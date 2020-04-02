@@ -1,27 +1,13 @@
 
-
 var parseTime = d3.timeParse("%d/%m/%Y");
-
 var formatTime = d3.timeFormat("%d/%m/%Y")
-
-// var mainWidth = parseInt(d3.select('.mainContent .mainMap').style("width"));
-
 var mainWidth = 1200;
-// var app_data;
 
 // console.log(mainWidth)
 
 var sliderTime = 10000;
-
 var maptype = 'standard';
-
-
 moment.locale('fr')
-
-
-// d3.select('#map')
-// .style('width', (mainWidth > 800 ? '800px' : String(mainWidth-11) + 'px'))
-// .style('height', (mainWidth > 800 ? '800px' : String(mainWidth-11) + 'px'));
 
 d3.select('svg#map_slider')
 .style('width', (mainWidth > 1000 ? '1000px' : String(mainWidth) + 'px'));
@@ -51,8 +37,6 @@ var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
     minMaxRectWidth = [12,30],
     scaleWidth,
     thisMinZoom = 2;
-
-
 
     if($(window).width() >= 1000){
 
@@ -102,16 +86,6 @@ const tip = d3
       }<br></span></span>`
   )
 
-  // .html( function(d){
-  //   console.log(d);
-  //   var this_pays = _.last(app_data.filter( e=> e.pays_iso == d.id)).pays;
-  //   console.log(this_pays)
-  //   return
-  //     `<strong>Country: </strong><span class='details'>${this_pays}<br></span><strong>Population: </strong><span class='details'>${format(
-  //       d[colorVariable]
-  //     )}</span>`
-  // }
-  // )
 
 tip.direction(function(d) {
   if (d.properties.name === 'Antarctica') return 'n'
@@ -254,7 +228,6 @@ function ready(error, geography, data) {
 
 
 data = data.filter(function(d,i){return d.datetime });
-
 app_data = data;
 
 
@@ -281,8 +254,6 @@ ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
     .style('fill', d => {
       if (typeof _.last(data.filter(function(e){return e.pays_iso == d.id})) !== 'undefined') {
 
-        // console.log(_.last(data_new.filter(function(e){return e.pays_iso == d.id})))
-        // return color2(+(_.last(data.filter(function(e){return e.pays_iso == d.id}))).stade)
 
       }
       return 'white'
@@ -366,13 +337,7 @@ handle.append("rect")
 .attr("height", 27)
 .attr("y", -14)
 .attr("x", -1)
-// .attr("rx", 20)
-// .attr("ry", 20)
 ;
-
-
-
-
 
 slider
 .append('g')
@@ -391,6 +356,15 @@ slider
 .attr('class', 'dateSlider')
 .attr('text-anchor', 'end')
 .text(moment(tMax, 'DD-MM-YYYY').format('LL'))
+;
+
+slider
+.append('g')
+.attr('transform', 'translate(' + width_slider/2 + ', 40)')
+.append('text')
+.attr('class', 'dateSlider currentDate')
+.attr('text-anchor', 'middle')
+.text(moment(t0, 'DD-MM-YYYY').format('LL'))
 ;
 // Transitions
 
@@ -565,6 +539,9 @@ function populate_map(date_value, city, category){
 
   if (date_value){
 
+d3.select('svg g.slider g text.currentDate')
+.text(moment(date_value, 'DD-MM-YYYY').format('LL'))
+
 
   var filtered_data = _.cloneDeep(app_data).filter(function(d){ return d.datetime <= date_value});
 
@@ -599,7 +576,6 @@ else if (category){
       d3.select('.info.city.box')
       .style('display', 'none')
 
-
     var filtered_data = _.cloneDeep(app_data).filter(function(d){ return d.Lieu == city});
 
     // console.log(filtered_data)
@@ -615,8 +591,6 @@ function fillMap(filtered_data){
 
 
 var thoseLocations =  _.uniqBy(filtered_data, function(d){return d.pays_iso}).map(function(d){return d.pays_iso});
-
-
 let those_paths = svg.selectAll('g.countries path').filter(d => thoseLocations.includes(d.id));
 
 those_paths
@@ -677,15 +651,11 @@ those_paths
         }
     }
 
-
-
 d3.selectAll(".shareTwitter")
 .on('click', function(d){ shareTwitter()});
 
 d3.selectAll(".shareFacebook")
 .on('click', function(d){ shareFacebook()});
-
-
 
 function shareFacebook () {
           var url = encodeURIComponent(window.location.origin + window.location.pathname),
@@ -695,7 +665,7 @@ function shareFacebook () {
 
 function shareTwitter () {
           var url = encodeURIComponent(window.location.origin + window.location.pathname),
-              text = "Comment le confinement a gagnÃ© toute la planÃ¨te https://www.liberation.fr/apps/2020/04/comment-le-confinement-a-gagne-la-planete/ via @libe",
+              text = "Comment jour par jour, pays par pays, le confinement a gagné la planète entière https://www.liberation.fr/apps/2020/04/comment-le-confinement-a-gagne-la-planete/ via @libe",
               link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
           window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
 
