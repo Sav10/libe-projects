@@ -354,7 +354,7 @@ slider
 .append('text')
 .attr('class', 'dateSlider')
 .attr('text-anchor', 'end')
-.text(moment(tMax, 'DD-MM-YYYY').format('LL'))
+.text('aujourd\'hui')
 ;
 
 slider
