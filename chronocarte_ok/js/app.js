@@ -1,4 +1,3 @@
-
 var parseTime = d3.timeParse("%d/%m/%Y");
 var formatTime = d3.timeFormat("%d/%m/%Y")
 var mainWidth = 1200;
@@ -298,7 +297,7 @@ function makeSlider (){
 
   var slider = svg2.append("g")
   .attr("class", "slider")
-  .attr("transform", "translate(10,20)");
+  .attr("transform", "translate(10,40)");
 
   slider.append("line")
   .attr("class", "track")
@@ -360,7 +359,7 @@ slider
 
 slider
 .append('g')
-.attr('transform', 'translate(' + width_slider/2 + ', 40)')
+.attr('transform', 'translate(' + width_slider/2 + ', -20)')
 .append('text')
 .attr('class', 'dateSlider currentDate')
 .attr('text-anchor', 'middle')
@@ -620,7 +619,7 @@ those_paths
         .call(resize);
 
         d3.select('svg#map_slider')
-        .attr("viewBox", "0 0 " + 1000 + " " + 70)
+        .attr("viewBox", "0 0 " + 1000 + " " + 80)
         .attr("preserveAspectRatio", "xMinYMid")
         // .call(resize);
 
