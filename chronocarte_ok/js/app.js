@@ -255,7 +255,7 @@ ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
 
 
       }
-      return 'white'
+      return '#dadada'
     })
     .style('fill-opacity', 0.8)
     .style('stroke', 'lightgray')
