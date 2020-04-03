@@ -21,6 +21,7 @@ var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
     padding = 0.3,
     max_width = 1000,
     width_slider = (width2 < (mainWidth -70) ? width2 : (mainWidth -70)),
+    width_slider_g = 960,
     width2 = width2 < mainWidth ? width2 : mainWidth,
     map,
     app_data,
@@ -47,7 +48,7 @@ this_zoom_level = 6;
 
 var svg2 = d3.select("svg#map_slider");
 
-svg2.style('width', (width_slider + 30));
+svg2.style('width', (width_slider + 0));
 
 var articles = d3.select('div#articles')
 
@@ -56,7 +57,7 @@ var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
 // set the ranges
 var x = d3.scaleTime()
-.range([0, width_slider])
+.range([0, width_slider_g])
 .clamp(true);
 
 
@@ -253,7 +254,6 @@ ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
     .style('fill', d => {
       if (typeof _.last(data.filter(function(e){return e.pays_iso == d.id})) !== 'undefined') {
 
-
       }
       return '#dadada'
     })
@@ -350,7 +350,7 @@ slider
 
 slider
 .append('g')
-.attr('transform', 'translate(' + width_slider + ', 40)')
+.attr('transform', 'translate(' + width_slider_g + ', 40)')
 .append('text')
 .attr('class', 'dateSlider')
 .attr('text-anchor', 'end')
@@ -359,7 +359,7 @@ slider
 
 slider
 .append('g')
-.attr('transform', 'translate(' + width_slider/2 + ', -20)')
+.attr('transform', 'translate(' + width_slider_g/2 + ', -20)')
 .append('text')
 .attr('class', 'dateSlider currentDate')
 .attr('text-anchor', 'middle')
