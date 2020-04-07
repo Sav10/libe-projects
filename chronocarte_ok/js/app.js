@@ -181,10 +181,10 @@ const color2 = d3
   .scaleQuantile()
   .range([
     '#FFFFFF',
-    '#FCE9ED',
+    '#F9D3DB',
     '#F4A7B7',
-    '#EB6581',
-    '#E3234A'
+    '#E3234A',
+    '#A70039'
   ])
 
 color2.domain([0, 1, 2, 4, 5]);
