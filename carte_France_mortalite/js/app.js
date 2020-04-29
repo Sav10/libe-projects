@@ -25,6 +25,11 @@ var circleScale =
 d3.scaleSqrt()
 .range([5, 40]);
 
+var circleScaleEcart = 
+d3.scaleSqrt()
+.range([0, 30]);
+
+
 const svg = d3.select(".carte svg");
 const allPaths = svg.selectAll('path');
 
@@ -180,10 +185,34 @@ function force_separate_circles(){
 
 }
 
+function force_separate_circles_ecart(){
+
+  var features = allPaths.data();
+
+  simulation = d3.forceSimulation(features)
+  .force("y", d3.forceY(function(d) { return d.centroid[1] }).strength(5))
+  .force("x", d3.forceX(function(d) { return d.centroid[0] }).strength(5))
+  .force("collide", d3.forceCollide(7).radius(d=> d.radius_ecart))
+  .stop();
+
+  for (var i = 0; i < 200; ++i) simulation.tick();
+
+    allPaths
+  .transition().attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
+
+}
+
 function registered_separate_circles(){
 
   allPaths
   .transition().attr('transform', function(d) { return 'translate(' +position_departements[d.id][0]+ ',' +position_departements[d.id][1] + ')'});
+
+}
+
+function registered_separate_circles_ecarts(){
+
+  allPaths
+  .transition().attr('transform', function(d) { return 'translate(' +position_departements_ecart[d.id][0]+ ',' +position_departements_ecart[d.id][1] + ')'});
 
 }
 
@@ -228,12 +257,39 @@ allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
 
 }
 
+function transform_all_paths_to_circle_ecarts(){
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
+// console.log(allpaths)
+allPaths.transition().attrTween("d", function(d){ return d.to_circle_ecart_function})
+.on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    registered_separate_circles_ecarts()
+  }
+})
+
+// force_separate_circles()
+
+}
+
+
 d3.select('#display_proportional_circles')
 .on('click', function(){
 
   transform_all_paths_to_circle()
 
   mapstate = 1;
+
+})
+
+d3.select('#display_proportional_circles_ecart')
+.on('click', function(){
+
+  transform_all_paths_to_circle_ecarts()
+
+  mapstate = 2;
 
 })
 
@@ -271,21 +327,28 @@ queue()
 
     circleScale.domain(d3.extent(data, d=>d.population));
 
+    circleScaleEcart.domain([0,d3.max(data, d=>d.ecart2020)]);
+
     let allSvgNodes = allPaths.nodes();
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-numerodepartement')
       let this_pop = data.filter(d=> d.CodeDepartement == this_id)[0].population;
+      let this_ecart = data.filter(d=> d.CodeDepartement == this_id)[0].ecart2020;
       let this_radius = Math.round(circleScale(this_pop));
+      let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
       let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
+      let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
       let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
 
       d3.select(allSvgNodes[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
         'to_circle_function': this_to_circle_function,
+        'to_circle_ecart_function': this_to_circle_ecart_function,
         'from_circle_function': this_from_circle_function,
         'population':this_pop,
-        'radius': this_radius});
+        'radius': this_radius,
+        'radius_ecart': this_radius_ecart});
 // console.log(d3.select(allSvgNodes[i]).attr('data-numerodepartement'))
 }
 
@@ -511,3 +574,109 @@ function responsivefy(svg) {
         "2A" : [0, 0],
         "2B" : [0, 0]
       };
+
+
+
+ const position_departements_ecart = {
+  "971": [0, 0],
+  "972": [0, 0],
+  "973": [0, 0],
+  "974": [0, 0],
+  "976": [0, 0],
+  "75": [5, 27],
+  "77": [24, 28],
+  "78": [-24, 28],
+  "91": [-19, 46],
+  "92": [-35, -13],
+  "93": [10, -26],
+  "94": [49, -5],
+  "95": [-10, -48],
+  "18": [0, 0],
+  "28": [-11, 34],
+  "36": [0, 0],
+  "37": [0, 0],
+  "41": [-7, 4],
+  "45": [1, 1],
+  "21": [0, 0],
+  "25": [0, 0],
+  "39": [0, 0],
+  "58": [0, 0],
+  "70": [0, 0],
+  "71": [0, 0],
+  "89": [0, 0],
+  "90": [-8, 12],
+  "14": [0, 0],
+  "27": [-22, 0],
+  "50": [0, 0],
+  "61": [0, 0],
+  "76": [0, 0],
+  "02": [1, 0],
+  "59": [0, 0],
+  "60": [12, -35],
+  "62": [0, 0],
+  "80": [1, -18],
+  "08": [0, 0],
+  "10": [0, 0],
+  "51": [12, -4],
+  "52": [0, 0],
+  "54": [-10, 3],
+  "55": [0, 0],
+  "57": [2, -1],
+  "67": [1, -1],
+  "68": [1, -1],
+  "88": [0, 0],
+  "44": [0, 0],
+  "49": [0, 0],
+  "53": [0, 0],
+  "72": [0, 0],
+  "85": [0, 0],
+  "22": [0, 0],
+  "29": [0, 0],
+  "35": [0, 0],
+  "56": [0, 0],
+  "16": [0, 0],
+  "17": [0, 0],
+  "19": [0, 0],
+  "23": [0, 0],
+  "24": [0, 0],
+  "33": [0, 0],
+  "40": [0, 0],
+  "47": [0, 0],
+  "64": [0, 0],
+  "79": [0, 0],
+  "86": [0, 0],
+  "87": [0, 0],
+  "09": [0, 0],
+  "11": [0, 0],
+  "12": [0, 0],
+  "30": [0, 0],
+  "31": [0, 0],
+  "32": [0, 0],
+  "34": [0, 0],
+  "46": [0, 0],
+  "48": [0, 0],
+  "65": [0, 0],
+  "66": [0, 0],
+  "81": [0, 0],
+  "82": [0, 0],
+  "01": [0, 0],
+  "03": [0, 0],
+  "07": [0, 0],
+  "15": [0, 0],
+  "26": [0, 0],
+  "38": [0, 0],
+  "42": [-5, 2],
+  "43": [0, 0],
+  "63": [0, 0],
+  "69": [1, -1],
+  "73": [0, 0],
+  "74": [0, 0],
+  "04": [0, 0],
+  "05": [0, 0],
+  "06": [0, 0],
+  "13": [0, 0],
+  "83": [0, 0],
+  "84": [0, 0],
+  "2A": [0, 0],
+  "2B": [0, 0]
+}
