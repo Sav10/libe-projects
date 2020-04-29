@@ -199,17 +199,33 @@ a#play_button img {
     background-color: #e91845;
     color: #fff;
     display: inline-block;
-    font-size: 1.5em;
+    font-size: 1.3em;
     line-height: 1.2em;
     padding: 3px 5px 4px;
     text-transform: uppercase;
     font-family: "syntheselibeweb", sans-serif;
 }
 
+#button_box{
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: -18px;
+
+}
+
 .actionButton:hover{
 color: #fff;
 opacity: 0.8;
 
+}
+
+#display_geo_paths{
+  margin-left: 2em;
+}
+
+.d3-tip{
+  max-width: 80vW;
 }
 
   </style>
@@ -259,7 +275,7 @@ opacity: 0.8;
           </div> -->
           <!-- <div id='appenedCityTagContainer'></div> -->
           <div id="articles">
-          <a class="actionButton" id="display_proportional_circles">Cercles proportionnels</a>   <a class="actionButton"  id="display_geo_paths">Carte</a>
+          <div id="button_box"><a class="actionButton" id="display_proportional_circles">Cartogramme</a>   <a class="actionButton"  id="display_geo_paths">Carte</a></div>
 
           </div>
           <div class="carte">
