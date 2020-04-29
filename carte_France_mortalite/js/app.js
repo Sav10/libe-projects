@@ -330,6 +330,14 @@ var progressionMax = d3.max(data, function(d) { return d.progression_morts; })
     .style('stroke-width', 1)
   })
 
+
+// setTimeout(() => {
+
+//   transform_all_paths_to_circle()
+// mapstate = 1;
+// },
+//    500);
+
 }
 
 function responsivefy(svg) {
