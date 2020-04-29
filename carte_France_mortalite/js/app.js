@@ -36,7 +36,14 @@ var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
     rectWidth = 10,
     minMaxRectWidth = [12,30],
     scaleWidth,
-    thisMinZoom = 2;
+    thisMinZoom = 2,
+    mapstate = 0;
+
+
+var circleScale = 
+d3.scaleSqrt()
+.range([5, 40]);
+
 
     if($(window).width() >= 1000){
 
@@ -69,6 +76,18 @@ var y = d3.scaleLinear()
   .attr("id", "tooltip")
   .attr('class', 'box');
 
+
+function getBoundingBoxCenter (selection) {
+  // get the DOM element from a D3 selection
+  // you could also use "this" inside .each()
+  var element = selection.node();
+  // use the native SVG interface to get the bounding box
+  var bbox = element.getBBox();
+  // return the center of the bounding box
+  return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
+}
+
+
 /////////////////////////
 //////////////////////////////////////// configuration
 const geoIDVariable = 'id'
@@ -99,7 +118,7 @@ const tip2 = d3
   .offset([-10, 0])
   .html(
     d =>{
-      let this_code = d;
+      let this_code = d.id;
       console.log(_.find(app_data, d => d.CodeDepartement == this_code))
       let this_d = _.find(app_data, d => d.CodeDepartement == this_code);
       let this_ecart = Math.round(this_d.ecart2020);
@@ -112,68 +131,6 @@ const tip2 = d3
   })
 
 
-tip.direction(function(d) {
-  if (d.properties.name === 'Antarctica') return 'n'
-  // Americas
-  if (d.properties.name === 'Greenland') return 's'
-  if (d.properties.name === 'Canada') return 'e'
-  if (d.properties.name === 'USA') return 'e'
-  if (d.properties.name === 'Mexico') return 'e'
-  // Europe
-  if (d.properties.name === 'Iceland') return 's'
-  if (d.properties.name === 'Norway') return 's'
-  if (d.properties.name === 'Sweden') return 's'
-  if (d.properties.name === 'Finland') return 's'
-  if (d.properties.name === 'Russia') return 'w'
-  // Asia
-  if (d.properties.name === 'China') return 'w'
-  if (d.properties.name === 'Japan') return 's'
-  // Oceania
-  if (d.properties.name === 'Indonesia') return 'w'
-  if (d.properties.name === 'Papua New Guinea') return 'w'
-  if (d.properties.name === 'Australia') return 'w'
-  if (d.properties.name === 'New Zealand') return 'w'
-  // otherwise if not specified
-  return 'n'
-})
-
-tip.offset(function(d) {
-  // [top, left]
-  if (d.properties.name === 'Antarctica') return [0, 0]
-  // Americas
-  if (d.properties.name === 'Greenland') return [10, -10]
-  if (d.properties.name === 'Canada') return [24, -28]
-  if (d.properties.name === 'USA') return [-5, 8]
-  if (d.properties.name === 'Mexico') return [12, 10]
-  if (d.properties.name === 'Chile') return [0, -15]
-  // Europe
-  if (d.properties.name === 'Iceland') return [15, 0]
-  if (d.properties.name === 'Norway') return [10, -28]
-  if (d.properties.name === 'Sweden') return [10, -8]
-  if (d.properties.name === 'Finland') return [10, 0]
-  if (d.properties.name === 'France') return [-9, 66]
-  if (d.properties.name === 'Italy') return [-8, -6]
-  if (d.properties.name === 'Russia') return [5, 385]
-  // Africa
-  if (d.properties.name === 'Madagascar') return [-10, 10]
-  // Asia
-  if (d.properties.name === 'China') return [-16, -8]
-  if (d.properties.name === 'Mongolia') return [-5, 0]
-  if (d.properties.name === 'Pakistan') return [-10, 13]
-  if (d.properties.name === 'India') return [-11, -18]
-  if (d.properties.name === 'Nepal') return [-8, 1]
-  if (d.properties.name === 'Myanmar') return [-12, 0]
-  if (d.properties.name === 'Laos') return [-12, -8]
-  if (d.properties.name === 'Vietnam') return [-12, -4]
-  if (d.properties.name === 'Japan') return [5, 5]
-  // Oceania
-  if (d.properties.name === 'Indonesia') return [0, -5]
-  if (d.properties.name === 'Papua New Guinea') return [-5, -10]
-  if (d.properties.name === 'Australia') return [-15, 0]
-  if (d.properties.name === 'New Zealand') return [-15, 0]
-  // otherwise if not specified
-  return [-10, 0]
-})
 
 d3.select('body').style('overflow', 'hidden')
 
@@ -212,6 +169,122 @@ const color2 = d3
     '#A70021'
   ])
 
+
+// features
+
+  // simulation = d3.forceSimulation(features)
+  //     .force("y", d3.forceY(function(d) { return d.centroid[1] }).strength(5))
+  //     .force("x", d3.forceX(function(d) { return d.centroid[0] }).strength(5))
+  //     .force("collide", d3.forceCollide(9))
+  //     .stop();
+
+// for (var i = 0; i < 200; ++i) simulation.tick();
+
+  // allpaths.transition().attr('transform', d => 'translate(' +d.vx + ',' +d.vy +')')
+
+function transformToCircle(thisPath){
+
+let thisCenter = getBoundingBoxCenter (thisPath);
+let this_path_d = thisPath.attr('d');
+let this_transformation = flubber.toCircle(this_path_d, thisCenter[0], thisCenter[1], 10);
+
+thisPath
+.transition()
+.attrTween("d", function(){ return this_transformation });
+
+}
+
+function force_separate_circles(){
+
+var features = d3.select(".carte svg").selectAll('path').data();
+
+ simulation = d3.forceSimulation(features)
+      .force("y", d3.forceY(function(d) { return d.centroid[1] }).strength(5))
+      .force("x", d3.forceX(function(d) { return d.centroid[0] }).strength(5))
+      .force("collide", d3.forceCollide(7).radius(d=> d.radius))
+      .stop();
+
+for (var i = 0; i < 200; ++i) simulation.tick();
+
+d3.select(".carte svg").selectAll('path')
+.transition().attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
+
+}
+
+function registered_separate_circles(){
+
+d3.select(".carte svg").selectAll('path')
+.transition().attr('transform', function(d) { return 'translate(' +position_departements[d.id][0]+ ',' +position_departements[d.id][1] + ')'});
+
+}
+
+
+function redraw_paths(){
+
+var allpaths = d3.select(".carte svg").selectAll('path');
+let pathsize = allpaths.size();
+let pathsCount = 0;
+let departements_corrections = ['17', '56', '91', '92', '93', '94', '95', '75', '971'];
+
+allpaths
+.transition()
+.duration(500)
+.attrTween("d", function(d){ return d.from_circle_function})
+.on('end', function(){
+pathsCount++;
+if (pathsCount >= pathsize){
+  allpaths.filter(function(d){return departements_corrections.includes(d.id) }).attr("d", function(d){ return d.path})
+
+allpaths
+.transition()
+.attr('transform', 'translate(0,0)')
+}
+})
+;
+
+
+}
+
+
+function transform_all_paths_to_circle(){
+
+let allpaths = d3.select(".carte svg").selectAll('path');
+
+let pathsize = d3.select(".carte svg").selectAll('path').size();
+let pathsCount = 0;
+// console.log(allpaths)
+allpaths.transition().attrTween("d", function(d){ return d.to_circle_function})
+.on('end', function(){
+pathsCount++;
+if (pathsCount >= pathsize){
+  registered_separate_circles()
+}
+})
+
+
+// force_separate_circles()
+
+}
+
+d3.select('#display_proportional_circles')
+.on('click', function(){
+
+transform_all_paths_to_circle()
+
+mapstate = 1;
+
+})
+
+d3.select('#display_geo_paths')
+.on('click', function(){
+redraw_paths()
+
+mapstate = 0;
+  
+})
+
+
+
 color2.domain([0, 1, 2, 4, 5]);
 
 // const svg = d3
@@ -231,15 +304,13 @@ const projection = d3
 
 const path = d3.geoPath().projection(projection)
 
-let allSvgNodes = d3.select(".carte svg").selectAll('path').nodes();
 
 const svg2 = d3.select(".carte svg").selectAll('path');
 
-for (i in allSvgNodes){
-let this_d = d3.select(allSvgNodes[i]).attr('data-numerodepartement')
-d3.select(allSvgNodes[i]).datum(this_d)
-// console.log(d3.select(allSvgNodes[i]).attr('data-numerodepartement'))
-}
+
+
+
+
 
 // svg.call(tip)
 
@@ -251,10 +322,9 @@ queue()
   // .defer(d3.tsv, 'data/world_population.tsv')
   // .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6YOcYH2GBljCvg2rXaPjWC2ibMV0upfMWd93kpQ6R8tO8mYtZt3y0SQNcRFI2K7aXyXNsgK5LGHnx/pub?gid=1360208169&single=true&output=csv')
   .defer(d3.csv, 'data/departements_morts_centres.csv')
-  .defer(d3.json, 'data/departements_ign.json')
   .await(ready)
 
-function ready(error, geography, data, json_ign) {
+function ready(error, geography, data) {
 
 
 //     data.forEach(d => {
@@ -269,12 +339,34 @@ function ready(error, geography, data, json_ign) {
     d.moyenne_2018_2019 = +d.moyenne_2018_2019;
     d.progression_morts = +d.progression_morts;
     d.Densite = +d.Densite;
+    d.population = +d.population;
   })
+
+
+
+circleScale.domain(d3.extent(data, d=>d.population));
+
+let allSvgNodes = d3.select(".carte svg").selectAll('path').nodes();
+for (i in allSvgNodes){
+let this_id = d3.select(allSvgNodes[i]).attr('data-numerodepartement')
+let this_pop = data.filter(d=> d.CodeDepartement == this_id)[0].population;
+let this_radius = Math.round(circleScale(this_pop));
+let this_path_d = d3.select(allSvgNodes[i]).attr('d');
+let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
+let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
+let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
+
+d3.select(allSvgNodes[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
+  'to_circle_function': this_to_circle_function,
+'from_circle_function': this_from_circle_function,
+'population':this_pop,
+'radius': this_radius});
+// console.log(d3.select(allSvgNodes[i]).attr('data-numerodepartement'))
+}
 
 
     app_data = data;
 
-    console.log(json_ign)
 
 // data = data.filter(function(d,i){return d.datetime });
 // app_data = data;
@@ -349,9 +441,9 @@ var myColor = d3.scaleLinear().domain([0,100])
 svg2
 .style('fill', d => {
 
-      if (typeof data.filter(function(e){return e.CodeDepartement == d})[0] !== 'undefined') {
+      if (typeof data.filter(function(e){return e.CodeDepartement == d.id})[0] !== 'undefined') {
 
-        return myColor(+data.filter(function(e){return e.CodeDepartement == d})[0].progression_morts)
+        return myColor(+data.filter(function(e){return e.CodeDepartement == d.id})[0].progression_morts)
 
       }
       return '#fff'
@@ -759,3 +851,108 @@ function shareTwitter () {
           window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
 
       }
+
+
+const position_departements  = {
+  "971" : [0, 0],
+  "972" : [0, 0],
+  "973" : [0, 0],
+  "974" : [0, 0],
+  "976" : [0, 0],
+  "75" : [-1, 9],
+  "77" : [17, 42],
+  "78" : [-37, 35],
+  "91" : [-7, 50],
+  "92" : [-60, -15],
+  "93" : [32, -43],
+  "94" : [60, 0],
+  "95" : [-14, -35],
+  "18" : [-4, 3],
+  "28" : [-12, 57],
+  "36" : [0, 1],
+  "37" : [-6, 5],
+  "41" : [3, 31],
+  "45" : [27, 42],
+  "21" : [0, 0],
+  "25" : [0, 0],
+  "39" : [0, 0],
+  "58" : [3, 1],
+  "70" : [0, 0],
+  "71" : [-1, -7],
+  "89" : [19, 26],
+  "90" : [-7, 9],
+  "14" : [-4, -3],
+  "27" : [-45, 29],
+  "50" : [-2, 0],
+  "61" : [-16, 24],
+  "76" : [-17, -23],
+  "02" : [31, -1],
+  "59" : [24, -10],
+  "60" : [0, -50],
+  "62" : [-12, -32],
+  "80" : [-34, -26],
+  "08" : [5, -6],
+  "10" : [9, 10],
+  "51" : [30, -8],
+  "52" : [0, 0],
+  "54" : [-10, 11],
+  "55" : [0, 17],
+  "57" : [5, -12],
+  "67" : [4, 2],
+  "68" : [0, 2],
+  "88" : [0, 0],
+  "44" : [-2, 0],
+  "49" : [-1, 4],
+  "53" : [-8, 6],
+  "72" : [-6, 14],
+  "85" : [1, 3],
+  "22" : [0, 0],
+  "29" : [0, 0],
+  "35" : [-1, -2],
+  "56" : [0, 0],
+  "16" : [0, 0],
+  "17" : [0, 0],
+  "19" : [0, 0],
+  "23" : [0, 0],
+  "24" : [0, 0],
+  "33" : [0, 0],
+  "40" : [0, 0],
+  "47" : [0, 0],
+  "64" : [0, 0],
+  "79" : [0, 0],
+  "86" : [0, 1],
+  "87" : [0, 0],
+  "09" : [4, 8],
+  "11" : [0, -3],
+  "12" : [0, 0],
+  "30" : [1, -6],
+  "31" : [0, -1],
+  "32" : [0, 0],
+  "34" : [-2, 2],
+  "46" : [0, 0],
+  "48" : [0, 0],
+  "65" : [0, 0],
+  "66" : [0, 2],
+  "81" : [0, 0],
+  "82" : [0, 0],
+  "01" : [14, -13],
+  "03" : [0, 0],
+  "07" : [0, 0],
+  "15" : [0, 0],
+  "26" : [-7, 3],
+  "38" : [3, 1],
+  "42" : [-20, 23],
+  "43" : [0, 10],
+  "63" : [-4, -4],
+  "69" : [-1, -6],
+  "73" : [7, 2],
+  "74" : [9, 0],
+  "04" : [0, 0],
+  "05" : [0, 0],
+  "06" : [1, 0],
+  "13" : [-2, 6],
+  "83" : [1, 1],
+  "84" : [10, -16],
+  "2A" : [0, 0],
+  "2B" : [0, 0]
+};
