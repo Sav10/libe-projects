@@ -70,12 +70,44 @@ const tip = d3
       let this_d = _.find(app_data, d => d.CodeDepartement == this_code);
       let this_ecart = Math.round(this_d.ecart2020);
       let this_diff = this_ecart < 0 ? 'moins' : 'plus';
+      let this_progression_type = this_ecart < 0 ? 'baisse' : 'augmentation';
 
       return `<span class='details'>${
         this_d.Departement
-      }<br><span style="font-weight:bold">${Math.abs(this_ecart)}</span> morts de <span style="font-weight:bold">${this_diff}</span> qu'en 2018- 2019</span>
-      <br>Soit une progression de <span style="font-weight:bold">${roundAndFormatPct(this_d.progression_morts)}%</span></span>`
+      }<br><span style="font-weight:bold">${Math.abs(this_ecart)}</span> morts de <span style="font-weight:bold">${this_diff}</span> qu'en 2018-2019</span>
+      <br>Soit une <span style="font-weight:bold">${this_progression_type}</span> de <span style="font-weight:bold">${roundAndFormatPct(this_d.progression_morts)}%</span></span>`
   })
+
+tip.direction(function(d) {
+  console.log(d);
+  if (d.id === '57') return 'w'
+  if (d.id === '67') return 'w'
+  if (d.id === '68') return 'w'
+  if (d.id === '90') return 'w'
+  if (d.id === '25') return 'w'
+  if (d.id === '74') return 'w'
+  if (d.id === '73') return 'w'
+  if (d.id === '06') return 'w'
+  if (d.id === '2B') return 'w'
+  if (d.id === '2A') return 'w'
+  if (d.id === '59') return 's'
+  if (d.id === '62') return 's'
+  if (d.id === '80') return 's'
+  if (d.id === '76') return 's'
+  if (d.id === '08') return 's'
+  if (d.id === '02') return 's'
+  if (d.id === '971') return 'e'
+  if (d.id === '972') return 'e'
+  if (d.id === '973') return 'e'
+  if (d.id === '974') return 'e'
+  if (d.id === '975') return 'e'
+  if (d.id === '976') return 'e'
+
+
+
+  // otherwise if not specified
+  return 'n'
+})
 
 // d3.select('body').style('overflow', 'hidden')
 
@@ -388,7 +420,7 @@ function shareTwitter () {
       }
 
 function roundAndFormatPct(x){
- return _.round(x,1).toString().replace(".", ",")
+ return Math.abs(_.round(x,1)).toString().replace(".", ",")
 
 }
 
