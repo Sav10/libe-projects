@@ -243,6 +243,7 @@ function transform_all_paths_to_circle(){
   let pathsize = allPaths.size();
   let pathsCount = 0;
 // console.log(allpaths)
+// if (mapstate == 0){
 allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
 .on('end', function(){
   pathsCount++;
@@ -250,6 +251,11 @@ allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
     registered_separate_circles()
   }
 })
+
+// }
+// else{
+//   registered_separate_circles()
+// }
 
 // force_separate_circles()
 
@@ -260,6 +266,8 @@ function transform_all_paths_to_circle_ecarts(){
   let pathsize = allPaths.size();
   let pathsCount = 0;
 // console.log(allpaths)
+
+if (mapstate == 0){
 allPaths.transition().attrTween("d", function(d){ return d.to_circle_ecart_function})
 .on('end', function(){
   pathsCount++;
@@ -267,6 +275,21 @@ allPaths.transition().attrTween("d", function(d){ return d.to_circle_ecart_funct
     registered_separate_circles_ecarts()
   }
 })
+}
+else{
+
+
+allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.select(this).attr('d'), d.centroid[0], d.centroid[1],
+ d.radius_ecart)})
+.on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    registered_separate_circles_ecarts()
+  }
+})
+
+
+}
 
 // force_separate_circles()
 
@@ -275,6 +298,7 @@ allPaths.transition().attrTween("d", function(d){ return d.to_circle_ecart_funct
 
 d3.select('#display_proportional_circles')
 .on('click', function(){
+
 
   transform_all_paths_to_circle()
 
@@ -285,7 +309,12 @@ d3.select('#display_proportional_circles')
 d3.select('#display_proportional_circles_ecart')
 .on('click', function(){
 
+
+  if (mapstate !== 2){
+
   transform_all_paths_to_circle_ecarts()
+
+}
 
   mapstate = 2;
 
@@ -293,7 +322,12 @@ d3.select('#display_proportional_circles_ecart')
 
 d3.select('#display_geo_paths')
 .on('click', function(){
+
+
+
   redraw_paths()
+
+
 
   mapstate = 0;
   
