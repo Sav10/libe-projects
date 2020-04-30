@@ -234,6 +234,22 @@ opacity: 0.8;
     padding-left: 0;
     padding-right: 0;
 }
+
+#display_proportional_circles_ecart{
+font-size: 1.1em;
+
+  }
+
+.d3-tip{
+font-size: 0.9em;
+
+}
+
+h1#graph_title {
+    line-height: 1.2em;
+    font-size: 1.6em;
+}
+
 }
 
 
@@ -243,8 +259,9 @@ h1#graph_title{
     display: flex;
     justify-content: center;
 }
+
+
   </style>
-}
 </head>
 <body>
   <div class="intro-section">
@@ -292,10 +309,10 @@ h1#graph_title{
           <!-- <div id='appenedCityTagContainer'></div> -->
           <div id="articles">
 
-          <p>L'Insee diffuse des données sur la mortalité quotidienne du coronavirus depuis le premier mars. Ces données, bien qu'encore provisoires et sujettes à des corrections ultérieures, sont néanmoins intéressantes pour évaluer les effets du virus dans les différents départements et se rendre compte de la léthalité de la pandémie.</p><p>
-          Nous avons comparé la mortalité du 1er mars au 13 avril 2020 à la moyenne de la mème période en 2018-2019.
-          Premier constat, les contrastes sont saisissants : si dans les départements les plus touchés, la mortalité a plus que doublé, les ravages du coronavirus semblent quasi inexistants ailleurs. A l'Ouest, rien, ou presque. Au sud est, pas grand chose. L'essentiel de la surmortalité en France se concentre dans les foyers de la pandémie (Ile de France et grand Est).</p><p>
-          Nous avons choisi de représenter ces données de deux manières : tout d'abord géographiquement, puis sous forme de cartogramme, avec des cercles proportionnels à la taille de la population.</p><br><br>
+          <p>L'Insee diffuse des données sur la mortalité quotidienne due au Covid-19 depuis le 1er mars. Ces données, bien qu'encore provisoires et sujettes à des corrections ultérieures, sont néanmoins intéressantes pour évaluer les effets dans les différents départements et se rendre compte de la létalité de la pandémie.</p><br>
+          <p>
+          Nous avons comparé la mortalité du 1er mars au 13 avril 2020 à la moyenne de la même période en 2018 et 2019. Premier constat, les contrastes sont saisissants : si dans les départements les plus touchés, la mortalité a plus que doublé, les ravages semblent quasi inexistants ailleurs. A l'Ouest, rien, ou presque. Au Sud-Est, pas grand-chose. L'essentiel de la surmortalité en France se concentre dans les foyers de la pandémie (Ile-de-France et Grand Est).</p><br>
+          <p>Nous avons choisi de représenter ces données de deux manières : tout d'abord géographiquement, puis sous forme de cartogramme, avec des cercles proportionnels à la taille de la population.</p><br><br>
 
           <h1 id="graph_title">La surmortalité par département en mars et avril</h1>
                     <div id="button_box"><a class="actionButton" id="display_proportional_circles">Cartogramme</a>   <a class="actionButton"  id="display_geo_paths">Carte</a></div>
@@ -444,9 +461,8 @@ h1#graph_title{
       </g></svg>
     </div>
     <div id="articles">
-<p>Toute une partie de la France semble à peine touchée. C'est encore plus visible sur une représentation des départements en proportion du nombre de morts supplémentaires par rapport à la moyenne 2018-2019.</p> <p><a class="actionButton" id="display_proportional_circles_ecart" href="#morphocarte">Cartogramme de la surmortalité</a></p>
-<p>Dans de nombreux départements, la mortalité n'a pas dépassé celle de la moyenne des deux années précédentes. Ils disparaissent donc de la carte. Il semble bien y avoir une certaine surmortalité à Lyon ou à Marseille, mais largement plus faible qu'en Ile de France et le grand Est. Et des villes comme Bordeaux ou Toulouse semblent totalement épargnées.
-Les grands départs de Franciliens vers l'ouest et le sud suite à l'anonce des mesures de confinement semblent avoir eu à priori un impact quasi nul sur la mortalité de leur lieu de villégiature.</p>
+<p>Toute une partie de la France semble à peine touchée. C'est encore plus visible avec une troisième représentation : un cartogramme toujours, mais qui présente cette fois des cercles proportionnels au nombre de morts supplémentaires par département par rapport à la moyenne 2018-2019.</p> <br><p><a class="actionButton" id="display_proportional_circles_ecart" href="#button_box" id="bouton_surmortalite">Cartogramme proportionnel à la surmortalité </a></p><br>
+<p>Dans de nombreux départements, la mortalité n'a pas dépassé celle de la moyenne des deux années précédentes. Ils disparaissent donc de la carte. Il semble bien y avoir une certaine surmortalité à Lyon ou à Marseille, mais largement plus faible qu'en Ile-de-France et dans le Grand Est. Et des villes comme Bordeaux ou Toulouse semblent totalement épargnées. Les grands départs de Franciliens vers l'ouest et le sud à la suite de l'annonce des mesures de confinement semblent avoir eu a priori un impact quasi nul sur la mortalité de leur lieu de villégiature.</p>
 
     </div>
         </div>
