@@ -492,7 +492,7 @@ function responsivefy(svg) {
 
         function shareTwitter () {
           var url = encodeURIComponent(window.location.origin + window.location.pathname),
-          text = "Comment jour par jour, pays par pays, le confinement a gagné la planète entière https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/ via @libe",
+          text = "Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/ via @libe",
           link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
           window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
 
