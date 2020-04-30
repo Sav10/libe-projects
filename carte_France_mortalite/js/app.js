@@ -76,7 +76,6 @@ const tip = d3
 .html(
   d =>{
     let this_code = d.id;
-    console.log(_.find(app_data, d => d.CodeDepartement == this_code))
     let this_d = _.find(app_data, d => d.CodeDepartement == this_code);
     let this_ecart = Math.round(this_d.ecart2020);
     let this_diff = this_ecart < 0 ? 'moins' : 'plus';
@@ -89,7 +88,6 @@ const tip = d3
   })
 
 tip.direction(function(d) {
-  console.log(d);
  if (d.id === '57') return 'w'
  if (d.id === '67') return 'w'
  if (d.id === '68') return 'w'
@@ -354,7 +352,7 @@ queue()
 
 app_data = data;
 
-console.log(data)
+// console.log(data)
 
 var progressionMax = d3.max(data, function(d) { return d.progression_morts; })
 
@@ -460,7 +458,7 @@ function responsivefy(svg) {
 
         function shareTwitter () {
           var url = encodeURIComponent(window.location.origin + window.location.pathname),
-          text = "Comment jour par jour, pays par pays, le confinement a gagné la planète entière https://www.liberation.fr/apps/2020/04/comment-le-confinement-a-gagne-la-planete/ via @libe",
+          text = "Comment jour par jour, pays par pays, le confinement a gagné la planète entière https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/ via @libe",
           link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
           window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
 
