@@ -27,7 +27,7 @@ d3.scaleSqrt()
 
 var circleScaleEcart = 
 d3.scaleSqrt()
-.range([0, 30]);
+.range([0, 29]);
 
 
 const svg = d3.select(".carte svg");
