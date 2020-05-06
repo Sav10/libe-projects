@@ -354,11 +354,11 @@ queue()
   // .defer(d3.json, 'data/departements.json')
   // .defer(d3.tsv, 'data/world_population.tsv')
   // .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6YOcYH2GBljCvg2rXaPjWC2ibMV0upfMWd93kpQ6R8tO8mYtZt3y0SQNcRFI2K7aXyXNsgK5LGHnx/pub?gid=1360208169&single=true&output=csv')
-  .defer(d3.csv, 'data/departements_morts_centres.csv')
+  // .defer(d3.csv, 'data/departements_morts_centres.csv')
   .defer(d3.csv, 'data/morts_par_pays_05_05.csv')
   .await(ready)
 
-  function ready(error, data0, data) {
+  function ready(error, data) {
 
     // data.forEach(d => {
     //   d.ecart2020 = +d.ecart2020;
@@ -374,7 +374,7 @@ queue()
       d.deaths_for_100k = _.round(100000*d.deaths / d.population, 1)
     })
 
-    console.log(data0)
+    // console.log(data0)
     console.log(data)
 
     circleScalePop.domain(d3.extent(data, d=>d.population));
