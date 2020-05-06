@@ -21,48 +21,14 @@ scaleWidth,
 thisMinZoom = 2,
 mapstate = 0;
 
-var circleScalePop = 
+var circleScale = 
 d3.scaleSqrt()
-.range([1, 100]);
+.range([5, 40]);
 
-var circleScaleDeaths = 
+var circleScaleEcart = 
 d3.scaleSqrt()
-.range([0, 100]);
+.range([0, 29]);
 
-
-const codes_pays_absolte_path = ["AO", "AR", "AU", "AZ", "CA", "CL", "CN", "DK", "FJ", "GB", "GR", "ID", "IT", "JP", "MY", "NO", "NZ", "OM",
-   "PH", "PG", "RU", "TR", "US", "VU", "ZA", "FR", "ES", "AG", "BS", "KM", "CV", "KY", "FK", "FO", "HK", "KN", "MV", "MT", "NC", "PR",
-    "PF", "SB", "ST", "TC", "TO", "TT", "VC", "VG", "VI", "GP", "IC"]
-
-function clean_those_numbers(this_array){
-
-
-this_array.forEach(d => {
-
-if (d.length > 1){
-d[1] = _.round(d[1], 1)
-d[2] = _.round(d[2], 1)
-}
-})
-
-return this_array
-
-}
-
-var p2s = /,?([achlmqrstvxz]),?/gi;
-
-  var convertToString = function (arr)
-  {
-    return arr.join(',').replace(p2s, '$1');
-  };
-
-function getAbsolutePath(thisPath){
-
-let this_arr = Raphael._pathToAbsolute(thisPath);
-this_arr = clean_those_numbers(this_arr)
-return convertToString(this_arr)
-
-}
 
 const svg = d3.select(".carte svg");
 const allPaths = svg.selectAll('path');
@@ -110,14 +76,15 @@ const tip = d3
 .html(
   d =>{
     let this_code = d.id;
-    let this_d = _.find(app_data, d => d.geoId == this_code);
-    let this_deaths = this_d.deaths;
-    let this_deaths_for_100k = this_d.deaths_for_100k;
+    let this_d = _.find(app_data, d => d.CodeDepartement == this_code);
+    let this_ecart = Math.round(this_d.ecart2020);
+    let this_diff = this_ecart < 0 ? 'moins' : 'plus';
+    let this_progression_type = this_ecart < 0 ? 'baisse' : 'augmentation';
 
     return `<span class='details'>${
-      this_d.countriesAndTerritories
-    }<br><span style="font-weight:bold">${this_deaths}</span> morts du Coronavirus
-    <br>Soit une mortalité de <span style="font-weight:bold">${this_deaths_for_100k}</span> pour 100 000 habitants</span></span>`
+      this_d.Departement
+    }<br><span style="font-weight:bold">${Math.abs(this_ecart)}</span> morts de <span style="font-weight:bold">${this_diff}</span> qu'en 2018-2019</span>
+    <br>Soit une <span style="font-weight:bold">${this_progression_type}</span> de <span style="font-weight:bold">${roundAndFormatPct(this_d.progression_morts)}%</span></span>`
   })
 
 tip.direction(function(d) {
@@ -199,25 +166,39 @@ function transformToCircle(thisPath){
 
 }
 
-function force_separate_circles(radius_name){
+function force_separate_circles(){
 
   var features = allPaths.data();
 
   simulation = d3.forceSimulation(features)
   .force("y", d3.forceY(function(d) { return d.centroid[1] }).strength(5))
   .force("x", d3.forceX(function(d) { return d.centroid[0] }).strength(5))
-  .force("collide", d3.forceCollide(7).radius(d=> d[radius_name]))
+  .force("collide", d3.forceCollide(7).radius(d=> d.radius))
   .stop();
 
   for (var i = 0; i < 200; ++i) simulation.tick();
 
     allPaths
-  .transition()
-  .duration(800)
-  .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
+  .transition().attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
 
 }
 
+function force_separate_circles_ecart(){
+
+  var features = allPaths.data();
+
+  simulation = d3.forceSimulation(features)
+  .force("y", d3.forceY(function(d) { return d.centroid[1] }).strength(5))
+  .force("x", d3.forceX(function(d) { return d.centroid[0] }).strength(5))
+  .force("collide", d3.forceCollide(7).radius(d=> d.radius_ecart))
+  .stop();
+
+  for (var i = 0; i < 200; ++i) simulation.tick();
+
+    allPaths
+  .transition().attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
+
+}
 
 function registered_separate_circles(){
 
@@ -233,96 +214,105 @@ function registered_separate_circles_ecarts(){
 
 }
 
-
-function redraw_paths(radius_name, duration, callback_value){
+function redraw_paths(){
 
   let pathsize = allPaths.size();
   let pathsCount = 0;
-  let departements_corrections = codes_pays_absolte_path;
+  let departements_corrections = ['17', '56', '91', '92', '93', '94', '95', '75', '971'];
 
   allPaths
   .transition()
-  .duration(duration)
-  .attrTween("d", function(d){ return flubber.fromCircle(d.centroid[0], d.centroid[1], d[radius_name], d.path)})
+  .duration(500)
+  .attrTween("d", function(d){ return d.from_circle_function})
   .on('end', function(){
     pathsCount++;
     if (pathsCount >= pathsize){
       allPaths.filter(function(d){return departements_corrections.includes(d.id) }).attr("d", function(d){ return d.path})
-      pathsCount = 0
 
       allPaths
       .transition()
       .attr('transform', 'translate(0,0)')
-      .on('end', function(){
-      pathsCount++;
-      if (pathsCount >= pathsize && callback_value){
-        transform_all_paths_to_circle(callback_value)
-        // setTimeout(() => {  callback_function(); }, 2000);
-      }
-
-      })
     }
   })
   ;
+
 }
 
-
-function transform_all_paths_to_circle(radius_name){
+function transform_all_paths_to_circle(){
 
   let pathsize = allPaths.size();
   let pathsCount = 0;
-
-allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.select(this).attr('d'), d.centroid[0], d.centroid[1],
- d[radius_name])})
+// console.log(allpaths)
+// if (mapstate == 0){
+allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
-    // registered_separate_circles_ecarts()
-    force_separate_circles(radius_name)
+    registered_separate_circles()
   }
 })
+
+// }
+// else{
+//   registered_separate_circles()
+// }
+
+// force_separate_circles()
+
+}
+
+function transform_all_paths_to_circle_ecarts(){
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
+// console.log(allpaths)
+
+if (mapstate == 0){
+allPaths.transition().attrTween("d", function(d){ return d.to_circle_ecart_function})
+.on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    registered_separate_circles_ecarts()
+  }
+})
+}
+else{
+
+
+allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.select(this).attr('d'), d.centroid[0], d.centroid[1],
+ d.radius_ecart)})
+.on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    registered_separate_circles_ecarts()
+  }
+})
+
+
+}
+
+// force_separate_circles()
 
 }
 
 
-
-d3.select('#display_proportional_circles_pop')
+d3.select('#display_proportional_circles')
 .on('click', function(){
 
 
-  // transform_all_paths_to_circle('radius_pop')
-
-  if (mapstate == 2){
-
-    console.log('with callback');
-
-    redraw_paths('radius_fixed', 100, 'radius_pop');
-
-    // redraw_paths('radius_random', 100);
-
-
-
-  }
-  else{
-
-
-
-
-    transform_all_paths_to_circle('radius_pop')
-
-  }
+  transform_all_paths_to_circle()
 
   mapstate = 1;
 
 })
 
-d3.select('#display_proportional_circles_deaths')
+d3.select('#display_proportional_circles_ecart')
 .on('click', function(){
 
 
   if (mapstate !== 2){
 
-  transform_all_paths_to_circle('radius_deaths')
+  transform_all_paths_to_circle_ecarts()
 
 }
 
@@ -335,7 +325,7 @@ d3.select('#display_geo_paths')
 
 
 
-  redraw_paths('radius_random', 500)
+  redraw_paths()
 
 
 
@@ -354,70 +344,43 @@ queue()
   // .defer(d3.json, 'data/departements.json')
   // .defer(d3.tsv, 'data/world_population.tsv')
   // .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6YOcYH2GBljCvg2rXaPjWC2ibMV0upfMWd93kpQ6R8tO8mYtZt3y0SQNcRFI2K7aXyXNsgK5LGHnx/pub?gid=1360208169&single=true&output=csv')
-  // .defer(d3.csv, 'data/departements_morts_centres.csv')
-  .defer(d3.csv, 'data/morts_par_pays_05_05.csv')
+  .defer(d3.csv, 'data/departements_morts_centres.csv')
   .await(ready)
 
   function ready(error, data) {
 
-    // data.forEach(d => {
-    //   d.ecart2020 = +d.ecart2020;
-    //   d.moyenne_2018_2019 = +d.moyenne_2018_2019;
-    //   d.progression_morts = +d.progression_morts;
-    //   d.Densite = +d.Densite;
-    //   d.population = +d.population;
-    // })
-
     data.forEach(d => {
-      d.deaths = +d.deaths;
-      d.population = +d.popData2018;
-      d.deaths_for_100k = _.round(100000*d.deaths / d.population, 1)
+      d.ecart2020 = +d.ecart2020;
+      d.moyenne_2018_2019 = +d.moyenne_2018_2019;
+      d.progression_morts = +d.progression_morts;
+      d.Densite = +d.Densite;
+      d.population = +d.population;
     })
 
-    // console.log(data0)
-    console.log(data)
+    circleScale.domain(d3.extent(data, d=>d.population));
 
-    circleScalePop.domain(d3.extent(data, d=>d.population));
-
-    circleScaleDeaths.domain([0,d3.max(data, d=>d.deaths)]);
+    circleScaleEcart.domain([0,d3.max(data, d=>d.ecart2020)]);
 
     let allSvgNodes = allPaths.nodes();
     for (i in allSvgNodes){
-      let this_id = d3.select(allSvgNodes[i]).attr('data-id')
-      let this_d = data.filter(d=> d.geoId == this_id)[0]
-      // console.log(this_id, this_d)
-      let this_pop = this_d ? this_d.population : 0;
-      let this_deaths = this_d ? this_d.deaths : null;
-      let this_deaths_for_100k = this_d ? this_d.deaths_for_100k : 0;
-      // let this_ecart = data.filter(d=> d.CodeDepartement == this_id)[0].ecart2020;
-      // let this_radius = Math.round(circleScale(this_pop));
-      // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
-      let this_radius_random = Math.round(Math.random()*50);
-      let this_radius_fixed = 10;
-      let this_radius_pop = Math.round(circleScalePop(this_pop));
-      let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
+      let this_id = d3.select(allSvgNodes[i]).attr('data-numerodepartement')
+      let this_pop = data.filter(d=> d.CodeDepartement == this_id)[0].population;
+      let this_ecart = data.filter(d=> d.CodeDepartement == this_id)[0].ecart2020;
+      let this_radius = Math.round(circleScale(this_pop));
+      let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
-      // let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
-      // let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
-      // let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
+      let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
+      let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
+      let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
 
-      d3.select(allSvgNodes[i]).datum({
-        'id': this_id, 'path': this_path_d,
-         'centroid': this_centroid, 
-        // 'to_circle_function': this_to_circle_function,
-        // 'to_circle_ecart_function': this_to_circle_ecart_function,
-        // 'from_circle_function': this_from_circle_function,
+      d3.select(allSvgNodes[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
+        'to_circle_function': this_to_circle_function,
+        'to_circle_ecart_function': this_to_circle_ecart_function,
+        'from_circle_function': this_from_circle_function,
         'population':this_pop,
-        'deaths':this_deaths,
-        'deaths_for_100k':this_deaths_for_100k,
-        'radius_pop': this_radius_pop,
-        'radius_deaths': this_radius_deaths,
-        'radius_fixed': this_radius_fixed,
-        // 'radius': this_radius,
-        // 'radius_ecart': this_radius_ecart,
-        'radius_random': this_radius_random
-      });
+        'radius': this_radius,
+        'radius_ecart': this_radius_ecart});
 // console.log(d3.select(allSvgNodes[i]).attr('data-numerodepartement'))
 }
 
@@ -425,28 +388,28 @@ app_data = data;
 
 // console.log(data)
 
-// var progressionMax = d3.max(data, function(d) { return d.progression_morts; })
+var progressionMax = d3.max(data, function(d) { return d.progression_morts; })
 
   // set the domain of the color scale based on our data
   color.domain([0, 13068161, 38463689, 70916439, 126804433, 201103330, 310232863, 1173108018, 1330141295]);
 
-  var myColor = d3.scaleLinear().domain(d3.extent(data.map( d => d.deaths_for_100k)))
+  var myColor = d3.scaleLinear().domain([0,100])
   .range(["white", "#E3234A"])
 
   allPaths
   .style('fill', d => {
 
-    // if (typeof data.filter(function(e){return e.CodeDepartement == d.id})[0] !== 'undefined') {
+    if (typeof data.filter(function(e){return e.CodeDepartement == d.id})[0] !== 'undefined') {
 
-      return myColor(d.deaths_for_100k)
+      return myColor(+data.filter(function(e){return e.CodeDepartement == d.id})[0].progression_morts)
 
-    // }
-    // return '#fff'
+    }
+    return '#fff'
   })
   .style('fill-opacity', 1)
-  // .style('stroke', 'lightgray')
+  .style('stroke', 'lightgray')
   .style('stroke-width', 1)
-  // .style('stroke-opacity', 0.5)
+  .style('stroke-opacity', 0.5)
   .on('mouseover', function(d) {
     tip.show(d)
     d3.select(this)
