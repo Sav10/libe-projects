@@ -207,6 +207,19 @@ a#play_button img {
     margin-right: 20px;
 }
 
+.actionButton:focus {
+  opacity:1;
+
+}
+
+.actionButton:focus {
+  border: 0;
+  opacity: 0.8;
+  outline: 0;
+
+    /*background-color: blue;*/
+}
+
 #button_box{
 display: flex;
 align-items: center;
@@ -218,6 +231,7 @@ margin-bottom: -18px;
 .actionButton:hover{
 color: #fff;
 opacity: 0.8;
+cursor: pointer;
 
 }
 
@@ -277,7 +291,7 @@ h1#graph_title{
       <p class="headline-big is-centered has-text-centered overtitle">
       </p>
       <p class="headline-big is-centered has-text-centered title">
-        Quel impact du coronavirus sur la mortalité en France ?
+        Mortalité du coronavirus dans le monde
       </p>
       <div id='pictoContainer'></div>
       <div id='appenedPictoContainer'></div>
@@ -324,9 +338,9 @@ h1#graph_title{
 
           <h1 id="graph_title">La mortalité du Coronavirus dans le monde</h1>
                     <p><div id="button_box">
-                    <a class="actionButton" id="display_proportional_circles_pop">Cartogramme population</a> 
-                    <a class="actionButton" id="display_proportional_circles_deaths">Cartogramme morts</a> <br>
-                    <a class="actionButton"  id="display_geo_paths">Carte</a></div>
+                    <button class="actionButton" id="display_proportional_circles_pop" href="#">Cartogramme population</button> 
+                    <button class="actionButton" id="display_proportional_circles_deaths" href="#">Cartogramme morts</button> <br>
+                    <button class="actionButton"  id="display_geo_paths" href="#">Carte</button></div>
 
           </div>
           <div class="carte" id='morphocarte'>
