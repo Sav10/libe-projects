@@ -27,7 +27,7 @@ d3.scaleSqrt()
 
 var circleScaleDeaths = 
 d3.scaleSqrt()
-.range([0, 100]);
+.range([1, 100]);
 
 
 const codes_pays_absolte_path = ["AO", "AR", "AU", "AZ", "CA", "CL", "CN", "DK", "FJ", "GB", "GR", "ID", "IT", "JP", "MY", "NO", "NZ", "OM",
@@ -289,28 +289,11 @@ allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.sel
 d3.select('#display_proportional_circles_pop')
 .on('click', function(){
 
-
+allPaths.attr('visibility', 'visible')
   // transform_all_paths_to_circle('radius_pop')
 
-  if (mapstate == 2){
 
-    console.log('with callback');
-
-    redraw_paths('radius_fixed', 100, 'radius_pop');
-
-    // redraw_paths('radius_random', 100);
-
-
-
-  }
-  else{
-
-
-
-
-    transform_all_paths_to_circle('radius_pop')
-
-  }
+transform_all_paths_to_circle('radius_pop')
 
   mapstate = 1;
 
@@ -320,11 +303,9 @@ d3.select('#display_proportional_circles_deaths')
 .on('click', function(){
 
 
-  if (mapstate !== 2){
-
   transform_all_paths_to_circle('radius_deaths')
+  allPaths.filter(d=> d.deaths==0).attr('visibility', 'hidden')
 
-}
 
   mapstate = 2;
 
@@ -332,10 +313,20 @@ d3.select('#display_proportional_circles_deaths')
 
 d3.select('#display_geo_paths')
 .on('click', function(){
+  
+allPaths.attr('visibility', 'visible')
+
+if (mapstate ==1){
+
+redraw_paths('radius_pop', 500)
+}
+else if (mapstate == 2){
+redraw_paths('radius_deaths', 500)
+
+}
 
 
-
-  redraw_paths('radius_random', 500)
+  
 
 
 
