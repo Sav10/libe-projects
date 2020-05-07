@@ -2,22 +2,6 @@ var parseTime = d3.timeParse("%d/%m/%Y");
 var formatTime = d3.timeFormat("%d/%m/%Y")
 var mainWidth = 1200;
 
-// console.log(mainWidth)
-
-// d3.json("https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json")
-// .then(json => {
-  
-//      const data1 = json.data; // array of dates and values
-//      const lowestVal = d3.min(data1, d => d[1]);
-//      const highestVal = d3.max(data1, d => d[1]);
-     
-//      console.log(lowestVal);
-//      console.log(highestVal);
-// })
-// .catch(error => {
-//     console.error(error);
-// });
-
 moment.locale('fr')
 
 var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
@@ -370,7 +354,7 @@ d3.select(".carte svg")
 
 
 Promise.all([
-    d3.csv("data/morts_par_pays_05_05.csv")
+    d3.csv("data/deaths_countries_last.csv")
 ]).then(function(files) {
   ready(files[0])
 }).catch(function(err) {
