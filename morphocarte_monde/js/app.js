@@ -461,7 +461,7 @@ color
     // return '#fff'
   })
   .style('fill-opacity', 1)
-  .style('stroke', '#555')
+  .style('stroke', '#bbb')
   .style('stroke-width', 1)
   .style('stroke-opacity', 1)
   .on('mouseover', function(d) {
@@ -469,7 +469,8 @@ color
     d3.select(this)
     .style('fill-opacity', 1)
     // .style('stroke-opacity', 1)
-    .style('stroke-width', 2)
+    .style('stroke-width', 3)
+    .style('stroke', '#aaa')
   })
   .on('mouseout', function(d) {
     tip.hide(d)
@@ -477,6 +478,7 @@ color
     .style('fill-opacity', 1)
     // .style('stroke-opacity', 0.8)
     .style('stroke-width', 1)
+    .style('stroke', '#bbb')
   })
 
 
