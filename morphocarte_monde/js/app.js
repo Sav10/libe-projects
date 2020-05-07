@@ -4,6 +4,20 @@ var mainWidth = 1200;
 
 // console.log(mainWidth)
 
+// d3.json("https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json")
+// .then(json => {
+  
+//      const data1 = json.data; // array of dates and values
+//      const lowestVal = d3.min(data1, d => d[1]);
+//      const highestVal = d3.max(data1, d => d[1]);
+     
+//      console.log(lowestVal);
+//      console.log(highestVal);
+// })
+// .catch(error => {
+//     console.error(error);
+// });
+
 moment.locale('fr')
 
 var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
@@ -104,6 +118,7 @@ const tip = d3
   d =>{
     let this_code = d.id;
     let this_d = _.find(app_data, d => d.geoId == this_code);
+    if(this_d){
     let this_deaths = this_d.deaths;
     let this_deaths_for_100k = this_d.deaths_for_100k;
 
@@ -111,28 +126,32 @@ const tip = d3
       d.nom
     }<br><span style="font-weight:bold">${this_deaths}</span> morts du Coronavirus
     <br>Soit une mortalité de <span style="font-weight:bold">${this_deaths_for_100k}</span> pour 100 000 habitants</span></span>`
+  }
+  else{
+    console.log(this_code + ' not found')
+  }
   })
 
 tip.direction(function(d) {
- if (d.id === '57') return 'w'
- if (d.id === '67') return 'w'
- if (d.id === '68') return 'w'
- if (d.id === '90') return 'w'
- if (d.id === '25') return 'w'
+ if (d.id === 'CN') return 'w'
+ if (d.id === 'ID') return 'w'
+ if (d.id === 'PG') return 'w'
+ if (d.id === 'AU') return 'w'
+ if (d.id === 'NZ') return 'w'
  if (d.id === '74') return 'w'
  if (d.id === '73') return 'w'
  if (d.id === '06') return 'w'
  if (d.id === '2B') return 'w'
  if (d.id === '2A') return 'w'
- if (d.id === 'CA') return 's'
- if (d.id === 'US') return 's'
+ if (d.id === 'CA') return 'e'
+ if (d.id === 'US') return 'e'
  if (d.id === 'GL') return 's'
  if (d.id === 'NO') return 's'
  if (d.id === 'SE') return 's'
  if (d.id === 'FI') return 's'
  if (d.id === 'RU') return 's'
  if (d.id === 'IS') return 's'
- if (d.id === '971') return 'e'
+ if (d.id === 'MX') return 'e'
  if (d.id === '972') return 'e'
   if (d.id === '973') return 'e'
  if (d.id === '974') return 'e'
@@ -146,6 +165,10 @@ if (d.id === '56') return 'e'
 return 'n'
 })
 
+// tip.offset(function(d) {
+//   return [-10, 0]
+// })
+
 // d3.select('body').style('overflow', 'hidden')
 
 const parentWidth = d3
@@ -157,30 +180,39 @@ const margin = { top: 0, right: 0, bottom: 0, left: 0 }
 const width = 960 - margin.left - margin.right
 const height = 500 - margin.top - margin.bottom
 
-const color = d3
-.scaleQuantile()
-.range([
-  'rgb(247,251,255)',
-  'rgb(222,235,247)',
-  'rgb(198,219,239)',
-  'rgb(158,202,225)',
-  'rgb(107,174,214)',
-  'rgb(66,146,198)',
-  'rgb(33,113,181)',
-  'rgb(8,81,156)',
-  'rgb(8,48,107)',
-  'rgb(3,19,43)'
-  ])
+  var color = d3.scaleLinear()
+  .range(["white", "#E3234A"]);
 
-const color2 = d3
-.scaleQuantile()
-.range([
-  '#FFFFFF',
-  '#F9D3DB',
-  '#F4A7B7',
-  '#E3234A',
-  '#A70021'
-  ])
+  // .range(["white", "#D4000C"]);
+  // A70021
+
+// const color = d3
+// .scaleQuantile()
+// .range([
+//   'rgb(247,251,255)',
+//   'rgb(222,235,247)',
+//   'rgb(198,219,239)',
+//   'rgb(158,202,225)',
+//   'rgb(107,174,214)',
+//   'rgb(66,146,198)',
+//   'rgb(33,113,181)',
+//   'rgb(8,81,156)',
+//   'rgb(8,48,107)',
+//   'rgb(3,19,43)'
+//   ])
+
+// const color2 = d3
+// .scaleQuantile()
+// .range([
+//   '#FFFFFF',
+//   '#F9D3DB',
+//   '#F4A7B7',
+//   '#E3234A',
+//   '#A70021'
+//   ])
+
+
+
 
 function transformToCircle(thisPath){
 
@@ -329,22 +361,23 @@ redraw_paths('radius_deaths', 500)
   
 })
 
-color2.domain([0, 1, 2, 4, 5]);
+// color2.domain([0, 1, 2, 4, 5]);
 
 // svg.call(tip)
 
 d3.select(".carte svg")
 .call(tip)
 
-queue()
-  // .defer(d3.json, 'data/departements.json')
-  // .defer(d3.tsv, 'data/world_population.tsv')
-  // .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6YOcYH2GBljCvg2rXaPjWC2ibMV0upfMWd93kpQ6R8tO8mYtZt3y0SQNcRFI2K7aXyXNsgK5LGHnx/pub?gid=1360208169&single=true&output=csv')
-  // .defer(d3.csv, 'data/departements_morts_centres.csv')
-  .defer(d3.csv, 'data/morts_par_pays_05_05.csv')
-  .await(ready)
 
-  function ready(error, data) {
+Promise.all([
+    d3.csv("data/morts_par_pays_05_05.csv")
+]).then(function(files) {
+  ready(files[0])
+}).catch(function(err) {
+})
+
+
+  function ready(data) {
 
     // data.forEach(d => {
     //   d.ecart2020 = +d.ecart2020;
@@ -411,42 +444,35 @@ queue()
 
 app_data = data;
 
-// console.log(data)
-
-// var progressionMax = d3.max(data, function(d) { return d.progression_morts; })
-
-  // set the domain of the color scale based on our data
-  color.domain([0, 13068161, 38463689, 70916439, 126804433, 201103330, 310232863, 1173108018, 1330141295]);
-
-  var myColor = d3.scaleLinear().domain(d3.extent(data.map( d => d.deaths_for_100k)))
-  .range(["white", "#E3234A"])
+color
+.domain(d3.extent(data.map( d => d.deaths_for_100k)));
 
   allPaths
   .style('fill', d => {
 
     // if (typeof data.filter(function(e){return e.CodeDepartement == d.id})[0] !== 'undefined') {
 
-      return myColor(d.deaths_for_100k)
+      return color(d.deaths_for_100k)
 
     // }
     // return '#fff'
   })
   .style('fill-opacity', 1)
-  // .style('stroke', 'lightgray')
+  .style('stroke', '#555')
   .style('stroke-width', 1)
-  // .style('stroke-opacity', 0.5)
+  .style('stroke-opacity', 1)
   .on('mouseover', function(d) {
     tip.show(d)
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-opacity', 1)
+    // .style('stroke-opacity', 1)
     .style('stroke-width', 2)
   })
   .on('mouseout', function(d) {
     tip.hide(d)
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-opacity', 0.5)
+    // .style('stroke-opacity', 0.8)
     .style('stroke-width', 1)
   })
 
@@ -527,3 +553,4 @@ function responsivefy(svg) {
          return Math.abs(_.round(x,1)).toString().replace(".", ",")
 
        }
+
