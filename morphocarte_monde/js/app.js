@@ -181,7 +181,7 @@ const width = 960 - margin.left - margin.right
 const height = 500 - margin.top - margin.bottom
 
   var color = d3.scaleLinear()
-  .range(["white", "#E3234A"]);
+  .range(["white", '#F9D3DB', "#E3234A"]);
 
   // .range(["white", "#D4000C"]);
   // A70021
@@ -444,8 +444,11 @@ Promise.all([
 
 app_data = data;
 
+// color
+// .domain(d3.extent(data.map( d => d.deaths_for_100k)));
+
 color
-.domain(d3.extent(data.map( d => d.deaths_for_100k)));
+.domain([0, 3 ,70]);
 
   allPaths
   .style('fill', d => {
