@@ -467,6 +467,7 @@ color
   .on('mouseover', function(d) {
     tip.show(d)
     d3.select(this)
+    .raise()
     .style('fill-opacity', 1)
     // .style('stroke-opacity', 1)
     .style('stroke-width', 3)
