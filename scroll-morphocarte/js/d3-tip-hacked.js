@@ -65,12 +65,14 @@ function findTop(element) {
     // Returns a tip
     tip.show = function() {
       var args = Array.prototype.slice.call(arguments)
+      // console.log(args);
       if (args[args.length - 1] instanceof SVGElement) target = args.pop()
 
-        let this_svg_el_left = this_svg_el.getBoundingClientRect().left;
+      let this_svg_el_left = this_svg_el.getBoundingClientRect().left;
       let this_svg_el_top = findTop('morphocarte_container')
       let this_scrollTop = ((document.documentElement.scrollTop || document.body.scrollTop));
       let this_svg_el_top2 = (this_svg_el_top - this_scrollTop) <=  0 ? this_scrollTop : (this_scrollTop + this_svg_el_top);
+
 
       var content = html.apply(this, args),
           poffset = offset.apply(this, args),
@@ -287,6 +289,7 @@ function findTop(element) {
     }
 
     function getNodeEl() {
+      // console.log(node)
       if (node == null) {
         node = initNode()
         // re-add node to DOM
@@ -310,6 +313,9 @@ function findTop(element) {
     // Returns an Object {n, s, e, w, nw, sw, ne, se}
     function getScreenBBox() {
       var targetel   = target || d3Selection.event.target
+      // var targetel   = d3Selection.event ? d3Selection.event.target : target;
+      // console.log(targetel)
+      target = null
 
       while (targetel.getScreenCTM == null && targetel.parentNode == null) {
         targetel = targetel.parentNode
@@ -341,6 +347,7 @@ function findTop(element) {
       bbox.n = point.matrixTransform(matrix)
       point.y += height
       bbox.s = point.matrixTransform(matrix)
+
 
       return bbox
     }
