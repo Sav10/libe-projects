@@ -2,8 +2,10 @@ var parseTime = d3.timeParse("%d/%m/%Y");
 var formatTime = d3.timeFormat("%d/%m/%Y")
 var mainWidth = 1200;
 
-const g_x_translation_europe = 900;
-const g_y_translation_europe = 50;
+const g_x_translation_europe = 1100;
+const g_y_translation_europe = 130;
+
+const rangeXEurope = [-400, 500];
 
 
 moment.locale('fr')
@@ -22,7 +24,8 @@ minMaxRectWidth = [12,30],
 scaleWidth,
 thisMinZoom = 2,
 mapstate = 0,
-allPathsEurope;
+allPathsEurope,
+tooltip_additional_var;
 
 var circleScalePop = 
 d3.scaleSqrt()
@@ -37,10 +40,17 @@ const codes_pays_absolte_path = ["AO", "AR", "AU", "AZ", "CA", "CL", "CN", "DK",
    "PH", "PG", "RU", "TR", "US", "VU", "ZA", "FR", "ES", "AG", "BS", "KM", "CV", "KY", "FK", "FO", "HK", "KN", "MV", "MT", "NC", "PR",
     "PF", "SB", "ST", "TC", "TO", "TT", "VC", "VG", "VI", "GP", "IC"]
 
-const europe_countries = ["Albanie", "Autriche", "Belgique", "Bulgarie", "Bosnie-Herzégovine", "Suisse", "Tchéquie", "Allemagne",
- "Danemark", "Estonie", "Finlande", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Irlande (pays)", "Islande", "Italie", "Lituanie",
-  "Luxembourg (pays)", "Lettonie", "Pays-Bas", "Norvège", "Pologne", "Portugal", "Roumanie", "Serbie",
-   "Slovaquie", "Slovénie", "Suède", "France", "Espagne", "Malte", "Chypre (pays)"]
+// const europe_countries = ["Albanie", "Autriche", "Belgique", "Bulgarie", "Bosnie-Herzégovine", "Suisse", "Tchéquie", "Allemagne",
+//  "Danemark", "Estonie", "Finlande", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Irlande (pays)", "Islande", "Italie", "Lituanie",
+//   "Luxembourg (pays)", "Lettonie", "Pays-Bas", "Norvège", "Pologne", "Portugal", "Roumanie", "Serbie",
+//    "Slovaquie", "Slovénie", "Suède", "France", "Espagne", "Malte", "Chypre (pays)"]
+
+
+const europe_countries = ["Autriche", "Belgique", "Suisse", "Tchéquie", "Allemagne",
+ "Danemark", "Estonie", "Finlande", "Royaume-Uni", "Grèce", "Hongrie", "Irlande", "Islande", "Italie", "Lituanie",
+  "Luxembourg", "Lettonie", "Pays-Bas", "Norvège", "Pologne", "Portugal",
+  "Slovaquie", "Slovénie", "Suède", "France", "Espagne"]
+
 
 function clean_those_numbers(this_array){
 
@@ -114,21 +124,29 @@ const tip = d3
   d =>{
     let this_code = d.id;
     let this_d = _.find(app_data, d => d.geoId == this_code);
-    if(this_d){
+    if (d.auto){
+      return `<span class='details'><span style="font-weight:bold">${d.nom}</span></span>`
+    }
+    else if(this_d){
     let this_deaths = this_d.deaths;
     let this_deaths_for_100k = this_d.deaths_for_100k;
+    if (tooltip_additional_var){
+      var tooltip_addition = `<br>${tooltip_additional_var[0]} : <span style="font-weight:bold">${formatNumber(this_d[tooltip_additional_var[1]])}</span>
+      ${tooltip_additional_var[2] ? tooltip_additional_var[2] : ""}`
+    }else{ var tooltip_addition = ''}
 
     return `<span class='details'>${
       d.nom
     }<br><span style="font-weight:bold">${this_deaths}</span> morts du Coronavirus
-    <br>Soit une mortalité de <span style="font-weight:bold">${this_deaths_for_100k}</span> pour 100 000 habitants</span></span>`
+    <br>Soit une mortalité de <span style="font-weight:bold">${this_deaths_for_100k}</span> pour 100 000 habitants</span>
+    ${tooltip_addition}</span>`
   }
   else{
     console.log(this_code + ' not found')
   }
   })
 
-const country_tip_direction = {'CN' :'w',
+var country_tip_direction = {'CN' :'w',
 'ID' :'w',
 'PG' :'w',
 'AU' :'w',
@@ -402,7 +420,10 @@ Promise.all([
       d.deaths = +d.deaths;
       d.population = +d.popData2018;
       d.gdp = +d.gdp;
-      d.deaths_for_100k = _.round(100000*d.deaths / d.population, 1)
+      d.deaths_for_100k = _.round(100000*d.deaths / d.population, 1);
+      d.life_expectancy =  +d['Espérance de vie'];
+      d.usual_deaths_for_100k =  +d['Décès pour 100 000 habitants'];
+      d.deaths_on_lockdown = +d.deaths_on_lockdown;
     })
 
     // console.log(data0)
@@ -421,6 +442,9 @@ Promise.all([
       // console.log(this_id, this_d)
       let this_pop = this_d ? this_d.population : 0;
       let this_gdp = this_d ? this_d.gdp : null;
+      let this_life_expectancy = this_d ? this_d.life_expectancy : null;
+      let this_usual_deaths_for_100k = this_d ? this_d.usual_deaths_for_100k : null;
+      let this_deaths_on_lockdown = this_d ? this_d.deaths_on_lockdown : null;
       let this_continent = this_d ? this_d.continentExp : null;
       let this_deaths = this_d ? this_d.deaths : null;
       let this_deaths_for_100k = this_d ? this_d.deaths_for_100k : 0;
@@ -445,6 +469,9 @@ Promise.all([
         // 'from_circle_function': this_from_circle_function,
         'population':this_pop,
         'gdp':this_gdp,
+        'life_expectancy':this_life_expectancy,
+        'usual_deaths_for_100k':this_usual_deaths_for_100k,
+        'deaths_on_lockdown':this_deaths_on_lockdown,
         'deaths':this_deaths,
         'deaths_for_100k':this_deaths_for_100k,
         'radius_pop': this_radius_pop,
@@ -485,6 +512,7 @@ color
   .style('stroke-width', 1)
   .style('stroke-opacity', 1)
   .on('mouseover', function(d) {
+    console.log(d.id)
     tip.show(d)
     d3.select(this)
     .raise()
@@ -631,10 +659,10 @@ function force_separate_circles_europe(column_y){
 // 'transform', d=> moveToPoint2(d, [scaleEurope(d.deaths_for_100k),150])
 
 const scaleXEurope = d3.scaleLinear()
-.range([-200, 700])
+.range(rangeXEurope)
 .domain([0, 100]);
 
-const scaleYEurope = d3.scaleLinear()
+var scaleYEurope = d3.scaleLinear()
 .range([400, 0])
 .domain([0, 90000]);
 
@@ -652,9 +680,18 @@ d3.select('g#axisLeft')
 g.append("g")
 .attr('class', 'axis')
 .attr('id', 'axisLeft')
-    .attr("transform", `translate(${g_x_translation_europe - 220},${g_y_translation_europe})`)
+    .attr("transform", `translate(${g_x_translation_europe + rangeXEurope[0] - 20},${g_y_translation_europe})`)
     .call(axisL);
 
+}
+
+function changeYAxisScale(newScale){
+
+  scaleYEurope.domain(newScale)
+
+  g.select('g#axisLeft')
+  .transition()
+  .call(d3.axisLeft(scaleYEurope).tickFormat(d=>formatNumber(d)))
 }
 
 
@@ -742,143 +779,206 @@ enterView({
     const index = +d3.select(el).attr('data-index');
     console.log('Entering ' + index);
     thisview = index;
-    enterview(index)
+    objEnterView[index]()
   },
   exit: el => {
     let index = +d3.select(el).attr('data-index');
-    index = Math.max(0, index - 1);
+
+    
+
     console.log('Exiting ' + index);
-    // if (progressbar < 50 && index == 0){
-    //   console.log('real exit')
-    // }
-    if (thisview == index){
+
+    if (index == 0){
       console.log('real exit')
       thisview = null;
-      enterview()
+      initializeView()
     }
     else{
+    index = enterViewKeys[enterViewKeys.indexOf(index) -1]
     thisview = index;
-    enterview(index)
+    objEnterView[index]()
   }
   
   },
-  // progress: function(el, progress) {
-  //   let z = Math.round(100*progress)
-  //   if(z%10 == 0){
 
-  //   progressbar = Math.round(100*progress);
-  //   console.log(progressbar)
-
-
-  //   }
-  // }
 });
 
-function enterview(index){
 
-console.log(index)
+const objEnterView = {
 
-if (index == 0 ){
-  // ShowEuropeData()
+0:function(){
 
 transform_all_paths_to_circle('radius_pop')
+mapstate = 1;
 
-  mapstate = 1;
+},
 
-}
-else if (index == 1){
-
-
+1: function(){
 
 transform_all_paths_to_circle('radius_deaths')
+ mapstate = 2;
+},
 
-  mapstate = 2;
-
-// ZoomEurope()
-
-// drawAxisLeft()
-// force_separate_circles_europe('gdp')
-
-
-}
-else if (index == 2){
-
-
+2: function(){
 
 transform_all_paths_to_circle('radius_pop')
-
-  mapstate = 1;
-
-// ZoomEurope()
-
-// drawAxisLeft()
-// force_separate_circles_europe('gdp')
-
-
-}
-else if (index == 3){
-
-
+ mapstate = 1;
+},
+3: function(){
 
   ZoomEurope()
   mapstate = 1;
-
 d3.selectAll('g#axisLeft')
 .remove()
-
 d3.selectAll('g#axisBottom')
 .remove()
+tooltip_additional_var = null;
 
+},
+4: function(){
 
-  
-}
-else if (index == 4){
-
+tip.hide()
 d3.selectAll('g#axisLeft')
 .remove()
-
+country_tip_direction['LU'] = 'n';
 drawAxisBottom()
-
 force_separate_circles_europe()
+tooltip_additional_var = null;
 
+},
+5: function(){
 
-  
-}
-else if (index == 5){
-
-
-
+  tip.hide()
+country_tip_direction['LU'] = 's';
+country_tip_direction['SE'] = 's';
+country_tip_direction['IS'] = 's';
+country_tip_direction['NO'] = 's';
 drawAxisBottom()
-
-force_separate_circles_europe()
-
 drawAxisLeft()
+changeYAxisScale([0, 120000])
 force_separate_circles_europe('gdp')
 
-  
+tooltip_additional_var = ['PIB par tête', 'gdp']
+
+},
+51: function(){
+
+showTipForId('LU')
+
+},
+52: function(){
+
+showTipForId('CH')
+changeYAxisScale([0, 120000])
+
+},
+53: function(){
+
+ tip.hide()
+
+changeYAxisScale([0, 90000])
+force_separate_circles_europe('gdp')
+
+},
+54: function(){
+
+ showTipForId('SK')
+
+
+},
+55: function(){
+
+ showTipForId('EL')
+
+
+},
+56: function(){
+
+ showTipForId('PT')
+
+
+},
+57: function(){
+
+ showTipForId('BE')
+
+changeYAxisScale([0, 90000])
+force_separate_circles_europe('gdp')
+
+},
+6: function(){
+  tip.hide()
+
+country_tip_direction['IT'] = 'n';
+country_tip_direction['SE'] = 'n';
+country_tip_direction['LU'] = 'n';
+country_tip_direction['IS'] = 'n';
+country_tip_direction['NO'] = 'n';
+
+changeYAxisScale([100, 500])
+
+
+force_separate_circles_europe('usual_deaths_for_100k')
+
+tooltip_additional_var = ['Mortalité générale en 2019', 'usual_deaths_for_100k', ' pour 100 000 habitants']
+
+
+},
+61: function(){
+showTipForId('HU')
+},
+62: function(){
+showTipForId('NO')
+},
+63: function(){
+tip.hide()
+},
+7: function(){
+
+ tip.hide()
+changeYAxisScale([70, 90])
+force_separate_circles_europe('life_expectancy')
+tooltip_additional_var = ['Espérance de vie', 'life_expectancy']
+
+},
+8: function(){
+
+country_tip_direction['IT'] = 'n';
+changeYAxisScale([0, 550])
+country_tip_direction['IT'] = 's';
+force_separate_circles_europe('deaths_on_lockdown')
+tooltip_additional_var = ['Nombre de morts le premier jour du confinement', 'deaths_on_lockdown']
+
+},
+
+9: function(){
+
 }
-// Sinon, sortie du 
 
-else{
+}
 
+const enterViewKeys = d3.keys(objEnterView).map(d=>+d);
+
+
+function initializeView(){
 
 d3.selectAll('g#axisLeft')
 .remove()
 
 d3.selectAll('g#axisBottom')
 .remove()
-
-  ZoomReset()
+ZoomReset()
 
 allPaths.attr('visibility', 'visible')
   // transform_all_paths_to_circle('radius_pop')
 
-
 transform_all_paths_to_circle('radius_pop')
 
-
-
-
 }
+
+function showTipForId(id){
+let this_el = allPaths.filter(d=>d.id == id)
+
+tip.show({'nom':this_el.attr('data-nom'), 'auto':1}, this_el.node())
 
 }
