@@ -39,7 +39,7 @@
   <script type="text/javascript" src="https://statics.liberation.fr/bloom/theme/js/xtcore.js"></script> -->
   <!-- Xiti -->
 
-  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=2">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=3">
   <title>Libération.fr La mortalité du Coronavirus dans le monde</title>
 <!--   <meta name="description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive.">
   <meta name="keywords" content="actualités, news">
@@ -258,7 +258,7 @@ margin-right: 9px;
   }
 
 .d3-tip{
-font-size: 0.7em;
+font-size: 0.5em;
 
 }
 
@@ -324,10 +324,16 @@ margin-left: 4px;
 margin-right: 4px;
 }
 
+article #lastStep{
+
+margin-bottom: 800px;
+}
+
 #map_inner{
 
 position: relative;
 margin: 0;
+background-color: #efefef; 
 
   }
 
@@ -623,12 +629,14 @@ article .step {
 </figure>
     </div>
     <article>
-
 <div class='step' data-index='0'>
-      <p>Représentons cette carte en cercle proportionnels à la population.</p><br>
+      <p>Nous allons étudier différents type de représentations.</p><br>
     </div>
 <div class='step' data-index='1'>
-      <p>Passons à présent à une représentation en fonction du nombre de morts par pays. L'essentiel de la mortalité se concentre en Europe et aux Etats-Unis, l'Asie et l'Afrique semplent très peu touchés.</p><br>
+      <p>Représentons tout d'abord cette carte en cercle proportionnels à la population.</p><br>
+    </div>
+<div class='step' data-index='11'>
+      <p>Passons à présent à une représentation en fonction du nombre de morts par pays. L'essentiel de la mortalité se concentre en Europe et aux Etats-Unis, l'Asie et l'Afrique semblent très peu touchés.</p><br>
     </div>
 <div class='step' data-index='2'>
       <p>Retour à une représentation proportionnelle à la population.</p><br>
@@ -647,7 +655,7 @@ article .step {
       <p>On peut constater que le riche Luxembourg</p><br>
     </div>
 <div class='step' data-index='52'>
-      <p>Mais également la riche Suisse sont moins d'être les moins touchés</p><br>
+      <p>Mais également la riche Suisse sont loins d'être les moins touchés</p><br>
     </div>
 <div class='step' data-index='53'>
       <p>Zoomons sur le bas de l'échelle</p><br>
@@ -662,7 +670,10 @@ article .step {
       <p>Le pays le moins riche d'Europe de l'Ouest, le Portugal, est également l'un des moins touchés</p><br>
     </div>
 <div class='step' data-index='57'>
-      <p>A l'opposé de l'axe, la Belgique, pays dans lequel le taux de victime de la pandémie est le plus nombreux, figure parmi les pays riches. La richesse d'un pays offre donc peu d'explications à la manière dont il a subi la pandémie.</p><br>
+      <p>A l'opposé de l'axe, la Belgique, pays dans lequel le taux de victime de la pandémie est le plus nombreux, figure parmi les pays riches.</p><br>
+    </div>
+<div class='step' data-index='58'>
+      <p>Mais des pays riches figurent également parmi les pays peu touchés. La richesse d'un pays offre donc peu d'explications à la manière dont il a subi la pandémie.</p><br>
     </div>
 <div class='step' data-index='6'>
       <p>Comparons à présent avec des indicateurs santé des pays. Commençons par la mortalité générale de l'année 2019 (normalisée en fonction de l'age).</p><br>
@@ -684,6 +695,9 @@ article .step {
     </div>
 <div class='step' data-index='9'>
       <p>Un constat assez net se dégage : la totalité des pays les moins touchés, de la Slovaquie à la Finlande en passant par la Pologne, avaient confinés très tôt, certains avant même leur premier mort.  En revanche, la situation est largement plus contrastée pour les pays les plus touchés. </p><br>
+    </div>
+<div class='step' id='lastStep' data-index='10'>
+      <p>En revanche, la situation est largement plus contrastée pour les pays les plus touchés. La date du premier jour du confinement est loin d'être le seul facteur explicatif pour expliquer la variation de leur mortalité. De nombreux autres facteurs (démographiques, réglementaires, géographiques, de densité) peuvent intervenir. Sans oublier le facteur chance qui a conduit à la formation ou non de foyer d'épidémie dans certains lieux.</p><br>
     </div>
     </article>
     </div>
