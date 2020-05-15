@@ -9,6 +9,7 @@
 // element.getBBox()
 
 const this_svg_el = d3.select('#morphocarte').node();
+const is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
 
 function findTop(element) {
@@ -71,6 +72,7 @@ function findTop(element) {
       let this_svg_el_left = this_svg_el.getBoundingClientRect().left;
       let this_svg_el_top = findTop('morphocarte_container')
       let this_scrollTop = ((document.documentElement.scrollTop || document.body.scrollTop));
+      this_scrollTop = is_chrome ? this_scrollTop : (this_scrollTop < 280 ? this_scrollTop : 280);
       let this_svg_el_top2 = (this_svg_el_top - this_scrollTop) <=  0 ? this_scrollTop : (this_scrollTop + this_svg_el_top);
 
 
