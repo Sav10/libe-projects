@@ -6,6 +6,7 @@ const g_x_translation_europe = 1100;
 const g_y_translation_europe = 130;
 
 const rangeXEurope = [-400, 500];
+const rangeYEurope = [380, 0];
 
 
 moment.locale('fr')
@@ -663,7 +664,7 @@ const scaleXEurope = d3.scaleLinear()
 .domain([0, 100]);
 
 var scaleYEurope = d3.scaleLinear()
-.range([400, 0])
+.range(rangeYEurope)
 .domain([0, 90000]);
 
 
@@ -709,7 +710,7 @@ d3.select('g#axisBottom')
 g.append("g")
 .attr('class', 'axis')
 .attr('id', 'axisBottom')
-    .attr("transform", `translate(${g_x_translation_europe},${g_y_translation_europe + 400})`)
+    .attr("transform", `translate(${g_x_translation_europe},${g_y_translation_europe + rangeYEurope[0]})`)
     .call(axisT);
 
 }
@@ -805,15 +806,18 @@ enterView({
 
 
 const objEnterView = {
-
 0:function(){
+
+
+},
+1:function(){
 
 transform_all_paths_to_circle('radius_pop')
 mapstate = 1;
 
 },
 
-1: function(){
+11: function(){
 
 transform_all_paths_to_circle('radius_deaths')
  mapstate = 2;
@@ -834,6 +838,9 @@ d3.selectAll('g#axisBottom')
 .remove()
 tooltip_additional_var = null;
 
+d3.select('svg g#graph #bottomLabel').text('')
+d3.select('svg g#graph #leftLabel').text('')
+
 },
 4: function(){
 
@@ -844,6 +851,10 @@ country_tip_direction['LU'] = 'n';
 drawAxisBottom()
 force_separate_circles_europe()
 tooltip_additional_var = null;
+
+drawLabels()
+d3.select('svg g#graph #bottomLabel').text('Nombre de morts du coronavirus pour 100 000')
+d3.select('svg g#graph #leftLabel').text('')
 
 },
 5: function(){
@@ -860,11 +871,13 @@ force_separate_circles_europe('gdp')
 
 tooltip_additional_var = ['PIB par tête', 'gdp']
 
+d3.select('svg g#graph #leftLabel').text('PIB par habitant')
+.attr('x', 680)
 },
 51: function(){
 
 showTipForId('LU')
-
+country_tip_direction['LU'] = 's';
 },
 52: function(){
 
@@ -902,6 +915,12 @@ force_separate_circles_europe('gdp')
 
  showTipForId('BE')
 
+
+},
+58: function(){
+
+ showTipForId('NO')
+
 changeYAxisScale([0, 90000])
 force_separate_circles_europe('gdp')
 
@@ -922,7 +941,8 @@ force_separate_circles_europe('usual_deaths_for_100k')
 
 tooltip_additional_var = ['Mortalité générale en 2019', 'usual_deaths_for_100k', ' pour 100 000 habitants']
 
-
+d3.select('svg g#graph #leftLabel').text('Mortalité annuelle en 2019')
+.attr('x', 700)
 },
 61: function(){
 showTipForId('HU')
@@ -940,21 +960,28 @@ changeYAxisScale([70, 90])
 force_separate_circles_europe('life_expectancy')
 tooltip_additional_var = ['Espérance de vie', 'life_expectancy']
 
+d3.select('svg g#graph #leftLabel').text('Espérance de vie')
+.attr('x', 680)
 },
 8: function(){
-
+tip.hide()
+showTipForId('BE')
 country_tip_direction['IT'] = 'n';
 changeYAxisScale([0, 550])
 country_tip_direction['IT'] = 's';
 force_separate_circles_europe('deaths_on_lockdown')
-tooltip_additional_var = ['Nombre de morts le premier jour du confinement', 'deaths_on_lockdown']
-
+tooltip_additional_var = ['Nombre de morts le jour du confinement', 'deaths_on_lockdown']
+d3.select('svg g#graph #leftLabel')
+.text('Nombre de morts le 1er jour du confinement')
+.attr('x', 760)
 },
 
 9: function(){
-
+showTipForId('PL')
+},
+10: function(){
+tip.hide()
 }
-
 }
 
 const enterViewKeys = d3.keys(objEnterView).map(d=>+d);
@@ -980,5 +1007,29 @@ function showTipForId(id){
 let this_el = allPaths.filter(d=>d.id == id)
 
 tip.show({'nom':this_el.attr('data-nom'), 'auto':1}, this_el.node())
+
+}
+
+function drawLabels(){
+
+d3.select('svg g#graph #leftLabel').remove()
+d3.select('svg g#graph #bottomLabel').remove()
+
+d3.select('svg g#graph')
+.append('text')
+.attr('id', 'leftLabel')
+.text('PIB par habitant')
+.attr('text-anchor', 'middle')
+.attr('x', 680)
+.attr('y', 100)
+
+d3.select('svg g#graph')
+.append('text')
+.attr('id', 'bottomLabel')
+.text('Nombre de morts du coronavirus pour 100 000')
+.attr('x', 1100)
+.attr('y', 560)
+.attr('text-anchor', 'middle')
+
 
 }
