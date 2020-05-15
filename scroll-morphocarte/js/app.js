@@ -96,7 +96,7 @@ window.addEventListener("resize", function(d){
 
 });
 
-var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+// var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
 var div = d3.select("#morphocarte").append("div")
 .attr("id", "tooltip")
@@ -381,11 +381,6 @@ else if (mapstate == 2){
 redraw_paths('radius_deaths', 500)
 
 }
-
-
-  
-
-
 
   mapstate = 0;
   
@@ -805,26 +800,37 @@ enterView({
 });
 
 
+
 const objEnterView = {
 0:function(){
+allPaths.attr('visibility', 'visible')
+if (mapstate ==1){
 
+redraw_paths('radius_pop', 500)
+}
+else if (mapstate == 2){
+redraw_paths('radius_deaths', 500)
 
+}
+
+  mapstate = 0;
 },
 1:function(){
 
+allPaths.attr('visibility', 'visible')
 transform_all_paths_to_circle('radius_pop')
 mapstate = 1;
 
 },
 
 11: function(){
-
+allPaths.filter(d=> d.deaths==0).attr('visibility', 'hidden')
 transform_all_paths_to_circle('radius_deaths')
  mapstate = 2;
 },
 
 2: function(){
-
+allPaths.attr('visibility', 'visible')
 transform_all_paths_to_circle('radius_pop')
  mapstate = 1;
 },
@@ -965,7 +971,7 @@ d3.select('svg g#graph #leftLabel').text('Espérance de vie')
 },
 8: function(){
 tip.hide()
-showTipForId('BE')
+showTipForId('SE')
 country_tip_direction['IT'] = 'n';
 changeYAxisScale([0, 550])
 country_tip_direction['IT'] = 's';
@@ -997,9 +1003,16 @@ d3.selectAll('g#axisBottom')
 ZoomReset()
 
 allPaths.attr('visibility', 'visible')
-  // transform_all_paths_to_circle('radius_pop')
+if (mapstate ==1){
 
-transform_all_paths_to_circle('radius_pop')
+redraw_paths('radius_pop', 500)
+}
+else if (mapstate == 2){
+redraw_paths('radius_deaths', 500)
+
+}
+
+  mapstate = 0;
 
 }
 
