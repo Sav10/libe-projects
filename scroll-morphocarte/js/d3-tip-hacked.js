@@ -10,7 +10,9 @@
 
 const this_svg_el = d3.select('#morphocarte').node();
 const is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
+const is_firefox = navigator.userAgent.indexOf('Firefox') > -1;
+var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+if ((is_chrome)&&(is_safari)) { is_safari = false; }
 
 function findTop(element) {
   var rec = document.getElementById(element).getBoundingClientRect();
@@ -72,7 +74,10 @@ function findTop(element) {
       let this_svg_el_left = this_svg_el.getBoundingClientRect().left;
       let this_svg_el_top = findTop('morphocarte_container')
       let this_scrollTop = ((document.documentElement.scrollTop || document.body.scrollTop));
+      let this_scrollLeft =  ((document.documentElement.scrollLeft || document.body.scrollLeft) - this_svg_el_left)
       this_scrollTop = is_chrome ? this_scrollTop : (this_scrollTop < 280 ? this_scrollTop : 280);
+      this_scrollTop = is_safari ? this_scrollTop -40 : this_scrollTop;
+      this_scrollLeft = is_safari ? this_scrollLeft -40 : this_scrollLeft;
       let this_svg_el_top2 = (this_svg_el_top - this_scrollTop) <=  0 ? this_scrollTop : (this_scrollTop + this_svg_el_top);
 
 
@@ -83,8 +88,7 @@ function findTop(element) {
           i       = directions.length,
           coords,
           scrollTop  = this_scrollTop - findTop('morphocarte_container'),
-          scrollLeft = ((document.documentElement.scrollLeft ||
-                                document.body.scrollLeft) - this_svg_el_left)
+          scrollLeft = this_scrollLeft
 
       nodel.html(content)
         .style('opacity', 1).style('pointer-events', 'all')
