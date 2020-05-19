@@ -96,11 +96,14 @@ const g = d3.select('svg g#graph');
 
 svg.style('max-height', $(window).height()*0.85 + 'px')
 
-let this_new_padding = Math.round(height_menu_libe + ($(window).height() - parseFloat(d3.select('#morphocarte').style('height')))/2)
+let this_new_padding = Math.round(height_menu_libe + ($(window).height() - height_menu_libe - parseFloat(d3.select('#morphocarte').style('height')))/2)
 
 this_new_padding = this_new_padding < height_menu_libe ? height_menu_libe : this_new_padding;
 
 d3.select('#morphocarte').style('padding-top', this_new_padding + 'px')
+
+
+d3.select('#articles').style('margin-bottom', (-this_new_padding + 24) + 'px')
 
 window.addEventListener("resize", function(d){
   console.log('resizing')
@@ -108,11 +111,13 @@ window.addEventListener("resize", function(d){
   svg.style('max-height', $(window).height()*0.85 + 'px')
 
 
-this_new_padding = Math.round(height_menu_libe + ($(window).height() - parseFloat(d3.select('#morphocarte').style('height')))/2)
+this_new_padding = Math.round(height_menu_libe + ($(window).height()- height_menu_libe - parseFloat(d3.select('#morphocarte').style('height')))/2)
 
 this_new_padding = this_new_padding < height_menu_libe ? height_menu_libe : this_new_padding;
 
 d3.select('#morphocarte').style('padding-top', this_new_padding + 'px')
+
+d3.select('#articles').style('margin-bottom', (-this_new_padding + 24) + 'px')
 
 });
 
@@ -853,6 +858,8 @@ transform_all_paths_to_circle('radius_deaths')
 allPaths.attr('visibility', 'visible')
 transform_all_paths_to_circle('radius_pop')
  mapstate = 1;
+
+ d3.selectAll('g#axisBottom').remove()
 },
 3: function(){
 
@@ -864,11 +871,13 @@ d3.selectAll('g#axisBottom')
 .remove()
 tooltip_additional_var = null;
 
+d3.select('svg g#graph #bottomLabel').text('')
+
 d3.selectAll('g#axisLeft').remove()
 
 d3.selectAll('g#axisBottom').remove()
 
-d3.select('svg g#graph #bottomLabel').text('')
+
 
 },
 4: function(){
