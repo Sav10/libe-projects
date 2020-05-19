@@ -2,6 +2,9 @@ var parseTime = d3.timeParse("%d/%m/%Y");
 var formatTime = d3.timeFormat("%d/%m/%Y")
 var mainWidth = 1200;
 
+var elements_sticky = document.querySelectorAll('#morphocarte');
+Stickyfill.add(elements_sticky);
+
 const g_x_translation_europe = 1100;
 const g_y_translation_europe = 130;
 
@@ -844,8 +847,11 @@ d3.selectAll('g#axisBottom')
 .remove()
 tooltip_additional_var = null;
 
+d3.selectAll('g#axisLeft').remove()
+
+d3.selectAll('g#axisBottom').remove()
+
 d3.select('svg g#graph #bottomLabel').text('')
-d3.select('svg g#graph #leftLabel').text('')
 
 },
 4: function(){
