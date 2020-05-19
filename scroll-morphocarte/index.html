@@ -315,13 +315,13 @@ article {
 }
 
 
-article .step{
-background-color: white;
-margin-bottom: 600px;
-max-width: 600px;
-padding: 36px 12px;
-margin-left: 4px;
-margin-right: 4px;
+article .step {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 600px;
+    max-width: 600px;
+    padding: 8px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 article #lastStep{
@@ -357,6 +357,10 @@ article .step {
 #morphocarte:after {
     content: '';
     display: table;
+}
+
+#articles {
+    margin-bottom: -40px;
 }
 
   </style>
@@ -406,17 +410,14 @@ article .step {
           </div> -->
           <!-- <div id='appenedCityTagContainer'></div> -->
           <div id="articles">
-<!-- 
-          <p>L'Insee diffuse des données sur la mortalité quotidienne due au Covid-19 depuis le 1er mars. Ces données, bien qu'encore provisoires et sujettes à des corrections ultérieures, sont néanmoins intéressantes pour évaluer les effets dans les différents départements et se rendre compte de la létalité de la pandémie.</p><br>
-          <p>
-          Nous avons comparé la mortalité du 1er mars au 19 avril 2020 à la moyenne de la même période en 2018 et 2019. Premier constat, les contrastes sont saisissants : si dans les départements les plus touchés, la mortalité a plus que doublé, les ravages semblent quasi inexistants ailleurs. A l'Ouest, rien, ou presque. Au Sud-Est, pas grand-chose. L'essentiel de la surmortalité en France se concentre dans les foyers de la pandémie (Ile-de-France et Grand Est).</p><br>
-          <p>Nous avons choisi de représenter ces données de deux manières : tout d'abord géographiquement, puis sous forme de cartogramme, avec des cercles proportionnels à la taille de la population.</p><br><br> -->
 
-          <h1 id="graph_title">La mortalité du Coronavirus dans le monde</h1>
-                    <p><div id="button_box">
+          <p>Mortalité du Coronavirus dans le monde, à travers différents types de représentation et à partir des données du  Centre européen de prévention et de contrôle des maladies. </p><br><br>
+
+          <!-- <h1 id="graph_title">La mortalité du Coronavirus dans le monde</h1> -->
+<!--                     <div id="button_box">
                     <button class="actionButton" id="display_proportional_circles_pop" href="#">Cartogramme population</button> 
                     <button class="actionButton" id="display_proportional_circles_deaths" href="#">Cartogramme morts</button> <br>
-                    <button class="actionButton"  id="display_geo_paths" href="#">Carte</button></div>
+                    <button class="actionButton"  id="display_geo_paths" href="#">Carte</button></div> -->
 
           </div>
           <div id='morphocarte_container'>
@@ -640,74 +641,74 @@ article .step {
     </div>
     <article>
 <div class='step' data-index='0'>
-      <p>Nous allons étudier différents type de représentations.</p><br>
+      <p>Nous allons changer de représentation, pour mettre en valeur différents aspects.</p>
     </div>
 <div class='step' data-index='1'>
-      <p>Représentons tout d'abord cette carte en cercle proportionnels à la population.</p><br>
+      <p>Représentons tout d'abord cette carte en cercle proportionnels à la population.</p>
     </div>
 <div class='step' data-index='11'>
-      <p>Passons à présent à une représentation en fonction du nombre de morts par pays. L'essentiel de la mortalité se concentre en Europe et aux Etats-Unis, l'Asie et l'Afrique semblent très peu touchés.</p><br>
+      <p>Passons à présent à une représentation en fonction du nombre de morts par pays. L'essentiel de la mortalité se concentre en Europe et aux Etats-Unis, l'Asie et l'Afrique semblent très peu touchés.</p>
     </div>
 <div class='step' data-index='2'>
-      <p>Retour à une représentation proportionnelle à la population.</p><br>
+      <p>Retour à une représentation proportionnelle à la population.</p>
     </div>
 <div class='step' data-index='3'>
-      <p>Zoom sur l'Europe, qui concentre les deux tiers des morts du coronavirus </p><br>
+      <p>Zoom sur l'Europe, qui concentre la moitié des morts du coronavirus </p>
     </div>
 <div class='step' data-index='4'>
-      <p>Classons à présent les pays européens  du plus au moins touchés par la pandémie, comparativement à la population. Y a-t-il des facteurs qui expliqueraient que certains soint plus touchés que d'autres par la pandémie?</p><br>
+      <p>Classons à présent les pays européens  du plus au moins touchés par la pandémie, comparativement à la population. Y a-t-il des facteurs qui expliqueraient que certains soint plus touchés que d'autres par la pandémie?</p>
     </div>
 
 <div class='step' data-index='5'>
-      <p>Comparons avec la richesse par habitant (PIB par tête).</p><br>
+      <p>Comparons avec la richesse par habitant (PIB par tête).</p>
     </div>
 <div class='step' data-index='51'>
-      <p>Parmi les plus riches, on peut constater que le Luxembourg,</p><br>
+      <p>Parmi les plus riches, on peut constater que le Luxembourg,</p>
     </div>
 <div class='step' data-index='52'>
-      <p>Mais également la Suisse, sont assez lourdement touchés.</p><br>
+      <p>Mais également la Suisse, sont assez lourdement touchés.</p>
     </div>
 <div class='step' data-index='53'>
-      <p>Zoomons sur le bas de l'échelle</p><br>
+      <p>Zoomons sur le bas de l'échelle</p>
     </div>
 <div class='step' data-index='54'>
-      <p>La Slovaquie, pays d'Europe dans lequel le nombre de morts du Coronavirus par habitant est le moins élevé, figure dans les pays les moins riches</p><br>
+      <p>La Slovaquie, pays d'Europe dans lequel le nombre de morts du Coronavirus par habitant est le moins élevé, figure dans les pays les moins riches</p>
     </div>
 <div class='step' data-index='55'>
-      <p>De même la Grèce, rendue exangue par les mesures d'austérité consécutive à la crise de 2008, est très peu touchée par la pandémie.</p><br>
+      <p>De même la Grèce, rendue exangue par les mesures d'austérité consécutive à la crise de 2008, est très peu touchée par la pandémie.</p>
     </div>
 <div class='step' data-index='56'>
-      <p>Le pays le moins riche d'Europe de l'Ouest, le Portugal, est également l'un des moins touchés</p><br>
+      <p>Le pays le moins riche d'Europe de l'Ouest, le Portugal, est également l'un des moins touchés</p>
     </div>
 <div class='step' data-index='57'>
-      <p>A l'opposé de l'axe, la Belgique, pays dans lequel le taux de victime de la pandémie est le plus élevé, figure parmi les pays riches.</p><br>
+      <p>A l'opposé de l'axe, la Belgique, pays dans lequel le taux de victime de la pandémie est le plus élevé, figure parmi les pays riches.</p>
     </div>
 <div class='step' data-index='58'>
-      <p>Mais des pays riches figurent également parmi les pays peu touchés. La richesse d'un pays offre donc peu d'explications à la manière dont il a subi la pandémie.</p><br>
+      <p>Mais des pays riches figurent également parmi les pays peu touchés. La richesse d'un pays offre donc peu d'explications à la manière dont il a subi la pandémie.</p>
     </div>
 <div class='step' data-index='6'>
-      <p>Comparons à présent avec des indicateurs santé des pays. Commençons par la mortalité générale de l'année 2019 (normalisée en fonction de l'age).</p><br>
+      <p>Comparons à présent avec des indicateurs santé des pays. Commençons par la mortalité générale de l'année 2019 (normalisée en fonction de l'age).</p>
     </div>
 <div class='step' data-index='61'>
-      <p>Ici, les indicateurs sont plutôt contrastés : dans les pays épargnés par la pandémie, se trouvent aussi bien des pays dans lesquels les performances en termes de santé publique sont mauvaises (Hongrie ou Pays baltes)</p><br>
+      <p>Ici, les indicateurs sont plutôt contrastés : dans les pays épargnés par la pandémie, se trouvent aussi bien des pays dans lesquels les performances en termes de santé publique sont mauvaises (Hongrie ou Pays baltes)</p>
     </div>
 <div class='step' data-index='62'>
-      <p>Que des pays dans lesquels ceux-ci sont bons (Norvège, Islande)</p><br>
+      <p>Que des pays dans lesquels ceux-ci sont bons (Norvège, Islande)</p>
     </div>
 <div class='step' data-index='63'>
-      <p>En revanche, dans la totalité des pays les plus touchés par l'épidémie, les performances en terme de santé publique étaient satisfaisantes : la mortalité par habitant en 2019 était plutôt faible.</p><br>
+      <p>En revanche, dans la totalité des pays les plus touchés par l'épidémie, les performances en terme de santé publique étaient satisfaisantes : la mortalité par habitant en 2019 était plutôt faible.</p>
     </div>
 <div class='step' data-index='7'>
-      <p>Etudions cette fois l'éspérance de vie à la naissance. On obtient à peu près le même résultat qu'avec l'indicateur de mortalité, en miroir.</p><br>
+      <p>Etudions cette fois l'éspérance de vie à la naissance. On obtient à peu près le même résultat qu'avec l'indicateur de mortalité, en miroir.</p>
     </div>
 <div class='step' data-index='8'>
-      <p>Comparons à présent avec un nouvel indicateur, le nombre de morts du coronavirus le premier jour du confinement pour chaque pays. La Suède, qui n'a jamais confiné, est ici arbitrairement placée à 500 morts, pour figurer en haut du graphique. </p><br>
+      <p>Comparons à présent avec un nouvel indicateur, le nombre de morts du coronavirus le premier jour du confinement pour chaque pays. La Suède, qui n'a jamais confiné, est ici arbitrairement placée à 500 morts, pour figurer en haut du graphique. </p>
     </div>
 <div class='step' data-index='9'>
-      <p>Un constat assez net se dégage : la totalité des pays les moins touchés, de la Slovaquie à la Finlande en passant par la Pologne, avaient confinés très tôt, certains avant même leur premier mort.</p><br>
+      <p>Un constat assez net se dégage : la totalité des pays les moins touchés, de la Slovaquie à la Finlande en passant par la Pologne, avaient confinés très tôt, certains avant même leur premier mort.</p>
     </div>
 <div class='step' id='lastStep' data-index='10'>
-      <p>En revanche, la situation est largement plus contrastée pour les pays les plus touchés. La date du premier jour du confinement est loin d'être le seul facteur explicatif pour expliquer la variation de leur mortalité. De nombreux autres facteurs (démographiques, réglementaires, géographiques, de densité) peuvent intervenir. Sans oublier le facteur chance qui a conduit à la formation ou non de foyer d'épidémie dans certains lieux.</p><br>
+      <p>En revanche, la situation est largement plus contrastée pour les pays les plus touchés. La date du premier jour du confinement est loin d'être le seul facteur explicatif pour expliquer la variation de leur mortalité. De nombreux autres facteurs (démographiques, réglementaires, géographiques, de densité) peuvent intervenir. Sans oublier le facteur chance qui a conduit à la formation ou non de foyer d'épidémie dans certains lieux.</p>
     </div>
     </article>
     </div>
