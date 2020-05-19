@@ -76,8 +76,8 @@ function findTop(element) {
       let this_scrollTop = ((document.documentElement.scrollTop || document.body.scrollTop));
       let this_scrollLeft =  ((document.documentElement.scrollLeft || document.body.scrollLeft) - this_svg_el_left)
       this_scrollTop = is_chrome ? this_scrollTop : (this_scrollTop < 280 ? this_scrollTop : 280);
-      this_scrollTop = is_safari ? this_scrollTop -40 : this_scrollTop;
-      this_scrollLeft = is_safari ? this_scrollLeft -40 : this_scrollLeft;
+      this_scrollTop = is_safari ? this_scrollTop +40 : this_scrollTop;
+      this_scrollLeft = is_safari ? this_scrollLeft +10 : this_scrollLeft;
       let this_svg_el_top2 = (this_svg_el_top - this_scrollTop) <=  0 ? this_scrollTop : (this_scrollTop + this_svg_el_top);
 
 
