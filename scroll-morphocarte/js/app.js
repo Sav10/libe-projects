@@ -1,766 +1,1071 @@
-<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
+var parseTime = d3.timeParse("%d/%m/%Y");
+var formatTime = d3.timeFormat("%d/%m/%Y")
+var mainWidth = 1200;
 
-  <!-- Header -->
-  <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="https://www.liberation.fr/menu/script.js"></script>
-  <!-- Google Analytics -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116918263-1"></script> -->
-<!--   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-116918263-1');
-  </script> -->
-  <!-- // Google Analytics -->
+var elements_sticky = document.querySelectorAll('#morphocarte');
+Stickyfill.add(elements_sticky);
 
-  <!-- Xiti -->
-<!--   <script type="text/javascript">
-    xtnv = document
-    xtsd = "https://logs1091"
-    xtsite = "381060"
-    xtn2 = "48"
-    xtpage = "LibeLabo::impact-coronavirus-mortalite-france"
-    xtdi = ""
-    xt_pagetype = "2-1-0"
-    xt_multc = "&x1=0&x2=40&x3=10&x4=&x5=20200401&x6=20&x7=1783805"
-    xt_ati= ""
-    xt_ati_title = ""
-    xt_ati_product = ""
-    xt_an = "";
-    xt_ac = "";
-    if (window.xtparam==null) { window.xtparam = ''; }
-    window.xtparam += "&ptype="+xt_pagetype+"&ac="+xt_ac+"&an="+xt_an+xt_multc+"&ati="+xt_ati;
-  </script>
-  <noscript>
-    <img width="1" height="1" src="https://logliberation.xiti.com/hit.xiti?s=381060&amp;s2=56&amp;p=LibeLabo::impact-coronavirus-mortalite-france&amp;di=&amp;" >
-  </noscript>
-  <script type="text/javascript" src="https://statics.liberation.fr/bloom/theme/js/xtcore.js"></script> -->
-  <!-- Xiti -->
+const g_x_translation_europe = 1100;
+const g_y_translation_europe = 130;
 
-  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=3">
-  <title>Libération.fr La mortalité du Coronavirus dans le monde</title>
-<!--   <meta name="description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive.">
-  <meta name="keywords" content="actualités, news">
-  <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
-  <link rel="canonical" href="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/">
-  <meta property="og:site_name" content="Libération.fr"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/" />
-  <meta property="og:title" content="Quel impact du coronavirus sur la mortalité en France ?" />
-  <meta property="og:description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive." />
-  <meta property="og:image" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/social.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@libe" />
-  <meta name="twitter:creator" content="@libe" />
-  <meta name="twitter:url" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/" />
-  <meta name="twitter:title" content="Quel impact du coronavirus sur la mortalité en France" />
-  <meta name="twitter:description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive." />
-  <meta name="twitter:image" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/social.jpg"> -->
-  <link type="text/css" rel="stylesheet" href="styles/six-plus.css">
-  <link type="text/css" rel="stylesheet" href="styles/styles.css">
-  <style type="text/css">
-    .intro-section {
-    background-color: #E3234A;
-    }
-    #intro_text a {
-    color: #E3234A;
-    }
-    #conclusion {
-    background-color: #E3234A;
-    }
-    .link .libePink {
-    color: #E3234A;
-    }
-    .description_detail a{
-    color:#E3234A;
-    }
-    svg.leaflet-zoom-animated.sightline-svg path.leaflet-interactive{
-    stroke-width: 0.5px;
-    }
-    .names {
-    fill: none;
-    stroke: #000;
-    stroke-linejoin: round;
-    }
-    /* Tooltip CSS */
-    .d3-tip {
-    line-height: 1.5;
-    font-weight: 400;
-    font-family:'syntheselibeweb', Arial, sans-serif;
-    padding: 6px;
-    background: rgba(255, 255, 255, 0.8);
-    color: #000;
-    border-radius: 1px;
-    pointer-events: none;
-    z-index: 100;
-    }
-    /* Creates a small triangle extender for the tooltip */
-    .d3-tip:after {      
-    box-sizing: border-box;
-    display: inline;
-    font-size: 8px;
-    width: 100%;
-    line-height: 1.5;
-    color: rgba(0, 0, 0, 0.6);
-    position: absolute;
-    pointer-events: none;
-    }
-    /* Northward tooltips */
-    .d3-tip.n:after {
-    content: "\25BC";
-    margin: -1px 0 0 0;
-    top: 100%;
-    left: 0;
-    text-align: center;
-    }
-    /* Eastward tooltips */
-    .d3-tip.e:after {
-    content: "\25C0";
-    margin: -4px 0 0 0;
-    top: 50%;
-    left: -8px;
-    }
-    /* Southward tooltips */
-    .d3-tip.s:after {
-    content: "\25B2";
-    margin: 0 0 1px 0;
-    top: -8px;
-    left: 0;
-    text-align: center;
-    }
-    /* Westward tooltips */
-    .d3-tip.w:after {
-    content: "\25B6";
-    margin: -4px 0 0 -1px;
-    top: 50%;
-    left: 100%;
-    }
-    /*    
-    text{
-    pointer-events:none;
-    }
-    */
-    .details{
-    color: black;
-    }
-    svg g.countries path{
-    stroke: grey;
-    }
-    .headline-section .headline-big.headline-big.title {
-    color: #fff;
-    }
-    @media screen and (max-width: 700px) {
-    .column.is-three-quarters.map_container{
-    margin: 0;
-    padding: 0;
-    }
-    section.section.mainConten#mainContent{
-    padding: 0;
-    }
-    }
-    #legend_img{
-    width: 100%;
-    height: auto;
-    display: block;
-    padding: 0 21px;
-    }
-    a#play_button {
-    margin-top: 20px;
-    }
-    @media (max-width: 768px) {
-    a#play_button {
-    margin-top: 12px;
-    }
-    }
+const rangeXEurope = [-400, 500];
+const rangeYEurope = [380, 0];
 
-    @media (min-width: 1200px) {
-a#play_button img {
-    margin-left: 40px;
+const is_mobile = $(window).width() < 850 ? true : false;
+
+const height_menu_libe = is_mobile ? 51 : 65;
+
+moment.locale('fr')
+
+var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
+width2 = 1000 - margin2.left - margin2.right,
+height2 = 450 - margin2.top - margin2.bottom,
+padding = 0.3,
+max_width = 1000,
+width_slider = (width2 < (mainWidth -70) ? width2 : (mainWidth -70)),
+width_slider_g = 960,
+width2 = width2 < mainWidth ? width2 : mainWidth,
+map,
+app_data,
+minMaxRectWidth = [12,30],
+scaleWidth,
+thisMinZoom = 2,
+mapstate = 0,
+allPathsEurope,
+tooltip_additional_var;
+
+var circleScalePop = 
+d3.scaleSqrt()
+.range([1, 100]);
+
+var circleScaleDeaths = 
+d3.scaleSqrt()
+.range([1, 100]);
+
+
+const codes_pays_absolte_path = ["AO", "AR", "AU", "AZ", "CA", "CL", "CN", "DK", "FJ", "GB", "GR", "ID", "IT", "JP", "MY", "NO", "NZ", "OM",
+   "PH", "PG", "RU", "TR", "US", "VU", "ZA", "FR", "ES", "AG", "BS", "KM", "CV", "KY", "FK", "FO", "HK", "KN", "MV", "MT", "NC", "PR",
+    "PF", "SB", "ST", "TC", "TO", "TT", "VC", "VG", "VI", "GP", "IC"]
+
+// const europe_countries = ["Albanie", "Autriche", "Belgique", "Bulgarie", "Bosnie-Herzégovine", "Suisse", "Tchéquie", "Allemagne",
+//  "Danemark", "Estonie", "Finlande", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Irlande (pays)", "Islande", "Italie", "Lituanie",
+//   "Luxembourg (pays)", "Lettonie", "Pays-Bas", "Norvège", "Pologne", "Portugal", "Roumanie", "Serbie",
+//    "Slovaquie", "Slovénie", "Suède", "France", "Espagne", "Malte", "Chypre (pays)"]
+
+
+const europe_countries = ["Autriche", "Belgique", "Suisse", "Tchéquie", "Allemagne",
+ "Danemark", "Estonie", "Finlande", "Royaume-Uni", "Grèce", "Hongrie", "Irlande", "Islande", "Italie", "Lituanie",
+  "Luxembourg", "Lettonie", "Pays-Bas", "Norvège", "Pologne", "Portugal",
+  "Slovaquie", "Slovénie", "Suède", "France", "Espagne"]
+
+
+function clean_those_numbers(this_array){
+
+
+this_array.forEach(d => {
+
+if (d.length > 1){
+d[1] = _.round(d[1], 1)
+d[2] = _.round(d[2], 1)
 }
-}
+})
 
-#map_slider{
-  max-width: 930px;
-}
-
-
-    path {
-      stroke: #000000;
-      stroke-width: 1px;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-opacity: .25;
-      fill: #fff;
-    }
-
-.actionButton {
-    background-color: #e91845;
-    color: #fff;
-    display: inline-block;
-    font-size: 1.3em;
-    line-height: 1.2em;
-    padding: 3px 5px 4px;
-    text-transform: uppercase;
-    font-family: "syntheselibeweb", sans-serif;
-    margin-right: 20px;
-}
-
-.actionButton:focus {
-  opacity:1;
+return this_array
 
 }
 
-.actionButton:focus {
-  border: 0;
-  opacity: 0.8;
-  outline: 0;
+var p2s = /,?([achlmqrstvxz]),?/gi;
 
-    /*background-color: blue;*/
-}
+  var convertToString = function (arr)
+  {
+    return arr.join(',').replace(p2s, '$1');
+  };
 
-#button_box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: -74px;
-    z-index: 30;
-    position: relative;
-}
+function getAbsolutePath(thisPath){
 
-.actionButton:hover{
-color: #fff;
-opacity: 0.8;
-cursor: pointer;
+let this_arr = Raphael._pathToAbsolute(thisPath);
+this_arr = clean_those_numbers(this_arr)
+return convertToString(this_arr)
 
 }
 
-#display_geo_paths{
-  /*margin-left: 2em;*/
+const svg = d3.select(".carte svg");
+const allPaths = svg.selectAll('path');
+
+const g = d3.select('svg g#graph');
+
+svg.style('max-height', $(window).height()*0.85 + 'px')
+
+let this_new_padding = Math.round(height_menu_libe + ($(window).height() - parseFloat(d3.select('#morphocarte').style('height')))/2)
+
+this_new_padding = this_new_padding < height_menu_libe ? height_menu_libe : this_new_padding;
+
+d3.select('#morphocarte').style('padding-top', this_new_padding + 'px')
+
+window.addEventListener("resize", function(d){
+  console.log('resizing')
+
+  svg.style('max-height', $(window).height()*0.85 + 'px')
+
+
+this_new_padding = Math.round(height_menu_libe + ($(window).height() - parseFloat(d3.select('#morphocarte').style('height')))/2)
+
+this_new_padding = this_new_padding < height_menu_libe ? height_menu_libe : this_new_padding;
+
+d3.select('#morphocarte').style('padding-top', this_new_padding + 'px')
+
+});
+
+// var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
+var div = d3.select("#morphocarte").append("div")
+.attr("id", "tooltip")
+.attr('class', 'box');
+
+function getBoundingBoxCenter (selection) {
+  // get the DOM element from a D3 selection
+  // you could also use "this" inside .each()
+  var element = selection.node();
+  // use the native SVG interface to get the bounding box
+  var bbox = element.getBBox();
+  // return the center of the bounding box
+  return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
 }
 
-.d3-tip{
-  max-width: 80vW;
-}
+/////////////////////////
+//////////////////////////////////////// configuration
+const geoIDVariable = 'id'
+const format = d3.format(',')
 
-@media (max-width: 768px)
-{
-.section.mainContent {
-    padding-left: 0;
-    padding-right: 0;
-}
+const tip = d3
+.tip()
+.attr('class', 'd3-tip')
+.offset([-10, -10])
+.html(
+  d =>{
+    let this_code = d.id;
+    let this_d = _.find(app_data, d => d.geoId == this_code);
+    if (d.auto){
+      return `<span class='details'><span style="font-weight:bold">${d.nom}</span></span>`
+    }
+    else if(this_d){
+    let this_deaths = this_d.deaths;
+    let this_deaths_for_100k = this_d.deaths_for_100k;
+    if (tooltip_additional_var){
+      var tooltip_addition = `<br>${tooltip_additional_var[0]} : <span style="font-weight:bold">${formatNumber(this_d[tooltip_additional_var[1]])}</span>
+      ${tooltip_additional_var[2] ? tooltip_additional_var[2] : ""}`
+    }else{ var tooltip_addition = ''}
 
-.actionButton{
-font-size: .9em;
-margin-right: 9px;
-
+    return `<span class='details'>${
+      d.nom
+    }<br><span style="font-weight:bold">${this_deaths}</span> morts du Coronavirus
+    <br>Soit une mortalité de <span style="font-weight:bold">${this_deaths_for_100k}</span> pour 100 000 habitants</span>
+    ${tooltip_addition}</span>`
   }
-
-.d3-tip{
-font-size: 0.5em;
-
-}
-
-h1#graph_title {
-    line-height: 1.2em;
-    font-size: 1.6em;
-}
-
-}
-
-
-h1#graph_title{
-    font-family: 'libesansweb-semicondensed';
-    letter-spacing: 0.03em;
-    display: flex;
-    justify-content: center;
-}
-
-@media (min-width: 768px) {
-
-.column.is-three-quarters, .column.is-three-quarters-tablet {
-    width: 90%;
-}
-
-
-}
-
-
-g.axis path.domain{
-  display: none;
-}
-
-article {
-  position: relative;
-      display: block;
-    margin: 0 auto;
-    text-align: center;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center
+  else{
+    console.log(this_code + ' not found')
   }
-/*figure.sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-}*/
+  })
 
-#morphocarte{
-    position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding-top: 56px;
-}
+var country_tip_direction = {'CN' :'w',
+'ID' :'w',
+'PG' :'w',
+'AU' :'w',
+'NZ' :'w',
+'74' :'w',
+'73' :'w',
+'06' :'w',
+'2B' :'w',
+'2A' :'w',
+'CA' :'e',
+'US' :'e',
+'GL' :'s',
+'NO' :'s',
+'SE' :'s',
+'FI' :'s',
+'RU' :'s',
+'IS' :'s',
+'MX' :'e',
+'972' :'e',
+'973' :'e',
+'974' :'e',
+'975' :'e',
+'976' :'e',
+'29' :'e',
+'22' :'e',
+'56' :'e'}
+
+tip.direction(function(d) {
+
+  // otherwise if not specified
+return country_tip_direction[d.id] ? country_tip_direction[d.id] : 'n';
+})
 
 
-article .step {
-    background-color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 600px;
-    max-width: 600px;
-    padding: 8px;
-    margin-left: 4px;
-    margin-right: 4px;
-}
-
-article #lastStep{
-
-margin-bottom: 800px;
-}
-
-#map_inner{
-
-position: relative;
-margin: 0;
-background-color: #efefef; 
-
+tip.offset(function(d) {
+  // [top, left]
+  if (country_tip_direction[d.id]){
+    let c = country_tip_direction[d.id]
+    if (c == 'w'){ return [-6, -5]}
+    if (c == 'e'){ return [-2, 8]}
+    if (c == 's'){ return [10, 0]}
   }
+  // otherwise if not specified
+  return [-14, 0]
+})
+// tip.offset(function(d) {
+//   return [-10, 0]
+// })
 
-@media (max-width: 768px) {
+// d3.select('body').style('overflow', 'hidden')
+
+const parentWidth = d3
+.select('body')
+.node()
+.getBoundingClientRect().width
+
+const margin = { top: 0, right: 0, bottom: 0, left: 0 }
+const width = 960 - margin.left - margin.right
+const height = 500 - margin.top - margin.bottom
+
+  var color = d3.scaleLinear()
+  .range(["white", '#F9D3DB', "#E3234A"]);
+
+  // .range(["white", "#D4000C"]);
+  // A70021
+
+// const color = d3
+// .scaleQuantile()
+// .range([
+//   'rgb(247,251,255)',
+//   'rgb(222,235,247)',
+//   'rgb(198,219,239)',
+//   'rgb(158,202,225)',
+//   'rgb(107,174,214)',
+//   'rgb(66,146,198)',
+//   'rgb(33,113,181)',
+//   'rgb(8,81,156)',
+//   'rgb(8,48,107)',
+//   'rgb(3,19,43)'
+//   ])
+
+// const color2 = d3
+// .scaleQuantile()
+// .range([
+//   '#FFFFFF',
+//   '#F9D3DB',
+//   '#F4A7B7',
+//   '#E3234A',
+//   '#A70021'
+//   ])
 
 
-article .step {
-    margin-left: 16px;
-    margin-right: 16px;
-    font-size: 0.8em;
+
+
+function transformToCircle(thisPath){
+
+  let thisCenter = getBoundingBoxCenter (thisPath);
+  let this_path_d = thisPath.attr('d');
+  let this_transformation = flubber.toCircle(this_path_d, thisCenter[0], thisCenter[1], 10);
+
+  thisPath
+  .transition()
+  .attrTween("d", function(){ return this_transformation });
+
 }
 
+function force_separate_circles(radius_name){
+
+  var features = allPaths.data();
+
+  simulation = d3.forceSimulation(features)
+  .force("y", d3.forceY(function(d) { return d.centroid[1] }).strength(5))
+  .force("x", d3.forceX(function(d) { return d.centroid[0] }).strength(5))
+  .force("collide", d3.forceCollide(7).radius(d=> d[radius_name]))
+  .stop();
+
+  for (var i = 0; i < 200; ++i) simulation.tick();
+
+    allPaths
+  .transition()
+  .duration(800)
+  .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
+
 }
 
-#morphocarte_container{
-  will-change:transform;
+
+function registered_separate_circles(){
+
+  allPaths
+  .transition().attr('transform', function(d) { return 'translate(' +position_departements[d.id][0]+ ',' +position_departements[d.id][1] + ')'});
+
+}
+
+function registered_separate_circles_ecarts(){
+
+  allPaths
+  .transition().attr('transform', function(d) { return 'translate(' +position_departements_ecart[d.id][0]+ ',' +position_departements_ecart[d.id][1] + ')'});
+
 }
 
 
-#morphocarte:before,
-#morphocarte:after {
-    content: '';
-    display: table;
+function redraw_paths(radius_name, duration, callback_value){
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
+  let departements_corrections = codes_pays_absolte_path;
+
+  allPaths
+  .transition()
+  .duration(duration)
+  .attrTween("d", function(d){ return flubber.fromCircle(d.centroid[0], d.centroid[1], d[radius_name], d.path)})
+  .on('end', function(){
+    pathsCount++;
+    if (pathsCount >= pathsize){
+      allPaths.filter(function(d){return departements_corrections.includes(d.id) }).attr("d", function(d){ return d.path})
+      pathsCount = 0
+
+      allPaths
+      .transition()
+      .attr('transform', 'translate(0,0)')
+      .on('end', function(){
+      pathsCount++;
+      if (pathsCount >= pathsize && callback_value){
+        transform_all_paths_to_circle(callback_value)
+        // setTimeout(() => {  callback_function(); }, 2000);
+      }
+
+      })
+    }
+  })
+  ;
 }
 
-#articles {
-    margin-bottom: -40px;
+
+function transform_all_paths_to_circle(radius_name, callback_value){
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
+
+allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.select(this).attr('d'), d.centroid[0], d.centroid[1],
+ d[radius_name])})
+.on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    if (callback_value){console.log('OK')}
+    // registered_separate_circles_ecarts()
+    force_separate_circles(radius_name)
+  }
+})
+.end(console.log('end transition'))
+
 }
 
-  </style>
-</head>
-<body>
-  <div class="intro-section">
-    <div class="headline-section has-text-centered">
-      <p class="headline-big is-centered has-text-centered overtitle">
-      </p>
-      <p class="headline-big is-centered has-text-centered title">
-        Mortalité du coronavirus dans le monde
-      </p>
-      <div id='pictoContainer'></div>
-      <div id='appenedPictoContainer'></div>
-      <!--     <p class="headline-small">
-        La pandémie de coronavirus est née à Wuhan, en Chine, où les premiers cas et les premiers morts ont été détectés, en décembre 2019 et janvier 2020. C’est aussi la région de Wuhan, le Hubei, qui a été la première à se confiner, fin janvier. Depuis début mars, une bonne partie du monde l’a imitée&nbsp;: de très nombreux pays ont décidé chacun leur tour de mesures de confinement partiel ou total, mettant petit à petit la planète sur pause.
-        </p> -->
-    </div>
-  </div>
-  <section class='section mainContent' id="mainContent">
-    <!-- <section id="tabs" class='columns is-centered is-hidden-mobile'>
-      <div class="container tabs sectionParametres" id="parametersTabs">
-                      </div>
-                  </section> -->
-    <div class="container">
-      <!-- <p class="social socialTop is-hidden-mobile">
-        <span><img class="shareFacebook" src="img/logos/facebook-badge.png" style="width: 30px"></span>
-        <span><img class="shareTwitter" src="img/logos/twitter-badge.png" style="width: 30px"></span>
-        </p>
-        <p class="social socialTop is-hidden-desktop">
-        
-        <span><img class="shareFacebook" src="img/logos/facebook-badge.png" style="width: 20px"></span>
-        <span><img class="shareTwitter" src="img/logos/twitter-badge.png" style="width: 20px"></span>
-        </p> -->
-      <div class='columns is-centered mainMap'>
-        <div class="column is-three-quarters map_container" style="z-index: 90;">
-          <!-- <div id='intro_text'>
-            Coronavirus.
-            </div> -->
-          <!-- <div id="cityTitle" class='box' style="display: none; max-width: 200px"></div> -->
-          <!-- <span id='tabletExplanations' class='is-hidden-tablet'>Utilisez deux doigts pour naviguer, un seul pour scroller.</span> -->
-          <!-- <div id='legend_img_container'><img src="img/legende.svg" id="legend_img"></div> -->
-          <!-- <div id="map""></div> -->
-<!--           <div id="slider_container">
-            <a id="play_button"><img src="img/play.svg"></a>
-            <svg id = "map_slider" height="70" width="600"></svg>
-          </div> -->
-          <!-- <div id='appenedCityTagContainer'></div> -->
-          <div id="articles">
 
-          <p>Mortalité du Coronavirus dans le monde, à travers différents types de représentation et à partir des données du  Centre européen de prévention et de contrôle des maladies. </p><br><br>
 
-          <!-- <h1 id="graph_title">La mortalité du Coronavirus dans le monde</h1> -->
-<!--                     <div id="button_box">
-                    <button class="actionButton" id="display_proportional_circles_pop" href="#">Cartogramme population</button> 
-                    <button class="actionButton" id="display_proportional_circles_deaths" href="#">Cartogramme morts</button> <br>
-                    <button class="actionButton"  id="display_geo_paths" href="#">Carte</button></div> -->
+d3.select('#display_proportional_circles_pop')
+.on('click', function(){
 
-          </div>
-          <div id='morphocarte_container'>
-          <div class="carte" id='morphocarte'>
-          <figure id= "map_inner">
-   <svg class="sightline-svg" style="max-height: 562.5px;" version="1.1" viewbox="0 0 2000 1000" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
-   <g id='graph'>
-<path d="m 1369.9,333.8 -5.4,0 -3.8,-0.5 -2.5,2.9 -2.1,0.7 -1.5,1.3 -2.6,-2.1 -1,-5.4 -1.6,-0.3 0,-2 -3.2,-1.5 -1.7,2.3 0.2,2.6 -0.6,0.9 -3.2,-0.1 -0.9,3 -2.1,-1.3 -3.3,2.1 -1.8,-0.8 -4.3,-1.4 -2.9,0 -1.6,-0.2 -2.9,-1.7 -0.3,2.3 -4.1,1.2 0.1,5.2 -2.5,2 -4,0.9 -0.4,3 -3.9,0.8 -5.9,-2.4 -0.5,8 -0.5,4.7 2.5,0.9 -1.6,3.5 2.7,5.1 1.1,4 4.3,1.1 1.1,4 -3.9,5.8 9.6,3.2 5.3,-0.9 3.3,0.8 0.9,-1.4 3.8,0.5 6.6,-2.6 -0.8,-5.4 2.3,-3.6 4,0 0.2,-1.7 4,-0.9 2.1,0.6 1.7,-1.8 -1.1,-3.8 1.5,-3.8 3,-1.6 -3,-4.2 5.1,0.2 0.9,-2.3 -0.8,-2.5 2,-2.7 -1.4,-3.2 -1.9,-2.8 2.4,-2.8 5.3,-1.3 5.8,-0.8 2.4,-1.2 2.8,-0.7 -1.4,-1.9 z" data-id="AF" data-name="Afghanistan" data-nom="Afghanistan" id="AF" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1068.3,609.6L1051.7,609.5L1049.8,610.2L1048.1,610.1L1045.8,611L1045.3,612.2L1048.1,616.2L1049.2,620.5L1050.8,626.6L1049.1,629.2L1048.8,630.5L1050.1,634.3L1051.6,638.2L1053.2,640.4L1053.5,644L1052.8,648.8L1051,651.6L1047.7,655.8L1046.4,658.4L1044.5,664.1L1044.2,666.8L1042.2,672.7L1041.3,678.2L1041.8,682.2L1044.5,681L1047.8,680L1051.4,680.1L1054.6,683L1055.5,682.6L1078,682.3L1081.7,685.3L1095.1,686.2L1105.4,683.7L1101.9,679.7L1098.3,674.5L1099.1,654.2L1110.7,654.3L1110.2,652.1L1111.1,649.7L1110.2,646.7L1110.9,643.7L1110.4,641.7L1107.8,641.3L1104.3,642.3L1101.9,642.1L1100.5,642.7L1101,635.1L1099.1,632.8L1098.8,628.8L1099.7,625L1098.5,622.6L1098.5,618.6L1091.7,618.6L1092.2,616.3L1089.3,616.3L1089,617.4L1085.6,617.7L1084.1,621.4L1083.2,623L1080.2,622.1L1078.3,623L1074.6,623.5L1072.5,620.2L1071.2,618.1L1069.6,614.3L1068.3,609.6Z M1046.5,608.3L1046.7,605.6L1047.6,603.9L1049.6,602.6L1047.6,600.4L1045.8,601.5L1043.6,604.2L1045,609L1046.5,608.3Z" data-id="AO" data-name="Angola" data-nom="Angola" id="AO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1077.5,300.5 -2,3.1 0.5,1.9 0,0 1,1 -0.5,1.9 -0.1,4.3 0.7,3 3,2.1 0.2,1.4 1,0.4 2.1,-3 0.1,-2.1 1.6,-0.9 0,-1.6 -2.3,-1.6 -0.9,-2.6 0.4,-2.1 0,0 -0.5,-2.3 -1.3,-0.6 -1.3,-1.6 -1.3,0.5 -0.4,-1.2 z" data-id="AL" data-name="Albania" data-nom="Albanie" id="AL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1283.9,408.6 -1.3,-2.2 -3,3.9 -3.7,4.1 -3.3,4.3 -3.3,-0.2 -4.6,-0.2 -4.2,1 -0.3,-1.7 -1,0.3 0.4,1.5 2.6,6.4 16.8,3.2 1,-1.3 -0.1,-2.6 1.4,-2.6 -0.3,-2.6 2.4,-1.3 -1.1,-0.8 0.1,-4.2 2.8,0 -1.3,-5 z" data-id="AE" data-name="United Arab Emirates" data-nom="Émirats arabes unis" id="AE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M619.4,712.6L612,711.1L608,716.8L608.9,718.4L607.8,725L602.2,728.2L603.8,738.8L602.9,740.8L604.9,743.3L601.7,747.3L599.1,753.2L598.2,759L599.9,765.2L597.8,771.7L602.7,782.6L604.3,783.8L605.6,789.7L604,795.9L605.4,801.3L602.5,805.6L604,811.5L607.3,817.8L604.8,820.2L605.1,825.9L605.8,832.3L609.1,839.9L607.5,841.1L611.1,848.2L614.2,850.5L613.4,853.1L616.2,854.4L617.5,856.7L615.7,857.8L617.5,861.5L618.6,869.7L617.9,875L619.7,878.2L619.6,882.1L616.9,884.8L620,891.4L622.6,893.6L625.7,893.2L627.5,897.8L631,901.4L643,902.2L647.8,903.1L650,903.5L645.3,899.9L641.2,893.6L642.1,890.7L645.6,888.2L646.1,881L650.8,877.5L650.6,871.9L645.4,870.6L639,866.1L638.9,861.4L641.8,858.3L646.5,858.2L646.7,854.9L645.5,848.8L648.4,844.9L652.5,843L650,839.8L647.8,841.8L643.8,839.9L641.3,833.7L642.8,832.1L648.4,834.4L653.4,833.5L655.9,831.3L654.1,828.2L654,823.4L652,819.6L657.8,820.2L668,818.9L674.9,815.5L678.2,807.2L677.9,804L674,801.2L673.9,796.7L666.1,791.2L665.8,787.9L665.4,783.7L666.3,782.3L665.2,776L665.5,769.5L666,764.4L671.9,755.8L677.2,749.6L680.5,747L684.7,743.5L684.2,738.4L681.1,734.7L678.5,735.9L678.2,741.6L673.9,746.4L669.7,747.5L663.5,746.5L657.8,744.7L662,735.1L660.9,732.3L655,729.8L647.8,725.1L643.2,724.1L632,713.7L631,712.4L624.7,712.1L623.1,717.2L619.4,712.6Z M669.8,920.7L670.7,917.7L663.4,916.2L655.7,912.6L651.4,908L648.4,905.2L654.3,918.7L659.3,918.7L662.2,918.9L665.5,921L669.8,920.7Z" data-id="AR" data-name="Argentina" data-nom="Argentine" id="AR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1219,325.1 -0.9,-4.4 -2.5,-1.1 -2.5,-1.7 1,-2 -3.1,-2.2 0.7,-1.5 -2.2,-1.1 -1.4,-1.7 -6.9,1 1.3,2.2 0,3.1 4.2,1.5 2.4,1.9 1,-0.2 1.8,1.7 2.3,0 0.2,1 2.8,3.7 1.8,-0.2 z" data-id="AM" data-name="Armenia" data-nom="Arménie" id="AM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1776.8,659.7L1777.3,657.4L1777.4,653.8L1775.8,650.6L1775.9,647.9L1774.6,647.1L1774.7,643.2L1773.5,640L1771.2,642.4L1770.8,644.2L1769.3,647.7L1767.5,651.1L1768.1,653.2L1766.9,654.5L1765.4,659.3L1765.5,663L1764.8,664.8L1765.1,667.9L1762.5,672.9L1761.2,676.4L1759.5,679.3L1757.8,682.7L1753.7,684.8L1748.8,682.7L1748.3,680.7L1745.8,679.1L1744.2,679.1L1740.9,675.3L1738.4,673.1L1734.5,671.1L1730.6,667.6L1730.5,665.8L1733,662.7L1735.1,659.5L1734.8,656.9L1736.7,656.7L1739.2,654.2L1741.2,650.8L1739,647.6L1737.5,648.8L1735.5,648.3L1732,650.1L1728.8,648.1L1727.1,648.8L1722.6,647.2L1719.9,644.5L1716.4,643L1713.3,643.9L1717.2,646L1716.9,649.2L1712.1,650.4L1709.3,649.7L1705.7,651.9L1702.8,655.6L1703.4,657.1L1700.7,658.8L1697.3,663.9L1697.9,667.4L1694.5,666.8L1691,666.8L1688.5,663L1684.8,660.1L1682,660.9L1679.4,661.8L1679.1,663.4L1676.7,662.7L1676.4,664.5L1673.4,665.6L1671.7,668.1L1668.2,671.2L1666.8,676L1664.5,674.7L1662.3,677.8L1663.8,680.8L1661.2,682L1659.8,676.5L1655,681.9L1654.2,685.4L1653.5,687.9L1649.7,691.2L1647.7,694.6L1644.2,697.4L1638.1,699.3L1635,699.1L1633.5,699.7L1632.4,701.1L1628.9,701.8L1624.2,704.2L1622.8,703.4L1620.2,703.9L1615.6,706.2L1612.4,708.9L1607.6,711L1604.5,715.4L1604.9,710.6L1601.8,715.2L1601.7,718.9L1600.4,722.1L1598.9,723.6L1597.6,727.3L1598.5,729.2L1598.6,731.2L1600.2,736.2L1599.5,739.5L1598.5,737L1596.2,735.2L1596.6,741.1L1594.9,738.3L1595,741.1L1596.8,746.1L1596.2,751.1L1597.9,753.6L1597.5,755.5L1598.4,759.6L1597.1,763.2L1596.8,766.8L1597.5,773.3L1596.8,777L1594.6,781.4L1594,783.7L1592.5,785.2L1589.6,786L1588.1,789.7L1590.5,790.9L1594.5,795L1598.1,795L1601.9,795.3L1605.2,793.2L1608.6,791.4L1610,791.7L1614.5,788.3L1618.3,788L1622.4,787.3L1626.6,788.5L1630.2,787.9L1634.8,787.7L1637.8,785.1L1640.1,781.8L1645.3,780.3L1652.2,777.1L1657.2,777.5L1664.1,775.4L1671.9,773.1L1681.7,772.5L1685.7,775.6L1689.4,775.8L1694.7,779.6L1693.1,781.1L1694.9,783.5L1696.2,788.1L1694.6,791.5L1697.5,794.1L1701.8,789L1706.1,786.9L1712.8,781.4L1711.2,786.1L1707.8,789.3L1705.3,793L1700.9,796.5L1706.1,795.3L1710.8,790.9L1709.9,795.7L1706.7,798.8L1711.4,799.6L1712.7,802.2L1712.3,805.5L1710.8,810.4L1712.2,814.4L1716.2,816.3L1719,816.7L1721.4,817.7L1724.9,819.5L1732.1,814.8L1735.6,813.6L1732.9,817L1735.5,818.1L1738.2,820.9L1742.9,818.2L1746.7,815.7L1753,813L1759,812.8L1763.2,810.5L1764.1,808.5L1767.1,804L1771,799.2L1774.6,796L1779,790.4L1782.3,787.3L1786.7,782.3L1792.1,779.2L1797.1,773.4L1800.2,768.9L1801.6,765.3L1805.4,759.6L1807.5,756.7L1810,751L1809.3,745.6L1811,741.7L1812.1,738L1812.1,732.9L1809.3,727.8L1807.4,725.3L1804.5,721.4L1805.2,714.7L1803.7,715.7L1802.1,712.9L1799.6,714.3L1799,707.4L1796.8,703.4L1797.8,701.9L1794.7,699.1L1791.5,696.1L1786.2,692.8L1785.3,688.5L1786.6,685.2L1786.2,679.7L1784.9,679L1784.7,675.8L1784.5,670.3L1785.6,667.5L1783.3,665L1781.9,662.3L1778,664.7L1776.8,659.7Z M1726.7,832L1723.7,831.5L1721.8,834.4L1721.2,839.8L1719.1,843.8L1718.6,849.1L1721.6,849.3L1722.4,849.6L1729,845.3L1729.6,847L1733.6,842.1L1736.8,839.9L1741.3,832.6L1738.5,832.1L1733.7,833.3L1730.3,834.2L1726.7,832Z" data-id="AU" data-name="Australia" data-nom="Australie" id="AU" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1060.2,264 -2.3,-1.2 -2.3,0.3 -4,-1.9 -1.7,0.5 -2.6,2.5 -3.8,-2 -1.5,2.9 -1.7,0.8 1,4 -0.4,1.1 -1.7,-1.3 -2.4,-0.2 -3.4,1.2 -4.4,-0.3 -0.6,1.6 -2.6,-1.7 -1.5,0.3 0.2,1.1 -0.7,1.6 2.3,1.1 2.6,0.2 3.1,0.9 0.5,-1.2 4.8,-1.1 1.3,2.2 7.2,1.6 4.2,0.4 2.4,-1.4 4.3,-0.1 0.9,-1.1 1.3,-4 -1.1,-1.3 2.8,0 0.2,-2.6 -0.7,-2.1 0.3,-0.8 z" data-id="AT" data-name="Austria" data-nom="Autriche" id="AT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1220.5,309.6L1216.2,305.8L1214.7,305.6L1213.6,306.5L1216.8,309.9L1216.2,310.6L1213.4,310.2L1209.2,308.4L1208.1,309.4L1209.5,311.1L1211.7,312.2L1211,313.7L1214.1,315.9L1213.1,317.9L1215.6,319.6L1218.1,320.7L1219,325.1L1224.3,320.4L1226.2,319.9L1228.1,321.8L1226.9,324.9L1230.7,328.3L1232,328L1231.2,324.8L1232.9,323.3L1233.3,321.1L1233.2,316.1L1237.4,315.6L1235.4,313.9L1232.9,313.7L1229.4,309.2L1226,306L1226,306L1223.4,308.5L1222.9,310L1220.5,309.6Z M1210.1,318.9L1209.1,319.1L1210.3,321.5L1213.5,324.4L1217.2,325.3L1214.4,321.6L1214.2,320.6L1211.9,320.6L1210.1,318.9Z" data-id="AZ" data-name="Azerbaijan" data-nom="Azerbaïdjan" id="AZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1148.2,590 -0.3,-2.5 0,0 -3,-0.4 -1.7,3.6 -3.5,-0.5 1.4,2.9 0.1,1.1 2,6.1 -0.1,0.3 0.6,-0.1 2.1,-2.3 2.2,-3.3 1.4,-1.4 0,-2 -1.2,-1.5 z" data-id="BI" data-name="Burundi" data-nom="Burundi" id="BI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1000.7,246.2 -4.4,1.3 -3.6,-0.5 0,0 -3.8,1.2 0.7,2.2 2.2,0.1 2.4,2.4 3.4,2.9 2.5,-0.4 4.4,2.8 0.4,-3.5 1.3,-0.2 0.4,-4.2 -2.8,-1.4 -3.1,-2.7 z" data-id="BE" data-name="Belgium" data-nom="Belgique" id="BE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 996.9,498 -4.3,-3.7 -2,0 -1.9,1.9 -1.2,1.9 -2.7,0.6 -1.2,2.8 -1.9,0.7 -0.7,3.3 1.7,1.9 2,2.3 0.2,3.1 1.1,1.3 -0.2,14.6 1.4,4.4 4.6,-0.8 0.3,-10.2 -0.1,-4.1 1,-4 1.7,-1.9 2.7,-4 -0.6,-1.7 1.1,-2.5 -1.2,-3.8 0.2,-2.1 z" data-id="BJ" data-name="Benin" data-nom="Bénin" id="BJ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 978.8,477.2 -3.6,0 -1.4,-1.2 -3,0.9 -5.2,2.6 -1.1,2 -4.3,2.9 -0.8,1.6 -2.3,1.3 -2.7,-0.9 -1.6,1.6 -0.8,4.4 -4.5,5.2 0.2,2.2 -1.6,2.7 0.4,3.7 2.5,1.4 1,2.1 2.5,1.3 1.9,-1.6 2.7,-0.2 3.8,1.6 -0.8,-4.8 0.2,-3.6 9.7,-0.3 2.4,0.5 1.8,-1 2.6,0.5 4.9,0.1 1.9,-0.7 1.2,-2.8 2.7,-0.6 1.2,-1.9 0.1,-4.4 -6.4,-1.4 -0.2,-3.1 -3.1,-4.1 -0.8,-2.9 0.5,-3.1 z" data-id="BF" data-name="Burkina Faso" data-nom="Burkina Faso" id="BF" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1486.5,431.9 -4.5,-10.1 -1.5,0.1 -0.2,4 -3.5,-3.3 1.1,-3.6 2.4,-0.4 1.6,-5.3 -3.4,-1.1 -5,0.1 -5.4,-0.9 -1.2,-4.4 -2.7,-0.4 -4.8,-2.7 -1.2,4.3 4.6,3.4 -3.1,2.4 -0.8,2.3 3.7,1.7 -0.4,3.8 2.6,4.8 1.6,5.2 2.2,0.6 1.7,0.7 0.6,-1.2 2.5,1.3 1.3,-3.5 -0.9,-2.6 5.1,0.2 2.8,3.7 1.5,3.1 0.8,3.2 2,3.3 -1.1,-5.1 2.1,1 -0.5,-4.6 z" data-id="BD" data-name="Bangladesh" data-nom="Bangladesh" id="BD" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1121.6,294.3 -3,-0.7 -4,-2.2 -5.8,1.4 -2.3,1.6 -7.5,-0.3 -4,-1 -1.9,0.5 -1.8,-2.6 -1.1,1.4 0.7,2.3 2.8,2.6 -1.7,1.9 -0.7,2 0.6,0.7 -0.7,0.9 2.8,2 0.8,4.1 3.8,0.2 3.9,-1.7 3.9,2.1 4.6,-0.6 -0.3,-3 5,-2 4.5,0.8 -2.1,-3.5 1.3,-4.4 2.2,-2.5 z" data-id="BG" data-name="Bulgaria" data-nom="Bulgarie" id="BG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1062.2,284.9 -2.3,0.1 -1,1.3 -1.9,-1.4 -0.9,2.5 2.7,2.9 1.3,1.9 2.5,2.3 2,1.4 2.2,2.5 4.7,2.4 0.4,-3.4 1.5,-1.4 0.9,-0.6 1.2,-0.3 0.5,-2.9 -2.7,-2.3 1,-2.7 -1.8,0 0,0 -2.4,-1.4 -3.5,0.1 -4.4,-1 z" data-id="BA" data-name="Bosnia and Herz." data-nom="Bosnie-Herzégovine" id="BA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1112.8,219.4 -5.2,-1.5 -4.6,2.3 -2.6,1 0.9,2.6 -3.5,2 -0.5,3.4 -4.8,2.2 -4.6,0 0.6,2.7 1.7,2.3 0.3,2.4 -2.7,1.2 1.9,2.9 0.5,2.7 2.2,-0.3 2.4,-1.6 3.7,-0.2 5,0.5 5.6,1.5 3.8,0.1 2,0.9 1.6,-1.1 1.5,1.5 4.3,-0.3 2,0.6 -0.2,-3.1 1.2,-1.4 4.1,-0.3 0,0 -2,-3.9 -1.5,-2 0.8,-0.6 3.9,0.2 1.6,-1.3 -1.7,-1.6 -3.4,-1.1 0.1,-1.1 -2.2,-1.1 -3.7,-3.9 0.6,-1.6 -1,-2.9 -4.8,-1.4 -2.3,0.7 -1,-1.4 z" data-id="BY" data-name="Belarus" data-nom="Biélorussie" id="BY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 482.5,471.1 1.4,-2.2 1,-0.2 1.3,-1.7 1,-3.2 -0.3,-0.6 0.9,-2.3 -0.4,-1 1.3,-2.7 0.3,-1.8 -1.1,0 0.1,-0.9 -1,0 -2.5,3.9 -0.9,-0.8 -0.7,0.3 -0.1,1 -0.7,5 -1.2,7.2 1.6,0 z" data-id="BZ" data-name="Belize" data-nom="Belize" id="BZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 655.7,700.5 1.6,-1.3 -0.8,-3.6 1.3,-2.8 0.5,-5 -1.6,-4 -3.2,-1.7 -0.8,-2.6 0.6,-3.6 -10.7,-0.3 -2.7,-7.4 1.6,-0.1 -0.3,-2.8 -1.2,-1.8 -0.5,-3.7 -3.3,-1.9 -3.5,0.1 -2.5,-1.9 -3.8,-1.2 -2.4,-2.4 -6.3,-1 -6.4,-5.7 0.3,-4.3 -0.9,-2.5 0.4,-4.7 -7.3,1.1 -2.8,2.3 -4.8,2.6 -1.1,1.9 -2.9,0.2 -4.2,-0.6 5.5,10.3 -1.1,2.1 0.1,4.5 0.3,5.4 -1.9,3.2 1.2,2.4 -1.1,2.1 2.8,5.3 -2.8,6.9 3.1,4.3 1.2,4.6 3.2,2.7 -1.1,6.2 3.7,7.1 3.1,8.8 3.8,-0.9 4,-5.7 7.4,1.5 3.7,4.6 1.6,-5.1 6.3,0.3 1,1.3 1.5,-7.6 -0.2,-3.4 2.1,-5.6 9.5,-1.9 5.1,0.1 5.4,3.3 0.3,1.9 z" data-id="BO" data-name="Bolivia" data-nom="Bolivie" id="BO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 659,560.1 -1.4,0.2 -3.1,-0.5 -1.8,1.7 -2.6,1.1 -1.7,0.2 -0.7,1.3 -2.7,-0.3 -3.5,-3 -0.3,-2.9 -1.4,-3.3 1,-5.4 1.6,-2.2 -1.2,-3 -1.9,-0.9 0.8,-2.8 -1.3,-1.5 -2.9,0.3 0.7,1.8 -2.1,2.4 -6.4,2.4 -4,1 -1.7,1.5 -4.4,-1.6 -4.2,-0.8 -1,0.6 2.4,1.6 -0.3,4.3 0.7,4 4.8,0.5 0.3,1.4 -4.1,1.8 -0.7,2.7 -2.3,1 -4.2,1.5 -1.1,1.9 -4.4,0.5 -3,-3.4 -1.1,0.8 -1,-3.8 -1.6,-2 -1.9,2.2 -10.9,-0.1 0,3.9 3.3,0.7 -0.2,2.4 -1.1,-0.6 -3.2,1 0,4.6 2.5,2.4 0.9,3.6 -0.1,2.8 -2.2,17.4 -5.1,-0.3 -0.7,1 -4.6,1.2 -6.2,4.3 -0.4,3 -1.3,2.2 0.7,3.4 -3.3,1.9 0.1,2.7 -1.5,1.1 2.6,5.8 3.3,3.8 -1,2.8 3.7,0.3 2.3,3.4 4.9,0.2 4.4,-3.8 0.2,9.7 2.6,0.7 3,-1.1 4.2,0.6 2.9,-0.2 1.1,-1.9 4.8,-2.6 2.8,-2.3 7.3,-1.1 -0.4,4.7 0.9,2.5 -0.3,4.3 6.4,5.7 6.3,1 2.4,2.4 3.8,1.2 2.5,1.9 3.5,-0.1 3.3,1.9 0.5,3.7 1.2,1.8 0.3,2.8 -1.6,0.1 2.7,7.4 10.7,0.3 -0.6,3.6 0.8,2.6 3.2,1.7 1.6,4 -0.5,5 -1.3,2.8 0.8,3.6 -1.6,1.3 1.9,3.6 0.4,8.6 6,1.2 2.1,-1.2 3.9,1.7 1.2,1.9 1,5.8 0.9,2.5 2,0.3 2,-1.1 2.1,1.2 0.3,3.5 -0.3,3.8 -0.7,3.6 2.6,-1.2 3.1,3.7 0.5,5.1 -4.2,3.5 -3.3,2.6 -5.3,6.2 -5.9,8.6 3.4,-0.7 6.2,4.9 1.9,-0.2 6.2,4.1 4.8,3.5 3.8,4.3 -1.9,3 2.1,3.7 2.9,-3.7 1.5,-6 3.2,-3 3.9,-5 4.5,-11.2 3.4,-3.5 0.8,-3.1 0.3,-6.4 -1.3,-3.5 0.3,-4.8 4.1,-6.3 6,-5.1 6,-1.8 3.6,-2.9 8.5,-2.4 5.9,0 1.1,-3.8 4.2,-2.8 0.6,-6.5 5.1,-8.3 0.5,-8.5 1.6,-2.6 0.3,-4.1 1.1,-9.9 -1,-11.9 1.4,-4.7 1.4,-0.1 3.9,-5.5 3.3,-7.2 7.7,-8.8 2.7,-4.2 2,-10.5 -1,-3.9 -2,-8.1 -2.1,-2 -4.8,-0.2 -4.3,-1.9 -7.3,-7.1 -8.4,-5.3 -8.4,0.3 -10.9,-3.4 -6.5,2 0.8,-3.5 -2.7,-3.8 -9.4,-3.8 -7.1,-2.3 -4.2,4.1 -0.3,-6.3 -9.9,-1 -1.7,-2 4.2,-5.2 -0.1,-4.4 -3,-1 -3,-11.2 -1.3,-3.5 -1.9,0.3 -3.5,5.8 -1.8,4.7 -2.1,2.4 -2.7,0.5 -0.8,-1.8 -1.2,-0.3 -1.8,1.8 -2.4,-1.3 -3.2,-1.4 -2.7,0.7 -2.3,-0.6 -0.5,1.8 0.9,1.3 -0.5,1.3 -3.1,-0.5 z" data-id="BR" data-name="Brazil" data-nom="Brésil" id="BR" style="fill: rgb(242, 242, 242); fill-rule: evenodd; fill-opacity: 1; stroke-opacity: 0.5; stroke-width: 1;"></path>
-<path d="m 1617.8,543.4 2.7,3.3 1.1,-2.2 2.7,0.2 0.1,-4.1 0.1,-3.1 -4.6,3.5 -2.1,2.4 z" data-id="BN" data-name="Brunei" data-nom="Brunei" id="BN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1474.7,395.5 -2.7,-1.8 -2.9,-0.1 -4.2,-1.5 -2.6,1.6 -2.6,4.8 0.3,1.2 5.5,2.5 3.2,-1 4.7,0.4 4.4,-0.2 -0.4,-3.9 -2.7,-2 z" data-id="BT" data-name="Bhutan" data-nom="Bhoutan" id="BT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1116.7,685 -1,-0.5 -3.2,1.5 -1.6,0 -3.7,2.5 -2,-2.6 -8.6,2.2 -4.1,0.2 -0.9,22.7 -5.4,0.2 -0.6,18.5 1.4,1 3,6.1 -0.7,3.8 1.1,2.3 4,-0.7 2.8,-2.8 2.7,-1.9 1.5,-3.1 2.7,-1.5 2.3,0.8 2.5,1.8 4.4,0.3 3.6,-1.5 0.6,-2 1.2,-3 3,-0.5 1.7,-2.4 2,-4.3 5.2,-4.7 8,-4.7 -3.4,-2.9 -4.2,-0.9 -1.5,-4.1 0.1,-2.2 -2.3,-0.7 -6,-7 -1.6,-3.7 -1.1,-1.1 -1.9,-5.1 z" data-id="BW" data-name="Botswana" data-nom="Botswana" id="BW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1110.5,517.3 -0.5,-0.3 -2,-1.8 -0.3,-2 0.8,-2.6 0,-2.6 -3.3,-4 -0.7,-2.7 -3.5,1.1 -2.8,2.5 -4,7 -5.2,2.9 -5.4,-0.4 -1.6,0.6 0.6,2.3 -2.9,2.2 -2.3,2.5 -7.1,2.4 -1.4,-1.4 -0.9,-0.2 -1,1.7 -4.7,0.4 -2.7,6.5 -1.4,1.1 -0.4,5 0.6,2.7 -0.4,1.9 2.6,3.3 0.5,2.3 2.1,3.2 2.6,2.1 0.3,2.9 0.6,1.8 2.9,-5.9 3.3,-3.4 3.8,1.1 3.6,0.4 0.5,-4.5 2.2,-3.2 3,-2 4.6,2.1 3.6,2.4 4.1,0.6 4.2,1.2 1.6,-3.8 0.8,-0.5 2.6,0.6 6.2,-3.1 2.2,1.3 1.8,-0.2 0.9,-1.5 2,-0.6 4.3,0.7 3.6,0.1 1.8,-0.6 -0.9,-2.1 -4.2,-2.5 -1.5,-3.8 -2.4,-2.7 -3.8,-3.4 -0.1,-2 -3.1,-2.6 -3.8,-2.5 z" data-id="CF" data-name="Central African Rep." data-nom="République centrafricaine" id="CF" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M608.8,142L602.2,141L607.9,138.4L607.5,132.4L605.6,130.1L601.1,129.3L593,133.1L587.5,138.9L590.4,141L592,144.3L585.7,149.8L582.5,149.6L576.3,154L580.5,148.8L575.7,147L571.2,147.9L568.8,151.3L562.9,151.2L555.7,152L550.6,149.6L545.6,150L544.1,147.1L542,145.8L538.2,146.3L533,146.6L528.6,148.4L530.6,150.7L523.6,153.5L522.2,150.2L517.8,151.2L506,151.8L499.6,150.6L508.1,148L505.3,145.2L500.9,145.6L496.2,144.6L488.7,142.7L484.9,140.4L480.4,140.1L477.1,141.7L471.2,142.6L475.1,138.5L465.7,142.1L464.3,137.4L462.2,136.8L458.4,139.3L453.9,140.5L453.7,138.3L445.5,139.7L436.7,142L431.5,141.4L424.5,143L418.3,145.3L414.6,144.8L411.3,142.2L405.4,140.9L405.4,140.9L381.1,161.1L345.7,193.5L349.9,193.6L352.6,195.2L353.2,197.8L353.4,201.7L361,198.4L367.4,196.5L366.9,199.5L367.6,201.9L369.3,204.6L368.2,208.8L366.7,215.6L371.3,219.4L368.2,223.1L363.1,226L363.1,226L360.6,229.1L362.7,233.5L359.6,238.4L363.7,241L360.1,244.7L358.8,250.2L365.7,252.7L367.3,255.4L372.7,261.5L373.4,261.5L387.3,261.5L401.9,261.5L406.7,261.5L421.7,261.5L436.2,261.5L450.9,261.5L465.7,261.5L482.4,261.5L499.2,261.5L509.3,261.5L510.6,259.1L512.2,259.1L511.4,262.5L512.4,263.5L515.6,263.9L520.2,264.9L524,266.8L528.4,266L533.7,267.6L533.7,267.6L536.9,265.2L540.1,264.2L541.9,262.7L543.4,261.9L547.4,263.1L550.7,263.3L551.5,264.1L551.6,267.6L556.8,268.6L555.1,270.3L556.3,272.2L554.4,274.5L556.2,275.3L554.3,277.4L554.3,277.4L555.5,277.6L556.8,276.7L557.3,278.1L560.7,278.8L564.5,278.9L568.3,279.5L572.3,280.7L573.1,282.7L574.5,287.4L572.1,289.4L568.3,288.6L567.3,284.8L566.4,288.7L562.6,292.1L561.8,295L560.7,296.7L556.6,298.7L556.6,298.7L552.9,302.1L550.9,304.3L553.6,304.7L558.1,302.7L561,301L562.6,300.7L565.2,301.3L566.9,300.4L569.7,299.6L574.4,298.8L574.4,298.8L574.4,298.8L574.7,297L574.4,297.1L572.7,297.4L570.9,296.8L573.2,294.7L575.1,294L579,293.1L583.6,292.2L585.4,293.4L587.3,292L589.2,291.2L590.1,291.6L590.2,291.7L596.9,287.5L599.6,286.3L607.3,286.3L616.6,286.3L617.6,284.7L619.3,284.4L621.8,283.5L624.5,280.7L627.7,275.8L633.2,271.1L634.3,272.8L638,271.7L639.5,273.5L636.7,282L638.8,285.5L644.7,284.7L652.8,284.5L642.4,289.6L640.9,294.8L644.6,295.3L651.7,290.8L657.5,288.4L669.7,284.7L677.2,280.6L674.6,278.4L675.6,273.9L668.5,280.9L659.9,281.7L654.4,278.6L654.3,274L654.9,267.2L661,263.1L657.7,260L650.1,260.6L638,265.8L627.1,274L622.5,275L630.3,269.3L640.4,261L647.6,258.3L653.3,253.9L658.5,253.4L665.8,253.5L675.8,254.8L684.4,253.8L692.2,248.7L700.9,246.5L705.1,244.4L709.3,242.1L711.3,235.3L710.2,233L706.8,232.2L706.8,227.1L704.5,225.2L697.6,223.6L694.8,220.2L690,216.8L693.4,213.1L691.4,206L688.8,198.5L687.8,193.3L683.5,196L676.1,202.5L668,205.7L666.4,202.3L662.7,201.3L664.9,194L667.5,189.1L659.8,188.6L659.7,186.4L656.1,183.1L653.1,181.1L648.6,182.6L644.4,182.1L637.8,180.5L633.9,181.8L630.1,190.8L629.1,196.1L620.3,202.2L623.4,206.7L623.9,211.7L622.2,215.7L617.5,219.8L610,224L601,226.8L602.7,230L600.5,239.6L594.9,245.9L590.3,247.8L585.9,242L585.8,235.2L587.5,229.2L591.1,224L586.3,223.4L578.8,223L575.2,220.5L570.4,218.9L568.7,216L565.4,213.8L558.4,211.2L551.3,212.4L552,207.9L553.5,202.4L547.5,201.4L552.4,194.6L557.3,190L566.7,183.5L575.3,178.9L580.9,178.2L583.8,174.5L588.9,172.1L595.3,171.7L603,167.9L605.9,165.5L613.3,160.8L616.5,158L619.7,159.7L626.2,158.8L637,155L639.3,152.3L638.5,149.4L643.5,146.5L645.2,143.8L641.7,141.2L636.3,140.4L630.8,140L626.2,145.9L619.7,150.5L612.5,154.5L611.2,150.8L615.4,146.8L613.2,143.3L604.5,147.5L608.8,142Z M640.7,122.9L646.4,119.7L635.2,121L629.4,123.1L622.3,127.7L619,132.9L624.6,133L618.5,135.3L620.3,137.2L626.2,138L633.5,139.5L647.3,140.7L655.2,140.1L658.4,138.5L660.4,140.3L663.7,140.6L665.7,143.9L662.2,145.3L669.3,147.1L673.9,149.7L674.4,151.6L674,154L665.4,159.4L662.2,162.1L662.4,164.1L653.2,164.8L645.2,164.9L639.8,169.1L642.2,171L655.2,170.1L656.1,168.5L660.8,171.2L665.5,174.1L663.1,175.7L666.9,178.5L674.5,181.8L685.2,184.1L685.5,182.1L682.7,178.6L679.2,173.7L687.7,178.3L692.4,179.8L696,175.7L696,170.1L695,168.6L690.6,166.1L687.9,162.8L690.2,159.6L696,158.9L699.8,164.3L703.8,166.7L714.5,160.2L717.8,156.3L711.4,156L708.2,150.9L702.3,149.7L694.6,146.2L703.6,143.7L702.8,138.7L700.6,136.6L692.3,134.5L690.4,131.2L682.2,132.4L683.3,130.1L679.7,127.6L672.9,125L667.7,127.1L658.7,128.6L662,125.2L659.7,119.9L648.1,122L641,126.1L640.7,122.9Z M749.6,77.8L742.6,77.6L735.7,77.3L725.5,77.9L724.1,77.5L713.8,77.7L707.4,78.1L702.3,78.7L697.3,80.7L695,79.7L691.1,79.5L684.4,80.9L677,81.5L672.9,81.6L666.9,82.4L665.8,83.7L668.3,84.9L669.1,86.5L673.5,88L685.9,87.7L693.1,88.2L685.9,89.7L683.7,89.3L674.4,89.1L673.3,91.3L676.3,93L673.5,94.6L666,95.7L661.1,97.4L665.9,98.3L667.6,101.3L660.1,99.3L657.6,99.6L655.6,103L647.6,104.1L645.6,106.4L652.3,106.7L657.2,107.3L668.9,106.5L677.3,107.9L689.9,104.9L690.9,103.8L684.5,104L685,102.9L691.5,101.5L695.1,99.6L701.9,98.3L706.9,96.7L706.1,94.5L709.4,93.7L705.1,93.1L716.2,92.7L719.4,91.8L727.3,91L736.6,87.5L743.4,86.4L753.7,83.9L746.3,83.9L750.2,83L759.2,82.2L768.9,80.6L770,79.5L764.8,78.5L758.1,78.1L749.6,77.8Z M533.3,123.1L530.5,122.1L516.4,125.3L511.3,127.3L503.5,131.2L508.9,132.6L515.1,132.5L503.6,134.6L503.6,136.5L509.2,136.6L518.2,136.2L524.7,137.4L518.5,138.4L513,138.1L505.9,139L502.6,139.6L503.2,143.8L507.4,143.2L511.5,144.7L511.2,147.2L519,146.7L530.2,145.9L539.6,144.1L544.6,143.7L550.3,145.2L557,146L560.1,144.1L559.4,142L566.4,141.6L569,139.2L564,136.7L559.8,134.1L562.2,130.5L564.9,125.4L562.7,123.4L559.7,122.5L555.5,123.3L552.7,128.6L548.4,130.7L550.6,125.6L548.9,123.9L541.6,126.6L539,124L528.6,125.5L533.3,123.1Z M704.2,251L708.1,247.2L709.5,245.5L707.4,245.2L702.5,247.4L698.3,250.9L690.2,260.7L684.9,264.4L686.5,266.1L682.7,268.3L682.9,270.2L692.5,270.3L697.9,270L702.3,271.5L697.9,274.4L700.8,274.6L708.1,269.2L709.3,270L706.8,275.1L709.8,276.3L712.1,276.1L715.6,270.6L715.1,266.7L715.4,263.4L711.7,264.5L714.5,259.9L710.2,258L707.5,259.5L703.6,257.8L706,255.7L703.1,254.4L699.3,256.4L704.2,251Z M629.8,103.4L622.7,103.1L618.9,105.1L621.5,106.6L628.5,107.2L629.9,109.3L627.7,111.7L626.2,114.5L634.7,116.1L640.2,116.7L648.2,116.6L659.8,115.8L664.1,116.4L670.8,115.4L674.3,114L675.3,112L673,110.1L667.2,109.8L659.2,110.2L652.2,111.3L647.1,110.9L642.3,110.6L641.1,109.5L638,108.4L640.8,106.5L639.4,104.9L632.1,105L629.8,103.4Z M574.6,107.7L576.4,105.4L573.3,104.9L567.6,106.6L566.9,111.3L560.8,110.9L558,108L549.8,106.4L544.4,107.8L532.8,112.6L536.9,113.4L554.7,112.9L544.1,115.1L542.6,116.7L548.5,116.6L560.7,114.4L574.5,113.6L579.6,111.3L581.9,108.9L578.2,108.7L573.9,109.5L574.6,107.7Z M615.6,163L612.9,162.5L607.9,167.7L604.3,172.1L598.6,174.9L604.9,174.3L604.1,177.7L612.3,174.7L618.5,171.7L619.3,174.3L625.2,175.6L630.1,173.8L628.2,172L624.8,172.4L626.1,169.7L622.4,168L619,166.1L617.5,164.6L614.7,165.5L615.6,163Z M671.1,91.6L671.7,88.8L667,88L662.3,87.1L660.7,84.9L652.5,85.1L652.8,86L648.9,86.3L644.8,87.6L639.9,89.5L639.6,91.4L641.6,92.9L648.1,92.9L643.8,94.1L641.7,95.7L643.3,97.6L650,98.2L656.8,97.8L667.3,94.4L673.7,93.1L671.1,91.6Z M498.3,132.1L500.9,129.8L510,126.2L523.8,122.6L530.2,121.3L528.6,119.2L526.7,117.7L517.3,117.5L513.2,116.4L499.2,117.2L498.9,120.3L491.3,123.6L483.9,127.4L479.6,129.6L485.5,132.3L484.9,134.6L498.3,132.1Z M368.1,264.5L368.3,261.1L365.1,258.5L364.7,255.6L364.6,253.5L360.5,252.8L358.1,251.9L354,250.5L352.6,252L352,255.3L356.3,256.4L355.9,258.2L358.8,260.4L358.8,262.6L365.1,265.4L368.1,264.5Z M590.7,119.5L583.6,121.9L584.5,125.3L577.1,124.6L575.4,126.3L581.2,130.2L582.1,132.2L585.5,132.7L593.9,130.7L599,126L595.2,123.8L601.2,121.4L601.7,119.9L594.2,120.5L590.7,119.5Z M613.7,105.2L612.6,105.9L607.8,105.6L600.2,107.2L596.4,107.1L592.1,110.9L598.7,110.5L595.3,113.4L598.5,114.2L605.3,113.7L611.1,110L613.9,107.5L613.7,105.2Z M554.8,100.8L548.8,101.5L543.3,101.4L531.2,104.5L519.6,108.2L519.6,108.2L523.2,109.2L530.2,108.5L540,106.4L543.8,106.1L549,104.5L554.8,100.8Z M680.1,123.2L675.7,120.4L667.3,119.9L665.2,120.2L663.5,122L665.5,124.8L666.4,125.1L671.2,124.4L675.3,124.5L679.4,124.6L680.1,123.2Z M586.4,144.1L585.6,142.1L585.3,141.1L583.7,140.1L580.7,138.6L575.8,140.9L570.8,142.6L574.3,145L578.1,144.4L582.2,146L586.4,144.1Z M347.4,229.8L345.5,231.8L344.1,234.4L345,236.3L344.4,239.1L345.1,241.9L347,241.9L346.8,237L353.9,230.1L349,230.6L347.4,229.8Z M613,124.9L618.6,123.9L628.6,119.4L622.5,118.2L614.7,118L609.5,119.4L605.3,121.5L602.8,124.1L601,128.6L605.3,128.8L613,124.9Z M617.4,97.7L617.5,95.5L610.1,93.8L604,93.2L601.9,94.9L604.7,96L599.4,97.4L607.1,97.6L611.1,99.1L616.3,99.6L617.4,97.7Z M659,276.7L658.3,273.7L655.8,275.6L656.3,277.7L661.9,280.3L663.8,279.9L667.1,277.4L662.4,277.5L659,276.7Z M660.2,154.8L663.9,153.1L664.9,152.4L666.3,150.1L664,148.6L659.8,149.3L656,152.4L655.3,155L660.2,154.8Z M631.1,98.9L634.1,97.2L631.8,95.6L630.1,95.3L625.7,95.2L623.6,97L622.9,98.8L624.5,99.9L631.1,98.9Z M673.4,260.8L673.6,259.7L669.5,257.1L663.6,255.5L661.7,256.1L665.2,259L670.9,260.9L673.4,260.8Z M628.3,182.8L627.9,181.6L626.2,181.5L623.4,183.2L623,183.6L623.1,185.3L624.8,185.8L628.3,182.8Z M622.4,113.8L622.7,112.2L621.3,110.5L614.4,111.8L610,114L613.2,115.3L618.3,115.7L622.4,113.8Z M618.7,179.6L619.5,178.5L613.5,178.4L608.6,181.1L608.6,182.6L611.6,182.8L618.7,179.6Z M635.3,101.4L636.3,100.9L634.8,100L627.6,99.9L627,101.2L633.4,101.5L635.3,101.4Z M576.9,100.6L580.1,99.2L576,98.4L570.1,98.9L565,100.4L568.3,101.9L576.9,100.6Z M584.7,96.4L581.4,95.5L579.8,95.3L574.1,96.6L573.1,97.3L579.1,97.3L584.7,96.4Z M572.4,121.6L570.7,120.5L565.3,120.7L563.2,121.4L565.4,125L572.4,121.6Z" data-id="CA" data-name="Canada" data-nom="Canada" id="CA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1024.3,270.6 -5.4,-1.9 -1,1.4 -4.2,0 -1.3,1 -2.3,-0.6 0.2,1.6 -3.5,3.5 0,2.8 2.4,-0.9 1.8,2.7 2.2,1.3 2.4,-0.3 2.7,-2.1 0.9,1 2.4,-0.2 0.9,-2.5 3.8,0.8 2.1,-1.1 0.3,-2.5 -2.6,-0.2 -2.3,-1.1 0.7,-1.6 -0.2,-1.1 z" data-id="CH" data-name="Switzerland" data-nom="Suisse" id="CH" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M601.1,708.9L597.4,701.8L598.5,695.6L595.3,692.9L594.1,688.3L591,684L589.8,687.3L587.1,688.9L589.2,697.9L590.7,708.3L590.6,722.5L590.6,735.7L591.5,748L589.6,755.8L591.7,763.6L591.2,768.9L594.4,778.4L594.3,787.9L593.1,798.1L592.5,808.6L590.4,808.8L592.8,816.1L596.1,822.4L595,826.7L596.9,838.3L598.4,847.1L601.9,848L600.8,840.3L604.8,841.9L606.6,854.6L600.2,852.5L602.2,862.7L599.5,868.2L607.7,870L604.3,874.8L604.5,880.8L609.5,891.4L613.7,895.5L613.9,899.1L617.2,902.9L624.7,906.4L624.7,906.4L632.1,910.6L638.3,912.6L640.3,912.5L638.5,906.8L641.9,904.6L643.6,903.1L647.8,903.1L643,902.2L631,901.4L627.5,897.8L625.7,893.2L622.6,893.6L620,891.4L616.9,884.8L619.6,882.1L619.7,878.2L617.9,875L618.6,869.7L617.5,861.5L615.7,857.8L617.5,856.7L616.2,854.4L613.4,853.1L614.2,850.5L611.1,848.2L607.5,841.1L609.1,839.9L605.8,832.3L605.1,825.9L604.8,820.2L607.3,817.8L604,811.5L602.5,805.6L605.4,801.3L604,795.9L605.6,789.7L604.3,783.8L602.7,782.6L597.8,771.7L599.9,765.2L598.2,759L599.1,753.2L601.7,747.3L604.9,743.3L602.9,740.8L603.8,738.8L602.2,728.2L607.8,725L608.9,718.4L608,716.8L604.2,717.7L601.1,708.9Z M648.4,905.2L644.7,904.5L641.4,907L641.6,911.1L640.4,913.9L633.2,911.7L624.6,907.7L620.1,906.4L629.8,913.2L636.1,916.4L643.6,919.8L648.9,920.7L653.2,922.5L656.2,923L658.5,923.1L661.7,921.3L662.2,918.9L659.3,918.7L654.3,918.7L648.4,905.2Z" data-id="CL" data-name="Chile" data-nom="Chili" id="CL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1600.4,256.8L1594.3,250.7L1589.9,247L1586.1,244.3L1578.4,238.2L1572.5,235.9L1564,234.1L1557.8,234.3L1552.7,235.4L1551,238.4L1554.7,239.9L1557.2,243.2L1556,245.2L1556.1,251.7L1558,254.4L1553.6,258.3L1546.3,256L1546.9,260.6L1547.2,266.8L1549.9,269.4L1552.3,268.6L1557.7,269.6L1560.2,267.3L1565.3,269.3L1572.5,273.6L1573.2,275.8L1568.9,275.1L1562.1,275.9L1559.7,277.7L1558.3,281.8L1552,284.2L1548.9,287.5L1543,286.2L1539.8,285.7L1539.4,289.7L1542.3,292L1544.2,294.1L1541.7,296.1L1539.8,299.4L1534.9,301.6L1527.4,301.8L1520.2,304L1515.8,307.3L1512.6,305.3L1506.4,305.4L1497.1,301.6L1491.6,300.7L1485.2,301.5L1474,300.2L1468.5,300.3L1463.8,296.7L1458.9,291L1455.5,290.3L1447.6,286.5L1440.4,285.6L1434,284.6L1431,281.9L1429.7,274.6L1423.9,269.6L1415.8,267.3L1410.1,264L1406.8,259.6L1405.1,260.1L1403.3,264.3L1399.5,264.9L1402,271.1L1400.4,273.9L1389.7,271.9L1390.7,283L1388.7,284.4L1379.7,286.8L1388.4,297.5L1385.5,299.1L1387.2,302.6L1387,304L1380.2,307.4L1379.2,309.8L1372.8,310.6L1372.2,314.6L1366.5,313.7L1363.3,314.9L1359.3,317.9L1360.4,319.4L1359.4,320.9L1362.4,326.8L1364,326.2L1367.5,327.6L1368.1,330.1L1369.9,333.8L1371.3,335.7L1376,338.7L1378.9,343.7L1388.3,346.3L1395.9,353.8L1396.7,359L1399.7,362.3L1400.3,365.6L1396.2,364.7L1399.4,371.7L1405.6,375.7L1414.1,380.1L1416,378.6L1420.7,380.6L1427.1,384.7L1430.3,385.6L1432.8,388.7L1437.3,389.9L1442.3,392.7L1448.7,394.2L1455.2,394.8L1458.2,393.4L1459.7,398.5L1462.3,393.7L1464.9,392.1L1469.1,393.6L1472,393.7L1474.7,395.5L1478.9,394.7L1482.8,389.9L1488.1,385.9L1493,387.4L1496.2,384.8L1499.7,388.7L1498.5,391.4L1504.6,392.3L1507.6,391.9L1510.3,395.6L1513,397.1L1514.3,402L1515.1,407.3L1511,412.6L1511.7,420.1L1517.3,419.1L1519.6,424.9L1523.3,426.2L1522.5,431.4L1527,433.8L1529.5,435L1533.3,433.2L1533.9,435.8L1534.6,437.3L1537.5,437.4L1535.6,430.2L1538.3,429.2L1541,427.7L1545.3,427.7L1550.6,427L1554.7,423.6L1557.7,426L1562.9,427.1L1562.7,430.8L1565.7,433.4L1571.6,435L1574,434L1581.7,436L1580.8,438.5L1583,443.1L1586,442.7L1586.8,436L1592.4,435.1L1599.6,431.9L1602.1,428.7L1604.4,430.8L1607.2,427.9L1613.3,427.2L1619.9,421.9L1626.2,416L1629.5,408.4L1631.8,400L1633.9,393.1L1636.7,392.6L1636.6,387.5L1635.8,382.4L1632,380.4L1629.5,377L1632.3,375.3L1630.7,370.6L1625.3,365.7L1619.9,359.9L1615.3,353.6L1608.2,350.1L1609.1,345.5L1612.9,342.3L1613.9,338.8L1620.6,337L1618.2,333.6L1614.8,333.4L1609,330.9L1605.1,335.5L1600.2,333.6L1598.7,330.7L1594,329.7L1589.3,325.3L1590.5,322.3L1595.5,322L1596.7,317.9L1600.3,313.5L1603.7,311.3L1608.1,314.6L1606.2,318.8L1608.5,321.3L1607.1,324.3L1611.9,322.5L1614.3,319.6L1620.6,317.7L1622.7,313.7L1626.5,310.3L1627.5,305.9L1631.1,307.9L1635.7,308.1L1633,304.8L1639.3,302.2L1639.2,298.7L1644.7,302.3L1644.7,302.3L1642.8,299.2L1645.3,299.1L1641.5,291.8L1636.8,286.5L1639.7,284.3L1646.5,285.4L1645.9,279.4L1643.1,272.6L1643.5,270.3L1642.2,264.7L1635.3,266.5L1632.7,269L1625.2,269L1619.2,263.2L1610.3,258.7L1600.4,256.8Z M1587.2,453.3L1587.8,449.7L1589.8,446.9L1588.2,444.4L1585,444.3L1579.2,446.1L1577,448.9L1578,454.4L1582.9,456.4L1587.2,453.3Z" data-id="CN" data-name="China" data-nom="Chine" id="CN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 946.5,506.2 -2.3,0.9 -1.3,0.8 -0.9,-2.7 -1.6,0.7 -1,-0.1 -1,1.9 -4.3,-0.1 -1.6,-1 -0.7,0.6 -1.1,0.5 -0.5,2.2 1.3,2.6 1.3,5.1 -2,0.8 -0.6,0.9 0.4,1.2 -0.3,2.8 -0.9,0 -0.3,1.8 0.6,3.1 -1.2,2.8 1.6,1.8 1.8,0.4 2.3,2.7 0.2,2.5 -0.5,0.8 -0.5,5.2 1.1,0.2 5.6,-2.4 3.9,-1.8 6.6,-1.1 3.6,-0.1 3.9,1.3 2.6,-0.1 0.2,-2.5 -2.4,-5.5 1.5,-7.2 2.3,-5.3 -1.4,-9.1 -3.8,-1.6 -2.7,0.2 -1.9,1.6 -2.5,-1.3 -1,-2.1 -2.5,-1.4 z" data-id="CI" data-name="Côte d'Ivoire" data-nom="Côte d'Ivoire" id="CI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1060.1,502.9 0.2,-4.3 -0.5,-4.2 -2.2,-4.1 -1.6,0.4 -0.2,2 2.3,2.6 -0.6,1.1 -0.3,2.1 -4.6,5 -1.5,4 -0.7,3.3 -1.2,1.4 -1.1,4.5 -3,2.6 -0.8,3.2 -1.2,2.6 -0.5,2.6 -3.9,2.2 -3.2,-2.6 -2.1,0.1 -3.3,3.7 -1.6,0.1 -2.7,6.1 -1.4,4.5 0,1.8 1.4,0.9 1.1,2.8 2.6,1.1 2.2,4.2 -0.8,5 9.2,0.2 2.6,-0.4 3.4,0.8 3.4,-0.8 0.7,0.3 7.1,0.3 4.5,1.7 4.5,1.5 0.4,-3.5 -0.6,-1.8 -0.3,-2.9 -2.6,-2.1 -2.1,-3.2 -0.5,-2.3 -2.6,-3.3 0.4,-1.9 -0.6,-2.7 0.4,-5 1.4,-1.1 2.7,-6.5 0.9,-1.7 -1.8,-4.4 -0.8,-2.6 -2.5,-1.1 -3.3,-3.7 1.2,-3 2.5,0.6 1.6,-0.4 3.1,0.1 -3.1,-5.8 z" data-id="CM" data-name="Cameroon" data-nom="Cameroun" id="CM" style="fill: rgb(242, 242, 242); fill-rule: evenodd; fill-opacity: 1; stroke-opacity: 0.5; stroke-width: 1;"></path>
-<path d="m 1124.9,539.4 -4.3,-0.7 -2,0.6 -0.9,1.5 -1.8,0.2 -2.2,-1.3 -6.2,3.1 -2.6,-0.6 -0.8,0.5 -1.6,3.8 -4.2,-1.2 -4.1,-0.6 -3.6,-2.4 -4.6,-2.1 -3,2 -2.2,3.2 -0.5,4.5 -0.3,3.8 -1.6,3.4 -1.1,4 -0.7,5.6 0.3,3.6 -0.9,2.2 -0.2,2.4 -0.6,2 -3.7,3.1 -2.6,3.2 -2.5,6.2 0.2,5.3 -1.4,2 -3.3,3.1 -3.4,4 -2,-1.1 -0.4,-1.8 -3.1,-0.1 -1.9,2.4 -1.5,-0.6 -2,1.3 -0.9,1.7 -0.2,2.7 -1.5,0.7 0.8,2 2.3,-0.9 1.7,0.1 1.9,-0.7 16.6,0.1 1.3,4.7 1.6,3.8 1.3,2.1 2.1,3.3 3.7,-0.5 1.9,-0.9 3,0.9 0.9,-1.6 1.5,-3.7 3.4,-0.3 0.3,-1.1 2.9,0 -0.5,2.3 6.8,0 0,4 1.2,2.4 -0.9,3.8 0.3,4 1.9,2.3 -0.5,7.6 1.4,-0.6 2.4,0.2 3.5,-1 2.6,0.4 1.9,0.1 0.3,2 2.6,-0.1 3.5,0.6 1.8,2.8 4.5,0.9 3.4,-2 1.2,3.4 4.3,0.8 2,2.8 2.1,3.5 4.3,0 -0.3,-6.9 -1.5,1.2 -3.9,-2.5 -1.4,-1.1 0.8,-6.4 1.2,-7.5 -1.2,-2.8 1.6,-4.1 1.6,-0.7 7.5,-1.1 1,0.3 0.2,-1.1 -1.5,-1.7 -0.7,-3.5 -3.4,-3.5 -1.8,-4.5 1,-2.7 -1.5,-3.6 1.1,-10.2 0.1,0.1 -0.1,-1.1 -1.4,-2.9 0.6,-3.5 0.8,-0.4 0.2,-3.8 1.6,-1.8 0.1,-4.8 1.3,-2.4 0.3,-5.1 1.2,-3 2.1,-3.3 2.2,-1.7 1.8,-2.3 -2.3,-0.8 0.3,-7.5 0,0 -5,-4.2 -1.4,-2.7 -3.1,1.3 -2.6,-0.4 -1.5,1.1 -2.5,-0.8 -3.5,-5.2 -1.8,0.6 -3.6,-0.1 z" data-id="CD" data-name="Dem. Rep. Congo" data-nom="République démocratique du Congo" id="CD" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1080.3,549.9 -3.6,-0.4 -3.8,-1.1 -3.3,3.4 -2.9,5.9 -0.4,3.5 -4.5,-1.5 -4.5,-1.7 -7.1,-0.3 -0.4,2.8 1.5,3.3 4.2,-0.5 1.4,1.2 -2.4,7.4 2.7,3.8 0.6,4.9 -0.8,4.3 -1.7,3 -4.9,-0.3 -3,-3 -0.5,2.8 -3.8,0.8 -1.9,1.6 2.1,4.2 -4.3,3.5 4.6,6.7 2.2,-2.7 1.8,-1.1 2,2.2 1.5,0.6 1.9,-2.4 3.1,0.1 0.4,1.8 2,1.1 3.4,-4 3.3,-3.1 1.4,-2 -0.2,-5.3 2.5,-6.2 2.6,-3.2 3.7,-3.1 0.6,-2 0.2,-2.4 0.9,-2.2 -0.3,-3.6 0.7,-5.6 1.1,-4 1.6,-3.4 0.3,-3.8 z" data-id="CG" data-name="Congo" data-nom="République du Congo" id="CG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 578.3,497.2 1.2,-2.1 -1.3,-1.7 -2,-0.4 -2.9,3.1 -2.3,1.4 -4.6,3.2 -4.3,-0.5 -0.5,1.3 -3.6,0.1 -3.3,3 -1.4,5.4 -0.1,2.1 -2.4,0.7 -4.4,4.4 -2.9,-0.2 -0.7,0.9 1.1,3.8 -1.1,1.9 -1.8,-0.5 -0.9,3.1 2.2,3.4 0.6,5.4 -1.2,1.6 1.1,5.9 -1.2,3.7 2,1.5 -2.2,3.3 -2.5,4 -2.8,0.4 -1.4,2.3 0.2,3.2 -2.1,0.5 0.8,2 5.6,3.6 1,-0.1 1.4,2.7 4.7,0.9 1.6,-1 2.8,2.1 2.4,1.5 1.5,-0.6 3.7,3 1.8,3 2.7,1.7 3.4,6.7 4.2,0.8 3,-1.7 2.1,1.1 3.3,-0.6 4.4,3 -3.5,6.5 1.7,0.1 2.9,3.4 2.2,-17.4 0.1,-2.8 -0.9,-3.6 -2.5,-2.4 0,-4.6 3.2,-1 1.1,0.6 0.2,-2.4 -3.3,-0.7 0,-3.9 10.9,0.1 1.9,-2.2 1.6,2 1,3.8 1.1,-0.8 -1.7,-6.4 -1.4,-2.2 -2,-1.4 2.9,-3.1 -0.2,-1.5 -1.5,-1.9 -1,-4.2 0.5,-4.6 1.3,-2.1 1.2,-3.4 -2,-1.1 -3.2,0.7 -4,-0.3 -2.3,0.7 -3.8,-5.5 -3.2,-0.8 -7.2,0.6 -1.3,-2.2 -1.3,-0.6 -0.2,-1.3 0.8,-2.4 -0.4,-2.5 -1.1,-1.4 -0.6,-2.9 -2.9,-0.5 1.8,-3.7 0.9,-4.5 1.8,-2.4 2.2,-1.8 1.6,-3.2 3.7,-1.1 z" data-id="CO" data-name="Colombia" data-nom="Colombie" id="CO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 509.1,502.6 -1.4,1.3 -1.7,-0.4 -0.8,-1.3 -1.7,-0.5 -1.4,0.8 -3.5,-1.7 -0.9,0.8 -1.4,1.2 1.5,0.9 -0.9,2 -0.1,2 0.7,1.3 1.7,0.6 1.2,1.8 1.2,-1.6 -0.3,-1.8 1.4,1.1 0.3,1.9 1.9,0.8 2.1,1.3 1.5,1.5 0.1,1.4 -0.7,1.1 1.1,1.3 2.9,1.4 0.4,-1.2 0.5,-1.3 -0.1,-1.2 0.8,-0.7 -1.1,-1 0.1,-2.5 2.2,-0.6 -2.4,-2.7 -2,-2.6 -1.2,-3.4 z" data-id="CR" data-name="Costa Rica" data-nom="Costa Rica" id="CR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 539,427.3 -4.9,-2.1 -4.3,-0.1 -4.7,-0.5 -1.4,0.7 -4.2,0.6 -3,1.3 -2.7,1.4 -1.5,2.3 -3.1,2 2.2,0.6 2.9,-0.7 0.9,-1.6 2.3,-0.1 4.4,-3.3 5.4,0.3 -2.3,1.6 1.8,1.3 7,1 1.5,1.3 4.9,1.7 3.2,-0.2 0.8,3.6 1.7,1.8 3.5,0.4 2.1,1.7 -4.1,3.5 7.9,-0.6 3.8,0.5 3.7,-0.3 3.8,-0.8 0.8,-1.5 -3.9,-2.6 -4,-0.3 0.6,-1.7 -3.1,-1.3 -1.9,0 -3,-2.8 -4.2,-4 -1.8,-1.5 -5.2,0.8 -1.9,-2.4 z" data-id="CU" data-name="Cuba" data-nom="Cuba" id="CU" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1049.4,248.5 -2.1,0.6 -1.4,-0.7 -1.1,1.2 -3.4,1.2 -1.7,1.5 -3.4,1.3 1,1.9 0.7,2.6 2.6,1.5 2.9,2.6 3.8,2 2.6,-2.5 1.7,-0.5 4,1.9 2.3,-0.3 2.3,1.2 0.6,-1.4 2.2,0.1 1.6,-0.6 0.1,-0.6 0.9,-0.3 0.2,-1.4 1.1,-0.3 0.6,-1.1 1.5,0 -2.6,-3.1 -3.6,-0.3 -0.7,-2 -3.4,-0.6 -0.6,1.5 -2.7,-1.2 0.1,-1.7 -3.7,-0.6 -2.4,-1.9 z" data-id="CZ" data-name="Czech Rep." data-nom="Tchéquie" id="CZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1043.6,232.3 -2.4,-1.9 -5.5,-2.4 -2.5,1.7 -4.7,1.1 -0.1,-2.1 -4.9,-1.4 -0.2,-2.3 -3,0.9 -3.6,-0.8 0.4,3.4 1.2,2.2 -3,3 -1,-1.3 -3.9,0.3 -0.9,1.3 1,2 -1,5.6 -1.1,2.3 -2.9,0 1.1,6.4 -0.4,4.2 1,1.4 -0.2,2.7 2.4,1.6 7.1,1.2 -2.3,4.2 -0.5,4.5 4.2,0 1,-1.4 5.4,1.9 1.5,-0.3 2.6,1.7 0.6,-1.6 4.4,0.3 3.4,-1.2 2.4,0.2 1.7,1.3 0.4,-1.1 -1,-4 1.7,-0.8 1.5,-2.9 -2.9,-2.6 -2.6,-1.5 -0.7,-2.6 -1,-1.9 3.4,-1.3 1.7,-1.5 3.4,-1.2 1.1,-1.2 1.4,0.7 2.1,-0.6 -2.3,-3.9 0.1,-2.1 -1.4,-3.3 -2,-2.2 1.2,-1.6 -1.4,-3.1 z" data-id="DE" data-name="Germany" data-nom="Allemagne" id="DE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1217.8,499.2 -2.5,-1.7 3.1,-1.5 0.1,-2.7 -1.4,-1.9 -1.6,1.5 -2.4,-0.5 -1.9,2.8 -1.8,3 0.5,1.7 0.2,2 3.1,0.1 1.3,-0.5 1.3,1.1 2,-3.4 z" data-id="DJ" data-name="Djibouti" data-nom="Djibouti" id="DJ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1027.3,216.1L1024.7,215.2L1024,213.6L1025.3,211.6L1025.2,208.6L1021.6,210.2L1020.1,211.9L1016.1,212.3L1014.9,214L1014.2,215.6L1014.6,221.7L1016.7,225.1L1020.3,225.9L1023.3,225L1021.8,222L1024.9,217.7L1026.3,218.4L1027.3,216.1Z M1035.9,221.2L1034.2,218.2L1027.5,220.2L1028.4,222.7L1033.5,226.1L1035.9,221.2Z" data-id="DK" data-name="Denmark" data-nom="Danemark" id="DK" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 579.6,457.4 0,1.8 1.4,1 2.6,-4.4 2,-0.9 0.6,1.6 2.2,-0.4 1.1,-1.2 1.8,0.3 2.6,-0.2 2.5,1.3 2.3,-2.6 -2.5,-2.3 -2.4,-0.2 0.3,-1.9 -3,0.1 -0.8,-2.2 -1.4,0.1 -3.1,-1.6 -4.4,-0.1 -0.8,1.1 0.2,3.5 -0.7,2.4 -1.5,1.1 1.2,1.9 -0.2,1.8 z" data-id="DO" data-name="Dominican Rep." data-nom="République dominicaine" id="DO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1021,336.9 -3.6,0.4 -2.2,-1.5 -5.6,0 -4.9,2.6 -2.7,-1 -8.7,0.5 -8.9,1.2 -5,2 -3.4,2.6 -5.7,1.2 -5.1,3.5 2,4.1 0.3,3.9 1.8,6.7 1.4,1.4 -1,2.5 -7,1 -2.5,2.4 -3.1,0.5 -0.3,4.7 -6.3,2.5 -2.1,3.2 -4.4,1.7 -5.4,1 -8.9,4.7 -0.1,7.5 0,0.4 -0.1,1.2 20.3,15.5 18.4,13.9 18.6,13.8 1.3,3 3.4,1.8 2.6,1.1 0.1,4 6.1,-0.6 7.8,-2.8 15.8,-12.5 18.6,-12.2 -2.5,-4 -4.3,-2.9 -2.6,1.2 -2,-3.6 -0.2,-2.7 -3.4,-4.7 2.1,-2.6 -0.5,-4 0.6,-3.5 -0.5,-2.9 0.9,-5.2 -0.4,-3 -1.9,-5.6 -2.6,-11.3 -3.4,-2.6 0,-1.5 -4.5,-3.8 -0.6,-4.8 3.2,-3.6 1.1,-5.3 -1,-6.2 1,-3.3 z" data-id="DZ" data-name="Algeria" data-nom="Algérie" id="DZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 553.1,573.1 -2.4,-1.5 -2.8,-2.1 -1.6,1 -4.7,-0.9 -1.4,-2.7 -1,0.1 -5.6,-3.6 -3.9,2.5 -3.1,1.4 0.4,2.6 -2.2,4.1 -1,3.9 -1.9,1 1,5.8 -1.1,1.8 3.4,2.7 2.1,-2.9 1.3,2.8 -2.9,4.7 0.7,2.7 -1.5,1.5 0.2,2.3 2.3,-0.5 2.3,0.7 2.5,3.2 3.1,-2.6 0.9,-4.3 3.3,-5.5 6.7,-2.5 6,-6.7 1.7,-4.1 -0.8,-4.9 z" data-id="EC" data-name="Ecuador" data-nom="Équateur (pays)" id="EC" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1129.7,374.8 -5.5,-1.9 -5.3,-1.7 -7.1,0.2 -1.8,3 1.1,2.7 -1.2,3.9 2,5.1 1.3,22.7 1,23.4 22.1,0 21.4,0 21.8,0 -1,-1.3 -6.8,-5.7 -0.4,-4.2 1,-1.1 -5.3,-7 -2,-3.6 -2.3,-3.5 -4.8,-9.9 -3.9,-6.4 -2.8,-6.7 0.5,-0.6 4.6,9.1 2.7,2.9 2,2 1.2,-1.1 1.2,-3.3 0.7,-4.8 1.3,-2.5 -0.7,-1.7 -3.9,-9.2 0,0 -2.5,1.6 -4.2,-0.4 -4.4,-1.5 -1.1,2.1 -1.7,-3.2 -3.9,-0.8 -4.7,0.6 -2.1,1.8 -3.9,2 -2.6,-1 z" data-id="EG" data-name="Egypt" data-nom="Égypte" id="EG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1198.1,474 -3.2,-3.1 -1.8,-5.9 -3.7,-7.3 -2.6,3.6 -4,1 -1.6,2 -0.4,4.2 -1.9,9.4 0.7,2.5 6.5,1.3 1.5,-4.7 3.5,2.9 3.2,-1.5 1.4,1.3 3.9,0.1 4.9,2.5 1.6,2.2 2.5,2.1 2.5,3.7 2,2.1 2.4,0.5 1.6,-1.5 -2.8,-1.9 -1.9,-2.2 -3.2,-3.7 -3.2,-3.6 -7.9,-6 z" data-id="ER" data-name="Eritrea" data-nom="Érythrée" id="ER" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1093.2,197.5 -5.5,0.9 -5.4,1.6 0.9,3.4 3.3,2.1 1.5,-0.8 0.1,3.5 3.7,-1 2.1,0.7 4.4,2.2 3.8,0 1.6,-1.9 -2.5,-5.5 2.6,-3.4 -0.9,-1 0,0 -4.6,0.2 -5.1,-1 z" data-id="EE" data-name="Estonia" data-nom="Estonie" id="EE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1187.6,477 -1.5,4.7 -6.5,-1.3 -0.7,5.5 -2.1,6.2 -3.2,3.2 -2.3,4.8 -0.5,2.6 -2.6,1.8 -1.4,6.7 0,0.7 0.2,5 -0.8,2 -3,0.1 -1.8,3.6 3.4,0.5 2.9,3.1 1,2.5 2.6,1.5 3.5,6.9 2.9,1.1 0,3.6 2,2.1 3.9,0 7.2,5.4 1.8,0 1.3,-0.1 1.2,0.7 3.8,0.5 1.6,-2.7 5.1,-2.6 2.3,2.1 3.8,0 1.5,-2 3.6,-0.1 4.9,-4.5 7.4,-0.3 15.4,-19.1 -4.8,0.1 -18.5,-7.6 -2.2,-2.2 -2.1,-3.1 -2.2,-3.5 1.1,-2.3 -1.3,-1.1 -1.3,0.5 -3.1,-0.1 -0.2,-2 -0.5,-1.7 1.8,-3 1.9,-2.8 -2,-2.1 -2.5,-3.7 -2.5,-2.1 -1.6,-2.2 -4.9,-2.5 -3.9,-0.1 -1.4,-1.3 -3.2,1.5 -3.5,-2.9 z" data-id="ET" data-name="Ethiopia" data-nom="Éthiopie" id="ET" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1093.4,144.4 0.8,-3.8 -5.7,-2.1 -5.8,1.8 -1.1,3.9 -3.4,2.4 -4.7,-1.3 -5.3,0.3 -5.1,-2.9 -2.1,1.4 5.9,2.7 7.2,3.7 1.7,8.4 1.9,2.2 6.4,2.6 0.9,2.3 -2.6,1.2 -8.7,6.1 -3.3,3.6 -1.5,3.3 2.9,5.2 -0.1,5.7 4.7,1.9 3.1,3.1 7.1,-1.2 7.5,-2.1 8,-0.5 0,0 7.9,-7.4 3.3,-3.3 0.9,-2.9 -7.3,-3.9 0.9,-3.7 -4.9,-4.1 1.7,-4.8 -6.4,-6.3 2.8,-4.1 -7.2,-3.7 -0.4,-3.7 z" data-id="FI" data-name="Finland" data-nom="Finlande" id="FI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1965.7,682.5L1964.1,683.5L1961.8,682.7L1959.1,684.9L1958.9,687.7L1961.8,688.5L1965.4,687.6L1967.2,684.3L1965.7,682.5Z M1976.7,674.4L1973,676.4L1971.1,676.7L1968,678L1968.2,680.4L1972.1,679.1L1976,677.5L1976.7,674.4Z" data-id="FJ" data-name="Fiji" data-nom="Fidji" id="FJ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1050.2,557.7 -0.7,-0.3 -3.4,0.8 -3.4,-0.8 -2.6,0.4 0,7.6 -8.2,0 -1.9,0.3 -1.1,4.8 -1.3,4.6 -1.3,2 -0.2,2.1 3.4,6.6 3.7,5.3 5.8,6.4 4.3,-3.5 -2.1,-4.2 1.9,-1.6 3.8,-0.8 0.5,-2.8 3,3 4.9,0.3 1.7,-3 0.8,-4.3 -0.6,-4.9 -2.7,-3.8 2.4,-7.4 -1.4,-1.2 -4.2,0.5 -1.5,-3.3 0.4,-2.8 z" data-id="GA" data-name="Gabon" data-nom="Gabon" id="GA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M963,203.2L957.5,203.7L953.9,203.3L950.2,208.1L948.3,214.2L950.5,217.2L950.6,223L953.2,220.2L954.6,221.8L952.9,224.5L953.9,226.1L959.6,227.2L959.7,227.2L962.8,231L962,234.5L962,234.5L954.9,233.9L953.9,237.9L956.5,241.2L951.4,243.1L952.7,245.5L960.2,246.5L960.2,246.5L955.9,247.8L948.6,254.3L951.1,255.5L954.6,253.2L959.1,253.9L962.4,251L964.6,252.2L972.9,250.5L979.4,250.6L983.7,247.3L981.8,244.2L984.2,242.4L984.7,238.5L978.9,237.3L977.6,235L974.7,228.1L971.5,227.1L967.4,220L967,219.4L962.2,219L966.4,213.7L967.7,208.8L962.7,208.8L958,209.6L963,203.2Z M950,227.5L945.1,223.8L941.2,224.1L942,227.3L940.9,230.5L943.8,230.4L947.3,231.7L950,227.5Z" data-id="UK" data-name="United Kingdom" data-nom="Royaume-Uni" id="GB" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1200,300.2 -7.5,-2.9 -7.7,-1 -4.5,-1.1 -0.5,0.7 2.2,1.9 3,0.7 3.4,2.3 2.1,4.2 -0.3,2.7 5.4,-0.3 5.6,3 6.9,-1 1.1,-1 4.2,1.8 2.8,0.4 0.6,-0.7 -3.2,-3.4 1.1,-0.9 -3.5,-1.4 -2.1,-2.5 -5.1,-1.3 -2.9,1 -1.1,-1.2 z" data-id="GE" data-name="Georgia" data-nom="Géorgie (pays)" id="GE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 976.8,502.1 -2.6,-0.5 -1.8,1 -2.4,-0.5 -9.7,0.3 -0.2,3.6 0.8,4.8 1.4,9.1 -2.3,5.3 -1.5,7.2 2.4,5.5 -0.2,2.5 5,1.8 5,-1.9 3.2,-2.1 8.7,-3.8 -1.2,-2.2 -1.5,-4 -0.4,-3.2 1.2,-5.7 -1.4,-2.3 -0.6,-5.1 0.1,-4.6 -2.4,-3.3 0.4,-1.9 z" data-id="GH" data-name="Ghana" data-nom="Ghana" id="GH" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 912.4,493 -0.8,0.4 -3,-0.5 -0.4,0.7 -1.3,0.1 -4,-1.5 -2.7,-0.1 -0.1,2.1 -0.6,0.7 0.4,2.1 -0.8,0.9 -1.3,0 -1.4,1 -1.7,-0.1 -2.6,3.1 1.6,1.1 0.8,1.4 0.7,2.8 1.3,1.2 1.5,0.9 2.1,2.5 2.4,3.7 3,-2.8 0.7,-1.7 1,-1.4 1.5,-0.2 1.3,-1.2 4.5,0 1.5,2.3 1.2,2.7 -0.2,1.8 0.9,1.7 0,2.3 1.5,-0.3 1.2,-0.2 1.5,-0.7 2.3,3.9 -0.4,2.6 1.1,1.3 1.6,0.1 1.1,-2.6 1.6,0.2 0.9,0 0.3,-2.8 -0.4,-1.2 0.6,-0.9 2,-0.8 -1.3,-5.1 -1.3,-2.6 0.5,-2.2 1.1,-0.5 -1.7,-1.8 0.3,-1.9 -0.7,-0.7 -1.2,0.6 0.2,-2.1 1.2,-1.6 -2.3,-2.7 -0.6,-1.7 -1.3,-1.4 -1.1,-0.2 -1.3,0.9 -1.8,0.8 -1.6,1.4 -2.4,-0.5 -1.5,-1.6 -0.9,-0.2 -1.5,0.8 -0.9,0 -0.3,-2.3 z" data-id="GN" data-name="Guinea" data-nom="Guinée" id="GN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 882.8,488.5 5,0.1 1.4,-0.9 1,0 2.1,-1.5 2.4,1.4 2.4,0.1 2.4,-1.5 -1.1,-1.8 -1.8,1.1 -1.8,-0.1 -2.1,-1.5 -1.8,0.1 -1.3,1.5 -6.1,0.2 -0.7,2.8 z" data-id="GM" data-name="Gambia" data-nom="Gambie" id="GM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 900.2,492.1 -10.3,-0.3 -1.5,0.7 -1.8,-0.2 -3,1.1 0.3,1.3 1.7,1.4 0,0.9 1.2,1.8 2.4,0.5 2.9,2.6 2.6,-3.1 1.7,0.1 1.4,-1 1.3,0 0.8,-0.9 -0.4,-2.1 0.6,-0.7 0.1,-2.1 z" data-id="GW" data-name="Guinea-Bissau" data-nom="Guinée-Bissau" id="GW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1040.1,557.8 -9.2,-0.2 -1.9,7.2 1,0.9 1.9,-0.3 8.2,0 0,-7.6 z" data-id="GQ" data-name="Eq. Guinea" data-nom="Guinée équatoriale" id="GQ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1113.4,307.5L1110.7,305.9L1111,308.9L1106.4,309.5L1102.5,307.4L1098.6,309.1L1094.8,308.9L1093.8,309.1L1093.1,310.2L1090.3,310.1L1088.4,311.4L1085.1,312L1085.1,313.6L1083.5,314.5L1083.4,316.6L1081.3,319.6L1081.8,321.5L1084.7,325.1L1087,328.1L1088.3,332.4L1090.6,337.5L1095.2,340.4L1098.6,340.3L1096.2,334.6L1099.5,333.9L1097.6,330.6L1102.6,332.3L1102.2,328.6L1099.5,326.8L1096.3,323.8L1098.1,322.4L1095.3,319.4L1093.7,315.6L1094.6,314.3L1097.6,317.5L1100.5,317.5L1103,316.5L1099.1,312.9L1105.2,311.3L1107.9,311.9L1111.1,312.1L1112.2,311.4L1113.4,307.5Z M1101.9,344.9L1101.1,347.7L1107.7,348.9L1107.7,350L1115.3,349.4L1115.8,347.5L1113,348.3L1113,347.2L1109.1,346.7L1105,347.1L1101.9,344.9Z" data-id="EL" data-name="Greece" data-nom="Grèce" id="GR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 887.4,76.3 -26,-0.4 -11.8,0.3 -5,1.3 -11.5,-0.1 -12.7,2.1 -1.6,1.7 6.7,2.1 -6.2,-1.3 -4.5,-0.3 -7,-1.4 -10.6,2.1 -2.7,-1.2 -10.4,0 -10.9,0.6 -8.9,1 -0.2,1.8 -5.3,0.5 -14.6,2.9 -4.6,1.7 8.1,1.5 -2.8,1.6 -14.9,2.2 -15.5,2.2 -2.2,1.7 6.4,2 14.5,1.2 -7.5,0.2 -10.9,1.5 3.8,3.1 3,1.5 9.4,-0.3 10.1,-0.2 7.6,0.3 8,2.9 -1.4,2.1 3.6,1.9 1.4,5.3 1,3.6 1.4,1.9 -7,4.8 2.6,1.3 4.4,-0.8 2.6,1.8 5.3,3.4 -7.5,-1.4 -3.8,0 -3,2.8 -1.5,3.6 4.2,1.8 4,-0.8 2.6,-0.8 5.5,-1.9 -2.8,4.2 -2.6,2.3 -7.1,2 -7,6.3 2,2 -3.4,4 3.7,5.2 -1.5,5 0.7,3.7 4.8,7.1 0.8,5.6 3.1,3.2 8.9,0 5,4.7 6.5,-0.3 4.1,-5.7 3.5,-4.8 -0.3,-4.4 8.6,-4.6 3.3,-3.7 1.4,-3.9 4.7,-3.5 6.5,-1.3 6.1,-1.4 3,-0.2 10.2,-3.9 7.4,-5.7 4.8,-2.1 4.6,-0.1 12.5,-1.8 12.1,-4.3 11.9,-4.6 -5.5,-0.3 -10.6,-0.2 5.3,-2.8 -0.5,-3.6 4.2,3 2.7,2.1 7.3,-1 -0.6,-4.3 -4.5,-3.1 -5,-1.3 2.4,-1.4 7.2,2.1 0.5,-2.3 -4.1,-3.4 5.4,0 5.6,-0.8 1.7,-1.8 -4,-2.1 8.6,-0.3 -4,-4.3 4.1,-0.5 0.1,-4.2 -6.2,-2.5 6.4,-1.6 5.8,-0.1 -3.6,-3.2 1.1,-5.1 3.6,-2.9 4.9,-3.2 -8,-0.2 11.3,-0.7 2.2,-1 14.6,-2.9 -1.6,-1.7 -10,-0.8 -16.9,1.5 -9.2,1.5 4.5,-2.3 -2.3,-1.4 -7,1.2 -9.7,-1.4 -12.1,0.5 -1.4,-0.7 18.3,-0.4 12.9,-0.2 6.6,-1.4 -19.7,-2.9 z" data-id="GL" data-name="Greenland" data-nom="Groenland" id="GL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 482.8,458.9 -5.1,-0.1 -5.2,0 -0.4,3.6 -2.6,0 1.8,2.1 1.9,1.5 0.5,1.4 0.8,0.4 -0.4,2.1 -7.1,0 -3.3,5.2 0.7,1.2 -0.8,1.5 -0.4,1.9 2.7,2.6 2.5,1.3 3.4,0.1 2.8,1.1 0.2,-1 2.1,-1.6 1.1,-0.7 -0.2,-0.7 1.4,-0.4 1.3,-1.6 -0.3,-1.3 0.5,-1.2 2.8,-1.8 2.8,-2.4 -1.5,-0.8 -0.6,0.9 -1.7,-1.1 -1.6,0 1.2,-7.2 0.7,-5 z" data-id="GT" data-name="Guatemala" data-nom="Guatemala" id="GT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 656.1,534.2 -2.1,-2.3 -2.9,-3.1 -2.1,-0.1 -0.1,-3.3 -3.3,-4.1 -3.6,-2.4 -4.6,3.8 -0.6,2.3 1.9,2.3 -1.5,1.2 -3.4,1.1 0,2.9 -1.6,1.8 3.7,4.8 2.9,-0.3 1.3,1.5 -0.8,2.8 1.9,0.9 1.2,3 -1.6,2.2 -1,5.4 1.4,3.3 0.3,2.9 3.5,3 2.7,0.3 0.7,-1.3 1.7,-0.2 2.6,-1.1 1.8,-1.7 3.1,0.5 1.4,-0.2 -3.3,-5.6 -0.7,-3.5 -1.8,-0.1 -2.4,-4.6 1.1,-3.3 -0.3,-1.5 3.5,-1.6 1,-5.7 z" data-id="GY" data-name="Guyana" data-nom="Guyana" id="GY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 514.1,476.8 -1.3,-1.8 -1.9,-1 -1.5,-1.4 -1.6,-1.2 -0.8,-0.1 -2.5,-0.9 -1.1,0.5 -1.5,0.2 -1.3,-0.4 -1.7,-0.4 -0.8,0.7 -1.8,0.7 -2.6,0.2 -2.5,-0.6 -0.9,0.4 -0.5,-0.6 -1.6,0.1 -1.3,1.1 -0.6,-0.2 -2.8,2.4 -2.8,1.8 -0.5,1.2 0.3,1.3 -1.3,1.6 1.5,0.5 1.1,1.3 1.6,1 0.1,0.9 2.5,-0.8 1.1,0.5 0.7,0.7 -0.6,2.5 1.7,0.6 0.7,2 1.8,-0.3 0.8,-1.5 0.8,0 0.2,-3.1 1.3,-0.2 1.2,0 1.4,-1.7 1.5,1.3 0.6,-0.8 1.1,-0.7 2.1,-1.8 0.3,-1.3 0.5,0.1 0.8,-1.5 0.6,-0.2 0.9,0.9 1.1,0.3 1.3,-0.8 1.4,0 2,-0.8 0.9,-0.9 1.9,0.2 z" data-id="HN" data-name="Honduras" data-nom="Honduras" id="HN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1065,280.4 -4,-2.6 -1.6,-0.8 -3.9,1.7 -0.3,2.5 -1.7,0.6 0.2,1.7 -2,-0.1 -1.8,-1 -0.8,1 -3.5,-0.2 -0.2,0.1 0,2.2 1.7,2 1.3,-2.6 3.3,1 0.3,2 2.5,2.6 -1,0.5 4.6,4.5 4.8,1.8 3.1,2.2 5,2.3 0,0 0.5,-1 -4.7,-2.4 -2.2,-2.5 -2,-1.4 -2.5,-2.3 -1.3,-1.9 -2.7,-2.9 0.9,-2.5 1.9,1.4 1,-1.3 2.3,-0.1 4.4,1 3.5,-0.1 2.4,1.4 0,0 1.7,-2.3 -1.7,-1.8 -1.5,-2.4 0,0 -1.8,0.9 -4.2,-1.2 z" data-id="HR" data-name="Croatia" data-nom="Croatie" id="HR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 580.6,446.7 -4.6,-1 -3.4,-0.2 -1.4,1.7 3.4,1 -0.3,2.4 2.2,2.8 -2.1,1.4 -4.2,-0.5 -5,-0.9 -0.7,2.1 2.8,1.9 2.7,-1.1 3.3,0.4 2.7,-0.4 3.6,1.1 0.2,-1.8 -1.2,-1.9 1.5,-1.1 0.7,-2.4 -0.2,-3.5 z" data-id="HT" data-name="Haiti" data-nom="Haïti" id="HT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1079.1,263.8 -1.6,0.4 -1,1.5 -2.2,0.7 -0.6,-0.4 -2.3,1 -1.9,0.2 -0.3,1.2 -4.1,0.8 -1.9,-0.7 -2.6,-1.6 -0.2,2.6 -2.8,0 1.1,1.3 -1.3,4 0.8,0.1 1.2,2.1 1.6,0.8 4,2.6 4.2,1.2 1.8,-0.9 0,0 3.7,-1.6 3.2,0.2 3.8,-1.1 2.6,-4.3 1.9,-4.2 2.9,-1.3 -0.6,-1.6 -2.9,-1.7 -1,0.6 -5.5,-1.9 z" data-id="HU" data-name="Hungary" data-nom="Hongrie" id="HU" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1680.5,563.1L1679.5,561.7L1674,566.3L1667.5,566.6L1660.4,565.7L1656,563.8L1651.3,568.6L1650.1,571.2L1647.2,580.8L1646.3,585.8L1643.9,590L1645.5,594.3L1647.8,594.4L1648.4,600.5L1646.5,606.4L1648.8,608.3L1652.4,607.3L1652.7,598.2L1652.5,590.8L1656.3,588.9L1655.6,595.1L1659.5,598.8L1658.7,601.3L1660,603L1665.6,600.6L1662.6,605.8L1664.7,608L1667.8,606.1L1668.1,602L1663.4,594.6L1664.5,592.4L1659.4,584.3L1664.4,581.8L1667,578.1L1669.4,579L1669.9,576.1L1659.4,578.2L1656.3,581.1L1651.3,575.5L1652.2,570.7L1657.1,569.7L1666.4,569.4L1671.8,570.7L1676.1,569.4L1680.5,563.1Z M1639,560.5L1639.9,557.6L1635.6,551.6L1638.6,545.8L1633.6,544.8L1627.2,544.8L1625.5,552L1623.5,554.2L1620.8,563.1L1616.3,564.4L1610.9,562.6L1608.2,563.2L1605,566.4L1601.4,566L1597.8,567.2L1593.9,563.7L1592.9,559.4L1589.6,563.6L1589,569.5L1589.8,575.1L1592.4,580.5L1595.2,582.3L1595.9,590.8L1600.5,591.6L1604.1,591.2L1606.1,594.3L1612.8,592L1615.6,594L1619.6,594.4L1621.6,598.3L1628.1,595.4L1628.9,597.7L1631.4,588L1631.7,581.6L1637.2,577.3L1637,571.5L1638.8,567.2L1645.5,566.4L1639,560.5Z M1730.5,579.5L1729.7,577.1L1720.7,574.5L1717.8,576.6L1710.2,578.1L1712.5,581.3L1717.5,582.5L1719.6,586.2L1727.9,586.3L1728.3,587.9L1724.3,587.8L1718.1,590.1L1722.3,593.2L1722.2,596L1723.4,598.3L1725.5,597.8L1727.3,594.7L1735.5,600.6L1740.1,601.1L1750.7,606.5L1753,611.8L1754,618.7L1750.3,620.5L1747.5,625.7L1754.6,625.5L1756.2,623.7L1761.7,625L1766.3,630.2L1767.8,609.4L1768.8,588.7L1762.8,587.5L1758.7,585.2L1754,583L1749,583L1742.4,586.8L1737.5,593.6L1731.8,589.8L1730.5,579.5Z M1570.3,609.4L1571,599.6L1572.7,591.6L1570.1,587.6L1566,587.1L1564.1,583.5L1563.2,579.1L1561.2,578.9L1558,576.7L1560.3,571.5L1556,568.6L1552.7,563.3L1547.9,558.9L1542.2,558.8L1536.7,552L1533.5,549.3L1529,545L1523.8,538.8L1515,537.6L1511.4,537.3L1512,540.5L1518.1,547.5L1522.5,551.1L1525.6,556.6L1530.7,560.6L1532.9,565.5L1534.6,571L1539.5,576.3L1543.6,585.2L1546.3,590L1550.4,595.2L1552.6,599L1559.6,604.2L1564.1,609.5L1570.3,609.4Z M1585.8,615.3L1585.1,613L1582.8,612.5L1578.4,610.1L1571.6,609.7L1567.5,615.8L1572.6,616.2L1573.4,619L1583.4,621.6L1585.8,620.8L1589.9,621.4L1596.2,623.8L1601.4,625L1607.2,625.5L1612.3,625.3L1618.2,627.8L1624.8,625.4L1618.2,621.6L1609.9,620.5L1608.1,616.4L1597.8,613.3L1596.5,615.9L1585.8,615.3Z M1699.9,565L1699.3,562.4L1696,561.8L1695.5,558.3L1693.7,560.6L1692.7,565.7L1694.4,573.9L1696.6,577.9L1698.2,577.1L1695.9,573.8L1696.8,569.9L1699.7,570.5L1699.9,565Z M1637.2,623.7L1635.6,625.9L1632.5,626L1630.3,629.6L1633.3,629.7L1637.2,628.8L1643.8,627.6L1642.6,624.8L1639.1,625.4L1637.2,623.7Z M1672.8,636.7L1676.8,631.9L1676.9,630L1676.4,628.7L1670.7,631.3L1667.9,635.2L1667.2,637.3L1667.8,638.1L1672.8,636.7Z M1665.3,623.7L1660.1,626L1656.3,626.5L1652.9,624.6L1648.4,625.9L1648.2,628.2L1655.6,629L1664.2,627.2L1665.3,623.7Z M1709.5,591.8L1703.4,590L1696.5,590.3L1695,593.8L1698.9,594L1702.1,593.6L1706.7,594.1L1711.4,596.7L1709.5,591.8Z M1651.9,637.3L1652.4,635.6L1650.6,633.7L1647.8,631.7L1642.5,633L1649.5,637.4L1651.9,637.3Z M1732.4,611.7L1732.6,608.7L1731.4,606.8L1730.1,609L1728.9,611.2L1729.2,616L1732.4,611.7Z M1691.4,594.2L1690,592.1L1684.3,592.4L1685.3,595.1L1689.2,596.3L1691.4,594.2Z" data-id="ID" data-name="Indonesia" data-nom="Indonésie" id="ID" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1414.1,380.1 -8.5,-4.4 -6.2,-4 -3.2,-7 4.1,0.9 -0.6,-3.3 -3,-3.3 -0.8,-5.2 -7.6,-7.5 -3.7,5.4 -5.7,1 -8.5,-1.6 -1.9,2.8 3.2,5.6 2.9,4.3 5,3.1 -3.7,3.7 1,4.5 -3.9,6.3 -2.1,6.5 -4.5,6.7 -6.4,-0.5 -4.9,6.6 4,2.9 1.3,4.9 3.5,3.2 1.8,5.5 -12,0 -3.2,4.2 7.1,5.4 1.9,2.5 -2.4,2.3 8,7.7 4,0.8 7.6,-3.8 1.7,5.9 0.8,7.8 2.5,8.1 3.6,12.3 5.8,8.8 1.3,3.9 2,8 3.4,6.1 2.2,3 2.5,6.4 3.1,8.9 5.5,6 2.2,-1.8 1.7,-4.4 5,-1.8 -1.8,-2.1 2.2,-4.8 2.9,-0.3 -0.7,-10.8 1.9,-6.1 -0.7,-5.3 -1.9,-8.2 1.2,-4.9 2.5,-0.3 4.8,-2.3 2.6,-1.6 -0.3,-2.9 5,-4.2 3.7,-4 5.3,-7.5 7.4,-4.2 2.4,-3.8 -0.9,-4.8 6.6,-1.3 3.7,0.1 0.5,-2.4 -1.6,-5.2 -2.6,-4.8 0.4,-3.8 -3.7,-1.7 0.8,-2.3 3.1,-2.4 -4.6,-3.4 1.2,-4.3 4.8,2.7 2.7,0.4 1.2,4.4 5.4,0.9 5,-0.1 3.4,1.1 -1.6,5.3 -2.4,0.4 -1.1,3.6 3.5,3.3 0.2,-4 1.5,-0.1 4.5,10.1 2.4,-1.5 -0.9,-2.7 0.9,-2.1 -0.9,-6.6 4.6,1.4 1.5,-5.2 -0.3,-3.1 2.1,-5.4 -0.9,-3.6 6.1,-4.4 4.1,1.1 -1.3,-3.9 1.6,-1.2 -0.9,-2.4 -6.1,-0.9 1.2,-2.7 -3.5,-3.9 -3.2,2.6 -4.9,-1.5 -5.3,4 -3.9,4.8 -4.2,0.8 2.7,2 0.4,3.9 -4.4,0.2 -4.7,-0.4 -3.2,1 -5.5,-2.5 -0.3,-1.2 -1.5,-5.1 -3,1.4 0.1,2.7 1.5,4.1 -0.1,2.5 -4.6,0.1 -6.8,-1.5 -4.3,-0.6 -3.8,-3.2 -7.6,-0.9 -7.7,-3.5 -5.8,-3.1 -5.7,-2.5 0.9,-5.9 2.8,-2.9 z" data-id="IN" data-name="India" data-nom="Inde" id="IN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 947.3,231.7 -3.5,-1.3 -2.9,0.1 1.1,-3.2 -0.8,-3.2 -3.7,2.8 -6.7,4.7 2.1,6.1 -4.2,6.4 6.7,0.9 8.7,-3.6 3.9,-5.4 -0.7,-4.3 z" data-id="IE" data-name="Ireland" data-nom="Irlande" id="IE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1213.5,324.4 -3.2,-2.9 -1.2,-2.4 -3.3,1.8 2.9,7.3 -0.7,2 3.7,5.2 0,0 4.7,7.8 3.7,1.9 1,3.8 -2.3,2.2 -0.5,5 4.6,6.1 7,3.4 3.5,4.9 -0.2,4.6 1.7,0 0.5,3.3 3.4,3.4 1.7,-2.5 3.7,2.1 2.8,-1 5.1,8.4 4.3,6.1 5.5,1.8 6.1,4.9 6.9,2.1 5.1,-3.1 4,-1.1 2.8,1.1 3.2,7.8 6.3,0.8 6.1,1.5 10.5,1.9 1.2,-7.4 7.4,-3.3 -0.9,-2.9 -2.7,-1 -1,-5.7 -5.6,-2.7 -2.8,-3.9 -3.2,-3.3 3.9,-5.8 -1.1,-4 -4.3,-1.1 -1.1,-4 -2.7,-5.1 1.6,-3.5 -2.5,-0.9 0.5,-4.7 0.5,-8 -1.6,-5.5 -3.9,-0.2 -7.3,-5.7 -4.3,-0.7 -6.5,-3.3 -3.8,-0.6 -2.1,1.2 -3.5,-0.2 -3,3.7 -4.4,1.2 -0.2,1.6 -7.9,1.7 -7.6,-1.1 -4.3,-3.3 -5.2,-1.3 -2.5,-4.8 -1.3,0.3 -3.8,-3.4 1.2,-3.1 -1.9,-1.9 -1.9,0.5 -5.3,4.7 -1.8,0.2 -3.7,-0.9 z" data-id="IR" data-name="Iran" data-nom="Iran" id="IR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1207.3,334.9 -6.2,-0.9 -2.1,1 -2.1,4.1 -2.7,1.6 1.2,4.7 -0.9,7.8 -11,6.7 3.1,7.7 6.7,1.7 8.5,4.5 16.7,12.7 10.2,0.5 3.2,-6.1 3.7,0.5 3.2,0.4 -3.4,-3.4 -0.5,-3.3 -1.7,0 0.2,-4.6 -3.5,-4.9 -7,-3.4 -4.6,-6.1 0.5,-5 2.3,-2.2 -1,-3.8 -3.7,-1.9 -4.7,-7.8 0,0 -2.3,1.1 -2.1,-1.6 z" data-id="IQ" data-name="Iraq" data-nom="Irak" id="IQ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 915.7,158.6 -6.9,-0.4 -7.3,2.9 -5.1,-1.5 -6.9,3 -5.9,-3.8 -6.5,0.8 -3.6,3.7 8.7,1.3 -0.1,1.6 -7.8,1.1 8.8,2.7 -4.6,2.5 11.7,1.8 5.6,0.8 3.9,-1 12.9,-3.9 6.1,-4.2 -4.4,-3.8 1.4,-3.6 z" data-id="IS" data-name="Iceland" data-nom="Islande" id="IS" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1167.8,360.5 -1.4,0.1 -0.4,1.1 -1.8,0 -0.1,0.1 -0.6,1.6 -0.6,4.8 -1.1,2.9 0.4,0.4 -1.4,2.1 0,0 3.9,9.2 0.7,1.7 1.7,-10.2 -0.4,-2.4 -2.4,0.8 0.1,-1.7 1.2,-0.8 -1.4,-0.7 0.7,-4.3 2,0.9 0.7,-2 -0.1,0 0.6,-1 -0.3,-2.6 z" data-id="IL" data-name="Israel" data-nom="Israël" id="IL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1038.4,275.4L1037.1,273.2L1032.3,274.3L1031.8,275.5L1028.7,274.6L1028.4,277.1L1026.3,278.2L1022.5,277.4L1021.6,279.9L1019.2,280.1L1018.3,279.1L1015.6,281.2L1013.2,281.5L1011,280.2L1010.8,281.9L1012.4,284.3L1010.7,286.1L1012.2,290.9L1014.9,291.7L1014.4,294.4L1016.5,293.9L1019.3,291.1L1021.6,290.2L1025.8,292.3L1028.4,293L1030.3,299L1033.9,302.6L1038.8,306.6L1043,309.4L1046.9,309.8L1049.2,312.3L1052.6,313.5L1054.3,316.2L1056.5,317L1058.3,320.2L1060.6,323.9L1059.5,325.2L1058.7,328.7L1058.8,330.7L1060.9,330.2L1063.4,324.6L1065.5,324.2L1065.9,320.9L1062,318.6L1063.9,314.5L1068.4,315.5L1071.5,318.5L1072.3,316.2L1071.7,315L1067,311.8L1063.1,309.9L1058.3,307.6L1059.7,306.4L1058.3,305L1054.3,305.1L1048.3,300.1L1045.4,295L1040.5,291.9L1038.6,288.8L1039.1,287L1038.7,284L1042.6,281.8L1046.7,282.7L1045.3,280L1045.6,277L1038.4,275.4Z M1057.8,328.6L1053.8,329.1L1048.6,329.8L1042.4,329.2L1041.8,332.6L1049.3,335.9L1052,336.6L1056.2,339L1057.1,335.7L1056.2,333.7L1057.8,328.6Z M1024.1,309.7L1021.6,311.6L1018.8,311.3L1020.1,314.9L1020.5,322.5L1022.6,324.2L1024.6,322.1L1027,322.5L1027.4,314.1L1024.1,309.7Z" data-id="IT" data-name="Italy" data-nom="Italie" id="IT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 550.7,458.5 3.9,-0.1 -0.8,-1.8 -2.7,-1.5 -3.7,-0.6 -1.2,-0.2 -2.4,0.4 -0.8,1.5 2.9,2.3 3,1 1.8,-1 z" data-id="JM" data-name="Jamaica" data-nom="Jamaïque" id="JM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1186.6,367.6 -3.1,-7.7 -9.6,6.7 -6.3,-2.5 -0.7,2 0.4,3.9 -0.6,1.9 0.4,2.4 -1.7,10.2 0.3,0.9 6.1,1 2.1,-2 1.1,-2.3 4,-0.8 0.7,-2.2 1.7,-1 -6.1,-6.4 10.4,-3.1 0.9,-1 z" data-id="JO" data-name="Jordan" data-nom="Jordanie" id="JO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1716.9,335.6L1713.3,328.9L1714.6,322.5L1711.8,317.3L1703.7,308.6L1698.9,309.8L1699.1,313.7L1704.2,320.8L1705.2,328.7L1703.5,331.2L1699,337.7L1694,334.6L1694,346.1L1687.7,344.8L1678.1,346.7L1676.2,351.1L1672.3,354.4L1671.2,358.4L1666.9,360.4L1670.9,364.7L1675,366.6L1675.9,372.3L1679.4,374.8L1681.9,372.1L1681.1,361.3L1673.8,356.6L1679.9,356.5L1684.9,353.5L1693.5,352.1L1695.9,356.9L1700.5,359.3L1704.9,352L1714,351.6L1719.4,348.6L1720,344L1717.5,340.8L1716.9,335.6Z M1705.1,291.4L1699.8,289.3L1689.4,282.9L1691.3,287.7L1695.6,296.2L1690.4,296.6L1691,301.3L1695.6,307.4L1701.3,307.4L1699.7,300.6L1710.5,304.8L1710.9,298.7L1717.3,297L1711.3,290.1L1709.6,292.7L1705.1,291.4Z M1692.5,354.9L1688,353.6L1686.9,356.3L1683.6,355.5L1682.3,359.3L1683.5,362.3L1687.7,364.1L1687.6,360.4L1689.7,358.9L1692.8,361L1694.1,357.1L1692.5,354.9Z" data-id="JP" data-name="Japan" data-nom="Japon" id="JP" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1308.8,223.8 -9,-1.3 -3.1,2.5 -10.8,2.2 -1.7,1.5 -16.8,2.1 -1.4,2.1 5,4.1 -3.9,1.6 1.5,1.7 -3.6,2.9 9.4,4.2 -0.2,3 -6.9,-0.3 -0.8,1.8 -7.3,-3.2 -7.6,0.2 -4.3,2.5 -6.6,-2.4 -11.9,-4.3 -7.5,0.2 -8.1,6.6 0.7,4.6 -6,-3.6 -2.1,6.8 1.7,1.2 -1.7,4.7 5.3,4.3 3.6,-0.2 4.2,4.1 0.2,3.2 2.8,1 4.4,-1.3 5,-2.7 4.7,1.5 4.9,-0.3 1.9,3.9 0.6,6 -4.6,-0.9 -4,1 0.9,4.5 -5,-0.6 0.6,2 3.2,1.6 3.7,5.5 6.4,2.1 1.5,2.1 -0.7,2.6 0.7,1.5 1.8,-2 5.5,-1.3 3.8,1.7 4.9,4.9 2.5,-0.3 -6.2,-22.8 11.9,-3.6 1.1,0.5 9.1,4.5 4.8,2.3 6.5,5.5 5.7,-0.9 8.6,-0.5 7.5,4.5 1.5,6.2 2.5,0.1 2.6,5 6.6,0.2 2.3,3 1.9,0 0.9,-4.5 5.4,-4.3 2.5,-1.2 0.3,-2.7 3.1,-0.8 9.1,2.1 -0.5,-3.6 2.5,-1.3 8.1,2.6 1.6,-0.7 8.6,0.2 7.8,0.6 3.3,2.2 3.5,0.9 -1.7,-3.5 2.9,-1.6 -8.7,-10.7 9,-2.4 2,-1.4 -1,-11.1 10.7,2 1.6,-2.8 -2.5,-6.2 3.8,-0.6 1.8,-4.2 -4.3,-3.8 -6,0.9 -3.3,-2.6 -3.9,-1.2 -4.1,-3.6 -3.2,-1.1 -6.2,1.6 -8.3,-3.6 -1.1,3.3 -18.1,-15.5 -8.3,-4.7 0.8,-1.9 -9.1,5.7 -4.4,0.4 -1.2,-3.3 -7,-2.1 -4.3,1.5 -4.3,-6.3 z" data-id="KZ" data-name="Kazakhstan" data-nom="Kazakhstan" id="KZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1211.7,547.2 -3.8,0 -2.3,-2.1 -5.1,2.6 -1.6,2.7 -3.8,-0.5 -1.2,-0.7 -1.3,0.1 -1.8,0 -7.2,-5.4 -3.9,0 -2,-2.1 0,-3.6 -2.9,-1.1 -3.8,4.2 -3.4,3.8 2.7,4.4 0.7,3.2 2.6,7.3 -2.1,4.7 -2.7,4.2 -1.6,2.6 0,0.3 1.4,2.4 -0.4,4.7 20.2,13 0.4,3.7 8,6.3 2.2,-2.1 1.2,-4.2 1.8,-2.6 0.9,-4.5 2.1,-0.4 1.4,-2.7 4,-2.5 -3.3,-5.3 -0.2,-23.2 4.8,-7.2 z" data-id="KE" data-name="Kenya" data-nom="Kenya" id="KE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1387.2,302.6 -3.5,-0.9 -3.3,-2.2 -7.8,-0.6 -8.6,-0.2 -1.6,0.7 -8.1,-2.6 -2.5,1.3 0.5,3.6 -9.1,-2.1 -3.1,0.8 -0.3,2.7 1.8,0.6 -3.1,4.1 4.6,2.3 3.2,-1.6 7.1,3.3 -5.2,4.5 -4.1,-0.6 -1.4,2 -5.9,-1.1 0.6,3.7 5.4,-0.5 7.1,2 9.5,-0.9 1,-1.5 -1.1,-1.5 4,-3 3.2,-1.2 5.7,0.9 0.6,-4 6.4,-0.8 1,-2.4 6.8,-3.4 0.2,-1.4 z" data-id="KG" data-name="Kyrgyzstan" data-nom="Kirghizistan" id="KG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1574.8,481.8 -5.2,-2.3 -2,4.3 -4.9,-2.4 -5.3,-1 -7.1,1.3 -3,5.2 2.1,7.7 3.4,6.6 2.6,3.3 4.7,0.9 4.7,-2.5 5.8,-0.5 -2.8,-3.8 8.9,-4.9 -0.1,-7.7 -1.8,-4.2 z" data-id="KH" data-name="Cambodia" data-nom="Cambodge" id="KH" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1637.3,331.7 6.2,5.5 -3.4,1.1 5.2,6.8 1.1,4.8 2.1,3.5 4.5,-0.5 3.2,-2.7 4.2,-1.2 0.5,-3.6 -3.4,-7.5 -3.3,-4.2 -8.2,-7.6 0.1,1.6 -2.1,0.4 -3.5,0.3 -0.7,2.9 -2.4,-0.2 -0.1,0.6 z" data-id="KR" data-name="Korea" data-nom="Corée du Sud" id="KR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1235.6,381.4 -3.7,-0.5 -3.2,6.1 4.9,0.6 1.7,3.1 3.8,-0.2 -2.4,-4.8 0.3,-1.5 -1.4,-2.8 z" data-id="KW" data-name="Kuwait" data-nom="Koweït" id="KW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1574.8,481.8 0.2,-6.4 -2,-4.5 -4.8,-4.4 -4.3,-5.6 -5.7,-7.5 -7.3,-3.8 1.3,-2.3 3.3,-1.7 -3,-5.5 -6.8,-0.1 -3.4,-5.7 -4,-5.1 -2.7,1 1.9,7.2 -2.9,-0.1 -0.7,-1.5 -4.1,4.1 -0.8,2.4 2.6,1.9 0.9,3.8 3.8,0.3 -0.4,6.7 1,5.7 5.3,-3.8 1.8,1.2 3.2,-0.2 0.8,-2.2 4.3,0.4 4.9,5.2 1.3,6.3 5.2,5.5 0.5,5.4 -1.5,2.9 4.9,2.4 2,-4.3 5.2,2.3 z" data-id="LA" data-name="Lao PDR" data-nom="Laos" id="LA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1167.8,360.5 0.9,-3.5 2.6,-2.4 -1.2,-2.5 -2.4,-0.3 -0.1,0.2 -2.1,4.5 -1.3,5.2 1.8,0 0.4,-1.1 1.4,-0.1 z" data-id="LB" data-name="Lebanon" data-nom="Liban" id="LB" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 929.4,523.3 -1.6,-0.2 -1.1,2.6 -1.6,-0.1 -1.1,-1.3 0.4,-2.6 -2.3,-3.9 -1.5,0.7 -1.2,0.2 -2.6,3 -2.6,3.4 -0.3,1.9 -1.3,2 3.7,4.1 4.8,3.5 5.1,4.8 5.7,3.1 1.5,-0.1 0.5,-5.2 0.5,-0.8 -0.2,-2.5 -2.3,-2.7 -1.8,-0.4 -1.6,-1.8 1.2,-2.8 -0.6,-3.1 0.3,-1.8 z" data-id="LR" data-name="Liberia" data-nom="Liberia" id="LR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1111.8,371.4 -1.5,-2.1 -5.4,-0.8 -1.8,-1.1 -2,0 -2,-2.8 -7.3,-1.3 -3.6,0.8 -3.7,3 -1.5,3.1 1.5,4.8 -2.4,3 -2.5,1.6 -5.9,-3.1 -7.7,-2.7 -4.9,-1.2 -2.8,-5.7 -7.2,-2.8 -4.5,-1.1 -2.2,0.6 -6.4,-2.2 -0.1,4.9 -2.6,1.8 -1.5,2 -3.7,2.5 0.7,2.6 -0.4,2.7 -2.6,1.4 1.9,5.6 0.4,3 -0.9,5.2 0.5,2.9 -0.6,3.5 0.5,4 -2.1,2.6 3.4,4.7 0.2,2.7 2,3.6 2.6,-1.2 4.3,2.9 2.5,4 8.8,2.8 3.1,3.5 3.9,-2.4 5.4,-3.5 22.3,12.2 22.4,12.2 0,-2.7 6.3,0 -0.5,-12.7 -1,-23.4 -1.3,-22.7 -2,-5.1 1.2,-3.9 -1.1,-2.7 1.8,-3 z" data-id="LY" data-name="Libya" data-nom="Libye" id="LY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1432.2,532.7 2.3,-1.8 0.6,-6.6 -3,-6.6 -2.9,-4.5 -4.1,-3.5 -1.9,10.3 1.4,9.1 2.8,5.1 4.8,-1.5 z" data-id="LK" data-name="Sri Lanka" data-nom="Sri Lanka" id="LK" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1128.1,766.5 1.1,-2 3.1,-1 1.1,-2.1 1.9,-3.1 -1.7,-1.9 -2.3,-2 -2.6,1.3 -3.1,2.5 -3.2,4 3.7,4.9 2,-0.6 z" data-id="LS" data-name="Lesotho" data-nom="Lesotho" id="LS" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1100.4,221.2 -5,-2.9 -2.5,-0.4 -0.9,-1.3 -4.4,0.6 -7.9,-0.4 -5,1.9 1.7,5 5,1.1 2.2,0.9 -0.2,1.7 0.6,1.5 2.5,0.6 1.4,1.9 4.6,0 4.8,-2.2 0.5,-3.4 3.5,-2 -0.9,-2.6 z" data-id="LT" data-name="Lithuania" data-nom="Lituanie" id="LT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1007,258.6 0.2,-2.7 -1,-1.4 -1.3,0.2 -0.4,3.5 1.1,0.5 1.4,-0.1 z" data-id="LU" data-name="Luxembourg" data-nom="Luxembourg" id="LU" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1102.1,210.1 -3.8,0 -4.4,-2.2 -2.1,-0.7 -3.7,1 -0.2,4.6 -3.6,0.1 -4.4,-4.5 -4,2.1 -1.7,3.7 0.5,4.5 5,-1.9 7.9,0.4 4.4,-0.6 0.9,1.3 2.5,0.4 5,2.9 2.6,-1 4.6,-2.3 -2.1,-3.6 -1,-2.8 -2.4,-1.4 z" data-id="LV" data-name="Latvia" data-nom="Lettonie" id="LV" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 965.2,348.4 -2.3,-0.1 -5.5,-1.4 -5,0.4 -3.1,-2.7 -3.9,0 -1.8,3.9 -3.7,6.7 -4,2.6 -5.4,2.9 -3.5,4.3 -0.9,3.4 -2.1,5.4 1.1,7.9 -4.7,5.3 -2.7,1.7 -4.4,4.4 -5.1,0.7 -2.8,2.4 -0.1,0.1 -3.6,6.5 -3.7,2.3 -2.1,4 -0.2,3.3 -1.6,3.8 -1.9,1 -3.1,4 -2,4.5 0.3,2.2 -1.9,3.3 -2.2,1.7 -0.3,3 0.1,0 12.4,-0.5 0.7,-2.3 2.3,-2.9 2,-8.8 7.8,-6.8 2.8,-8.1 1.7,-0.4 1.9,-5 4.6,-0.7 1.9,0.9 2.5,0 1.8,-1.5 3.4,-0.2 -0.1,-3.4 0,0 0.8,0 0.1,-7.5 8.9,-4.7 5.4,-1 4.4,-1.7 2.1,-3.2 6.3,-2.5 0.3,-4.7 3.1,-0.5 2.5,-2.4 7,-1 1,-2.5 -1.4,-1.4 -1.8,-6.7 -0.3,-3.9 -2,-4.1 z" data-id="MA" data-name="Morocco" data-nom="Maroc" id="MA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1118.5,283.3 1.2,-0.7 0.5,-2.1 1.1,-2 -0.5,-1.1 1,-0.5 0.6,0.9 3,0.2 1.2,-0.5 -1,-0.6 0.2,-1 -2,-1.5 -1.1,-2.6 -1.9,-1.1 0,-2.1 -2.5,-1.6 -2,-0.3 -3.9,-1.9 -3.2,0.6 -1.1,0.9 1.6,0.6 1.8,1.9 1.9,2.6 3.4,3.7 0.6,2.7 -0.2,2.7 1.3,2.8 z" data-id="MD" data-name="Moldova" data-nom="Moldavie" id="MD" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1255.7,658.4 -1.1,-4.2 -1.4,-2.7 -1.8,-2.7 -2,2.8 -0.3,3.8 -3.3,4.5 -2.3,-0.8 0.6,2.7 -1.8,3.2 -4.8,3.9 -3.4,3.7 -2.4,0 -2.2,1.2 -3.1,1.3 -2.8,0.2 -1,4.1 -2.2,3.5 0.1,5.9 0.8,4 1.1,3 -0.8,4.1 -2.9,4.8 -0.2,2.1 -2.6,1.1 -1.3,4.6 0.2,4.6 1.6,5 -0.1,5.7 1.2,3.3 4.2,2.3 3,1.7 5,-2.7 4.6,-1.5 3.1,-7.4 2.8,-8.9 4.3,-12 3.3,-8.8 2.7,-7.4 0.8,-5.4 1.6,-1.5 0.7,-2.7 -0.8,-4.7 1.2,-1.9 1.6,3.8 1.1,-1.9 0.8,-3.1 -1.3,-2.9 -0.5,-7.7 z" data-id="MG" data-name="Madagascar" data-nom="Madagascar" id="MG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 444.4,407.8 -3.6,-1.4 -3.9,-2 -0.8,-3 -0.2,-4.5 -2.4,-3.6 -1,-3.7 -1.6,-4.4 -3.1,-2.5 -4.4,0.1 -4.8,5 -4,-1.9 -2.2,-1.9 -0.4,-3.5 -0.8,-3.3 -2.4,-2.8 -2.1,-2 -1.3,-2.2 -9.3,0 -0.8,2.6 -4.3,0 -10.7,0 -10.7,-4.4 -7.1,-3.1 1,-1.3 -7,0.7 -6.3,0.5 0.2,5.7 0.7,5.1 0.7,4.1 0.8,4 2.6,1.8 2.9,4.5 -1,2.9 -2.7,2.3 -2.1,-0.3 -0.6,0.5 2.3,3.7 2.9,1.5 1,1.7 0.9,-0.9 3.1,2.9 2.1,2 0.1,3.4 -1.2,4.7 2.5,1.6 3.3,3.1 2.9,3.6 0.7,3.9 1,0 2.7,-2.3 0.4,-1.2 -1.5,-2.8 -1.6,-2.9 -2.6,-0.2 0.4,-3.4 -0.9,-3 -1,-2.8 -0.5,-5.9 -2.6,-3.2 -0.6,-2.3 -1.2,-1.6 0,-4.1 -1,0.1 -0.1,-2.2 -0.7,-0.5 -0.4,-1.4 -2.7,-4.4 -1.1,-2.6 1,-4.8 0.1,-3 1.8,-2.6 2.4,1.7 1.9,-0.2 3.1,2.5 -0.9,2.4 0.4,4.9 1.5,4.7 -0.4,2 1.7,3.1 2.3,3.4 2.7,0.5 0.3,4.4 2.4,3.1 2.5,1.5 -1.8,4 0.7,1.5 4.1,2.6 1.9,4 4.5,4.9 3.8,6.4 1.3,3.2 0,2.5 1.4,2.9 -0.3,2.2 -1.6,1.6 0.3,1.8 -1.9,0.7 0.8,3.1 2.2,4 5.3,3.6 1.9,2.9 5.4,2 3,0.4 1.2,1.7 4.2,3 5.9,3 4,0.9 4.8,2.9 4,1.2 3.7,1.7 2.9,-0.7 4.8,-2.4 3.1,-0.4 4.4,1.6 2.6,2.1 5.5,6.9 0.4,-1.9 0.8,-1.5 -0.7,-1.2 3.3,-5.2 7.1,0 0.4,-2.1 -0.8,-0.4 -0.5,-1.4 -1.9,-1.5 -1.8,-2.1 2.6,0 0.4,-3.6 5.2,0 5.1,0.1 0.1,-1 0.7,-0.3 0.9,0.8 2.5,-3.9 1,0 1.2,-0.1 1.2,1.6 2,-5 1.2,-2.7 -0.9,-1.1 1.8,-3.9 3.5,-3.8 0.6,-3.1 -1.2,-1.3 -3.4,0.5 -4.8,-0.2 -6,1.5 -4,1.7 -1.2,1.8 -1.2,5.4 -1.8,3.7 -3.9,2.6 -3.6,1.1 -4.3,1.1 -4.3,0.6 -5.1,1.8 -1.9,-2.6 -5.6,-1.7 -1.8,-3.2 -0.7,-3.6 -3,-4.7 -0.4,-5 -1.2,-3.1 -0.5,-3.4 1.1,-3.1 1.8,-8.6 1.8,-4.5 3.1,-5.6 -2.1,0.2 z" data-id="MX" data-name="Mexico" data-nom="Mexique" id="MX" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1094,304.8 -2.8,-2 -2.4,0.1 -1.7,0.4 -1.1,0.2 -2.9,1 -0.1,1.2 -0.7,0 0,0 -0.4,2.1 0.9,2.6 2.3,1.6 3.3,-0.6 1.9,-1.3 2.8,0.1 0.7,-1.1 1,-0.2 -0.8,-4.1 z" data-id="MK" data-name="Macedonia" data-nom="Macédoine du Nord" id="MK" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1000.3,450.3 -6.1,0.6 -0.1,-4 -2.6,-1.1 -3.4,-1.8 -1.3,-3 -18.6,-13.8 -18.4,-13.9 -8.4,0.1 2.4,27.4 2.4,27.5 1,0.8 -1.3,4.4 -22.3,0.1 -0.9,1.4 -2.1,-0.4 -3.2,1.3 -3.8,-1.8 -1.8,0.2 -1,3.7 -1.9,1.2 0.2,3.9 1.1,3.7 2.1,1.8 0.4,2.4 -0.3,2 0.3,2.3 0.9,0 1.5,-0.8 0.9,0.2 1.5,1.6 2.4,0.5 1.6,-1.4 1.8,-0.8 1.3,-0.9 1.1,0.2 1.3,1.4 0.6,1.7 2.3,2.7 -1.2,1.6 -0.2,2.1 1.2,-0.6 0.7,0.7 -0.3,1.9 1.7,1.8 0.7,-0.6 1.6,1 4.3,0.1 1,-1.9 1,0.1 1.6,-0.7 0.9,2.7 1.3,-0.8 2.3,-0.9 -0.4,-3.7 1.6,-2.7 -0.2,-2.2 4.5,-5.2 0.8,-4.4 1.6,-1.6 2.7,0.9 2.3,-1.3 0.8,-1.6 4.3,-2.9 1.1,-2 5.2,-2.6 3,-0.9 1.4,1.2 3.6,0 3.6,-0.3 2,-2.2 7.6,-0.6 4.9,-1 0.5,-3.9 3,-4.3 -0.1,-14.6 z" data-id="ML" data-name="Mali" data-nom="Mali" id="ML" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1533.9,435.8 -0.6,-2.6 -3.8,1.8 -2.5,-1.2 -4.5,-2.4 0.8,-5.2 -3.7,-1.3 -2.3,-5.8 -5.6,1 -0.7,-7.5 4.1,-5.3 -0.8,-5.3 -1.3,-4.9 -2.7,-1.5 -2.7,-3.7 -3,0.4 0.9,2.4 -1.6,1.2 1.3,3.9 -4.1,-1.1 -6.1,4.4 0.9,3.6 -2.1,5.4 0.3,3.1 -1.5,5.2 -4.6,-1.4 0.9,6.6 -0.9,2.1 0.9,2.7 -2.4,1.5 0.5,4.6 -2.1,-1 1.1,5.1 4.6,5.2 3.4,0.9 -0.4,2.2 5.4,7.4 1.9,5.9 -0.9,7.9 3.6,1.5 3.2,0.6 5.8,-4.6 3.2,-3.1 3.1,5.2 2,8.1 2.6,7.6 2.6,3.3 0.2,6.9 2.2,3.8 -1.3,4.8 0.9,4.8 2.2,-6.6 2.6,-5.9 -2.8,-5.8 -0.2,-3 -1,-3.5 -4.2,-5.1 -1.7,-3.2 1.7,-1.1 1.4,-5.6 -2.9,-4.2 -4.1,-4.6 -3.5,-5.6 2.2,-1.1 1.5,-6.9 3.9,-0.3 2.8,-2.8 3,-1.4 0.8,-2.4 4.1,-4.1 z" data-id="MM" data-name="Myanmar" data-nom="Birmanie" id="MM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1080,299.8 0.4,-0.6 -2,-1.2 -1.8,-0.7 -0.8,-0.8 -1.5,-1.1 -0.9,0.6 -1.5,1.4 -0.4,3.4 -0.5,1 0,0 2.3,1.2 1.6,2.1 1.1,0.4 0,0 -0.5,-1.9 2,-3.1 0.4,1.2 1.3,-0.5 0.8,-1.4 z" data-id="ME" data-name="Montenegro" data-nom="Monténégro" id="ME" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1473.7,252.1 -3.7,-4.6 -6.6,-1.5 -4.8,-0.8 -6.9,-2.5 -1.3,6.4 4,3.6 -2.4,4.3 -7.9,-1.6 -5,-0.2 -4.7,-2.9 -5.1,-0.1 -5.3,-1.9 -5.9,2.9 -6.6,5.4 -4.7,1 3.3,4.4 5.7,3.3 8.1,2.3 5.8,5 1.3,7.3 3,2.7 6.4,1 7.2,0.9 7.9,3.8 3.4,0.7 4.9,5.7 4.7,3.6 5.5,-0.1 11.2,1.3 6.4,-0.8 5.5,0.9 9.3,3.8 6.2,-0.1 3.2,2 4.4,-3.3 7.2,-2.2 7.5,-0.2 4.9,-2.2 1.9,-3.3 2.5,-2 -1.9,-2.1 -2.9,-2.3 0.4,-4 3.2,0.5 5.9,1.3 3.1,-3.3 6.3,-2.4 1.4,-4.1 2.4,-1.8 6.8,-0.8 4.3,0.7 -0.7,-2.2 -7.2,-4.3 -5.1,-2 -2.5,2.3 -5.4,-1 -2.4,0.8 -2.7,-2.6 -0.3,-6.2 -0.6,-4.6 -5.5,0.5 -3.9,-2.1 -3.3,-0.7 -4.5,4.4 -5.8,1 -3.6,1.6 -6.7,-1 -4.5,0 -4.9,-3.1 -6.5,-3 -5.4,-0.8 -5.7,0.8 -3.9,1.1 -8.4,-2.6 z" data-id="MN" data-name="Mongolia" data-nom="Mongolie" id="MN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1203,640.7 -0.8,-2.9 0,0 0,0 -4.6,3.7 -6.2,2.5 -3.3,-0.1 -2.1,1.9 -3.9,0.1 -1.4,0.8 -6.7,-1.8 -2.1,0.3 -1.6,6 0.7,7.3 0.3,0 1.9,2 2.2,4.6 0.1,8.2 -2.5,1.3 -1.9,4.5 -3.4,-4 -0.2,-4.5 1.3,-2.9 -0.3,-2.6 -2.1,-1.6 -1.6,0.6 -3,-3 -17.1,5.2 0.3,4.5 0.3,2.4 4.6,-0.1 2.6,1.3 1.1,1.6 2.6,0.5 2.8,2 -0.3,8.1 -1.3,4.4 -0.5,4.7 0.8,1.9 -0.8,3.7 -0.9,0.6 -1.6,4.6 -6.2,7.2 2.2,9 1.1,4.5 -1.4,7.1 0.4,2.3 0.6,2.9 0.3,2.8 4.1,0 0.7,-3.3 -1.4,-0.5 -0.3,-2.6 2.6,-2.4 6.8,-3.4 4.6,-2.2 2.5,-2.3 0.9,-2.6 -1.2,-1.1 1.1,-3 0.5,-6.2 -1,0.3 0,-1.9 -0.8,-3.7 -2.4,-4.8 0.7,-4.6 2.3,-1.4 4.1,-4.6 2.2,-1.1 6.7,-6.8 6.4,-3.1 5.2,-2.5 3.7,-3.9 2.4,-4.4 1.9,-4.6 -0.9,-3.1 0.2,-9.9 -0.4,-5.6 0.4,-6.3 z" data-id="MZ" data-name="Mozambique" data-nom="Mozambique" id="MZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 949.8,413.3 -20.3,-15.5 -0.2,9.7 -17.9,-0.3 -0.2,16.3 -5.2,0.5 -1.4,3.3 0.9,9.2 -21.6,-0.1 -1.2,2.2 2.8,2.7 1.4,3 -0.7,3.2 0.6,3.2 0.5,6.3 -0.8,5.9 -1.7,3.2 0.4,3.4 2,-2 2.7,0.5 2.8,-1.4 3.1,0 2.6,1.8 3.7,1.7 3.2,4.7 3.6,4.4 1.9,-1.2 1,-3.7 1.8,-0.2 3.8,1.8 3.2,-1.3 2.1,0.4 0.9,-1.4 22.3,-0.1 1.3,-4.4 -1,-0.8 -2.4,-27.5 -2.4,-27.4 8.4,-0.1 z" data-id="MR" data-name="Mauritania" data-nom="Mauritanie" id="MR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1169.2,661.5 0.1,-2.3 -1.2,-1.9 0.1,-2.8 -1.5,-4.7 1.7,-3.5 -0.1,-7.7 -1.9,-4.1 0.2,-0.7 0,0 -1.1,-1.7 -5.4,-1.2 2.6,2.8 1.2,5.4 -1,1.8 -1.2,5.1 0.9,5.3 -1.8,2.2 -1.9,5.9 2.9,1.7 3,3 1.6,-0.6 2.1,1.6 0.3,2.6 -1.3,2.9 0.2,4.5 3.4,4 1.9,-4.5 2.5,-1.3 -0.1,-8.2 -2.2,-4.6 -1.9,-2 -0.3,0 0,0.8 1.1,0.3 1,3.4 -0.2,0.8 -1.9,-2.5 -1,1.6 -0.8,-1.4 z" data-id="MW" data-name="Malawi" data-nom="Malawi" id="MW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1642.6,543.7L1641.4,540.6L1645.2,540.2L1645.5,537.8L1640.7,535.8L1636.9,534.1L1636.5,531.3L1633.4,528.1L1631.1,528.1L1628.6,533.1L1624.5,537.5L1624.4,540.6L1624.3,544.7L1621.6,544.5L1620.5,546.7L1617.8,543.4L1615.2,547.4L1611.4,552.4L1604.7,553.8L1602.3,555L1601.4,560.4L1597,561.6L1592.9,559.4L1593.9,563.7L1597.8,567.2L1601.4,566L1605,566.4L1608.2,563.2L1610.9,562.6L1616.3,564.4L1620.8,563.1L1623.5,554.2L1625.5,552L1627.2,544.8L1633.6,544.8L1638.6,545.8L1642.6,543.7Z M1543.6,532.7L1538.9,529.9L1538,531L1539.4,533.7L1539,538.4L1541.1,541.8L1542.1,547.1L1545.5,551.4L1546.3,554.6L1553,559.6L1558.4,564.4L1562.4,563.9L1562.5,561.8L1560.2,556.2L1558.1,554.4L1557.6,550.6L1557,548.5L1557.5,545.6L1557,541.3L1554.4,537L1550.9,533.2L1549.6,532.6L1547.9,535.2L1544.2,536L1543.6,532.7Z" data-id="MY" data-name="Malaysia" data-nom="Malaisie" id="MY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1105.4,683.7 -10.3,2.5 -13.4,-0.9 -3.7,-3 -22.5,0.3 -0.9,0.4 -3.2,-2.9 -3.6,-0.1 -3.3,1 -2.7,1.2 0.2,4.9 4.4,6.2 1.1,4 2.8,7.7 2.7,5.2 2.1,2.6 0.6,3.5 0,7.6 1.6,9.8 1.2,4.6 1,6.2 1.9,4.7 3.9,4.8 2.7,-3.2 2.1,1.8 0.8,2.7 2.4,0.5 3.3,1.2 2.9,-0.5 5,-3.2 1.1,-23.6 0.6,-18.5 5.4,-0.2 0.9,-22.7 4.1,-0.2 8.6,-2.2 2,2.6 3.7,-2.5 1.6,0 3.2,-1.5 0,-0.5 -2.1,-1.4 -3.6,-0.4 -4.6,1.5 z" data-id="NA" data-name="Namibia" id="NA" inkscape:connector-curvature="0" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1051.3,425.6 -8.8,-2.8 -18.6,12.2 -15.8,12.5 -7.8,2.8 0.1,14.6 -3,4.3 -0.5,3.9 -4.9,1 -7.6,0.6 -2,2.2 -3.6,0.3 -0.5,3.1 0.8,2.9 3.1,4.1 0.2,3.1 6.4,1.4 -0.1,4.4 1.9,-1.9 2,0 4.3,3.7 0.3,-5.7 1.6,-2.6 0.8,-3.6 1.4,-1.4 6,-0.8 5.6,2.4 2.1,2.4 2.9,0.1 2.6,-1.5 6.8,3.3 2.8,-0.2 3.3,-2.7 3.3,0.2 1.6,-0.9 3,0.4 4.3,1.8 4.3,-3.5 1.3,0.2 3.9,7 1,-0.2 0.2,-2 1.6,-0.4 0.5,-2.9 -3.6,-0.2 0,-4.1 -2.4,-2.3 2.3,-8.4 6.9,-6 0.2,-8.3 1.8,-12.9 1.1,-2.7 -2.3,-2.2 -0.2,-2.1 -2,-1.6 -1.6,-9.9 -3.9,2.4 -3.1,-3.5 z" data-id="NE" data-name="Niger" data-nom="Niger" id="NE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1055.8,492.7 -1,0.2 -3.9,-7 -1.3,-0.2 -4.3,3.5 -4.3,-1.8 -3,-0.4 -1.6,0.9 -3.3,-0.2 -3.3,2.7 -2.8,0.2 -6.8,-3.3 -2.6,1.5 -2.9,-0.1 -2.1,-2.4 -5.6,-2.4 -6,0.8 -1.4,1.4 -0.8,3.6 -1.6,2.6 -0.3,5.7 -0.2,2.1 1.2,3.8 -1.1,2.5 0.6,1.7 -2.7,4 -1.7,1.9 -1,4 0.1,4.1 -0.3,10.2 4.9,0 4.3,0 3.9,4.2 1.9,4.6 3,3.9 4.5,0.2 2.2,-1.4 2.1,0.3 5.8,-2.3 1.4,-4.5 2.7,-6.1 1.6,-0.1 3.3,-3.7 2.1,-0.1 3.2,2.6 3.9,-2.2 0.5,-2.6 1.2,-2.6 0.8,-3.2 3,-2.6 1.1,-4.5 1.2,-1.4 0.7,-3.3 1.5,-4 4.6,-5 0.3,-2.1 0.6,-1.1 -2.3,-2.6 z" data-id="NG" data-name="Nigeria" data-nom="Nigeria" id="NG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 514.1,476.8 -1.9,-0.2 -0.9,0.9 -2,0.8 -1.4,0 -1.3,0.8 -1.1,-0.3 -0.9,-0.9 -0.6,0.2 -0.8,1.5 -0.5,-0.1 -0.3,1.3 -2.1,1.8 -1.1,0.7 -0.6,0.8 -1.5,-1.3 -1.4,1.7 -1.2,0 -1.3,0.2 -0.2,3.1 -0.8,0 -0.8,1.5 -1.8,0.3 -0.4,0.4 -0.9,-1 -0.7,1 2.6,2.9 2.2,2 1,2.1 2.5,2.6 1.8,2 0.9,-0.8 3.5,1.7 1.4,-0.8 1.7,0.5 0.8,1.3 1.7,0.4 1.4,-1.3 -0.8,-1.1 -0.1,-1.7 1.2,-1.6 -0.2,-1.7 0.7,-2.7 0.9,-0.7 0.1,-2.8 -0.2,-1.7 0.4,-2.8 0.9,-2.5 1.4,-2.2 -0.3,-2.3 0.4,-1.4 0.6,-0.6 z" data-id="NI" data-name="Nicaragua" data-nom="Nicaragua" id="NI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1005.5,243.9 2.9,0 1.1,-2.3 1,-5.6 -1,-2 -3.9,-0.2 -6.5,2.6 -3.9,8.9 -2.5,1.7 0,0 3.6,0.5 4.4,-1.3 3.1,2.7 2.8,1.4 -1.1,-6.4 z" data-id="NL" data-name="Netherlands" data-nom="Pays-Bas" id="NL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1088.8,133.1L1081.9,134.2L1074.6,133.9L1069.5,138.3L1062.8,138L1054.3,140.3L1044.2,147.1L1037.8,151.1L1029,161.8L1021.9,169.6L1013.8,175.4L1002.6,180.2L998.7,183.8L1000.6,197.2L1002.5,203.5L1008.9,206.5L1014.9,205.1L1023.4,198.3L1026.7,201.9L1028.4,198.6L1031.8,194.6L1032.7,187.7L1029.6,184.8L1028.6,177.2L1030.9,171.9L1035.2,172L1036.5,169.8L1034.7,167.9L1040.4,160L1043.8,153.9L1046,150L1050,150.1L1050.6,147L1058.5,147.9L1058.5,144.4L1061,144.1L1063.1,142.7L1068.2,145.6L1073.5,145.3L1078.2,146.6L1081.6,144.2L1082.7,140.3L1088.5,138.5L1094.2,140.6L1093.4,144.4L1096.6,143.9L1103,141.7L1103,141.7L1097.6,138.4L1102.4,137L1088.8,133.1Z M1040.8,91.5L1036,89.9L1030.9,90.1L1029.9,91.6L1024.9,91.6L1022.7,90.1L1013.4,91.7L1016.6,95.2L1024.2,99L1029.9,100.4L1026.9,102.1L1035.3,105L1039.7,104.8L1040.6,100.9L1043.6,100L1044.8,96.6L1053.3,94.8L1040.8,91.5Z M1065,88.4L1055.9,87.4L1052.7,88.6L1047.4,87.6L1037,88.8L1041.3,90.8L1046.4,90.8L1047.3,92.1L1057.9,92.8L1068,92.3L1072.3,89.9L1065,88.4Z M1066.2,99.8L1060.6,98.8L1058.7,97.1L1051.5,98L1054.1,99.5L1051.9,100.7L1058.6,101.8L1066.2,99.8Z" data-id="NO" data-name="Norway" data-nom="Norvège" id="NO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1455.2,394.8 -6.5,-0.6 -6.4,-1.5 -5,-2.8 -4.5,-1.2 -2.5,-3.1 -3.2,-0.9 -6.4,-4.1 -4.7,-2 -1.9,1.5 -2.8,2.9 -0.9,5.9 5.7,2.5 5.8,3.1 7.7,3.5 7.6,0.9 3.8,3.2 4.3,0.6 6.8,1.5 4.6,-0.1 0.1,-2.5 -1.5,-4.1 -0.1,-2.7 z" data-id="NP" data-name="Nepal" data-nom="Népal" id="NP" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1897.4,802.3L1899.3,796.6L1896.2,794.9L1895.4,791.3L1893.1,791.8L1892.7,796.4L1893.5,802.1L1894.4,804.8L1893.5,805.9L1892.9,810.3L1890.5,814.4L1886.3,819.4L1881,821.6L1879.3,824L1883,826.5L1882.2,830L1875.3,835.1L1876.7,836L1876.3,837.6L1882.2,835.1L1888.1,830.9L1892.6,827.5L1894.2,826.3L1895.7,823.6L1898.5,821.6L1902.3,821.8L1906.5,818L1911.6,812.3L1909.5,811.5L1904.9,814L1901.7,813.5L1898.8,811.4L1901.1,806.5L1899.9,804.7L1897,809.1L1897.4,802.3Z M1868.6,832.8L1869.5,830.2L1863.7,833.1L1860.3,836.5L1857.1,838.1L1851.2,842.7L1845.6,845.9L1838.6,849.1L1833.1,851.5L1828.8,852.6L1817.5,858.7L1811.1,863.3L1810,865.6L1815.1,866L1816.6,868.1L1821.1,868.2L1825.1,866.4L1831.4,863.6L1839.5,857.4L1844.2,853.3L1850.4,851L1854.4,850.9L1855,848L1859.6,845.5L1866.6,841L1870.8,838.1L1872.9,835.5L1873.4,832.9L1867.8,835.4L1868.6,832.8Z" data-id="NZ" data-name="New Zealand" data-nom="Nouvelle-Zélande" id="NZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1301,437.8L1303.1,435.8L1303.9,434L1305.5,430.2L1305.4,428.8L1303.3,428L1301.7,425.9L1298.8,422.2L1295.5,421.1L1291.4,420.2L1288.1,417.9L1285.2,413.6L1282.4,413.6L1282.3,417.8L1283.4,418.6L1281,419.9L1281.3,422.5L1279.9,425.1L1280,427.7L1282.9,432.2L1280.3,444.9L1264.2,451.3L1269.4,461.8L1271.5,466.2L1274,465.9L1277.6,463.7L1280.7,464.3L1283.2,462.5L1283,460L1285.1,458.4L1288.5,458.4L1289.7,457.1L1289.9,454L1293.2,451.6L1295.8,451.6L1296.2,450.8L1295.2,446.6L1295.8,443.4L1296.8,441.9L1299.3,442.2L1301,437.8Z M1284.4,407.4L1284.6,404.8L1283.9,404.2L1282.6,406.4L1283.9,408.6L1284.4,407.4Z" data-id="OM" data-name="Oman" data-nom="Oman" id="OM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1388.3,346.3 -9.4,-2.6 -2.9,-5 -4.7,-3 -2.8,0.7 -2.4,1.2 -5.8,0.8 -5.3,1.3 -2.4,2.8 1.9,2.8 1.4,3.2 -2,2.7 0.8,2.5 -0.9,2.3 -5.1,-0.2 3,4.2 -3,1.6 -1.5,3.8 1.1,3.8 -1.7,1.8 -2.1,-0.6 -4,0.9 -0.2,1.7 -4,0 -2.3,3.6 0.8,5.4 -6.6,2.6 -3.8,-0.5 -0.9,1.4 -3.3,-0.8 -5.3,0.9 -9.6,-3.2 3.2,3.3 2.8,3.9 5.6,2.7 1,5.7 2.7,1 0.9,2.9 -7.4,3.3 -1.2,7.4 7.6,-0.9 8.9,-0.1 9.9,-1.2 4.9,4.8 2.1,4.6 4.2,1.6 3.2,-4.2 12,0 -1.8,-5.5 -3.5,-3.2 -1.3,-4.9 -4,-2.9 4.9,-6.6 6.4,0.5 4.5,-6.7 2.1,-6.5 3.9,-6.3 -1,-4.5 3.7,-3.7 -5,-3.1 -2.9,-4.3 -3.2,-5.6 1.9,-2.8 8.5,1.6 5.7,-1 3.7,-5.4 z" data-id="PK" data-name="Pakistan" data-nom="Pakistan" id="PK" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 543.5,517 -2,-1.8 -1.7,-1.9 -2.5,-1.1 -3.1,-0.2 0.3,-0.6 -3.1,-0.4 -2,1.9 -3.5,1.3 -2.5,1.6 -2.7,0.5 -1.5,-1.6 -0.5,0.5 -2.3,-0.3 0.2,-1.3 -1.9,-2.3 -2.2,0.6 -0.1,2.5 1.1,1 -0.8,0.7 0.1,1.2 -0.5,1.3 -0.4,1.2 0.6,1 0.3,-1.4 2.4,0 1.4,0.7 2.3,0.5 1,2.5 1.8,0.4 0.8,-1.1 0.8,3.8 2.6,-0.3 0.9,-0.9 1.5,-0.9 -2.5,-3.4 0.6,-1.3 1.3,-0.3 2.3,-1.6 1.2,-2.2 2.5,-0.4 2.7,1.8 1,2.1 1.4,0.4 -1.5,1.7 1,3.5 1.8,1.8 0.9,-3.1 1.8,0.5 1.1,-1.9 -1.1,-3.8 0.7,-0.9 z" data-id="PA" data-name="Panama" data-nom="Panama" id="PA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 584.3,599.5 -2.9,-3.4 -1.7,-0.1 3.5,-6.5 -4.4,-3 -3.3,0.6 -2.1,-1.1 -3,1.7 -4.2,-0.8 -3.4,-6.7 -2.7,-1.7 -1.8,-3 -3.7,-3 -1.5,0.6 0.8,4.9 -1.7,4.1 -6,6.7 -6.7,2.5 -3.3,5.5 -0.9,4.3 -3.1,2.6 -2.5,-3.2 -2.3,-0.7 -2.3,0.5 -0.2,-2.3 1.5,-1.5 -0.7,-2.7 -4.4,4 -1.6,4.5 3,6.1 -1.7,2.8 4.1,2.6 4.5,4.1 2,4.7 2.4,2.9 6,12.7 6.2,11.7 5.4,8.4 -0.8,1.8 2.8,5.3 4.6,3.9 10.7,6.9 11.6,6.4 0.7,2.6 5.9,3.7 2.7,-1.6 1.2,-3.3 2.8,-6.9 -2.8,-5.3 1.1,-2.1 -1.2,-2.4 1.9,-3.2 -0.3,-5.4 -0.1,-4.5 1.1,-2.1 -5.5,-10.3 -3,1.1 -2.6,-0.7 -0.2,-9.7 -4.4,3.8 -4.9,-0.2 -2.3,-3.4 -3.7,-0.3 1,-2.8 -3.3,-3.8 -2.6,-5.8 1.5,-1.1 -0.1,-2.7 3.3,-1.9 -0.7,-3.4 1.3,-2.2 0.4,-3 6.2,-4.3 4.6,-1.2 0.7,-1 5.1,0.3 z" data-id="PE" data-name="Peru" data-nom="Pérou" id="PE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1648.1,454.4L1644.8,454.4L1643.9,460.2L1645,470.1L1642.4,468.1L1643.6,474.1L1644.8,476.9L1648.1,480.6L1648.5,478.3L1650.3,479.7L1648.8,481.4L1648.9,484L1651.8,485.4L1656.8,484.5L1660.8,488.3L1661.9,485.9L1664.4,489.3L1669.2,492.4L1669.4,489.5L1667.4,487.9L1667.5,484.5L1660,480.9L1657.7,481.7L1654.6,481L1652.6,475.9L1652.7,470.8L1655.7,468.7L1656.3,463.4L1653.6,458.8L1654,456.2L1653.3,454.6L1651.8,456.2L1648.1,454.4Z M1684.6,518.6L1684,516.3L1683.2,513.1L1678.4,510.1L1679.2,515L1675.3,515.2L1674.6,518L1670.4,519.7L1668.2,516.9L1665.4,519.3L1662,521L1660.1,526.4L1661.2,528.3L1665.1,524.7L1667.8,525L1669.3,522.3L1673.1,525.3L1671.6,528.4L1673.5,533L1680.3,536.7L1681.7,533.7L1679.6,529L1682,525.8L1684.5,532.2L1686,526.4L1685.4,522.9L1684.6,518.6Z M1677.4,494.8L1675.6,492.4L1670.2,492.3L1674.2,497.1L1674.5,499.5L1671.2,499L1672.4,502.9L1674.1,503.2L1674.8,507.7L1677.3,506.3L1675.6,502.3L1675.2,500.2L1679.7,501.9L1677.4,494.8Z M1670.1,506.8L1670.1,500.7L1666.5,506.8L1667,502.6L1664,502.9L1663.7,506.9L1662.5,508.7L1661.5,510.4L1665.3,514.8L1666.9,512.9L1668.3,508.9L1670.1,506.8Z M1657.4,496.5L1658.6,499.5L1658.5,502.8L1659,505.7L1662.3,503.8L1664.7,501.1L1664.5,498.5L1660.9,498.5L1657.4,496.5Z M1640,512.9L1642.6,508.5L1646,505L1644.5,499.8L1642.1,506.1L1639.2,510.5L1635.4,514.5L1633,518.9L1640,512.9Z M1654.5,489L1652.3,486.7L1647.5,486.5L1650.9,491.3L1653.7,494.5L1654.5,489Z" data-id="PH" data-name="Philippines" data-nom="Philippines" id="PH" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1801.7,619.2L1800.8,614.9L1806,614.2L1804.9,610.9L1795.8,606.9L1795.2,603.2L1792.3,600L1788.6,596.7L1778.4,593.1L1768.8,588.7L1767.8,609.4L1766.3,630.2L1772,630.4L1775.1,631.5L1779.7,629.3L1779.4,624.6L1783,622.5L1787.9,620.7L1794.9,623.5L1797.3,629.1L1800.2,632.6L1804.1,636.6L1809.6,637.6L1814.4,638.3L1815.5,639.9L1819.3,639.5L1820.1,637.7L1814.5,635L1816.3,633.8L1812.1,632.7L1812.6,629.9L1809.4,630.1L1806.4,623.3L1801.7,619.2Z M1829.5,607L1831.6,603.1L1832,599.6L1830.9,598.6L1827.5,598.7L1827.9,602.4L1824.6,604.7L1822.9,606.9L1819.7,607.4L1819.3,604L1818.5,604.1L1817.5,607.2L1814.4,607.7L1809.4,606.8L1808.8,608.7L1811.9,610.5L1816.4,612.4L1819.3,612.4L1822.3,610.9L1825.5,609.3L1826.5,607.5L1829.5,607Z M1836.4,600.8L1835.9,597.5L1833.9,595.4L1831.8,592.8L1829.5,591.3L1827.6,589.9L1824.7,588.1L1823.1,589.6L1827,591.5L1830.1,594.2L1832.5,596.3L1833.7,598.7L1834.5,602.5L1836.4,600.8Z M1850.7,615.6L1851.6,613.8L1849.2,611.6L1846.7,607.6L1845.1,606.1L1844.6,604.2L1843.8,604.9L1844.7,609.7L1846.9,613.7L1849.1,616.2L1850.7,615.6Z" data-id="PG" data-name="Papua New Guinea" data-nom="Papouasie-Nouvelle-Guinée" id="PG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1069.4,228.3 -4.6,-0.1 -0.5,-1.4 -4.8,-1.1 -5.7,2.1 -7.1,2.8 -3.1,1.7 1.4,3.1 -1.2,1.6 2,2.2 1.4,3.3 -0.1,2.1 2.3,3.9 2.4,1.9 3.7,0.6 -0.1,1.7 2.7,1.2 0.6,-1.5 3.4,0.6 0.7,2 3.6,0.3 2.6,3.1 0.3,0.4 1.9,-0.9 2.7,2.2 2.8,-1.3 2.4,0.6 3.4,-0.8 4.9,2.3 1.1,0.4 -1.6,-2.8 3.8,-5.1 2.3,-0.7 0.3,-1.8 -3.1,-5.3 -0.5,-2.7 -1.9,-2.9 2.7,-1.2 -0.3,-2.4 -1.7,-2.3 -0.6,-2.7 -1.4,-1.9 -2.5,-0.6 -8.7,0.1 -5.9,-0.7 z" data-id="PL" data-name="Poland" data-nom="Pologne" id="PL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1644.7,302.3 0,0 -5.5,-3.6 0.1,3.5 -6.3,2.6 2.7,3.3 -4.6,-0.2 -3.6,-2 -1,4.4 -3.8,3.4 -2.1,4 3.3,1.7 3.4,0.7 0.8,1 0.4,3.5 1.1,1.2 -0.9,0.7 -0.1,2.9 1.9,1 1.6,0.6 0.8,1.2 1.3,-0.5 0,-1.3 3.1,1.3 0.1,-0.6 2.4,0.2 0.7,-2.9 3.5,-0.3 2.1,-0.4 -0.1,-1.6 -4.3,-2.8 -2.6,-1 0.2,-0.7 -1.2,-2.8 1.3,-1.7 2.9,-1 1,-1.9 0.3,-1.1 1.9,-1.4 -2.8,-4.5 0.3,-2.1 0.9,-2 2.2,0.3 0,0 0,0 0,0 -1.4,-1.1 z" data-id="KP" data-name="Dem. Rep. Korea" data-nom="Corée du Nord" id="KP" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 937.6,335.9 -0.4,-2.1 2,-2.5 0.8,-1.7 -1.8,-1.9 1.6,-4.3 -2,-3.8 2.2,-0.5 0.3,-3 0.9,-0.9 0.2,-4.9 2.4,-1.7 -1.3,-3.1 -3,-0.2 -0.9,0.8 -3,0 -1.2,-3.1 -2.1,0.9 -1.9,1.6 0.1,2.1 0.9,2.2 0.1,2.7 -1.3,3.8 -0.4,2.5 -2.2,2.3 -0.6,4.2 1.2,2.4 2.3,0.6 0.4,4 -1,5.1 2.8,-0.7 2.7,0.9 2.2,-1.7 z" data-id="PT" data-name="Portugal" data-nom="Portugal" id="PT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 655.7,700.5 -0.3,-1.9 -5.4,-3.3 -5.1,-0.1 -9.5,1.9 -2.1,5.6 0.2,3.4 -1.5,7.6 11.2,10.4 4.6,1 7.2,4.7 5.9,2.5 1.1,2.8 -4.2,9.6 5.7,1.8 6.2,1 4.2,-1.1 4.3,-4.8 0.3,-5.7 0.7,-3.6 0.3,-3.8 -0.3,-3.5 -2.1,-1.2 -2,1.1 -2,-0.3 -0.9,-2.5 -1,-5.8 -1.2,-1.9 -3.9,-1.7 -2.1,1.2 -6,-1.2 -0.4,-8.6 -1.9,-3.6 z" data-id="PY" data-name="Paraguay" data-nom="Paraguay" id="PY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1166.9,366.1 -2,-0.9 -0.7,4.3 1.4,0.7 -1.2,0.8 -0.1,1.7 2.4,-0.8 0.6,-1.9 -0.4,-3.9 z" data-id="PS" data-name="Palestine" data-nom="Palestine" id="PS" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1258,415.5 0.8,-3.8 -0.5,-3.7 -1.9,-2 -1.4,0.7 -1.1,3.3 0.8,4.7 1.8,1.2 1.5,-0.4 z" data-id="QA" data-name="Qatar" data-nom="Qatar" id="QA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1108.1,266.3 -2.1,0 -1,1.5 -3.6,0.6 -1.6,0.9 -2.4,-1.5 -3.2,0 -3.2,-0.7 -1.9,1.3 -2.9,1.3 -1.9,4.2 -2.6,4.3 -3.8,1.1 2.9,2.5 0.8,1.9 3.2,1.5 0.7,2.5 3.1,1.8 1.4,-1.3 1.4,0.7 -1.1,1.1 1,1 1.8,2.6 1.9,-0.5 4,1 7.5,0.3 2.3,-1.6 5.8,-1.4 4,2.2 3,0.7 0.4,-7.4 1.6,0.5 2.3,-1.3 -0.4,-1.6 -2.4,-1.1 -2.2,1 -2.4,-1.1 -1.3,-2.8 0.2,-2.7 -0.6,-2.7 -3.4,-3.7 -1.9,-2.6 -1.8,-1.9 -1.6,-0.6 z" data-id="RO" data-name="Romania" data-nom="Roumanie" id="RO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1369.3,104L1360.1,103.3L1363.5,102.1L1355.3,100.6L1349.2,102.5L1348.2,104.5L1349.7,106.6L1342.8,106.5L1337.5,109.1L1333.2,108L1323.9,108.5L1324.2,109.8L1315,110.5L1310.1,112.9L1305.9,113.1L1304.7,116.4L1310.2,119L1302.5,119.7L1293,119.4L1287.2,120.5L1292,125.9L1298.9,130.2L1289.3,127.2L1281.4,127.5L1276.3,129.5L1280.8,133.3L1275.9,132.3L1273.8,127.3L1269.6,124.5L1267.8,124.6L1271.4,128.3L1266.8,131.8L1274.9,136L1275.3,141.4L1278.2,144.3L1282.9,144.8L1283.3,148.3L1287.7,151.4L1285.8,154L1286.3,156.7L1282.6,158.1L1282.1,160.1L1276.8,159.3L1280.3,151.5L1279.8,147.9L1273.1,144.6L1269.3,137.3L1265.6,133.6L1262,132L1262.8,127.8L1259.9,124.9L1248.6,123.5L1246.5,124.5L1247,129.2L1242.7,133.9L1243.9,135.6L1248.6,139.7L1248.7,142.3L1254,142.8L1254.8,143.9L1260.6,146.8L1259.6,149.6L1241.1,143.5L1234.5,141.8L1221.7,140.2L1220.5,141.9L1226.4,145L1223.7,148.6L1217.3,145.4L1212.3,147.6L1204.7,147.7L1202.6,149.6L1197.3,149L1199.8,145.7L1196.6,145.5L1184.3,150.1L1176.7,152.7L1177.1,156.2L1171.1,157.4L1167.1,155.5L1165.9,152.5L1170.9,151.8L1167.3,148.8L1155.1,147L1159.4,150.4L1158.6,153.6L1163.3,156.9L1162.2,160.7L1157.6,158.8L1153.6,158.5L1145.6,163.9L1149.8,168L1146.6,169.4L1135.2,165.9L1133.1,168L1136.4,170.4L1136.6,173.1L1132.8,171.7L1126.8,170L1124.9,164.2L1123.9,161.6L1115.9,157.6L1118.8,156.9L1138.9,161.1L1145.3,159.6L1149,156.7L1147.4,153.1L1143.4,150.5L1125.8,144.4L1114.2,143.1L1106.6,139.9L1103,141.7L1103,141.7L1096.6,143.9L1093.4,144.4L1093.8,148.1L1101,151.8L1098.2,155.9L1104.6,162.2L1102.9,167L1107.8,171.1L1106.9,174.8L1114.2,178.7L1113.3,181.6L1110,184.9L1102.1,192.3L1102.1,192.3L1107.4,195.1L1102.9,198.3L1102.9,198.3L1103.8,199.3L1101.2,202.7L1103.7,208.2L1102.1,210.1L1104.5,211.5L1105.5,214.3L1107.6,217.9L1112.8,219.4L1113.8,220.8L1116.1,220.1L1120.9,221.5L1121.9,224.4L1121.3,226L1125,229.9L1127.2,231L1127.1,232.1L1130.5,233.2L1132.2,234.8L1130.6,236.1L1126.7,235.9L1125.9,236.5L1127.4,238.5L1129.4,242.4L1129.4,242.4L1131.2,242.6L1132.2,241.2L1133.7,241.5L1138.5,241L1142.3,244.4L1141.4,245.7L1142.1,247.6L1146.1,247.8L1148.3,250.5L1148.5,251.7L1155.1,253.9L1158.6,252.9L1162.2,255.8L1165.1,255.7L1172.7,257.7L1173.1,259.6L1171.8,262.8L1173.6,266.2L1173.3,268.3L1168.6,268.8L1166.4,270.5L1166.8,273.3L1171,272.3L1171.4,273.6L1164.6,276.2L1167.8,278.6L1164.6,283.8L1161.2,284.8L1166.2,288.4L1172.4,290.8L1179.8,295.9L1180.3,295.2L1184.8,296.3L1192.5,297.3L1200,300.2L1201.1,301.4L1204,300.4L1209.1,301.7L1211.2,304.2L1214.7,305.6L1216.2,305.8L1220.5,309.6L1222.9,310L1223.4,308.5L1226,306L1226,306L1218.7,298.7L1218.3,294.6L1212.4,288.7L1215.9,282.4L1220.5,281.3L1221.9,277.6L1219.1,276.6L1218.9,273.4L1214.7,269.3L1211.1,269.5L1205.8,265.2L1207.5,260.5L1205.8,259.3L1207.9,252.5L1213.9,256.1L1213.2,251.5L1221.3,244.9L1228.8,244.7L1240.7,249L1247.3,251.4L1251.6,248.9L1259.2,248.7L1266.5,251.9L1267.3,250.1L1274.2,250.4L1274.4,247.4L1265,243.2L1268.6,240.3L1267.1,238.6L1271,237L1266,232.9L1267.4,230.8L1284.2,228.7L1285.9,227.2L1296.7,225L1299.8,222.5L1308.8,223.8L1313.1,230.1L1317.4,228.6L1324.4,230.7L1325.6,234L1330,233.6L1339.1,227.9L1338.3,229.8L1346.6,234.5L1364.7,250L1365.8,246.7L1374.1,250.3L1380.3,248.7L1383.5,249.8L1387.6,253.4L1391.5,254.6L1394.8,257.2L1400.8,256.3L1405.1,260.1L1406.8,259.6L1411.5,258.6L1418.1,253.2L1424,250.3L1429.3,252.2L1434.4,252.3L1439.1,255.2L1444.1,255.4L1452,257L1454.4,252.7L1450.4,249.1L1451.7,242.7L1458.6,245.2L1463.4,246L1470,247.5L1473.7,252.1L1482.1,254.7L1486,253.6L1491.7,252.8L1497.1,253.6L1503.6,256.6L1508.5,259.7L1513,259.7L1519.7,260.7L1523.3,259.1L1529.1,258.1L1533.6,253.7L1536.9,254.4L1540.8,256.5L1546.3,256L1553.6,258.3L1558,254.4L1556.1,251.7L1556,245.2L1557.2,243.2L1554.7,239.9L1551,238.4L1552.7,235.4L1557.8,234.3L1564,234.1L1572.5,235.9L1578.4,238.2L1586.1,244.3L1589.9,247L1594.3,250.7L1600.4,256.8L1610.3,258.7L1619.2,263.2L1625.2,269L1632.7,269L1635.3,266.5L1642.2,264.7L1643.5,270.3L1643.1,272.6L1645.9,279.4L1646.5,285.4L1639.7,284.3L1636.8,286.5L1641.5,291.8L1645.3,299.1L1642.8,299.2L1644.7,302.3L1644.7,302.3L1646.1,303.4L1646.1,303.4L1646.1,303.4L1646.1,303.4L1645.7,301.4L1649.7,296.9L1654.8,299.9L1658,299.8L1662.4,296.2L1663.4,292.5L1665.5,285.4L1667.4,278.2L1666.1,273.9L1667.1,264.9L1661.9,255L1656.4,247.7L1655.1,241.5L1650.4,236.4L1637.7,229.7L1632.1,229.3L1631.8,232.3L1626,231L1620.3,227.2L1612.3,226.5L1617.2,212.4L1620.7,200.9L1633.8,199.1L1648.7,200.1L1651.2,197.3L1659.1,198.1L1663.4,202.4L1669.8,201.8L1678.2,200.2L1670.5,196.7L1670.5,186.9L1679.6,185L1691.7,192.1L1695.3,185.7L1692.1,181L1696.8,180.5L1703.3,188.6L1700.9,193.2L1700.1,199.2L1700.4,206.7L1694.7,208L1697.5,210.7L1697.4,214.3L1703.8,222.6L1719.8,236L1730.3,244.8L1736,249.1L1737.6,243.4L1733.1,237.2L1738.8,235.7L1733.4,228.8L1738.4,225.7L1733.7,223.1L1730.3,218.1L1734.4,217.9L1725.4,209.3L1718.7,207.9L1715.8,205.5L1714.7,199.9L1711.6,196L1718.6,196.8L1719.9,194.3L1724.6,196.5L1730.7,191.9L1742.1,195.9L1740.4,193.3L1742.4,189.7L1743.9,185.7L1747,185L1753.5,180.7L1763.3,181.9L1762.4,180.4L1758.6,178.1L1754.5,176.5L1745.4,171.9L1737.3,168.9L1743.4,169.3L1745.4,166.8L1745.4,166.8L1712.5,144.9L1703.1,142.6L1687.4,140L1679.5,140.3L1664.3,138.9L1666.1,141.2L1674.6,144.6L1672.1,146.4L1657.9,141.6L1651.1,142.2L1641.9,141.1L1634.9,141.3L1631,142.4L1623.8,140.8L1618.7,137L1612.2,134.8L1603,133.9L1588.3,134.9L1572.2,130.9L1564.4,127.9L1524.3,124.5L1522.2,126.7L1531.5,131.5L1524,130.8L1523,132.3L1513.3,130.7L1508.3,132.1L1499,129.7L1502,135.2L1493.1,133.1L1483.1,129L1482.7,126.8L1476.7,123.5L1466.9,120.9L1460.8,120.9L1451.5,120L1456.2,123.9L1439,123.1L1435.1,120.8L1421.8,119.9L1416.5,120.7L1416.4,122L1410.6,118.8L1408.3,119.7L1401.1,118.5L1395.5,117.8L1396.6,116.3L1403.2,113.5L1405.5,112L1403.1,109.5L1397.6,107.6L1386.1,105.3L1375.3,105.2L1373.4,106.4L1369.3,104Z M1207.1,135.6L1197.2,131.3L1194.1,127L1197.4,122.1L1200.2,117.1L1208.8,112.4L1218.6,110L1229.9,107.6L1231.2,106.1L1227,104.2L1220.4,104.8L1215.5,106.6L1203.8,107.5L1193.7,110.6L1186.9,113.3L1189.4,115.5L1182.8,119.9L1186.7,120.6L1181.3,124.9L1182.9,127.7L1179.5,128.8L1181.4,131.6L1189.3,133L1191.5,135.3L1204.9,136L1207.1,135.6Z M1673.7,250.7L1666.5,244.5L1661.4,238.5L1654.6,232.7L1649.7,228.7L1648.4,229.5L1652.8,232.3L1650.9,235.1L1657.7,243.4L1665.5,249.4L1671.9,257.7L1674.3,262.3L1679.8,269.1L1683.6,275.1L1688.2,280.3L1688.1,275.5L1694.6,279.3L1691.6,274.9L1682.1,268.6L1678.4,259.6L1687.3,261.6L1673.7,250.7Z M1153.6,87.8L1154.5,87.2L1148.8,86.3L1146,87L1144.7,88L1143.2,86.8L1138,86.9L1131.8,87.7L1139.5,87.8L1138.4,89.1L1142.8,90.1L1146.4,89.4L1146.5,88.7L1149.4,88.4L1153.6,87.8Z M1332.3,95.1L1327.8,91.1L1314.2,87L1304.8,84.9L1298.6,85.8L1293.3,88.7L1299.1,89.5L1305.7,92.7L1313.7,94.4L1325.2,95.7L1332.3,95.1Z M1521.1,110.9L1503.2,108.3L1493,108.1L1489.6,109L1493,112.4L1505.4,115.6L1509.9,114.4L1524.1,114.6L1521.1,110.9Z M1084,228.9L1083.4,227.4L1083.6,225.7L1081.4,224.8L1076.4,223.7L1070.1,225.7L1069.4,228.3L1075.3,229L1084,228.9Z M1533.8,122.7L1531.3,121.3L1523,119.4L1518.9,119.9L1518.1,121.9L1519.2,122.1L1528,122.7L1533.8,122.7Z M1546.3,113.2L1534.6,111.9L1526.4,111.2L1528.1,112.8L1538.4,114.8L1545.2,115.2L1546.3,113.2Z M1354.1,97.7L1352.6,95.9L1340.1,93.3L1337.1,93L1334.9,93.5L1336.1,99.5L1354.1,97.7Z M1696.4,135L1690.4,131.4L1689,133.6L1692.5,135.2L1696.4,135Z" data-id="RU" data-name="Russia" data-nom="Russie" id="RU" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1147.6,579.4 -3.3,1.9 -1.4,-0.6 -1.6,1.8 -0.2,3.8 -0.8,0.4 -0.6,3.5 3.5,0.5 1.7,-3.6 3,0.4 0,0 1.6,-0.8 0.4,-3.7 -2.3,-3.6 z" data-id="RW" data-name="Rwanda" data-nom="Rwanda" id="RW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 929.6,396.2 -0.8,0 0,0 0.1,3.4 -3.4,0.2 -1.8,1.5 -2.5,0 -1.9,-0.9 -4.6,0.7 -1.9,5 -1.7,0.4 -2.8,8.1 -7.8,6.8 -2,8.8 -2.3,2.9 -0.7,2.3 -12.4,0.5 -0.1,0 -0.3,2.7 1.2,-2.2 21.6,0.1 -0.9,-9.2 1.4,-3.3 5.2,-0.5 0.2,-16.3 17.9,0.3 0.2,-9.7 0.1,-1.2 0,-0.4 z" data-id="EH" data-name="W. Sahara" data-nom="République arabe sahraouie démocratique" id="EH" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1228.7,387 -10.2,-0.5 -16.7,-12.7 -8.5,-4.5 -6.7,-1.7 -0.9,1 -10.4,3.1 6.1,6.4 -1.7,1 -0.7,2.2 -4,0.8 -1.1,2.3 -2.1,2 -6.1,-1 -0.5,2.5 0,2.2 -0.6,3.5 2.7,0 3.2,4.4 3.7,5.1 2.5,4.7 1.7,1.5 1.7,3.3 -0.2,1.4 2.1,3.7 3,1.3 2.8,2.5 3.6,7 0,3.8 0.9,4.4 4,6.1 2.5,1 4.1,4.4 1.9,5.2 3.2,5.3 3,2.3 0.6,2.5 1.8,1.9 0.9,2.8 2.3,-2.1 -0.7,-2.7 1.2,-3.1 2.4,1.7 1.5,-0.6 6.4,-0.2 1,0.7 5.4,0.6 2.1,-0.3 1.6,2.1 2.5,-1 3.5,-6.7 5,-2.9 15.7,-2.4 16.1,-6.4 2.6,-12.7 -2.9,-4.5 -1,1.3 -16.8,-3.2 -2.6,-6.4 -0.4,-1.5 -1.2,-2.4 -1.5,0.4 -1.8,-1.2 -1,-1.6 -0.9,-2.1 -1.7,-1.8 -1,-2.1 0.4,-2.1 -0.6,-2.7 -4,-2.6 -1.2,-2.3 -2.9,-1.4 -2.7,-5.5 -3.8,0.2 -1.7,-3.1 -4.9,-0.6 z" data-id="SA" data-name="Saudi Arabia" data-nom="Arabie saoudite" id="SA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1180.8,468.5 0.4,-4.2 1.6,-2 4,-1 2.6,-3.6 -3.1,-2.4 -2.2,-1.6 -2.5,-7.6 -1.1,-6.5 1.1,-1.2 -2.1,-6.2 -21.8,0 -21.4,0 -22.1,0 0.5,12.7 -6.3,0 0,2.7 1.1,25.2 -4.8,-0.4 -2.4,4.7 -1.4,3.9 1.2,1.5 -1.8,1.9 0.7,2.7 -1.4,2.6 -0.5,2.4 2,-0.4 1.2,2.5 0.1,3.7 2.1,1.8 0,1.6 0.7,2.7 3.3,4 0,2.6 -0.8,2.6 0.3,2 2,1.8 0.5,0.3 1.7,-0.7 1.9,-1.2 1.3,-5.7 1.5,-2.9 4,-0.9 1,1.8 3,3.7 1.5,0.5 2,-1.1 4.1,0.3 0.8,1.3 5.5,0 0.2,-1.3 2.9,-1.2 0.5,-1.9 2.1,-1.3 4.8,3.7 2.8,-0.7 2.7,-4.5 3,-3.5 -0.6,-3.9 -1.4,-1.8 3.4,-0.3 0.3,-1.5 2.6,0.5 -0.5,4.7 0.8,4.6 2.9,2.5 0.7,2.2 0,3.1 0.8,0.1 0,-0.7 1.4,-6.7 2.6,-1.8 0.5,-2.6 2.3,-4.8 3.2,-3.2 2.1,-6.2 0.7,-5.5 -0.7,-2.5 1.9,-9.4 z" data-id="SD" data-name="Sudan" data-nom="Soudan" id="SD" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1166,508.7 -0.7,-2.2 -2.9,-2.5 -0.8,-4.6 0.5,-4.7 -2.6,-0.5 -0.3,1.5 -3.4,0.3 1.4,1.8 0.6,3.9 -3,3.5 -2.7,4.5 -2.8,0.7 -4.8,-3.7 -2.1,1.3 -0.5,1.9 -2.9,1.2 -0.2,1.3 -5.5,0 -0.8,-1.3 -4.1,-0.3 -2,1.1 -1.5,-0.5 -3,-3.7 -1,-1.8 -4,0.9 -1.5,2.9 -1.3,5.7 -1.9,1.2 -1.7,0.7 3.8,2.5 3.1,2.6 0.1,2 3.8,3.4 2.4,2.7 1.5,3.8 4.2,2.5 0.9,2.1 3.5,5.2 2.5,0.8 1.5,-1.1 2.6,0.4 3.1,-1.3 1.4,2.7 5,4.2 0,0 2.3,-1.7 3.5,1.4 4.5,-1.5 4,0.1 3.4,-3 3.4,-3.8 3.8,-4.2 -3.5,-6.9 -2.6,-1.5 -1,-2.5 -2.9,-3.1 -3.4,-0.5 1.8,-3.6 3,-0.1 0.8,-2 -0.2,-5 -0.8,-0.1 0,-3.1 z" data-id="SS" data-name="S. Sudan" data-nom="Soudan du Sud" id="SS" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 908.9,479.2 -3.6,-4.4 -3.2,-4.7 -3.7,-1.7 -2.6,-1.8 -3.1,0 -2.8,1.4 -2.7,-0.5 -2,2 -1.3,3.3 -2.8,4.4 -2.5,1.2 2.7,2.3 2.2,5 6.1,-0.2 1.3,-1.5 1.8,-0.1 2.1,1.5 1.8,0.1 1.8,-1.1 1.1,1.8 -2.4,1.5 -2.4,-0.1 -2.4,-1.4 -2.1,1.5 -1,0 -1.4,0.9 -5,-0.1 0.8,4.9 3,-1.1 1.8,0.2 1.5,-0.7 10.3,0.3 2.7,0.1 4,1.5 1.3,-0.1 0.4,-0.7 3,0.5 0.8,-0.4 0.3,-2 -0.4,-2.4 -2.1,-1.8 -1.1,-3.7 -0.2,-3.9 z" data-id="SN" data-name="Senegal" data-nom="Sénégal" id="SN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 919.4,518.7 -1.5,0.3 0,-2.3 -0.9,-1.7 0.2,-1.8 -1.2,-2.7 -1.5,-2.3 -4.5,0 -1.3,1.2 -1.5,0.2 -1,1.4 -0.7,1.7 -3,2.8 0.7,4.7 0.9,2.3 2.9,3.5 4.1,2.5 1.5,0.5 1.3,-2 0.3,-1.9 2.6,-3.4 2.6,-3 z" data-id="SL" data-name="Sierra Leone" data-nom="Sierra Leone" id="SL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 487.2,487 0.6,-2.5 -0.7,-0.7 -1.1,-0.5 -2.5,0.8 -0.1,-0.9 -1.6,-1 -1.1,-1.3 -1.5,-0.5 -1.4,0.4 0.2,0.7 -1.1,0.7 -2.1,1.6 -0.2,1 1.4,1.3 3.1,0.4 2.2,1.3 1.9,0.6 3.3,0.1 0.7,-1.5 z" data-id="SV" data-name="El Salvador" data-nom="Salvador" id="SV" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1084.8,285.2 -3.2,-1.5 -0.8,-1.9 -2.9,-2.5 -3.2,-0.2 -3.7,1.6 0,0 1.5,2.4 1.7,1.8 -1.7,2.3 0,0 1.8,0 -1,2.7 2.7,2.3 -0.5,2.9 -1.2,0.3 1.5,1.1 0.8,0.8 1.8,0.7 2,1.2 -0.4,0.6 1.2,-0.5 0.5,-2 0.9,-0.4 0.8,0.9 1,0.4 0.8,1 0.8,0.3 1.1,1.1 0.8,0 -0.5,1.5 -0.5,0.7 0.2,0.5 1.7,-0.4 2.4,-0.1 0.7,-0.9 -0.6,-0.7 0.7,-2 1.7,-1.9 -2.8,-2.6 -0.7,-2.3 1.1,-1.4 -1,-1 1.1,-1.1 -1.4,-0.7 -1.4,1.3 -3.1,-1.8 -0.7,-2.5 z" data-id="RS" data-name="Serbia" data-nom="Serbie" id="RS" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 668,533.8 -4.6,0.5 -0.6,1.1 -6.7,-1.2 -1,5.7 -3.5,1.6 0.3,1.5 -1.1,3.3 2.4,4.6 1.8,0.1 0.7,3.5 3.3,5.6 3.1,0.5 0.5,-1.3 -0.9,-1.3 0.5,-1.8 2.3,0.6 2.7,-0.7 3.2,1.4 1.4,-2.7 0.6,-2.9 1,-2.8 -2.1,-3.7 -0.4,-4.4 3.1,-5.5 -6,-1.7 z" data-id="SR" data-name="Suriname" data-nom="Suriname" id="SR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1087.4,260.9 -4.9,-2.3 -3.4,0.8 -2.4,-0.6 -2.8,1.3 -2.7,-2.2 -1.9,0.9 -0.3,-0.4 -1.5,0 -0.6,1.1 -1.1,0.3 -0.2,1.4 -0.9,0.3 -0.1,0.6 -1.6,0.6 -2.2,-0.1 -0.6,1.4 -0.3,0.8 0.7,2.1 2.6,1.6 1.9,0.7 4.1,-0.8 0.3,-1.2 1.9,-0.2 2.3,-1 0.6,0.4 2.2,-0.7 1,-1.5 1.6,-0.4 5.5,1.9 1,-0.6 0.7,-2.5 1.1,-1.7 z" data-id="SK" data-name="Slovakia" data-nom="Slovaquie" id="SK" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1059.4,277 -1.2,-2.1 -0.8,-0.1 -0.9,1.1 -4.3,0.1 -2.4,1.4 -4.2,-0.4 -0.3,3 1.4,2.7 -1.1,0.5 3.5,0.2 0.8,-1 1.8,1 2,0.1 -0.2,-1.7 1.7,-0.6 0.3,-2.5 3.9,-1.7 z" data-id="SI" data-name="Slovenia" data-nom="Slovénie" id="SI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1077.7,161.1 -1.9,-2.2 -1.7,-8.4 -7.2,-3.7 -5.9,-2.7 -2.5,0.3 0,3.5 -7.9,-0.9 -0.6,3.1 -4,-0.1 -2.2,3.9 -3.4,6.1 -5.7,7.9 1.8,1.9 -1.3,2.2 -4.3,-0.1 -2.3,5.3 1,7.6 3.1,2.9 -0.9,6.9 -3.4,4 -1.7,3.3 4.2,8.4 4.4,6.7 2,5.7 5.3,-0.3 2.2,-4.7 5.7,0.5 2,-5.5 0.6,-10 4.6,-1.3 3.3,-6.6 -4.8,-3.3 -3.6,-4 2.1,-8.1 7.7,-4.9 6.1,-4.5 -1.2,-3.5 3.4,-3.9 7,-1.5 z" data-id="SE" data-name="Sweden" data-nom="Suède" id="SE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1150.5,736.6 -2.7,-1.2 -1.6,0.5 -0.7,1.8 -1.6,2.4 -0.1,2.2 3,3.5 3.3,-0.7 1.3,-2.8 -0.3,-2.8 -0.6,-2.9 z" data-id="SZ" data-name="Swaziland" data-nom="Eswatini" id="SZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1183.5,359.9 11,-6.7 0.9,-7.8 -1.2,-4.7 2.7,-1.6 2.1,-4.1 -5.9,1.1 -2.8,-0.2 -5.7,2.5 -4.3,0 -3,-1.2 -5.5,1.8 -1.9,-1.3 0.1,3.6 -1.2,1.5 -1.2,1.4 -1,2.6 1.1,5 2.4,0.3 1.2,2.5 -2.6,2.4 -0.9,3.5 0.3,2.6 -0.6,1 0.1,0 6.3,2.5 9.6,-6.7 z" data-id="SY" data-name="Syria" data-nom="Syrie" id="SY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1108.4,447.6 -22.4,-12.2 -22.3,-12.2 -5.4,3.5 1.6,9.9 2,1.6 0.2,2.1 2.3,2.2 -1.1,2.7 -1.8,12.9 -0.2,8.3 -6.9,6 -2.3,8.4 2.4,2.3 0,4.1 3.6,0.2 -0.5,2.9 2.2,4.1 0.5,4.2 -0.2,4.3 3.1,5.8 -3.1,-0.1 -1.6,0.4 -2.5,-0.6 -1.2,3 3.3,3.7 2.5,1.1 0.8,2.6 1.8,4.4 -0.9,1.7 4.7,-0.4 1,-1.7 0.9,0.2 1.4,1.4 7.1,-2.4 2.3,-2.5 2.9,-2.2 -0.6,-2.3 1.6,-0.6 5.4,0.4 5.2,-2.9 4,-7 2.8,-2.5 3.5,-1.1 0,-1.6 -2.1,-1.8 -0.1,-3.7 -1.2,-2.5 -2,0.4 0.5,-2.4 1.4,-2.6 -0.7,-2.7 1.8,-1.9 -1.2,-1.5 1.4,-3.9 2.4,-4.7 4.8,0.4 -1.1,-25.2 z" data-id="TD" data-name="Chad" data-nom="Tchad" id="TD" style="fill: rgb(242, 242, 242); fill-rule: evenodd; fill-opacity: 1; stroke-opacity: 0.5; stroke-width: 1;"></path>
-<path d="m 981.7,502.2 -4.9,-0.1 -0.4,1.9 2.4,3.3 -0.1,4.6 0.6,5.1 1.4,2.3 -1.2,5.7 0.4,3.2 1.5,4 1.2,2.2 4.6,-1.3 -1.4,-4.4 0.2,-14.6 -1.1,-1.3 -0.2,-3.1 -2,-2.3 -1.7,-1.9 0.7,-3.3 z" data-id="TG" data-name="Togo" data-nom="Togo" id="TG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1562.7,481.4 1.5,-2.9 -0.5,-5.4 -5.2,-5.5 -1.3,-6.3 -4.9,-5.2 -4.3,-0.4 -0.8,2.2 -3.2,0.2 -1.8,-1.2 -5.3,3.8 -1,-5.7 0.4,-6.7 -3.8,-0.3 -0.9,-3.8 -2.6,-1.9 -3,1.4 -2.8,2.8 -3.9,0.3 -1.5,6.9 -2.2,1.1 3.5,5.6 4.1,4.6 2.9,4.2 -1.4,5.6 -1.7,1.1 1.7,3.2 4.2,5.1 1,3.5 0.2,3 2.8,5.8 -2.6,5.9 -2.2,6.6 -1.3,6.1 -0.3,3.9 1.2,3.6 0.7,-3.8 2.9,3.1 3.2,3.5 1.1,3.2 2.4,2.4 0.9,-1.1 4.7,2.8 0.6,3.3 3.7,-0.8 1.7,-2.6 -3.1,-3.3 -3.4,-0.8 -3.3,-3.6 -1.4,-5.5 -2.6,-5.8 -3.7,-0.2 -0.7,-4.6 1.4,-5.6 2.2,-9.3 -0.2,-7 4.9,-0.1 -0.3,5 4.7,-0.1 5.3,2.9 -2.1,-7.7 3,-5.2 7.1,-1.3 5.3,1 z" data-id="TH" data-name="Thailand" data-nom="Thaïlande" id="TH" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1344.1,315.7 -2.1,0.2 -1.3,-1.8 0.2,-2.9 -6.4,1.5 -0.5,4 -1.5,3.5 -4.4,-0.3 -0.6,2.8 4.2,1.6 2.4,4.7 -1.3,6.6 1.8,0.8 3.3,-2.1 2.1,1.3 0.9,-3 3.2,0.1 0.6,-0.9 -0.2,-2.6 1.7,-2.3 3.2,1.5 0,2 1.6,0.3 1,5.4 2.6,2.1 1.5,-1.3 2.1,-0.7 2.5,-2.9 3.8,0.5 5.4,0 -1.8,-3.7 -0.6,-2.5 -3.5,-1.4 -1.6,0.6 -3,-5.9 -9.5,0.9 -7.1,-2 -5.4,0.5 -0.6,-3.7 5.9,1.1 1.4,-2 z" data-id="TJ" data-name="Tajikistan" data-nom="Tadjikistan" id="TJ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1325.6,334.2 -0.8,-4 -7.7,-2.7 -6.2,-3.2 -4.2,-3 -7,-4.4 -4.3,-6.4 -2,-1.2 -5.5,0.3 -2.3,-1.3 -1.9,-4.9 -7.8,-3.3 -3.3,3.6 -3.8,2.2 1.6,3.1 -5.8,0.1 -2.5,0.3 -4.9,-4.9 -3.8,-1.7 -5.5,1.3 -1.8,2 2.5,4 -0.5,-4.5 3.7,-1.6 2.4,3.6 4.6,3.7 -4,2 -5.3,-1.5 0.1,5.2 3.5,0.4 -0.4,4.4 4.5,2.1 0.7,6.8 1.8,4.5 4.4,-1.2 3,-3.7 3.5,0.2 2.1,-1.2 3.8,0.6 6.5,3.3 4.3,0.7 7.3,5.7 3.9,0.2 1.6,5.5 5.9,2.4 3.9,-0.8 0.4,-3 4,-0.9 2.5,-2 -0.1,-5.2 4.1,-1.2 0.3,-2.3 2.9,1.7 1.6,0.2 z" data-id="TM" data-name="Turkmenistan" data-nom="Turkménistan" id="TM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1676.8,631.9 4.9,-1.8 6,-2.8 2.2,-1.7 -2,-0.8 -1.8,0.8 -4,0.2 -4.9,1.4 -0.8,1.5 0.5,1.3 -0.1,1.9 z" data-id="TL" data-name="Timor-Leste" data-nom="Timor oriental" id="TL" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1038,361.4 -2,-1 -1.5,-3 -2.8,-0.1 -1.1,-3.5 3.4,-3.2 0.5,-5.6 -1.9,-1.6 -0.1,-3 2.5,-3.2 -0.4,-1.3 -4.4,2.4 0.1,-3.3 -3.7,-0.7 -5.6,2.6 -1,3.3 1,6.2 -1.1,5.3 -3.2,3.6 0.6,4.8 4.5,3.8 0,1.5 3.4,2.6 2.6,11.3 2.6,-1.4 0.4,-2.7 -0.7,-2.6 3.7,-2.5 1.5,-2 2.6,-1.8 0.1,-4.9 z" data-id="TN" data-name="Tunisia" data-nom="Tunisie" id="TN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1166.6,308.9L1156.9,304.5L1148.4,304.7L1142.7,306.4L1137.1,310.4L1127.2,309.6L1125.6,314.4L1117.7,314.6L1112.6,320.7L1116.2,323.7L1114.2,328.7L1118.4,332.3L1122.1,338.7L1127.9,338.6L1133.3,342.1L1136.9,341.3L1137.8,338.6L1143.5,338.8L1148.1,342.3L1156.1,341.6L1159.2,337.9L1163.8,339.4L1167,338.8L1165.3,341.2L1167.6,344.2L1168.8,342.8L1170,341.3L1169.9,337.7L1171.8,339L1177.3,337.2L1180.3,338.4L1184.6,338.4L1190.3,335.9L1193.1,336.1L1199,335L1201.1,334L1207.3,334.9L1209.4,336.5L1211.7,335.4L1211.7,335.4L1208,330.2L1208.7,328.2L1205.8,320.9L1209.1,319.1L1206.7,317.2L1202.5,315.7L1202.5,312.6L1201.2,310.4L1195.6,307.4L1190.2,307.7L1184.7,310.9L1180.2,310.3L1174.4,311.3L1166.6,308.9Z M1117,312.9L1119,311L1125.1,310.6L1125.8,309.1L1121.1,307.1L1120.2,304.7L1115.7,303.9L1110.7,305.9L1113.4,307.5L1112.2,311.4L1111.1,312.1L1111.2,313.4L1113.1,316.3L1117,312.9Z" data-id="TR" data-name="Turkey" data-nom="Turquie" id="TR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1642.3,427.2 1.2,-10.2 0.1,-3.9 -2.9,-1.9 -3.3,4.8 -1.9,6.3 1.5,4.7 4,5.4 1.3,-5.2 z" data-id="TW" data-name="Taiwan" data-nom="Taïwan / (République de Chine (Taïwan))" id="TW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1149.6,578.6 -2,0.8 2.3,3.6 -0.4,3.7 -1.6,0.8 0,0 0.3,2.5 1.2,1.5 0,2 -1.4,1.4 -2.2,3.3 -2.1,2.3 -0.6,0.1 -0.3,2.7 1.1,0.9 -0.2,2.7 1,2.6 -1.3,2.4 4.5,4.3 0.3,3.9 2.7,6.5 0,0 0.3,0.2 2.2,1.1 3.5,1.1 3.2,1.9 5.4,1.2 1.1,1.7 0,0 0.4,-1.2 2.8,3.4 0.3,6.7 1.8,2.4 0,0.1 2.1,-0.3 6.7,1.8 1.4,-0.8 3.9,-0.1 2.1,-1.9 3.3,0.1 6.2,-2.5 4.6,-3.7 0,0 -2,-1.4 -2.2,-6.3 -1.8,-3.9 0.4,-3.1 -0.3,-1.9 1.7,-3.9 -0.2,-1.6 -3.5,-2.3 -0.3,-3.6 2.8,-7.9 -8,-6.3 -0.4,-3.7 -20.2,-13 0,0 -2.8,2.8 -1.9,2.9 2.2,2.2 -3.2,1.6 -0.7,-0.8 -3.2,0.4 -2.5,1.4 -1.6,-2.4 1.1,-4.5 0.2,-3.8 0,0 0,0 -6.2,-0.1 z" data-id="TZ" data-name="Tanzania" data-nom="Tanzanie" id="TZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1167.6,545.1 -3.4,3 -4,-0.1 -4.5,1.5 -3.5,-1.4 -2.3,1.7 0,0 -0.3,7.5 2.3,0.8 -1.8,2.3 -2.2,1.7 -2.1,3.3 -1.2,3 -0.3,5.1 -1.3,2.4 -0.1,4.8 1.4,0.6 3.3,-1.9 2,-0.8 6.2,0.1 0,0 -0.3,-2.5 2.6,-3.7 3.5,-0.9 2.4,-1.5 2.9,1.2 0.3,0.5 0,-0.3 1.6,-2.6 2.7,-4.2 2.1,-4.7 -2.6,-7.3 -0.7,-3.2 -2.7,-4.4 z" data-id="UG" data-name="Uganda" data-nom="Ouganda" id="UG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1138.5,241 -4.8,0.5 -1.5,-0.3 -1,1.4 -1.8,-0.2 0,0 -4.1,0.3 -1.2,1.4 0.2,3.1 -2,-0.6 -4.3,0.3 -1.5,-1.5 -1.6,1.1 -2,-0.9 -3.8,-0.1 -5.6,-1.5 -5,-0.5 -3.7,0.2 -2.4,1.6 -2.2,0.3 3.1,5.3 -0.3,1.8 -2.3,0.7 -3.8,5.1 1.6,2.8 -1.1,-0.4 -1.1,1.7 -0.7,2.5 2.9,1.7 0.6,1.6 1.9,-1.3 3.2,0.7 3.2,0 2.4,1.5 1.6,-0.9 3.6,-0.6 1,-1.5 2.1,0 1.1,-0.9 3.2,-0.6 3.9,1.9 2,0.3 2.5,1.6 0,2.1 1.9,1.1 1.1,2.6 2,1.5 -0.2,1 1,0.6 -1.2,0.5 -3,-0.2 -0.6,-0.9 -1,0.5 0.5,1.1 -1.1,2 -0.5,2.1 -1.2,0.7 2.4,1.1 2.2,-1 2.4,1.1 3.3,-4.6 1.3,-3.4 4.5,-0.8 0.7,2.4 8,1.5 1.7,1.4 -4.5,2.1 -0.7,1.2 5.8,1.8 -0.6,2.9 3,1.3 6.3,-3.6 5.3,-1.1 0.6,-2.2 -5.1,0.4 -2.7,-1.5 -1,-3.9 3.9,-2.3 4.6,-0.3 3,-2 3.9,-0.5 -0.4,-2.8 2.2,-1.7 4.7,-0.5 0.3,-2.1 -1.8,-3.4 1.3,-3.2 -0.4,-1.9 -7.6,-2 -2.9,0.1 -3.6,-2.9 -3.5,1 -6.6,-2.2 -0.2,-1.2 -2.2,-2.7 -4,-0.2 -0.7,-1.9 0.9,-1.3 -3.8,-3.4 z" data-id="UA" data-name="Ukraine" data-nom="Ukraine" id="UA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 692.5,787 -2.1,-3.7 1.9,-3 -3.8,-4.3 -4.8,-3.5 -6.2,-4.1 -1.9,0.2 -6.2,-4.9 -3.4,0.7 -0.5,5.1 -0.3,6.5 1.1,6.3 -0.9,1.4 0.4,4.2 3.9,3.5 3.6,-0.2 5.4,2.7 2.7,-0.6 4.2,1.2 5.3,-3.5 1.6,-4 z" data-id="UY" data-name="Uruguay" data-nom="Uruguay" id="UY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M512.2,259.1L510.6,259.1L509.3,261.5L499.2,261.5L482.4,261.5L465.7,261.5L450.9,261.5L436.2,261.5L421.7,261.5L406.7,261.5L401.9,261.5L387.3,261.5L373.4,261.5L371.8,266.6L369.4,271.7L367.1,273.3L368.2,267.4L362.4,265.3L361,266.5L360.6,269.4L358.8,274.8L354.6,283.1L350.6,288.7L346.6,294.3L341.2,300.1L340.1,304.8L337.3,310.1L333.4,315.3L334.4,318.7L332.5,323.9L334,329.3L335.3,331.5L334.5,333L334.9,342L337.4,348.5L336.6,352L337.6,353L342.2,353.7L343.5,355.4L346.3,355.7L346.2,357.6L348.4,358.3L350.5,362L350.2,365.2L356.5,364.7L363.5,364L362.5,365.3L369.6,368.4L380.3,372.8L391,372.8L395.3,372.8L396.1,370.2L405.4,370.2L406.7,372.4L408.8,374.4L411.2,377.2L412,380.5L412.4,384L414.6,385.9L418.6,387.8L423.4,382.8L427.8,382.7L430.9,385.2L432.5,389.6L433.5,393.3L435.9,396.9L436.1,401.4L436.9,404.4L440.8,406.4L444.4,407.8L446.5,407.6L445.9,405.4L446.3,402.3L447.3,397.9L449.2,395.1L452.9,392L458.9,389.3L465,384.6L469.9,383.1L473.4,382.7L476.9,384.1L481.8,383.3L485.1,386.7L488.9,386.9L491.3,385.7L493,386.6L494.3,385.8L493.4,384.5L494.1,382L493.6,380.3L496,379.3L500.2,378.9L504.9,379.6L511.1,378.8L514.1,380.3L516.1,383.3L517,383.6L523.1,380.7L525,381.7L528,387L528.8,390.5L526.8,394.7L527.2,397.2L528.8,402.1L530.8,407.6L532.6,409L533,411.8L535.6,412.6L537.3,411.8L539.3,407.9L540,405.4L540.9,401.1L539.7,393.7L540.2,391L538.7,386.5L538,381.1L538.1,376.7L539.9,372.2L543.4,368.4L547.1,365.4L554,361.3L555.3,359.1L558.6,356.8L561.4,356.4L565.8,352.6L571.8,350.7L576.4,345.9L577.3,339.4L577.4,337.2L576,336.8L577.5,330.6L574.5,328.5L577.7,329.5L577.7,325.4L579.6,322.7L578.6,328L580.6,330.5L577.7,334.9L578.1,335.1L582.5,330L584.9,327.5L585.5,325L584.6,323.9L584.5,320.4L585.7,322L586.8,322.4L586.7,324L591.9,319.1L594.4,314.6L593,314.3L595.1,312.5L594.7,313.3L598,313.3L605.8,311.4L604.7,310.2L596.8,311.4L601.6,309.6L604.7,309.3L607.1,309L611.2,307.9L613.6,308L617.4,307L618.4,305.3L617.3,303.9L617.1,306.1L615,306L614.4,302.7L615.5,299.4L616.9,298.1L620.8,294.4L626.7,292.6L632.7,290.5L639,287.5L638.8,285.5L636.7,282L639.5,273.5L638,271.7L634.3,272.8L633.2,271.1L627.7,275.8L624.5,280.7L621.8,283.5L619.3,284.4L617.6,284.7L616.6,286.3L607.3,286.3L599.6,286.3L596.9,287.5L590.2,291.7L590.4,292.6L589.8,295L585.2,297L581.3,296.5L577.3,296.3L574.7,297L574.4,298.8L574.4,298.8L574.3,299.4L568.5,303.1L564,304.9L561.1,305.7L557.4,307.4L553.4,308.3L550.9,308L548.2,306.7L550.9,304.3L550.9,304.3L552.9,302.1L556.6,298.7L556.6,298.7L556.6,298.7L557.3,296.2L557.8,292.7L556.2,292L551.9,294.8L551,294.7L551.3,293.2L555.1,290.7L556.7,287.9L557.4,285.1L554.7,282.7L551,281.4L549.3,283.8L547.9,284.4L545.7,287.5L546.1,285.4L543.5,286.9L541.4,288.9L538.8,292L537.5,294.6L537.6,298.4L535.8,302.4L532.5,305.4L531.1,306.3L529.5,307L527.7,307L527.4,306.6L527.3,303.3L528,301.7L528.7,300.2L529.3,297.2L531.8,293.7L534.7,289.4L539.3,284.7L538.6,284.7L533.2,288.7L532.8,288L535.7,285.7L540.4,281.7L544.1,281.2L548.5,279.9L552.2,280.6L552.3,280.6L557,280.1L555.5,277.6L555.5,277.6L554.3,277.4L554.3,277.4L554.3,277.4L552.9,277.1L552.5,275.4L547.4,275.9L542.4,277.3L539.9,275L537.4,274.2L540.5,270.9L535.2,272.9L530.3,275L525.7,276.5L523.6,274.4L518.1,275.7L518.5,274.8L523.1,272.2L527.8,269.7L533.7,267.6L533.7,267.6L533.7,267.6L528.4,266L524,266.8L520.2,264.9L515.6,263.9L512.4,263.5L511.4,262.5L512.2,259.1Z M359,133.3L354.6,132.2L344.4,135L341.2,134.7L330.2,137L325.4,137.6L317.6,140.1L312.8,142.7L304.2,145.2L296.6,145.3L290.3,148.2L293.5,149.9L294.2,152.2L293.4,154.9L295.7,157L294.5,160.5L285.3,160.7L289.6,157.9L286.2,157.9L273.1,160.6L264,162.9L265,166.2L263.8,168.4L268.3,169.8L275.2,169.1L277,170.4L279.9,169.1L286,167.9L288.7,167.9L282.8,170L283.9,171L281.4,173.6L275.9,175.4L273.4,174.9L266.4,177.6L264.6,176.7L260.5,177.1L255.2,180.1L247.6,183.2L241.8,186.6L242.1,189L238.1,192.3L239.5,193.7L240,196.4L247.2,195.3L247.6,197.4L244.3,199.5L240.7,203L243.5,203L250.7,200.7L249.1,203.6L252.7,201.5L252.3,204.5L257.1,202.3L257.5,203.4L264.7,201.6L258.5,205L252.8,209.5L247.1,211.6L244.8,212.8L234.5,216.4L229.6,218.8L223.1,219.5L214.6,222.8L208,224.6L199.9,227.4L199.5,228.4L209.5,226.7L215.5,224.7L222.4,222.7L228.5,221L231.3,221.5L239.4,218.9L243.9,216.1L254.4,213L258.3,210.4L264.9,208.6L272.5,206.1L281.4,201.9L281.2,199L292.3,194.9L299.7,191L308.9,187.8L308.5,189.2L301.8,191L293.5,196.7L290.3,200.2L296.7,198.9L302.8,197L309.3,195.7L312.2,195.4L315.7,191.3L322,190.1L324.6,192.6L330.6,195.3L337.3,194.8L343,196.8L346.2,197.9L349.5,204L353.2,205.7L360.3,205.9L364.4,206.3L361.7,211.8L363.3,216.7L360,221.9L362.5,223.8L363.1,226L363.1,226L368.2,223.1L371.3,219.4L366.7,215.6L368.2,208.8L369.3,204.6L367.6,201.9L366.9,199.5L367.4,196.5L361,198.4L353.4,201.7L353.2,197.8L352.6,195.2L349.9,193.6L345.7,193.5L381.1,161.1L405.4,140.9L405.4,140.9L405.4,140.9L401.9,140.2L397.8,138.6L391.3,139.4L389.1,138.7L382,138.2L375.8,136.6L371,137.1L366.1,136.2L368.1,135L361.8,134.7L358.5,135.7L359,133.3Z M116.7,450.7L118.7,449.8L121.2,448.4L121.4,448L120.5,445.8L119.8,445L119,444.4L117.1,443.3L116.7,443.2L116.3,443.8L116.3,445.1L115.1,446.1L114.7,446.8L115.1,449.1L114.5,450.9L115.7,451.8L116.7,450.7Z M234.1,173.5L231,175.7L231.4,176.2L235.6,175.8L235.9,176.9L237.6,178.1L242.5,176.9L243.7,176.3L240.4,175.5L238.8,174L235.4,174.6L234.1,173.5Z M271.6,212.2L278.5,209.4L278.5,207.6L275.9,207.2L272.5,208.1L266.1,210.2L263.9,212.9L264.6,214.5L271.6,212.2Z M116.1,440.8L116.7,440.1L115.5,439.1L113.7,438.5L113,439L113,439.4L113.5,439.9L114.1,441.3L116.1,440.8Z M108.4,436.5L107.3,434.4L107,434L105.3,434.9L105.4,435.1L105.8,436.6L107.6,436.8L108,436.9L108.4,436.5Z M100.1,432.3L100.4,430.8L99.1,430.7L98.1,431.3L97.7,431.8L99.3,432.9L100.1,432.3Z M232.9,195.8L235.2,193.5L232.3,193L226.6,194L227.4,195.6L229,196.7L232.9,195.8Z M113.1,437.4L110.5,437.2L109.9,437.9L112.8,438.1L113.1,437.4Z" data-id="US" data-name="United States" data-nom="États-Unis" id="US" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1339.8,303.1 -2.5,1.2 -5.4,4.3 -0.9,4.5 -1.9,0 -2.3,-3 -6.6,-0.2 -2.6,-5 -2.5,-0.1 -1.5,-6.2 -7.5,-4.5 -8.6,0.5 -5.7,0.9 -6.5,-5.5 -4.8,-2.3 -9.1,-4.5 -1.1,-0.5 -11.9,3.6 6.2,22.8 5.8,-0.1 -1.6,-3.1 3.8,-2.2 3.3,-3.6 7.8,3.3 1.9,4.9 2.3,1.3 5.5,-0.3 2,1.2 4.3,6.4 7,4.4 4.2,3 6.2,3.2 7.7,2.7 0.8,4 2.9,0 4.3,1.4 1.3,-6.6 -2.4,-4.7 -4.2,-1.6 0.6,-2.8 4.4,0.3 1.5,-3.5 0.5,-4 6.4,-1.5 -0.2,2.9 1.3,1.8 2.1,-0.2 4.1,0.6 5.2,-4.5 -7.1,-3.3 -3.2,1.6 -4.6,-2.3 3.1,-4.1 -1.8,-0.6 z" data-id="UZ" data-name="Uzbekistan" data-nom="Ouzbékistan" id="UZ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 642,518.9 -2.2,-1.5 -2.9,0.2 -0.7,-5.1 -4.1,-3.2 -4.4,-0.4 -1.8,-3 4.8,-1.9 -6.7,0.1 -6.9,0.4 -0.2,1.6 -3.2,1.9 -4.2,-0.7 -3.1,-2.9 -6,0.7 -5,-0.1 -0.1,-2.1 -3.5,-3.5 -3.9,-0.1 -1.7,-4.5 -2.1,2 0.6,3 -7.1,2.6 0,4.8 1.6,2.2 -1.5,4.6 -2.4,0.4 -1.9,-5 2.7,-3.7 0.3,-3.3 -1.7,-2.9 3.3,-0.8 0.3,-1.5 -3.7,1.1 -1.6,3.2 -2.2,1.8 -1.8,2.4 -0.9,4.5 -1.8,3.7 2.9,0.5 0.6,2.9 1.1,1.4 0.4,2.5 -0.8,2.4 0.2,1.3 1.3,0.6 1.3,2.2 7.2,-0.6 3.2,0.8 3.8,5.5 2.3,-0.7 4,0.3 3.2,-0.7 2,1.1 -1.2,3.4 -1.3,2.1 -0.5,4.6 1,4.2 1.5,1.9 0.2,1.5 -2.9,3.1 2,1.4 1.4,2.2 1.7,6.4 3,3.4 4.4,-0.5 1.1,-1.9 4.2,-1.5 2.3,-1 0.7,-2.7 4.1,-1.8 -0.3,-1.4 -4.8,-0.5 -0.7,-4 0.3,-4.3 -2.4,-1.6 1,-0.6 4.2,0.8 4.4,1.6 1.7,-1.5 4,-1 6.4,-2.4 2.1,-2.4 -0.7,-1.8 -3.7,-4.8 1.6,-1.8 0,-2.9 3.4,-1.1 1.5,-1.2 -1.9,-2.3 0.6,-2.3 4.6,-3.8 z" data-id="VE" data-name="Venezuela" data-nom="Venezuela" id="VE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1571.6,435 -5.9,-1.6 -3,-2.6 0.2,-3.7 -5.2,-1.1 -3,-2.4 -4.1,3.4 -5.3,0.7 -4.3,0 -2.7,1.5 4,5.1 3.4,5.7 6.8,0.1 3,5.5 -3.3,1.7 -1.3,2.3 7.3,3.8 5.7,7.5 4.3,5.6 4.8,4.4 2,4.5 -0.2,6.4 1.8,4.2 0.1,7.7 -8.9,4.9 2.8,3.8 -5.8,0.5 -4.7,2.5 4.5,3.7 -1.3,4.3 2.3,4 6.6,-5.9 4.1,-5.3 6.1,-4.1 4.3,-4.2 -0.4,-11.2 -4,-11.7 -4.1,-5.1 -5.6,-4 -6.4,-8.3 -5.3,-6.7 0.5,-4.4 3.7,-6 6.5,-5.5 z" data-id="VN" data-name="Vietnam" data-nom="Viêt Nam" id="VN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1906.6,667.2L1904.3,665.2L1903.4,670.1L1903.9,671.9L1905.1,671.5L1906.4,672.3L1906.6,667.2Z M1908.6,676.9L1905.9,673.3L1905.3,675L1906.6,677.8L1908.6,676.9Z" data-id="VU" data-name="Vanuatu" data-nom="Vanuatu" id="VU" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1271.5,466.2 -2.1,-4.4 -5.2,-10.5 -15.7,2.4 -5,2.9 -3.5,6.7 -2.5,1 -1.6,-2.1 -2.1,0.3 -5.4,-0.6 -1,-0.7 -6.4,0.2 -1.5,0.6 -2.4,-1.7 -1.2,3.1 0.7,2.7 -2.3,2.1 0.4,2.7 -0.6,1.3 0.7,2.9 -1.1,0.3 1.7,2.6 1.3,4.7 1,1.9 0,3.4 1.6,3.8 3.9,0.3 1.8,-0.9 2.7,0.2 0.8,-1.7 1.5,-0.4 1.1,-1.7 1.4,-0.4 4.7,-0.3 3.5,-1.2 3.1,-2.7 1.7,0.4 2.4,-0.3 4.7,-4.5 8.8,-3 5.3,-2.7 0,-2.1 0.9,-2.9 3.9,-1.7 z" data-id="YE" data-name="Yemen" data-nom="Yémen" id="YE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1148.2,713.7L1145.3,713.1L1143.4,713.9L1140.8,712.8L1138.6,712.7L1130.6,717.4L1125.4,722.1L1123.4,726.4L1121.7,728.8L1118.7,729.3L1117.5,732.3L1116.9,734.3L1113.3,735.8L1108.9,735.5L1106.4,733.7L1104.1,732.9L1101.4,734.4L1099.9,737.5L1097.2,739.4L1094.4,742.2L1090.4,742.9L1089.3,740.6L1090,736.8L1087,730.7L1085.6,729.7L1084.5,753.3L1079.5,756.5L1076.6,757L1073.3,755.8L1070.9,755.3L1070.1,752.6L1068,750.8L1065.3,754L1068.8,762.2L1068.8,762.3L1071.3,767.6L1074.5,773.6L1074.3,778.4L1072.6,779.6L1074,783.8L1073.8,787.6L1074.4,789.3L1074.7,788.4L1076.8,791.3L1078.6,791.4L1080.7,793.7L1083.1,793.5L1086.6,791.1L1091.2,790.1L1096.8,787.6L1099,787.9L1102.3,787.1L1108,788.3L1110.7,787.1L1113.9,788.1L1114.7,786.3L1117.4,786L1123.2,783.5L1127.5,780.6L1131.6,776.8L1138.3,770.3L1141.7,765.7L1143.5,762.5L1146,759.2L1147.2,758.3L1151.1,755.1L1152.7,752.2L1153.8,747L1155.5,742.3L1151.4,742.3L1150.1,745.1L1146.8,745.8L1143.8,742.3L1143.9,740.1L1145.5,737.7L1146.2,735.9L1147.8,735.4L1150.5,736.6L1150.1,734.3L1151.5,727.2L1150.4,722.7L1148.2,713.7Z M1128.1,766.5L1126.1,767.1L1122.4,762.2L1125.6,758.2L1128.7,755.7L1131.3,754.4L1133.6,756.4L1135.3,758.3L1133.4,761.4L1132.3,763.5L1129.2,764.5L1128.1,766.5Z" data-id="ZA" data-name="South Africa" data-nom="Afrique du Sud" id="ZA" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1149.2,626.7 -1.9,-0.5 0.4,-1.3 -1,-0.3 -7.5,1.1 -1.6,0.7 -1.6,4.1 1.2,2.8 -1.2,7.5 -0.8,6.4 1.4,1.1 3.9,2.5 1.5,-1.2 0.3,6.9 -4.3,0 -2.1,-3.5 -2,-2.8 -4.3,-0.8 -1.2,-3.4 -3.4,2 -4.5,-0.9 -1.8,-2.8 -3.5,-0.6 -2.6,0.1 -0.3,-2 -1.9,-0.1 0.5,2 -0.7,3 0.9,3 -0.9,2.4 0.5,2.2 -11.6,-0.1 -0.8,20.3 3.6,5.2 3.5,4 4.6,-1.5 3.6,0.4 2.1,1.4 0,0.5 1,0.5 6.2,0.7 1.7,0.7 1.9,-0.1 3.2,-4.1 5.1,-5.3 2,-0.5 0.7,-2.2 3.3,-2.5 4.2,-0.9 -0.3,-4.5 17.1,-5.2 -2.9,-1.7 1.9,-5.9 1.8,-2.2 -0.9,-5.3 1.2,-5.1 1,-1.8 -1.2,-5.4 -2.6,-2.8 -3.2,-1.9 -3.5,-1.1 -2.2,-1.1 -0.3,-0.2 0,0 0.5,1.1 -1,0.4 -1.2,-1.4 z" data-id="ZM" data-name="Zambia" data-nom="Zambie" id="ZM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1148.2,713.7 6.2,-7.2 1.6,-4.6 0.9,-0.6 0.8,-3.7 -0.8,-1.9 0.5,-4.7 1.3,-4.4 0.3,-8.1 -2.8,-2 -2.6,-0.5 -1.1,-1.6 -2.6,-1.3 -4.6,0.1 -0.3,-2.4 -4.2,0.9 -3.3,2.5 -0.7,2.2 -2,0.5 -5.1,5.3 -3.2,4.1 -1.9,0.1 -1.7,-0.7 -6.2,-0.7 1.9,5.1 1.1,1.1 1.6,3.7 6,7 2.3,0.7 -0.1,2.2 1.5,4.1 4.2,0.9 3.4,2.9 2.2,0.1 2.6,1.1 1.9,-0.8 2.9,0.6 z" data-id="ZW" data-name="Zimbabwe" data-nom="Zimbabwe" id="ZW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1223.4,505.7 -2.6,-2.7 -1.2,-2.6 -1.8,-1.2 -2,3.4 -1.1,2.3 2.2,3.5 2.1,3.1 2.2,2.2 18.5,7.6 4.8,-0.1 -15.4,19.1 -7.4,0.3 -4.9,4.5 -3.6,0.1 -1.5,2 -4.8,7.2 0.2,23.2 3.3,5.3 1.3,-1.5 1.3,-3.4 6.1,-7.7 5.3,-4.8 8.3,-6.4 5.6,-5.1 6.4,-8.7 4.7,-7.1 4.6,-9.3 3.2,-8.2 2.5,-7.1 1.3,-6.8 1.1,-2.3 -0.2,-3.4 0.4,-3.7 -0.2,-1.7 -2.1,0 -2.6,2.2 -2.9,0.6 -2.5,0.9 -1.8,0.2 0,0 -3.2,0.2 -1.9,1.1 -2.8,0.5 -4.8,1.9 -6.1,0.8 -5.2,1.6 -2.8,0 z" data-id="SO" data-name="Somalia" data-nom="Somalie" id="SO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 681.4,556.2 1.8,-4.7 3.5,-5.8 -0.9,-2.6 -5.8,-5.4 -4.1,-1.5 -1.9,-0.7 -3.1,5.5 0.4,4.4 2.1,3.7 -1,2.7 -0.6,2.9 -1.4,2.8 2.4,1.3 1.8,-1.8 1.2,0.3 0.8,1.8 2.7,-0.5 2.1,-2.4 z" data-id="GF" data-name="French Guiana" data-nom="Guyane" id="GF" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M994.2,252.9L991.8,250.5L989.6,250.4L988.9,248.2L984.6,249.4L983.2,254.5L971.9,259.3L967.3,256.7L968.7,263.7L960.5,262.1L954.1,263.4L954.5,268L962,270.4L965.6,273.5L970.7,280L969.7,292.3L967,296L969,298.4L978.4,301.2L980.3,299.9L986,302.7L992,301.9L992.5,298.2L999.9,296.2L1009.9,297.8L1014.4,294.4L1014.9,291.7L1012.2,290.9L1010.7,286.1L1012.4,284.3L1010.8,281.9L1011,280.2L1009.2,277.5L1006.8,278.4L1006.8,275.6L1010.3,272.1L1010.1,270.5L1012.4,271.1L1013.7,270.1L1014.2,265.6L1016.5,261.4L1009.4,260.2L1007,258.6L1005.6,258.7L1004.5,258.2L1000.1,255.4L997.6,255.8L994.2,252.9Z M1025.7,303.8L1024.6,298.6L1021.4,300.9L1020.4,303.2L1021.8,307.4L1024.2,308.6L1025.7,303.8Z" data-id="FR" data-name="France" data-nom="France" id="FR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M967,296L958.8,295.8L954.6,296.1L949.2,295.1L942.4,295.1L936.2,294L928.8,298.5L930.8,301.1L930.4,305.5L932.3,303.9L934.4,303L935.6,306.1L938.6,306.1L939.5,305.3L942.5,305.5L943.8,308.6L941.4,310.3L941.2,315.2L940.3,316.1L940,319.1L937.8,319.6L939.8,323.4L938.2,327.7L940,329.6L939.2,331.3L937.2,333.8L937.6,335.9L942.4,336.9L943.8,340.6L945.8,342.8L948.3,343.4L950.4,340.9L953.7,338.6L958.7,338.7L965.4,338.7L969.2,333.7L973.1,332.4L974.3,328.2L977.3,325.3L975.3,321.6L977.3,316.5L980.4,313L980.9,310.9L987.5,309.6L992.3,305.4L992,301.9L986,302.7L980.3,299.9L978.4,301.2L969,298.4L967,296Z M993,318.6L993.1,318.3L993.2,318.1L993.3,318L993.1,317.8L993.1,317.7L993.3,317.5L993.1,317.4L991.8,317.8L991.1,318.2L989,319.7L989,320L989.1,320.2L989.5,320.2L989.7,320.6L990.1,320.2L990.4,320.1L990.7,320.2L991,320.4L991.1,321L991.2,321.2L991.8,321.3L992.7,321.7L993.1,321.5L993.6,321.2L993.8,320.6L994.1,320.1L994.4,319.6L994.7,319.2L994.6,318.8L994.3,318.7L994,318.6L993.5,318.8L993,318.6Z M984.2,324.1L984.5,324.1L985.1,323.4L985.1,323.1L984.8,322.9L983.7,323.1L983.5,323.4L983.5,323.7L983.2,323.8L983.1,324.2L983.2,324.4L984,324.5L984.2,324.1Z M999,318.3L999.1,317.9L999.1,317.8L998.6,317.1L997.7,316.8L996.7,316.9L996.6,317L996.6,317.4L996.7,317.5L997.3,317.6L998.9,318.3L999,318.3Z M985,325.7L985,325.5L984.5,325.5L984.2,325.1L984.1,325.3L984,325.5L984,325.7L984.5,325.7L984.9,325.8L985,325.7Z" data-id="ES" data-name="Spain" data-nom="Espagne" id="ES" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 586.6,492.9 -0.1,-0.1 -0.3,-0.6 -0.3,-0.3 -0.1,0.1 -0.1,0.3 0.3,0.3 0.3,0.4 0.3,0.1 0,-0.2 z" data-id="AW" data-name="Aruba" data-nom="Aruba" id="AW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 627.9,456.2 0.1,-0.2 -0.2,-0.1 -0.8,0.5 0,0.1 0.9,-0.3 z" data-id="AI" data-name="Anguilla" data-nom="Anguilla" id="AI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 985.4,301.7 0.1,-0.2 0.1,-0.2 0,-0.1 -0.2,-0.1 -0.7,-0.2 -0.3,-0.1 -0.2,0.1 -0.2,0.2 -0.1,0.3 0.1,0.1 0,0.2 0,0.2 0.1,0.2 0.2,0 0.2,0 0.3,-0.1 0.5,-0.3 0.1,0 z" data-id="AD" data-name="Andorra" data-nom="Andorre" id="AD" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M634.3,463.8L634.5,463.7L634.5,463.6L634.5,463.4L634.4,463.3L634.3,463.1L633.9,462.9L633.4,463.4L633.4,463.6L633.5,463.9L634.1,464L634.3,463.8Z M634.5,460.3L634.5,459.8L634.4,459.6L634.1,459.6L634,459.5L633.9,459.5L633.8,459.6L633.9,460.2L634.4,460.5L634.5,460.3Z" data-id="AG" data-name="Antigua and Barb." data-nom="Antigua-et-Barbuda" id="AG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M551.3,415L550.8,414.4L550.5,413.5L550.3,413.1L550.4,412.6L550.1,412.2L549.5,411.8L549.2,411.9L549.3,413L549.1,413.6L548.3,414.7L548.4,415.1L548.4,415.1L548.5,415.3L548,415.7L548,415.4L547.4,415.5L547.7,416L548.3,416.4L548.6,416.5L548.9,416.3L548.9,416.8L549.2,417.2L549.3,417.6L549.6,417.3L550.2,417.1L550.4,416.9L551.1,416.5L551.1,416.3L551.2,415.7L551.3,415Z M555.3,407.3L555.5,407L555.9,405.2L556.7,404.6L556.8,403.4L556.3,402.9L555.9,402.7L555.8,402.5L555.9,402.3L555.7,402.2L555.4,402L555,401.4L554.6,401L553.9,400.9L553.3,400.8L552.9,400.7L552.4,401L553.2,401L554.7,401.3L555.4,402.8L555.9,403.2L556,403.6L555.8,404L555.8,404.4L555.5,404.9L555.4,405.7L555.1,406.1L554.4,406.6L554.8,406.8L555.1,407.4L555.3,407.3Z M558,410L557.7,409.5L557.6,409.6L557.5,410L557.2,410.4L557.7,410.3L558.1,410.4L558.7,410.9L559.4,411.1L559.7,411.7L560.3,412.3L560.3,412.9L559.9,413.5L559.8,414.2L559.2,414.3L559.3,414.4L559.6,414.7L559.7,415.1L559.9,415.3L559.9,414.6L560.2,413.8L560.6,412.5L560.5,412.2L560.2,411.9L559.5,411L558.8,410.7L558,410Z M551.3,417.9L551.1,417.6L550.8,417.8L550.3,417.8L550.1,417.9L549.7,417.9L549.4,418.1L549.8,418.9L550.1,419.2L550.2,420.2L550.4,420.3L550.3,421L551.4,421.1L551.8,420.3L551.8,420L551.8,419.9L551.8,419.7L551.8,419.5L551.8,418.6L551.5,418.1L551.1,418.7L550.7,418.4L551.3,418L551.3,417.9Z M549.2,402.1L548.7,401.7L548.5,402.1L548.5,402.2L548.4,402.5L547.9,402.9L547.4,403L546.7,402.4L546.5,402.3L547.3,403.4L547.6,403.5L548,403.5L548.9,403.2L550.5,402.7L552.2,402.5L552.3,402.3L552.2,402L551.4,402.2L550.4,402.1L550.2,402.3L549.8,402.3L549.2,402.1Z M565.7,426.5L565.7,425.8L565.3,425.3L564.7,424.9L564.6,423.7L564.3,423L564.1,422.4L563.7,421.6L563.7,422.1L563.8,422.2L563.9,422.8L564.3,423.7L564.4,424.1L564.3,424.5L563.9,424.6L563.8,424.8L564.3,425.1L565.1,425.4L565.6,426.7L565.7,426.5Z M564.2,418.2L563.2,416.8L563.2,416.6L562.7,415.1L562.4,415L562.3,415.1L562.2,415.3L562.6,415.7L562.6,416.1L562.9,416.3L563.3,417.4L563.7,417.8L563.6,418.1L563.2,418.4L563.1,418.6L563.2,418.6L563.8,418.5L564.2,418.5L564.2,418.2Z M574.4,437.3L574.6,436.7L574.3,436.6L573.8,437.3L573.2,437.6L572.9,437.6L572.2,437.3L571.7,437.3L571.3,437.8L570.7,437.9L570.8,438L570.8,438.2L570.6,438.5L570.6,438.7L570.7,439L572.2,438.9L573.5,438.7L574.2,437.8L574.4,437.3Z M568.6,430.8L569.3,430.2L570,429.9L570.9,428.8L570.8,427.9L571,427.5L570.4,427.6L570.3,427.9L570.2,428.2L570.5,428.6L570.5,428.8L570.3,429.2L570,429.3L569.9,429.5L569.6,429.6L569.2,430.1L568.4,430.7L568.2,431L568.6,430.8Z M575.2,429.5L574.8,429.3L574.5,429.8L574.8,429.9L575.5,429.8L576,429.9L576.5,430.3L576.8,430.1L576.7,430L576.3,429.7L575.7,429.6L575.5,429.6L575.2,429.5Z M569.8,427.6L569.2,427.4L569,427L568.6,426.9L568.5,427.1L568.5,427.3L568.6,427.7L568.8,427.6L569.6,428L570,427.7L569.8,427.6Z M553.7,413L554.2,412.8L554.2,412.8L553.9,412.6L553.2,412.6L552.8,412.7L552.6,412.9L552.7,413L553.1,413.1L553.7,413Z M561.6,423L561.1,422.7L560.9,422.4L560.2,421.7L559.9,421.6L559.7,422L560.1,422.1L561,422.8L561.4,423L561.6,423Z M568.9,419L568.8,418.7L568.7,418.7L568.4,418.8L568.1,419.7L568.4,419.7L568.9,419Z M575.2,435.3L574.8,435L574.4,435.3L574.5,435.6L575.2,435.3Z" data-id="BS" data-name="Bahamas" data-nom="Bahamas" id="BS" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 630.2,366.8 0.4,-0.6 -0.1,0 -0.5,0.5 -0.6,0.2 0.1,0.1 0.1,0 0.6,-0.2 z" data-id="BM" data-name="Bermuda" data-nom="Bermudes" id="BM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 644.9,488.9 0.4,-0.4 -0.3,-0.3 -0.6,-0.8 -0.3,0.1 0,1 0.1,0.3 0.5,0.3 0.2,-0.2 z" data-id="BB" data-name="Barbados" data-nom="Barbade" id="BB" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1219.4,647.9L1219.6,647.6L1219.4,646.9L1219,646.1L1219.1,644.7L1218.9,644.5L1218.6,644.5L1218.5,644.6L1218.4,644.9L1218.1,646.9L1218.5,647.5L1218.8,647.6L1219.3,648L1219.4,647.9Z M1225,649L1224.9,649L1224.7,649.1L1224.6,649.3L1224.5,649.6L1224.2,649.6L1224,649.6L1223.6,649.6L1224.4,650.1L1224.9,650.6L1225.1,650.8L1225.2,650.6L1225.3,649.9L1225,649Z M1221.1,650.5L1220.7,650.1L1220.3,650.1L1220.3,650.3L1220.4,650.7L1221.5,650.9L1221.1,650.5Z" data-id="KM" data-name="Comoros" data-nom="Comores (pays)" id="KM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M846.3,476.7L845.8,475.8L845.5,475.7L844.9,475L844.9,474.7L844.6,474.6L844.6,474.8L844.6,475.2L844.4,475.7L844.4,476.2L844.8,477L845.2,477.2L845.9,477.3L846.3,476.7Z M849.4,468.9L849.4,469.4L849.1,470.1L849.6,470.4L849.9,470.5L850.5,470.1L850.7,469.6L850.6,469.3L850.3,469L850,468.9L849.9,469L849.4,468.9Z M843,466.4L842,466.3L841.4,466.1L841.3,466.1L841.3,466.4L841.7,467.2L841.9,466.7L842.1,466.6L842.9,466.8L843.3,466.7L843.2,466.6L843,466.4Z M837.1,464.3L837.9,463.7L838.1,463.4L837.9,462.9L837.4,462.8L836.2,463.4L836.1,463.6L836.2,463.9L836.3,464.4L836.5,464.5L837.1,464.3Z M841.4,477.6L841.5,477.2L841.3,476.6L841,476.5L840.4,476.9L840.3,477.2L840.4,477.5L840.7,477.8L841,477.9L841.4,477.6Z M847.7,475.9L848.1,475.7L848.1,475L848,474.7L847.6,474.7L847.4,475.1L847.4,475.2L847.4,475.6L847.6,475.9L847.7,475.9Z M838.6,465.2L838.6,465L838.3,464.5L838,464.6L837.6,464.8L837.5,465.1L837.9,465.3L838.1,465.3L838.6,465.2Z M849.7,466.2L849.6,465.7L849.6,465L849.4,465L849.1,465.2L849.2,465.9L849.3,466L849.5,466.5L849.7,466.2Z" data-id="CV" data-name="Cape Verde" data-nom="Cap-Vert" id="CV" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M527,449.1L526.9,448.8L526.8,448.9L526.8,449.5L527.3,449.5L527.5,449.5L527.8,449.3L528.4,449.3L528.3,449.1L527.5,449L527.4,449.1L527.2,449.2L527,449.1Z M535,446.8L535,446.8L534.9,446.7L534.8,446.7L534.5,446.8L534.4,446.8L534.3,446.8L534.2,446.9L534.1,447L534.3,447L534.7,446.8L534.9,446.8L535,446.8Z M535.8,446.7L536.3,446.5L536.3,446.5L536.2,446.4L536.1,446.4L536,446.5L535.9,446.5L535.4,446.8L535.6,446.8L535.8,446.7Z" data-id="KY" data-name="Cayman Is." data-nom="Îles Caïmans" id="KY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 635.8,475.1 0.3,-0.7 -0.1,-1 -0.2,-0.4 -0.8,-0.3 0,0.2 -0.1,0.5 0.3,0.8 0.1,1.1 0.5,-0.2 z" data-id="DM" data-name="Dominica" data-nom="Dominique" id="DM" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M685.7,898L684.8,897.7L684.4,897.4L684.1,897.4L684.5,897.8L684.6,898L684.7,898.2L685.3,898.5L685.9,898.8L686.3,899.1L686.2,899.2L685.4,899.5L685.1,899.5L684.9,899.6L685.3,899.8L685.9,899.7L686.1,899.6L686.3,899.6L686.6,899.7L686.6,899.9L686.5,900.1L686.3,900.3L685.9,900.6L685.3,901L684.5,901L683.8,901.7L684.7,902.2L685.4,902.5L686.3,902.5L686.3,902.4L686.5,902.3L686.8,902.3L686.9,902.2L687.1,901.8L687.1,901.2L687.3,901.2L687.6,901.3L688.3,901.2L688.6,901.1L689.2,900.2L689.6,899.4L689.8,899L690.1,898.8L690.2,898.6L690.3,898.3L690.6,898.1L690.6,897.8L690.2,897.6L689.9,897.4L689.6,897.7L689.4,897.6L688.5,897.9L688.1,897.9L687.8,897.7L687.4,897.6L687,897.7L686.5,898.2L685.7,898Z M692.3,896.9L691.9,896.9L692.3,897.4L691.5,898.2L691.7,898.8L692,899.2L692.1,899.4L692,899.5L691.6,899.6L691.3,899.7L691.1,900L690.2,900.9L690.4,901.1L690.1,901.8L690.3,902.1L691.1,902.8L691.9,903.2L691.9,902.5L692.3,902.4L692.7,902.6L693.1,902.4L692.2,901.4L692.5,901.4L695,901.9L694.9,901.5L694.8,901.3L694.5,900.9L696,900.5L696.5,900.2L696.7,899.9L697.3,899.8L698.1,899.5L698,899.4L698.1,899.1L697.7,898.9L697.2,898.8L697.3,898.5L697.8,898.4L697,897.7L696.7,897.6L695.7,897.7L695.4,897.8L695.4,898L695.5,898.3L695.8,898.6L695.9,898.8L695.7,898.7L694.6,898.3L694.4,898.2L694.2,897.8L694.4,897.7L694.7,897.8L694.8,897.5L694.4,897.2L694,897.1L693.1,897.2L692.3,896.9Z M682.9,900L682.8,900.2L682.4,900.3L682.6,900.6L683.2,901L683.6,901L683.7,900.7L683.6,900.1L683.3,900.1L682.9,900Z M690.3,902.7L690.2,902.4L689.8,902.2L689.6,902.1L689.7,902.3L689.8,902.6L689.9,902.8L690.1,902.9L690.3,902.7Z M686.4,897.6L686.5,897.3L686.4,897.1L685.9,896.9L685.4,896.9L685.6,897.4L685.8,897.6L686.4,897.6Z M695.8,901.4L695.7,901.3L695.5,901.3L695.4,901.5L695.6,901.8L696,901.9L695.8,901.4Z" data-id="FK" data-name="Falkland Is." data-nom="Malouines" id="FK" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M947.6,182.4L946.8,182.2L946.2,181.9L945.2,182L945.9,183.1L946.7,183.8L947.1,184L947.1,183.9L947.1,183.7L946.7,183.2L946.6,183.1L946.6,183L946.7,182.9L946.9,182.9L947.2,183.1L947.4,183.1L947.6,182.4Z M947,186.9L947,186.6L946.9,186.3L946.9,186.1L946.8,186.1L946.3,186L946.2,185.8L946.1,185.8L946.1,186L946.2,186.4L946.7,186.8L947,187L947.1,187L947,186.9Z M947.5,184.8L947.5,184.7L947.3,184.5L946.8,184.3L946.6,184.2L946.4,184.3L946.4,184.5L946.5,184.6L946.9,184.7L947.3,185L947.4,185L947.5,184.8Z M945.1,182.9L944.9,182.8L944.4,182.9L944.1,182.9L944.2,183.2L944.8,183.4L945.1,183.4L945.4,183.4L945.6,183.3L945.5,183.1L945.1,182.9Z M948.6,182.2L948.3,182L947.9,181.6L947.9,182.1L947.9,182.4L947.9,182.5L948,182.5L948.3,182.6L948.6,182.2Z" data-id="FO" data-name="Faeroe Is." data-nom="Îles Féroé" id="FO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 632.1,495.7 0.5,-0.2 0.2,-1.1 -0.3,-0.1 -0.3,0.3 -0.3,0.5 0,0.4 -0.2,0.3 0.4,-0.1 z" data-id="GD" data-name="Grenada" data-nom="Grenade (pays)" id="GD" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1605.2,429.7L1605.1,429.4L1604.9,429.3L1604.8,429L1604.7,428.8L1604.7,428.8L1604.4,428.7L1604.2,428.6L1603.8,428.6L1603.7,428.7L1603.5,428.7L1603.3,428.9L1603.3,428.9L1603.3,429.1L1602.8,429.5L1602.8,429.7L1603.1,429.9L1603.6,429.8L1604.2,430L1605,430.3L1605,430.1L1605,429.8L1605.2,429.7Z M1603.6,430.9L1603.5,430.4L1603.7,430.1L1602.8,430.4L1602.7,430.7L1602.7,430.8L1602.9,430.9L1603.6,430.9Z M1604.9,430.9L1604.9,430.7L1604.9,430.5L1604.5,430.3L1604.2,430.3L1604.3,430.5L1604.7,431L1604.9,430.9Z" data-id="HK" data-name="Hong Kong" data-nom="Hong Kong" id="HK" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M629.4,462.5L629.3,462.3L629.2,462.2L629,461.8L628.6,461.4L628.4,461.5L628.3,461.7L628.3,461.8L628.3,461.8L628.6,462.1L629,462.2L629.2,462.6L629.4,462.5Z M629.9,463.2L629.9,462.9L629.7,462.7L629.4,462.7L629.4,463.2L629.6,463.4L629.9,463.2Z" data-id="KN" data-name="St. Kitts and Nevis" data-nom="Saint-Christophe-et-Niévès" id="KN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 637.4,484.2 0.1,-1.2 -0.1,-0.5 -0.2,0.1 -0.3,0.4 -0.4,0.6 -0.1,0.3 0,0.6 0.6,0.4 0.4,-0.7 z" data-id="LC" data-name="Saint Lucia" data-nom="Sainte-Lucie" id="LC" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1024.4,273.6 0,-0.2 0.1,-0.2 -0.1,-0.1 -0.1,-0.2 -0.1,-0.1 0,-0.2 -0.1,-0.1 0,-0.2 -0.1,-0.1 -0.2,0.6 0,0.5 0.1,0.2 0.1,0 0.4,0.1 z" data-id="LI" data-name="Liechtenstein" data-nom="Liechtenstein" id="LI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1389.4,545.7L1389.5,545.5L1389.5,545.4L1389.5,545.3L1389.5,545.2L1389.5,545.1L1389.4,545.2L1389.3,545.4L1389.3,545.5L1389.2,545.6L1389.2,545.7L1389.3,545.7L1389.4,545.7Z M1389.1,551.6L1389.2,551.5L1389.2,551.3L1389.1,551.2L1389,551.2L1388.9,551.4L1388.9,551.5L1388.9,551.6L1389.1,551.6Z" data-id="MV" data-name="Maldives" data-nom="Maldives" id="MV" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1052.2,342.8L1052.2,342.8L1052.2,342.6L1051.9,342.5L1051.5,342.6L1051.6,342.7L1051.9,342.9L1052.2,342.8Z M1053.6,344L1053.4,343.8L1052.9,343.3L1052.4,343.2L1052.5,343.8L1052.9,344.2L1053.4,344.2L1053.6,344Z" data-id="MT" data-name="Malta" data-nom="Malte" id="MT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 631.8,465.7 -0.1,-0.5 -0.1,0 -0.2,0.4 0,0.3 0.3,0.1 0.1,-0.3 z" data-id="MS" data-name="Montserrat" data-nom="Montserrat" id="MS" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1294.7,702.5 0.3,-0.3 0.2,-0.4 0.3,-0.3 0.1,-0.7 -0.2,-0.8 -0.4,-0.7 -0.5,0.1 -0.3,0.4 -0.2,0.5 -0.5,0.3 -0.1,0.3 -0.2,0.7 -0.1,0.4 -0.2,0.1 0,0.2 0.3,0.3 0.8,0.1 0.7,-0.2 z" data-id="MU" data-name="Mauritius" data-nom="Maurice (pays)" id="MU" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1882.7,701L1882.1,700.3L1882,700.5L1881.9,700.9L1881.9,701.2L1882.2,701.4L1882.3,701.6L1882.2,702.1L1882.2,702.5L1882.8,703.4L1882.9,704.1L1883.2,704.7L1883.7,705.2L1884.1,705.7L1884.9,707.1L1885.1,707.6L1885.5,707.9L1886.5,709.1L1886.9,709.5L1887.3,709.7L1888.2,710.4L1888.8,710.7L1889.1,711.2L1889.7,711.5L1890.5,711.9L1890.6,712.1L1890.6,712.4L1890.7,712.7L1891.2,713.1L1891.8,713.4L1891.9,713.6L1892,713.8L1892.3,713.7L1892.6,713.8L1893.5,714.5L1893.9,714.4L1894.2,714.4L1894.7,714.2L1895,713.8L1894.9,712.7L1894.4,712.2L1893.7,711.8L1893.3,711.3L1892.9,710.8L1892.1,709.8L1891,708.8L1890.5,708.6L1890.2,708.2L1889.9,708.1L1889.7,707.8L1889.2,707.5L1888.9,706.9L1888.3,706.3L1888.2,706L1888.3,705.7L1888.2,705.4L1887.8,705.1L1887.6,704.6L1887.4,704.3L1887,704.1L1886.3,703.7L1884.7,701.8L1884,701.2L1883.3,701.4L1882.7,701Z M1898.9,706.8L1899.2,706.3L1899.3,706.1L1899.1,705.4L1898.8,705.1L1899.1,704.1L1899,703.9L1898.6,703.7L1897.7,704L1897.6,704.2L1898.1,704.3L1898.3,704.5L1897.8,705.2L1897.3,705.3L1897.4,705.8L1897.6,706.2L1898.3,706.4L1898.6,706.8L1898.9,706.8Z M1901.9,708.5L1901.8,708.4L1901.8,708.1L1901.9,707.9L1901.5,708.1L1900.9,708.3L1901,709.1L1900.9,709.5L1901.2,709.6L1901.3,709.9L1901.5,709.9L1902.2,709.7L1902.5,708.6L1902.1,708.6L1901.9,708.5Z M1895,703.9L1895.3,703.6L1895.6,703.2L1895.5,703.1L1895.5,702.8L1895.7,702.4L1896,702.3L1895.8,702.1L1895.6,702L1895.6,702.3L1895.3,703L1895.2,703.3L1894.7,703.9L1895,703.9Z M1897.3,716.1L1897.3,715.8L1896.9,715.6L1896.7,716.1L1896.7,716.2L1896.9,716.3L1897.1,716.3L1897.3,716.1Z M1860.7,695L1860.9,694.6L1861,693.8L1860.8,694.2L1860.6,695.2L1860.7,695Z" data-id="NC" data-name="New Caledonia" data-nom="Nouvelle-Calédonie" id="NC" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1915,575.5 0,-0.2 -0.1,0 -0.1,0 -0.1,0.2 0.1,0.1 0.1,0.1 0.1,-0.2 z" data-id="NR" data-name="Nauru" data-nom="Nauru" id="NR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 274.2,727.4 0,-0.2 -0.1,-0.2 -0.2,-0.1 -0.1,0.1 0.1,0.2 0.2,0.2 0.1,0.1 0,-0.1 z" data-id="PN" data-name="Pitcairn Is." data-nom="Îles Pitcairn" id="PN" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M610.7,454.8L610.6,454.6L610.4,454.6L606.9,454.5L605.6,454.3L605.3,454.4L605,454.5L604.9,454.9L604.7,455.1L604.4,455.3L604.5,455.6L604.6,455.8L604.8,456.2L604.7,456.7L604.5,457.7L604.8,457.9L605.5,457.8L605.8,457.9L606.1,458L606.5,457.9L606.9,457.7L607.8,457.8L608.3,457.7L608.9,458L609.3,457.9L609.5,458L609.8,458L610.4,458L611.3,457.8L612.1,457.3L612.4,456.8L612.8,456.5L613.4,456.1L613.4,455.2L612.7,455.1L612.1,454.8L611,454.7L610.9,454.7L611,454.9L610.9,454.9L610.7,454.8Z M600.8,457.3L600.8,457.2L600.8,457.2L600.9,457.2L600.9,457.1L601,457L601,457L601,456.9L600.9,456.9L600.9,456.9L600.6,456.9L600.5,456.9L600.5,457L600.5,457.1L600.7,457.2L600.7,457.2L600.7,457.3L600.8,457.3L600.8,457.3Z M614.4,457L615.1,456.8L615.1,456.7L614.7,456.6L614.1,456.6L613.6,456.8L613.7,457L613.9,457L614.4,457Z" data-id="PR" data-name="Puerto Rico" data-nom="Porto Rico" id="PR" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M196.6,685.8L196.5,685.7L196.5,685.7L196.5,685.4L196.7,685.1L197.3,684.7L197.3,684.6L197.3,684.6L197.1,684.7L196.7,684.9L196.5,685.1L196.4,685.3L196.3,685.6L196.4,685.8L196.5,685.9L196.7,685.9L196.6,685.8Z M149.2,684.7L149,684.1L148.7,683.6L147.9,683.5L147.4,683.7L147.3,683.9L147.4,684.3L147.9,685L148.4,685.1L149.2,685L149.6,685.6L149.8,685.7L150.2,685.8L150.3,685.5L150.1,685L149.2,684.7Z M222.5,690.2L222.3,690L221.9,689.8L221.7,689.7L221.5,689.6L221.4,689.7L221.5,689.8L221.6,689.8L221.9,690L222.2,690.1L222.4,690.2L222.4,690.3L222.5,690.2Z M168.8,676.1L168.5,675.7L168.3,675.4L168.1,675L167.7,674.5L167.8,674.8L167.9,675L168.1,675.2L168.3,675.6L168.4,675.8L168.7,676.2L168.8,676.2L168.8,676.1Z M192.4,628.9L192.5,628.6L192.5,628.4L192.4,628.2L191.5,628L191.4,628.1L191.4,628.5L191.6,629L191.9,629L192.4,628.9Z M146.3,683.8L146.4,683.4L146.2,683.3L145.7,683.3L145.7,683.5L145.8,683.7L145.9,683.8L146.2,684L146.3,683.8Z M198.8,633.8L198,634.3L198.2,634.7L198.6,634.8L198.8,634.6L199.6,634.5L199.9,634.1L199.6,634.2L198.8,633.8Z M196.9,687.9L196.5,687.5L196.3,687.2L196,687.1L196.1,687.2L196.5,687.6L196.8,688L197,688.1L196.9,687.9Z M195.3,629L195.6,628.9L195.6,628.8L195.4,628.6L195.1,628.5L195,628.6L194.9,628.8L195,629.1L195.3,629Z M136.6,679.5L136.8,679.5L136.4,678.9L136.1,678.7L136.1,678.8L136.1,679.5L136.4,679.6L136.6,679.5Z M213.2,704.9L213.1,704.6L212.9,704.3L212.8,704.4L212.9,704.5L213.1,704.8L213.1,705L213.2,704.9Z M136,678.1L136.1,677.9L136,677.8L135.6,677.6L135.7,677.9L135.7,678.1L135.9,678.2L136,678.1Z M201.4,639.1L201.5,638.9L201.5,638.7L201.4,638.6L201.1,638.5L201.2,639.2L201.4,639.1Z M192.7,632.1L192.9,631.6L192.7,631.5L192.3,631.7L192.3,631.9L192.6,632.3L192.7,632.1Z M180.5,677.9L180.3,677.9L180,677.9L179.9,677.9L180.4,678L180.8,678.2L180.5,677.9Z M170.6,673L170,672.4L169.9,672.4L170,672.6L170.5,673.1L170.6,673.3L170.6,673Z M198.7,635.4L198.6,635.2L198.4,635.2L198.3,635.3L198.3,635.8L198.7,635.4Z M198,689.1L197.4,688.8L197.5,689L197.9,689.2L198.1,689.3L198,689.1Z M179.8,678L179.5,677.9L179.2,677.7L178.9,677.7L179.6,678L179.8,678Z M218.5,688.9L218.1,688.4L217.8,688.4L218.5,689L218.5,688.9Z M185,674.6L185.1,674.1L184.9,674.1L184.9,674.6L185,674.6Z" data-id="PF" data-name="Fr. Polynesia" data-nom="Polynésie française" id="PF" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1561,563.7 0.1,-0.2 -0.2,-0.2 -0.3,-0.1 -0.5,-0.2 -0.6,0.1 -0.3,0.6 0.9,0.4 0.9,-0.4 z" data-id="SG" data-name="Singapore" data-nom="Singapour" id="SG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1872.1,626.5L1872,626L1871.7,625.6L1872.1,625.1L1869.9,623.2L1869.6,623L1869.2,622.9L1868.7,622.5L1868.2,622.4L1867.7,622L1867.5,621.7L1866.9,621.3L1866.3,620.5L1864.8,620.2L1864.9,620.4L1865.3,620.8L1865.4,621.5L1865.9,621.9L1866.4,622.5L1866.6,622.6L1866.8,622.8L1867.2,623.3L1868,623.7L1868.8,624.3L1869.1,624.4L1869.4,624.7L1870.9,625.4L1871.4,626.1L1872.1,626.6L1872.1,626.5Z M1877.1,625.1L1876.9,625.1L1876.8,625.2L1876.6,625.2L1876.3,625.2L1876.2,625.4L1876.8,626.5L1876.5,627L1876.9,629.2L1877.3,630.4L1878.1,631.2L1878.1,631.4L1878.9,631.9L1879.5,633.2L1879.7,633.3L1879.8,633.1L1879.8,632.5L1879.3,631.4L1879.4,630.6L1879.2,630.3L1879.2,630L1879,629.2L1878.4,628.5L1878.1,628.4L1877.9,628.1L1878.1,627.5L1878.3,627.3L1878.4,627L1877.1,625.1Z M1881.1,638.3L1881,638.1L1880.8,638L1879.9,637.3L1879.4,637.1L1878.9,637.1L1878.8,637.6L1878.8,637.9L1879.4,637.9L1879.8,638.1L1879.8,638.7L1880,638.9L1880,639.4L1881.2,640.3L1881.9,640.7L1882.6,640.8L1883,641L1883.5,640.9L1884,641.1L1884.4,641L1884,640.7L1884,640.3L1883.5,639L1883.2,638.7L1882.7,638.8L1882.2,638.6L1881.8,638.6L1881.1,638.3Z M1870.9,631.2L1870.6,631.1L1870.2,631.4L1870.1,631.7L1870,632.4L1870,632.8L1870.3,633.5L1870.6,634L1870.9,634.3L1871.1,634.5L1872,634.6L1873.7,634.7L1874.6,635.1L1875.5,635.3L1875.9,635.2L1876.4,635L1876.5,634.9L1876.4,634.3L1876.2,634L1875.8,633.8L1875.6,633.2L1875.1,632.8L1874.2,632.1L1872.6,632.1L1872,632.2L1870.9,631.2Z M1860.5,624.6L1859.9,624.4L1859.7,624.1L1859.7,623.1L1859.1,622.8L1858.8,623L1858.2,623.7L1858,624.1L1857.5,624.4L1857.4,624.7L1857.4,625.1L1857.8,625.2L1858.1,624.8L1859,624.7L1859.3,624.8L1859.3,625.2L1859.4,625.9L1859.7,626.2L1860.2,626.4L1860.6,627L1860.7,626.7L1860.9,626.7L1861.1,626.3L1860.8,625.1L1860.5,624.6Z M1859.4,618.8L1859.3,618.7L1859,618.7L1858.6,618.5L1857.9,617.7L1857.7,617.4L1857.5,616.4L1857.1,616L1855.7,615.2L1854.9,614.4L1854.2,614.2L1854,614.4L1854,614.9L1854.2,615.2L1855.2,616.1L1856.3,617.8L1857.3,618.8L1858.1,618.9L1858.5,618.9L1858.5,619L1858.6,619.2L1859.1,619.4L1859.6,619L1859.4,618.8Z M1905.5,640.6L1905.5,640.5L1905.7,640.2L1905.5,640.1L1905,640L1904.3,640.1L1904,640.3L1903.8,640.6L1903.6,640.6L1903.6,640.8L1903.7,641.2L1903.9,641.1L1904.1,641.2L1904.6,640.7L1904.9,640.7L1905,640.7L1905.5,640.6Z M1873.5,647.2L1873.4,647L1872.9,646.6L1871,645.3L1870.6,645.2L1870.5,645.3L1870.4,645.6L1870.5,645.8L1871,645.9L1871,646L1871.3,646.2L1872,646.4L1872.4,646.7L1872.5,647.2L1872.8,647.3L1873.1,647.4L1873.5,647.2Z M1862.1,627.4L1862.1,627.2L1862.1,627L1861.9,626.9L1862.3,626.6L1862.2,626.5L1861.6,626.3L1861.4,626.5L1861.2,626.6L1861.1,626.7L1861,626.8L1860.9,627.3L1861.1,627.7L1861.5,627.9L1862.1,627.4Z M1854.6,622.6L1854.8,622.3L1855.3,621.6L1855.4,621.3L1854.9,621.1L1854.5,620.6L1854.1,620.4L1853.8,620.8L1853.8,621.2L1854.3,621.8L1854.2,622.2L1854.4,622.3L1854.5,622.7L1854.6,622.6Z M1873.5,629.4L1873,629.6L1873,629.9L1873.4,630L1873.8,630.2L1873.9,630.5L1873.9,630.5L1874.1,630.4L1874.5,630.6L1874.7,630.3L1874.3,629.8L1873.9,629.5L1873.8,629.5L1873.5,629.4Z M1867.9,630.2L1868.2,630L1868.2,629.6L1867.9,629.6L1867.8,629.4L1867.6,629.4L1867.3,629.6L1867.1,629.9L1867.2,630.1L1867.6,630.1L1867.8,630.2L1867.9,630.2Z M1858.1,627.6L1857.8,627.2L1857.9,626.7L1858.1,626.6L1858.3,626.1L1858.2,625.7L1858,625.8L1857.3,626.4L1857.2,626.7L1857.8,627.5L1858.1,627.7L1858.1,627.6Z M1857.2,623.8L1857.4,623.6L1857.4,623.2L1857.4,622.7L1857.2,622.3L1857,622.1L1856.5,622.2L1856.1,622.7L1856.1,623.2L1856.5,623.8L1857.1,623.8L1857.2,623.8Z M1880.7,633.4L1880.1,631.8L1879.9,631.7L1880,632.3L1880.1,632.7L1880,633.2L1879.9,633.8L1880.1,634L1880.3,633.8L1880.7,634.3L1880.7,634.1L1880.7,633.4Z M1871.1,626.3L1870.9,625.9L1870.9,625.7L1870.6,625.5L1870.4,625.6L1870.3,625.9L1870.4,626.1L1870.8,626.4L1871.1,626.3Z M1859.5,627.9L1859.4,627.7L1859.1,627.5L1858.9,627.5L1858.4,627.6L1858.5,627.7L1859.1,628L1859.4,628.1L1859.5,627.9Z M1909.1,646.4L1908.9,646.2L1908.8,645.8L1908.5,645.8L1908.2,645.9L1908.4,646.5L1908.6,646.5L1909.1,646.4Z M1854,624.2L1854.1,623.7L1854,622.8L1853.8,622.9L1853.8,623.1L1853.7,623.5L1853.9,624.3L1854,624.2Z M1862.6,628.3L1862.9,628.1L1862.8,627.9L1862.7,627.4L1862.3,628.1L1862.4,628.3L1862.6,628.3Z M1850.3,617.3L1850.5,617L1849.8,616.5L1849.6,616.8L1849.4,617.3L1849.8,617.5L1850.3,617.3Z" data-id="SB" data-name="Solomon Is." data-nom="Salomon" id="SB" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M1014.1,571.4L1014.6,570.6L1014.6,570.1L1014.3,569.6L1013.9,569.6L1013.4,570L1013.1,570.4L1013.1,570.7L1013.2,571.4L1013.3,571.7L1013.6,571.9L1014.1,571.4Z M1018.4,562.2L1018.6,561.8L1018.6,561.6L1018.5,561.5L1018.4,561.4L1018.2,561.5L1017.9,562L1018,562.2L1018.2,562.4L1018.4,562.2Z" data-id="ST" data-name="São Tomé and Principe" data-nom="Sao Tomé-et-Principe" id="ST" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 627.1,457.2 0,0 0.2,0.2 0.3,0.1 0.1,-0.1 0,-0.2 -0.6,0 z" data-id="SX" data-name="Sint Maarten" data-nom="Saint-Martin" id="SX" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1288.5,602 -0.5,-0.8 -0.4,0.3 0.2,0.3 0.3,0.2 0.1,0.4 0.3,0.2 0,-0.6 z" data-id="SC" data-name="Seychelles" data-nom="Seychelles" id="SC" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M578.7,433.1L578.6,433.5L578.6,433.7L578.8,433.8L579.4,433.7L579.5,433.6L579.7,433.5L579.7,433.4L579.3,433.5L578.7,433.1Z M581.2,433.2L581.1,433.1L581,432.5L580.5,432.5L580.5,432.7L580.6,432.9L580.7,432.9L580.8,433.1L581.1,433.3L581.2,433.2Z M582.3,433.7L582.5,433.5L582.3,433.3L581.6,433.1L581.4,433.2L581.4,433.5L582,433.5L582.3,433.8L582.3,433.7Z" data-id="TC" data-name="Turks and Caicos Is." data-nom="Îles Turques-et-Caïques" id="TC" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M11.7,706.8L11.5,706.8L11.7,706.7L11.3,706.5L10.9,706.5L10.7,706.4L10.7,706.2L10.5,706.5L10.7,706.8L11.6,707.2L11.9,707.4L12.1,706.8L12.1,706.6L11.8,706.7L11.8,706.8L11.7,706.8Z M14.2,690.8L14.3,690.6L14.3,690.4L14,690.3L13.9,690.3L13.6,690.8L13.7,690.9L14,691.1L14.1,691.1L14.2,690.8Z M13.3,707.7L13.3,707.7L13.1,708L13.1,708.2L13.5,708.6L13.3,707.7Z" data-id="TO" data-name="Tonga" data-nom="Tonga" id="TO" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M635.4,507.7L635.5,507.5L635.5,506.9L635.7,506.5L635.5,506.1L635.4,505.5L635.5,505L635.5,504.3L635.7,504L636.2,503.2L635.3,503.2L634.7,503.4L633.6,503.5L633.1,503.7L632.4,503.8L632,504L632.1,504.1L632.6,504.3L632.8,504.5L632.9,504.7L633,505.1L632.7,506.8L632.6,506.9L632,507L631.8,507.3L630.4,508.1L631.2,508L632.1,508.1L634.5,508L635.4,507.7Z M637.2,501L638.4,500.5L638.5,500.1L638.3,500.1L637.5,500.4L636.9,500.9L636.9,501.1L637.2,501Z" data-id="TT" data-name="Trinidad and Tobago" data-nom="Trinité-et-Tobago" id="TT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M635.2,489.5L635.3,489.3L635.4,489.2L635.4,489.2L635.4,489.2L635.3,489.1L635.3,489.1L635.3,489.2L635.1,489.3L635.1,489.3L635.1,489.4L635.1,489.4L635.1,489.5L635,489.5L634.9,489.5L634.9,489.5L635,489.5L635,489.5L635.1,489.6L635.1,489.6L635.1,489.6L635.1,489.6L635.2,489.5Z M634.5,491.4L634.5,491.4L634.5,491.3L634.6,491.3L634.6,491.2L634.6,491.2L634.6,491.1L634.5,491.1L634.5,491.2L634.5,491.2L634.5,491.3L634.4,491.3L634.4,491.4L634.4,491.4L634.4,491.4L634.5,491.4Z M635.5,488.4L635.8,488.2L635.9,487.6L635.8,487.2L635.6,487.2L635.3,487.3L635.1,487.6L635,488.1L635.4,488.5L635.5,488.4Z" data-id="VC" data-name="St. Vin. and Gren." data-nom="Saint-Vincent-et-les-Grenadines" id="VC" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M621.1,452.9L620.9,452.9L620.4,452.9L620.4,452.9L620.5,453L620.8,453L621.1,453.1L621.1,453.1L621.1,452.9Z M619.2,455.1L619.5,454.9L619.3,454.8L618.9,454.8L618.6,455L618.7,455.1L619.2,455.1Z M620.3,454.7L620.7,454.3L620.2,454.4L620,454.6L620.1,454.7L620.2,454.7L620.3,454.7Z" data-id="VG" data-name="British Virgin Is." data-nom="Îles Vierges britanniques" id="VG" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M617.9,458.9L617.2,459.1L617.1,459.5L618.2,459.5L618.9,459.2L618.3,459.2L617.9,458.9Z M618.8,455.4L618.3,455.3L618.1,455.5L618.1,455.5L618.4,455.6L618.8,455.4Z M617.7,455.5L617.5,455.3L617.2,455.2L616.8,455.3L617.3,455.6L617.7,455.5Z" data-id="VI" data-name="U.S. Virgin Is." data-nom="Îles Vierges des États-Unis" id="VI" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1149.9,348.4 -0.3,-0.1 -0.5,0.2 -0.4,0.4 -0.4,0.3 -0.5,-0.3 0.2,0.9 0.6,1.1 0.2,0.3 0.3,0.2 1.1,0.3 0.3,0 0.6,0 0.2,0.1 0.2,0.4 0.4,0 0,-0.1 0,-0.3 0.2,-0.2 0.3,-0.2 0.3,0 0.6,-0.1 0.6,-0.2 0.5,-0.4 0.9,-1 0.3,0 0.3,0 0.6,0 0.6,-0.1 -0.2,-0.4 -0.1,-0.1 -0.4,-0.5 -0.2,-0.4 0.1,-0.6 2.5,-1.9 0.5,-0.5 -0.8,0.2 -0.6,0.4 -0.4,0.2 -0.7,0.4 -2.3,0.8 -0.8,0.1 -0.8,0 -1,-0.1 -0.9,-0.2 0,0.7 -0.2,0.6 -0.6,0.2 -0.3,-0.1 z" data-id="CY" data-name="Cyprus" data-nom="Chypre" id="CY" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1284,707.9 0.2,-0.4 0.1,-0.8 -0.4,-0.8 -0.4,-0.7 -0.4,-0.2 -0.8,-0.1 -0.7,0.3 -0.4,0.6 -0.2,0.3 0.4,1.1 0.2,0.3 1.1,0.6 0.5,0 0.8,-0.2 z" data-id="RE" data-name="Reunion" data-nom="La Réunion" id="RE" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 1228.7,654.7 0,-0.3 0.2,-0.5 0,-0.1 0.1,-0.5 -0.3,-0.3 -0.2,0 -0.2,-0.3 -0.3,0.3 0.3,0.5 -0.1,0.3 -0.1,0.4 0.1,0.4 0.2,0.2 0.3,-0.1 z" data-id="YT" data-name="Mayotte" data-nom="Mayotte" id="YT" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 638,479.9 -0.2,-0.7 -0.1,-0.2 -0.2,-0.3 0.1,-0.3 0,-0.1 -0.2,0 -0.3,-0.5 -0.6,-0.3 -0.3,0 -0.2,0.2 0,0.3 0.3,0.9 0.2,0.2 0.5,0.2 -0.4,0.4 0,0.1 0.1,0.3 0.9,0 0.2,0.3 0.1,-0.1 0.1,-0.4 z" data-id="MQ" data-name="Martinique" data-nom="Martinique" id="MQ" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M634.5,470.3L634.7,470.1L634.7,468.9L634.8,468.6L634.6,468.5L634.4,468.3L633.8,468.1L633.7,468.2L633.5,468.5L633.6,470L633.8,470.5L634,470.6L634.5,470.3Z M636.1,468.9L636.9,468.7L636,468.1L635.8,467.7L635.8,467.4L635.4,467.1L635.2,467.3L635.1,467.6L635.2,468.1L634.9,468.5L635,468.9L635.4,469L636.1,468.9Z M636.4,471.1L636.6,470.9L636.6,470.6L636.4,470.3L636.2,470.4L636,470.7L636,471L636.1,471.1L636.4,471.1Z" data-id="GP" data-name="Guadeloupe" data-nom="Guadeloupe" id="GP" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="m 595.9,494.9 0,-0.6 -0.9,-0.4 0,0.3 0.1,0.2 0.3,0.1 0.1,0.2 -0.1,0.6 0.2,0.3 0.3,-0.7 z" data-id="CW" data-name="Curaco" data-nom="Curaçao" id="CW" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-<path d="M899.7,392.9L901.2,392.4L901.5,391.4L901.8,390.3L901.8,389.6L901.6,389.3L901.5,389.3L901.1,389.3L900.8,389.5L900.7,390.1L900,391.4L899.5,392.6L898.8,393.2L898.1,393.4L898.2,393.5L898.9,393.6L899.7,392.9Z M888.1,391.6L889.3,390.6L889.3,390.3L888.3,390.4L887.2,391.4L886.9,391.5L885.9,391.6L885.4,391.6L885,391.8L885.2,392.1L885.6,393.1L886.3,394L886.9,393.8L887.2,393.6L887.6,393L888.1,391.6Z M893.1,393.1L893.1,393L893,393L892.9,393.1L891.6,393L891.4,393.6L890.9,394L890.9,394.7L891.4,395.4L891.7,395.5L892.2,395.6L892.9,395.2L893.1,394.8L893.2,394L893.1,393.6L893.1,393.1Z M902.4,388.2L903.3,387.9L903.8,387.6L903.9,386.7L904.1,386.4L903.9,386.1L903.7,386.3L903.5,386.7L902.9,386.9L902.1,387.3L901.9,387.6L901.7,388.5L902.1,388.6L902.4,388.2Z M880,390.9L880.5,390.4L880.6,390.1L880.5,389.6L880.7,389.4L880.6,389L880.3,388.6L879.6,388.6L879.2,389.2L879.8,390.4L879.9,390.9L880,390.9Z M883.4,393.9L883.9,393.5L883.9,393.3L883.8,393L883.3,392.7L883.1,392.7L882.9,392.9L882.7,393.3L883,393.8L883.2,393.9L883.4,393.9Z M879.6,395.2L879.4,395L878.7,395.5L878.1,395.5L878.2,395.7L878.3,395.9L879,396.3L879.6,395.2Z" data-id="IC" data-name="Canary Islands" id="IC" inkscape:connector-curvature="0" style="fill:#f2f2f2;fill-rule:evenodd"></path>
-</g></svg>
-</figure>
-    </div>
-    <article>
-<div class='step' data-index='0'>
-      <p>Nous allons changer de représentation, pour mettre en valeur différents aspects.</p>
-    </div>
-<div class='step' data-index='1'>
-      <p>Représentons tout d'abord cette carte en cercle proportionnels à la population.</p>
-    </div>
-<div class='step' data-index='11'>
-      <p>Passons à présent à une représentation en fonction du nombre de morts par pays. L'essentiel de la mortalité se concentre en Europe et aux Etats-Unis, l'Asie et l'Afrique semblent très peu touchés.</p>
-    </div>
-<div class='step' data-index='2'>
-      <p>Retour à une représentation proportionnelle à la population.</p>
-    </div>
-<div class='step' data-index='3'>
-      <p>Zoom sur l'Europe, qui concentre la moitié des morts du coronavirus </p>
-    </div>
-<div class='step' data-index='4'>
-      <p>Classons à présent les pays européens  du plus au moins touchés par la pandémie, comparativement à la population. Y a-t-il des facteurs qui expliqueraient que certains soint plus touchés que d'autres par la pandémie?</p>
-    </div>
+allPaths.attr('visibility', 'visible')
+  // transform_all_paths_to_circle('radius_pop')
 
-<div class='step' data-index='5'>
-      <p>Comparons avec la richesse par habitant (PIB par tête).</p>
-    </div>
-<div class='step' data-index='51'>
-      <p>Parmi les plus riches, on peut constater que le Luxembourg,</p>
-    </div>
-<div class='step' data-index='52'>
-      <p>Mais également la Suisse, sont assez lourdement touchés.</p>
-    </div>
-<div class='step' data-index='53'>
-      <p>Zoomons sur le bas de l'échelle</p>
-    </div>
-<div class='step' data-index='54'>
-      <p>La Slovaquie, pays d'Europe dans lequel le nombre de morts du Coronavirus par habitant est le moins élevé, figure dans les pays les moins riches</p>
-    </div>
-<div class='step' data-index='55'>
-      <p>De même la Grèce, rendue exangue par les mesures d'austérité consécutive à la crise de 2008, est très peu touchée par la pandémie.</p>
-    </div>
-<div class='step' data-index='56'>
-      <p>Le pays le moins riche d'Europe de l'Ouest, le Portugal, est également l'un des moins touchés</p>
-    </div>
-<div class='step' data-index='57'>
-      <p>A l'opposé de l'axe, la Belgique, pays dans lequel le taux de victime de la pandémie est le plus élevé, figure parmi les pays riches.</p>
-    </div>
-<div class='step' data-index='58'>
-      <p>Mais des pays riches figurent également parmi les pays peu touchés. La richesse d'un pays offre donc peu d'explications à la manière dont il a subi la pandémie.</p>
-    </div>
-<div class='step' data-index='6'>
-      <p>Comparons à présent avec des indicateurs santé des pays. Commençons par la mortalité générale de l'année 2019 (normalisée en fonction de l'age).</p>
-    </div>
-<div class='step' data-index='61'>
-      <p>Ici, les indicateurs sont plutôt contrastés : dans les pays épargnés par la pandémie, se trouvent aussi bien des pays dans lesquels les performances en termes de santé publique sont mauvaises (Hongrie ou Pays baltes)</p>
-    </div>
-<div class='step' data-index='62'>
-      <p>Que des pays dans lesquels ceux-ci sont bons (Norvège, Islande)</p>
-    </div>
-<div class='step' data-index='63'>
-      <p>En revanche, dans la totalité des pays les plus touchés par l'épidémie, les performances en terme de santé publique étaient satisfaisantes : la mortalité par habitant en 2019 était plutôt faible.</p>
-    </div>
-<div class='step' data-index='7'>
-      <p>Etudions cette fois l'éspérance de vie à la naissance. On obtient à peu près le même résultat qu'avec l'indicateur de mortalité, en miroir.</p>
-    </div>
-<div class='step' data-index='8'>
-      <p>Comparons à présent avec un nouvel indicateur, le nombre de morts du coronavirus le premier jour du confinement pour chaque pays. La Suède, qui n'a jamais confiné, est ici arbitrairement placée à 500 morts, pour figurer en haut du graphique. </p>
-    </div>
-<div class='step' data-index='9'>
-      <p>Un constat assez net se dégage : la totalité des pays les moins touchés, de la Slovaquie à la Finlande en passant par la Pologne, avaient confinés très tôt, certains avant même leur premier mort.</p>
-    </div>
-<div class='step' id='lastStep' data-index='10'>
-      <p>En revanche, la situation est largement plus contrastée pour les pays les plus touchés. La date du premier jour du confinement est loin d'être le seul facteur explicatif pour expliquer la variation de leur mortalité. De nombreux autres facteurs (démographiques, réglementaires, géographiques, de densité) peuvent intervenir. Sans oublier le facteur chance qui a conduit à la formation ou non de foyer d'épidémie dans certains lieux.</p>
-    </div>
-    </article>
-    </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div id="conclusion">
-    <p class="conclusion-prose">
-      <span> <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538"><img src="img/logos/LibeLaboLogo.svg" style="width: 50px;position: relative;top: 10px;"></a></span>
-      <span><img class="shareFacebook" src="img/logos/social-facebook.png" style="width: 30px"></span>
-      <span><img class="shareTwitter" src="img/logos/social-twitter.png" style="width: 30px"></span>
-    </p>
-    <p class="credits_top">
-    <strong>Savinien de Rivet. Production </strong>&nbsp;: <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>.</p>
-    <!-- <p class="credits_top">Publié le 1er avril 2020.</p> -->
-  </div>
-  <script type="text/javascript" src="js/lodash.min.js"></script>
-  <script type="text/javascript" src="js/moment-with-locales.js"></script>
-  <!-- <script type="text/javascript" src="js/raphael.min.js"></script> -->
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <!-- <script src="js/queue.v1.min.js"></script> -->
-  <!-- <script src="js/topojson.v1.min.js"></script> -->
-  <!-- <script src="js/d3-geo-projection.v1.min.js"></script> -->
-  <script src="js/d3-tip-hacked.js"></script>
-  <script src="js/flubber.min.js"></script>
-  <script src="js/enter-view.min.js"></script>
-  <script src="js/stickyfill.min.js"></script>
-  <script src='js/app.js' type='text/javascript'></script>
-  <!-- Chartbeat -->
-<!--   <script type='text/javascript'>
-    var _sf_async_config={};
-    _sf_async_config.uid = 43601;
-    _sf_async_config.domain = 'liberation.fr';
-    _sf_async_config.useCanonical = true;
-    _sf_async_config.sections = "Static";
-    _sf_async_config.authors = "Static";
-    (function(){
-        function loadChartbeat() {
-            window._sf_endpt=(new Date()).getTime();
-            var e = document.createElement('script');
-            e.setAttribute('language', 'javascript');
-            e.setAttribute('type', 'text/javascript');
-            e.setAttribute('src', 'https://static.chartbeat.com/' + 'js/chartbeat.js');
-            document.body.appendChild(e);
+
+transform_all_paths_to_circle('radius_pop')
+
+  mapstate = 1;
+
+})
+
+d3.select('#display_proportional_circles_deaths')
+.on('click', function(){
+
+
+  transform_all_paths_to_circle('radius_deaths')
+  allPaths.filter(d=> d.deaths==0).attr('visibility', 'hidden')
+
+
+  mapstate = 2;
+
+})
+
+d3.select('#display_geo_paths')
+.on('click', function(){
+
+allPaths.attr('visibility', 'visible')
+
+if (mapstate ==1){
+
+redraw_paths('radius_pop', 500)
+}
+else if (mapstate == 2){
+redraw_paths('radius_deaths', 500)
+
+}
+
+  mapstate = 0;
+  
+})
+
+// color2.domain([0, 1, 2, 4, 5]);
+
+// svg.call(tip)
+
+d3.select(".carte svg")
+.call(tip)
+
+
+Promise.all([
+    d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUaq1OlhHfw8UTbLyDPDa-zPwW1bD3N2AVkuKPg9jLKOTG5vwtuYO4f5InwnNNdVWRfd3iDOFZW72C/pub?gid=0&single=true&output=csv")
+]).then(function(files) {
+  ready(files[0])
+}).catch(function(err) {
+})
+
+
+  function ready(data) {
+
+    // data.forEach(d => {
+    //   d.ecart2020 = +d.ecart2020;
+    //   d.moyenne_2018_2019 = +d.moyenne_2018_2019;
+    //   d.progression_morts = +d.progression_morts;
+    //   d.Densite = +d.Densite;
+    //   d.population = +d.population;
+    // })
+
+    data.forEach(d => {
+      d.deaths = +d.deaths;
+      d.population = +d.popData2018;
+      d.gdp = +d.gdp;
+      d.deaths_for_100k = _.round(100000*d.deaths / d.population, 1);
+      d.life_expectancy =  +d['Espérance de vie'];
+      d.usual_deaths_for_100k =  +d['Décès pour 100 000 habitants'];
+      d.deaths_on_lockdown = +d.deaths_on_lockdown;
+    })
+
+    // console.log(data0)
+    console.log(data)
+
+    circleScalePop.domain(d3.extent(data, d=>d.population));
+
+    circleScaleDeaths.domain([0,d3.max(data, d=>d.deaths)]);
+
+    let allSvgNodes = allPaths.nodes();
+    for (i in allSvgNodes){
+      let this_id = d3.select(allSvgNodes[i]).attr('data-id')
+      let this_nom = d3.select(allSvgNodes[i]).attr('data-nom')
+      let this_europe = europe_countries.includes(this_nom) ? 1 : 0;
+      let this_d = data.filter(d=> d.geoId == this_id)[0]
+      // console.log(this_id, this_d)
+      let this_pop = this_d ? this_d.population : 0;
+      let this_gdp = this_d ? this_d.gdp : null;
+      let this_life_expectancy = this_d ? this_d.life_expectancy : null;
+      let this_usual_deaths_for_100k = this_d ? this_d.usual_deaths_for_100k : null;
+      let this_deaths_on_lockdown = this_d ? this_d.deaths_on_lockdown : null;
+      let this_continent = this_d ? this_d.continentExp : null;
+      let this_deaths = this_d ? this_d.deaths : null;
+      let this_deaths_for_100k = this_d ? this_d.deaths_for_100k : 0;
+      // let this_ecart = data.filter(d=> d.CodeDepartement == this_id)[0].ecart2020;
+      // let this_radius = Math.round(circleScale(this_pop));
+      // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
+      let this_radius_random = Math.round(Math.random()*50);
+      let this_radius_fixed = 10;
+      let this_radius_pop = Math.round(circleScalePop(this_pop));
+      let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
+      let this_path_d = d3.select(allSvgNodes[i]).attr('d');
+      let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
+      // let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
+      // let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
+      // let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
+
+      d3.select(allSvgNodes[i]).datum({
+        'id': this_id, 'path': this_path_d,
+         'centroid': this_centroid, 
+        // 'to_circle_function': this_to_circle_function,
+        // 'to_circle_ecart_function': this_to_circle_ecart_function,
+        // 'from_circle_function': this_from_circle_function,
+        'population':this_pop,
+        'gdp':this_gdp,
+        'life_expectancy':this_life_expectancy,
+        'usual_deaths_for_100k':this_usual_deaths_for_100k,
+        'deaths_on_lockdown':this_deaths_on_lockdown,
+        'deaths':this_deaths,
+        'deaths_for_100k':this_deaths_for_100k,
+        'radius_pop': this_radius_pop,
+        'radius_deaths': this_radius_deaths,
+        'radius_fixed': this_radius_fixed,
+        'nom': this_nom,
+        'europe': this_europe,
+        'continent': this_continent,
+        // 'radius': this_radius,
+        // 'radius_ecart': this_radius_ecart,
+        'radius_random': this_radius_random
+      });
+// console.log(d3.select(allSvgNodes[i]).attr('data-numerodepartement'))
+}
+
+allPathsEurope = allPaths.filter(d=> d.europe)
+
+app_data = data;
+
+// color
+// .domain(d3.extent(data.map( d => d.deaths_for_100k)));
+
+color
+.domain([0, 3 ,70]);
+
+  allPaths
+  .style('fill', d => {
+
+    // if (typeof data.filter(function(e){return e.CodeDepartement == d.id})[0] !== 'undefined') {
+
+      return color(d.deaths_for_100k)
+
+    // }
+    // return '#fff'
+  })
+  .style('fill-opacity', 1)
+  .style('stroke', '#bbb')
+  .style('stroke-width', 1)
+  .style('stroke-opacity', 1)
+  .on('mouseover', function(d) {
+    console.log(d.id)
+    tip.show(d)
+    d3.select(this)
+    .raise()
+    .style('fill-opacity', 1)
+    // .style('stroke-opacity', 1)
+    .style('stroke-width', 3)
+    .style('stroke', '#aaa')
+  })
+  .on('mouseout', function(d) {
+    tip.hide(d)
+    d3.select(this)
+    .style('fill-opacity', 1)
+    // .style('stroke-opacity', 0.8)
+    .style('stroke-width', 1)
+    .style('stroke', '#bbb')
+  })
+
+
+// setTimeout(() => {
+
+//   transform_all_paths_to_circle()
+// mapstate = 1;
+// },
+//    500);
+
+}
+
+function responsivefy(svg) {
+
+        // get container + svg aspect ratio
+        var container = d3.select(svg.node().parentNode),
+        width = parseInt(svg.style('width')),
+        height = parseInt(svg.style("height")),
+        aspect = width / height;
+
+        // add viewBox and preserve aspectratio properties
+        // call resize so that svg resizes on initial page load
+        svg.attr("viewBox", "0 0 " + width + " " + height)
+        .attr("preserveAspectRatio", "xMinYMid")
+        .call(resize);
+
+        d3.select('svg#map_slider')
+        .attr("viewBox", "0 0 " + 1000 + " " + 80)
+        .attr("preserveAspectRatio", "xMinYMid")
+        // .call(resize);
+
+        // to register multiple listeners for the same event type
+        d3.select(window).on("resize." + container.attr("id"), resize);
+
+        function resize() {
+
+          var actualContainerWidth = parseInt(container.style("width"));
+
+          var targetWidth = actualContainerWidth <= max_width  ? actualContainerWidth : 1000;
+          var targetHeight = Math.round(targetWidth / aspect);
+
+          svg.attr("width", targetWidth);
+          svg.attr("height", targetHeight);
+
+          if (actualContainerWidth < 1000){
+
+              // d3.select('#slider_container').style('width', actualContainerWidth + 'px')
+              d3.select('svg#map_slider').attr('width', (actualContainerWidth - 40))
+              d3.select('svg#map_slider').style('width', (actualContainerWidth - 40) + 'px')
+
+            }
+
+          }
         }
-        var oldonload = window.onload;
-        window.onload = (typeof window.onload != 'function') ?
-        loadChartbeat : function() { oldonload(); loadChartbeat(); };
-    })();
-  </script> -->
-  <!-- // Chartbeat -->
 
-</body>
-</html>
+        d3.selectAll(".shareTwitter")
+        .on('click', function(d){ shareTwitter()});
+
+        d3.selectAll(".shareFacebook")
+        .on('click', function(d){ shareFacebook()});
+
+        function shareFacebook () {
+          var url = encodeURIComponent(window.location.origin + window.location.pathname),
+          link = 'http://www.facebook.com/sharer/sharer.php?u=' + url ;
+          window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
+        };
+
+        function shareTwitter () {
+          var url = encodeURIComponent(window.location.origin + window.location.pathname),
+          text = "Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/ via @libe",
+          link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
+          window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
+
+        }
+
+        function roundAndFormatPct(x){
+         return Math.abs(_.round(x,1)).toString().replace(".", ",")
+
+       }
+
+function ZoomEurope(){
+
+allPaths.filter(d=>d.europe != 1).style('display', 'none')
+
+g.transition().attr('transform', `translate(${-g_x_translation_europe},${-140}) scale(2)`)
+
+
+}
+
+function ZoomReset(){
+
+allPaths.filter(d=>d.europe != 1).style('display', 'initial')
+
+g.transition().attr('transform', 'translate(0,0) scale(1)')
+
+  }
+
+
+
+function moveToPoint2(d, newCoords){
+
+return `translate(${g_x_translation_europe-d.centroid[0] + newCoords[0]}, ${g_y_translation_europe-d.centroid[1] + newCoords[1]})`
+
+}
+
+
+function force_separate_circles_europe(column_y){
+
+  // g.transition().attr('transform', `translate(${-g_x_translation_europe},${g_y_translation_europe}) scale(2)`)
+
+
+  var features = allPathsEurope.data();
+
+  simulation = d3.forceSimulation(features)
+  .force("y", d3.forceY(function(d) { return column_y ? scaleYEurope(d[column_y]) : 150}).strength(5))
+  .force("x", d3.forceX(function(d) { return scaleXEurope(d.deaths_for_100k) }).strength(8))
+  .force("collide", d3.forceCollide(7).radius(d=> d['radius_pop']))
+  .stop();
+
+  for (var i = 0; i < 200; ++i) simulation.tick();
+
+    allPathsEurope
+  .transition()
+  .duration(800)
+  // .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'})
+  .attr('transform', function(d) { return moveToPoint2(d, [d.x, d.y])});
+
+}
+// 'transform', d=> moveToPoint2(d, [scaleEurope(d.deaths_for_100k),150])
+
+const scaleXEurope = d3.scaleLinear()
+.range(rangeXEurope)
+.domain([0, 100]);
+
+var scaleYEurope = d3.scaleLinear()
+.range(rangeYEurope)
+.domain([0, 90000]);
+
+
+function drawAxisLeft(){
+
+var axisL = d3.axisLeft(scaleYEurope);
+
+
+axisL.tickFormat(d=>formatNumber(d));
+
+d3.select('g#axisLeft')
+.remove()
+
+g.append("g")
+.attr('class', 'axis')
+.attr('id', 'axisLeft')
+    .attr("transform", `translate(${g_x_translation_europe + rangeXEurope[0] - 20},${g_y_translation_europe})`)
+    .call(axisL);
+
+}
+
+function changeYAxisScale(newScale){
+
+  scaleYEurope.domain(newScale)
+
+  g.select('g#axisLeft')
+  .transition()
+  .call(d3.axisLeft(scaleYEurope).tickFormat(d=>formatNumber(d)))
+}
+
+
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+}
+
+function drawAxisBottom(){
+
+var axisT = d3.axisBottom(scaleXEurope);
+
+d3.select('g#axisBottom')
+.remove()
+
+g.append("g")
+.attr('class', 'axis')
+.attr('id', 'axisBottom')
+    .attr("transform", `translate(${g_x_translation_europe},${g_y_translation_europe + rangeYEurope[0]})`)
+    .call(axisT);
+
+}
+
+
+function ShowEuropeData(){
+
+allPaths.attr('visibility', 'visible')
+  // transform_all_paths_to_circle('radius_pop')
+
+
+transform_all_paths_to_circle('radius_pop')
+
+ZoomEurope()
+
+force_separate_circles_europe()
+
+
+}
+
+function populationViewAndZoomEurope(){
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
+
+allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.select(this).attr('d'), d.centroid[0], d.centroid[1],
+ d['radius_pop'])})
+.on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    // registered_separate_circles_ecarts()
+    // ZoomEurope()
+  }
+})
+
+}
+
+
+function ShowEuropeData(){
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
+
+allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.select(this).attr('d'), d.centroid[0], d.centroid[1],
+ d['radius_pop'])})
+.on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    // registered_separate_circles_ecarts()
+    ZoomEurope()
+    force_separate_circles_europe()
+    drawAxisBottom()
+  }
+})
+.end(console.log('end transition'))
+
+}
+
+let thisview = null;
+
+let progressbar = 0;
+
+enterView({
+  selector: d3.selectAll('article .step').nodes(),
+  offset: 0.5,
+  enter: el => {
+    const index = +d3.select(el).attr('data-index');
+    console.log('Entering ' + index);
+    thisview = index;
+    objEnterView[index]()
+  },
+  exit: el => {
+    let index = +d3.select(el).attr('data-index');
+
+    
+
+    console.log('Exiting ' + index);
+
+    if (index == 0){
+      console.log('real exit')
+      thisview = null;
+      initializeView()
+    }
+    else{
+    index = enterViewKeys[enterViewKeys.indexOf(index) -1]
+    thisview = index;
+    objEnterView[index]()
+  }
+  
+  },
+
+});
+
+
+
+const objEnterView = {
+0:function(){
+allPaths.attr('visibility', 'visible')
+if (mapstate ==1){
+
+redraw_paths('radius_pop', 500)
+}
+else if (mapstate == 2){
+redraw_paths('radius_deaths', 500)
+
+}
+
+  mapstate = 0;
+},
+1:function(){
+
+allPaths.attr('visibility', 'visible')
+transform_all_paths_to_circle('radius_pop')
+mapstate = 1;
+
+},
+
+11: function(){
+allPaths.filter(d=> d.deaths==0).attr('visibility', 'hidden')
+transform_all_paths_to_circle('radius_deaths')
+ mapstate = 2;
+},
+
+2: function(){
+allPaths.attr('visibility', 'visible')
+transform_all_paths_to_circle('radius_pop')
+ mapstate = 1;
+},
+3: function(){
+
+  ZoomEurope()
+  mapstate = 1;
+d3.selectAll('g#axisLeft')
+.remove()
+d3.selectAll('g#axisBottom')
+.remove()
+tooltip_additional_var = null;
+
+d3.selectAll('g#axisLeft').remove()
+
+d3.selectAll('g#axisBottom').remove()
+
+d3.select('svg g#graph #bottomLabel').text('')
+
+},
+4: function(){
+
+tip.hide()
+d3.selectAll('g#axisLeft')
+.remove()
+country_tip_direction['LU'] = 'n';
+drawAxisBottom()
+force_separate_circles_europe()
+tooltip_additional_var = null;
+
+drawLabels()
+d3.select('svg g#graph #bottomLabel').text('Nombre de morts du coronavirus pour 100 000')
+d3.select('svg g#graph #leftLabel').text('')
+
+},
+5: function(){
+
+  tip.hide()
+country_tip_direction['LU'] = 's';
+country_tip_direction['SE'] = 's';
+country_tip_direction['IS'] = 's';
+country_tip_direction['NO'] = 's';
+drawAxisBottom()
+drawAxisLeft()
+changeYAxisScale([0, 120000])
+force_separate_circles_europe('gdp')
+
+tooltip_additional_var = ['PIB par tête', 'gdp']
+
+d3.select('svg g#graph #leftLabel').text('PIB par habitant')
+.attr('x', 680)
+},
+51: function(){
+
+showTipForId('LU')
+country_tip_direction['LU'] = 's';
+},
+52: function(){
+
+showTipForId('CH')
+changeYAxisScale([0, 120000])
+
+},
+53: function(){
+
+ tip.hide()
+
+changeYAxisScale([0, 90000])
+force_separate_circles_europe('gdp')
+
+},
+54: function(){
+
+ showTipForId('SK')
+
+
+},
+55: function(){
+
+ showTipForId('EL')
+
+
+},
+56: function(){
+
+ showTipForId('PT')
+
+
+},
+57: function(){
+
+ showTipForId('BE')
+
+
+},
+58: function(){
+
+ showTipForId('NO')
+
+changeYAxisScale([0, 90000])
+force_separate_circles_europe('gdp')
+
+},
+6: function(){
+  tip.hide()
+
+country_tip_direction['IT'] = 'n';
+country_tip_direction['SE'] = 'n';
+country_tip_direction['LU'] = 'n';
+country_tip_direction['IS'] = 'n';
+country_tip_direction['NO'] = 'n';
+
+changeYAxisScale([100, 500])
+
+
+force_separate_circles_europe('usual_deaths_for_100k')
+
+tooltip_additional_var = ['Mortalité générale en 2019', 'usual_deaths_for_100k', ' pour 100 000 habitants']
+
+d3.select('svg g#graph #leftLabel').text('Mortalité annuelle en 2019')
+.attr('x', 700)
+},
+61: function(){
+showTipForId('HU')
+},
+62: function(){
+showTipForId('NO')
+},
+63: function(){
+tip.hide()
+},
+7: function(){
+
+ tip.hide()
+changeYAxisScale([70, 90])
+force_separate_circles_europe('life_expectancy')
+tooltip_additional_var = ['Espérance de vie', 'life_expectancy']
+
+d3.select('svg g#graph #leftLabel').text('Espérance de vie')
+.attr('x', 680)
+},
+8: function(){
+tip.hide()
+showTipForId('SE')
+country_tip_direction['IT'] = 'n';
+changeYAxisScale([0, 550])
+country_tip_direction['IT'] = 's';
+force_separate_circles_europe('deaths_on_lockdown')
+tooltip_additional_var = ['Nombre de morts le jour du confinement', 'deaths_on_lockdown']
+d3.select('svg g#graph #leftLabel')
+.text('Nombre de morts le 1er jour du confinement')
+.attr('x', 760)
+},
+
+9: function(){
+showTipForId('PL')
+},
+10: function(){
+tip.hide()
+}
+}
+
+const enterViewKeys = d3.keys(objEnterView).map(d=>+d);
+
+
+function initializeView(){
+
+d3.selectAll('g#axisLeft')
+.remove()
+
+d3.selectAll('g#axisBottom')
+.remove()
+ZoomReset()
+
+allPaths.attr('visibility', 'visible')
+if (mapstate ==1){
+
+redraw_paths('radius_pop', 500)
+}
+else if (mapstate == 2){
+redraw_paths('radius_deaths', 500)
+
+}
+
+  mapstate = 0;
+
+}
+
+function showTipForId(id){
+let this_el = allPaths.filter(d=>d.id == id)
+
+tip.show({'nom':this_el.attr('data-nom'), 'auto':1}, this_el.node())
+
+}
+
+function drawLabels(){
+
+d3.select('svg g#graph #leftLabel').remove()
+d3.select('svg g#graph #bottomLabel').remove()
+
+d3.select('svg g#graph')
+.append('text')
+.attr('id', 'leftLabel')
+.text('PIB par habitant')
+.attr('text-anchor', 'middle')
+.attr('x', 680)
+.attr('y', 100)
+
+d3.select('svg g#graph')
+.append('text')
+.attr('id', 'bottomLabel')
+.text('Nombre de morts du coronavirus pour 100 000')
+.attr('x', 1100)
+.attr('y', 560)
+.attr('text-anchor', 'middle')
+
+
+}
