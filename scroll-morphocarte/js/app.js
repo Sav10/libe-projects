@@ -449,7 +449,7 @@ d3.select(".carte svg")
 
 
 Promise.all([
-    d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUaq1OlhHfw8UTbLyDPDa-zPwW1bD3N2AVkuKPg9jLKOTG5vwtuYO4f5InwnNNdVWRfd3iDOFZW72C/pub?gid=0&single=true&output=csv")
+    d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUaq1OlhHfw8UTbLyDPDa-zPwW1bD3N2AVkuKPg9jLKOTG5vwtuYO4f5InwnNNdVWRfd3iDOFZW72C/pub?gid=1483611590&single=true&output=csv")
 ]).then(function(files) {
   ready(files[0])
 }).catch(function(err) {
@@ -1006,9 +1006,9 @@ changeYAxisScale([100, 500])
 
 force_separate_circles_europe('usual_deaths_for_100k')
 
-tooltip_additional_var = ['Mortalité générale en 2019', 'usual_deaths_for_100k', ' pour 100 000 habitants']
+tooltip_additional_var = ['Mortalité générale', 'usual_deaths_for_100k', ' pour 100 000 habitants']
 
-d3.select('svg g#graph #leftLabel').text('Mortalité annuelle en 2019')
+d3.select('svg g#graph #leftLabel').text('Mortalité annuelle')
 .attr('x', 700)
 },
 61: function(){
@@ -1023,6 +1023,7 @@ tip.hide()
 7: function(){
 
  tip.hide()
+country_tip_direction['SE'] = 'n';
 changeYAxisScale([70, 90])
 force_separate_circles_europe('life_expectancy')
 tooltip_additional_var = ['Espérance de vie', 'life_expectancy']
@@ -1032,6 +1033,7 @@ d3.select('svg g#graph #leftLabel').text('Espérance de vie')
 },
 8: function(){
 tip.hide()
+country_tip_direction['SE'] = 's';
 showTipForId('SE')
 country_tip_direction['IT'] = 'n';
 changeYAxisScale([0, 550])
