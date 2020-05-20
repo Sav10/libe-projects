@@ -43,6 +43,28 @@ d3.scaleSqrt()
 .range([1, 100]);
 
 
+// function makeLegend(scaleLegend){
+
+// d3.select('svg#legend').select("*").remove()
+
+// var g2 = d3.select('svg#legend').append("g")
+//   .attr("class", "mapLegend")
+//   .attr("transform", "translate(20,20)")
+
+// var thisLegend = d3.legendColor()
+//     .shapeWidth(30)
+//     .cells(10)
+//     .orient("horizontal")
+//     .scale(scaleLegend)
+//     .shapeWidth(50)
+//     .shapePadding(10)
+
+// g2.call(thisLegend)
+
+
+// }
+
+
 const codes_pays_absolte_path = ["AO", "AR", "AU", "AZ", "CA", "CL", "CN", "DK", "FJ", "GB", "GR", "ID", "IT", "JP", "MY", "NO", "NZ", "OM",
    "PH", "PG", "RU", "TR", "US", "VU", "ZA", "FR", "ES", "AG", "BS", "KM", "CV", "KY", "FK", "FO", "HK", "KN", "MV", "MT", "NC", "PR",
     "PF", "SB", "ST", "TC", "TO", "TT", "VC", "VG", "VI", "GP", "IC"]
@@ -96,14 +118,18 @@ const g = d3.select('svg g#graph');
 
 svg.style('max-height', $(window).height()*0.85 + 'px')
 
+d3.select('svg#legend')
+.style('margin-bottom', (-height_menu_libe) + 'px')
+
 let this_new_padding = Math.round(height_menu_libe + ($(window).height() - height_menu_libe - parseFloat(d3.select('#morphocarte').style('height')))/2)
 
 this_new_padding = this_new_padding < height_menu_libe ? height_menu_libe : this_new_padding;
 
 d3.select('#morphocarte').style('padding-top', this_new_padding + 'px')
 
-
-d3.select('#articles').style('margin-bottom', (-this_new_padding + 24) + 'px')
+d3.select('svg#legend')
+.style('margin-bottom', (-this_new_padding) + 'px')
+// d3.select('#articles').style('margin-bottom', (-this_new_padding + 24) + 'px')
 
 window.addEventListener("resize", function(d){
   console.log('resizing')
@@ -117,7 +143,10 @@ this_new_padding = this_new_padding < height_menu_libe ? height_menu_libe : this
 
 d3.select('#morphocarte').style('padding-top', this_new_padding + 'px')
 
-d3.select('#articles').style('margin-bottom', (-this_new_padding + 24) + 'px')
+// d3.select('#articles').style('margin-bottom', (-this_new_padding + 24) + 'px')
+d3.select('svg#legend')
+.style('margin-bottom', (-this_new_padding) + 'px')
+
 
 });
 
