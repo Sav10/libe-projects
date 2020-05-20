@@ -647,7 +647,7 @@ function responsivefy(svg) {
 
         function shareTwitter () {
           var url = encodeURIComponent(window.location.origin + window.location.pathname),
-          text = "Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/ via @libe",
+          text = "D'un pays à l'autre, le nombre de morts liés au coronavirus est parfois très varié. Un seul indicateur ne suffisant à l'expliquer, LibeLabo en a croisé plusieurs. https://www.liberation.fr/apps/2020/05/covid-19-croiser-les-donnees-pour-mieux-comprendre-la-mortalite/ via @libe",
           link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
           window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
 
