@@ -349,7 +349,7 @@ article .step {
 }
 
 #morphocarte_container{
-  will-change:transform;
+  /*will-change:transform;*/
 }
 
 
@@ -373,6 +373,23 @@ article{
   z-index:50;
     }
 
+#legend{
+max-width: 600px;
+width: 100%;
+margin: 0 auto;
+text-align: center;
+display: flex;
+margin-bottom: -51px;
+}
+#legend .label{
+font-weight: 200;
+
+  }
+
+#legend text{
+font-size: 12px;
+
+}
 
   </style>
 </head>
@@ -386,16 +403,10 @@ article{
       </p>
       <div id='pictoContainer'></div>
       <div id='appenedPictoContainer'></div>
-      <!--     <p class="headline-small">
-        La pandémie de coronavirus est née à Wuhan, en Chine, où les premiers cas et les premiers morts ont été détectés, en décembre 2019 et janvier 2020. C’est aussi la région de Wuhan, le Hubei, qui a été la première à se confiner, fin janvier. Depuis début mars, une bonne partie du monde l’a imitée&nbsp;: de très nombreux pays ont décidé chacun leur tour de mesures de confinement partiel ou total, mettant petit à petit la planète sur pause.
-        </p> -->
+
     </div>
   </div>
   <section class='section mainContent' id="mainContent">
-    <!-- <section id="tabs" class='columns is-centered is-hidden-mobile'>
-      <div class="container tabs sectionParametres" id="parametersTabs">
-                      </div>
-                  </section> -->
     <div class="container">
       <!-- <p class="social socialTop is-hidden-mobile">
         <span><img class="shareFacebook" src="img/logos/facebook-badge.png" style="width: 30px"></span>
@@ -413,7 +424,8 @@ article{
             </div> -->
           <!-- <div id="cityTitle" class='box' style="display: none; max-width: 200px"></div> -->
           <!-- <span id='tabletExplanations' class='is-hidden-tablet'>Utilisez deux doigts pour naviguer, un seul pour scroller.</span> -->
-          <!-- <div id='legend_img_container'><img src="img/legende.svg" id="legend_img"></div> -->
+          <div id='legend_img_container'>
+          </div>
           <!-- <div id="map""></div> -->
 <!--           <div id="slider_container">
             <a id="play_button"><img src="img/play.svg"></a>
@@ -432,6 +444,16 @@ article{
 
           </div>
           <div id='morphocarte_container'>
+          <svg  id="legend" viewbox="-10 0 450 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;">Nombre de morts du Coronavirus pour 100 000 habitants</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells"><g class="cell" transform="translate(0,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(255, 255, 255);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">0</text></g><g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(247, 193, 204);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">10</text></g><g class="cell" transform="translate(92,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(243, 166, 182);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">20</text></g><g class="cell" transform="translate(138,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(240, 140, 161);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">30</text></g><g class="cell" transform="translate(184,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(237, 114, 139);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">40</text></g><g class="cell" transform="translate(230,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(234, 88, 117);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">50</text></g><g class="cell" transform="translate(276,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(230, 61, 96);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">60</text></g><g class="cell" transform="translate(322,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(227, 35, 74);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">70</text></g><g class="cell" transform="translate(368,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(224, 9, 52);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">80</text></g></g></g></svg>
           <div class="carte" id='morphocarte'>
           <figure id= "map_inner">
    <svg class="sightline-svg" style="max-height: 562.5px;" version="1.1" viewbox="0 0 2000 1000" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
@@ -741,6 +763,7 @@ article{
   <script type="text/javascript" src="js/moment-with-locales.js"></script>
   <!-- <script type="text/javascript" src="js/raphael.min.js"></script> -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script> -->
   <!-- <script src="js/queue.v1.min.js"></script> -->
   <!-- <script src="js/topojson.v1.min.js"></script> -->
   <!-- <script src="js/d3-geo-projection.v1.min.js"></script> -->
