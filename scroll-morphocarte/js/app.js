@@ -132,7 +132,7 @@ d3.select('svg#legend')
 // d3.select('#articles').style('margin-bottom', (-this_new_padding + 24) + 'px')
 
 window.addEventListener("resize", function(d){
-  console.log('resizing')
+  // console.log('resizing')
 
   svg.style('max-height', $(window).height()*0.85 + 'px')
 
@@ -386,12 +386,12 @@ allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.sel
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
-    if (callback_value){console.log('OK')}
+    // if (callback_value){console.log('OK')}
     // registered_separate_circles_ecarts()
     force_separate_circles(radius_name)
   }
 })
-.end(console.log('end transition'))
+// .end(console.log('end transition'))
 
 }
 
@@ -477,7 +477,7 @@ Promise.all([
     })
 
     // console.log(data0)
-    console.log(data)
+    // console.log(data)
 
     circleScalePop.domain(d3.extent(data, d=>d.population));
 
@@ -562,7 +562,7 @@ color
   .style('stroke-width', 1)
   .style('stroke-opacity', 1)
   .on('mouseover', function(d) {
-    console.log(d.id)
+    // console.log(d.id)
     tip.show(d)
     d3.select(this)
     .raise()
@@ -814,7 +814,7 @@ allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.sel
     drawAxisBottom()
   }
 })
-.end(console.log('end transition'))
+// .end(console.log('end transition'))
 
 }
 
@@ -827,7 +827,7 @@ enterView({
   offset: 0.5,
   enter: el => {
     const index = +d3.select(el).attr('data-index');
-    console.log('Entering ' + index);
+    // console.log('Entering ' + index);
     thisview = index;
     objEnterView[index]()
   },
@@ -836,10 +836,10 @@ enterView({
 
     
 
-    console.log('Exiting ' + index);
+    // console.log('Exiting ' + index);
 
     if (index == 0){
-      console.log('real exit')
+      // console.log('real exit')
       thisview = null;
       initializeView()
     }
@@ -1049,6 +1049,12 @@ d3.select('svg g#graph #leftLabel')
 showTipForId('PL')
 },
 10: function(){
+tip.hide()
+},
+101: function(){
+tip.hide()
+},
+102: function(){
 tip.hide()
 }
 }
