@@ -16,12 +16,12 @@
   <!-- // Google Analytics -->
 
   <!-- Xiti -->
-<!--   <script type="text/javascript">
+  <script type="text/javascript">
     xtnv = document
     xtsd = "https://logs1091"
     xtsite = "381060"
     xtn2 = "48"
-    xtpage = "LibeLabo::impact-coronavirus-mortalite-france"
+    xtpage = "LibeLabo::covid-19-croiser-les-donnees-pour-mieux-comprendre-la-mortalite"
     xtdi = ""
     xt_pagetype = "2-1-0"
     xt_multc = "&x1=0&x2=40&x3=10&x4=&x5=20200401&x6=20&x7=1783805"
@@ -36,28 +36,28 @@
   <noscript>
     <img width="1" height="1" src="https://logliberation.xiti.com/hit.xiti?s=381060&amp;s2=56&amp;p=LibeLabo::impact-coronavirus-mortalite-france&amp;di=&amp;" >
   </noscript>
-  <script type="text/javascript" src="https://statics.liberation.fr/bloom/theme/js/xtcore.js"></script> -->
+  <script type="text/javascript" src="https://statics.liberation.fr/bloom/theme/js/xtcore.js"></script>
   <!-- Xiti -->
 
   <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=3">
-  <title>Libération.fr Coronavirus : une exploration géographique des donnée</title>
-<!--   <meta name="description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive.">
+  <title>Libération.fr Covid-19: croiser les données pour mieux comprendre la mortalité</title>
+  <meta name="description" content="D'un pays à l'autre, le nombre de morts liés au coronavirus est parfois très varié. Un seul indicateur ne suffisant à l'expliquer, LibeLabo en a croisé plusieurs.">
   <meta name="keywords" content="actualités, news">
   <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
-  <link rel="canonical" href="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/">
+  <link rel="canonical" href="https://www.liberation.fr/apps/2020/05/covid-19-croiser-les-donnees-pour-mieux-comprendre-la-mortalite/">
   <meta property="og:site_name" content="Libération.fr"/>
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/" />
-  <meta property="og:title" content="Quel impact du coronavirus sur la mortalité en France ?" />
-  <meta property="og:description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive." />
-  <meta property="og:image" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/social.jpg" />
+  <meta property="og:url" content="https://www.liberation.fr/apps/2020/05/covid-19-croiser-les-donnees-pour-mieux-comprendre-la-mortalite/" />
+  <meta property="og:title" content="Covid-19, croiser les données pour mieux comprendre la mortalité" />
+  <meta property="og:description" content="D'un pays à l'autre, le nombre de morts liés au coronavirus est parfois très varié. Un seul indicateur ne suffisant à l'expliquer, LibeLabo en a croisé plusieurs." />
+  <meta property="og:image" content="https://www.liberation.fr/apps/2020/05/covid-19-croiser-les-donnees-pour-mieux-comprendre-la-mortalite/social.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@libe" />
   <meta name="twitter:creator" content="@libe" />
-  <meta name="twitter:url" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/" />
-  <meta name="twitter:title" content="Quel impact du coronavirus sur la mortalité en France" />
-  <meta name="twitter:description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive." />
-  <meta name="twitter:image" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/social.jpg"> -->
+  <meta name="twitter:url" content="https://www.liberation.fr/apps/2020/05/covid-19-croiser-les-donnees-pour-mieux-comprendre-la-mortalite/" />
+  <meta name="twitter:title" content="Covid-19, croiser les données pour mieux comprendre la mortalité" />
+  <meta name="twitter:description" content="D'un pays à l'autre, le nombre de morts liés au coronavirus est parfois très varié. Un seul indicateur ne suffisant à l'expliquer, LibeLabo en a croisé plusieurs." />
+  <meta name="twitter:image" content="https://www.liberation.fr/apps/2020/05/covid-19-croiser-les-donnees-pour-mieux-comprendre-la-mortalite/social.jpg">
   <link type="text/css" rel="stylesheet" href="styles/six-plus.css">
   <link type="text/css" rel="stylesheet" href="styles/styles.css">
   <style type="text/css">
@@ -283,6 +283,9 @@ h1#graph_title{
     width: 90%;
 }
 
+#leftLabel, #bottomLabel{
+ font-size: 15px;
+}
 
 }
 
@@ -391,9 +394,7 @@ font-size: 12px;
 
 }
 
-#leftLabel, #bottomLabel{
- font-size: 15px;
-}
+
 
   </style>
 </head>
@@ -403,7 +404,7 @@ font-size: 12px;
       <p class="headline-big is-centered has-text-centered overtitle">
       </p>
       <p class="headline-big is-centered has-text-centered title">
-        Coronavirus : une exploration géographique des donnée
+        Covid-19: croiser les données pour mieux comprendre la mortalité
       </p>
       <div id='pictoContainer'></div>
       <div id='appenedPictoContainer'></div>
@@ -423,22 +424,9 @@ font-size: 12px;
         </p> -->
       <div class='columns is-centered mainMap'>
         <div class="column is-three-quarters map_container" style="z-index: 40;">
-          <!-- <div id='intro_text'>
-            Coronavirus.
-            </div> -->
-          <!-- <div id="cityTitle" class='box' style="display: none; max-width: 200px"></div> -->
-          <!-- <span id='tabletExplanations' class='is-hidden-tablet'>Utilisez deux doigts pour naviguer, un seul pour scroller.</span> -->
-          <div id='legend_img_container'>
-          </div>
-          <!-- <div id="map""></div> -->
-<!--           <div id="slider_container">
-            <a id="play_button"><img src="img/play.svg"></a>
-            <svg id = "map_slider" height="70" width="600"></svg>
-          </div> -->
-          <!-- <div id='appenedCityTagContainer'></div> -->
           <div id="articles">
 
-          <p>Exploration géographique et graphique des données de la pandémie de Coronavirus à partir des données du Centre européen de prévention et de contrôle des maladies. </p><br><br>
+          <p>D’un pays à l’autre, la pandémie du nouveau coronavirus a eu des impacts très variés. Un seul facteur ne peut évidemment l’expliquer: il faut donc recouper plusieurs indicateurs pour tenter de comprendre cette situation complexe. Mais encore faut-il trouver les bons: exemple avec les données du Centre européen de prévention et de contrôle des maladies(ECDC).</p><br><br>
 
           <!-- <h1 id="graph_title">La mortalité du Coronavirus dans le monde</h1> -->
 <!--                     <div id="button_box">
@@ -784,7 +772,7 @@ font-size: 12px;
   <script src="js/stickyfill.min.js"></script>
   <script src='js/app.js' type='text/javascript'></script>
   <!-- Chartbeat -->
-<!--   <script type='text/javascript'>
+  <script type='text/javascript'>
     var _sf_async_config={};
     _sf_async_config.uid = 43601;
     _sf_async_config.domain = 'liberation.fr';
@@ -804,7 +792,7 @@ font-size: 12px;
         window.onload = (typeof window.onload != 'function') ?
         loadChartbeat : function() { oldonload(); loadChartbeat(); };
     })();
-  </script> -->
+  </script>
   <!-- // Chartbeat -->
 
 </body>
