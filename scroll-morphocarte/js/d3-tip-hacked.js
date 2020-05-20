@@ -19,6 +19,15 @@ function findTop(element) {
   return rec.top + window.scrollY;
 }
 
+function findBottom(element) {
+  var rec = document.getElementById(element).getBoundingClientRect();
+  return rec.bottom + window.scrollY;
+}
+
+function findBottomLegend(){
+  return findBottom('legend') + parseInt(d3.select('svg#legend').style('margin-bottom'))
+}
+
 // var this_svg_el_left = this_svg_el.getBoundingClientRect().left;
 
 // var this_svg_el_top = this_svg_el.getBoundingClientRect().top + 60;
@@ -75,9 +84,9 @@ function findTop(element) {
       let this_svg_el_top = findTop('morphocarte_container')
       let this_scrollTop = ((document.documentElement.scrollTop || document.body.scrollTop));
       let this_scrollLeft =  ((document.documentElement.scrollLeft || document.body.scrollLeft) - this_svg_el_left)
-      this_scrollTop = is_chrome ? this_scrollTop : (this_scrollTop < 280 ? this_scrollTop : 280);
-      this_scrollTop = is_safari ? this_scrollTop +40 : this_scrollTop;
-      this_scrollLeft = is_safari ? this_scrollLeft +10 : this_scrollLeft;
+      this_scrollTop = is_chrome ? (this_scrollTop) : (this_scrollTop < findBottomLegend() ? this_scrollTop : findBottomLegend());
+      this_scrollTop = is_safari ? (this_scrollTop +40) : this_scrollTop;
+      this_scrollLeft = is_safari ? (this_scrollLeft +10) : this_scrollLeft;
       let this_svg_el_top2 = (this_svg_el_top - this_scrollTop) <=  0 ? this_scrollTop : (this_scrollTop + this_svg_el_top);
 
 
@@ -87,7 +96,8 @@ function findTop(element) {
           nodel   = getNodeEl(),
           i       = directions.length,
           coords,
-          scrollTop  = this_scrollTop - findTop('morphocarte_container'),
+          scrollTop  = this_scrollTop - findBottomLegend(),
+          // scrollTop  = findTop('morphocarte'),
           scrollLeft = this_scrollLeft
 
       nodel.html(content)
@@ -95,6 +105,7 @@ function findTop(element) {
 
       while (i--) nodel.classed(directions[i], false)
       coords = directionCallbacks.get(dir).apply(this)
+    // console.log(coords)
       nodel.classed(dir, true)
         .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
         .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
