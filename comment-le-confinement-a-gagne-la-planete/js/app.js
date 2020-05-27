@@ -185,7 +185,7 @@ const color2 = d3
     '#F4A7B7',
     '#E3234A',
     '#A70021',
-    '#FFE176'
+    '#FF9C76'
   ])
 
 color2.domain([0, 1, 2, 4, 5, 6]);
