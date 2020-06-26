@@ -21,6 +21,21 @@ scaleWidth,
 thisMinZoom = 2,
 mapstate = 0;
 
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+
 var circleScale = 
 d3.scaleSqrt()
 .range([5, 40]);
@@ -345,9 +360,14 @@ queue()
   // .defer(d3.tsv, 'data/world_population.tsv')
   // .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6YOcYH2GBljCvg2rXaPjWC2ibMV0upfMWd93kpQ6R8tO8mYtZt3y0SQNcRFI2K7aXyXNsgK5LGHnx/pub?gid=1360208169&single=true&output=csv')
   .defer(d3.csv, 'data/departements_morts_centres.csv')
+  .defer(d3.csv, 'data/departements_morts_centres_to_may.csv')
   .await(ready)
 
-  function ready(error, data) {
+  function ready(error, data, data_mai) {
+
+    if (getUrlParameter('mai')){
+      var data = data_mai
+    }
 
     data.forEach(d => {
       d.ecart2020 = +d.ecart2020;
