@@ -1,0 +1,6958 @@
+[
+  {
+    "id": 549,
+    "date": "2016-07-21T17:43:15",
+    "date_gmt": "2016-07-21T15:43:15",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/mayotte"
+    },
+    "modified": "2016-07-29T11:18:25",
+    "modified_gmt": "2016-07-29T09:18:25",
+    "slug": "mayotte",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/mayotte",
+    "title": {
+      "rendered": "MAYOTTE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "976",
+      "left_bbox": "45.01978",
+      "right_bbox": "45.29765",
+      "bottom_bbox": "-12.99974",
+      "top_bbox": "-12.63733",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/549"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=549"
+        }
+      ]
+    }
+  },
+  {
+    "id": 550,
+    "date": "2016-07-21T17:43:14",
+    "date_gmt": "2016-07-21T15:43:14",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/martinique"
+    },
+    "modified": "2016-07-29T11:18:26",
+    "modified_gmt": "2016-07-29T09:18:26",
+    "slug": "martinique",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/martinique",
+    "title": {
+      "rendered": "MARTINIQUE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "972",
+      "left_bbox": "-61.22895",
+      "right_bbox": "-60.81124",
+      "bottom_bbox": "14.39595",
+      "top_bbox": "14.87859",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/550"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=550"
+        }
+      ]
+    }
+  },
+  {
+    "id": 551,
+    "date": "2016-07-21T17:43:13",
+    "date_gmt": "2016-07-21T15:43:13",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/la-reunion"
+    },
+    "modified": "2016-07-29T11:18:26",
+    "modified_gmt": "2016-07-29T09:18:26",
+    "slug": "la-reunion",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/la-reunion",
+    "title": {
+      "rendered": "LA REUNION"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "974",
+      "left_bbox": "55.2171",
+      "right_bbox": "55.83604",
+      "bottom_bbox": "-21.38824",
+      "top_bbox": "-20.87173",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/551"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=551"
+        }
+      ]
+    }
+  },
+  {
+    "id": 552,
+    "date": "2016-07-21T17:43:12",
+    "date_gmt": "2016-07-21T15:43:12",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/guyane"
+    },
+    "modified": "2016-07-29T11:18:27",
+    "modified_gmt": "2016-07-29T09:18:27",
+    "slug": "guyane",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/guyane",
+    "title": {
+      "rendered": "GUYANE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "973",
+      "left_bbox": "-54.59434",
+      "right_bbox": "-51.62208",
+      "bottom_bbox": "2.11396",
+      "top_bbox": "5.75387",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/552"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=552"
+        }
+      ]
+    }
+  },
+  {
+    "id": 553,
+    "date": "2016-07-21T17:43:11",
+    "date_gmt": "2016-07-21T15:43:11",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/guadeloupe"
+    },
+    "modified": "2016-07-29T11:18:27",
+    "modified_gmt": "2016-07-29T09:18:27",
+    "slug": "guadeloupe",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/guadeloupe",
+    "title": {
+      "rendered": "GUADELOUPE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "971",
+      "left_bbox": "-61.80874",
+      "right_bbox": "-61.0034",
+      "bottom_bbox": "15.83977",
+      "top_bbox": "16.51071",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/553"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=553"
+        }
+      ]
+    }
+  },
+  {
+    "id": 554,
+    "date": "2016-07-21T17:43:11",
+    "date_gmt": "2016-07-21T15:43:11",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/essonne"
+    },
+    "modified": "2016-07-29T11:18:28",
+    "modified_gmt": "2016-07-29T09:18:28",
+    "slug": "essonne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/essonne",
+    "title": {
+      "rendered": "ESSONNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "91",
+      "left_bbox": "1.9165394406085",
+      "right_bbox": "2.58407400388371",
+      "bottom_bbox": "48.2853193664117",
+      "top_bbox": "48.7761020316218",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/554"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=554"
+        }
+      ]
+    }
+  },
+  {
+    "id": 555,
+    "date": "2016-07-21T17:43:10",
+    "date_gmt": "2016-07-21T15:43:10",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/territoire-de-belfort"
+    },
+    "modified": "2016-07-29T11:18:28",
+    "modified_gmt": "2016-07-29T09:18:28",
+    "slug": "territoire-de-belfort",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/territoire-de-belfort",
+    "title": {
+      "rendered": "TERRITOIRE DE BELFORT"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "90",
+      "left_bbox": "6.75763848367051",
+      "right_bbox": "7.1421733942044",
+      "bottom_bbox": "47.4336991246288",
+      "top_bbox": "47.8247819220456",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/555"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=555"
+        }
+      ]
+    }
+  },
+  {
+    "id": 556,
+    "date": "2016-07-21T17:43:09",
+    "date_gmt": "2016-07-21T15:43:09",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/yonne"
+    },
+    "modified": "2016-07-29T11:18:29",
+    "modified_gmt": "2016-07-29T09:18:29",
+    "slug": "yonne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/yonne",
+    "title": {
+      "rendered": "YONNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "89",
+      "left_bbox": "2.84865016049049",
+      "right_bbox": "4.34029687115421",
+      "bottom_bbox": "47.3123467676337",
+      "top_bbox": "48.3990277813267",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/556"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=556"
+        }
+      ]
+    }
+  },
+  {
+    "id": 557,
+    "date": "2016-07-21T17:43:08",
+    "date_gmt": "2016-07-21T15:43:08",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/vosges"
+    },
+    "modified": "2016-07-29T11:18:29",
+    "modified_gmt": "2016-07-29T09:18:29",
+    "slug": "vosges",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/vosges",
+    "title": {
+      "rendered": "VOSGES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "88",
+      "left_bbox": "5.39383756038222",
+      "right_bbox": "7.19828225379745",
+      "bottom_bbox": "47.8130537245886",
+      "top_bbox": "48.5135922655566",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/557"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=557"
+        }
+      ]
+    }
+  },
+  {
+    "id": 558,
+    "date": "2016-07-21T17:43:07",
+    "date_gmt": "2016-07-21T15:43:07",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-vienne"
+    },
+    "modified": "2016-07-29T11:18:30",
+    "modified_gmt": "2016-07-29T09:18:30",
+    "slug": "haute-vienne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-vienne",
+    "title": {
+      "rendered": "HAUTE-VIENNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "87",
+      "left_bbox": "0.62974246395244",
+      "right_bbox": "1.90944070649067",
+      "bottom_bbox": "45.437605335213",
+      "top_bbox": "46.4015983835496",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/558"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=558"
+        }
+      ]
+    }
+  },
+  {
+    "id": 559,
+    "date": "2016-07-21T17:43:07",
+    "date_gmt": "2016-07-21T15:43:07",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/vienne"
+    },
+    "modified": "2016-07-29T11:18:30",
+    "modified_gmt": "2016-07-29T09:18:30",
+    "slug": "vienne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/vienne",
+    "title": {
+      "rendered": "VIENNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "86",
+      "left_bbox": "-0.102121473880653",
+      "right_bbox": "1.21306586288722",
+      "bottom_bbox": "46.049088674625",
+      "top_bbox": "47.1757578503197",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/559"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=559"
+        }
+      ]
+    }
+  },
+  {
+    "id": 560,
+    "date": "2016-07-21T17:43:06",
+    "date_gmt": "2016-07-21T15:43:06",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/vendee"
+    },
+    "modified": "2016-07-29T11:18:30",
+    "modified_gmt": "2016-07-29T09:18:30",
+    "slug": "vendee",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/vendee",
+    "title": {
+      "rendered": "VENDEE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "85",
+      "left_bbox": "-2.39883533384168",
+      "right_bbox": "-0.53780049801211",
+      "bottom_bbox": "46.2669296147409",
+      "top_bbox": "47.0842685066335",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/560"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=560"
+        }
+      ]
+    }
+  },
+  {
+    "id": 561,
+    "date": "2016-07-21T17:43:05",
+    "date_gmt": "2016-07-21T15:43:05",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/vaucluse"
+    },
+    "modified": "2016-07-29T11:18:31",
+    "modified_gmt": "2016-07-29T09:18:31",
+    "slug": "vaucluse",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/vaucluse",
+    "title": {
+      "rendered": "VAUCLUSE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "84",
+      "left_bbox": "4.64922366610049",
+      "right_bbox": "5.7573329775827",
+      "bottom_bbox": "43.6586859051648",
+      "top_bbox": "44.4298461845612",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/561"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=561"
+        }
+      ]
+    }
+  },
+  {
+    "id": 562,
+    "date": "2016-07-21T17:43:04",
+    "date_gmt": "2016-07-21T15:43:04",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/var"
+    },
+    "modified": "2016-07-29T11:18:31",
+    "modified_gmt": "2016-07-29T09:18:31",
+    "slug": "var",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/var",
+    "title": {
+      "rendered": "VAR"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "83",
+      "left_bbox": "5.65691958916954",
+      "right_bbox": "6.93372623645342",
+      "bottom_bbox": "42.9820330559485",
+      "top_bbox": "43.8069759192297",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/562"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=562"
+        }
+      ]
+    }
+  },
+  {
+    "id": 563,
+    "date": "2016-07-21T17:43:04",
+    "date_gmt": "2016-07-21T15:43:04",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/tarn-et-garonne"
+    },
+    "modified": "2016-07-29T11:18:32",
+    "modified_gmt": "2016-07-29T09:18:32",
+    "slug": "tarn-et-garonne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/tarn-et-garonne",
+    "title": {
+      "rendered": "TARN-ET-GARONNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "82",
+      "left_bbox": "0.738908962885049",
+      "right_bbox": "1.99705447201444",
+      "bottom_bbox": "43.7682419836351",
+      "top_bbox": "44.3938762830875",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/563"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=563"
+        }
+      ]
+    }
+  },
+  {
+    "id": 564,
+    "date": "2016-07-21T17:43:03",
+    "date_gmt": "2016-07-21T15:43:03",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/tarn"
+    },
+    "modified": "2016-07-29T11:18:32",
+    "modified_gmt": "2016-07-29T09:18:32",
+    "slug": "tarn",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/tarn",
+    "title": {
+      "rendered": "TARN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "81",
+      "left_bbox": "1.53526757807792",
+      "right_bbox": "2.93545056525751",
+      "bottom_bbox": "43.3826145540765",
+      "top_bbox": "44.2005428225172",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/564"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=564"
+        }
+      ]
+    }
+  },
+  {
+    "id": 565,
+    "date": "2016-07-21T17:43:02",
+    "date_gmt": "2016-07-21T15:43:02",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/somme"
+    },
+    "modified": "2016-07-29T11:18:33",
+    "modified_gmt": "2016-07-29T09:18:33",
+    "slug": "somme",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/somme",
+    "title": {
+      "rendered": "SOMME"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "80",
+      "left_bbox": "1.37969108770657",
+      "right_bbox": "3.20272196050972",
+      "bottom_bbox": "49.5717641083625",
+      "top_bbox": "50.3661272627017",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/565"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=565"
+        }
+      ]
+    }
+  },
+  {
+    "id": 566,
+    "date": "2016-07-21T17:43:01",
+    "date_gmt": "2016-07-21T15:43:01",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/deux-sevres"
+    },
+    "modified": "2016-07-29T11:18:34",
+    "modified_gmt": "2016-07-29T09:18:34",
+    "slug": "deux-sevres",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/deux-sevres",
+    "title": {
+      "rendered": "DEUX-SEVRES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "79",
+      "left_bbox": "-0.902217134528063",
+      "right_bbox": "0.218931968181321",
+      "bottom_bbox": "45.969659985238",
+      "top_bbox": "47.1084160627862",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/566"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=566"
+        }
+      ]
+    }
+  },
+  {
+    "id": 567,
+    "date": "2016-07-21T17:43:00",
+    "date_gmt": "2016-07-21T15:43:00",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/seine-et-marne"
+    },
+    "modified": "2016-07-29T11:18:34",
+    "modified_gmt": "2016-07-29T09:18:34",
+    "slug": "seine-et-marne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/seine-et-marne",
+    "title": {
+      "rendered": "SEINE-ET-MARNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "77",
+      "left_bbox": "2.39237152446175",
+      "right_bbox": "3.55568695855857",
+      "bottom_bbox": "48.1205415437406",
+      "top_bbox": "49.1175542188162",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/567"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=567"
+        }
+      ]
+    }
+  },
+  {
+    "id": 568,
+    "date": "2016-07-21T17:43:00",
+    "date_gmt": "2016-07-21T15:43:00",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/seine-maritime"
+    },
+    "modified": "2016-07-29T11:18:34",
+    "modified_gmt": "2016-07-29T09:18:34",
+    "slug": "seine-maritime",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/seine-maritime",
+    "title": {
+      "rendered": "SEINE-MARITIME"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "76",
+      "left_bbox": "0.0657060459778601",
+      "right_bbox": "1.78863341194128",
+      "bottom_bbox": "49.2519741450731",
+      "top_bbox": "50.0715510068397",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/568"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=568"
+        }
+      ]
+    }
+  },
+  {
+    "id": 569,
+    "date": "2016-07-21T17:42:59",
+    "date_gmt": "2016-07-21T15:42:59",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/paris"
+    },
+    "modified": "2016-07-29T11:18:35",
+    "modified_gmt": "2016-07-29T09:18:35",
+    "slug": "paris",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/paris",
+    "title": {
+      "rendered": "PARIS"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "75",
+      "left_bbox": "2.22422457022508",
+      "right_bbox": "2.46724594319785",
+      "bottom_bbox": "48.8157571461016",
+      "top_bbox": "48.9016517752508",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/569"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=569"
+        }
+      ]
+    }
+  },
+  {
+    "id": 570,
+    "date": "2016-07-21T17:42:58",
+    "date_gmt": "2016-07-21T15:42:58",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-savoie"
+    },
+    "modified": "2016-07-29T11:18:36",
+    "modified_gmt": "2016-07-29T09:18:36",
+    "slug": "haute-savoie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-savoie",
+    "title": {
+      "rendered": "HAUTE-SAVOIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "74",
+      "left_bbox": "5.80547202595325",
+      "right_bbox": "7.04116340941196",
+      "bottom_bbox": "45.6827069357963",
+      "top_bbox": "46.4081778210384",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/570"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=570"
+        }
+      ]
+    }
+  },
+  {
+    "id": 571,
+    "date": "2016-07-21T17:42:57",
+    "date_gmt": "2016-07-21T15:42:57",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/savoie"
+    },
+    "modified": "2016-07-29T11:18:36",
+    "modified_gmt": "2016-07-29T09:18:36",
+    "slug": "savoie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/savoie",
+    "title": {
+      "rendered": "SAVOIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "73",
+      "left_bbox": "5.6236771221683",
+      "right_bbox": "7.18420190162793",
+      "bottom_bbox": "45.0523734133462",
+      "top_bbox": "45.9384595782932",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/571"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=571"
+        }
+      ]
+    }
+  },
+  {
+    "id": 572,
+    "date": "2016-07-21T17:42:56",
+    "date_gmt": "2016-07-21T15:42:56",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/sarthe"
+    },
+    "modified": "2016-07-29T11:18:36",
+    "modified_gmt": "2016-07-29T09:18:36",
+    "slug": "sarthe",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/sarthe",
+    "title": {
+      "rendered": "SARTHE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "72",
+      "left_bbox": "-0.447914016040585",
+      "right_bbox": "0.916650480581802",
+      "bottom_bbox": "47.5685259333078",
+      "top_bbox": "48.4845765333341",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/572"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=572"
+        }
+      ]
+    }
+  },
+  {
+    "id": 573,
+    "date": "2016-07-21T17:42:55",
+    "date_gmt": "2016-07-21T15:42:55",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/saone-et-loire"
+    },
+    "modified": "2016-07-29T11:18:37",
+    "modified_gmt": "2016-07-29T09:18:37",
+    "slug": "saone-et-loire",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/saone-et-loire",
+    "title": {
+      "rendered": "SAONE-ET-LOIRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "71",
+      "left_bbox": "3.62280167498711",
+      "right_bbox": "5.46302217273112",
+      "bottom_bbox": "46.1568158371151",
+      "top_bbox": "47.1554116835445",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/573"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=573"
+        }
+      ]
+    }
+  },
+  {
+    "id": 574,
+    "date": "2016-07-21T17:42:55",
+    "date_gmt": "2016-07-21T15:42:55",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-saone"
+    },
+    "modified": "2016-07-29T11:18:37",
+    "modified_gmt": "2016-07-29T09:18:37",
+    "slug": "haute-saone",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-saone",
+    "title": {
+      "rendered": "HAUTE-SAONE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "70",
+      "left_bbox": "5.37060312184662",
+      "right_bbox": "6.82467151075771",
+      "bottom_bbox": "47.2531171722977",
+      "top_bbox": "48.0240844173587",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/574"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=574"
+        }
+      ]
+    }
+  },
+  {
+    "id": 575,
+    "date": "2016-07-21T17:42:54",
+    "date_gmt": "2016-07-21T15:42:54",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/rhone"
+    },
+    "modified": "2016-07-29T11:18:38",
+    "modified_gmt": "2016-07-29T09:18:38",
+    "slug": "rhone",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/rhone",
+    "title": {
+      "rendered": "RHONE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "69",
+      "left_bbox": "4.24383956873539",
+      "right_bbox": "5.15923090286338",
+      "bottom_bbox": "45.4542105234082",
+      "top_bbox": "46.3045177162748",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/575"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=575"
+        }
+      ]
+    }
+  },
+  {
+    "id": 576,
+    "date": "2016-07-21T17:42:53",
+    "date_gmt": "2016-07-21T15:42:53",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/hautes-pyrenees"
+    },
+    "modified": "2016-07-29T11:18:38",
+    "modified_gmt": "2016-07-29T09:18:38",
+    "slug": "hautes-pyrenees",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/hautes-pyrenees",
+    "title": {
+      "rendered": "HAUTES-PYRENEES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "65",
+      "left_bbox": "-0.326875042893179",
+      "right_bbox": "0.645958542499811",
+      "bottom_bbox": "42.6750381998866",
+      "top_bbox": "43.6110151518302",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/576"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=576"
+        }
+      ]
+    }
+  },
+  {
+    "id": 577,
+    "date": "2016-07-21T17:42:52",
+    "date_gmt": "2016-07-21T15:42:52",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/pyrenees-atlantiques"
+    },
+    "modified": "2016-07-29T11:18:39",
+    "modified_gmt": "2016-07-29T09:18:39",
+    "slug": "pyrenees-atlantiques",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/pyrenees-atlantiques",
+    "title": {
+      "rendered": "PYRENEES-ATLANTIQUES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "64",
+      "left_bbox": "-1.78927065469002",
+      "right_bbox": "0.0286653361704553",
+      "bottom_bbox": "42.7791245851151",
+      "top_bbox": "43.5968319192209",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/577"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=577"
+        }
+      ]
+    }
+  },
+  {
+    "id": 578,
+    "date": "2016-07-21T17:42:52",
+    "date_gmt": "2016-07-21T15:42:52",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/puy-de-dome"
+    },
+    "modified": "2016-07-29T11:18:39",
+    "modified_gmt": "2016-07-29T09:18:39",
+    "slug": "puy-de-dome",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/puy-de-dome",
+    "title": {
+      "rendered": "PUY-DE-DOME"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "63",
+      "left_bbox": "2.38800755058955",
+      "right_bbox": "3.98562929441086",
+      "bottom_bbox": "45.2870664026082",
+      "top_bbox": "46.2565897578473",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/578"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=578"
+        }
+      ]
+    }
+  },
+  {
+    "id": 579,
+    "date": "2016-07-21T17:42:51",
+    "date_gmt": "2016-07-21T15:42:51",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/pas-de-calais"
+    },
+    "modified": "2016-07-29T11:18:40",
+    "modified_gmt": "2016-07-29T09:18:40",
+    "slug": "pas-de-calais",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/pas-de-calais",
+    "title": {
+      "rendered": "PAS-DE-CALAIS"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "62",
+      "left_bbox": "1.55596486534455",
+      "right_bbox": "3.1868508332076",
+      "bottom_bbox": "50.0210757580314",
+      "top_bbox": "51.006505048771",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/579"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=579"
+        }
+      ]
+    }
+  },
+  {
+    "id": 580,
+    "date": "2016-07-21T17:42:50",
+    "date_gmt": "2016-07-21T15:42:50",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/orne"
+    },
+    "modified": "2016-07-29T11:18:40",
+    "modified_gmt": "2016-07-29T09:18:40",
+    "slug": "orne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/orne",
+    "title": {
+      "rendered": "ORNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "61",
+      "left_bbox": "-0.860362915434868",
+      "right_bbox": "0.976415754774005",
+      "bottom_bbox": "48.1800913476878",
+      "top_bbox": "48.9725578529906",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/580"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=580"
+        }
+      ]
+    }
+  },
+  {
+    "id": 581,
+    "date": "2016-07-21T17:42:50",
+    "date_gmt": "2016-07-21T15:42:50",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/oise"
+    },
+    "modified": "2016-07-29T11:18:41",
+    "modified_gmt": "2016-07-29T09:18:41",
+    "slug": "oise",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/oise",
+    "title": {
+      "rendered": "OISE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "60",
+      "left_bbox": "1.68861991590973",
+      "right_bbox": "3.16619299476867",
+      "bottom_bbox": "49.0604588166992",
+      "top_bbox": "49.7621154477532",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/581"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=581"
+        }
+      ]
+    }
+  },
+  {
+    "id": 582,
+    "date": "2016-07-21T17:42:49",
+    "date_gmt": "2016-07-21T15:42:49",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/bas-rhin"
+    },
+    "modified": "2016-07-29T11:18:42",
+    "modified_gmt": "2016-07-29T09:18:42",
+    "slug": "bas-rhin",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/bas-rhin",
+    "title": {
+      "rendered": "BAS-RHIN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "67",
+      "left_bbox": "6.94146755311435",
+      "right_bbox": "8.23029497464336",
+      "bottom_bbox": "48.1203775050917",
+      "top_bbox": "49.0778913044195",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/582"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=582"
+        }
+      ]
+    }
+  },
+  {
+    "id": 583,
+    "date": "2016-07-21T17:42:48",
+    "date_gmt": "2016-07-21T15:42:48",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/nord"
+    },
+    "modified": "2016-07-29T11:18:42",
+    "modified_gmt": "2016-07-29T09:18:42",
+    "slug": "nord",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/nord",
+    "title": {
+      "rendered": "NORD"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "59",
+      "left_bbox": "2.06769781245755",
+      "right_bbox": "4.23013424692159",
+      "bottom_bbox": "49.9706577019505",
+      "top_bbox": "51.0890003105061",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/583"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=583"
+        }
+      ]
+    }
+  },
+  {
+    "id": 584,
+    "date": "2016-07-21T17:42:47",
+    "date_gmt": "2016-07-21T15:42:47",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/nievre"
+    },
+    "modified": "2016-07-29T11:18:43",
+    "modified_gmt": "2016-07-29T09:18:43",
+    "slug": "nievre",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/nievre",
+    "title": {
+      "rendered": "NIEVRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "58",
+      "left_bbox": "2.84518715979413",
+      "right_bbox": "4.23087531089952",
+      "bottom_bbox": "46.6516513888404",
+      "top_bbox": "47.587923653216",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/584"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=584"
+        }
+      ]
+    }
+  },
+  {
+    "id": 585,
+    "date": "2016-07-21T17:42:47",
+    "date_gmt": "2016-07-21T15:42:47",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/moselle"
+    },
+    "modified": "2016-07-29T11:18:43",
+    "modified_gmt": "2016-07-29T09:18:43",
+    "slug": "moselle",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/moselle",
+    "title": {
+      "rendered": "MOSELLE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "57",
+      "left_bbox": "5.89340158922053",
+      "right_bbox": "7.63929424144907",
+      "bottom_bbox": "48.5275964435493",
+      "top_bbox": "49.5121803763668",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/585"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=585"
+        }
+      ]
+    }
+  },
+  {
+    "id": 586,
+    "date": "2016-07-21T17:42:46",
+    "date_gmt": "2016-07-21T15:42:46",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/pyrenees-orientales"
+    },
+    "modified": "2016-07-29T11:18:44",
+    "modified_gmt": "2016-07-29T09:18:44",
+    "slug": "pyrenees-orientales",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/pyrenees-orientales",
+    "title": {
+      "rendered": "PYRENEES-ORIENTALES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "66",
+      "left_bbox": "1.72401059413076",
+      "right_bbox": "3.17560928422705",
+      "bottom_bbox": "42.3334886248064",
+      "top_bbox": "42.918341437261",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/586"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=586"
+        }
+      ]
+    }
+  },
+  {
+    "id": 587,
+    "date": "2016-07-21T17:42:45",
+    "date_gmt": "2016-07-21T15:42:45",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/morbihan"
+    },
+    "modified": "2016-07-29T11:18:44",
+    "modified_gmt": "2016-07-29T09:18:44",
+    "slug": "morbihan",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/morbihan",
+    "title": {
+      "rendered": "MORBIHAN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "56",
+      "left_bbox": "-3.73319097352884",
+      "right_bbox": "-2.03605808668459",
+      "bottom_bbox": "47.2785723824613",
+      "top_bbox": "48.2100163334276",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/587"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=587"
+        }
+      ]
+    }
+  },
+  {
+    "id": 588,
+    "date": "2016-07-21T17:42:44",
+    "date_gmt": "2016-07-21T15:42:44",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/meuse"
+    },
+    "modified": "2016-07-29T11:18:45",
+    "modified_gmt": "2016-07-29T09:18:45",
+    "slug": "meuse",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/meuse",
+    "title": {
+      "rendered": "MEUSE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "55",
+      "left_bbox": "4.88876092979764",
+      "right_bbox": "5.85347643091997",
+      "bottom_bbox": "48.4093347310975",
+      "top_bbox": "49.6170877385028",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/588"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=588"
+        }
+      ]
+    }
+  },
+  {
+    "id": 589,
+    "date": "2016-07-21T17:42:43",
+    "date_gmt": "2016-07-21T15:42:43",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/meurthe-et-moselle"
+    },
+    "modified": "2016-07-29T11:18:46",
+    "modified_gmt": "2016-07-29T09:18:46",
+    "slug": "meurthe-et-moselle",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/meurthe-et-moselle",
+    "title": {
+      "rendered": "MEURTHE-ET-MOSELLE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "54",
+      "left_bbox": "5.42599032483599",
+      "right_bbox": "7.12316536902857",
+      "bottom_bbox": "48.3500388831168",
+      "top_bbox": "49.5622518629105",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/589"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=589"
+        }
+      ]
+    }
+  },
+  {
+    "id": 590,
+    "date": "2016-07-21T17:42:43",
+    "date_gmt": "2016-07-21T15:42:43",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-marne"
+    },
+    "modified": "2016-07-29T11:18:46",
+    "modified_gmt": "2016-07-29T09:18:46",
+    "slug": "haute-marne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-marne",
+    "title": {
+      "rendered": "HAUTE-MARNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "52",
+      "left_bbox": "4.62682990793103",
+      "right_bbox": "5.89057469690884",
+      "bottom_bbox": "47.5765507085746",
+      "top_bbox": "48.6888516838792",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/590"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=590"
+        }
+      ]
+    }
+  },
+  {
+    "id": 591,
+    "date": "2016-07-21T17:42:42",
+    "date_gmt": "2016-07-21T15:42:42",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/marne"
+    },
+    "modified": "2016-07-29T11:18:46",
+    "modified_gmt": "2016-07-29T09:18:46",
+    "slug": "marne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/marne",
+    "title": {
+      "rendered": "MARNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "51",
+      "left_bbox": "3.39712958466865",
+      "right_bbox": "5.03775651961035",
+      "bottom_bbox": "48.5151739162974",
+      "top_bbox": "49.4077249196893",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/591"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=591"
+        }
+      ]
+    }
+  },
+  {
+    "id": 592,
+    "date": "2016-07-21T17:42:41",
+    "date_gmt": "2016-07-21T15:42:41",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/manche"
+    },
+    "modified": "2016-07-29T11:18:47",
+    "modified_gmt": "2016-07-29T09:18:47",
+    "slug": "manche",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/manche",
+    "title": {
+      "rendered": "MANCHE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "50",
+      "left_bbox": "-1.94670966074895",
+      "right_bbox": "-0.736267312130707",
+      "bottom_bbox": "48.4568749243268",
+      "top_bbox": "49.7261028438926",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/592"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=592"
+        }
+      ]
+    }
+  },
+  {
+    "id": 593,
+    "date": "2016-07-21T17:42:40",
+    "date_gmt": "2016-07-21T15:42:40",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/maine-et-loire"
+    },
+    "modified": "2016-07-29T11:18:48",
+    "modified_gmt": "2016-07-29T09:18:48",
+    "slug": "maine-et-loire",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/maine-et-loire",
+    "title": {
+      "rendered": "MAINE-ET-LOIRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "49",
+      "left_bbox": "-1.35420364185724",
+      "right_bbox": "0.234568112476669",
+      "bottom_bbox": "46.9704655722341",
+      "top_bbox": "47.8099914629707",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/593"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=593"
+        }
+      ]
+    }
+  },
+  {
+    "id": 594,
+    "date": "2016-07-21T17:42:39",
+    "date_gmt": "2016-07-21T15:42:39",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/mayenne"
+    },
+    "modified": "2016-07-29T11:18:48",
+    "modified_gmt": "2016-07-29T09:18:48",
+    "slug": "mayenne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/mayenne",
+    "title": {
+      "rendered": "MAYENNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "53",
+      "left_bbox": "-1.23825173432567",
+      "right_bbox": "-0.0505388875447988",
+      "bottom_bbox": "47.733381378006",
+      "top_bbox": "48.5679994940617",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/594"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=594"
+        }
+      ]
+    }
+  },
+  {
+    "id": 595,
+    "date": "2016-07-21T17:42:38",
+    "date_gmt": "2016-07-21T15:42:38",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/lozere"
+    },
+    "modified": "2016-07-29T11:18:49",
+    "modified_gmt": "2016-07-29T09:18:49",
+    "slug": "lozere",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/lozere",
+    "title": {
+      "rendered": "LOZERE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "48",
+      "left_bbox": "2.98167698653043",
+      "right_bbox": "3.99816298776397",
+      "bottom_bbox": "44.1143717516483",
+      "top_bbox": "44.9757230255701",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/595"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=595"
+        }
+      ]
+    }
+  },
+  {
+    "id": 596,
+    "date": "2016-07-21T17:42:37",
+    "date_gmt": "2016-07-21T15:42:37",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/lot-et-garonne"
+    },
+    "modified": "2016-07-29T11:18:49",
+    "modified_gmt": "2016-07-29T09:18:49",
+    "slug": "lot-et-garonne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/lot-et-garonne",
+    "title": {
+      "rendered": "LOT-ET-GARONNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "47",
+      "left_bbox": "-0.140688977601515",
+      "right_bbox": "1.07795122623525",
+      "bottom_bbox": "43.9732082639777",
+      "top_bbox": "44.7641935250676",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/596"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=596"
+        }
+      ]
+    }
+  },
+  {
+    "id": 597,
+    "date": "2016-07-21T17:42:36",
+    "date_gmt": "2016-07-21T15:42:36",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/lot"
+    },
+    "modified": "2016-07-29T11:18:50",
+    "modified_gmt": "2016-07-29T09:18:50",
+    "slug": "lot",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/lot",
+    "title": {
+      "rendered": "LOT"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "46",
+      "left_bbox": "0.981507059196262",
+      "right_bbox": "2.21047650650625",
+      "bottom_bbox": "44.2033443628775",
+      "top_bbox": "45.0446656338747",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/597"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=597"
+        }
+      ]
+    }
+  },
+  {
+    "id": 598,
+    "date": "2016-07-21T17:42:34",
+    "date_gmt": "2016-07-21T15:42:34",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/loiret"
+    },
+    "modified": "2016-07-29T11:18:50",
+    "modified_gmt": "2016-07-29T09:18:50",
+    "slug": "loiret",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/loiret",
+    "title": {
+      "rendered": "LOIRET"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "45",
+      "left_bbox": "1.51465722436234",
+      "right_bbox": "3.12822994541792",
+      "bottom_bbox": "47.4831887872082",
+      "top_bbox": "48.3449441557612",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/598"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=598"
+        }
+      ]
+    }
+  },
+  {
+    "id": 599,
+    "date": "2016-07-21T17:42:34",
+    "date_gmt": "2016-07-21T15:42:34",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/val-doise"
+    },
+    "modified": "2016-07-29T11:18:51",
+    "modified_gmt": "2016-07-29T09:18:51",
+    "slug": "val-doise",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/val-doise",
+    "title": {
+      "rendered": "VAL-DOISE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "95",
+      "left_bbox": "1.60879607062992",
+      "right_bbox": "2.59447416723085",
+      "bottom_bbox": "48.9086793298905",
+      "top_bbox": "49.2371907073631",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/599"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=599"
+        }
+      ]
+    }
+  },
+  {
+    "id": 600,
+    "date": "2016-07-21T17:42:33",
+    "date_gmt": "2016-07-21T15:42:33",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/loire-atlantique"
+    },
+    "modified": "2016-07-29T11:18:51",
+    "modified_gmt": "2016-07-29T09:18:51",
+    "slug": "loire-atlantique",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/loire-atlantique",
+    "title": {
+      "rendered": "LOIRE-ATLANTIQUE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "44",
+      "left_bbox": "-2.55670587240236",
+      "right_bbox": "-0.923468920280055",
+      "bottom_bbox": "46.8600798343647",
+      "top_bbox": "47.8348596707559",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/600"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=600"
+        }
+      ]
+    }
+  },
+  {
+    "id": 601,
+    "date": "2016-07-21T17:42:32",
+    "date_gmt": "2016-07-21T15:42:32",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-loire"
+    },
+    "modified": "2016-07-29T11:18:52",
+    "modified_gmt": "2016-07-29T09:18:52",
+    "slug": "haute-loire",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-loire",
+    "title": {
+      "rendered": "HAUTE-LOIRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "43",
+      "left_bbox": "3.08538944280753",
+      "right_bbox": "4.48891796783216",
+      "bottom_bbox": "44.7438724371486",
+      "top_bbox": "45.4276329992512",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/601"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=601"
+        }
+      ]
+    }
+  },
+  {
+    "id": 602,
+    "date": "2016-07-21T17:42:31",
+    "date_gmt": "2016-07-21T15:42:31",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/loire"
+    },
+    "modified": "2016-07-29T11:18:52",
+    "modified_gmt": "2016-07-29T09:18:52",
+    "slug": "loire",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/loire",
+    "title": {
+      "rendered": "LOIRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "42",
+      "left_bbox": "3.69339101091205",
+      "right_bbox": "4.75995345936003",
+      "bottom_bbox": "45.2322110017572",
+      "top_bbox": "46.2759144434065",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/602"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=602"
+        }
+      ]
+    }
+  },
+  {
+    "id": 603,
+    "date": "2016-07-21T17:42:31",
+    "date_gmt": "2016-07-21T15:42:31",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/loir-et-cher"
+    },
+    "modified": "2016-07-29T11:18:53",
+    "modified_gmt": "2016-07-29T09:18:53",
+    "slug": "loir-et-cher",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/loir-et-cher",
+    "title": {
+      "rendered": "LOIR-ET-CHER"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "41",
+      "left_bbox": "0.58031547394897",
+      "right_bbox": "2.24774501529762",
+      "bottom_bbox": "47.1862252339445",
+      "top_bbox": "48.1328347595991",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/603"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=603"
+        }
+      ]
+    }
+  },
+  {
+    "id": 604,
+    "date": "2016-07-21T17:42:30",
+    "date_gmt": "2016-07-21T15:42:30",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/jura"
+    },
+    "modified": "2016-07-29T11:18:53",
+    "modified_gmt": "2016-07-29T09:18:53",
+    "slug": "jura",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/jura",
+    "title": {
+      "rendered": "JURA"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "39",
+      "left_bbox": "5.25204276810923",
+      "right_bbox": "6.20657472346847",
+      "bottom_bbox": "46.2606932070983",
+      "top_bbox": "47.305843036758",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/604"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=604"
+        }
+      ]
+    }
+  },
+  {
+    "id": 605,
+    "date": "2016-07-21T17:42:29",
+    "date_gmt": "2016-07-21T15:42:29",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/isere"
+    },
+    "modified": "2016-07-29T11:18:54",
+    "modified_gmt": "2016-07-29T09:18:54",
+    "slug": "isere",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/isere",
+    "title": {
+      "rendered": "ISERE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "38",
+      "left_bbox": "4.7439913610838",
+      "right_bbox": "6.35855018246407",
+      "bottom_bbox": "44.6969650242906",
+      "top_bbox": "45.8827813321709",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/605"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=605"
+        }
+      ]
+    }
+  },
+  {
+    "id": 606,
+    "date": "2016-07-21T17:42:28",
+    "date_gmt": "2016-07-21T15:42:28",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/indre"
+    },
+    "modified": "2016-07-29T11:18:54",
+    "modified_gmt": "2016-07-29T09:18:54",
+    "slug": "indre",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/indre",
+    "title": {
+      "rendered": "INDRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "36",
+      "left_bbox": "0.867468880708157",
+      "right_bbox": "2.2037884222747",
+      "bottom_bbox": "46.347218495873",
+      "top_bbox": "47.2771385931104",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/606"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=606"
+        }
+      ]
+    }
+  },
+  {
+    "id": 607,
+    "date": "2016-07-21T17:42:27",
+    "date_gmt": "2016-07-21T15:42:27",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/ille-et-vilaine"
+    },
+    "modified": "2016-07-29T11:18:55",
+    "modified_gmt": "2016-07-29T09:18:55",
+    "slug": "ille-et-vilaine",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/ille-et-vilaine",
+    "title": {
+      "rendered": "ILLE-ET-VILAINE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "35",
+      "left_bbox": "-2.28753886020226",
+      "right_bbox": "-1.01820304892648",
+      "bottom_bbox": "47.6313598440143",
+      "top_bbox": "48.7115691614362",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/607"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=607"
+        }
+      ]
+    }
+  },
+  {
+    "id": 608,
+    "date": "2016-07-21T17:42:27",
+    "date_gmt": "2016-07-21T15:42:27",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/val-de-marne"
+    },
+    "modified": "2016-07-29T11:18:55",
+    "modified_gmt": "2016-07-29T09:18:55",
+    "slug": "val-de-marne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/val-de-marne",
+    "title": {
+      "rendered": "VAL-DE-MARNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "94",
+      "left_bbox": "2.30988229458844",
+      "right_bbox": "2.61481690616404",
+      "bottom_bbox": "48.6890252711783",
+      "top_bbox": "48.861409850049",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/608"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=608"
+        }
+      ]
+    }
+  },
+  {
+    "id": 609,
+    "date": "2016-07-21T17:42:26",
+    "date_gmt": "2016-07-21T15:42:26",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/herault"
+    },
+    "modified": "2016-07-29T11:18:56",
+    "modified_gmt": "2016-07-29T09:18:56",
+    "slug": "herault",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/herault",
+    "title": {
+      "rendered": "HERAULT"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "34",
+      "left_bbox": "2.53991734469627",
+      "right_bbox": "4.19381781155392",
+      "bottom_bbox": "43.2128086330841",
+      "top_bbox": "43.9706897224518",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/609"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=609"
+        }
+      ]
+    }
+  },
+  {
+    "id": 610,
+    "date": "2016-07-21T17:42:25",
+    "date_gmt": "2016-07-21T15:42:25",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/gironde"
+    },
+    "modified": "2016-07-29T11:18:56",
+    "modified_gmt": "2016-07-29T09:18:56",
+    "slug": "gironde",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/gironde",
+    "title": {
+      "rendered": "GIRONDE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "33",
+      "left_bbox": "-1.26156091294416",
+      "right_bbox": "0.315043080115652",
+      "bottom_bbox": "44.1940166710363",
+      "top_bbox": "45.5735853922635",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/610"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=610"
+        }
+      ]
+    }
+  },
+  {
+    "id": 611,
+    "date": "2016-07-21T17:42:24",
+    "date_gmt": "2016-07-21T15:42:24",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/indre-et-loire"
+    },
+    "modified": "2016-07-29T11:18:57",
+    "modified_gmt": "2016-07-29T09:18:57",
+    "slug": "indre-et-loire",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/indre-et-loire",
+    "title": {
+      "rendered": "INDRE-ET-LOIRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "37",
+      "left_bbox": "0.0537397848495228",
+      "right_bbox": "1.36446576002727",
+      "bottom_bbox": "46.7366210426403",
+      "top_bbox": "47.708089518433",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/611"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=611"
+        }
+      ]
+    }
+  },
+  {
+    "id": 612,
+    "date": "2016-07-21T17:42:24",
+    "date_gmt": "2016-07-21T15:42:24",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-garonne"
+    },
+    "modified": "2016-07-29T11:18:57",
+    "modified_gmt": "2016-07-29T09:18:57",
+    "slug": "haute-garonne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-garonne",
+    "title": {
+      "rendered": "HAUTE-GARONNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "31",
+      "left_bbox": "0.441704831511497",
+      "right_bbox": "2.0482898262114",
+      "bottom_bbox": "42.6913486808669",
+      "top_bbox": "43.9210957133889",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/612"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=612"
+        }
+      ]
+    }
+  },
+  {
+    "id": 613,
+    "date": "2016-07-21T17:42:23",
+    "date_gmt": "2016-07-21T15:42:23",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/gers"
+    },
+    "modified": "2016-07-29T11:18:58",
+    "modified_gmt": "2016-07-29T09:18:58",
+    "slug": "gers",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/gers",
+    "title": {
+      "rendered": "GERS"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "32",
+      "left_bbox": "-0.282111589196039",
+      "right_bbox": "1.20030064488225",
+      "bottom_bbox": "43.3108859915855",
+      "top_bbox": "44.0792633802986",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/613"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=613"
+        }
+      ]
+    }
+  },
+  {
+    "id": 614,
+    "date": "2016-07-21T17:42:22",
+    "date_gmt": "2016-07-21T15:42:22",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/gard"
+    },
+    "modified": "2016-07-29T11:18:58",
+    "modified_gmt": "2016-07-29T09:18:58",
+    "slug": "gard",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/gard",
+    "title": {
+      "rendered": "GARD"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "30",
+      "left_bbox": "3.26311258845482",
+      "right_bbox": "4.84555390067659",
+      "bottom_bbox": "43.4601854327264",
+      "top_bbox": "44.4597975558632",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/614"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=614"
+        }
+      ]
+    }
+  },
+  {
+    "id": 615,
+    "date": "2016-07-21T17:42:21",
+    "date_gmt": "2016-07-21T15:42:21",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/finistere"
+    },
+    "modified": "2016-07-29T11:18:59",
+    "modified_gmt": "2016-07-29T09:18:59",
+    "slug": "finistere",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/finistere",
+    "title": {
+      "rendered": "FINISTERE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "29",
+      "left_bbox": "-5.13901728543322",
+      "right_bbox": "-3.38802544841603",
+      "bottom_bbox": "47.7635615765894",
+      "top_bbox": "48.7526158728705",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/615"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=615"
+        }
+      ]
+    }
+  },
+  {
+    "id": 616,
+    "date": "2016-07-21T17:42:20",
+    "date_gmt": "2016-07-21T15:42:20",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/seine-saint-denis"
+    },
+    "modified": "2016-07-29T11:18:59",
+    "modified_gmt": "2016-07-29T09:18:59",
+    "slug": "seine-saint-denis",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/seine-saint-denis",
+    "title": {
+      "rendered": "SEINE-SAINT-DENIS"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "93",
+      "left_bbox": "2.2884607724429",
+      "right_bbox": "2.60259843143198",
+      "bottom_bbox": "48.807436629376",
+      "top_bbox": "49.0123995600171",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/616"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=616"
+        }
+      ]
+    }
+  },
+  {
+    "id": 617,
+    "date": "2016-07-21T17:42:20",
+    "date_gmt": "2016-07-21T15:42:20",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/corse-du-sud"
+    },
+    "modified": "2016-07-29T11:19:00",
+    "modified_gmt": "2016-07-29T09:19:00",
+    "slug": "corse-du-sud",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/corse-du-sud",
+    "title": {
+      "rendered": "CORSE-DU-SUD"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "2A",
+      "left_bbox": "8.53823242096776",
+      "right_bbox": "9.407123931761",
+      "bottom_bbox": "41.3627574264572",
+      "top_bbox": "42.3814057120503",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/617"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=617"
+        }
+      ]
+    }
+  },
+  {
+    "id": 618,
+    "date": "2016-07-21T17:42:19",
+    "date_gmt": "2016-07-21T15:42:19",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/eure-et-loir"
+    },
+    "modified": "2016-07-29T11:19:00",
+    "modified_gmt": "2016-07-29T09:19:00",
+    "slug": "eure-et-loir",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/eure-et-loir",
+    "title": {
+      "rendered": "EURE-ET-LOIR"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "28",
+      "left_bbox": "0.756826368076685",
+      "right_bbox": "1.99408471805938",
+      "bottom_bbox": "47.9537490548553",
+      "top_bbox": "48.9410536061552",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/618"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=618"
+        }
+      ]
+    }
+  },
+  {
+    "id": 619,
+    "date": "2016-07-21T17:42:18",
+    "date_gmt": "2016-07-21T15:42:18",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/eure"
+    },
+    "modified": "2016-07-29T11:19:01",
+    "modified_gmt": "2016-07-29T09:19:01",
+    "slug": "eure",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/eure",
+    "title": {
+      "rendered": "EURE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "27",
+      "left_bbox": "0.297224420290615",
+      "right_bbox": "1.8026602375003",
+      "bottom_bbox": "48.666524151607",
+      "top_bbox": "49.4844665138576",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/619"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=619"
+        }
+      ]
+    }
+  },
+  {
+    "id": 620,
+    "date": "2016-07-21T17:42:16",
+    "date_gmt": "2016-07-21T15:42:16",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/drome"
+    },
+    "modified": "2016-07-29T11:19:01",
+    "modified_gmt": "2016-07-29T09:19:01",
+    "slug": "drome",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/drome",
+    "title": {
+      "rendered": "DROME"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "26",
+      "left_bbox": "4.64683712406175",
+      "right_bbox": "5.82988436213845",
+      "bottom_bbox": "44.1157193477884",
+      "top_bbox": "45.3439846178268",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/620"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=620"
+        }
+      ]
+    }
+  },
+  {
+    "id": 621,
+    "date": "2016-07-21T17:42:16",
+    "date_gmt": "2016-07-21T15:42:16",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/doubs"
+    },
+    "modified": "2016-07-29T11:19:02",
+    "modified_gmt": "2016-07-29T09:19:02",
+    "slug": "doubs",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/doubs",
+    "title": {
+      "rendered": "DOUBS"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "25",
+      "left_bbox": "5.69872619467738",
+      "right_bbox": "7.06029531241506",
+      "bottom_bbox": "46.5535721427229",
+      "top_bbox": "47.5799061446341",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/621"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=621"
+        }
+      ]
+    }
+  },
+  {
+    "id": 622,
+    "date": "2016-07-21T17:42:15",
+    "date_gmt": "2016-07-21T15:42:15",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/dordogne"
+    },
+    "modified": "2016-07-29T11:19:02",
+    "modified_gmt": "2016-07-29T09:19:02",
+    "slug": "dordogne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/dordogne",
+    "title": {
+      "rendered": "DORDOGNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "24",
+      "left_bbox": "-0.0415138998487501",
+      "right_bbox": "1.44826154393221",
+      "bottom_bbox": "44.5707739252791",
+      "top_bbox": "45.7145699897727",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/622"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=622"
+        }
+      ]
+    }
+  },
+  {
+    "id": 623,
+    "date": "2016-07-21T17:42:14",
+    "date_gmt": "2016-07-21T15:42:14",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/creuse"
+    },
+    "modified": "2016-07-29T11:19:03",
+    "modified_gmt": "2016-07-29T09:19:03",
+    "slug": "creuse",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/creuse",
+    "title": {
+      "rendered": "CREUSE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "23",
+      "left_bbox": "1.37452137996296",
+      "right_bbox": "2.60939630483867",
+      "bottom_bbox": "45.6642395042393",
+      "top_bbox": "46.4549062858728",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/623"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=623"
+        }
+      ]
+    }
+  },
+  {
+    "id": 624,
+    "date": "2016-07-21T17:42:13",
+    "date_gmt": "2016-07-21T15:42:13",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/cotes-darmor"
+    },
+    "modified": "2016-07-29T11:19:03",
+    "modified_gmt": "2016-07-29T09:19:03",
+    "slug": "cotes-darmor",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/cotes-darmor",
+    "title": {
+      "rendered": "COTES-DARMOR"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "22",
+      "left_bbox": "-3.66353556729797",
+      "right_bbox": "-1.9089961926263",
+      "bottom_bbox": "48.0325401797206",
+      "top_bbox": "48.8836013813589",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/624"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=624"
+        }
+      ]
+    }
+  },
+  {
+    "id": 625,
+    "date": "2016-07-21T17:42:12",
+    "date_gmt": "2016-07-21T15:42:12",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/cote-dor"
+    },
+    "modified": "2016-07-29T11:19:04",
+    "modified_gmt": "2016-07-29T09:19:04",
+    "slug": "cote-dor",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/cote-dor",
+    "title": {
+      "rendered": "COTE-DOR"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "21",
+      "left_bbox": "4.0651984622774",
+      "right_bbox": "5.51853872951259",
+      "bottom_bbox": "46.9009541355769",
+      "top_bbox": "48.0313759686354",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/625"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=625"
+        }
+      ]
+    }
+  },
+  {
+    "id": 626,
+    "date": "2016-07-21T17:42:12",
+    "date_gmt": "2016-07-21T15:42:12",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/correze"
+    },
+    "modified": "2016-07-29T11:19:04",
+    "modified_gmt": "2016-07-29T09:19:04",
+    "slug": "correze",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/correze",
+    "title": {
+      "rendered": "CORREZE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "19",
+      "left_bbox": "1.22705998915047",
+      "right_bbox": "2.52868364408504",
+      "bottom_bbox": "44.9202879852948",
+      "top_bbox": "45.7636718955746",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/626"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=626"
+        }
+      ]
+    }
+  },
+  {
+    "id": 627,
+    "date": "2016-07-21T17:42:11",
+    "date_gmt": "2016-07-21T15:42:11",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/cher"
+    },
+    "modified": "2016-07-29T11:19:05",
+    "modified_gmt": "2016-07-29T09:19:05",
+    "slug": "cher",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/cher",
+    "title": {
+      "rendered": "CHER"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "18",
+      "left_bbox": "1.77445145081256",
+      "right_bbox": "3.07933730997611",
+      "bottom_bbox": "46.420405373181",
+      "top_bbox": "47.629054990991",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/627"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=627"
+        }
+      ]
+    }
+  },
+  {
+    "id": 628,
+    "date": "2016-07-21T17:42:10",
+    "date_gmt": "2016-07-21T15:42:10",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/charente-maritime"
+    },
+    "modified": "2016-07-29T11:19:05",
+    "modified_gmt": "2016-07-29T09:19:05",
+    "slug": "charente-maritime",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/charente-maritime",
+    "title": {
+      "rendered": "CHARENTE-MARITIME"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "17",
+      "left_bbox": "-1.56273296315655",
+      "right_bbox": "0.00586644262893199",
+      "bottom_bbox": "45.0892484281864",
+      "top_bbox": "46.3709353812297",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/628"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=628"
+        }
+      ]
+    }
+  },
+  {
+    "id": 629,
+    "date": "2016-07-21T17:42:09",
+    "date_gmt": "2016-07-21T15:42:09",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/hauts-de-seine"
+    },
+    "modified": "2016-07-29T11:19:06",
+    "modified_gmt": "2016-07-29T09:19:06",
+    "slug": "hauts-de-seine",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/hauts-de-seine",
+    "title": {
+      "rendered": "HAUTS-DE-SEINE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "92",
+      "left_bbox": "2.14587252260782",
+      "right_bbox": "2.33597931039204",
+      "bottom_bbox": "48.7294917478758",
+      "top_bbox": "48.9509667880772",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/629"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=629"
+        }
+      ]
+    }
+  },
+  {
+    "id": 630,
+    "date": "2016-07-21T17:42:09",
+    "date_gmt": "2016-07-21T15:42:09",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/charente"
+    },
+    "modified": "2016-07-29T11:19:06",
+    "modified_gmt": "2016-07-29T09:19:06",
+    "slug": "charente",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/charente",
+    "title": {
+      "rendered": "CHARENTE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "16",
+      "left_bbox": "-0.463154085816001",
+      "right_bbox": "0.943329049906428",
+      "bottom_bbox": "45.191632555616",
+      "top_bbox": "46.1389646910567",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/630"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=630"
+        }
+      ]
+    }
+  },
+  {
+    "id": 631,
+    "date": "2016-07-21T17:42:08",
+    "date_gmt": "2016-07-21T15:42:08",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/cantal"
+    },
+    "modified": "2016-07-29T11:19:07",
+    "modified_gmt": "2016-07-29T09:19:07",
+    "slug": "cantal",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/cantal",
+    "title": {
+      "rendered": "CANTAL"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "15",
+      "left_bbox": "2.06290160772993",
+      "right_bbox": "3.37146553482871",
+      "bottom_bbox": "44.6155316765298",
+      "top_bbox": "45.4823903645155",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/631"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=631"
+        }
+      ]
+    }
+  },
+  {
+    "id": 632,
+    "date": "2016-07-21T17:42:07",
+    "date_gmt": "2016-07-21T15:42:07",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/yvelines"
+    },
+    "modified": "2016-07-29T11:19:07",
+    "modified_gmt": "2016-07-29T09:19:07",
+    "slug": "yvelines",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/yvelines",
+    "title": {
+      "rendered": "YVELINES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "78",
+      "left_bbox": "1.44727950476602",
+      "right_bbox": "2.22719411117819",
+      "bottom_bbox": "48.4400101876368",
+      "top_bbox": "49.0842851363212",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/632"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=632"
+        }
+      ]
+    }
+  },
+  {
+    "id": 633,
+    "date": "2016-07-21T17:42:06",
+    "date_gmt": "2016-07-21T15:42:06",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/calvados"
+    },
+    "modified": "2016-07-29T11:19:08",
+    "modified_gmt": "2016-07-29T09:19:08",
+    "slug": "calvados",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/calvados",
+    "title": {
+      "rendered": "CALVADOS"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "14",
+      "left_bbox": "-1.15797428032603",
+      "right_bbox": "0.446051929418346",
+      "bottom_bbox": "48.7522291472338",
+      "top_bbox": "49.429861637283",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/633"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=633"
+        }
+      ]
+    }
+  },
+  {
+    "id": 634,
+    "date": "2016-07-21T17:42:05",
+    "date_gmt": "2016-07-21T15:42:05",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/bouches-du-rhone"
+    },
+    "modified": "2016-07-29T11:19:08",
+    "modified_gmt": "2016-07-29T09:19:08",
+    "slug": "bouches-du-rhone",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/bouches-du-rhone",
+    "title": {
+      "rendered": "BOUCHES-DU-RHONE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "13",
+      "left_bbox": "4.23028339339248",
+      "right_bbox": "5.81324840035912",
+      "bottom_bbox": "43.1623707529158",
+      "top_bbox": "43.9240684708176",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/634"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=634"
+        }
+      ]
+    }
+  },
+  {
+    "id": 635,
+    "date": "2016-07-21T17:42:05",
+    "date_gmt": "2016-07-21T15:42:05",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/aveyron"
+    },
+    "modified": "2016-07-29T11:19:09",
+    "modified_gmt": "2016-07-29T09:19:09",
+    "slug": "aveyron",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/aveyron",
+    "title": {
+      "rendered": "AVEYRON"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "12",
+      "left_bbox": "1.83967146025188",
+      "right_bbox": "3.45098139974826",
+      "bottom_bbox": "43.6916457755152",
+      "top_bbox": "44.9412221847367",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/635"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=635"
+        }
+      ]
+    }
+  },
+  {
+    "id": 636,
+    "date": "2016-07-21T17:42:04",
+    "date_gmt": "2016-07-21T15:42:04",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/aude"
+    },
+    "modified": "2016-07-29T11:19:09",
+    "modified_gmt": "2016-07-29T09:19:09",
+    "slug": "aude",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/aude",
+    "title": {
+      "rendered": "AUDE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "11",
+      "left_bbox": "1.68841972091475",
+      "right_bbox": "3.24056113717041",
+      "bottom_bbox": "42.6489010194418",
+      "top_bbox": "43.4601129585518",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/636"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=636"
+        }
+      ]
+    }
+  },
+  {
+    "id": 637,
+    "date": "2016-07-21T17:42:03",
+    "date_gmt": "2016-07-21T15:42:03",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haut-rhin"
+    },
+    "modified": "2016-07-29T11:19:10",
+    "modified_gmt": "2016-07-29T09:19:10",
+    "slug": "haut-rhin",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haut-rhin",
+    "title": {
+      "rendered": "HAUT-RHIN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "68",
+      "left_bbox": "6.84299034040105",
+      "right_bbox": "7.62215723743944",
+      "bottom_bbox": "47.4203012112159",
+      "top_bbox": "48.3108891269821",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/637"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=637"
+        }
+      ]
+    }
+  },
+  {
+    "id": 638,
+    "date": "2016-07-21T17:42:02",
+    "date_gmt": "2016-07-21T15:42:02",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/aube"
+    },
+    "modified": "2016-07-29T11:19:10",
+    "modified_gmt": "2016-07-29T09:19:10",
+    "slug": "aube",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/aube",
+    "title": {
+      "rendered": "AUBE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "10",
+      "left_bbox": "3.38409358130258",
+      "right_bbox": "4.86243610033147",
+      "bottom_bbox": "47.9237793453152",
+      "top_bbox": "48.7166733661605",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/638"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=638"
+        }
+      ]
+    }
+  },
+  {
+    "id": 639,
+    "date": "2016-07-21T17:42:02",
+    "date_gmt": "2016-07-21T15:42:02",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/ariege"
+    },
+    "modified": "2016-07-29T11:19:11",
+    "modified_gmt": "2016-07-29T09:19:11",
+    "slug": "ariege",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/ariege",
+    "title": {
+      "rendered": "ARIEGE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "09",
+      "left_bbox": "0.826681542119149",
+      "right_bbox": "2.17552137741738",
+      "bottom_bbox": "42.5723203246756",
+      "top_bbox": "43.3154902525248",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/639"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=639"
+        }
+      ]
+    }
+  },
+  {
+    "id": 640,
+    "date": "2016-07-21T17:42:01",
+    "date_gmt": "2016-07-21T15:42:01",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/landes"
+    },
+    "modified": "2016-07-29T11:19:11",
+    "modified_gmt": "2016-07-29T09:19:11",
+    "slug": "landes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/landes",
+    "title": {
+      "rendered": "LANDES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "40",
+      "left_bbox": "-1.5248665484221",
+      "right_bbox": "0.136731215823359",
+      "bottom_bbox": "43.4885916619551",
+      "top_bbox": "44.5321945716776",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/640"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=640"
+        }
+      ]
+    }
+  },
+  {
+    "id": 641,
+    "date": "2016-07-21T17:42:00",
+    "date_gmt": "2016-07-21T15:42:00",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/ardennes"
+    },
+    "modified": "2016-07-29T11:19:12",
+    "modified_gmt": "2016-07-29T09:19:12",
+    "slug": "ardennes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/ardennes",
+    "title": {
+      "rendered": "ARDENNES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "08",
+      "left_bbox": "4.02626145095538",
+      "right_bbox": "5.39353665832851",
+      "bottom_bbox": "49.2265769718056",
+      "top_bbox": "50.1676430915938",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/641"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=641"
+        }
+      ]
+    }
+  },
+  {
+    "id": 642,
+    "date": "2016-07-21T17:41:59",
+    "date_gmt": "2016-07-21T15:41:59",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/ardeche"
+    },
+    "modified": "2016-07-29T11:19:12",
+    "modified_gmt": "2016-07-29T09:19:12",
+    "slug": "ardeche",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/ardeche",
+    "title": {
+      "rendered": "ARDECHE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "07",
+      "left_bbox": "3.86252732812711",
+      "right_bbox": "4.88658929984345",
+      "bottom_bbox": "44.2644248574895",
+      "top_bbox": "45.3656812630267",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/642"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=642"
+        }
+      ]
+    }
+  },
+  {
+    "id": 643,
+    "date": "2016-07-21T17:41:59",
+    "date_gmt": "2016-07-21T15:41:59",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-corse"
+    },
+    "modified": "2016-07-29T11:19:13",
+    "modified_gmt": "2016-07-29T09:19:13",
+    "slug": "haute-corse",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-corse",
+    "title": {
+      "rendered": "HAUTE-CORSE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "2B",
+      "left_bbox": "8.57341106810862",
+      "right_bbox": "9.55982331816637",
+      "bottom_bbox": "41.8321452359409",
+      "top_bbox": "43.0107306681021",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/643"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=643"
+        }
+      ]
+    }
+  },
+  {
+    "id": 644,
+    "date": "2016-07-21T17:41:58",
+    "date_gmt": "2016-07-21T15:41:58",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/alpes-maritimes"
+    },
+    "modified": "2016-07-29T11:19:13",
+    "modified_gmt": "2016-07-29T09:19:13",
+    "slug": "alpes-maritimes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/alpes-maritimes",
+    "title": {
+      "rendered": "ALPES-MARITIMES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "06",
+      "left_bbox": "6.63603868812941",
+      "right_bbox": "7.71612732815105",
+      "bottom_bbox": "43.480068010885",
+      "top_bbox": "44.3610568287277",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/644"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=644"
+        }
+      ]
+    }
+  },
+  {
+    "id": 645,
+    "date": "2016-07-21T17:41:57",
+    "date_gmt": "2016-07-21T15:41:57",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/hautes-alpes"
+    },
+    "modified": "2016-07-29T11:19:14",
+    "modified_gmt": "2016-07-29T09:19:14",
+    "slug": "hautes-alpes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/hautes-alpes",
+    "title": {
+      "rendered": "HAUTES-ALPES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "05",
+      "left_bbox": "5.41839741766945",
+      "right_bbox": "7.07587151976948",
+      "bottom_bbox": "44.1864833718316",
+      "top_bbox": "45.1268479138663",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/645"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=645"
+        }
+      ]
+    }
+  },
+  {
+    "id": 646,
+    "date": "2016-07-21T17:41:56",
+    "date_gmt": "2016-07-21T15:41:56",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/alpes-de-haute-provence"
+    },
+    "modified": "2016-07-29T11:19:14",
+    "modified_gmt": "2016-07-29T09:19:14",
+    "slug": "alpes-de-haute-provence",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/alpes-de-haute-provence",
+    "title": {
+      "rendered": "ALPES-DE-HAUTE-PROVENCE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "04",
+      "left_bbox": "5.49816529351772",
+      "right_bbox": "6.96708571531756",
+      "bottom_bbox": "43.6682884339206",
+      "top_bbox": "44.6597963885516",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/646"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=646"
+        }
+      ]
+    }
+  },
+  {
+    "id": 647,
+    "date": "2016-07-21T17:41:56",
+    "date_gmt": "2016-07-21T15:41:56",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/allier"
+    },
+    "modified": "2016-07-29T11:19:15",
+    "modified_gmt": "2016-07-29T09:19:15",
+    "slug": "allier",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/allier",
+    "title": {
+      "rendered": "ALLIER"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "03",
+      "left_bbox": "2.27841636602015",
+      "right_bbox": "4.00455842921635",
+      "bottom_bbox": "45.9307323564124",
+      "top_bbox": "46.8038765767733",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/647"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=647"
+        }
+      ]
+    }
+  },
+  {
+    "id": 648,
+    "date": "2016-07-21T17:41:55",
+    "date_gmt": "2016-07-21T15:41:55",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/aisne"
+    },
+    "modified": "2016-07-29T11:19:15",
+    "modified_gmt": "2016-07-29T09:19:15",
+    "slug": "aisne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/aisne",
+    "title": {
+      "rendered": "AISNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "02",
+      "left_bbox": "2.95873860742351",
+      "right_bbox": "4.2557338266909",
+      "bottom_bbox": "48.838474288456",
+      "top_bbox": "50.0692746359635",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/648"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=648"
+        }
+      ]
+    }
+  },
+  {
+    "id": 649,
+    "date": "2016-07-21T17:41:54",
+    "date_gmt": "2016-07-21T15:41:54",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/ain"
+    },
+    "modified": "2016-07-29T11:19:16",
+    "modified_gmt": "2016-07-29T09:19:16",
+    "slug": "ain",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/ain",
+    "title": {
+      "rendered": "AIN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "01",
+      "left_bbox": "4.73058154440788",
+      "right_bbox": "6.16845115155231",
+      "bottom_bbox": "45.6114938041312",
+      "top_bbox": "46.5176754293688",
+      "niveau_nuts": "3"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/649"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=649"
+        }
+      ]
+    }
+  },
+  {
+    "id": 650,
+    "date": "2016-07-21T17:41:53",
+    "date_gmt": "2016-07-21T15:41:53",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/rhone-alpes"
+    },
+    "modified": "2016-07-29T11:19:17",
+    "modified_gmt": "2016-07-29T09:19:17",
+    "slug": "rhone-alpes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/rhone-alpes",
+    "title": {
+      "rendered": "RHONE-ALPES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "82",
+      "left_bbox": "3.693391010912046",
+      "right_bbox": "7.184201901627929",
+      "bottom_bbox": "44.115719347788371",
+      "top_bbox": "46.517675429368794",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/650"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=650"
+        }
+      ]
+    }
+  },
+  {
+    "id": 651,
+    "date": "2016-07-21T17:41:52",
+    "date_gmt": "2016-07-21T15:41:52",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/poitou-charentes"
+    },
+    "modified": "2016-07-29T11:19:19",
+    "modified_gmt": "2016-07-29T09:19:19",
+    "slug": "poitou-charentes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/poitou-charentes",
+    "title": {
+      "rendered": "POITOU-CHARENTES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "54",
+      "left_bbox": "-1.562732963156553",
+      "right_bbox": "1.213065862887220",
+      "bottom_bbox": "45.089248428186394",
+      "top_bbox": "47.175757850319748",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/651"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=651"
+        }
+      ]
+    }
+  },
+  {
+    "id": 652,
+    "date": "2016-07-21T17:41:52",
+    "date_gmt": "2016-07-21T15:41:52",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/picardie"
+    },
+    "modified": "2016-07-29T11:19:19",
+    "modified_gmt": "2016-07-29T09:19:19",
+    "slug": "picardie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/picardie",
+    "title": {
+      "rendered": "PICARDIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "22",
+      "left_bbox": "1.379691087706571",
+      "right_bbox": "4.255733826690897",
+      "bottom_bbox": "48.837427758921905",
+      "top_bbox": "50.366217026185026",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/652"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=652"
+        }
+      ]
+    }
+  },
+  {
+    "id": 653,
+    "date": "2016-07-21T17:41:51",
+    "date_gmt": "2016-07-21T15:41:51",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/pays-de-la-loire"
+    },
+    "modified": "2016-07-29T11:19:20",
+    "modified_gmt": "2016-07-29T09:19:20",
+    "slug": "pays-de-la-loire",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/pays-de-la-loire",
+    "title": {
+      "rendered": "PAYS DE LA LOIRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "52",
+      "left_bbox": "-2.557543229782619",
+      "right_bbox": "0.916650480581802",
+      "bottom_bbox": "46.267037039064952",
+      "top_bbox": "48.567999494061702",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/653"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=653"
+        }
+      ]
+    }
+  },
+  {
+    "id": 654,
+    "date": "2016-07-21T17:41:50",
+    "date_gmt": "2016-07-21T15:41:50",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/nord-pas-de-calais"
+    },
+    "modified": "2016-07-29T11:19:20",
+    "modified_gmt": "2016-07-29T09:19:20",
+    "slug": "nord-pas-de-calais",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/nord-pas-de-calais",
+    "title": {
+      "rendered": "NORD-PAS-DE-CALAIS"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "31",
+      "left_bbox": "1.555964865344545",
+      "right_bbox": "4.230134246921591",
+      "bottom_bbox": "49.970657701950451",
+      "top_bbox": "51.089000310506115",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/654"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=654"
+        }
+      ]
+    }
+  },
+  {
+    "id": 655,
+    "date": "2016-07-21T17:41:49",
+    "date_gmt": "2016-07-21T15:41:49",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/midi-pyrenees"
+    },
+    "modified": "2016-07-29T11:19:21",
+    "modified_gmt": "2016-07-29T09:19:21",
+    "slug": "midi-pyrenees",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/midi-pyrenees",
+    "title": {
+      "rendered": "MIDI-PYRENEES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "73",
+      "left_bbox": "-0.326875042893179",
+      "right_bbox": "3.450981399748263",
+      "bottom_bbox": "42.572320324675559",
+      "top_bbox": "45.044665633874651",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/655"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=655"
+        }
+      ]
+    }
+  },
+  {
+    "id": 656,
+    "date": "2016-07-21T17:41:48",
+    "date_gmt": "2016-07-21T15:41:48",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/lorraine"
+    },
+    "modified": "2016-07-29T11:19:21",
+    "modified_gmt": "2016-07-29T09:19:21",
+    "slug": "lorraine",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/lorraine",
+    "title": {
+      "rendered": "LORRAINE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "41",
+      "left_bbox": "4.888760929797642",
+      "right_bbox": "7.639294241449073",
+      "bottom_bbox": "47.813053724588585",
+      "top_bbox": "49.617087738502768",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/656"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=656"
+        }
+      ]
+    }
+  },
+  {
+    "id": 657,
+    "date": "2016-07-21T17:41:48",
+    "date_gmt": "2016-07-21T15:41:48",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/limousin"
+    },
+    "modified": "2016-07-29T11:19:22",
+    "modified_gmt": "2016-07-29T09:19:22",
+    "slug": "limousin",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/limousin",
+    "title": {
+      "rendered": "LIMOUSIN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "74",
+      "left_bbox": "0.629742463952440",
+      "right_bbox": "2.609396304838669",
+      "bottom_bbox": "44.920287985294770",
+      "top_bbox": "46.454906285872802",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/657"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=657"
+        }
+      ]
+    }
+  },
+  {
+    "id": 658,
+    "date": "2016-07-21T17:41:47",
+    "date_gmt": "2016-07-21T15:41:47",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/languedoc-roussillon"
+    },
+    "modified": "2016-07-29T11:19:22",
+    "modified_gmt": "2016-07-29T09:19:22",
+    "slug": "languedoc-roussillon",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/languedoc-roussillon",
+    "title": {
+      "rendered": "LANGUEDOC-ROUSSILLON"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "91",
+      "left_bbox": "1.688419720914751",
+      "right_bbox": "4.845553900676586",
+      "bottom_bbox": "42.333488624806378",
+      "top_bbox": "44.975723025570133",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/658"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=658"
+        }
+      ]
+    }
+  },
+  {
+    "id": 659,
+    "date": "2016-07-21T17:41:46",
+    "date_gmt": "2016-07-21T15:41:46",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/ile-de-france"
+    },
+    "modified": "2016-07-29T11:19:23",
+    "modified_gmt": "2016-07-29T09:19:23",
+    "slug": "ile-de-france",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/ile-de-france",
+    "title": {
+      "rendered": "ILE-DE-FRANCE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "11",
+      "left_bbox": "1.447279504766020",
+      "right_bbox": "3.555686958558568",
+      "bottom_bbox": "48.120541543740551",
+      "top_bbox": "49.237190707363112",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/659"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=659"
+        }
+      ]
+    }
+  },
+  {
+    "id": 660,
+    "date": "2016-07-21T17:41:45",
+    "date_gmt": "2016-07-21T15:41:45",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/haute-normandie"
+    },
+    "modified": "2016-07-29T11:19:23",
+    "modified_gmt": "2016-07-29T09:19:23",
+    "slug": "haute-normandie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/haute-normandie",
+    "title": {
+      "rendered": "HAUTE-NORMANDIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "23",
+      "left_bbox": "0.065457770706589",
+      "right_bbox": "1.802660237500302",
+      "bottom_bbox": "48.666524151606978",
+      "top_bbox": "50.071551006839677",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/660"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=660"
+        }
+      ]
+    }
+  },
+  {
+    "id": 661,
+    "date": "2016-07-21T17:41:45",
+    "date_gmt": "2016-07-21T15:41:45",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/franche-comte"
+    },
+    "modified": "2016-07-29T11:19:24",
+    "modified_gmt": "2016-07-29T09:19:24",
+    "slug": "franche-comte",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/franche-comte",
+    "title": {
+      "rendered": "FRANCHE-COMTE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "43",
+      "left_bbox": "5.252042768109230",
+      "right_bbox": "7.142173394204400",
+      "bottom_bbox": "46.260693207098299",
+      "top_bbox": "48.024084417358736",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/661"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=661"
+        }
+      ]
+    }
+  },
+  {
+    "id": 662,
+    "date": "2016-07-21T17:41:44",
+    "date_gmt": "2016-07-21T15:41:44",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/corse"
+    },
+    "modified": "2016-07-29T11:19:24",
+    "modified_gmt": "2016-07-29T09:19:24",
+    "slug": "corse",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/corse",
+    "title": {
+      "rendered": "CORSE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "94",
+      "left_bbox": "8.538297771732212",
+      "right_bbox": "9.559823318166366",
+      "bottom_bbox": "41.362757426457222",
+      "top_bbox": "43.010730668102084",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/662"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=662"
+        }
+      ]
+    }
+  },
+  {
+    "id": 663,
+    "date": "2016-07-21T17:41:43",
+    "date_gmt": "2016-07-21T15:41:43",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/champagne-ardenne"
+    },
+    "modified": "2016-07-29T11:19:25",
+    "modified_gmt": "2016-07-29T09:19:25",
+    "slug": "champagne-ardenne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/champagne-ardenne",
+    "title": {
+      "rendered": "CHAMPAGNE-ARDENNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "21",
+      "left_bbox": "3.384093581302576",
+      "right_bbox": "5.890574696908842",
+      "bottom_bbox": "47.576550708574622",
+      "top_bbox": "50.167643091593774",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/663"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=663"
+        }
+      ]
+    }
+  },
+  {
+    "id": 664,
+    "date": "2016-07-21T17:41:42",
+    "date_gmt": "2016-07-21T15:41:42",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/centre"
+    },
+    "modified": "2016-07-29T11:19:25",
+    "modified_gmt": "2016-07-29T09:19:25",
+    "slug": "centre",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/centre",
+    "title": {
+      "rendered": "CENTRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "24",
+      "left_bbox": "0.053794043756639",
+      "right_bbox": "3.128229945417917",
+      "bottom_bbox": "46.347218495872966",
+      "top_bbox": "48.941053606155158",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/664"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=664"
+        }
+      ]
+    }
+  },
+  {
+    "id": 665,
+    "date": "2016-07-21T17:41:42",
+    "date_gmt": "2016-07-21T15:41:42",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/bretagne"
+    },
+    "modified": "2016-07-29T11:19:26",
+    "modified_gmt": "2016-07-29T09:19:26",
+    "slug": "bretagne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/bretagne",
+    "title": {
+      "rendered": "BRETAGNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "53",
+      "left_bbox": "-5.139017285433225",
+      "right_bbox": "-1.018203048926480",
+      "bottom_bbox": "47.281047781715799",
+      "top_bbox": "48.883748989632359",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/665"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=665"
+        }
+      ]
+    }
+  },
+  {
+    "id": 666,
+    "date": "2016-07-21T17:41:41",
+    "date_gmt": "2016-07-21T15:41:41",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/bourgogne"
+    },
+    "modified": "2016-07-29T11:19:26",
+    "modified_gmt": "2016-07-29T09:19:26",
+    "slug": "bourgogne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/bourgogne",
+    "title": {
+      "rendered": "BOURGOGNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "26",
+      "left_bbox": "2.845187159794131",
+      "right_bbox": "5.518538729512594",
+      "bottom_bbox": "46.156815837115090",
+      "top_bbox": "48.399027781326652",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/666"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=666"
+        }
+      ]
+    }
+  },
+  {
+    "id": 667,
+    "date": "2016-07-21T17:41:40",
+    "date_gmt": "2016-07-21T15:41:40",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/basse-normandie"
+    },
+    "modified": "2016-07-29T11:19:27",
+    "modified_gmt": "2016-07-29T09:19:27",
+    "slug": "basse-normandie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/basse-normandie",
+    "title": {
+      "rendered": "BASSE-NORMANDIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "25",
+      "left_bbox": "-1.946709660748949",
+      "right_bbox": "0.976415754774005",
+      "bottom_bbox": "48.180091347687778",
+      "top_bbox": "49.726102843892576",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/667"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=667"
+        }
+      ]
+    }
+  },
+  {
+    "id": 668,
+    "date": "2016-07-21T17:41:39",
+    "date_gmt": "2016-07-21T15:41:39",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/auvergne"
+    },
+    "modified": "2016-07-29T11:19:27",
+    "modified_gmt": "2016-07-29T09:19:27",
+    "slug": "auvergne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/auvergne",
+    "title": {
+      "rendered": "AUVERGNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "83",
+      "left_bbox": "2.062901607729930",
+      "right_bbox": "4.488917967832163",
+      "bottom_bbox": "44.615531676529834",
+      "top_bbox": "46.803876576773312",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/668"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=668"
+        }
+      ]
+    }
+  },
+  {
+    "id": 669,
+    "date": "2016-07-21T17:41:38",
+    "date_gmt": "2016-07-21T15:41:38",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/aquitaine"
+    },
+    "modified": "2016-07-29T11:19:28",
+    "modified_gmt": "2016-07-29T09:19:28",
+    "slug": "aquitaine",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/aquitaine",
+    "title": {
+      "rendered": "AQUITAINE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "72",
+      "left_bbox": "-1.791273555702342",
+      "right_bbox": "1.448261543932212",
+      "bottom_bbox": "42.779124585115142",
+      "top_bbox": "45.714569989772691",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/669"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=669"
+        }
+      ]
+    }
+  },
+  {
+    "id": 670,
+    "date": "2016-07-21T17:41:38",
+    "date_gmt": "2016-07-21T15:41:38",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/alsace"
+    },
+    "modified": "2016-07-29T11:19:28",
+    "modified_gmt": "2016-07-29T09:19:28",
+    "slug": "alsace",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/alsace",
+    "title": {
+      "rendered": "ALSACE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "42",
+      "left_bbox": "6.842990340401051",
+      "right_bbox": "8.230294974643360",
+      "bottom_bbox": "47.419907582250964",
+      "top_bbox": "49.077891304419545",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/670"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=670"
+        }
+      ]
+    }
+  },
+  {
+    "id": 671,
+    "date": "2016-07-21T17:41:37",
+    "date_gmt": "2016-07-21T15:41:37",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/alsace-champagne-ardenne-lorraine"
+    },
+    "modified": "2016-07-29T11:19:29",
+    "modified_gmt": "2016-07-29T09:19:29",
+    "slug": "alsace-champagne-ardenne-lorraine",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/alsace-champagne-ardenne-lorraine",
+    "title": {
+      "rendered": "ALSACE CHAMPAGNE-ARDENNE LORRAINE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "44",
+      "left_bbox": "3.3836653",
+      "right_bbox": "8.23351919999999",
+      "bottom_bbox": "47.4202518990603",
+      "top_bbox": "50.1691491990724",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/671"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=671"
+        }
+      ]
+    }
+  },
+  {
+    "id": 672,
+    "date": "2016-07-21T17:41:36",
+    "date_gmt": "2016-07-21T15:41:36",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/bourgogne-franche-comte"
+    },
+    "modified": "2016-07-29T11:19:29",
+    "modified_gmt": "2016-07-29T09:19:29",
+    "slug": "bourgogne-franche-comte",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/bourgogne-franche-comte",
+    "title": {
+      "rendered": "BOURGOGNE FRANCHE-COMTE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "27",
+      "left_bbox": "2.8448948",
+      "right_bbox": "7.14336709999999",
+      "bottom_bbox": "46.1560649990576",
+      "top_bbox": "48.4000530990636",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/672"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=672"
+        }
+      ]
+    }
+  },
+  {
+    "id": 673,
+    "date": "2016-07-21T17:41:35",
+    "date_gmt": "2016-07-21T15:41:35",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/centre-val-de-loire"
+    },
+    "modified": "2016-07-29T11:19:30",
+    "modified_gmt": "2016-07-29T09:19:30",
+    "slug": "centre-val-de-loire",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/centre-val-de-loire",
+    "title": {
+      "rendered": "CENTRE-VAL DE LOIRE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "24",
+      "left_bbox": "0.0527387999999919",
+      "right_bbox": "3.1286777",
+      "bottom_bbox": "46.3469010990579",
+      "top_bbox": "48.9410339990659",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/673"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=673"
+        }
+      ]
+    }
+  },
+  {
+    "id": 674,
+    "date": "2016-07-21T17:41:34",
+    "date_gmt": "2016-07-21T15:41:34",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/nord-pas-de-calais-picardie"
+    },
+    "modified": "2016-07-29T11:19:31",
+    "modified_gmt": "2016-07-29T09:19:31",
+    "slug": "nord-pas-de-calais-picardie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/nord-pas-de-calais-picardie",
+    "title": {
+      "rendered": "NORD-PAS-DE-CALAIS PICARDIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "32",
+      "left_bbox": "1.37982829999999",
+      "right_bbox": "4.2557148",
+      "bottom_bbox": "48.8372073990654",
+      "top_bbox": "51.0890011990783",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/674"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=674"
+        }
+      ]
+    }
+  },
+  {
+    "id": 675,
+    "date": "2016-07-21T17:41:33",
+    "date_gmt": "2016-07-21T15:41:33",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/auvergne-rhone-alpes"
+    },
+    "modified": "2016-07-29T11:19:31",
+    "modified_gmt": "2016-07-29T09:19:31",
+    "slug": "auvergne-rhone-alpes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/auvergne-rhone-alpes",
+    "title": {
+      "rendered": "AUVERGNE RHONE-ALPES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "84",
+      "left_bbox": "2.0628781",
+      "right_bbox": "7.18556130000001",
+      "bottom_bbox": "44.1154925990572",
+      "top_bbox": "46.8042869990587",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/675"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=675"
+        }
+      ]
+    }
+  },
+  {
+    "id": 676,
+    "date": "2016-07-21T17:41:33",
+    "date_gmt": "2016-07-21T15:41:33",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/languedoc-roussillon-midi-pyrenees"
+    },
+    "modified": "2016-07-29T11:19:32",
+    "modified_gmt": "2016-07-29T09:19:32",
+    "slug": "languedoc-roussillon-midi-pyrenees",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/languedoc-roussillon-midi-pyrenees",
+    "title": {
+      "rendered": "LANGUEDOC-ROUSSILLON MIDI-PYRENEES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "76",
+      "left_bbox": "-0.327176100000007",
+      "right_bbox": "4.84556889999999",
+      "bottom_bbox": "42.3330074990607",
+      "top_bbox": "45.0466745990568",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/676"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=676"
+        }
+      ]
+    }
+  },
+  {
+    "id": 677,
+    "date": "2016-07-21T17:41:32",
+    "date_gmt": "2016-07-21T15:41:32",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/provence-alpes-cote-dazur"
+    },
+    "modified": "2016-07-29T11:19:32",
+    "modified_gmt": "2016-07-29T09:19:32",
+    "slug": "provence-alpes-cote-dazur",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/provence-alpes-cote-dazur",
+    "title": {
+      "rendered": "PROVENCE-ALPES-COTE D&rsquo;AZUR"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "93",
+      "left_bbox": "4.23021319999999",
+      "right_bbox": "7.71898369999999",
+      "bottom_bbox": "42.982004799059",
+      "top_bbox": "45.1268441990568",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/677"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=677"
+        }
+      ]
+    }
+  },
+  {
+    "id": 678,
+    "date": "2016-07-21T17:41:31",
+    "date_gmt": "2016-07-21T15:41:31",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/aquitaine-limousin-poitou-charentes"
+    },
+    "modified": "2016-07-29T11:19:33",
+    "modified_gmt": "2016-07-29T09:19:33",
+    "slug": "aquitaine-limousin-poitou-charentes",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/aquitaine-limousin-poitou-charentes",
+    "title": {
+      "rendered": "AQUITAINE LIMOUSIN POITOU-CHARENTES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "75",
+      "left_bbox": "-1.7907124",
+      "right_bbox": "2.61128490000001",
+      "bottom_bbox": "42.7775044990595",
+      "top_bbox": "47.1759904990596",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/678"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=678"
+        }
+      ]
+    }
+  },
+  {
+    "id": 679,
+    "date": "2016-07-21T17:41:30",
+    "date_gmt": "2016-07-21T15:41:30",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/normandie"
+    },
+    "modified": "2016-07-29T11:19:33",
+    "modified_gmt": "2016-07-29T09:19:33",
+    "slug": "normandie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/normandie",
+    "title": {
+      "rendered": "NORMANDIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "28",
+      "left_bbox": "-1.9549718",
+      "right_bbox": "1.80312940000001",
+      "bottom_bbox": "48.1798896990627",
+      "top_bbox": "50.0721076990718",
+      "niveau_nuts": "2"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/679"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=679"
+        }
+      ]
+    }
+  },
+  {
+    "id": 680,
+    "date": "2016-07-21T17:41:30",
+    "date_gmt": "2016-07-21T15:41:30",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/wallis-et-futuna"
+    },
+    "modified": "2016-07-29T11:19:34",
+    "modified_gmt": "2016-07-29T09:19:34",
+    "slug": "wallis-et-futuna",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/wallis-et-futuna",
+    "title": {
+      "rendered": "WALLIS ET FUTUNA"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-178.5",
+      "right_bbox": "-175.8",
+      "bottom_bbox": "-14.6",
+      "top_bbox": "-12.8",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/680"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=680"
+        }
+      ]
+    }
+  },
+  {
+    "id": 681,
+    "date": "2016-07-21T17:41:29",
+    "date_gmt": "2016-07-21T15:41:29",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/saint-pierre-et-miquelon"
+    },
+    "modified": "2016-07-29T11:19:34",
+    "modified_gmt": "2016-07-29T09:19:34",
+    "slug": "saint-pierre-et-miquelon",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/saint-pierre-et-miquelon",
+    "title": {
+      "rendered": "SAINT-PIERRE ET MIQUELON"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-60",
+      "right_bbox": "-50",
+      "bottom_bbox": "43.5",
+      "top_bbox": "52",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/681"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=681"
+        }
+      ]
+    }
+  },
+  {
+    "id": 682,
+    "date": "2016-07-21T17:41:28",
+    "date_gmt": "2016-07-21T15:41:28",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/saint-martin"
+    },
+    "modified": "2016-07-29T11:19:35",
+    "modified_gmt": "2016-07-29T09:19:35",
+    "slug": "saint-martin",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/saint-martin",
+    "title": {
+      "rendered": "SAINT-MARTIN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-63.19",
+      "right_bbox": "-62.9",
+      "bottom_bbox": "18",
+      "top_bbox": "18.18",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/682"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=682"
+        }
+      ]
+    }
+  },
+  {
+    "id": 683,
+    "date": "2016-07-21T17:41:27",
+    "date_gmt": "2016-07-21T15:41:27",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/saint-barthelemy"
+    },
+    "modified": "2016-07-29T11:19:35",
+    "modified_gmt": "2016-07-29T09:19:35",
+    "slug": "saint-barthelemy",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/saint-barthelemy",
+    "title": {
+      "rendered": "SAINT-BARTHELEMY"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-63",
+      "right_bbox": "-62.7",
+      "bottom_bbox": "17.75",
+      "top_bbox": "17.99",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/683"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=683"
+        }
+      ]
+    }
+  },
+  {
+    "id": 684,
+    "date": "2016-07-21T17:41:27",
+    "date_gmt": "2016-07-21T15:41:27",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/polynesie"
+    },
+    "modified": "2016-07-29T11:19:35",
+    "modified_gmt": "2016-07-29T09:19:35",
+    "slug": "polynesie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/polynesie",
+    "title": {
+      "rendered": "POLYNESIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-160",
+      "right_bbox": "-108",
+      "bottom_bbox": "-28.2",
+      "top_bbox": "11",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/684"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=684"
+        }
+      ]
+    }
+  },
+  {
+    "id": 685,
+    "date": "2016-07-21T17:41:26",
+    "date_gmt": "2016-07-21T15:41:26",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/nouvelle-caledonie"
+    },
+    "modified": "2016-07-29T11:19:36",
+    "modified_gmt": "2016-07-29T09:19:36",
+    "slug": "nouvelle-caledonie",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/nouvelle-caledonie",
+    "title": {
+      "rendered": "NOUVELLE-CALEDONIE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "160",
+      "right_bbox": "170",
+      "bottom_bbox": "-24.3",
+      "top_bbox": "-17.1",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/685"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=685"
+        }
+      ]
+    }
+  },
+  {
+    "id": 686,
+    "date": "2016-07-21T17:41:25",
+    "date_gmt": "2016-07-21T15:41:25",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/iles-kerguelen"
+    },
+    "modified": "2016-07-29T11:19:36",
+    "modified_gmt": "2016-07-29T09:19:36",
+    "slug": "iles-kerguelen",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/iles-kerguelen",
+    "title": {
+      "rendered": "ILES KERGUELEN"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "62",
+      "right_bbox": "76",
+      "bottom_bbox": "-53",
+      "top_bbox": "-45",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/686"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=686"
+        }
+      ]
+    }
+  },
+  {
+    "id": 687,
+    "date": "2016-07-21T17:41:24",
+    "date_gmt": "2016-07-21T15:41:24",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/crozet"
+    },
+    "modified": "2016-07-29T11:19:37",
+    "modified_gmt": "2016-07-29T09:19:37",
+    "slug": "crozet",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/crozet",
+    "title": {
+      "rendered": "CROZET"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "47",
+      "right_bbox": "55",
+      "bottom_bbox": "-48",
+      "top_bbox": "-44",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/687"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=687"
+        }
+      ]
+    }
+  },
+  {
+    "id": 688,
+    "date": "2016-07-21T17:41:23",
+    "date_gmt": "2016-07-21T15:41:23",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/terres-australes-francaises"
+    },
+    "modified": "2016-07-29T11:19:38",
+    "modified_gmt": "2016-07-29T09:19:38",
+    "slug": "terres-australes-francaises",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/terres-australes-francaises",
+    "title": {
+      "rendered": "TERRES AUSTRALES FRANCAISES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "132.56",
+      "right_bbox": "144.54",
+      "bottom_bbox": "-68.62",
+      "top_bbox": "-64.03",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/688"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=688"
+        }
+      ]
+    }
+  },
+  {
+    "id": 689,
+    "date": "2016-07-21T17:41:23",
+    "date_gmt": "2016-07-21T15:41:23",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/amsterdam-saint-paul"
+    },
+    "modified": "2016-07-29T11:19:38",
+    "modified_gmt": "2016-07-29T09:19:38",
+    "slug": "amsterdam-saint-paul",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/amsterdam-saint-paul",
+    "title": {
+      "rendered": "AMSTERDAM SAINT-PAUL"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "76",
+      "right_bbox": "79",
+      "bottom_bbox": "-40",
+      "top_bbox": "-36",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/689"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=689"
+        }
+      ]
+    }
+  },
+  {
+    "id": 690,
+    "date": "2016-07-21T17:41:22",
+    "date_gmt": "2016-07-21T15:41:22",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/antilles-francaises"
+    },
+    "modified": "2016-07-29T11:19:39",
+    "modified_gmt": "2016-07-29T09:19:39",
+    "slug": "antilles-francaises",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/antilles-francaises",
+    "title": {
+      "rendered": "ANTILLES FRANCAISES"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-64",
+      "right_bbox": "-59",
+      "bottom_bbox": "11.7",
+      "top_bbox": "18.18",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/690"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=690"
+        }
+      ]
+    }
+  },
+  {
+    "id": 691,
+    "date": "2016-07-21T17:41:21",
+    "date_gmt": "2016-07-21T15:41:21",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/espagne"
+    },
+    "modified": "2016-07-29T11:19:39",
+    "modified_gmt": "2016-07-29T09:19:39",
+    "slug": "espagne",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/espagne",
+    "title": {
+      "rendered": "ESPAGNE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "99134",
+      "left_bbox": "36",
+      "right_bbox": "44",
+      "bottom_bbox": "-10",
+      "top_bbox": "4",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/691"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=691"
+        }
+      ]
+    }
+  },
+  {
+    "id": 692,
+    "date": "2016-07-21T17:41:20",
+    "date_gmt": "2016-07-21T15:41:20",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/luxembourg"
+    },
+    "modified": "2016-07-29T11:19:40",
+    "modified_gmt": "2016-07-29T09:19:40",
+    "slug": "luxembourg",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/luxembourg",
+    "title": {
+      "rendered": "LUXEMBOURG"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "99137",
+      "left_bbox": "5.6",
+      "right_bbox": "6.4",
+      "bottom_bbox": "49.4",
+      "top_bbox": "50.20",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/692"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=692"
+        }
+      ]
+    }
+  },
+  {
+    "id": 693,
+    "date": "2016-07-21T17:41:20",
+    "date_gmt": "2016-07-21T15:41:20",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/suisse"
+    },
+    "modified": "2016-07-29T11:19:40",
+    "modified_gmt": "2016-07-29T09:19:40",
+    "slug": "suisse",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/suisse",
+    "title": {
+      "rendered": "SUISSE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "99140",
+      "left_bbox": "6",
+      "right_bbox": "10.5",
+      "bottom_bbox": "45.5",
+      "top_bbox": "48",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/693"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=693"
+        }
+      ]
+    }
+  },
+  {
+    "id": 694,
+    "date": "2016-07-21T17:41:19",
+    "date_gmt": "2016-07-21T15:41:19",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/france-metropolitaine"
+    },
+    "modified": "2016-07-29T11:19:41",
+    "modified_gmt": "2016-07-29T09:19:41",
+    "slug": "france-metropolitaine",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/france-metropolitaine",
+    "title": {
+      "rendered": "FRANCE METROPOLITAINE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-31.17",
+      "right_bbox": "69.03",
+      "bottom_bbox": "27.33",
+      "top_bbox": "80.83",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/694"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=694"
+        }
+      ]
+    }
+  },
+  {
+    "id": 695,
+    "date": "2016-07-21T17:41:18",
+    "date_gmt": "2016-07-21T15:41:18",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/europe"
+    },
+    "modified": "2016-07-29T11:19:41",
+    "modified_gmt": "2016-07-29T09:19:41",
+    "slug": "europe",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/europe",
+    "title": {
+      "rendered": "EUROPE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-31.17",
+      "right_bbox": "69.03",
+      "bottom_bbox": "27.33",
+      "top_bbox": "80.83",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/695"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=695"
+        }
+      ]
+    }
+  },
+  {
+    "id": 696,
+    "date": "2016-07-21T17:41:16",
+    "date_gmt": "2016-07-21T15:41:16",
+    "guid": {
+      "rendered": "https://www.geoportail.gouv.fr/entite/monde"
+    },
+    "modified": "2016-07-29T11:19:42",
+    "modified_gmt": "2016-07-29T09:19:42",
+    "slug": "monde",
+    "type": "entite",
+    "link": "https://www.geoportail.gouv.fr/entite/monde",
+    "title": {
+      "rendered": "MONDE"
+    },
+    "parent": 0,
+    "custom_meta": {
+      "code_insee": "NA",
+      "left_bbox": "-180",
+      "right_bbox": "180",
+      "bottom_bbox": "-90",
+      "top_bbox": "90",
+      "niveau_nuts": "1"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite/696"
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/entite"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/types/entite"
+        }
+      ],
+      "https://api.w.org/attachment": [
+        {
+          "href": "https://www.geoportail.gouv.fr/wp-json/wp/v2/media?parent=696"
+        }
+      ]
+    }
+  }
+]
