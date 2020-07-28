@@ -83,8 +83,8 @@ const tip = d3
 
     return `<span class='details'><span style="font-weight:bold">${this_d.Departement} (${this_d.dep})</span>
     <br>Taux de positivité : <span style="font-weight:bold">${this_d.taux_de_positivite}%</span>
-    <br>Taux d'incidence : <span style="font-weight:bold">${this_d.taux_incidence}%</span>
-    <br>Taux de reproduction effectif : <span style="font-weight:bold">${this_d.tauxReproductionEffectif}%</span>
+    <br>Taux d'incidence : <span style="font-weight:bold">${this_d.taux_incidence}</span>
+    <br>Taux de reproduction effectif : <span style="font-weight:bold">${this_d.tauxReproductionEffectif}</span>
     <br>Taux d'occupation en réanimation : <span style="font-weight:bold">${this_d.tauxOccupationRea}%</span></span>`
   })
 
