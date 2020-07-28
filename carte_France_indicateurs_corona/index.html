@@ -169,11 +169,6 @@
     a#play_button {
     margin-top: 20px;
     }
-    @media (max-width: 768px) {
-    a#play_button {
-    margin-top: 12px;
-    }
-    }
 
     @media (min-width: 1200px) {
 a#play_button img {
@@ -273,6 +268,46 @@ h1#graph_title{
     justify-content: center;
 }
 
+    @media (max-width: 768px) {
+    a#play_button {
+    margin-top: 12px;
+    }
+.actionButton {
+    font-size: .9em;
+}
+
+    }
+
+    @media (max-width: 398px) {
+.actionButton {
+    font-size: .8em;
+}
+    }
+
+    @media (max-width: 349px) {
+.actionButton {
+    font-size: .7em;
+}
+    }
+
+    @media (min-width: 768px) {
+.actionButton {
+    font-size: 1.2em;
+}
+}
+
+#representation_carto{
+
+    position: relative;
+    top: 20px;
+    left: 10%;
+
+}
+
+#representation_carto a{
+background-color: grey;
+
+}
 
   </style>
 </head>
@@ -330,8 +365,12 @@ h1#graph_title{
                       <a class="actionButton" id="positivity">positivité</a>
                       <a class="actionButton" id="R_rate">reproduction</a>
                       <a class="actionButton" id="reanimation_rate">réanimation</a>
-              </div>
+              </div><br />
                     <!-- <a class="actionButton" id="display_proportional_circles">Cartogramme</a>   <a class="actionButton"  id="display_geo_paths">Carte</a> -->
+          </div>
+          <div id="representation_carto">
+            <a class="actionButton"  id="display_geo_paths">Carte</a>
+            <a class="actionButton" id="display_proportional_circles" style='display: none;'>Cartogramme*</a>
           </div>
           <div class="carte" id='morphocarte'>
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 667 578" xml:space="preserve">
@@ -476,9 +515,15 @@ h1#graph_title{
       </g></svg>
     </div>
     <div id="articles">
-<p><a class="actionButton" id="display_proportional_circles">Cartogramme</a>   <a class="actionButton"  id="display_geo_paths">Carte</a></p>
+<br>
+<p><span style="font-weight:bold">Taux d’incidence.</span> C’est le nombre de tests positifs pour 100 000 habitants sur une semaine. Vert en dessous de 10, orange entre 10 et 50, rouge au-dessus de 50.</p>
+<p><span style="font-weight:bold">Taux de positivité.</span> C’est le nombre de positif pour cent tests virologiques. Vert en dessous de 5%, orange entre 5 et 10 %, rouge au-dessus de 10%</p>
+<p><span style="font-weight:bold">Facteur de reproduction du virus (R0).</span> C’est le nombre de contaminé pour chaque malade. Calculé à l’échelle régionale. Vert en dessous de 1, orange entre 1 et 1,5, rouge au-dessus de 1,5. </p>
+<p><span style="font-weight:bold">Tension hospitalière.</span> Nombre de lits en réanimation, soins intensifs ou surveillance continue occupés par des patients Covid par rapport à la capacité initiale. Calculé à l’échelle régionale. Vert en dessous de 40%, orange entre 40 et 60%, rouge au-dessus de 60%</p>
+<br>
+<p style="font-style: italic;">*La taille des cercles du format cartogramme est proportionelle à la population de chaque département</p>
 
-    </div>
+</div>
         </div>
       </div>
     </div>
