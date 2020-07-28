@@ -81,9 +81,8 @@ const tip = d3
     let this_diff = this_ecart < 0 ? 'moins' : 'plus';
     let this_progression_type = this_ecart < 0 ? 'baisse' : 'augmentation';
 
-    return `<span class='details'>${
-      this_d.Departement
-    }<br>Taux de positivité : <span style="font-weight:bold">${this_d.taux_de_positivite}%</span>
+    return `<span class='details'><span style="font-weight:bold">${this_d.Departement} (${this_d.dep})</span>
+    <br>Taux de positivité : <span style="font-weight:bold">${this_d.taux_de_positivite}%</span>
     <br>Taux d'incidence : <span style="font-weight:bold">${this_d.taux_incidence}%</span>
     <br>Taux de reproduction effectif : <span style="font-weight:bold">${this_d.tauxReproductionEffectif}%</span>
     <br>Taux d'occupation en réanimation : <span style="font-weight:bold">${this_d.tauxOccupationRea}%</span></span>`
@@ -355,9 +354,16 @@ function registered_separate_circles_ecarts(){
 
 function redraw_paths(){
 
+
+d3.select('#display_geo_paths')
+.style('display', 'none')
+
+d3.select('#display_proportional_circles')
+.style('display', 'initial')
+
   let pathsize = allPaths.size();
   let pathsCount = 0;
-  let departements_corrections = ['17', '56', '91', '92', '93', '94', '95', '75', '971'];
+  let departements_corrections = ['17', '56', '91', '92', '93', '94', '95', '75', '971', '51', '10', '03', '23', '34', '81'];
 
   allPaths
   .transition()
@@ -378,6 +384,13 @@ function redraw_paths(){
 }
 
 function transform_all_paths_to_circle(){
+
+
+  d3.select('#display_geo_paths')
+.style('display', 'initial')
+
+d3.select('#display_proportional_circles')
+.style('display', 'none')
 
   let pathsize = allPaths.size();
   let pathsCount = 0;
@@ -572,12 +585,12 @@ var progressionMax = d3.max(data, function(d) { return d.progression_morts; })
   })
 
 
-// setTimeout(() => {
+setTimeout(() => {
 
-//   transform_all_paths_to_circle()
-// mapstate = 1;
-// },
-//    500);
+  transform_all_paths_to_circle()
+mapstate = 1;
+},
+   500);
 
 }
 
