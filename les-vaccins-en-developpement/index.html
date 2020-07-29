@@ -338,6 +338,37 @@ color:black;
     color: #000;
 }
 
+.mainContent {
+     background-color: #fff; 
+}
+
+
+.semicircle{
+width: 170px;
+display: block;
+float: left;
+margin-right: 12px;
+}
+
+
+.semicircle p{
+font-size: 12px;
+height: 68px;
+}
+
+@media (max-width: 390px) {
+.semicircle{
+width: 154px;
+margin-right: 6px;
+}
+
+
+.semicircle p{
+font-size: 11px;
+height: 75px;
+}
+}
+
   </style>
 </head>
 <body>
@@ -382,19 +413,7 @@ color:black;
 
         </div>
         <div id="dashboard_vaccins"></div>
-          <!-- <div id='intro_text'>
-            Coronavirus.
-            </div> -->
-          <!-- <div id="cityTitle" class='box' style="display: none; max-width: 200px"></div> -->
-          <!-- <span id='tabletExplanations' class='is-hidden-tablet'>Utilisez deux doigts pour naviguer, un seul pour scroller.</span> -->
-          <!-- <div id='legend_img_container'><img src="img/legende.svg" id="legend_img"></div> -->
-          <!-- <div id="map""></div> -->
-<!--           <div id="slider_container">
-            <a id="play_button"><img src="img/play.svg"></a>
-            <svg id = "map_slider" height="70" width="600"></svg>
-          </div> -->
-          <!-- <div id='appenedCityTagContainer'></div> -->
-          <div id="articles">
+          <div id="articles" style="clear: both;">
 
           <p></p><br><br>
 
@@ -403,7 +422,7 @@ color:black;
                     <!-- <a class="actionButton" id="display_proportional_circles">Cartogramme</a>   <a class="actionButton"  id="display_geo_paths">Carte</a> -->
           </div>
 
-    <div id="articles">
+    <div id="articles" style="clear: both;">
 <br>
  
 
@@ -411,7 +430,7 @@ color:black;
 
     </div>
   </section>
-  <div id="conclusion">
+  <div id="conclusion" style="clear: both;">
     <p class="conclusion-prose">
       <span> <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538"><img src="img/logos/LibeLaboLogo.svg" style="width: 50px;position: relative;top: 10px;"></a></span>
       <span><img class="shareFacebook" src="img/logos/social-facebook.png" style="width: 30px"></span>
