@@ -1,0 +1,67 @@
+Platform,,Type of candidate vaccine,Developer,Coronavirus target,Current stage of clinical evaluation/regulatory status- Coronavirus candidate,Stade en cours,Stade complété,Dernier stade complété,Same platform for non-Coronavirus candidates,Nombre de vaccins en phase pre-clinique
+DNA,,DNA plasmid vaccine + Adjuvant,Osaka University/ AnGes/ Takara Bio,SARS-CoV2,"Phase 1/2 
+ NCT04463472",1 et 2,,0,,141
+DNA,,DNA plasmid vaccine with electroporation,Inovio Pharmaceuticals/ International Vaccine Institute,SARS-CoV2,"Phase 1/2 
+ NCT04447781 NCT04336410",1 et 2,,0,multiple candidates,
+DNA,,DNA Vaccine (GX-19),Genexine Consortium,SARS-CoV2,"Phase 1/2 
+ NCT04445389",1 et 2,,0,,
+DNA,,DNA plasmid vaccine,Cadila Healthcare Limited,SARS-CoV2,"Phase 1/2 
+ CTRI/2020/07/026352",1 et 2,,0,,
+Inactivated,,Whole-Virion Inactivated,Bharat Biotech,SARS-CoV2,"Phase 1/2 
+ CTRI/2020/07/026300",1 et 2,,0,,
+Inactivated,,Inactivated,"Institute of Medical Biology , Chinese Academy of Medical Sciences",SARS-CoV2,"Phase 1/2 
+ NCT04470609 
+ Phase 1 
+ NCT04412538",1 et 2,,0,,
+Protein Subunit,,Full length recombinant SARS CoV-2 glycoprotein nanoparticle vaccine adjuvanted with Matrix M,Novavax,SARS-CoV2,"Phase 1/2 
+ NCT04368988",1 et 2,,0,"RSV; CCHF, HPV, VZV, EBOV",
+Protein Subunit,,RBD-based,"Kentucky Bioprocessing, Inc",SARS-CoV2,"Phase 1/2 
+ NCT04473690",1 et 2,,0,,
+RNA,,3 LNP-mRNAs,BioNTech/Fosun Pharma/Pfizer,SARS-CoV2,"Phase 1/2 
+ 2020-001038-36 NCT04368728 ChiCTR2000034825",1 et 2,,0,,
+RNA,,mRNA,Arcturus/Duke-NUS,SARS-CoV2,"Phase 1/2 
+ NCT04480957",1 et 2,,0,multiple candidates,
+Inactivated,,Inactivated + alum,Sinovac,SARS-CoV2,"Phase 3 
+ NCT04456595 
+ Phase 1/2 
+ NCT04383574 NCT04352608",3,1 et 2,2,SARS,
+Inactivated,,Inactivated,Wuhan Institute of Biological Products/Sinopharm,SARS-CoV2,"Phase 3 
+ ChiCTR2000034780 
+ Phase 1/2 
+ ChiCTR2000031809",3,1 et 2,2,,
+Non- Replicating Viral Vector,,ChAdOx1-S,University of Oxford/AstraZeneca,SARS-CoV2,"Phase 3 
+ ISRCTN89951424 
+ Phase2b/3 
+ 2020-001228-32 
+ Phase 1/2 
+ PACTR202006922165132 2020-001072-15",3,1 et 2,2,"MERS, influenza, TB, Chikungunya, Zika, MenB, plague",
+RNA,,LNP- encapsulated mRNA,Moderna/NIAID,SARS-CoV2,"Phase 3 (not yet recruiting) 
+ NCT04470427 
+ Phase 2 
+ NCT04405076 
+ Phase 1 
+ NCT04283461",3,1 et 2,2,multiple candidates,
+Non- Replicating Viral Vector,,Adenovirus Type 5 Vector,CanSino Biological Inc./Beijing Institute of Biotechnology,SARS-CoV2,"Phase 2 
+ ChiCTR2000031781 
+ Phase 1 
+ ChiCTR2000030906",2,1,1,Ebola,
+Protein Subunit,,Adjuvanted recombinant protein (RBD- Dimer),"Anhui Zhifei Longcom Biopharmaceutical/ Institute of Microbiology, Chinese Academy of Sciences",SARS-CoV2,"Phase 2 
+ NCT04466085 
+ Phase 1 
+ NCT04445194",2,1,1,MERS,
+Non- Replicating Viral Vector,,Adeno-based,Gamaleya Research Institute,SARS-CoV2,"Phase 1 
+ NCT04436471 NCT04437875",1,,0,,
+Protein Subunit,,Native like Trimeric subunit Spike Protein vaccine,Clover Biopharmaceuticals Inc./GSK/Dynavax,SARS-CoV2,"Phase 1 
+ NCT04405908",1,,0,"HIV, REV Influenza",
+Protein Subunit,,Recombinant spike protein with AdvaxTM adjuvant,Vaxine Pty Ltd/Medytox,SARS-CoV2,"Phase 1 
+ NCT04453852",1,,0,,
+Protein Subunit,,Molecular clamp stabilized Spike protein with MF59 adjuvant,University of Queensland/CSL/Seqirus,SARS-CoV2,"Phase 1 
+ ACTRN12620000674932p",1,,0,"Nipah, influenza, Ebola, Lassa",
+RNA,,LNP-nCoVsaRNA,Imperial College London,SARS-CoV2,"Phase 1 
+ ISRCTN17072692",1,,0,"EBOV; LASV, MARV, Inf (H7N9), RABV",
+RNA,,mRNA,Curevac,SARS-CoV2,"Phase 1 
+ NCT04449276",1,,0,"RABV, LASV, YFV; MERS, InfA, ZIKV, DENV, NIPV",
+RNA,,mRNA,People's Liberation Army (PLA) Academy of Military Sciences/Walvax Biotech.,SARS-CoV2,"Phase 1 
+ ChiCTR2000034112",1,,0,,
+VLP,,Plant-derived VLP adjuvanted with GSK or Dynavax adjs.,Medicago Inc.,SARS-CoV2,"Phase 1 
+ NCT04450004",1,,0,"Flu, Rotavirus, Norovirus, West Nile virus, Cancer",
