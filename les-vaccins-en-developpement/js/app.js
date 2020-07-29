@@ -240,6 +240,19 @@ else{return 0}
 
 }
 
+
+function last_encours(stade_en_court){
+
+var encours = stade_en_court.split(' et ')
+
+if (encours.includes("approuve")){ return 4}
+else if (encours.includes("3")){ return 3}
+else if (encours.includes("2")){ return 2}
+else if (encours.includes("1")){ return 1}
+
+}
+
+
 var barscale = d3.scaleLinear()
 .range([0, 100])
 
@@ -281,6 +294,12 @@ queue()
     //   d.Densite = +d.Densite;
     //   d.population = +d.population;
     // })
+
+    data.forEach(d => {
+      d['last_encours'] = last_encours(d['Stade en cours']);
+      d['Dernier stade complété'] = +d['Dernier stade complété']
+    })
+
 
 preclinic =  data.filter(function(d) { return d['Nombre de vaccins en phase pre-clinique']})[0]['Nombre de vaccins en phase pre-clinique']
 
@@ -330,6 +349,18 @@ d3.select('#approuvedtext').text(databar.filter(function(d){return d.key == 4})[
 
 function drawCircles(datacircles){
 
+console.log(datacircles)
+
+
+datacircles.sort(function(a,b){return b['Dernier stade complété'] - a['Dernier stade complété']})
+
+datacircles.sort(
+   function(a, b) {          
+      if (a['Dernier stade complété'] === b['Dernier stade complété']) {
+         return b.last_encours - a.last_encours;
+      }
+      return b['Dernier stade complété'] - a['Dernier stade complété'] ;
+   });
 
 
 var circleBoard =  d3.select('#dashboard_vaccins').selectAll('div.semicircle').data(datacircles);
