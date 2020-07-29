@@ -68,8 +68,8 @@ function getBoundingBoxCenter (selection) {
  
 var svg_semi_circle =  `<svg x="0px" y="0px" viewBox="0 0 156 81" style="enable-background:new 0 0 156 81;" xml:space="preserve">
 <style type="text/css">
-  .st0{fill:none;stroke:#231F20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-  .st1{fill:none;stroke:#231F20;stroke-width:3;stroke-miterlimit:10;}
+  .st0{fill:none;stroke:#231F20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity: 1;}
+  .st1{fill:none;stroke:#231F20;stroke-width:3;stroke-miterlimit:10;stroke-opacity: 1;}
 </style>
 <g id="parts">
   <path id="approuve" class="st0" d="M78.34,69.86l51.09-37.12c8.2,11.29,12.06,23.17,12.06,37.12L78.34,69.86z"/>
@@ -265,7 +265,7 @@ queue()
   // .defer(d3.tsv, 'data/world_population.tsv')
   // .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6YOcYH2GBljCvg2rXaPjWC2ibMV0upfMWd93kpQ6R8tO8mYtZt3y0SQNcRFI2K7aXyXNsgK5LGHnx/pub?gid=1360208169&single=true&output=csv')
   // .defer(d3.csv, 'data/departements_morts_centres.csv')
-  .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRbn8qRsMXkFfhHjmqjix4k7NToClW4tyH9TJGFwL-UQK-ausiL4SEbQYP3rQv0klXK03LTkLwDooe/pub?gid=856265856&single=true&output=csv')
+  .defer(d3.csv, 'data/data.csv')
   .await(ready)
 
   function ready(error, data) {
@@ -340,12 +340,19 @@ circleBoard
 .enter()
 .append('div')
 .attr('class', 'semicircle')
-.style('width', '150px')
-.style('display', 'inline-block')
+
+
+circleBoard =  d3.select('#dashboard_vaccins').selectAll('div.semicircle')
+
+circleBoard
 .html(svg_semi_circle)
 .datum(function(d){return d})
 
-circleBoard =  d3.select('#dashboard_vaccins').selectAll('div.semicircle')
+circleBoard
+.append('p')
+.text(function(d){return d.Developer})
+
+
 
 circleBoard
 .select('svg #parts').selectAll('path')
