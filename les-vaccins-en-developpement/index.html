@@ -369,7 +369,140 @@ height: 75px;
 }
 }
 
+
+.phasesbartext span{
+color: #000;
+}
+
+@media (min-width: 1000px) {
+
+#phases_img{
+  margin:  0 auto;
+width: 1000px;
+margin-bottom: 32px;
+}
+
+#phases_img img{
+width: 500px;
+}
+
+}
+
+@media (min-width: 800px) {
+
+#phases_img{
+  margin:  0 auto;
+width: 800px;
+margin-bottom: 32px;
+}
+
+#phases_img img{
+width: 400px;
+}
+
+}
+
+
+#bandeau{
+  display: none;
+}
+
+@media (max-width: 800px) {
+
+#phases_img{
+  margin:  0 auto;
+/*width: 800px;*/
+margin-bottom: 32px;
+}
+
+#phases_img img{
+width: 300px;
+}
+
+#bandeau{
+    height: 50px;
+    width: 100%;
+    background-color: red;
+    position: sticky;
+    top: 90vh;
+    z-index: 1000;
+    margin-top: -50px;
+    display: block;
+}
+
+
+#dashboard_vaccins{
+
+
+
+}
+
+
+#legendelistemobibe{
+
+width: 100%;
+display: block;
+background-color: #fff;
+margin: 0 auto;
+}
+
+#bandeau h2{
+color: white;
+color: white;
+margin-left: 8px;
+font-weight: bold;
+}
+
+
+#legendeliste{
+  display: none;
+}
+
+}
+
+
+.headline-big.overtitle {
+    background-color: #E30613;
+    color: white;
+    width: 120px;
+    margin: 18px auto;
+    padding-top: 0;
+    font-weight: 600;
+}
+
+.headline-big.title {
+font-size: 2.5em;
+margin-top: 18px;
+font-weight: 600;
+}
+
+.headline-big.headline-big.title span{
+    display: block;
+    font-size: .65em;
+    font-weight: 200;
+}
+
+#intro_text {
+    font-family: Georgia;
+    font-weight: bold;
+    margin: 4px;
+}
+
+h2{
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin: 24px 8px;
+    font-size: 30px;
+  }
+
+.phasesbartext{
+    font-family: Georgia;
+    font-weight: bold;
+}
+
   </style>
+
 </head>
 <body>
   <div class="intro-section">
@@ -378,7 +511,8 @@ height: 75px;
         COVID-19
       </p>
       <p class="headline-big is-centered has-text-centered title">
-        Les vaccins en développement
+        LES VACCINS
+        <span>EN DÉVELOPPEMENT</span>
       </p>
       <div id='pictoContainer'></div>
       <div id='appenedPictoContainer'></div>
@@ -402,18 +536,30 @@ height: 75px;
           Le point sur les vaccins en développement dans le monde contre le SRAS-CoV-2. Page mise à jour régulièrement à partir des rapports de l'Organisation mondiale de la santé.
         </div>
 
-        <p class="phasesbartext" style='text-align: left'>Phase pré-clinique <span id='preclinictext'>141</span></p>
+        <h2>Le point sur la recherche</h2>
+
+        <p class="phasesbartext" style='text-align: left; color:#A6A6A6'>Phase pré-clinique <span id='preclinictext' style='color:#000'>141</span></p>
         <div id='bar_phases'>
         </div>
         <div style='text-align: right'>
-          <p class="phasesbartext">Phase I <span id='phase1text'>17</span></p>
-          <p class="phasesbartext">Phase II <span id='phase2text'>13</span></p>
-          <p class="phasesbartext">Phase III <span id='phase3text'>5</span></p>
-          <p class="phasesbartext">Vaccin approuvé <span id='approuvedtext'>0</span></p>
-
+          <p class="phasesbartext" style="color:#FACFBC">Phase I <span id='phase1text'>17</span></p>
+          <p class="phasesbartext" style="color:#F9C4AF">Phase II <span id='phase2text'>13</span></p>
+          <p class="phasesbartext" style="color:#F08262">Phase III <span id='phase3text'>5</span></p>
+          <p class="phasesbartext" style="color:#E30613">Vaccin approuvé <span id='approuvedtext'>0</span></p>
         </div>
+
+        <h2>Le développement clinique</h2>
+
+        <div id='intro_text' style='font-weight: 200;'>
+          Seuls les vaccins ayant complété la phase pré-clinique sont représentés.<br> Chaque part du demi-cercle représente une étape du développement clinique, coloriée en fonction de son état d’avancement. <br>Plus le demi-cercle est coloré, plus le développement du vaccin est avancé.
+        </div>
+    <div id='phases_img'><img src="img/legendeschema.png"><img src="img/legendeliste.png" id="legendeliste"></div>
+    <div id="bandeau"><h2>TYPE DE VACCIN</h2><img src="img/legendelistemobile.png" id="legendelistemobibe"></div>
+
         <div id="dashboard_vaccins"></div>
           <div id="articles" style="clear: both;">
+
+          
 
           <p></p><br><br>
 
