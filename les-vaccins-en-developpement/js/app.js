@@ -179,7 +179,7 @@ const color2 = d3
 const colorbar = {
 '-1':"#fff",
 '0':"#fff",
-'1':"#FACFBC",
+'1':"#FDE3D8",
 '2':"#F9C4AF",
 '3':"#F08262",
 '4':"#E30613"
