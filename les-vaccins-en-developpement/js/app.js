@@ -178,10 +178,11 @@ const color2 = d3
 
 const colorbar = {
 '-1':"#fff",
-0:"#fff",
-1:"#ddd",
-2:"#aaa"
-
+'0':"#fff",
+'1':"#FACFBC",
+'2':"#F9C4AF",
+'3':"#F08262",
+'4':"#E30613"
 }
 
 
@@ -245,7 +246,7 @@ function last_encours(stade_en_court){
 
 var encours = stade_en_court.split(' et ')
 
-if (encours.includes("approuve")){ return 4}
+if (encours.includes("4")){ return 4}
 else if (encours.includes("3")){ return 3}
 else if (encours.includes("2")){ return 2}
 else if (encours.includes("1")){ return 1}
@@ -297,15 +298,20 @@ queue()
 
     data.forEach(d => {
       d['last_encours'] = last_encours(d['Stade en cours']);
+      d['encours_for_bar'] = d['last_encours'] == 4 ? 3 : d['last_encours'];
       d['Dernier stade complété'] = +d['Dernier stade complété']
     })
 
 
 preclinic =  data.filter(function(d) { return d['Nombre de vaccins en phase pre-clinique']})[0]['Nombre de vaccins en phase pre-clinique']
 
-   var data_bar = d3.entries(_.countBy(data, 'Dernier stade complété'))
+   var data_bar = d3.entries(_.countBy(data, 'encours_for_bar'))
 
    data_bar.push({key:'-1', value:+preclinic})
+
+   data_bar.push({key:'4', value:data.filter(function(d){return d['Dernier stade complété'] == 4}).length})
+
+
 
    drawBar(data_bar)
 
@@ -318,6 +324,15 @@ drawCircles(data)
 function drawBar(databar){
 
 databar.sort(function(a,b){return a.key - b.key})
+
+
+d3.select('#preclinictext').text(databar.filter(function(d){return d.key == -1})[0].value)
+d3.select('#phase1text').text(databar.filter(function(d){return d.key == 1})[0].value)
+d3.select('#phase2text').text(databar.filter(function(d){return d.key == 2})[0].value)
+d3.select('#phase3text').text(databar.filter(function(d){return d.key == 3})[0] ? databar.filter(function(d){return d.key == 3})[0].value : 0)
+d3.select('#approuvedtext').text(databar.filter(function(d){return d.key == 4})[0] ? databar.filter(function(d){return d.key == 4})[0].value : 0)
+
+databar = databar.filter(function(d){return d.value})
 
 console.log(databar)
 
@@ -337,11 +352,7 @@ uniqbar
 .style('background-color', function(d){return colorbar[d.key]})
 // .style('display', 'inline-block')
 
-d3.select('#preclinictext').text(databar.filter(function(d){return d.key == -1})[0].value)
-d3.select('#phase1text').text(databar.filter(function(d){return d.key == 1})[0].value)
-d3.select('#phase2text').text(databar.filter(function(d){return d.key == 2})[0].value)
-d3.select('#phase3text').text(databar.filter(function(d){return d.key == 3})[0] ? databar.filter(function(d){return d.key == 3})[0].value : 0)
-d3.select('#approuvedtext').text(databar.filter(function(d){return d.key == 4})[0] ? databar.filter(function(d){return d.key == 4})[0].value : 0)
+
 
 
 }
