@@ -343,6 +343,11 @@ color:black;
 }
 
 
+#bar_phases{
+margin: 0 8px;
+
+}
+
 #dashboard_vaccins{
 
 display: flex;
@@ -489,10 +494,10 @@ font-weight: 600;
     font-weight: 200;
 }
 
-#intro_text {
+.para_text {
     font-family: Georgia;
     font-weight: bold;
-    margin: 4px;
+    margin: 8px;
 }
 
 h2{
@@ -501,11 +506,13 @@ h2{
     font-weight: 600;
     margin: 24px 8px;
     font-size: 30px;
+    line-height: 1.2em;
   }
 
 .phasesbartext{
     font-family: Georgia;
     font-weight: bold;
+    margin: 0 8px;
 }
 
 
@@ -513,6 +520,15 @@ h2{
 
 max-width: 900px;
 
+}
+
+.para_text strong{
+  font-weight: 600;
+}
+
+.para_text a{ 
+    color: #000;
+    font-weight: 600;
 }
 
   </style>
@@ -546,9 +562,12 @@ max-width: 900px;
         <span><img class="shareTwitter" src="img/logos/twitter-badge.png" style="width: 20px"></span>
         </p> -->
 
-          <div id='intro_text'>
+          <div class='para_text'>
 
-          Le point sur les vaccins en développement dans le monde contre le SRAS-CoV-2. Page mise à jour régulièrement à partir des rapports de l'Organisation mondiale de la santé.
+          Libération fait le point sur les vaccins en développement dans le monde contre le virus SRAS-CoV-2. On compte environ 200 projets dans le monde entier pour lutter contre l'épidémie de Covid-19.</div><br>
+          <div class='para_text' style='font-weight: 200;'>
+          Ces projets sont à différents niveau d'avancement. Ils doivent être testés sur des animaux (phase préclinique) avant de pouvoir passer chez l'homme. En général, environ 90% des projets de vaccins échouent lors de l'une des 3 phases des essais cliniques. La phase I sert jauger les effets secondaires du vaccin, la phase II vise à vérifier qu'ils déclenchent bien une réaction immunitaire. Enfin, la phase III doit démontrer qu'ils constituent une protection contre la maladie ciblée. Une fois ces phases passées, il reste à obtenir une autorisation de mise sur le marché auprès des agences sanitaires.<br>
+          La frise ci-dessous donne l'avancée des principaux projets en se basant notamment sur les <a href="https://www.who.int/publications/m/item/draft-landscape-of-covid-19-candidate-vaccines">données régulièrement mises à jour</a> par l'Organisation mondiale de la santé.
         </div>
 
         <h2>Le point sur la recherche</h2>
@@ -562,17 +581,31 @@ max-width: 900px;
           <p class="phasesbartext" style="color:#F08262">Phase III <span id='phase3text'>5</span></p>
           <p class="phasesbartext" style="color:#E30613">Vaccin approuvé <span id='approuvedtext'>0</span></p>
         </div>
+<div class='para_text' style='font-weight: 200;'>
+        Pour développer un vaccin en dix-huit mois au lieu des dix ans habituels, les industriels ont lancé toutes les phases en même temps. Il est donc parfois compliqué de savoir à quel stade est chaque projet. Ainsi, un laboratoire indien a commencé à fabriquer de manière industriel le vaccin d'AstraZeneca, avant même de savoir s'il est efficace. Son directeur reconnaît, dans Libération, que «si les essais cliniques échouent, cela représentera une grande perte financière». En effet, un vaccin peut n'être efficace que sur une fraction de la population piquée. En dessous de 70%, l'OMS estime que cela ne vaudra pas le coup. Pour s'associer à ce risque industriel, des Etats font des précommandes auprès des entreprises afin de leur assurer un revenu en cas de succès.<br>
+
+        Enfin, la dernière étape, celle de l'approbation auprès des agences sanitaires n'est pas une mince affaire. Il est envisageable d'avoir un vaccin approuvé dans un pays mais pas dans l'autre. Ainsi, La Chine a approuvé l'utilisation sur ses militaires du vaccin développé par CanSinoBio... Nous considérons ici, qu'un vaccin est approuvé quand il a obtenu une autorisation de mise sur le marché en France.
+        <br>Ci-dessous, Libération détaille le stade d'avancement des différents projets déjà en phase d'essai clinique. Les projets sont classés selon le nom du consortium qui les porte (en général un laboratoire de recherche associé à une entreprise).
+      </div>
 
         <h2>Le développement clinique</h2>
 
-        <div id='intro_text' style='font-weight: 200;'>
+        <div class='para_text' style='font-weight: 200;'>
           Seuls les vaccins ayant complété la phase pré-clinique sont représentés.<br> Chaque part du demi-cercle représente une étape du développement clinique, coloriée en fonction de son état d’avancement. <br>Plus le demi-cercle est coloré, plus le développement du vaccin est avancé.
         </div>
     <div id='phases_img'><img src="img/legendeschema.png"><img src="img/legendeliste.png" id="legendeliste"></div>
     <div id="bandeau"><h2>TYPE DE VACCIN</h2><img src="img/legendelistemobile.png" id="legendelistemobibe"></div>
 
         <div id="dashboard_vaccins"></div>
-          <div id="articles" style="clear: both; padding: 0">
+          <div class='para_text' style="clear: both; padding: 0;font-weight: 200;">
+         Il existe différents type de vaccin en fonction du mécanisme d'action.
+         <ul>
+           <li><strong>Vaccin à virus inactivé </strong>: C'est le plus simple à comprendre. On prend le virus cible, on le tue pour qu'il ne puisse plus se reproduire et on l'injecte mort dans le corps pour que le système immunitaire apprenne à le reconnaitre.</li>
+           <li><strong>Vaccins à sous-unités protéiques</strong> : On introduit dans le corps seulement une partie caractéristique du virus d'intérêt afin que le système immunitaire la reconnaisse. C'est le vaccin synecdoque.</li>
+           <li><strong>Vaccin à vecteur viral</strong> : C'est un cousin du vaccin à sous-unités protéiques. On utilise issue un autre virus inoffensif à qui l'on injecte des éléments caractéristique du virus d'intérêt. Cette technique a été utilisée contre Ebola.</li>
+           <li><strong>Vaccin à ADN ou ARN</strong> : Lui aussi est un cousin du vaccin à sous-unités protéiques. C'est le dernier arrivé de la famille, jamais vraiment testé. On injecte dans le corps le matériel génétique codant pour une partie caractéristique du virus d'intérêt. Le corps va ensuite lui-même produire la protéine virale et apprendre à la reconnaitre. </li>
+
+         </ul>
 
           </div>
 
@@ -586,9 +619,9 @@ max-width: 900px;
   </section>
   <div id="conclusion" style="clear: both;">
     <p class="conclusion-prose">
-      <span> <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538"><img src="img/logos/LibeLaboLogo.svg" style="width: 50px;position: relative;top: 10px;"></a></span>
-      <span><img class="shareFacebook" src="img/logos/social-facebook.png" style="width: 30px"></span>
-      <span><img class="shareTwitter" src="img/logos/social-twitter.png" style="width: 30px"></span>
+      <span> <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538"><img src="img/logos/LibeLaboLogo.svg" style="width: 100px;margin: 0 auto;display: block;"></a></span>
+<!--       <span><img class="shareFacebook" src="img/logos/social-facebook.png" style="width: 30px"></span>
+      <span><img class="shareTwitter" src="img/logos/social-twitter.png" style="width: 30px"></span> -->
     </p>
     <p class="credits_top">
     <strong>Production </strong>&nbsp;: Clara Dealberto, Savinien de Rivet, Olivier Monod<br><a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>.</p>
