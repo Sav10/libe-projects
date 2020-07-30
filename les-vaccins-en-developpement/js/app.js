@@ -31,16 +31,53 @@ d3.scaleSqrt()
 .range([0, 29]);
 
 
-const svg = d3.select(".carte svg");
-const allPaths = svg.selectAll('path');
+// const svg = d3.select(".carte svg");
+// const allPaths = svg.selectAll('path');
 
-svg.style('max-height', $(window).height()*0.9 + 'px')
+// svg.style('max-height', $(window).height()*0.9 + 'px')
 
-window.addEventListener("resize", function(d){
+// window.addEventListener("resize", function(d){
 
-  svg.style('max-height', $(window).height()*0.9 + 'px')
+//   svg.style('max-height', $(window).height()*0.9 + 'px')
+
+// });
+
+
+window.addEventListener("scroll", function(d){
+
+  if (window.innerWidth < 800){
+
+  var bandeau_postion = d3.select('#phases_img').node().getBoundingClientRect().bottom;
+
+  var height_window = window.innerHeight;
+
+  console.log(window.scrollY)
+
+  if(window.innerHeight >= (bandeau_postion + 250) ){
+
+if(d3.select('#conclusion').node().getBoundingClientRect().top <= (height_window + 100))
+{
+hide_bandeau ()
+
+}
+else{
+// d3.select('#bandeau').style('display', 'block')
+position_bandeau (window.scrollY)
+
+}
+
+  }
+
+else{
+// d3.select('#bandeau').style('display', 'none')
+hide_bandeau ()
+
+}
+
+}
 
 });
+
 
 if($(window).width() >= 1000){
 
@@ -81,6 +118,34 @@ var svg_semi_circle =  `<svg x="0px" y="0px" viewBox="0 0 156 81" style="enable-
 <path id="contour" class="st1" d="M129.43,32.74c-8.2-11.29-18.31-18.63-31.58-22.94c-13.27-4.31-25.76-4.31-39.03,0
   S35.45,21.46,27.25,32.75c-8.2,11.29-12.06,23.17-12.06,37.12l63.15,0l63.15,0C141.49,55.91,137.63,44.03,129.43,32.74z"/>
 </svg>`
+
+
+function position_bandeau (){
+
+d3.select('#bandeau')
+.style('visibility', 'visible')
+
+var height_bandeau = d3.select('#bandeau img').node().getBoundingClientRect().height;
+var height_window = window.innerHeight;
+
+d3.select('#bandeau')
+.style('top', Math.round((height_window - height_bandeau - 47)) + 'px')
+
+}
+
+
+function hide_bandeau (){
+
+// var height_window = window.innerHeight;
+
+// d3.select('#bandeau')
+// .style('top', Math.round((height_window +800)) + 'px')
+
+d3.select('#bandeau')
+.style('visibility', 'hidden')
+
+
+}
 
 
 
@@ -405,7 +470,10 @@ var d = d3.select(this.parentNode).datum();
 var phase = d3.select(this).attr('id');
 var d = d3.select(this.parentNode).datum();
  return part_opacity(phase, d)})
-
+.style('stroke-opacity', function(){
+var phase = d3.select(this).attr('id');
+var d = d3.select(this.parentNode).datum();
+ return part_opacity(phase, d) <= 0.5 ? 0.3 : 1})
 
 
 
