@@ -22,14 +22,6 @@ thisMinZoom = 2,
 mapstate = 0,
 preclinic;
 
-var circleScale = 
-d3.scaleSqrt()
-.range([5, 40]);
-
-var circleScaleEcart = 
-d3.scaleSqrt()
-.range([0, 29]);
-
 
 // const svg = d3.select(".carte svg");
 // const allPaths = svg.selectAll('path');
@@ -51,18 +43,18 @@ window.addEventListener("scroll", function(d){
 
   var height_window = window.innerHeight;
 
-  console.log(window.scrollY)
+  // console.log(window.scrollY)
 
-  if(window.innerHeight >= (bandeau_postion + 250) ){
+  if(window.innerHeight >= (bandeau_postion + 220) ){
 
-if(d3.select('#conclusion').node().getBoundingClientRect().top <= (height_window + 100))
+if(d3.select('#conclusion').node().getBoundingClientRect().top <= (height_window))
 {
 hide_bandeau ()
 
 }
 else{
 // d3.select('#bandeau').style('display', 'block')
-position_bandeau (window.scrollY)
+position_bandeau()
 
 }
 
@@ -129,7 +121,7 @@ var height_bandeau = d3.select('#bandeau img').node().getBoundingClientRect().he
 var height_window = window.innerHeight;
 
 d3.select('#bandeau')
-.style('top', Math.round((height_window - height_bandeau - 47)) + 'px')
+.style('top', Math.round((height_window - height_bandeau - 37)) + 'px')
 
 }
 
@@ -214,31 +206,6 @@ const parentWidth = d3
 const margin = { top: 0, right: 0, bottom: 0, left: 0 }
 const width = 960 - margin.left - margin.right
 const height = 500 - margin.top - margin.bottom
-
-const color = d3
-.scaleQuantile()
-.range([
-  'rgb(247,251,255)',
-  'rgb(222,235,247)',
-  'rgb(198,219,239)',
-  'rgb(158,202,225)',
-  'rgb(107,174,214)',
-  'rgb(66,146,198)',
-  'rgb(33,113,181)',
-  'rgb(8,81,156)',
-  'rgb(8,48,107)',
-  'rgb(3,19,43)'
-  ])
-
-const color2 = d3
-.scaleQuantile()
-.range([
-  '#FFFFFF',
-  '#F9D3DB',
-  '#F4A7B7',
-  '#E3234A',
-  '#A70021'
-  ])
 
 
 const colorbar = {
