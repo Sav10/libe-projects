@@ -343,29 +343,41 @@ color:black;
 }
 
 
+#dashboard_vaccins{
+
+display: flex;
+flex-wrap: wrap;
+
+}
+
 .semicircle{
 width: 170px;
-display: block;
-float: left;
-margin-right: 12px;
+margin-right: auto;
+margin-left: auto;
 }
 
 
 .semicircle p{
-font-size: 12px;
-height: 68px;
+font-size: 14px;
+font-family: Giorgia;
+font-weight: 600;
+text-align: center;
+margin-bottom: 8px;
+}
+
+
+.semicircle{
+/*margin-right: 6px;*/
 }
 
 @media (max-width: 390px) {
 .semicircle{
 width: 154px;
-margin-right: 6px;
 }
 
 
 .semicircle p{
-font-size: 11px;
-height: 75px;
+font-size: 12px;
 }
 }
 
@@ -416,13 +428,13 @@ margin-bottom: 32px;
 }
 
 #phases_img img{
-width: 300px;
+width: 100%;
 }
 
 #bandeau{
     height: 50px;
     width: 100%;
-    background-color: red;
+    background-color: #A6A6A6;
     position: sticky;
     top: 90vh;
     z-index: 1000;
@@ -431,12 +443,6 @@ width: 300px;
 }
 
 
-#dashboard_vaccins{
-
-
-
-}
-
 
 #legendelistemobibe{
 
@@ -444,6 +450,7 @@ width: 100%;
 display: block;
 background-color: #fff;
 margin: 0 auto;
+margin-top: -21px;
 }
 
 #bandeau h2{
@@ -504,7 +511,7 @@ h2{
 
 #mainContent .container{
 
-max-width: 1000px;
+max-width: 900px;
 
 }
 
@@ -550,7 +557,7 @@ max-width: 1000px;
         <div id='bar_phases'>
         </div>
         <div style='text-align: right'>
-          <p class="phasesbartext" style="color:#FDE3D8">Phase I <span id='phase1text'>17</span></p>
+          <p class="phasesbartext" style="color:#FACFBC">Phase I <span id='phase1text'>17</span></p>
           <p class="phasesbartext" style="color:#F9C4AF">Phase II <span id='phase2text'>13</span></p>
           <p class="phasesbartext" style="color:#F08262">Phase III <span id='phase3text'>5</span></p>
           <p class="phasesbartext" style="color:#E30613">Vaccin approuvé <span id='approuvedtext'>0</span></p>
@@ -565,22 +572,15 @@ max-width: 1000px;
     <div id="bandeau"><h2>TYPE DE VACCIN</h2><img src="img/legendelistemobile.png" id="legendelistemobibe"></div>
 
         <div id="dashboard_vaccins"></div>
-          <div id="articles" style="clear: both;">
+          <div id="articles" style="clear: both; padding: 0">
 
-          
-
-          <p></p><br><br>
-
-          <!-- <h1 id="graph_title">Coronavirus : carte de vigilance des départements en fonction des indicateurs</h1> -->
-
-                    <!-- <a class="actionButton" id="display_proportional_circles">Cartogramme</a>   <a class="actionButton"  id="display_geo_paths">Carte</a> -->
           </div>
 
-    <div id="articles" style="clear: both;">
+<!--     <div id="articles" style="clear: both;">
 <br>
  
 
-</div>
+</div> -->
 
     </div>
   </section>
