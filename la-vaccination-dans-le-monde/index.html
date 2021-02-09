@@ -5,15 +5,15 @@
 
   <!-- Header -->
   <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="https://www.liberation.fr/menu/script.js"></script>
+  <!-- <script type="text/javascript" src="https://www.liberation.fr/menu/script.js"></script> -->
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116918263-1"></script>
-  <script>
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116918263-1"></script> -->
+<!--   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'UA-116918263-1');
-  </script>
+  </script> -->
   <!-- // Google Analytics -->
 
   <!-- Xiti -->
@@ -175,10 +175,75 @@
     margin-top: 12px;
     }
     }
+
+#legend{
+max-width: 600px;
+width: 100%;
+margin: 0 auto;
+text-align: center;
+display: flex;
+margin-bottom: -51px;
+padding: 0 60px;
+}
+#legend .label{
+font-weight: 200;
+
+  }
+
+#legend text{
+font-size: 12px;
+
+}
+
+#dosage a{
+border: 1px solid #e91845;
+padding: 2px;
+background-color: #fff;
+color: #e91845;
+font-size: 14px;
+}
+
+
+#dosage{
+margin-left: 14px;
+}
+
+
+#dosage a.selected{
+color: #fff;
+background-color: #e91845;
+}
+
+a#zoomEurope{
+border: 1px solid #e91845;
+padding: 2px;
+position: absolute;
+top: 36px;
+left: 112px;
+font-size: 14px;
+
+}
+
+@media screen and (max-width: 640px) {
+
+a#zoomEurope{
+    left: initial;
+    top: 1px;
+    right: 0vw;
+    font-size: 13px;
+    width: 10em;
+}
+
+.d3-tip{
+  font-size: 12px;
+}
+
+}
+
   </style>
 </head>
 <body>
-  <div class="intro-section">
+<!--   <div class="intro-section">
     <div class="headline-section has-text-centered">
       <p class="headline-big is-centered has-text-centered overtitle">
       </p>
@@ -187,11 +252,8 @@
       </p>
       <div id='pictoContainer'></div>
       <div id='appenedPictoContainer'></div>
-      <!--     <p class="headline-small">
-        La pandémie de coronavirus est née à Wuhan, en Chine, où les premiers cas et les premiers morts ont été détectés, en décembre 2019 et janvier 2020. C’est aussi la région de Wuhan, le Hubei, qui a été la première à se confiner, fin janvier. Depuis début mars, une bonne partie du monde l’a imitée&nbsp;: de très nombreux pays ont décidé chacun leur tour de mesures de confinement partiel ou total, mettant petit à petit la planète sur pause.
-        </p> -->
     </div>
-  </div>
+  </div> -->
   <section class='section mainContent' id="mainContent">
     <!-- <section id="tabs" class='columns is-centered is-hidden-mobile'>
       <div class="container tabs sectionParametres" id="parametersTabs">
@@ -208,6 +270,11 @@
         <span><img class="shareTwitter" src="img/logos/twitter-badge.png" style="width: 20px"></span>
         </p> -->
       <div class='columns is-centered mainMap'>
+        <div id="dosage">
+            <a class="actionButton selected" id="display_one_dose" >Une dose</a>
+            <a class="actionButton" id="display_two_doses">Deux doses</a>
+          </div>
+          <a class="unzoomed" id="zoomEurope" style="color: rgb(233, 24, 69); background-color: rgb(255, 255, 255);">Zoom sur l'Europe</a>
         <div class="column is-three-quarters map_container" style="z-index: 90;">
           <!-- <div id='intro_text'>
             Coronavirus.
@@ -215,7 +282,17 @@
           <!-- <div id="cityTitle" class='box' style="display: none; max-width: 200px"></div> -->
           <!-- <span id='tabletExplanations' class='is-hidden-tablet'>Utilisez deux doigts pour naviguer, un seul pour scroller.</span> -->
           <!-- <div id='legend_img_container'><img src="img/legende.svg" id="legend_img"></div> -->
-          <div id="map""></div>
+                    <svg  id="legend" viewbox="-10 0 450 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;">Pourcentage de personnes vaccinées</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells"><g class="cell" transform="translate(0,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(255, 255, 255);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">0</text></g><g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(246, 185, 197);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">10</text></g><g class="cell" transform="translate(92,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(237, 114, 139);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">20</text></g><g class="cell" transform="translate(138,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(234, 88, 117);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">30</text></g><g class="cell" transform="translate(184,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(230, 61, 96);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">40</text></g><g class="cell" transform="translate(230,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(227, 35, 74);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">50</text></g><g class="cell" transform="translate(276,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(186, 23, 49);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">60</text></g><g class="cell" transform="translate(322,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(146, 12, 25);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">70</text></g><g class="cell" transform="translate(368,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(105, 0, 0);"></rect><text class="label" transform="translate(22,
+          30)" style="text-anchor: middle;">80</text></g></g></g></svg>
+          <div id="map"></div>
           <div id="slider_container">
             <a id="play_button"><img src="img/play.svg"></a>
             <svg id = "map_slider" height="70" width="600"></svg>
@@ -230,15 +307,15 @@
       </div>
     </div>
   </section>
-  <div id="conclusion">
+<!--   <div id="conclusion">
     <p class="conclusion-prose">
       <span> <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538"><img src="img/logos/LibeLaboLogo.svg" style="width: 50px;position: relative;top: 10px;"></a></span>
       <span><img class="shareFacebook" src="img/logos/social-facebook.png" style="width: 30px"></span>
       <span><img class="shareTwitter" src="img/logos/social-twitter.png" style="width: 30px"></span>
     </p>
     <p class="credits_top"><strong>Savinien de Rivet, Libération</strong>&nbsp;</p>
-    <!-- <p class="credits_top">Publié le 1er avril 2020.</p> -->
-  </div>
+    <p class="credits_top">Publié le 1er avril 2020.</p>
+  </div> -->
   <script type="text/javascript" src="js/lodash.min.js"></script>
   <script type="text/javascript" src="js/moment-with-locales.js"></script>
   <script src="js/d3.v4.min.js"></script>
