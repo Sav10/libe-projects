@@ -2,9 +2,13 @@ var parseTime = d3.timeParse("%d/%m/%Y");
 var parseTime_ok = d3.timeParse("%Y-%m-%d");
 var formatTime = d3.timeFormat("%d/%m/%Y")
 var mainWidth = 1200;
-var colorScale2;
+const is_mobile = $(window).width() < 850 ? true : false;
+
+var  curent_col =  'people_vaccinated_per_hundred';
 
 var chosenChroma = chroma.scale('OrRd');
+var currentDate;
+var currentdate_formated;
 
 var colorScale3 = function(pct){
 
@@ -14,9 +18,19 @@ return chosenChroma(pct/50).hex()
 
 // console.log(mainWidth)
 
+var color = d3.scaleLinear()
+  .range(["white", '#ED728B', "#E3234A", '#690000']);
+
+
+color.domain([0, 20, 50, 80]);
+
 var sliderTime = 10000;
 var maptype = 'standard';
 moment.locale('fr')
+
+
+d3.select('svg#legend')
+.style('margin-bottom', 0 + 'px')
 
 d3.select('svg#map_slider')
 .style('width', (mainWidth > 1000 ? '1000px' : String(mainWidth) + 'px'));
@@ -46,8 +60,8 @@ var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
     minMaxRectWidth = [12,30],
     scaleWidth,
     thisMinZoom = 2;
-const g_x_translation_europe = 1400;
-const g_y_translation_europe = 160;
+var g_x_translation_europe = 1300;
+var g_y_translation_europe = 160;
 
     if($(window).width() >= 1000){
 
@@ -70,7 +84,7 @@ function ZoomEurope(){
 
 // allPaths.filter(d=>d.europe != 1).style('display', 'none')
 
-d3.select('#map svg g.map').transition().attr('transform', `translate(${-g_x_translation_europe},${-g_y_translation_europe}) scale(4)`)
+d3.select('#map svg g.map').transition().attr('transform', `translate(${-g_x_translation_europe},${-g_y_translation_europe}) scale(3.5)`)
 
 // d3.select('#map svg g.map').transition().attr('transform', `translate(-1400, -160) scale(3.5)`)
 
@@ -81,7 +95,9 @@ function ZoomReset(){
 
 // allPaths.filter(d=>d.europe != 1).style('display', 'initial')
 
-d3.select('#map svg g.map').transition().attr('transform', 'translate(0,0) scale(1)')
+// d3.select('#map svg g.map').transition().attr('transform', 'translate(0,0) scale(1)')
+
+d3.select('#map svg g.map').transition().attr('transform', `translate(-110,0) scale(1.15)`)
 
   }
 
@@ -115,12 +131,13 @@ const tip = d3
     var this_html = `<span class='details'>${this_country}<br></span></span>`}
     else {var this_d = _.last(app_data.filter( e=> e.pays_iso == d.id))
     var this_html = `<span class='details'>${this_d.pays}<br>
-    <span>${this_d.total_vaccinations} personnes vaccinées</span><br>
-    <span>soit ${this_d.total_vaccinations_per_hundred}% de la population</span><br>
+    <span><b>${this_d.people_vaccinated_per_hundred}%</b> ont reçu au moins une dose de vaccin</span><br>
+    <span>et <b>${this_d.people_fully_vaccinated_per_hundred}%</b> ont reçu les deux doses</span><br>
       </span></span>`
 
     }
 
+    // <span>${this_d.total_vaccinations} personnes vaccinées</span><br>
 
  return this_html
 
@@ -202,33 +219,6 @@ const margin = { top: 0, right: 0, bottom: 0, left: 0 }
 const width = 960 - margin.left - margin.right
 const height = 500 - margin.top - margin.bottom
 
-const color = d3
-  .scaleQuantile()
-  .range([
-    'rgb(247,251,255)',
-    'rgb(222,235,247)',
-    'rgb(198,219,239)',
-    'rgb(158,202,225)',
-    'rgb(107,174,214)',
-    'rgb(66,146,198)',
-    'rgb(33,113,181)',
-    'rgb(8,81,156)',
-    'rgb(8,48,107)',
-    'rgb(3,19,43)'
-  ])
-
-
-const color2 = d3
-  .scaleQuantile()
-  .range([
-    '#FFFFFF',
-    '#FCE9ED',
-    '#F4A7B7',
-    '#EB6581',
-    '#E3234A'
-  ])
-
-color2.domain([0, 1, 2, 4, 5]);
 
 const svg = d3
   .select('#map')
@@ -258,7 +248,6 @@ queue()
 
 function ready(error, geography, data) {
 
-
  
 
     data.forEach(d => {
@@ -266,14 +255,75 @@ function ready(error, geography, data) {
     d.datetime = parseTime_ok(d.date);
     d.pays_iso = d.iso_code;
     d.pays = d.Pays;
-    d.total_vaccinations_per_hundred = +d.total_vaccinations_per_hundred;
+    d.people_vaccinated_per_hundred = +d.people_vaccinated_per_hundred;
+    d.people_fully_vaccinated_per_hundred = +d.people_fully_vaccinated_per_hundred;
   })
 
 
   console.log(data);
 
 
+d3.select('#zoomEurope')
+.on('click', function(){
 
+var that = d3.select(this)
+if (that.classed('zoomed')){
+
+that.classed('zoomed', false)
+that.classed('unzoomed', true)
+that.text("Zoom sur l'Europe")
+
+
+ZoomReset()
+
+}
+else{
+
+that.classed('zoomed', true)
+that.classed('unzoomed', false)
+that.text("Dézoomer")
+
+ZoomEurope()
+
+}
+
+
+})
+
+
+
+d3.select('#display_one_dose')
+.on('click', function(){
+if (curent_col == 'people_fully_vaccinated_per_hundred'){
+
+curent_col = 'people_vaccinated_per_hundred';
+
+d3.select('#display_one_dose')
+.classed('selected', true)
+
+d3.select('#display_two_doses')
+.classed('selected', false)
+
+populate_map(currentDate, 0)
+
+}})
+
+d3.select('#display_two_doses')
+.on('click', function(){
+if (curent_col == 'people_vaccinated_per_hundred'){
+
+curent_col = 'people_fully_vaccinated_per_hundred';
+
+
+d3.select('#display_one_dose')
+.classed('selected', false)
+
+d3.select('#display_two_doses')
+.classed('selected', true)
+
+populate_map(currentDate, 0)
+
+}})
 
 data = data.filter(function(d,i){return d.datetime });
 
@@ -286,12 +336,6 @@ x.domain([t0 , tMax]);
 ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
 
 
-  // set the domain of the color scale based on our data
-  color.domain([0, 13068161, 38463689, 70916439, 126804433, 201103330, 310232863, 1173108018, 1330141295]);
-
-
-colorScale2 = d3.scaleSequential(d3.interpolateRainbow)
-    .domain([0, 100])
 
 
   svg
@@ -308,24 +352,24 @@ colorScale2 = d3.scaleSequential(d3.interpolateRainbow)
       }
       return '#fff'
     })
-    .style('fill-opacity', 0.8)
+    .style('fill-opacity', 0.9)
     .style('stroke', 'lightgray')
-    .style('stroke-width', 1)
-    .style('stroke-opacity', 0.5)
+    .style('stroke-width', 0.5)
+    .style('stroke-opacity', 1)
     // tooltips
     .on('mouseover', function(d) {
       tip.show(d)
       d3.select(this)
         .style('fill-opacity', 1)
         .style('stroke-opacity', 1)
-        .style('stroke-width', 2)
+        .style('stroke-width', 1)
     })
     .on('mouseout', function(d) {
       tip.hide(d)
       d3.select(this)
-        .style('fill-opacity', 0.8)
-        .style('stroke-opacity', 0.5)
-        .style('stroke-width', 1)
+        .style('fill-opacity', 0.9)
+        .style('stroke-opacity', 1)
+        .style('stroke-width', 0.5)
     })
 
   svg
@@ -333,6 +377,9 @@ colorScale2 = d3.scaleSequential(d3.interpolateRainbow)
     .datum(topojson.mesh(geography.features, (a, b) => a.id !== b.id))
     .attr('class', 'names')
     .attr('d', path)
+
+
+d3.select('#map svg g.map').transition().attr('transform', `translate(-110,0) scale(1.15)`);
 
 makeSlider()
 
@@ -567,9 +614,16 @@ d3.select('#play_button')
 function moving_slider(h) {
   handle.attr("transform", "translate("+ x(h) +",0)");
 
-  populate_map(h, 0)
+  
 
+  currentDate = h;
 
+  if (formatTime(currentDate) != currentdate_formated){
+
+    currentdate_formated = formatTime(currentDate)
+    populate_map(h, 0)
+
+  }
 
 }
 
@@ -651,7 +705,8 @@ let those_paths = svg.selectAll('g.countries path').filter(d => thoseLocations.i
 those_paths
     .style('fill', d => {
 
-        return colorScale3(+(_.first(filtered_data.filter(function(e){return e.pays_iso == d.id}))).total_vaccinations_per_hundred)
+        // return colorScale3(+(_.first(filtered_data.filter(function(e){return e.pays_iso == d.id}))).total_vaccinations_per_hundred)
+        return color(+(_.first(filtered_data.filter(function(e){return e.pays_iso == d.id})))[curent_col])
 
     })
 
