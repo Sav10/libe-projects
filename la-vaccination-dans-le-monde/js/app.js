@@ -132,7 +132,9 @@ const tip = d3
     else {var this_d = _.last(app_data.filter( e=> e.pays_iso == d.id))
     var this_html = `<span class='details'>${this_d.pays}<br>
     <span><b>${this_d.people_vaccinated_per_hundred}%</b> ont reçu au moins une dose de vaccin</span><br>
-    <span>et <b>${this_d.people_fully_vaccinated_per_hundred}%</b> ont reçu les deux doses</span><br>
+    <span> ${this_d.people_fully_vaccinated_per_hundred ? 
+      'et <b>'+ this_d.people_fully_vaccinated_per_hundred + '%</b> ont reçu les deux doses' : 
+      'Données non communiquées pour la seconde dose'} </span><br>
       </span></span>`
 
     }
