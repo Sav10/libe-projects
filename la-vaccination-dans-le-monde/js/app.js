@@ -361,6 +361,10 @@ ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
     // tooltips
     .on('mouseover', function(d) {
       tip.show(d)
+
+      reposition_tip()
+
+
       d3.select(this)
         .style('fill-opacity', 1)
         .style('stroke-opacity', 1)
@@ -368,6 +372,7 @@ ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
     })
     .on('mouseout', function(d) {
       tip.hide(d)
+
       d3.select(this)
         .style('fill-opacity', 0.9)
         .style('stroke-opacity', 1)
@@ -454,7 +459,8 @@ slider
 .append('text')
 .attr('class', 'dateSlider')
 .attr('text-anchor', 'end')
-.text('aujourd\'hui')
+// .text('aujourd\'hui')
+.text(moment(tMax, 'DD-MM-YYYY').format('LL'))
 ;
 
 slider
@@ -715,6 +721,34 @@ those_paths
 
     }
 
+
+function reposition_tip(){
+
+
+  let left_position_tip = parseFloat(d3.select('.d3-tip').style('left'));
+  let top_position_tip = parseFloat(d3.select('.d3-tip').style('top'));
+  let width_svg = parseFloat(d3.select('#map svg').style('width'));
+  let width_tip = parseFloat(d3.select('.d3-tip').style('width'));
+
+      if (left_position_tip < 0){
+        d3.select('.d3-tip').style('left', 0)
+      }
+      if (top_position_tip < 0){
+        d3.select('.d3-tip').style('top', 0)
+      }
+
+    if ((left_position_tip + width_tip) >= width_svg){
+
+      let new_left = (width_svg - width_tip + 10) > 0 ? (width_svg - width_tip + 10) : 0;
+
+      d3.select('.d3-tip').style('left', new_left + "px")
+      .style('opacity', 1)
+
+    }
+
+
+
+}
 
     function responsivefy(svg) {
 
