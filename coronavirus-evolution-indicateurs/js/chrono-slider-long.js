@@ -461,7 +461,7 @@ function fillColor(column){
 
 function fillColorDate(column, date){
 
-  console.log(date)
+//  console.log(date)
 
 d3.select('#period_text').text(find_textDate(date))
 
