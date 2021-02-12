@@ -262,7 +262,7 @@ function ready(error, geography, data) {
   })
 
 
-  console.log(data);
+  // console.log(data);
 
 
 d3.select('#zoomEurope')
