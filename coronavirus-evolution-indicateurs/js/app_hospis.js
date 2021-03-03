@@ -133,7 +133,7 @@ d3.select('#slider_container')
 d3.select('#minigraph_container')
 .style('display', 'flex')
 
-makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues)
+makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues, 8)
 
 
 }

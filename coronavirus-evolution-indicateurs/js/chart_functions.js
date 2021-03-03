@@ -66,7 +66,7 @@ function makeAreachart(data_, kValue, dValue, color_chart, maxvalues, number_of_
 
 
     if (dValue == 'hosp_pour_100k' || dValue == 'rea_pour_100k'){
-    axis_bottom = d3.axisBottom(xScale).ticks(chart_vars.number_of_ticks_x).tickFormat(function(d, i){return i == 0 || i == 3 ? moment(d).format('MMMM') : ''});
+    axis_bottom = d3.axisBottom(xScale).ticks(chart_vars.number_of_ticks_x).tickFormat(function(d, i){return i % 2 != 0 ? moment(d).format('MMMM') : ''});
         }
 
     axis_left = d3.axisLeft(yScale).ticks(chart_vars.number_of_ticks_y);
