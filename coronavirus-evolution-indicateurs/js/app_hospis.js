@@ -24,10 +24,12 @@ mapstate = 0,
 fulldata,
 daterange,
 timer_duration = 12000,
-selected_variable = 'hosp_pour_100k',
+selected_variable =  d3.select('#rea_rate').classed('selected') ? 'rea_pour_100k' : 'hosp_pour_100k',
 this_date_pretty,
 currentDate,
 maxvalues = {};
+
+console.log(selected_variable)
 
 var circleScale = 
 d3.scaleSqrt()
@@ -823,7 +825,7 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
     if (typeof app_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return colorScaleHosp(+app_data.filter(function(e){return e.dep == d.id})[0].hosp_pour_100k)
+      return colorScaleHosp(+app_data.filter(function(e){return e.dep == d.id})[0][selected_variable])
 
     }
     return '#fff'
