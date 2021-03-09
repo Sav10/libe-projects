@@ -36,10 +36,19 @@ var chosenChroma = chroma.scale('OrRd');
 // return chosenChroma(pct/15).hex()
 // }
 
+var colors = {
+'couv_dose1' : d3.scaleLinear()
+  .range(["white", "#23064b"])
+  .domain([0, 12]),
+'couv_dose2' : d3.scaleLinear()
+  .range(["white", "#2dae8c"])
+  .domain([0, 12])
+}
 
-var color = d3.scaleLinear()
-  .range(["white", "#23064b"]);
-color.domain([0, 12]);
+
+// var color = d3.scaleLinear()
+//   .range(["white", "#23064b"]);
+// color.domain([0, 12]);
 
 
 // var color = d3.scaleLinear()
@@ -229,8 +238,8 @@ function fillColor(column){
     if (typeof app_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
       // return color_functions[column](+app_data.filter(function(e){return e.dep == d.id})[0][column])
-      console.log(+app_data.filter(function(e){return e.dep == d.id})[0][column])
-      return color(+app_data.filter(function(e){return e.dep == d.id})[0][column])
+      // console.log(+app_data.filter(function(e){return e.dep == d.id})[0][column])
+      return colors[column](+app_data.filter(function(e){return e.dep == d.id})[0][column])
 
     }
     return '#fff'
@@ -243,6 +252,8 @@ function reset_tooltip(){
 d3.select('#minigraph_container')
 .style('display', 'none')
 
+d3.select('#tooltip')
+.style('display', 'none')
 }
 
 
@@ -509,7 +520,7 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
     if (typeof app_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return color(+app_data.filter(function(e){return e.dep == d.id})[0][selected_variable])
+      return colors[selected_variable](+app_data.filter(function(e){return e.dep == d.id})[0][selected_variable])
 
     }
     return '#fff'
