@@ -45,6 +45,41 @@ var colors = {
   .domain([0, 12])
 }
 
+var data_legend = [0,2,4,6,8,10,12, 14,16];
+
+
+// <g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(246, 185, 197);"></rect><text class="label" transform="translate(22,
+//           30)" style="text-anchor: middle;">10</text></g>
+
+var legend = d3.select('#legend .mapLegend .legendCells').selectAll('.cell')
+.data(data_legend)
+
+legend.exit().remove()
+
+
+var legend_cells = legend
+.enter()
+.append('g')
+.attr('class', 'cell')
+.attr('transform', function(d, i){ return 'translate(' + i*46 + ',0)'})
+
+legend_cells
+.append('rect')
+.attr('class', 'swatch')
+.attr('height', 15)
+.attr('width', 44)
+.style('fill', function(d){ return colors[selected_variable](d)})
+
+
+legend_cells
+.append('text')
+.attr('class', 'label')
+.attr('height', 15)
+.attr('width', 44)
+.style('text-anchor', 'middle')
+.text(function(d){return d})
+.attr('transform', 'translate(22,30)')
+
 
 // var color = d3.scaleLinear()
 //   .range(["white", "#23064b"]);
@@ -244,6 +279,10 @@ function fillColor(column){
     }
     return '#fff'
   })
+
+legend_cells
+.selectAll('rect.swatch')
+.style('fill', function(d){ return colors[column](d)})
 
 }
 
