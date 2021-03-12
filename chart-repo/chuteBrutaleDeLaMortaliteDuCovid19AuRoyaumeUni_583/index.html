@@ -1,0 +1,573 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chute brutale de la mortalité du Covid-19 au Royaume-Uni</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://statics.liberation.fr/newsite/css/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart">
+      <h3 id="chartTitle"></h3>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e61e49', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e61e49", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e61e49", personalized:null}};
+
+
+  var data = [{"date":"2021-01-01","population":"65273512.0","new_deaths_smoothed":"335","new_deaths_smoothed_per_million":"5.13","Pays":"France"},{"date":"2021-01-01","population":"331002647.0","new_deaths_smoothed":"2608","new_deaths_smoothed_per_million":"7.88","Pays":"États-Unis"},{"date":"2021-01-01","population":"67886004.0","new_deaths_smoothed":"562","new_deaths_smoothed_per_million":"8.281","Pays":"Royaume-Uni"},{"date":"2021-01-01","population":"444919060.0","new_deaths_smoothed":"3012","new_deaths_smoothed_per_million":"6.769","Pays":"Europe"},{"date":"2021-01-02","population":"444919060.0","new_deaths_smoothed":"3020","new_deaths_smoothed_per_million":"6.789","Pays":"Europe"},{"date":"2021-01-02","population":"67886004.0","new_deaths_smoothed":"596","new_deaths_smoothed_per_million":"8.773","Pays":"Royaume-Uni"},{"date":"2021-01-02","population":"65273512.0","new_deaths_smoothed":"336","new_deaths_smoothed_per_million":"5.152","Pays":"France"},{"date":"2021-01-02","population":"331002647.0","new_deaths_smoothed":"2697","new_deaths_smoothed_per_million":"8.148","Pays":"États-Unis"},{"date":"2021-01-03","population":"331002647.0","new_deaths_smoothed":"2698","new_deaths_smoothed_per_million":"8.151","Pays":"États-Unis"},{"date":"2021-01-03","population":"67886004.0","new_deaths_smoothed":"611","new_deaths_smoothed_per_million":"9.0","Pays":"Royaume-Uni"},{"date":"2021-01-03","population":"65273512.0","new_deaths_smoothed":"328","new_deaths_smoothed_per_million":"5.027","Pays":"France"},{"date":"2021-01-03","population":"444919060.0","new_deaths_smoothed":"3016","new_deaths_smoothed_per_million":"6.779","Pays":"Europe"},{"date":"2021-01-04","population":"65273512.0","new_deaths_smoothed":"331","new_deaths_smoothed_per_million":"5.064","Pays":"France"},{"date":"2021-01-04","population":"67886004.0","new_deaths_smoothed":"619","new_deaths_smoothed_per_million":"9.112","Pays":"Royaume-Uni"},{"date":"2021-01-04","population":"331002647.0","new_deaths_smoothed":"2711","new_deaths_smoothed_per_million":"8.191","Pays":"États-Unis"},{"date":"2021-01-04","population":"444919060.0","new_deaths_smoothed":"3026","new_deaths_smoothed_per_million":"6.801","Pays":"Europe"},{"date":"2021-01-05","population":"67886004.0","new_deaths_smoothed":"679","new_deaths_smoothed_per_million":"10.002","Pays":"Royaume-Uni"},{"date":"2021-01-05","population":"331002647.0","new_deaths_smoothed":"2720","new_deaths_smoothed_per_million":"8.217","Pays":"États-Unis"},{"date":"2021-01-05","population":"444919060.0","new_deaths_smoothed":"3010","new_deaths_smoothed_per_million":"6.765","Pays":"Europe"},{"date":"2021-01-05","population":"65273512.0","new_deaths_smoothed":"316","new_deaths_smoothed_per_million":"4.843","Pays":"France"},{"date":"2021-01-06","population":"65273512.0","new_deaths_smoothed":"313","new_deaths_smoothed_per_million":"4.795","Pays":"France"},{"date":"2021-01-06","population":"67886004.0","new_deaths_smoothed":"688","new_deaths_smoothed_per_million":"10.128","Pays":"Royaume-Uni"},{"date":"2021-01-06","population":"444919060.0","new_deaths_smoothed":"2909","new_deaths_smoothed_per_million":"6.539","Pays":"Europe"},{"date":"2021-01-06","population":"331002647.0","new_deaths_smoothed":"2747","new_deaths_smoothed_per_million":"8.299","Pays":"États-Unis"},{"date":"2021-01-07","population":"331002647.0","new_deaths_smoothed":"2820","new_deaths_smoothed_per_million":"8.52","Pays":"États-Unis"},{"date":"2021-01-07","population":"65273512.0","new_deaths_smoothed":"317","new_deaths_smoothed_per_million":"4.85","Pays":"France"},{"date":"2021-01-07","population":"67886004.0","new_deaths_smoothed":"716","new_deaths_smoothed_per_million":"10.543","Pays":"Royaume-Uni"},{"date":"2021-01-07","population":"444919060.0","new_deaths_smoothed":"2968","new_deaths_smoothed_per_million":"6.672","Pays":"Europe"},{"date":"2021-01-08","population":"331002647.0","new_deaths_smoothed":"3097","new_deaths_smoothed_per_million":"9.355","Pays":"États-Unis"},{"date":"2021-01-08","population":"67886004.0","new_deaths_smoothed":"818","new_deaths_smoothed_per_million":"12.054","Pays":"Royaume-Uni"},{"date":"2021-01-08","population":"65273512.0","new_deaths_smoothed":"382","new_deaths_smoothed_per_million":"5.852","Pays":"France"},{"date":"2021-01-08","population":"444919060.0","new_deaths_smoothed":"3217","new_deaths_smoothed_per_million":"7.23","Pays":"Europe"},{"date":"2021-01-09","population":"331002647.0","new_deaths_smoothed":"3214","new_deaths_smoothed_per_million":"9.711","Pays":"États-Unis"},{"date":"2021-01-09","population":"67886004.0","new_deaths_smoothed":"903","new_deaths_smoothed_per_million":"13.295","Pays":"Royaume-Uni"},{"date":"2021-01-09","population":"65273512.0","new_deaths_smoothed":"384","new_deaths_smoothed_per_million":"5.879","Pays":"France"},{"date":"2021-01-09","population":"444919060.0","new_deaths_smoothed":"3346","new_deaths_smoothed_per_million":"7.521","Pays":"Europe"},{"date":"2021-01-10","population":"65273512.0","new_deaths_smoothed":"389","new_deaths_smoothed_per_million":"5.955","Pays":"France"},{"date":"2021-01-10","population":"331002647.0","new_deaths_smoothed":"3293","new_deaths_smoothed_per_million":"9.948","Pays":"États-Unis"},{"date":"2021-01-10","population":"67886004.0","new_deaths_smoothed":"919","new_deaths_smoothed_per_million":"13.531","Pays":"Royaume-Uni"},{"date":"2021-01-10","population":"444919060.0","new_deaths_smoothed":"3371","new_deaths_smoothed_per_million":"7.577","Pays":"Europe"},{"date":"2021-01-11","population":"444919060.0","new_deaths_smoothed":"3368","new_deaths_smoothed_per_million":"7.571","Pays":"Europe"},{"date":"2021-01-11","population":"65273512.0","new_deaths_smoothed":"378","new_deaths_smoothed_per_million":"5.795","Pays":"France"},{"date":"2021-01-11","population":"67886004.0","new_deaths_smoothed":"936","new_deaths_smoothed_per_million":"13.782","Pays":"Royaume-Uni"},{"date":"2021-01-11","population":"331002647.0","new_deaths_smoothed":"3292","new_deaths_smoothed_per_million":"9.946","Pays":"États-Unis"},{"date":"2021-01-12","population":"65273512.0","new_deaths_smoothed":"360","new_deaths_smoothed_per_million":"5.52","Pays":"France"},{"date":"2021-01-12","population":"67886004.0","new_deaths_smoothed":"988","new_deaths_smoothed_per_million":"14.55","Pays":"Royaume-Uni"},{"date":"2021-01-12","population":"444919060.0","new_deaths_smoothed":"3341","new_deaths_smoothed_per_million":"7.51","Pays":"Europe"},{"date":"2021-01-12","population":"331002647.0","new_deaths_smoothed":"3403","new_deaths_smoothed_per_million":"10.281","Pays":"États-Unis"},{"date":"2021-01-13","population":"331002647.0","new_deaths_smoothed":"3417","new_deaths_smoothed_per_million":"10.324","Pays":"États-Unis"},{"date":"2021-01-13","population":"444919060.0","new_deaths_smoothed":"3414","new_deaths_smoothed_per_million":"7.674","Pays":"Europe"},{"date":"2021-01-13","population":"65273512.0","new_deaths_smoothed":"353","new_deaths_smoothed_per_million":"5.404","Pays":"France"},{"date":"2021-01-13","population":"67886004.0","new_deaths_smoothed":"1063","new_deaths_smoothed_per_million":"15.656","Pays":"Royaume-Uni"},{"date":"2021-01-14","population":"444919060.0","new_deaths_smoothed":"3453","new_deaths_smoothed_per_million":"7.761","Pays":"Europe"},{"date":"2021-01-14","population":"67886004.0","new_deaths_smoothed":"1076","new_deaths_smoothed_per_million":"15.848","Pays":"Royaume-Uni"},{"date":"2021-01-14","population":"65273512.0","new_deaths_smoothed":"354","new_deaths_smoothed_per_million":"5.421","Pays":"France"},{"date":"2021-01-14","population":"331002647.0","new_deaths_smoothed":"3418","new_deaths_smoothed_per_million":"10.326","Pays":"États-Unis"},{"date":"2021-01-15","population":"65273512.0","new_deaths_smoothed":"360","new_deaths_smoothed_per_million":"5.52","Pays":"France"},{"date":"2021-01-15","population":"444919060.0","new_deaths_smoothed":"3381","new_deaths_smoothed_per_million":"7.598","Pays":"Europe"},{"date":"2021-01-15","population":"331002647.0","new_deaths_smoothed":"3389","new_deaths_smoothed_per_million":"10.239","Pays":"États-Unis"},{"date":"2021-01-15","population":"67886004.0","new_deaths_smoothed":"1069","new_deaths_smoothed_per_million":"15.747","Pays":"Royaume-Uni"},{"date":"2021-01-16","population":"67886004.0","new_deaths_smoothed":"1107","new_deaths_smoothed_per_million":"16.303","Pays":"Royaume-Uni"},{"date":"2021-01-16","population":"65273512.0","new_deaths_smoothed":"364","new_deaths_smoothed_per_million":"5.574","Pays":"France"},{"date":"2021-01-16","population":"444919060.0","new_deaths_smoothed":"3403","new_deaths_smoothed_per_million":"7.649","Pays":"Europe"},{"date":"2021-01-16","population":"331002647.0","new_deaths_smoothed":"3403","new_deaths_smoothed_per_million":"10.281","Pays":"États-Unis"},{"date":"2021-01-17","population":"331002647.0","new_deaths_smoothed":"3385","new_deaths_smoothed_per_million":"10.226","Pays":"États-Unis"},{"date":"2021-01-17","population":"444919060.0","new_deaths_smoothed":"3406","new_deaths_smoothed_per_million":"7.655","Pays":"Europe"},{"date":"2021-01-17","population":"67886004.0","new_deaths_smoothed":"1123","new_deaths_smoothed_per_million":"16.545","Pays":"Royaume-Uni"},{"date":"2021-01-17","population":"65273512.0","new_deaths_smoothed":"362","new_deaths_smoothed_per_million":"5.552","Pays":"France"},{"date":"2021-01-18","population":"331002647.0","new_deaths_smoothed":"3301","new_deaths_smoothed_per_million":"9.973","Pays":"États-Unis"},{"date":"2021-01-18","population":"444919060.0","new_deaths_smoothed":"3324","new_deaths_smoothed_per_million":"7.47","Pays":"Europe"},{"date":"2021-01-18","population":"67886004.0","new_deaths_smoothed":"1134","new_deaths_smoothed_per_million":"16.698","Pays":"Royaume-Uni"},{"date":"2021-01-18","population":"65273512.0","new_deaths_smoothed":"376","new_deaths_smoothed_per_million":"5.754","Pays":"France"},{"date":"2021-01-19","population":"444919060.0","new_deaths_smoothed":"3395","new_deaths_smoothed_per_million":"7.63","Pays":"Europe"},{"date":"2021-01-19","population":"65273512.0","new_deaths_smoothed":"363","new_deaths_smoothed_per_million":"5.566","Pays":"France"},{"date":"2021-01-19","population":"67886004.0","new_deaths_smoothed":"1186","new_deaths_smoothed_per_million":"17.468","Pays":"Royaume-Uni"},{"date":"2021-01-19","population":"331002647.0","new_deaths_smoothed":"3052","new_deaths_smoothed_per_million":"9.22","Pays":"États-Unis"},{"date":"2021-01-20","population":"67886004.0","new_deaths_smoothed":"1223","new_deaths_smoothed_per_million":"18.011","Pays":"Royaume-Uni"},{"date":"2021-01-20","population":"331002647.0","new_deaths_smoothed":"3105","new_deaths_smoothed_per_million":"9.381","Pays":"États-Unis"},{"date":"2021-01-20","population":"444919060.0","new_deaths_smoothed":"3425","new_deaths_smoothed_per_million":"7.698","Pays":"Europe"},{"date":"2021-01-20","population":"65273512.0","new_deaths_smoothed":"375","new_deaths_smoothed_per_million":"5.743","Pays":"France"},{"date":"2021-01-21","population":"444919060.0","new_deaths_smoothed":"3409","new_deaths_smoothed_per_million":"7.662","Pays":"Europe"},{"date":"2021-01-21","population":"67886004.0","new_deaths_smoothed":"1229","new_deaths_smoothed_per_million":"18.102","Pays":"Royaume-Uni"},{"date":"2021-01-21","population":"65273512.0","new_deaths_smoothed":"384","new_deaths_smoothed_per_million":"5.881","Pays":"France"},{"date":"2021-01-21","population":"331002647.0","new_deaths_smoothed":"3135","new_deaths_smoothed_per_million":"9.471","Pays":"États-Unis"},{"date":"2021-01-22","population":"331002647.0","new_deaths_smoothed":"3125","new_deaths_smoothed_per_million":"9.442","Pays":"États-Unis"},{"date":"2021-01-22","population":"444919060.0","new_deaths_smoothed":"3467","new_deaths_smoothed_per_million":"7.793","Pays":"Europe"},{"date":"2021-01-22","population":"67886004.0","new_deaths_smoothed":"1245","new_deaths_smoothed_per_million":"18.346","Pays":"Royaume-Uni"},{"date":"2021-01-22","population":"65273512.0","new_deaths_smoothed":"386","new_deaths_smoothed_per_million":"5.909","Pays":"France"},{"date":"2021-01-23","population":"331002647.0","new_deaths_smoothed":"3112","new_deaths_smoothed_per_million":"9.401","Pays":"États-Unis"},{"date":"2021-01-23","population":"444919060.0","new_deaths_smoothed":"3402","new_deaths_smoothed_per_million":"7.646","Pays":"Europe"},{"date":"2021-01-23","population":"67886004.0","new_deaths_smoothed":"1253","new_deaths_smoothed_per_million":"18.457","Pays":"Royaume-Uni"},{"date":"2021-01-23","population":"65273512.0","new_deaths_smoothed":"391","new_deaths_smoothed_per_million":"5.99","Pays":"France"},{"date":"2021-01-24","population":"331002647.0","new_deaths_smoothed":"3115","new_deaths_smoothed_per_million":"9.412","Pays":"États-Unis"},{"date":"2021-01-24","population":"444919060.0","new_deaths_smoothed":"3404","new_deaths_smoothed_per_million":"7.651","Pays":"Europe"},{"date":"2021-01-24","population":"67886004.0","new_deaths_smoothed":"1243","new_deaths_smoothed_per_million":"18.308","Pays":"Royaume-Uni"},{"date":"2021-01-24","population":"65273512.0","new_deaths_smoothed":"395","new_deaths_smoothed_per_million":"6.058","Pays":"France"},{"date":"2021-01-25","population":"67886004.0","new_deaths_smoothed":"1242","new_deaths_smoothed_per_million":"18.291","Pays":"Royaume-Uni"},{"date":"2021-01-25","population":"444919060.0","new_deaths_smoothed":"3519","new_deaths_smoothed_per_million":"7.909","Pays":"Europe"},{"date":"2021-01-25","population":"331002647.0","new_deaths_smoothed":"3181","new_deaths_smoothed_per_million":"9.61","Pays":"États-Unis"},{"date":"2021-01-25","population":"65273512.0","new_deaths_smoothed":"401","new_deaths_smoothed_per_million":"6.15","Pays":"France"},{"date":"2021-01-26","population":"65273512.0","new_deaths_smoothed":"395","new_deaths_smoothed_per_million":"6.058","Pays":"France"},{"date":"2021-01-26","population":"67886004.0","new_deaths_smoothed":"1245","new_deaths_smoothed_per_million":"18.342","Pays":"Royaume-Uni"},{"date":"2021-01-26","population":"331002647.0","new_deaths_smoothed":"3367","new_deaths_smoothed_per_million":"10.171","Pays":"États-Unis"},{"date":"2021-01-26","population":"444919060.0","new_deaths_smoothed":"3381","new_deaths_smoothed_per_million":"7.598","Pays":"Europe"},{"date":"2021-01-27","population":"331002647.0","new_deaths_smoothed":"3301","new_deaths_smoothed_per_million":"9.974","Pays":"États-Unis"},{"date":"2021-01-27","population":"67886004.0","new_deaths_smoothed":"1231","new_deaths_smoothed_per_million":"18.131","Pays":"Royaume-Uni"},{"date":"2021-01-27","population":"444919060.0","new_deaths_smoothed":"3317","new_deaths_smoothed_per_million":"7.455","Pays":"Europe"},{"date":"2021-01-27","population":"65273512.0","new_deaths_smoothed":"401","new_deaths_smoothed_per_million":"6.146","Pays":"France"},{"date":"2021-01-28","population":"65273512.0","new_deaths_smoothed":"401","new_deaths_smoothed_per_million":"6.139","Pays":"France"},{"date":"2021-01-28","population":"444919060.0","new_deaths_smoothed":"3390","new_deaths_smoothed_per_million":"7.619","Pays":"Europe"},{"date":"2021-01-28","population":"67886004.0","new_deaths_smoothed":"1223","new_deaths_smoothed_per_million":"18.011","Pays":"Royaume-Uni"},{"date":"2021-01-28","population":"331002647.0","new_deaths_smoothed":"3278","new_deaths_smoothed_per_million":"9.904","Pays":"États-Unis"},{"date":"2021-01-29","population":"444919060.0","new_deaths_smoothed":"3349","new_deaths_smoothed_per_million":"7.527","Pays":"Europe"},{"date":"2021-01-29","population":"331002647.0","new_deaths_smoothed":"3248","new_deaths_smoothed_per_million":"9.812","Pays":"États-Unis"},{"date":"2021-01-29","population":"67886004.0","new_deaths_smoothed":"1201","new_deaths_smoothed_per_million":"17.689","Pays":"Royaume-Uni"},{"date":"2021-01-29","population":"65273512.0","new_deaths_smoothed":"425","new_deaths_smoothed_per_million":"6.515","Pays":"France"},{"date":"2021-01-30","population":"444919060.0","new_deaths_smoothed":"3420","new_deaths_smoothed_per_million":"7.686","Pays":"Europe"},{"date":"2021-01-30","population":"65273512.0","new_deaths_smoothed":"427","new_deaths_smoothed_per_million":"6.54","Pays":"France"},{"date":"2021-01-30","population":"67886004.0","new_deaths_smoothed":"1180","new_deaths_smoothed_per_million":"17.38","Pays":"Royaume-Uni"},{"date":"2021-01-30","population":"331002647.0","new_deaths_smoothed":"3167","new_deaths_smoothed_per_million":"9.567","Pays":"États-Unis"},{"date":"2021-01-31","population":"331002647.0","new_deaths_smoothed":"3159","new_deaths_smoothed_per_million":"9.544","Pays":"États-Unis"},{"date":"2021-01-31","population":"444919060.0","new_deaths_smoothed":"3355","new_deaths_smoothed_per_million":"7.54","Pays":"Europe"},{"date":"2021-01-31","population":"67886004.0","new_deaths_smoothed":"1177","new_deaths_smoothed_per_million":"17.336","Pays":"Royaume-Uni"},{"date":"2021-01-31","population":"65273512.0","new_deaths_smoothed":"430","new_deaths_smoothed_per_million":"6.59","Pays":"France"},{"date":"2021-02-01","population":"65273512.0","new_deaths_smoothed":"432","new_deaths_smoothed_per_million":"6.612","Pays":"France"},{"date":"2021-02-01","population":"444919060.0","new_deaths_smoothed":"3372","new_deaths_smoothed_per_million":"7.578","Pays":"Europe"},{"date":"2021-02-01","population":"331002647.0","new_deaths_smoothed":"3170","new_deaths_smoothed_per_million":"9.576","Pays":"États-Unis"},{"date":"2021-02-01","population":"67886004.0","new_deaths_smoothed":"1150","new_deaths_smoothed_per_million":"16.942","Pays":"Royaume-Uni"},{"date":"2021-02-02","population":"67886004.0","new_deaths_smoothed":"1124","new_deaths_smoothed_per_million":"16.553","Pays":"Royaume-Uni"},{"date":"2021-02-02","population":"331002647.0","new_deaths_smoothed":"3089","new_deaths_smoothed_per_million":"9.333","Pays":"États-Unis"},{"date":"2021-02-02","population":"65273512.0","new_deaths_smoothed":"448","new_deaths_smoothed_per_million":"6.857","Pays":"France"},{"date":"2021-02-02","population":"444919060.0","new_deaths_smoothed":"3435","new_deaths_smoothed_per_million":"7.72","Pays":"Europe"},{"date":"2021-02-03","population":"331002647.0","new_deaths_smoothed":"3079","new_deaths_smoothed_per_million":"9.303","Pays":"États-Unis"},{"date":"2021-02-03","population":"65273512.0","new_deaths_smoothed":"449","new_deaths_smoothed_per_million":"6.874","Pays":"France"},{"date":"2021-02-03","population":"67886004.0","new_deaths_smoothed":"1066","new_deaths_smoothed_per_million":"15.703","Pays":"Royaume-Uni"},{"date":"2021-02-03","population":"444919060.0","new_deaths_smoothed":"3423","new_deaths_smoothed_per_million":"7.693","Pays":"Europe"},{"date":"2021-02-04","population":"444919060.0","new_deaths_smoothed":"3275","new_deaths_smoothed_per_million":"7.362","Pays":"Europe"},{"date":"2021-02-04","population":"67886004.0","new_deaths_smoothed":"1020","new_deaths_smoothed_per_million":"15.021","Pays":"Royaume-Uni"},{"date":"2021-02-04","population":"331002647.0","new_deaths_smoothed":"3039","new_deaths_smoothed_per_million":"9.182","Pays":"États-Unis"},{"date":"2021-02-04","population":"65273512.0","new_deaths_smoothed":"400","new_deaths_smoothed_per_million":"6.121","Pays":"France"},{"date":"2021-02-05","population":"67886004.0","new_deaths_smoothed":"986","new_deaths_smoothed_per_million":"14.531","Pays":"Royaume-Uni"},{"date":"2021-02-05","population":"331002647.0","new_deaths_smoothed":"3040","new_deaths_smoothed_per_million":"9.186","Pays":"États-Unis"},{"date":"2021-02-05","population":"65273512.0","new_deaths_smoothed":"426","new_deaths_smoothed_per_million":"6.531","Pays":"France"},{"date":"2021-02-05","population":"444919060.0","new_deaths_smoothed":"3339","new_deaths_smoothed_per_million":"7.506","Pays":"Europe"},{"date":"2021-02-06","population":"65273512.0","new_deaths_smoothed":"419","new_deaths_smoothed_per_million":"6.421","Pays":"France"},{"date":"2021-02-06","population":"67886004.0","new_deaths_smoothed":"933","new_deaths_smoothed_per_million":"13.737","Pays":"Royaume-Uni"},{"date":"2021-02-06","population":"331002647.0","new_deaths_smoothed":"3016","new_deaths_smoothed_per_million":"9.111","Pays":"États-Unis"},{"date":"2021-02-06","population":"444919060.0","new_deaths_smoothed":"3222","new_deaths_smoothed_per_million":"7.242","Pays":"Europe"},{"date":"2021-02-07","population":"331002647.0","new_deaths_smoothed":"2948","new_deaths_smoothed_per_million":"8.907","Pays":"États-Unis"},{"date":"2021-02-07","population":"65273512.0","new_deaths_smoothed":"416","new_deaths_smoothed_per_million":"6.369","Pays":"France"},{"date":"2021-02-07","population":"67886004.0","new_deaths_smoothed":"902","new_deaths_smoothed_per_million":"13.287","Pays":"Royaume-Uni"},{"date":"2021-02-07","population":"444919060.0","new_deaths_smoothed":"3221","new_deaths_smoothed_per_million":"7.239","Pays":"Europe"},{"date":"2021-02-08","population":"444919060.0","new_deaths_smoothed":"3162","new_deaths_smoothed_per_million":"7.106","Pays":"Europe"},{"date":"2021-02-08","population":"331002647.0","new_deaths_smoothed":"2885","new_deaths_smoothed_per_million":"8.716","Pays":"États-Unis"},{"date":"2021-02-08","population":"65273512.0","new_deaths_smoothed":"416","new_deaths_smoothed_per_million":"6.378","Pays":"France"},{"date":"2021-02-08","population":"67886004.0","new_deaths_smoothed":"891","new_deaths_smoothed_per_million":"13.131","Pays":"Royaume-Uni"},{"date":"2021-02-09","population":"65273512.0","new_deaths_smoothed":"416","new_deaths_smoothed_per_million":"6.373","Pays":"France"},{"date":"2021-02-09","population":"331002647.0","new_deaths_smoothed":"2829","new_deaths_smoothed_per_million":"8.545","Pays":"États-Unis"},{"date":"2021-02-09","population":"67886004.0","new_deaths_smoothed":"834","new_deaths_smoothed_per_million":"12.292","Pays":"Royaume-Uni"},{"date":"2021-02-09","population":"444919060.0","new_deaths_smoothed":"3113","new_deaths_smoothed_per_million":"6.996","Pays":"Europe"},{"date":"2021-02-10","population":"67886004.0","new_deaths_smoothed":"789","new_deaths_smoothed_per_million":"11.618","Pays":"Royaume-Uni"},{"date":"2021-02-10","population":"444919060.0","new_deaths_smoothed":"3054","new_deaths_smoothed_per_million":"6.864","Pays":"Europe"},{"date":"2021-02-10","population":"331002647.0","new_deaths_smoothed":"2749","new_deaths_smoothed_per_million":"8.306","Pays":"États-Unis"},{"date":"2021-02-10","population":"65273512.0","new_deaths_smoothed":"407","new_deaths_smoothed_per_million":"6.237","Pays":"France"},{"date":"2021-02-11","population":"444919060.0","new_deaths_smoothed":"3049","new_deaths_smoothed_per_million":"6.854","Pays":"Europe"},{"date":"2021-02-11","population":"331002647.0","new_deaths_smoothed":"2669","new_deaths_smoothed_per_million":"8.064","Pays":"États-Unis"},{"date":"2021-02-11","population":"65273512.0","new_deaths_smoothed":"459","new_deaths_smoothed_per_million":"7.025","Pays":"France"},{"date":"2021-02-11","population":"67886004.0","new_deaths_smoothed":"755","new_deaths_smoothed_per_million":"11.124","Pays":"Royaume-Uni"},{"date":"2021-02-12","population":"444919060.0","new_deaths_smoothed":"2924","new_deaths_smoothed_per_million":"6.572","Pays":"Europe"},{"date":"2021-02-12","population":"331002647.0","new_deaths_smoothed":"2568","new_deaths_smoothed_per_million":"7.758","Pays":"États-Unis"},{"date":"2021-02-12","population":"65273512.0","new_deaths_smoothed":"407","new_deaths_smoothed_per_million":"6.231","Pays":"France"},{"date":"2021-02-12","population":"67886004.0","new_deaths_smoothed":"719","new_deaths_smoothed_per_million":"10.585","Pays":"Royaume-Uni"},{"date":"2021-02-13","population":"331002647.0","new_deaths_smoothed":"2509","new_deaths_smoothed_per_million":"7.58","Pays":"États-Unis"},{"date":"2021-02-13","population":"67886004.0","new_deaths_smoothed":"689","new_deaths_smoothed_per_million":"10.149","Pays":"Royaume-Uni"},{"date":"2021-02-13","population":"65273512.0","new_deaths_smoothed":"408","new_deaths_smoothed_per_million":"6.248","Pays":"France"},{"date":"2021-02-13","population":"444919060.0","new_deaths_smoothed":"2898","new_deaths_smoothed_per_million":"6.514","Pays":"Europe"},{"date":"2021-02-14","population":"65273512.0","new_deaths_smoothed":"407","new_deaths_smoothed_per_million":"6.24","Pays":"France"},{"date":"2021-02-14","population":"331002647.0","new_deaths_smoothed":"2475","new_deaths_smoothed_per_million":"7.476","Pays":"États-Unis"},{"date":"2021-02-14","population":"444919060.0","new_deaths_smoothed":"2866","new_deaths_smoothed_per_million":"6.442","Pays":"Europe"},{"date":"2021-02-14","population":"67886004.0","new_deaths_smoothed":"672","new_deaths_smoothed_per_million":"9.903","Pays":"Royaume-Uni"},{"date":"2021-02-15","population":"67886004.0","new_deaths_smoothed":"658","new_deaths_smoothed_per_million":"9.697","Pays":"Royaume-Uni"},{"date":"2021-02-15","population":"444919060.0","new_deaths_smoothed":"2754","new_deaths_smoothed_per_million":"6.189","Pays":"Europe"},{"date":"2021-02-15","population":"65273512.0","new_deaths_smoothed":"400","new_deaths_smoothed_per_million":"6.135","Pays":"France"},{"date":"2021-02-15","population":"331002647.0","new_deaths_smoothed":"2380","new_deaths_smoothed_per_million":"7.191","Pays":"États-Unis"},{"date":"2021-02-16","population":"67886004.0","new_deaths_smoothed":"622","new_deaths_smoothed_per_million":"9.165","Pays":"Royaume-Uni"},{"date":"2021-02-16","population":"444919060.0","new_deaths_smoothed":"2613","new_deaths_smoothed_per_million":"5.873","Pays":"Europe"},{"date":"2021-02-16","population":"331002647.0","new_deaths_smoothed":"2188","new_deaths_smoothed_per_million":"6.61","Pays":"États-Unis"},{"date":"2021-02-16","population":"65273512.0","new_deaths_smoothed":"381","new_deaths_smoothed_per_million":"5.835","Pays":"France"},{"date":"2021-02-17","population":"331002647.0","new_deaths_smoothed":"2055","new_deaths_smoothed_per_million":"6.209","Pays":"États-Unis"},{"date":"2021-02-17","population":"67886004.0","new_deaths_smoothed":"584","new_deaths_smoothed_per_million":"8.609","Pays":"Royaume-Uni"},{"date":"2021-02-17","population":"444919060.0","new_deaths_smoothed":"2583","new_deaths_smoothed_per_million":"5.805","Pays":"Europe"},{"date":"2021-02-17","population":"65273512.0","new_deaths_smoothed":"383","new_deaths_smoothed_per_million":"5.865","Pays":"France"},{"date":"2021-02-18","population":"444919060.0","new_deaths_smoothed":"2499","new_deaths_smoothed_per_million":"5.617","Pays":"Europe"},{"date":"2021-02-18","population":"67886004.0","new_deaths_smoothed":"552","new_deaths_smoothed_per_million":"8.135","Pays":"Royaume-Uni"},{"date":"2021-02-18","population":"65273512.0","new_deaths_smoothed":"370","new_deaths_smoothed_per_million":"5.671","Pays":"France"},{"date":"2021-02-18","population":"331002647.0","new_deaths_smoothed":"1954","new_deaths_smoothed_per_million":"5.902","Pays":"États-Unis"},{"date":"2021-02-19","population":"65273512.0","new_deaths_smoothed":"360","new_deaths_smoothed_per_million":"5.511","Pays":"France"},{"date":"2021-02-19","population":"331002647.0","new_deaths_smoothed":"1915","new_deaths_smoothed_per_million":"5.785","Pays":"États-Unis"},{"date":"2021-02-19","population":"444919060.0","new_deaths_smoothed":"2452","new_deaths_smoothed_per_million":"5.51","Pays":"Europe"},{"date":"2021-02-19","population":"67886004.0","new_deaths_smoothed":"520","new_deaths_smoothed_per_million":"7.66","Pays":"Royaume-Uni"},{"date":"2021-02-20","population":"65273512.0","new_deaths_smoothed":"354","new_deaths_smoothed_per_million":"5.419","Pays":"France"},{"date":"2021-02-20","population":"67886004.0","new_deaths_smoothed":"495","new_deaths_smoothed_per_million":"7.292","Pays":"Royaume-Uni"},{"date":"2021-02-20","population":"331002647.0","new_deaths_smoothed":"1859","new_deaths_smoothed_per_million":"5.616","Pays":"États-Unis"},{"date":"2021-02-20","population":"444919060.0","new_deaths_smoothed":"2408","new_deaths_smoothed_per_million":"5.413","Pays":"Europe"},{"date":"2021-02-21","population":"67886004.0","new_deaths_smoothed":"489","new_deaths_smoothed_per_million":"7.203","Pays":"Royaume-Uni"},{"date":"2021-02-21","population":"331002647.0","new_deaths_smoothed":"1871","new_deaths_smoothed_per_million":"5.654","Pays":"États-Unis"},{"date":"2021-02-21","population":"444919060.0","new_deaths_smoothed":"2386","new_deaths_smoothed_per_million":"5.362","Pays":"Europe"},{"date":"2021-02-21","population":"65273512.0","new_deaths_smoothed":"353","new_deaths_smoothed_per_million":"5.401","Pays":"France"},{"date":"2021-02-22","population":"67886004.0","new_deaths_smoothed":"481","new_deaths_smoothed_per_million":"7.083","Pays":"Royaume-Uni"},{"date":"2021-02-22","population":"65273512.0","new_deaths_smoothed":"341","new_deaths_smoothed_per_million":"5.231","Pays":"France"},{"date":"2021-02-22","population":"444919060.0","new_deaths_smoothed":"2378","new_deaths_smoothed_per_million":"5.345","Pays":"Europe"},{"date":"2021-02-22","population":"331002647.0","new_deaths_smoothed":"1921","new_deaths_smoothed_per_million":"5.803","Pays":"États-Unis"},{"date":"2021-02-23","population":"331002647.0","new_deaths_smoothed":"1998","new_deaths_smoothed_per_million":"6.035","Pays":"États-Unis"},{"date":"2021-02-23","population":"444919060.0","new_deaths_smoothed":"2340","new_deaths_smoothed_per_million":"5.26","Pays":"Europe"},{"date":"2021-02-23","population":"67886004.0","new_deaths_smoothed":"445","new_deaths_smoothed_per_million":"6.555","Pays":"Royaume-Uni"},{"date":"2021-02-23","population":"65273512.0","new_deaths_smoothed":"319","new_deaths_smoothed_per_million":"4.889","Pays":"France"},{"date":"2021-02-24","population":"67886004.0","new_deaths_smoothed":"403","new_deaths_smoothed_per_million":"5.934","Pays":"Royaume-Uni"},{"date":"2021-02-24","population":"331002647.0","new_deaths_smoothed":"2107","new_deaths_smoothed_per_million":"6.366","Pays":"États-Unis"},{"date":"2021-02-24","population":"444919060.0","new_deaths_smoothed":"2259","new_deaths_smoothed_per_million":"5.077","Pays":"Europe"},{"date":"2021-02-24","population":"65273512.0","new_deaths_smoothed":"315","new_deaths_smoothed_per_million":"4.819","Pays":"France"},{"date":"2021-02-25","population":"444919060.0","new_deaths_smoothed":"2181","new_deaths_smoothed_per_million":"4.903","Pays":"Europe"},{"date":"2021-02-25","population":"67886004.0","new_deaths_smoothed":"384","new_deaths_smoothed_per_million":"5.659","Pays":"Royaume-Uni"},{"date":"2021-02-25","population":"65273512.0","new_deaths_smoothed":"313","new_deaths_smoothed_per_million":"4.797","Pays":"France"},{"date":"2021-02-25","population":"331002647.0","new_deaths_smoothed":"2091","new_deaths_smoothed_per_million":"6.317","Pays":"États-Unis"},{"date":"2021-02-26","population":"65273512.0","new_deaths_smoothed":"308","new_deaths_smoothed_per_million":"4.725","Pays":"France"},{"date":"2021-02-26","population":"67886004.0","new_deaths_smoothed":"357","new_deaths_smoothed_per_million":"5.263","Pays":"Royaume-Uni"},{"date":"2021-02-26","population":"331002647.0","new_deaths_smoothed":"2013","new_deaths_smoothed_per_million":"6.083","Pays":"États-Unis"},{"date":"2021-02-26","population":"444919060.0","new_deaths_smoothed":"2171","new_deaths_smoothed_per_million":"4.879","Pays":"Europe"},{"date":"2021-02-27","population":"331002647.0","new_deaths_smoothed":"1971","new_deaths_smoothed_per_million":"5.956","Pays":"États-Unis"},{"date":"2021-02-27","population":"444919060.0","new_deaths_smoothed":"2185","new_deaths_smoothed_per_million":"4.911","Pays":"Europe"},{"date":"2021-02-27","population":"65273512.0","new_deaths_smoothed":"312","new_deaths_smoothed_per_million":"4.786","Pays":"France"},{"date":"2021-02-27","population":"67886004.0","new_deaths_smoothed":"335","new_deaths_smoothed_per_million":"4.937","Pays":"Royaume-Uni"},{"date":"2021-02-28","population":"67886004.0","new_deaths_smoothed":"325","new_deaths_smoothed_per_million":"4.783","Pays":"Royaume-Uni"},{"date":"2021-02-28","population":"331002647.0","new_deaths_smoothed":"1948","new_deaths_smoothed_per_million":"5.886","Pays":"États-Unis"},{"date":"2021-02-28","population":"444919060.0","new_deaths_smoothed":"2192","new_deaths_smoothed_per_million":"4.927","Pays":"Europe"},{"date":"2021-02-28","population":"65273512.0","new_deaths_smoothed":"307","new_deaths_smoothed_per_million":"4.705","Pays":"France"},{"date":"2021-03-01","population":"331002647.0","new_deaths_smoothed":"1983","new_deaths_smoothed_per_million":"5.99","Pays":"États-Unis"},{"date":"2021-03-01","population":"65273512.0","new_deaths_smoothed":"313","new_deaths_smoothed_per_million":"4.795","Pays":"France"},{"date":"2021-03-01","population":"67886004.0","new_deaths_smoothed":"314","new_deaths_smoothed_per_million":"4.628","Pays":"Royaume-Uni"},{"date":"2021-03-01","population":"444919060.0","new_deaths_smoothed":"2189","new_deaths_smoothed_per_million":"4.921","Pays":"Europe"},{"date":"2021-03-02","population":"67886004.0","new_deaths_smoothed":"285","new_deaths_smoothed_per_million":"4.196","Pays":"Royaume-Uni"},{"date":"2021-03-02","population":"65273512.0","new_deaths_smoothed":"311","new_deaths_smoothed_per_million":"4.767","Pays":"France"},{"date":"2021-03-02","population":"444919060.0","new_deaths_smoothed":"2144","new_deaths_smoothed_per_million":"4.819","Pays":"Europe"},{"date":"2021-03-02","population":"331002647.0","new_deaths_smoothed":"1936","new_deaths_smoothed_per_million":"5.85","Pays":"États-Unis"},{"date":"2021-03-03","population":"65273512.0","new_deaths_smoothed":"317","new_deaths_smoothed_per_million":"4.863","Pays":"France"},{"date":"2021-03-03","population":"444919060.0","new_deaths_smoothed":"2163","new_deaths_smoothed_per_million":"4.861","Pays":"Europe"},{"date":"2021-03-03","population":"67886004.0","new_deaths_smoothed":"291","new_deaths_smoothed_per_million":"4.289","Pays":"Royaume-Uni"},{"date":"2021-03-03","population":"331002647.0","new_deaths_smoothed":"1839","new_deaths_smoothed_per_million":"5.555","Pays":"États-Unis"},{"date":"2021-03-04","population":"67886004.0","new_deaths_smoothed":"279","new_deaths_smoothed_per_million":"4.116","Pays":"Royaume-Uni"},{"date":"2021-03-04","population":"65273512.0","new_deaths_smoothed":"322","new_deaths_smoothed_per_million":"4.933","Pays":"France"},{"date":"2021-03-04","population":"444919060.0","new_deaths_smoothed":"2190","new_deaths_smoothed_per_million":"4.921","Pays":"Europe"},{"date":"2021-03-04","population":"331002647.0","new_deaths_smoothed":"1777","new_deaths_smoothed_per_million":"5.37","Pays":"États-Unis"},{"date":"2021-03-05","population":"67886004.0","new_deaths_smoothed":"264","new_deaths_smoothed_per_million":"3.887","Pays":"Royaume-Uni"},{"date":"2021-03-05","population":"331002647.0","new_deaths_smoothed":"1731","new_deaths_smoothed_per_million":"5.229","Pays":"États-Unis"},{"date":"2021-03-05","population":"444919060.0","new_deaths_smoothed":"2183","new_deaths_smoothed_per_million":"4.907","Pays":"Europe"},{"date":"2021-03-05","population":"65273512.0","new_deaths_smoothed":"308","new_deaths_smoothed_per_million":"4.714","Pays":"France"},{"date":"2021-03-06","population":"444919060.0","new_deaths_smoothed":"2177","new_deaths_smoothed_per_million":"4.892","Pays":"Europe"},{"date":"2021-03-06","population":"331002647.0","new_deaths_smoothed":"1731","new_deaths_smoothed_per_million":"5.229","Pays":"États-Unis"},{"date":"2021-03-06","population":"67886004.0","new_deaths_smoothed":"245","new_deaths_smoothed_per_million":"3.609","Pays":"Royaume-Uni"},{"date":"2021-03-06","population":"65273512.0","new_deaths_smoothed":"306","new_deaths_smoothed_per_million":"4.681","Pays":"France"},{"date":"2021-03-07","population":"331002647.0","new_deaths_smoothed":"1678","new_deaths_smoothed_per_million":"5.071","Pays":"États-Unis"},{"date":"2021-03-07","population":"67886004.0","new_deaths_smoothed":"236","new_deaths_smoothed_per_million":"3.479","Pays":"Royaume-Uni"},{"date":"2021-03-07","population":"65273512.0","new_deaths_smoothed":"307","new_deaths_smoothed_per_million":"4.699","Pays":"France"},{"date":"2021-03-07","population":"444919060.0","new_deaths_smoothed":"2181","new_deaths_smoothed_per_million":"4.901","Pays":"Europe"},{"date":"2021-03-08","population":"331002647.0","new_deaths_smoothed":"1565","new_deaths_smoothed_per_million":"4.727","Pays":"États-Unis"},{"date":"2021-03-08","population":"444919060.0","new_deaths_smoothed":"2169","new_deaths_smoothed_per_million":"4.876","Pays":"Europe"},{"date":"2021-03-08","population":"65273512.0","new_deaths_smoothed":"305","new_deaths_smoothed_per_million":"4.673","Pays":"France"},{"date":"2021-03-08","population":"67886004.0","new_deaths_smoothed":"231","new_deaths_smoothed_per_million":"3.396","Pays":"Royaume-Uni"},{"date":"2021-03-09","population":"331002647.0","new_deaths_smoothed":"1567","new_deaths_smoothed_per_million":"4.735","Pays":"États-Unis"},{"date":"2021-03-09","population":"444919060.0","new_deaths_smoothed":"2184","new_deaths_smoothed_per_million":"4.91","Pays":"Europe"},{"date":"2021-03-09","population":"67886004.0","new_deaths_smoothed":"215","new_deaths_smoothed_per_million":"3.161","Pays":"Royaume-Uni"},{"date":"2021-03-09","population":"65273512.0","new_deaths_smoothed":"297","new_deaths_smoothed_per_million":"4.557","Pays":"France"},{"date":"2021-03-10","population":"67886004.0","new_deaths_smoothed":"172","new_deaths_smoothed_per_million":"2.536","Pays":"Royaume-Uni"},{"date":"2021-03-10","population":"65273512.0","new_deaths_smoothed":"287","new_deaths_smoothed_per_million":"4.403","Pays":"France"},{"date":"2021-03-10","population":"331002647.0","new_deaths_smoothed":"1437","new_deaths_smoothed_per_million":"4.341","Pays":"États-Unis"},{"date":"2021-03-10","population":"444919060.0","new_deaths_smoothed":"2154","new_deaths_smoothed_per_million":"4.842","Pays":"Europe"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":140,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":2.536,"calculated_right_value":18.457,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":true,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":4,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":4,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"black","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"date","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('path.line').on('mouseover', function(d){\nd3.selectAll('path.line').style('stroke-width', 2).style('opacity', 0.5)\nd3.select(this).style('stroke-width', 3).style('opacity', 1)});\nd3.selectAll('path.line').on('mouseout', function(d){\nd3.selectAll('path.line').style('stroke-width', 2).style('opacity', 1)});\nd3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM')});\nd3.selectAll('path.line').filter(function(d){return d[0].Pays != 'Royaume-Uni'}).style('stroke', '#aaa').style('stroke-width', 2);\nd3.selectAll('path.line').filter(function(d){return d[0].Pays == 'Royaume-Uni'}).style('stroke-width', 3);\nd3.selectAll('svg text.label').filter(function(d){return d.Pays == \"Royaume-Uni\"}).style('fill', '#e61e49').style('opacity', 1);\nd3.selectAll('svg text.label').filter(function(d){return d.Pays != \"Royaume-Uni\"}).style('fill', '#aaa').style('opacity', 1);\nd3.selectAll('circle.dotPoint').on('click', function(d){\nshow_tooltip(d);\nconsole.log(d)\nd3.selectAll('path.line').filter(function(d){return d[0].Pays != d.Pays}).style('stroke', '#ccc').style('stroke-width', 2);\nd3.selectAll('path.line').filter(function(d){return d[0].Pays == d.Pays}).style('stroke-width', 3);});\nd3.selectAll('svg text.label').on('mouseover', function(d){\nd3.selectAll('svg text.label').style('opacity', 0.5)\nd3.select(this).style('opacity', 1)\nd3.selectAll('path.line').style('stroke-width', 2).style('opacity', 0.5)\nd3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1);\n});\nd3.selectAll('svg text.label').on('mouseout', function(d){\nd3.selectAll('path.line').style('stroke-width', 2).style('opacity', 1);\nd3.selectAll('svg text.label').style('opacity', 1)});\nd3.selectAll('circle.dotPoint').on('mouseover', function(d){\nshow_tooltip(d);\nd3.selectAll('path.line').filter(function(e){return e[0].Pays != d.Pays}).style('stroke-width', 2);\nd3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 4);});\nd3.selectAll('circle.dotPoint').on('mouseout', function(d){\nhide_tooltip(d);\nd3.selectAll('path.line').style('stroke-width', 2).style('opacity', 1);})"},"colorizeField":{"value":true,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":1,"category":"color"},"colorizeFieldText":{"value":"Royaume-Uni","type":"simpleInputs","label":"Critères pour colorier le champ","activated":true,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"date","value":"date"},{"label":"Pays","value":"Pays"},{"label":"new_deaths_smoothed_per_million","value":"new_deaths_smoothed_per_million"}],"initial_range_value":"black","manual_range_value":"Pays","activated":true,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[date|frenchDate]]<br>\n[[Pays]]<br>\n<strong>Nombre de morts : </strong>[[new_deaths_smoothed]]<br>\n<strong>Nombre de morts par millions : </strong>[[new_deaths_smoothed_per_million]]"},"moveElements":{"value":true,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"value":{"_groups":[[{"__data__":{"date":"2021-03-09T23:00:00.000Z","population":"65273512.0","new_deaths_smoothed":"287","new_deaths_smoothed_per_million":4.403,"Pays":"France","x_value":"2021-03-09T23:00:00.000Z","y_value":4.403,"name":"France"},"__on":[{"type":"mouseover","name":"","capture":false},{"type":"mouseout","name":"","capture":false},{"type":"click","name":"","capture":false},{"type":"mousedown","name":"drag","capture":false}]}]],"_parents":[null]},"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{"d_17578":{"elementType":"text","elementOrder":8,"operations":{"x":"407","y":"268.7374979682505"}},"d_10078":{"elementType":"text","elementOrder":9,"operations":{"x":"408","y":"290.03185783171693"}},"d_11718":{"elementType":"text","elementOrder":7,"operations":{"x":"406","y":"251.66256704773258"}},"d_51905":{"elementType":"text","elementOrder":10,"operations":{"x":"406","y":"235.05136262664573"}}},"thoseElementsOrder":["d_10078","d_17578","d_11718","d_51905"]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["date","Pays"],"selected_yRows":["new_deaths_smoothed_per_million"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":["date","Pays","new_deaths_smoothed","new_deaths_smoothed_per_million"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"lineChartFromTidyData","chartTitle":"Chute brutale de la mortalité du Covid-19 au Royaume-Uni","chartSource":"Our world in data","chartSubTitle":"Nombre de morts par millions d'habitants, moyenne mobile sur une semaine","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeLinechartFromTidyData(data_) {
+
+      var initial_data = _.cloneDeep(data_);
+      var kValue = graphParameters['selected_xRows'][0];
+      var kValue2 = graphParameters['selected_xRows'][1];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      var data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      data.forEach(function(d){
+
+        d[kValue] = (isNaN(d[kValue]) || typeof(d[kValue])  === 'object') ? d[kValue] : +d[kValue];
+        d.x_value = d[kValue]
+
+      })
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+                if (manualReusableParameters.startEndValues.manual_left_value){
+                    data = data.filter(function(d){return d.x_value >= manualReusableParameters.startEndValues.manual_left_value})
+                }
+               if (manualReusableParameters.startEndValues.manual_right_value){
+                    data = data.filter(function(d){return d.x_value <= manualReusableParameters.startEndValues.manual_right_value})
+                }
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+            if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+               
+            }
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+            data = prepareLineChartIndice100ValueForTidy(data, kValue, dValues, kValue2);
+        }
+    }
+
+    else{
+      // data = prepareLineChartData(data, kValue, dValues);
+  }
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+      //   var newScale = d3.scaleOrdinal()
+      // .domain(_.uniq(data.map(function(d){return d.kValue})))
+      // .range(_.range(1, (_.uniq(data.map(function(d){return d.kValue}))).length + 1))
+
+
+      var those_xValues = _.uniq(data.map(function(d){return d[kValue]})).filter(function(d) {return d})
+
+      // data.forEach(function(d){
+      //   d.x_value = d[kValue]
+      // })
+
+      data = _.groupBy(data, kValue2)
+      data = d3.values(data)
+
+      data.forEach(function(d){
+        d.forEach(function(e){
+        // e.x_value = those_xValues.indexOf(e.x_value)
+        e.x_value = e[kValue]
+        e.y_value = +e[dValue]
+        e.name = e[kValue2]
+
+        })
+
+        d = d.sort(function(a,b){return a.x_value - b.x_value})
+
+      })
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+        var allLines = g_inner
+        .selectAll('.line')
+        .data(data);
+
+        allLines
+        .transition()
+        .duration(200)
+        .attr('d', function(d) { return line(d) })
+        .attr('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().transition().duration(200).remove();
+
+        allLines
+        .enter()
+        .append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .attr('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('stroke-width', 2)
+        .style('fill', 'none');
+
+        AllDotPoints = g_inner
+        .selectAll('circle.dotPoint')
+        .data(_.flatten(data));
+
+        AllDotPoints
+        // .transition()
+        // .duration(200)
+        .attr('cx', function(d) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
+
+        AllDotPoints.exit().transition().duration(200).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        .on('mouseover', function(d, i){ show_tooltip(d, d.name)})
+        .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+/// Axis Label
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+  customizeAxis()
+
+  drawLegend()
+
+  colorizeOnlyOneCategory([{svg_element:'path', look_in_object:0,  property_types:['stroke'], reappend_nodes:true},
+    {svg_element:'circle', look_in_object:false,  property_types:['stroke', 'fill'], reappend_nodes:true}])
+
+  addCustomCode()
+
+}
+
+initChart();
+
+makeLinechartFromTidyData(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
