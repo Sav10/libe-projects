@@ -4,16 +4,20 @@
 
 
 
-function makeAreachart(data_, kValue, dValue, color_chart, maxvalues, variable_name, number_of_ticks_x=3) {
+function makeAreachart(data_, kValue, dValue, color_chart, maxvalues, variable_name, last_date, number_of_ticks_x=3) {
 
-  console.log(data_)
+// let data_ = data_.filter(d=>d.date <= )
 
-  console.log(kValue, dValue, variable_name)
+  // console.log(data_, last_date, parseTime(last_date))
+
+  // console.log(kValue, dValue, variable_name)
+
+// d.date = parseTime(d.datetime)
 
 
+data_ = data_.filter(d=>d.date <= parseTime(last_date))
 
-
-let this_object_info = _.find(app_data, d => d.dep == data_[0].dep);
+let this_object_info = _.find(app_data['tx_incidence'], d => d.dep == data_[0].dep);
 console.log(this_object_info)
 
 d3.select("svg#minigraph").remove()

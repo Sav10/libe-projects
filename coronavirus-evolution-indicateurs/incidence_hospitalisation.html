@@ -66,7 +66,7 @@
     #map_info {
     position: absolute;
     display: none;
-    width: 95%;
+    width: 97%;
     max-width: 700px;
     padding: 10px;
     /*margin-top: 10px;*/
@@ -80,6 +80,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   border: 0;
+  margin-left: .5%;
 }
     .intro-section {
     background-color: #E3234A;
@@ -435,11 +436,6 @@ min-height: 10em;
 }
 
 
-#map_info {
-    /*border: 0;*/
-/*    max-width: 400px;*/
-
-}
 
 #tooltip .date_tooltip{
 
@@ -470,11 +466,6 @@ font-size: 20px;
 @media (max-width: 768px)
 {
 
-#map_info{
-/*    max-width: 89vW;
-    left: 12px;
-    padding-left: 4px;*/
-}
 
 #tooltip_content li {
     line-height: 12px;
@@ -493,10 +484,6 @@ font-size: 20px;
 @media (min-width: 768px)
 {
 
-#map_info {
-/*    margin-top: 21px;
-    margin-left: 35px;*/
-}
 
 }
 
@@ -513,9 +500,6 @@ font-size: 2em;
 
 }
 
-#map_info {
-    /*display: block;*/
-}
 
 #evolution_indicateur{
 
@@ -552,10 +536,6 @@ font-size: 2em;
     padding: 5px 5px 5px;
 }
 
-#map_info{
-/*padding: 3px;*/
-
-}
 
 #tooltip .date_tooltip{
 font-size: 1.2em;
@@ -645,7 +625,7 @@ a#play_button img {
 
 a#play_button {
     margin-right: 2px;
-   margin-left: 7px;
+   margin-left: 15px;
   margin-top: 23px;
 }
 
@@ -657,10 +637,6 @@ border: 0;
  padding: 3px;
 }
 
-#map_info{
-
-
-}
 
 #slider_container {
     margin: 0 auto;
@@ -709,6 +685,11 @@ stroke: #c1c1c1;
 /*border: 1px solid #c1c1c1;  */
 }
 
+
+#articles p{
+padding-left:3px;   
+}
+
   </style>
 
 </head>
@@ -746,7 +727,7 @@ stroke: #c1c1c1;
           <!-- <div id='appenedCityTagContainer'></div> -->
           <div id="articles" class='explanation_block'>
 
-          <h1 id="graph_title">Covid-19 : évolution des indicateurs depuis le 1er juillet</h1>
+          <h1 id="graph_title">Covid-19 : évolution des indicateurs depuis le 1er septembre</h1>
                     <div id="button_box">
                       <!-- <a id="play_button" class="play"><img src="img/play.svg"></a> -->
                       <a style="color: #fff;background-color: #e91845;" class="actionButton selected" id="incidence_rate">Incidence</a>
@@ -910,12 +891,13 @@ stroke: #c1c1c1;
     </div>
     <div id="articles">
 <br>
-
-              <p id='incidence_text' class='explanation_text' ><strong>Taux d'incidence</strong><br> Nombre de tests positifs pour 100 000 habitants sur une semaine.</p>
-              <p id='positivity_text' class='explanation_text' style="display: none;"><strong>Taux de positivité</strong> :  Nombre de positif pour cent tests virologiques.</p>
  <div id="map_info" style="opacity: 1; display: flex;">
 <div id='minigraph_container'></div>
             </div>
+
+              <p id='incidence_text' class='explanation_text' ><strong>Taux d'incidence</strong><br> Nombre de tests positifs pour 100 000 habitants sur une semaine.</p>
+              <p id='positivity_text' class='explanation_text' style="display: none;"><strong>Taux de positivité</strong> :  Nombre de positif pour cent tests virologiques.</p>
+
 
 
 <p><strong>Taux d'incidence</strong><br>
