@@ -27,7 +27,8 @@ this_date_pretty,
 currentDate,
 maxvalues = {},
 tMax,
-t0;
+t0,
+selected_dep = [];
 
 var circleScale = 
 d3.scaleSqrt()
@@ -46,6 +47,10 @@ const variables_names= {
   hosp_pour_100k : `taux d'hospitalisation`,
   rea_pour_100k : `taux de réanimation`
 }
+
+let article_height = $(window).width()/2 > 220 ? ($(window).width()/2 + 50) : 240;
+d3.select('#information')
+.style('min-height', article_height + 'px')
 
 var parseTime2 = d3.timeParse("%Y-%m-%d");
 var tooltip_initial_content = '';
@@ -674,14 +679,24 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
     .style('stroke-opacity', 1)
     .style('stroke-width', 2)
 
-
   })
   .on('mouseout', function(d) {
-    
-  d3.select('#tooltip')
-  .style('display', 'block')
-  .html('<span class="details"><span class="date_tooltip">' + this_date_pretty + '</span></span>')
 
+
+    if (selected_dep.length > 0){
+
+     showTip(selected_dep[1])
+    allPaths
+    .style('stroke-opacity', .5)
+    .style('fill-opacity', .5)
+
+    d3.select(selected_dep[0])
+    .style('fill-opacity', 1)
+    .style('stroke-opacity', 1)
+    .style('stroke-width', 2)
+
+    }
+    else{
     reset_tooltip()
 
     allPaths
@@ -692,7 +707,60 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
     .style('fill-opacity', 1)
     .style('stroke-opacity', 0.5)
     .style('stroke-width', 1)
+
+
+    }
+
+
   })
+
+
+
+d3.select('body').on("click",function(){
+    var outside = allPaths.filter(equalToEventTarget).empty();
+    if (outside) {
+    reset_tooltip()
+selected_dep = [];
+    allPaths
+    .style('stroke-opacity', .8)
+    .style('fill-opacity', 1)
+
+    d3.select(this)
+    .style('fill-opacity', 1)
+    .style('stroke-opacity', 0.5)
+    .style('stroke-width', 1)
+    }
+else{
+
+    //   showTip(d)
+    // allPaths
+    // .style('stroke-opacity', .5)
+    // .style('fill-opacity', .5)
+    // d3.select(this)
+    // .style('fill-opacity', 1)
+    // .style('stroke-opacity', 1)
+    // .style('stroke-width', 2)
+
+}
+});
+
+  allPaths
+  .on('click', function(d) {
+
+    selected_dep = [this, d];
+
+    showTip(d)
+    allPaths
+    .style('stroke-opacity', .5)
+    .style('fill-opacity', .5)
+    d3.select(this)
+    .style('fill-opacity', 1)
+    .style('stroke-opacity', 1)
+    .style('stroke-width', 2)
+
+  })
+
+
 
 setTimeout(() => {
 
@@ -755,6 +823,8 @@ function responsivefy(svg) {
 
           svg.attr("width", targetWidth);
           svg.attr("height", targetHeight);
+
+
           }
         }
 
@@ -1067,10 +1137,19 @@ svg_slider
 .attr('width', (slider_width + 10))
 handle_factor = slider_width/100;
 
+let article_height = $(window).width()/2 > 220 ? ($(window).width()/2 + 50) : 240;;
+d3.select('#information')
+.style('min-height', article_height + 'px')
+
 }
 
 function getBoundingBoxCenter (selection) {
   var element = selection.node();
   var bbox = element.getBBox();
   return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
+}
+
+
+function equalToEventTarget() {
+    return this == d3.event.target;
 }
