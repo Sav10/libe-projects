@@ -685,7 +685,7 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
     reset_tooltip()
 
     allPaths
-    .style('stroke-opacity', .7)
+    .style('stroke-opacity', .8)
     .style('fill-opacity', 1)
 
     d3.select(this)
