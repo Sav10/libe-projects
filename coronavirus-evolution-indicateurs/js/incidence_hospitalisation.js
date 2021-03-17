@@ -21,11 +21,13 @@ thisMinZoom = 2,
 mapstate = 0,
 fulldata,
 daterange = {},
-timer_duration = 300,
+timer_duration = 5000,
 selected_variable = 'tx_incidence',
 this_date_pretty,
 currentDate,
-maxvalues = {};
+maxvalues = {},
+tMax,
+t0;
 
 var circleScale = 
 d3.scaleSqrt()
@@ -34,6 +36,9 @@ d3.scaleSqrt()
 var circleScaleEcart = 
 d3.scaleSqrt()
 .range([0, 29]);
+
+var x_scale = d3.scaleTime()
+.range([0, 100]);
 
 const variables_names= {
   tx_incidence : `taux d'incidence`,
@@ -100,7 +105,24 @@ color_hospi.domain([0, 30, 75, 150]);
 
 var color_rea = d3.scaleLinear()
   .range(["white", '#E3234A', "#6d142d", '#000']);
-color_rea.domain([0, 5, 10, 20]);
+color_rea.domain([0, 5, 10, 15]);
+
+const hosp_label_scale = [0, 10, 30, 80, 150];
+
+for (i in hosp_label_scale){
+let temp_d = hosp_label_scale[i]
+d3.select("#" + "dot_hosp_" +String(temp_d))
+.style('background-color', color_hospi(temp_d))
+}
+
+const rea_label_scale = [0, 5, 8, 12, 15];
+
+for (i in rea_label_scale){
+let temp_d = rea_label_scale[i]
+d3.select("#" + "dot_rea_" +String(temp_d))
+.style('background-color', color_rea(temp_d))
+}
+
 
 var colorIncidence = function (x){
 
@@ -151,6 +173,8 @@ d3.select('#positivity_text')
 
 selected_variable = 'tx_positivite';
 tMax = parseTime2(_.last(daterange[selected_variable]))
+x_scale
+.domain([t0, tMax])
 if (daterange[selected_variable].indexOf(currentDate) == -1){
  currentDate = _.last(daterange[selected_variable])
 }
@@ -184,6 +208,8 @@ d3.select('#incidence_text')
 
 selected_variable = 'tx_incidence';
 tMax = parseTime2(_.last(daterange[selected_variable]))
+x_scale
+.domain([t0, tMax])
 if (daterange[selected_variable].indexOf(currentDate) == -1){
  currentDate = _.last(daterange[selected_variable])
 }
@@ -207,16 +233,24 @@ d3.selectAll('#hospitalisation')
 .style('color', '#fff')
 .style('background-color', '#e91845')
 
-// d3.selectAll('.explanation_text')
-// .style('display', 'none')
+d3.selectAll('.explanation_text')
+.style('display', 'none')
 
-// d3.select('#R_text')
-// .style('display', 'inline-block')
+d3.select('#hospitalisation_text')
+.style('display', 'inline-block')
 
-fillColorDate('hosp_pour_100k', currentDate)
+if (currentDate == _.last(daterange[selected_variable])){
+selected_variable = 'hosp_pour_100k';
+currentDate = _.last(daterange[selected_variable])
+}
 selected_variable = 'hosp_pour_100k';
 
+fillColorDate(selected_variable, currentDate)
+
+
 tMax = parseTime2(_.last(daterange[selected_variable]))
+x_scale
+.domain([t0, tMax])
 d3.select('svg#map_slider g.date-container text.endDate')
 .text(moment(tMax).format('Do MMMM'))
 
@@ -234,16 +268,24 @@ d3.selectAll('#reanimation')
 .style('color', '#fff')
 .style('background-color', '#e91845')
 
-// d3.selectAll('.explanation_text')
-// .style('display', 'none')
+d3.selectAll('.explanation_text')
+.style('display', 'none')
 
-// d3.select('#reanimation_text')
-// .style('display', 'inline-block')
+d3.select('#reanimation_text')
+.style('display', 'inline-block')
 
-fillColorDate('rea_pour_100k', currentDate)
+
+if (currentDate == _.last(daterange[selected_variable])){
+selected_variable = 'rea_pour_100k';
+currentDate = _.last(daterange[selected_variable])
+}
 selected_variable = 'rea_pour_100k';
 
+fillColorDate(selected_variable, currentDate)
+
 tMax = parseTime2(_.last(daterange[selected_variable]))
+x_scale
+.domain([t0, tMax])
 d3.select('svg#map_slider g.date-container text.endDate')
 .text(moment(tMax).format('Do MMMM'))
 
@@ -289,10 +331,6 @@ function fillColorDate(column, date){
 
     if (typeof this_date_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      // console.log(d.id)
-
-      // console.log(fulldata.filter(function(e){return e.dep == d.id && e.datetime == date}))
-
       return color_functions[column](+this_date_data.filter(function(e){return e.dep == d.id})[0][column])
 
     }
@@ -302,8 +340,6 @@ function fillColorDate(column, date){
 }
 
 function FillWithTimer(total_time, column) {
-
-console.log(_.last(daterange[column]))
 
   d3.select('#tooltip')
   .style('display', 'block')
@@ -317,8 +353,7 @@ reset_tooltip()
 var count = 0
 var number = daterange[column].length
 t = d3.interval(function(elapsed) {
-  // console.log(daterange[count]);
-  // console.log(count);
+
 fillColorDate(column, daterange[column][count])
   count +=1
   if (elapsed > total_time){
@@ -468,8 +503,7 @@ d3.select('#display_geo_paths')
 
   let pathsize = allPaths.size();
   let pathsCount = 0;
-// console.log(allpaths)
-// if (mapstate == 0){
+
 allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
 .on('end', function(){
   pathsCount++;
@@ -478,20 +512,12 @@ allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
   }
 })
 
-// }
-// else{
-//   registered_separate_circles()
-// }
-
-// force_separate_circles()
-
 }
 
 function transform_all_paths_to_circle_ecarts(){
 
   let pathsize = allPaths.size();
   let pathsCount = 0;
-// console.log(allpaths)
 
 if (mapstate == 0){
 allPaths.transition().attrTween("d", function(d){ return d.to_circle_ecart_function})
@@ -558,14 +584,8 @@ queue()
   function ready(error, data, data7j) {
 
     data.forEach(d => {
-      // d.P = +d.P;
-      // d.T = +d.T;
       d.taux_de_positivite = +d.taux_de_positivite;
       d.taux_incidence = +d.taux_incidence;
-      // d.tauxReproductionEffectif = +d.tauxReproductionEffectif == 0 ? NaN : +d.tauxReproductionEffectif;
-      // d.tauxOccupationRea = +d.tauxOccupationRea;
-      // d.progression_morts = +d.progression_morts;
-      // d.Densite = +d.Densite;
       d.population = +d.population;
     })
 
@@ -581,7 +601,6 @@ queue()
 
     fulldata = data7j;
 
-    // console.log(fulldata)
     maxvalues['tx_positivite'] = d3.max(fulldata.map(d=>d.tx_positivite));
     maxvalues['tx_incidence'] = d3.max(fulldata.map(d=>d.tx_incidence));
     maxvalues['hosp_pour_100k'] = d3.max(fulldata.map(d=>d.hosp_pour_100k));
@@ -617,7 +636,6 @@ queue()
         'population':this_pop,
         'radius': this_radius,
         'radius_ecart': this_radius_ecart});
-// console.log(d3.select(allSvgNodes[i]).attr('data-numerodepartement'))
 }
 
 app_data['tx_incidence'] = fulldata.filter(d=>d.datetime == daterange['tx_incidence'][daterange['tx_incidence'].length-1])
@@ -625,23 +643,12 @@ app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_posit
 app_data['hosp_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['hosp_pour_100k'][daterange['hosp_pour_100k'].length-1])
 app_data['rea_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['rea_pour_100k'][daterange['rea_pour_100k'].length-1])
 
-// app_data = fulldata.filter(d=>d.datetime == daterange[0])
-
 app_data['tx_incidence'].forEach(function(d){
 
 d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
 })
 
-// console.log(data)
-
-// var progressionMax = d3.max(data, function(d) { return d.progression_morts; })
-
-  // set the domain of the color scale based on our data
-  // color.domain([0, 13068161, 38463689, 70916439, 126804433, 201103330, 310232863, 1173108018, 1330141295]);
-
-  // var myColor = d3.scaleLinear().domain([0,100])
-  // .range(["white", "#E3234A"])
 
   allPaths
   .style('fill', d => {
@@ -659,12 +666,14 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
   .style('stroke-opacity', 0.5)
   .on('mouseover', function(d) {
     showTip(d)
+    allPaths
+    .style('stroke-opacity', .5)
+    .style('fill-opacity', .5)
     d3.select(this)
     .style('fill-opacity', 1)
     .style('stroke-opacity', 1)
     .style('stroke-width', 2)
 
-    init_tooltip_position()
 
   })
   .on('mouseout', function(d) {
@@ -674,6 +683,10 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
   .html('<span class="details"><span class="date_tooltip">' + this_date_pretty + '</span></span>')
 
     reset_tooltip()
+
+    allPaths
+    .style('stroke-opacity', .7)
+    .style('fill-opacity', 1)
 
     d3.select(this)
     .style('fill-opacity', 1)
@@ -770,10 +783,6 @@ function responsivefy(svg) {
 
        }
 
-function init_tooltip_position(){
-
-}
-
 const position_departements  = {
   "971" : [0, 0], "972" : [0, 0], "973" : [0, 0], "974" : [0, 0], "976" : [0, 0], "75" : [-1, 9], "77" : [17, 42],
   "78" : [-37, 35], "91" : [-7, 50], "92" : [-60, -15], "93" : [32, -43], "94" : [60, 0], "95" : [-14, -35], "18" : [-4, 3],
@@ -816,21 +825,14 @@ var handle_factor = 2;
 
 function makeSlider (){
 
-  // console.log(daterange)
-
 var formatTime2 = d3.timeFormat("%Y-%m-%d");
-
-// var slider_width = 200;
-
 var slider_height = 10;
-
 sliderTime = timer_duration;
 
 var svg_slider = 
 d3.select('svg#map_slider')
 
 var total_width = getWidth()
-
 var slider_width = total_width <= 800 ? (total_width*.8) : 700;
 
 svg_slider
@@ -838,21 +840,12 @@ svg_slider
 
 handle_factor = slider_width/100;
 
-// slider_width = 90;
-
-// svg_slider
-// .attr('viewBox', '0 0 210 30')
-// .attr('preserveAspectRatio', 'none')
-
 var daterange_parsed = daterange[selected_variable].map(function(d){return parseTime2(d)} )
 
-var tMax = d3.max(daterange_parsed, function(d) { return d; })
-var t0 = d3.min(daterange_parsed, function(d) { return d; })
+tMax = d3.max(daterange_parsed, function(d) { return d; })
+t0 = d3.min(daterange_parsed, function(d) { return d; })
 
-console.log(t0, tMax)
-
-var x = d3.scaleTime()
-.range([0, 100])
+x_scale
 .domain([t0, tMax])
 .clamp(true);
 
@@ -866,15 +859,15 @@ slider_dates
 .attr('class', 'currentDate')
 .attr('text-anchor', 'middle')
 .attr('y', 20)
-.attr('x', (x.range()[1]/2)  + '%')
-.text(moment(x.domain[0]).format('Do MMMM'))
+.attr('x', (x_scale.range()[1]/2)  + '%')
+.text(moment(x_scale.domain[0]).format('Do MMMM'))
 
 slider_dates
 .append('text')
 .attr('class', 'endDate')
 .attr('text-anchor', 'end')
 .attr('y', 20)
-.attr('x', x.range()[1]  + '%')
+.attr('x', x_scale.range()[1]  + '%')
 .text(moment(tMax).format('Do MMMM'))
 
   var slider = svg_slider.append("g")
@@ -883,17 +876,16 @@ slider_dates
 
   slider.append("line")
   .attr("class", "track")
-  .attr("x1", x.range()[0] + '%')
-  .attr("x2", (x.range()[1]) + '%')
+  .attr("x1", x_scale.range()[0] + '%')
+  .attr("x2", (x_scale.range()[1]) + '%')
   .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
   .attr("class", "track-inset")
   .call(d3.drag()
     .on("start.interrupt", function() { 
 
-      // console.log('interrupt')
       slider.interrupt(); })
     .on("start drag", function() {
-     moving_slider(x.invert(d3.event.x/handle_factor)); }));
+     moving_slider(x_scale.invert(d3.event.x/handle_factor)); }));
 
   var handle = slider.insert("g", ".track-overlay")
   .attr("class", "handle")
@@ -975,8 +967,6 @@ function check_transition(){
 
   var transition_state = d3.select('#play_button').attr('class');
 
-    // console.log(transition_state)
-
   if (transition_state == 'pause')
   {
 
@@ -1002,21 +992,18 @@ function restart_transition(){
 tMax = parseTime2(_.last(daterange[selected_variable]))
 
   var z_val  = Math.round(+handle.attr("transform").split('(')[1].split(',')[0]);
-
-  // moving_slider(x.invert(d3.event.x))
-
   var y_val = z_val/handle_factor;
 
   d3.select('#play_button')
   .html('<img src="img/pause.svg">')
   .attr('class','pause');
 
-  if (y_val >= x(tMax)*.99){
+  if (y_val >= x_scale(tMax)*.99){
     var this_sliderTime = sliderTime;
-    y_val = x(t0);
+    y_val = x_scale(t0);
   }
   else{
-    var this_sliderTime = sliderTime*((x(tMax) - y_val) /x(tMax));
+    var this_sliderTime = sliderTime*((x_scale(tMax) - y_val) /x_scale(tMax));
   }
 
   slider.transition('chrono_animation')
@@ -1025,13 +1012,10 @@ tMax = parseTime2(_.last(daterange[selected_variable]))
   .tween("moving_slider", function() {
 
     y_val = y_val == tMax ? t0 : y_val;
-    var i = d3.interpolate(x.invert(y_val), tMax);
-    // d3.select("#articles").style('display', 'none')
+    var i = d3.interpolate(x_scale.invert(y_val), tMax);
     return function(t) { moving_slider(i(t)); };
   })
   .on('end', function(){
-
-    // updateAllArticle()
 
 d3.select('#play_button')
 .html('<img src="img/play.svg">')
@@ -1047,8 +1031,7 @@ var previousDate = '';
 
 function moving_slider(h) {
 
-  // console.log(handle_factor)
-  handle.attr("transform", "translate("+ x(h)*handle_factor +",0)");
+  handle.attr("transform", "translate("+ x_scale(h)*handle_factor +",0)");
 
   // populate_map(h, 0)
   var thisDate =  String(formatTime2(h))
@@ -1056,14 +1039,9 @@ function moving_slider(h) {
   if (thisDate != previousDate){
 
     currentDate = thisDate;
-
-    // console.log(currentDate)
-
     fillColorDate(selected_variable, thisDate)
-
     previousDate = thisDate
   }
-  
 
 }
 

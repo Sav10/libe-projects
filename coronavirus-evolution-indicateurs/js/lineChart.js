@@ -6,20 +6,9 @@
 
 function makeAreachart(data_, kValue, dValue, color_chart, maxvalues, variable_name, last_date, number_of_ticks_x=3) {
 
-// let data_ = data_.filter(d=>d.date <= )
-
-  // console.log(data_, last_date, parseTime(last_date))
-
-  // console.log(kValue, dValue, variable_name)
-
-// d.date = parseTime(d.datetime)
-
-
 data_ = data_.filter(d=>d.date <= parseTime(last_date))
 
 let this_object_info = _.find(app_data['tx_incidence'], d => d.dep == data_[0].dep);
-console.log(this_object_info)
-
 d3.select("svg#minigraph").remove()
 
 
@@ -62,13 +51,9 @@ var g_text = svg
     }
 
       data = recalculateAndTransformValues(data_, kValue, [dValue])
-
-
-
       data = prepareLineChartData(data, kValue, [dValue]);
 
   var thisYMin = 0;
-  // var thisYMax =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
   var thisYMax =  maxvalues[dValue];
 
   
@@ -84,22 +69,12 @@ var g_text = svg
     thisYMax
     ])
   .range([chart_vars.height, 0]);
-
-  // changeAxis(xScale, yScale)
-
-    
-
-
+ 
       axis_bottom = d3.axisBottom(xScale).ticks(chart_vars.number_of_ticks_x).tickFormat(function(d){return moment(d).format('MMMM')});
-    
-
-
     if (dValue == 'hosp_pour_100k' || dValue == 'rea_pour_100k'){
     axis_bottom = d3.axisBottom(xScale).ticks(chart_vars.number_of_ticks_x).tickFormat(function(d, i){return i % 2 != 0 ? moment(d).format('MMMM') : ''});
         }
-
     axis_left = d3.axisLeft(yScale).ticks(chart_vars.number_of_ticks_y);
-
 
   g_inner
   .attr("transform", "translate(" + chart_vars.padding_left + "," + chart_vars.padding_top + ")");
@@ -113,7 +88,6 @@ var g_text = svg
   .attr("dy", "0.7em")
   .attr("transform", "rotate(0)");
 
-
 g.select("g.axis.axis--y")
 .attr('transform', 'translate(' + chart_vars.padding_left + ',' + chart_vars.padding_top + ')')
 .call(axis_left);
@@ -123,10 +97,6 @@ g.select("g.axis.axis--y")
     .y0(yScale(yScale.domain()[0]))
     .y1(function(d) { return yScale(d['y_value'])})
     .curve(d3.curveCatmullRom.alpha(0.5));
-
-
-
-// console.log(data)
 
     var allArea = g_inner
     .selectAll('.area')
@@ -150,9 +120,6 @@ g.select("g.axis.axis--y")
     .style('stroke-width', 2)
     .style('fill-opacity', 0.9);
 
-
-
-
     svg.select("g.axis--x path").style('stroke', '#f4f4f4')
     svg.select("g.axis--y path").style('stroke', '#f4f4f4')
     svg.selectAll("g.axis--x").selectAll('g.tick line').style('stroke', '#f4f4f4')
@@ -161,15 +128,7 @@ g.select("g.axis.axis--y")
     svg.selectAll("g.axis--y").selectAll('g.tick line').style('stroke', 'e7e7e7')
     svg.select("g.axis--y").selectAll('g.tick line').attr('x1', chart_vars.width)
 
-
 svg.select('g.innerGraph').select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-
-    // svg.select("g.axis--x path").attr('stroke', manualReusableParameters.bottomAxisStroke.manual_range_value)
-    // svg.select("g.axis--y path").attr('stroke', manualReusableParameters.leftAxisStroke.manual_range_value)
-    // svg.selectAll("g.axis--x, g.axis--y").selectAll('g.tick line').attr('stroke', manualReusableParameters.ticksStroke.manual_range_value);
-    // svg.select("g.axis--y").selectAll('g.tick line').attr('x1', thisLeftTickx1Value);
-    // svg.select("g.axis--x").selectAll('g.tick line').attr('y1', thisBottomTickx1Value);
-
 
 g_text
 .style('font-size', '10px');
@@ -195,8 +154,6 @@ g_text
 .html(`${String(_.last(data_)[dValue]).replace('.', ',')}`)
 
 }
-
-
 
 function responsivefy_minichart(svg) {
 
@@ -227,7 +184,6 @@ function responsivefy_minichart(svg) {
           }
         }
 
-
 function prepareLineChartData(data, kValue, dValues) {
   var new_data = [];
 
@@ -245,9 +201,6 @@ function prepareLineChartData(data, kValue, dValues) {
 
   return new_data
 }
-
-
-
                 function recalculateAndTransformValues(data, kValue, dValues, kValues) {
 
                     var this_data = _.cloneDeep(data);
@@ -273,7 +226,6 @@ function changeAxis(xScale, yScale){
 
         moment.locale('fr')
         function thisDateFormat (d){ return moment(d).format('L')}
-
     }
     else{
 
@@ -290,8 +242,6 @@ function changeAxis(xScale, yScale){
     axis_left = d3.axisLeft(yScale).ticks(manualReusableParameters.leftAxisTickNumber.value).tickFormat(thisDateFormat);
     }
 }
-
-
 
 function formatNumbers(n){
 
