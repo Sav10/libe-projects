@@ -1,0 +1,539 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le taux d'incidence chez les enfants double en 10 jours en Ile-de-France</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://statics.liberation.fr/newsite/css/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart">
+      <h3 id="chartTitle"></h3>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e61e49', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e61e49", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e61e49", personalized:null}};
+
+
+  var data = [{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-01","P":"371","T":"6591","tx_incidence":"23.3","tx_positivite":"5.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-02","P":"402","T":"6755","tx_incidence":"25.2","tx_positivite":"6.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-03","P":"432","T":"6829","tx_incidence":"27.1","tx_positivite":"6.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-04","P":"450","T":"7305","tx_incidence":"28.2","tx_positivite":"6.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-05","P":"464","T":"7845","tx_incidence":"29.1","tx_positivite":"5.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-06","P":"470","T":"8046","tx_incidence":"29.5","tx_positivite":"5.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-07","P":"512","T":"9597","tx_incidence":"32.1","tx_positivite":"5.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-08","P":"577","T":"12058","tx_incidence":"36.2","tx_positivite":"4.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-09","P":"619","T":"14189","tx_incidence":"38.8","tx_positivite":"4.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-10","P":"669","T":"16615","tx_incidence":"41.9","tx_positivite":"4.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-11","P":"722","T":"18889","tx_incidence":"45.3","tx_positivite":"3.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-12","P":"726","T":"19050","tx_incidence":"45.5","tx_positivite":"3.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-13","P":"725","T":"19045","tx_incidence":"45.5","tx_positivite":"3.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-14","P":"725","T":"19579","tx_incidence":"45.5","tx_positivite":"3.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-15","P":"729","T":"19496","tx_incidence":"45.7","tx_positivite":"3.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-16","P":"727","T":"19207","tx_incidence":"45.6","tx_positivite":"3.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-17","P":"713","T":"18449","tx_incidence":"44.7","tx_positivite":"3.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-18","P":"657","T":"16976","tx_incidence":"41.2","tx_positivite":"3.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-19","P":"650","T":"16534","tx_incidence":"40.8","tx_positivite":"3.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-20","P":"648","T":"16357","tx_incidence":"40.6","tx_positivite":"4.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-21","P":"622","T":"14666","tx_incidence":"39.0","tx_positivite":"4.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-22","P":"556","T":"12561","tx_incidence":"34.9","tx_positivite":"4.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-23","P":"498","T":"10706","tx_incidence":"31.2","tx_positivite":"4.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-24","P":"443","T":"8885","tx_incidence":"27.8","tx_positivite":"5.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-25","P":"425","T":"7453","tx_incidence":"26.6","tx_positivite":"5.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-26","P":"421","T":"7373","tx_incidence":"26.4","tx_positivite":"5.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-27","P":"423","T":"7296","tx_incidence":"26.5","tx_positivite":"5.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-28","P":"389","T":"6638","tx_incidence":"24.4","tx_positivite":"5.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-29","P":"377","T":"6192","tx_incidence":"23.6","tx_positivite":"6.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-09-30","P":"387","T":"5967","tx_incidence":"24.3","tx_positivite":"6.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-01","P":"411","T":"5726","tx_incidence":"25.8","tx_positivite":"7.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-02","P":"442","T":"5646","tx_incidence":"27.7","tx_positivite":"7.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-03","P":"461","T":"5458","tx_incidence":"28.9","tx_positivite":"8.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-04","P":"460","T":"5479","tx_incidence":"28.8","tx_positivite":"8.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-05","P":"522","T":"5594","tx_incidence":"32.7","tx_positivite":"9.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-06","P":"567","T":"5661","tx_incidence":"35.6","tx_positivite":"10.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-07","P":"629","T":"5889","tx_incidence":"39.4","tx_positivite":"10.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-08","P":"675","T":"6191","tx_incidence":"42.3","tx_positivite":"10.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-09","P":"722","T":"6468","tx_incidence":"45.3","tx_positivite":"11.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-10","P":"736","T":"6673","tx_incidence":"46.1","tx_positivite":"11.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-11","P":"753","T":"6707","tx_incidence":"47.2","tx_positivite":"11.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-12","P":"820","T":"7106","tx_incidence":"51.4","tx_positivite":"11.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-13","P":"879","T":"7528","tx_incidence":"55.1","tx_positivite":"11.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-14","P":"895","T":"8150","tx_incidence":"56.1","tx_positivite":"11.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-15","P":"920","T":"8564","tx_incidence":"57.7","tx_positivite":"10.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-16","P":"925","T":"9020","tx_incidence":"58.0","tx_positivite":"10.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-17","P":"945","T":"9261","tx_incidence":"59.3","tx_positivite":"10.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-18","P":"949","T":"9365","tx_incidence":"59.5","tx_positivite":"10.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-19","P":"999","T":"9908","tx_incidence":"62.6","tx_positivite":"10.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-20","P":"1048","T":"10101","tx_incidence":"65.7","tx_positivite":"10.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-21","P":"1084","T":"9866","tx_incidence":"68.0","tx_positivite":"11.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-22","P":"1119","T":"9926","tx_incidence":"70.2","tx_positivite":"11.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-23","P":"1185","T":"9876","tx_incidence":"74.3","tx_positivite":"12.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-24","P":"1205","T":"9779","tx_incidence":"75.6","tx_positivite":"12.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-25","P":"1198","T":"9705","tx_incidence":"75.1","tx_positivite":"12.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-26","P":"1227","T":"9445","tx_incidence":"76.9","tx_positivite":"13.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-27","P":"1234","T":"9217","tx_incidence":"77.4","tx_positivite":"13.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-28","P":"1291","T":"9049","tx_incidence":"80.9","tx_positivite":"14.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-29","P":"1334","T":"8935","tx_incidence":"83.6","tx_positivite":"14.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-30","P":"1449","T":"9121","tx_incidence":"90.9","tx_positivite":"15.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-10-31","P":"1459","T":"9126","tx_incidence":"91.5","tx_positivite":"16.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-01","P":"1471","T":"9163","tx_incidence":"92.2","tx_positivite":"16.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-02","P":"1546","T":"9467","tx_incidence":"96.9","tx_positivite":"16.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-03","P":"1565","T":"9654","tx_incidence":"98.1","tx_positivite":"16.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-04","P":"1586","T":"9903","tx_incidence":"99.4","tx_positivite":"16.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-05","P":"1574","T":"9823","tx_incidence":"98.7","tx_positivite":"16.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-06","P":"1498","T":"9631","tx_incidence":"93.9","tx_positivite":"15.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-07","P":"1518","T":"9618","tx_incidence":"95.2","tx_positivite":"15.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-08","P":"1513","T":"9567","tx_incidence":"94.9","tx_positivite":"15.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-09","P":"1391","T":"9206","tx_incidence":"87.2","tx_positivite":"15.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-10","P":"1325","T":"9094","tx_incidence":"83.1","tx_positivite":"14.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-11","P":"1084","T":"7798","tx_incidence":"68.0","tx_positivite":"13.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-12","P":"1056","T":"7954","tx_incidence":"66.2","tx_positivite":"13.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-13","P":"936","T":"7683","tx_incidence":"58.7","tx_positivite":"12.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-14","P":"878","T":"7442","tx_incidence":"55.1","tx_positivite":"11.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-15","P":"866","T":"7417","tx_incidence":"54.3","tx_positivite":"11.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-16","P":"813","T":"7152","tx_incidence":"51.0","tx_positivite":"11.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-17","P":"757","T":"6932","tx_incidence":"47.5","tx_positivite":"10.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-18","P":"877","T":"7907","tx_incidence":"55.0","tx_positivite":"11.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-19","P":"777","T":"7474","tx_incidence":"48.7","tx_positivite":"10.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-20","P":"736","T":"7314","tx_incidence":"46.1","tx_positivite":"10.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-21","P":"716","T":"7435","tx_incidence":"44.9","tx_positivite":"9.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-22","P":"708","T":"7431","tx_incidence":"44.4","tx_positivite":"9.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-23","P":"668","T":"7280","tx_incidence":"41.9","tx_positivite":"9.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-24","P":"629","T":"7164","tx_incidence":"39.4","tx_positivite":"8.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-25","P":"593","T":"7096","tx_incidence":"37.2","tx_positivite":"8.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-26","P":"556","T":"6937","tx_incidence":"34.9","tx_positivite":"8.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-27","P":"526","T":"6907","tx_incidence":"33.0","tx_positivite":"7.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-28","P":"512","T":"6878","tx_incidence":"32.1","tx_positivite":"7.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-29","P":"516","T":"6893","tx_incidence":"32.4","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-11-30","P":"479","T":"6870","tx_incidence":"30.0","tx_positivite":"7.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-01","P":"489","T":"6776","tx_incidence":"30.7","tx_positivite":"7.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-02","P":"466","T":"6574","tx_incidence":"29.2","tx_positivite":"7.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-03","P":"456","T":"6486","tx_incidence":"28.6","tx_positivite":"7.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-04","P":"483","T":"6447","tx_incidence":"30.3","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-05","P":"482","T":"6404","tx_incidence":"30.2","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-06","P":"479","T":"6432","tx_incidence":"30.0","tx_positivite":"7.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-07","P":"464","T":"6439","tx_incidence":"29.1","tx_positivite":"7.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-08","P":"459","T":"6580","tx_incidence":"28.8","tx_positivite":"7.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-09","P":"478","T":"6806","tx_incidence":"30.0","tx_positivite":"7.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-10","P":"504","T":"7099","tx_incidence":"31.6","tx_positivite":"7.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-11","P":"501","T":"7265","tx_incidence":"31.4","tx_positivite":"6.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-12","P":"505","T":"7588","tx_incidence":"31.7","tx_positivite":"6.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-13","P":"506","T":"7653","tx_incidence":"31.7","tx_positivite":"6.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-14","P":"516","T":"8071","tx_incidence":"32.4","tx_positivite":"6.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-15","P":"518","T":"8529","tx_incidence":"32.5","tx_positivite":"6.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-16","P":"524","T":"9934","tx_incidence":"32.9","tx_positivite":"5.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-17","P":"505","T":"11224","tx_incidence":"31.7","tx_positivite":"4.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-18","P":"509","T":"13436","tx_incidence":"31.9","tx_positivite":"3.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-19","P":"535","T":"15799","tx_incidence":"33.5","tx_positivite":"3.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-20","P":"540","T":"16278","tx_incidence":"33.9","tx_positivite":"3.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-21","P":"560","T":"19199","tx_incidence":"35.1","tx_positivite":"2.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-22","P":"549","T":"22243","tx_incidence":"34.4","tx_positivite":"2.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-23","P":"526","T":"23806","tx_incidence":"33.0","tx_positivite":"2.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-24","P":"535","T":"24427","tx_incidence":"33.5","tx_positivite":"2.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-25","P":"443","T":"21248","tx_incidence":"27.8","tx_positivite":"2.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-26","P":"435","T":"19410","tx_incidence":"27.3","tx_positivite":"2.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-27","P":"435","T":"18979","tx_incidence":"27.3","tx_positivite":"2.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-28","P":"416","T":"16179","tx_incidence":"26.1","tx_positivite":"2.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-29","P":"433","T":"12873","tx_incidence":"27.1","tx_positivite":"3.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-30","P":"436","T":"9944","tx_incidence":"27.3","tx_positivite":"4.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2020-12-31","P":"430","T":"8102","tx_incidence":"27.0","tx_positivite":"5.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-01","P":"429","T":"7962","tx_incidence":"26.9","tx_positivite":"5.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-02","P":"461","T":"7352","tx_incidence":"28.9","tx_positivite":"6.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-03","P":"462","T":"7276","tx_incidence":"29.0","tx_positivite":"6.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-04","P":"516","T":"6851","tx_incidence":"32.4","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-05","P":"533","T":"6545","tx_incidence":"33.4","tx_positivite":"8.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-06","P":"564","T":"6440","tx_incidence":"35.4","tx_positivite":"8.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-07","P":"595","T":"6204","tx_incidence":"37.3","tx_positivite":"9.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-08","P":"703","T":"7247","tx_incidence":"44.1","tx_positivite":"9.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-09","P":"688","T":"7419","tx_incidence":"43.1","tx_positivite":"9.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-10","P":"692","T":"7425","tx_incidence":"43.4","tx_positivite":"9.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-11","P":"689","T":"7577","tx_incidence":"43.2","tx_positivite":"9.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-12","P":"717","T":"8107","tx_incidence":"45.0","tx_positivite":"8.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-13","P":"742","T":"8677","tx_incidence":"46.5","tx_positivite":"8.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-14","P":"754","T":"9240","tx_incidence":"47.3","tx_positivite":"8.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-15","P":"829","T":"9993","tx_incidence":"52.0","tx_positivite":"8.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-16","P":"867","T":"10575","tx_incidence":"54.4","tx_positivite":"8.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-17","P":"868","T":"10842","tx_incidence":"54.4","tx_positivite":"8.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-18","P":"945","T":"11750","tx_incidence":"59.3","tx_positivite":"8.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-19","P":"963","T":"12403","tx_incidence":"60.4","tx_positivite":"7.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-20","P":"1037","T":"13164","tx_incidence":"65.0","tx_positivite":"7.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-21","P":"1121","T":"13978","tx_incidence":"70.3","tx_positivite":"8.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-22","P":"1184","T":"14896","tx_incidence":"74.2","tx_positivite":"7.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-23","P":"1215","T":"15100","tx_incidence":"76.2","tx_positivite":"8.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-24","P":"1223","T":"15079","tx_incidence":"76.7","tx_positivite":"8.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-25","P":"1254","T":"15958","tx_incidence":"78.6","tx_positivite":"7.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-26","P":"1293","T":"16740","tx_incidence":"81.1","tx_positivite":"7.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-27","P":"1317","T":"17186","tx_incidence":"82.6","tx_positivite":"7.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-28","P":"1329","T":"17715","tx_incidence":"83.3","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-29","P":"1352","T":"17927","tx_incidence":"84.8","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-30","P":"1349","T":"18036","tx_incidence":"84.6","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-01-31","P":"1350","T":"18046","tx_incidence":"84.6","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-01","P":"1376","T":"18427","tx_incidence":"86.3","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-02","P":"1435","T":"18538","tx_incidence":"90.0","tx_positivite":"7.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-03","P":"1415","T":"18852","tx_incidence":"88.7","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-04","P":"1449","T":"19200","tx_incidence":"90.9","tx_positivite":"7.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-05","P":"1453","T":"19893","tx_incidence":"91.1","tx_positivite":"7.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-06","P":"1483","T":"20496","tx_incidence":"93.0","tx_positivite":"7.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-07","P":"1490","T":"20599","tx_incidence":"93.4","tx_positivite":"7.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-08","P":"1523","T":"21419","tx_incidence":"95.5","tx_positivite":"7.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-09","P":"1563","T":"22543","tx_incidence":"98.0","tx_positivite":"6.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-10","P":"1611","T":"24387","tx_incidence":"101.0","tx_positivite":"6.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-11","P":"1590","T":"25796","tx_incidence":"99.7","tx_positivite":"6.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-12","P":"1601","T":"28080","tx_incidence":"100.4","tx_positivite":"5.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-13","P":"1596","T":"29800","tx_incidence":"100.1","tx_positivite":"5.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-14","P":"1592","T":"29848","tx_incidence":"99.8","tx_positivite":"5.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-15","P":"1576","T":"30302","tx_incidence":"98.8","tx_positivite":"5.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-16","P":"1531","T":"29841","tx_incidence":"96.0","tx_positivite":"5.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-17","P":"1492","T":"28224","tx_incidence":"93.6","tx_positivite":"5.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-18","P":"1501","T":"27364","tx_incidence":"94.1","tx_positivite":"5.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-19","P":"1534","T":"25993","tx_incidence":"96.2","tx_positivite":"5.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-20","P":"1550","T":"23944","tx_incidence":"97.2","tx_positivite":"6.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-21","P":"1562","T":"23976","tx_incidence":"97.9","tx_positivite":"6.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-22","P":"1634","T":"22131","tx_incidence":"102.5","tx_positivite":"7.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-23","P":"1630","T":"20674","tx_incidence":"102.2","tx_positivite":"7.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-24","P":"1666","T":"19372","tx_incidence":"104.5","tx_positivite":"8.6","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-25","P":"1723","T":"17808","tx_incidence":"108.0","tx_positivite":"9.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-26","P":"1784","T":"15716","tx_incidence":"111.9","tx_positivite":"11.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-27","P":"1842","T":"15148","tx_incidence":"115.5","tx_positivite":"12.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-02-28","P":"1844","T":"15144","tx_incidence":"115.6","tx_positivite":"12.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-01","P":"1866","T":"15297","tx_incidence":"117.0","tx_positivite":"12.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-02","P":"1929","T":"15595","tx_incidence":"121.0","tx_positivite":"12.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-03","P":"1990","T":"15904","tx_incidence":"124.8","tx_positivite":"12.5","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-04","P":"2003","T":"16927","tx_incidence":"125.6","tx_positivite":"11.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-05","P":"2042","T":"20463","tx_incidence":"128.0","tx_positivite":"10.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-06","P":"2052","T":"21151","tx_incidence":"128.7","tx_positivite":"9.7","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-07","P":"2069","T":"20966","tx_incidence":"129.7","tx_positivite":"9.9","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-08","P":"2147","T":"22990","tx_incidence":"134.6","tx_positivite":"9.3","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-09","P":"2277","T":"27226","tx_incidence":"142.8","tx_positivite":"8.4","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-10","P":"2427","T":"29670","tx_incidence":"152.2","tx_positivite":"8.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-11","P":"2660","T":"33914","tx_incidence":"166.8","tx_positivite":"7.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-12","P":"2886","T":"36812","tx_incidence":"181.0","tx_positivite":"7.8","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-13","P":"3050","T":"38329","tx_incidence":"191.2","tx_positivite":"8.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-14","P":"3101","T":"38987","tx_incidence":"194.4","tx_positivite":"8.0","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-15","P":"3413","T":"42263","tx_incidence":"214.0","tx_positivite":"8.1","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-16","P":"3709","T":"45435","tx_incidence":"232.6","tx_positivite":"8.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-17","P":"3934","T":"47840","tx_incidence":"246.7","tx_positivite":"8.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-18","P":"4165","T":"50645","tx_incidence":"261.2","tx_positivite":"8.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-19","P":"4326","T":"52872","tx_incidence":"271.2","tx_positivite":"8.2","region":"Île-de-France"},{"reg":"11","cl_age90":"9","pop":"1594856.0","datetime":"2021-03-20","P":"4389","T":"53834","tx_incidence":"275.2","tx_positivite":"8.2","region":"Île-de-France"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":23.3,"calculated_right_value":275.2,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"datetime","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM')});"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"datetime","value":"datetime"},{"label":"tx_incidence","value":"tx_incidence"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n<strong>Taux d'incidence : </strong>[[tx_incidence]]<br>\n<strong>Taux de positivité : </strong>[[tx_positivite]]"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["datetime"],"selected_yRows":["tx_incidence"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":["datetime","tx_incidence","tx_positivite"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"areaChart","chartTitle":"Le taux d'incidence chez les enfants double en 10 jours en Ile-de-France","chartSubTitle":"Taux d'incidence en Ile-de-France chez les enfants de moins de 10 ans","chartSource":"Santé publique France","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeAreachart(data_) {
+
+    var kValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_yRows'];
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+    // width = +svg.attr("width") - margin.left - margin.right;
+
+    updateParameters();
+
+    var data = _.cloneDeep(data_);
+    var initial_data = _.cloneDeep(data);
+
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var yScale = d3.scaleLinear()
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale)
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var area = d3.area()
+    .x(function(d) { return xScale(d.x_value) })
+    .y0(yScale(yScale.domain()[0]))
+    .y1(function(d) { return yScale(d.y_value)})
+    .curve(d3.curveCatmullRom.alpha(0.5));
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+    var allArea = g_inner
+    .selectAll('.area')
+    .data(data);
+
+    allArea
+    .transition()
+    .duration(200)
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+    allArea.exit().transition().duration(200).remove();
+
+    allArea
+    .enter()
+    .append('path')
+    .attr('class', 'area')
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) })
+    .style('fill', function(d) { return colorUpdated(d[0].name) })
+    .style('stroke-width', 2)
+    .style('fill-opacity', 0.9);
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+        // AllDotPoints = g_inner
+        // .selectAll('circle.dotPoint')
+        // .data(_.flatten(data));
+
+        // AllDotPoints
+        // // .transition()
+        // // .duration(200)
+        // .attr('cx', function(d) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .style('fill-opacity', 0 );
+
+        // AllDotPoints.exit().transition().duration(200).remove();
+
+        // AllDotPoints
+        // .enter()
+        // .append('circle')
+        // .attr('class', 'dotPoint')
+        // .attr('cx', function(d, i) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .attr('r', 3)
+        // .style('stroke-width', 5)
+        // .style('stroke', 'white')
+        // .style('stroke-opacity', 0)
+        // .style('fill-opacity', 0 )
+        // // .style('fill', 'black')
+        // .on('mouseover', function(d, i){ show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        // ;
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+
+customizeAxis()
+
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeAreachart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
