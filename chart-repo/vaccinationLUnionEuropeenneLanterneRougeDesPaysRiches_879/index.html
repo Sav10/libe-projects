@@ -1,0 +1,491 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaccination : l'Union Européenne, lanterne rouge des pays riches</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://statics.liberation.fr/newsite/css/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e61e49', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e61e49", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e61e49", personalized:null}};
+
+
+  var data = [{"iso_code":"ALB","continent":"Europe","location":"Albania","nombre_vaccins":"64075","date_donnees":"2021-03-27","pourcentage_vaccins":"2.23","pourcentageDose1":"","pourcentageDose2":"","population":"2877800.0","gdp_per_capita":"11803.431","total_deaths_per_million":"765.863","UE":"","Pays":"Albanie"},{"iso_code":"ARE","continent":"Asia","location":"United Arab Emirates","nombre_vaccins":"8133841","date_donnees":"2021-03-29","pourcentage_vaccins":"82.24","pourcentageDose1":"","pourcentageDose2":"","population":"9890400.0","gdp_per_capita":"67293.483","total_deaths_per_million":"150.247","UE":"","Pays":"Émirats Arabes Unis"},{"iso_code":"ARG","continent":"South America","location":"Argentina","nombre_vaccins":"3646068","date_donnees":"2021-03-29","pourcentage_vaccins":"8.07","pourcentageDose1":"6.59","pourcentageDose2":"1.47","population":"45195777.0","gdp_per_capita":"18933.907","total_deaths_per_million":"1230.447","UE":"","Pays":"Argentine"},{"iso_code":"AUT","continent":"Europe","location":"Austria","nombre_vaccins":"1544597","date_donnees":"2021-03-28","pourcentage_vaccins":"17.15","pourcentageDose1":"12.57","pourcentageDose2":"4.58","population":"9006400.0","gdp_per_capita":"45436.686","total_deaths_per_million":"1027.714","UE":"UE","Pays":"Autriche"},{"iso_code":"AZE","continent":"Asia","location":"Azerbaijan","nombre_vaccins":"510420","date_donnees":"2021-03-26","pourcentage_vaccins":"5.03","pourcentageDose1":"5.03","pourcentageDose2":"","population":"10139175.0","gdp_per_capita":"15847.419","total_deaths_per_million":"339.771","UE":"","Pays":"Azerbaïdjan"},{"iso_code":"BEL","continent":"Europe","location":"Belgium","nombre_vaccins":"1742424","date_donnees":"2021-03-28","pourcentage_vaccins":"15.03","pourcentageDose1":"10.67","pourcentageDose2":"4.36","population":"11589616.0","gdp_per_capita":"42658.576","total_deaths_per_million":"1975.648","UE":"UE","Pays":"Belgique"},{"iso_code":"BGR","continent":"Europe","location":"Bulgaria","nombre_vaccins":"445547","date_donnees":"2021-03-29","pourcentage_vaccins":"6.41","pourcentageDose1":"5.11","pourcentageDose2":"1.3","population":"6948445.0","gdp_per_capita":"18563.307","total_deaths_per_million":"1858.401","UE":"UE","Pays":"Bulgarie"},{"iso_code":"BHR","continent":"Asia","location":"Bahrain","nombre_vaccins":"747008","date_donnees":"2021-03-29","pourcentage_vaccins":"43.9","pourcentageDose1":"29.18","pourcentageDose2":"14.72","population":"1701583.0","gdp_per_capita":"43290.705","total_deaths_per_million":"302.659","UE":"","Pays":"Bahreïn"},{"iso_code":"BLR","continent":"Europe","location":"Belarus","nombre_vaccins":"30000","date_donnees":"2021-03-12","pourcentage_vaccins":"0.32","pourcentageDose1":"0.21","pourcentageDose2":"0.11","population":"9449321.0","gdp_per_capita":"17167.967","total_deaths_per_million":"219.91","UE":"","Pays":"Biélorussie"},{"iso_code":"BOL","continent":"South America","location":"Bolivia","nombre_vaccins":"263887","date_donnees":"2021-03-28","pourcentage_vaccins":"2.26","pourcentageDose1":"1.5","pourcentageDose2":"0.76","population":"11673029.0","gdp_per_capita":"6885.829","total_deaths_per_million":"1043.945","UE":"","Pays":"Bolivie"},{"iso_code":"BRA","continent":"South America","location":"Brazil","nombre_vaccins":"18082153","date_donnees":"2021-03-29","pourcentage_vaccins":"8.51","pourcentageDose1":"6.58","pourcentageDose2":"1.93","population":"212559409.0","gdp_per_capita":"14103.452","total_deaths_per_million":"1476.604","UE":"","Pays":"Brésil"},{"iso_code":"CAN","continent":"North America","location":"Canada","nombre_vaccins":"5301234","date_donnees":"2021-03-29","pourcentage_vaccins":"14.05","pourcentageDose1":"12.26","pourcentageDose2":"1.78","population":"37742157.0","gdp_per_capita":"44017.591","total_deaths_per_million":"605.98","UE":"","Pays":"Canada"},{"iso_code":"CHE","continent":"Europe","location":"Switzerland","nombre_vaccins":"1342748","date_donnees":"2021-03-24","pourcentage_vaccins":"15.51","pourcentageDose1":"9.68","pourcentageDose2":"5.83","population":"8654618.0","gdp_per_capita":"57410.166","total_deaths_per_million":"1187.343","UE":"","Pays":"Suisse"},{"iso_code":"CHL","continent":"South America","location":"Chile","nombre_vaccins":"9905091","date_donnees":"2021-03-29","pourcentage_vaccins":"51.82","pourcentageDose1":"34.18","pourcentageDose2":"17.63","population":"19116209.0","gdp_per_capita":"22767.037","total_deaths_per_million":"1206.829","UE":"","Pays":"Chili"},{"iso_code":"COL","continent":"South America","location":"Colombia","nombre_vaccins":"1818861","date_donnees":"2021-03-28","pourcentage_vaccins":"3.57","pourcentageDose1":"3.19","pourcentageDose2":"0.38","population":"50882884.0","gdp_per_capita":"13254.949","total_deaths_per_million":"1237.253","UE":"","Pays":"Colombie"},{"iso_code":"CRI","continent":"North America","location":"Costa Rica","nombre_vaccins":"348037","date_donnees":"2021-03-24","pourcentage_vaccins":"6.83","pourcentageDose1":"4.19","pourcentageDose2":"2.64","population":"5094114.0","gdp_per_capita":"15524.995","total_deaths_per_million":"570.855","UE":"","Pays":"Costa Rica"},{"iso_code":"CYP","continent":"Europe","location":"Cyprus","nombre_vaccins":"129438","date_donnees":"2021-03-20","pourcentage_vaccins":"14.78","pourcentageDose1":"10.67","pourcentageDose2":"4.11","population":"875899.0","gdp_per_capita":"32415.132","total_deaths_per_million":"276.288","UE":"UE","Pays":"Chypre"},{"iso_code":"CZE","continent":"Europe","location":"Czechia","nombre_vaccins":"1611172","date_donnees":"2021-03-29","pourcentage_vaccins":"15.05","pourcentageDose1":"10.7","pourcentageDose2":"4.34","population":"10708982.0","gdp_per_capita":"32605.906","total_deaths_per_million":"2431.23","UE":"UE","Pays":"République tchèque"},{"iso_code":"DEU","continent":"Europe","location":"Germany","nombre_vaccins":"12872859","date_donnees":"2021-03-28","pourcentage_vaccins":"15.36","pourcentageDose1":"10.74","pourcentageDose2":"4.63","population":"83783945.0","gdp_per_capita":"45229.245","total_deaths_per_million":"906.606","UE":"UE","Pays":"Allemagne"},{"iso_code":"DNK","continent":"Europe","location":"Denmark","nombre_vaccins":"1059197","date_donnees":"2021-03-28","pourcentage_vaccins":"18.29","pourcentageDose1":"11.94","pourcentageDose2":"6.35","population":"5792203.0","gdp_per_capita":"46682.515","total_deaths_per_million":"416.94","UE":"UE","Pays":"Danemark"},{"iso_code":"DOM","continent":"North America","location":"Dominican Republic","nombre_vaccins":"890194","date_donnees":"2021-03-29","pourcentage_vaccins":"8.21","pourcentageDose1":"8.02","pourcentageDose2":"0.18","population":"10847904.0","gdp_per_capita":"14600.861","total_deaths_per_million":"304.852","UE":"","Pays":"République dominicaine"},{"iso_code":"ECU","continent":"South America","location":"Ecuador","nombre_vaccins":"235000","date_donnees":"2021-03-27","pourcentage_vaccins":"1.33","pourcentageDose1":"0.99","pourcentageDose2":"0.34","population":"17643060.0","gdp_per_capita":"10581.936","total_deaths_per_million":"945.358","UE":"","Pays":"Équateur"},{"iso_code":"ESP","continent":"Europe","location":"Spain","nombre_vaccins":"7571439","date_donnees":"2021-03-29","pourcentage_vaccins":"16.19","pourcentageDose1":"10.62","pourcentageDose2":"5.57","population":"46754783.0","gdp_per_capita":"34272.36","total_deaths_per_million":"1608.37","UE":"UE","Pays":"Espagne"},{"iso_code":"EST","continent":"Europe","location":"Estonia","nombre_vaccins":"255219","date_donnees":"2021-03-29","pourcentage_vaccins":"19.24","pourcentageDose1":"14.65","pourcentageDose2":"4.59","population":"1326539.0","gdp_per_capita":"29481.252","total_deaths_per_million":"662.627","UE":"UE","Pays":"Estonie"},{"iso_code":"FIN","continent":"Europe","location":"Finland","nombre_vaccins":"932253","date_donnees":"2021-03-29","pourcentage_vaccins":"16.83","pourcentageDose1":"15.23","pourcentageDose2":"1.6","population":"5540718.0","gdp_per_capita":"40585.721","total_deaths_per_million":"148.356","UE":"UE","Pays":"Finlande"},{"iso_code":"FRA","continent":"Europe","location":"France","nombre_vaccins":"10453534","date_donnees":"2021-03-28","pourcentage_vaccins":"15.34","pourcentageDose1":"11.44","pourcentageDose2":"3.9","population":"68147687.0","gdp_per_capita":"38605.671","total_deaths_per_million":"1390.421","UE":"UE","Pays":"France"},{"iso_code":"GBR","continent":"Europe","location":"United Kingdom","nombre_vaccins":"34119095","date_donnees":"2021-03-28","pourcentage_vaccins":"50.26","pourcentageDose1":"44.85","pourcentageDose2":"5.41","population":"67886004.0","gdp_per_capita":"39753.244","total_deaths_per_million":"1868.338","UE":"","Pays":"Royaume-Uni"},{"iso_code":"GRC","continent":"Europe","location":"Greece","nombre_vaccins":"1635676","date_donnees":"2021-03-29","pourcentage_vaccins":"15.69","pourcentageDose1":"10.24","pourcentageDose2":"5.46","population":"10423056.0","gdp_per_capita":"24574.382","total_deaths_per_million":"762.252","UE":"UE","Pays":"Grèce"},{"iso_code":"GTM","continent":"North America","location":"Guatemala","nombre_vaccins":"94272","date_donnees":"2021-03-28","pourcentage_vaccins":"0.53","pourcentageDose1":"0.52","pourcentageDose2":"0.0","population":"17915567.0","gdp_per_capita":"7423.808","total_deaths_per_million":"379.67","UE":"","Pays":"Guatemala"},{"iso_code":"GUY","continent":"South America","location":"Guyana","nombre_vaccins":"15524","date_donnees":"2021-03-19","pourcentage_vaccins":"1.97","pourcentageDose1":"1.97","pourcentageDose2":"","population":"786559.0","gdp_per_capita":"7435.047","total_deaths_per_million":"269.528","UE":"","Pays":"Guyane"},{"iso_code":"HND","continent":"North America","location":"Honduras","nombre_vaccins":"43073","date_donnees":"2021-03-21","pourcentage_vaccins":"0.43","pourcentageDose1":"0.43","pourcentageDose2":"","population":"9904608.0","gdp_per_capita":"4541.795","total_deaths_per_million":"448.579","UE":"","Pays":"Honduras"},{"iso_code":"HRV","continent":"Europe","location":"Croatia","nombre_vaccins":"430396","date_donnees":"2021-03-29","pourcentage_vaccins":"10.48","pourcentageDose1":"8.49","pourcentageDose2":"1.99","population":"4105268.0","gdp_per_capita":"22669.797","total_deaths_per_million":"1439.857","UE":"UE","Pays":"Croatie"},{"iso_code":"HUN","continent":"Europe","location":"Hungary","nombre_vaccins":"2609739","date_donnees":"2021-03-28","pourcentage_vaccins":"27.01","pourcentageDose1":"19.88","pourcentageDose2":"7.14","population":"9660350.0","gdp_per_capita":"26777.561","total_deaths_per_million":"2067.42","UE":"UE","Pays":"Hongrie"},{"iso_code":"IDN","continent":"Asia","location":"Indonesia","nombre_vaccins":"10766490","date_donnees":"2021-03-28","pourcentage_vaccins":"3.94","pourcentageDose1":"2.72","pourcentageDose2":"1.22","population":"273523621.0","gdp_per_capita":"11188.744","total_deaths_per_million":"147.881","UE":"","Pays":"Indonésie"},{"iso_code":"IND","continent":"Asia","location":"India","nombre_vaccins":"61113354","date_donnees":"2021-03-29","pourcentage_vaccins":"4.43","pourcentageDose1":"3.78","pourcentageDose2":"0.65","population":"1380004385.0","gdp_per_capita":"6426.674","total_deaths_per_million":"117.474","UE":"","Pays":"Inde"},{"iso_code":"IRL","continent":"Europe","location":"Ireland","nombre_vaccins":"786569","date_donnees":"2021-03-26","pourcentage_vaccins":"15.93","pourcentageDose1":"11.48","pourcentageDose2":"4.45","population":"4937796.0","gdp_per_capita":"67335.293","total_deaths_per_million":"941.918","UE":"UE","Pays":"Irlande"},{"iso_code":"IRN","continent":"Asia","location":"Iran","nombre_vaccins":"124193","date_donnees":"2021-03-19","pourcentage_vaccins":"0.15","pourcentageDose1":"","pourcentageDose2":"","population":"83992953.0","gdp_per_capita":"19082.62","total_deaths_per_million":"733.978","UE":"","Pays":"Iran"},{"iso_code":"ISR","continent":"Asia","location":"Israel","nombre_vaccins":"9970269","date_donnees":"2021-03-29","pourcentage_vaccins":"115.19","pourcentageDose1":"60.4","pourcentageDose2":"54.79","population":"8655541.0","gdp_per_capita":"33132.32","total_deaths_per_million":"715.958","UE":"","Pays":"Israël"},{"iso_code":"ITA","continent":"Europe","location":"Italy","nombre_vaccins":"9658927","date_donnees":"2021-03-29","pourcentage_vaccins":"15.98","pourcentageDose1":"10.95","pourcentageDose2":"5.02","population":"60461828.0","gdp_per_capita":"35220.084","total_deaths_per_million":"1792.04","UE":"UE","Pays":"Italie"},{"iso_code":"JAM","continent":"North America","location":"Jamaica","nombre_vaccins":"33000","date_donnees":"2021-03-25","pourcentage_vaccins":"1.11","pourcentageDose1":"1.11","pourcentageDose2":"","population":"2961161.0","gdp_per_capita":"8193.571","total_deaths_per_million":"184.387","UE":"","Pays":"Jamaïque"},{"iso_code":"JOR","continent":"Asia","location":"Jordan","nombre_vaccins":"320140","date_donnees":"2021-03-24","pourcentage_vaccins":"3.14","pourcentageDose1":"2.46","pourcentageDose2":"0.68","population":"10203140.0","gdp_per_capita":"8337.49","total_deaths_per_million":"605.794","UE":"","Pays":"Jordanie"},{"iso_code":"KAZ","continent":"Asia","location":"Kazakhstan","nombre_vaccins":"109995","date_donnees":"2021-03-18","pourcentage_vaccins":"0.59","pourcentageDose1":"0.48","pourcentageDose2":"0.1","population":"18776707.0","gdp_per_capita":"24055.588","total_deaths_per_million":"170.371","UE":"","Pays":"Kazakhstan"},{"iso_code":"KWT","continent":"Asia","location":"Kuwait","nombre_vaccins":"604861","date_donnees":"2021-03-29","pourcentage_vaccins":"14.16","pourcentageDose1":"","pourcentageDose2":"","population":"4270563.0","gdp_per_capita":"65530.537","total_deaths_per_million":"303.941","UE":"","Pays":"Koweït"},{"iso_code":"LBN","continent":"Asia","location":"Lebanon","nombre_vaccins":"193903","date_donnees":"2021-03-29","pourcentage_vaccins":"2.84","pourcentageDose1":"1.74","pourcentageDose2":"1.1","population":"6825442.0","gdp_per_capita":"13367.565","total_deaths_per_million":"898.989","UE":"","Pays":"Liban"},{"iso_code":"LTU","continent":"Europe","location":"Lithuania","nombre_vaccins":"483740","date_donnees":"2021-03-29","pourcentage_vaccins":"17.77","pourcentageDose1":"12.15","pourcentageDose2":"5.62","population":"2722291.0","gdp_per_capita":"29524.265","total_deaths_per_million":"1307.722","UE":"UE","Pays":"Lituanie"},{"iso_code":"LUX","continent":"Europe","location":"Luxembourg","nombre_vaccins":"86556","date_donnees":"2021-03-28","pourcentage_vaccins":"13.83","pourcentageDose1":"10.52","pourcentageDose2":"3.31","population":"625976.0","gdp_per_capita":"94277.965","total_deaths_per_million":"1178.959","UE":"UE","Pays":"Luxembourg"},{"iso_code":"LVA","continent":"Europe","location":"Latvia","nombre_vaccins":"128615","date_donnees":"2021-03-29","pourcentage_vaccins":"6.82","pourcentageDose1":"5.64","pourcentageDose2":"1.18","population":"1886202.0","gdp_per_capita":"25063.846","total_deaths_per_million":"998.302","UE":"UE","Pays":"Lettonie"},{"iso_code":"MAR","continent":"Africa","location":"Morocco","nombre_vaccins":"7758500","date_donnees":"2021-03-29","pourcentage_vaccins":"21.02","pourcentageDose1":"11.66","pourcentageDose2":"9.36","population":"36910558.0","gdp_per_capita":"7485.013","total_deaths_per_million":"238.604","UE":"","Pays":"Maroc"},{"iso_code":"MDA","continent":"Europe","location":"Moldova","nombre_vaccins":"33885","date_donnees":"2021-03-27","pourcentage_vaccins":"0.84","pourcentageDose1":"0.84","pourcentageDose2":"","population":"4033963.0","gdp_per_capita":"5189.972","total_deaths_per_million":"1186.178","UE":"","Pays":"Moldavie"},{"iso_code":"MDV","continent":"Asia","location":"Maldives","nombre_vaccins":"233875","date_donnees":"2021-03-29","pourcentage_vaccins":"43.27","pourcentageDose1":"","pourcentageDose2":"","population":"540542.0","gdp_per_capita":"15183.616","total_deaths_per_million":"122.1","UE":"","Pays":"Maldives"},{"iso_code":"MEX","continent":"North America","location":"Mexico","nombre_vaccins":"7018449","date_donnees":"2021-03-29","pourcentage_vaccins":"5.44","pourcentageDose1":"4.78","pourcentageDose2":"0.66","population":"128932753.0","gdp_per_capita":"17336.469","total_deaths_per_million":"1565.405","UE":"","Pays":"Mexique"},{"iso_code":"MKD","continent":"Europe","location":"North Macedonia","nombre_vaccins":"5300","date_donnees":"2021-03-16","pourcentage_vaccins":"0.25","pourcentageDose1":"0.25","pourcentageDose2":"","population":"2083380.0","gdp_per_capita":"13111.214","total_deaths_per_million":"1614.684","UE":"","Pays":"Macédoine"},{"iso_code":"MNE","continent":"Europe","location":"Montenegro","nombre_vaccins":"20140","date_donnees":"2021-03-29","pourcentage_vaccins":"3.21","pourcentageDose1":"2.83","pourcentageDose2":"0.38","population":"628062.0","gdp_per_capita":"16409.288","total_deaths_per_million":"1999.803","UE":"","Pays":"Monténégro"},{"iso_code":"NAM","continent":"Africa","location":"Namibia","nombre_vaccins":"152","date_donnees":"2021-03-25","pourcentage_vaccins":"0.01","pourcentageDose1":"0.01","pourcentageDose2":"","population":"2540916.0","gdp_per_capita":"9541.808","total_deaths_per_million":"197.567","UE":"","Pays":"Namibie"},{"iso_code":"NLD","continent":"Europe","location":"Netherlands","nombre_vaccins":"2097980","date_donnees":"2021-03-21","pourcentage_vaccins":"12.24","pourcentageDose1":"8.71","pourcentageDose2":"3.53","population":"17134873.0","gdp_per_capita":"48472.545","total_deaths_per_million":"957.754","UE":"UE","Pays":"Pays-Bas"},{"iso_code":"NOR","continent":"Europe","location":"Norway","nombre_vaccins":"886874","date_donnees":"2021-03-28","pourcentage_vaccins":"16.36","pourcentageDose1":"11.35","pourcentageDose2":"5.0","population":"5421242.0","gdp_per_capita":"64800.057","total_deaths_per_million":"121.005","UE":"","Pays":"Norvège"},{"iso_code":"NPL","continent":"Asia","location":"Nepal","nombre_vaccins":"1600000","date_donnees":"2021-03-19","pourcentage_vaccins":"5.49","pourcentageDose1":"","pourcentageDose2":"","population":"29136808.0","gdp_per_capita":"2442.804","total_deaths_per_million":"103.512","UE":"","Pays":"Népal"},{"iso_code":"OMN","continent":"Asia","location":"Oman","nombre_vaccins":"139897","date_donnees":"2021-03-29","pourcentage_vaccins":"2.74","pourcentageDose1":"2.37","pourcentageDose2":"0.37","population":"5106622.0","gdp_per_capita":"37960.709","total_deaths_per_million":"325.46","UE":"","Pays":"Oman"},{"iso_code":"PAN","continent":"North America","location":"Panama","nombre_vaccins":"357431","date_donnees":"2021-03-28","pourcentage_vaccins":"8.28","pourcentageDose1":"","pourcentageDose2":"","population":"4314768.0","gdp_per_capita":"22267.037","total_deaths_per_million":"1413.749","UE":"","Pays":"Panama"},{"iso_code":"PER","continent":"South America","location":"Peru","nombre_vaccins":"805224","date_donnees":"2021-03-28","pourcentage_vaccins":"2.44","pourcentageDose1":"1.65","pourcentageDose2":"0.8","population":"32971846.0","gdp_per_capita":"12236.706","total_deaths_per_million":"1560.998","UE":"","Pays":"Pérou"},{"iso_code":"PHL","continent":"Asia","location":"Philippines","nombre_vaccins":"508332","date_donnees":"2021-03-24","pourcentage_vaccins":"0.46","pourcentageDose1":"0.46","pourcentageDose2":"","population":"109581085.0","gdp_per_capita":"7599.188","total_deaths_per_million":"118.99","UE":"","Pays":"Philippines"},{"iso_code":"POL","continent":"Europe","location":"Poland","nombre_vaccins":"5882581","date_donnees":"2021-03-28","pourcentage_vaccins":"15.54","pourcentageDose1":"10.28","pourcentageDose2":"5.26","population":"37846605.0","gdp_per_capita":"27216.445","total_deaths_per_million":"1370.902","UE":"UE","Pays":"Pologne"},{"iso_code":"PRT","continent":"Europe","location":"Portugal","nombre_vaccins":"1618399","date_donnees":"2021-03-29","pourcentage_vaccins":"15.87","pourcentageDose1":"11.27","pourcentageDose2":"4.61","population":"10196707.0","gdp_per_capita":"27936.896","total_deaths_per_million":"1651.808","UE":"UE","Pays":"Portugal"},{"iso_code":"PRY","continent":"South America","location":"Paraguay","nombre_vaccins":"37780","date_donnees":"2021-03-28","pourcentage_vaccins":"0.53","pourcentageDose1":"0.51","pourcentageDose2":"","population":"7132530.0","gdp_per_capita":"8827.01","total_deaths_per_million":"569.644","UE":"","Pays":"Paraguay"},{"iso_code":"ROU","continent":"Europe","location":"Romania","nombre_vaccins":"2913155","date_donnees":"2021-03-28","pourcentage_vaccins":"15.14","pourcentageDose1":"10.08","pourcentageDose2":"5.07","population":"19237682.0","gdp_per_capita":"23313.199","total_deaths_per_million":"1201.496","UE":"UE","Pays":"Roumanie"},{"iso_code":"RUS","continent":"Europe","location":"Russia","nombre_vaccins":"11124350","date_donnees":"2021-03-29","pourcentage_vaccins":"7.62","pourcentageDose1":"4.69","pourcentageDose2":"4.69","population":"145934460.0","gdp_per_capita":"24765.954","total_deaths_per_million":"660.66","UE":"","Pays":"Russie"},{"iso_code":"SAU","continent":"Asia","location":"Saudi Arabia","nombre_vaccins":"4241555","date_donnees":"2021-03-29","pourcentage_vaccins":"12.18","pourcentageDose1":"","pourcentageDose2":"","population":"34813867.0","gdp_per_capita":"49045.411","total_deaths_per_million":"191.188","UE":"","Pays":"Arabie Saoudite"},{"iso_code":"SLV","continent":"North America","location":"El Salvador","nombre_vaccins":"49000","date_donnees":"2021-03-21","pourcentage_vaccins":"0.76","pourcentageDose1":"0.76","pourcentageDose2":"","population":"6486201.0","gdp_per_capita":"7292.458","total_deaths_per_million":"305.109","UE":"","Pays":"Salvador"},{"iso_code":"SRB","continent":"Europe","location":"Serbia","nombre_vaccins":"2323689","date_donnees":"2021-03-28","pourcentage_vaccins":"34.15","pourcentageDose1":"20.64","pourcentageDose2":"13.51","population":"6804596.0","gdp_per_capita":"14048.881","total_deaths_per_million":"762.72","UE":"","Pays":"Serbie"},{"iso_code":"SUR","continent":"South America","location":"Suriname","nombre_vaccins":"23304","date_donnees":"2021-03-28","pourcentage_vaccins":"3.97","pourcentageDose1":"3.97","pourcentageDose2":"","population":"586634.0","gdp_per_capita":"13767.119","total_deaths_per_million":"301.721","UE":"","Pays":"Suriname"},{"iso_code":"SVK","continent":"Europe","location":"Slovakia","nombre_vaccins":"899660","date_donnees":"2021-03-28","pourcentage_vaccins":"16.48","pourcentageDose1":"11.79","pourcentageDose2":"4.69","population":"5459643.0","gdp_per_capita":"30155.152","total_deaths_per_million":"1739.308","UE":"UE","Pays":"Slovaquie"},{"iso_code":"SVN","continent":"Europe","location":"Slovenia","nombre_vaccins":"295780","date_donnees":"2021-03-23","pourcentage_vaccins":"14.23","pourcentageDose1":"9.2","pourcentageDose2":"5.03","population":"2078932.0","gdp_per_capita":"31400.84","total_deaths_per_million":"1916.85","UE":"UE","Pays":"Slovénie"},{"iso_code":"SWE","continent":"Europe","location":"Sweden","nombre_vaccins":"1482153","date_donnees":"2021-03-26","pourcentage_vaccins":"14.68","pourcentageDose1":"10.24","pourcentageDose2":"4.43","population":"10099270.0","gdp_per_capita":"46949.283","total_deaths_per_million":"1327.027","UE":"UE","Pays":"Suède"},{"iso_code":"TUN","continent":"Africa","location":"Tunisia","nombre_vaccins":"44311","date_donnees":"2021-03-27","pourcentage_vaccins":"0.37","pourcentageDose1":"0.37","pourcentageDose2":"","population":"11818618.0","gdp_per_capita":"10849.297","total_deaths_per_million":"736.55","UE":"","Pays":"Tunisie"},{"iso_code":"TUR","continent":"Asia","location":"Turkey","nombre_vaccins":"14949260","date_donnees":"2021-03-29","pourcentage_vaccins":"17.73","pourcentageDose1":"9.93","pourcentageDose2":"7.8","population":"84339067.0","gdp_per_capita":"25129.341","total_deaths_per_million":"370.291","UE":"","Pays":"Turquie"},{"iso_code":"UKR","continent":"Europe","location":"Ukraine","nombre_vaccins":"212898","date_donnees":"2021-03-29","pourcentage_vaccins":"0.49","pourcentageDose1":"0.49","pourcentageDose2":"0.0","population":"43733759.0","gdp_per_capita":"7894.393","total_deaths_per_million":"771.761","UE":"","Pays":"Ukraine"},{"iso_code":"URY","continent":"South America","location":"Uruguay","nombre_vaccins":"563281","date_donnees":"2021-03-29","pourcentage_vaccins":"16.22","pourcentageDose1":"15.79","pourcentageDose2":"0.42","population":"3473727.0","gdp_per_capita":"20551.409","total_deaths_per_million":"267.148","UE":"","Pays":"Uruguay"},{"iso_code":"USA","continent":"North America","location":"United States","nombre_vaccins":"145812835","date_donnees":"2021-03-29","pourcentage_vaccins":"43.6","pourcentageDose1":"28.41","pourcentageDose2":"15.73","population":"331002647.0","gdp_per_capita":"54225.446","total_deaths_per_million":"1661.727","UE":"","Pays":"États-Unis"},{"iso_code":"ZAF","continent":"Africa","location":"South Africa","nombre_vaccins":"239665","date_donnees":"2021-03-29","pourcentage_vaccins":"0.4","pourcentageDose1":"0.4","pourcentageDose2":"0.4","population":"59308690.0","gdp_per_capita":"12294.876","total_deaths_per_million":"888.74","UE":"","Pays":"Afrique du Sud"},{"iso_code":"ZWE","continent":"Africa","location":"Zimbabwe","nombre_vaccins":"69751","date_donnees":"2021-03-29","pourcentage_vaccins":"0.47","pourcentageDose1":"0.47","pourcentageDose2":"","population":"14862927.0","gdp_per_capita":"1899.775","total_deaths_per_million":"102.268","UE":"","Pays":"Zimbabwe"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":13,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":94277.965,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":115.19,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":4,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":2,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"small","activated":1,"category":"grid"},"yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":-12,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":14,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},"yAxisLabelText":{"value":"Nombre d'injections pour 100 habitants","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelText":{"value":"PIB par tête","type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.8,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"var xScale = d3.scaleLog(2)\n    .domain([1800, 80000])\n    .range([0, width]);\nvar yScale = d3.scaleLinear()\n    .domain([0, 120])\n    .range([height, 0]);\nd3.selectAll('svg g.innerGraph .ball')\n.attr('transform', function(d) {return 'translate(' + xScale(d[graphParameters['selected_xRows'][0]]) + ',' +  yScale(d[graphParameters['selected_yRows'][0]]) + ')'});\nd3.selectAll('svg g.innerGraph .ball circle')\n.style('fill', function(d){return d.UE == 'UE' ? '#e61e49' : 'grey'});\nvar axis_bottom2 = d3.axisBottom(xScale).tickValues([2000, 5000, 10000, 30000, 80000]).tickFormat(numbers_separators);\nd3.select('svg g.graphContainer .axis.axis--x').selectAll('*').remove();\n d3.select('svg g.graphContainer .axis.axis--x')\n  .call(axis_bottom2)"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"gdp_per_capita","value":"gdp_per_capita"},{"label":"pourcentage_vaccins","value":"pourcentage_vaccins"},{"label":"population","value":"population"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[Pays]]<br>\n<strong> PIB par tête</strong> : [[gdp_per_capita]] <br>\n[[nombre_vaccins|number_separator]] <strong> vaccins injectés</strong><br>\n<strong>Soit </strong> [[pourcentage_vaccins]] <strong> pour 100 habitants</strong><br>\n[[pourcentageDose1]]% <strong> ont reçu une dose</strong> <br>\n<strong>et </strong>[[pourcentageDose2]]% <strong>deux doses</strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["gdp_per_capita"],"selected_yRows":["pourcentage_vaccins"],"selected_size":["population"],"selected_color":[],"selected_label":[],"selected_tooltip":["Pays","pourcentage_vaccins"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Vaccination : l'Union Européenne, lanterne rouge des pays riches","annotations":[{"note":{"label":"Israël","title":"","wrap":150,"orientation":0,"textPadding":"20","align":"right"},"x":394,"y":15,"dy":4,"dx":-37,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":1,"disable":[]},{"note":{"label":"Etats-Unis","title":"","wrap":150,"orientation":0,"textPadding":"30","align":"right"},"x":475,"y":173,"dy":-25,"dx":-6,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":2,"disable":[]},{"note":{"label":"Royaume-Uni","title":"","wrap":150,"orientation":0,"textPadding":"30","align":"right"},"x":427,"y":176,"dy":-42,"dx":-34,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":3,"disable":[]},{"note":{"label":"Chili","title":"","wrap":150,"orientation":0,"textPadding":"10"},"x":353,"y":177,"dy":-16,"dx":-21,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":4,"disable":[]},{"note":{"label":"Maroc","title":"","wrap":150,"orientation":0,"textPadding":0},"x":192,"y":252,"dy":-11,"dx":-33,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":5,"disable":[]},{"note":{"label":"Union Européenne","title":"","align":"left","wrap":150,"orientation":0,"textPadding":0},"x":441,"y":297,"dy":-107,"dx":-306,"subject":{"radius":80.811183182043},"functionName":"annotationCalloutCircle","color":"#3c3c3b","index":6,"disable":[]}],"chartSource":"Our world in data - l'échelle du PIB par habitant est logarithmique","chartSubTitle":"Nombre d'injections et PIB par habitant"};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e61e49'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e61e49'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
