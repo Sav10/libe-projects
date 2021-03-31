@@ -22,7 +22,7 @@ var color = d3.scaleLinear()
   .range(["white", '#ED728B', "#E3234A", '#690000']);
 
 
-color.domain([0, 20, 50, 80]);
+color.domain([0, 30, 60, 80]);
 
 var sliderTime = 10000;
 var maptype = 'standard';
