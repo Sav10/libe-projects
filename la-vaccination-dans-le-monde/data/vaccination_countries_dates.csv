@@ -5744,8 +5744,8 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-03-30,BGR,Europe,Bulgaria,458731,6.6,5.26,1.34,Bulgarie
 2021-03-30,UKR,Europe,Ukraine,231566,0.53,0.53,0.0,Ukraine
 2021-03-30,BRA,South America,Brazil,18222559,8.57,6.64,1.93,Brésil
-2021-03-30,DOM,North America,Dominican Republic,965264,8.9,8.4,0.5,République dominicaine
-2021-03-30,OWID_NAM,,North America,162725548,27.48,18.38,9.34,
+2021-03-30,DOM,North America,Dominican Republic,910869,8.4,7.9,0.5,République dominicaine
+2021-03-30,OWID_NAM,,North America,162671153,27.47,18.37,9.34,
 2021-03-30,OWID_OCE,,Oceania,639023,1.5,0.47,,
 2021-03-30,MEX,North America,Mexico,7404912,5.74,5.74,,Mexique
 2021-03-30,LVA,Europe,Latvia,133230,7.06,5.85,1.22,Lettonie
