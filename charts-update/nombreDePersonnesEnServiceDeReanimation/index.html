@@ -1,0 +1,541 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nombre de personnes en service de réanimation</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e61e49', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e61e49", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e61e49", personalized:null}};
+
+
+  var data = [{"jour":"2020-03-18","hosp":"2972","rea":"771"},{"jour":"2020-03-19","hosp":"4073","rea":"1002"},{"jour":"2020-03-20","hosp":"5226","rea":"1297"},{"jour":"2020-03-21","hosp":"5900","rea":"1453"},{"jour":"2020-03-22","hosp":"6954","rea":"1674"},{"jour":"2020-03-23","hosp":"8673","rea":"2080"},{"jour":"2020-03-24","hosp":"10163","rea":"2503"},{"jour":"2020-03-25","hosp":"12072","rea":"2935"},{"jour":"2020-03-26","hosp":"13879","rea":"3351"},{"jour":"2020-03-27","hosp":"15701","rea":"3758"},{"jour":"2020-03-28","hosp":"17580","rea":"4236"},{"jour":"2020-03-29","hosp":"19311","rea":"4592"},{"jour":"2020-03-30","hosp":"20946","rea":"5056"},{"jour":"2020-03-31","hosp":"22672","rea":"5496"},{"jour":"2020-04-01","hosp":"24543","rea":"5940"},{"jour":"2020-04-02","hosp":"26131","rea":"6305"},{"jour":"2020-04-03","hosp":"27302","rea":"6556"},{"jour":"2020-04-04","hosp":"28003","rea":"6723"},{"jour":"2020-04-05","hosp":"28747","rea":"6859"},{"jour":"2020-04-06","hosp":"29569","rea":"6948"},{"jour":"2020-04-07","hosp":"29871","rea":"7004"},{"jour":"2020-04-08","hosp":"30217","rea":"7019"},{"jour":"2020-04-09","hosp":"30608","rea":"6937"},{"jour":"2020-04-10","hosp":"31108","rea":"6875"},{"jour":"2020-04-11","hosp":"31159","rea":"6752"},{"jour":"2020-04-12","hosp":"31665","rea":"6714"},{"jour":"2020-04-13","hosp":"31952","rea":"6690"},{"jour":"2020-04-14","hosp":"32131","rea":"6599"},{"jour":"2020-04-15","hosp":"31623","rea":"6331"},{"jour":"2020-04-16","hosp":"31172","rea":"6139"},{"jour":"2020-04-17","hosp":"31061","rea":"5922"},{"jour":"2020-04-18","hosp":"30515","rea":"5733"},{"jour":"2020-04-19","hosp":"30486","rea":"5644"},{"jour":"2020-04-20","hosp":"30462","rea":"5584"},{"jour":"2020-04-21","hosp":"29984","rea":"5334"},{"jour":"2020-04-22","hosp":"29627","rea":"5127"},{"jour":"2020-04-23","hosp":"29113","rea":"4967"},{"jour":"2020-04-24","hosp":"28554","rea":"4785"},{"jour":"2020-04-25","hosp":"28119","rea":"4641"},{"jour":"2020-04-26","hosp":"28114","rea":"4598"},{"jour":"2020-04-27","hosp":"27954","rea":"4526"},{"jour":"2020-04-28","hosp":"27607","rea":"4392"},{"jour":"2020-04-29","hosp":"26736","rea":"4128"},{"jour":"2020-04-30","hosp":"26192","rea":"3947"},{"jour":"2020-05-01","hosp":"25809","rea":"3819"},{"jour":"2020-05-02","hosp":"25751","rea":"3770"},{"jour":"2020-05-03","hosp":"25739","rea":"3762"},{"jour":"2020-05-04","hosp":"25472","rea":"3639"},{"jour":"2020-05-05","hosp":"24701","rea":"3375"},{"jour":"2020-05-06","hosp":"23912","rea":"3095"},{"jour":"2020-05-07","hosp":"23139","rea":"2911"},{"jour":"2020-05-08","hosp":"22657","rea":"2820"},{"jour":"2020-05-09","hosp":"22547","rea":"2764"},{"jour":"2020-05-10","hosp":"22502","rea":"2728"},{"jour":"2020-05-11","hosp":"22219","rea":"2666"},{"jour":"2020-05-12","hosp":"21530","rea":"2496"},{"jour":"2020-05-13","hosp":"21009","rea":"2385"},{"jour":"2020-05-14","hosp":"20401","rea":"2256"},{"jour":"2020-05-15","hosp":"19801","rea":"2162"},{"jour":"2020-05-16","hosp":"19372","rea":"2091"},{"jour":"2020-05-17","hosp":"19302","rea":"2047"},{"jour":"2020-05-18","hosp":"18956","rea":"1958"},{"jour":"2020-05-19","hosp":"18409","rea":"1854"},{"jour":"2020-05-20","hosp":"17882","rea":"1754"},{"jour":"2020-05-21","hosp":"17527","rea":"1708"},{"jour":"2020-05-22","hosp":"17327","rea":"1664"},{"jour":"2020-05-23","hosp":"17122","rea":"1628"},{"jour":"2020-05-24","hosp":"17129","rea":"1618"},{"jour":"2020-05-25","hosp":"16742","rea":"1572"},{"jour":"2020-05-26","hosp":"16209","rea":"1519"},{"jour":"2020-05-27","hosp":"15627","rea":"1467"},{"jour":"2020-05-28","hosp":"15155","rea":"1395"},{"jour":"2020-05-29","hosp":"14643","rea":"1328"},{"jour":"2020-05-30","hosp":"14329","rea":"1293"},{"jour":"2020-05-31","hosp":"14271","rea":"1287"},{"jour":"2020-06-01","hosp":"14237","rea":"1270"},{"jour":"2020-06-02","hosp":"13978","rea":"1221"},{"jour":"2020-06-03","hosp":"13465","rea":"1179"},{"jour":"2020-06-04","hosp":"13054","rea":"1133"},{"jour":"2020-06-05","hosp":"12650","rea":"1065"},{"jour":"2020-06-06","hosp":"12433","rea":"1030"},{"jour":"2020-06-07","hosp":"12415","rea":"1024"},{"jour":"2020-06-08","hosp":"12269","rea":"995"},{"jour":"2020-06-09","hosp":"11915","rea":"926"},{"jour":"2020-06-10","hosp":"11632","rea":"904"},{"jour":"2020-06-11","hosp":"11420","rea":"875"},{"jour":"2020-06-12","hosp":"11079","rea":"851"},{"jour":"2020-06-13","hosp":"10864","rea":"843"},{"jour":"2020-06-14","hosp":"10836","rea":"841"},{"jour":"2020-06-15","hosp":"10707","rea":"818"},{"jour":"2020-06-16","hosp":"10490","rea":"792"},{"jour":"2020-06-17","hosp":"10222","rea":"744"},{"jour":"2020-06-18","hosp":"10080","rea":"724"},{"jour":"2020-06-19","hosp":"9925","rea":"699"},{"jour":"2020-06-20","hosp":"9792","rea":"687"},{"jour":"2020-06-21","hosp":"9778","rea":"687"},{"jour":"2020-06-22","hosp":"9648","rea":"673"},{"jour":"2020-06-23","hosp":"9446","rea":"654"},{"jour":"2020-06-24","hosp":"9254","rea":"630"},{"jour":"2020-06-25","hosp":"9096","rea":"623"},{"jour":"2020-06-26","hosp":"8841","rea":"606"},{"jour":"2020-06-27","hosp":"8715","rea":"594"},{"jour":"2020-06-28","hosp":"8727","rea":"594"},{"jour":"2020-06-29","hosp":"8643","rea":"591"},{"jour":"2020-06-30","hosp":"8491","rea":"574"},{"jour":"2020-07-01","hosp":"8291","rea":"554"},{"jour":"2020-07-02","hosp":"8103","rea":"545"},{"jour":"2020-07-03","hosp":"7946","rea":"533"},{"jour":"2020-07-04","hosp":"7863","rea":"517"},{"jour":"2020-07-05","hosp":"7863","rea":"521"},{"jour":"2020-07-06","hosp":"7806","rea":"521"},{"jour":"2020-07-07","hosp":"7550","rea":"511"},{"jour":"2020-07-08","hosp":"7254","rea":"503"},{"jour":"2020-07-09","hosp":"7134","rea":"486"},{"jour":"2020-07-10","hosp":"7020","rea":"471"},{"jour":"2020-07-11","hosp":"6995","rea":"470"},{"jour":"2020-07-12","hosp":"6991","rea":"473"},{"jour":"2020-07-13","hosp":"6941","rea":"467"},{"jour":"2020-07-14","hosp":"6907","rea":"465"},{"jour":"2020-07-15","hosp":"6873","rea":"457"},{"jour":"2020-07-16","hosp":"6754","rea":"456"},{"jour":"2020-07-17","hosp":"6646","rea":"452"},{"jour":"2020-07-18","hosp":"6614","rea":"450"},{"jour":"2020-07-19","hosp":"6583","rea":"448"},{"jour":"2020-07-20","hosp":"6547","rea":"442"},{"jour":"2020-07-21","hosp":"6440","rea":"430"},{"jour":"2020-07-22","hosp":"6324","rea":"420"},{"jour":"2020-07-23","hosp":"5915","rea":"411"},{"jour":"2020-07-24","hosp":"5678","rea":"385"},{"jour":"2020-07-25","hosp":"5634","rea":"368"},{"jour":"2020-07-26","hosp":"5640","rea":"367"},{"jour":"2020-07-27","hosp":"5614","rea":"374"},{"jour":"2020-07-28","hosp":"5510","rea":"361"},{"jour":"2020-07-29","hosp":"5409","rea":"356"},{"jour":"2020-07-30","hosp":"5334","rea":"357"},{"jour":"2020-07-31","hosp":"5257","rea":"347"},{"jour":"2020-08-01","hosp":"5177","rea":"344"},{"jour":"2020-08-02","hosp":"5188","rea":"345"},{"jour":"2020-08-03","hosp":"5157","rea":"360"},{"jour":"2020-08-04","hosp":"5121","rea":"364"},{"jour":"2020-08-05","hosp":"5107","rea":"360"},{"jour":"2020-08-06","hosp":"5019","rea":"366"},{"jour":"2020-08-07","hosp":"4970","rea":"359"},{"jour":"2020-08-08","hosp":"4981","rea":"366"},{"jour":"2020-08-09","hosp":"4992","rea":"368"},{"jour":"2020-08-10","hosp":"5004","rea":"372"},{"jour":"2020-08-11","hosp":"4971","rea":"367"},{"jour":"2020-08-12","hosp":"4850","rea":"355"},{"jour":"2020-08-13","hosp":"4824","rea":"351"},{"jour":"2020-08-14","hosp":"4788","rea":"344"},{"jour":"2020-08-15","hosp":"4817","rea":"353"},{"jour":"2020-08-16","hosp":"4820","rea":"353"},{"jour":"2020-08-17","hosp":"4885","rea":"361"},{"jour":"2020-08-18","hosp":"4783","rea":"357"},{"jour":"2020-08-19","hosp":"4781","rea":"362"},{"jour":"2020-08-20","hosp":"4723","rea":"368"},{"jour":"2020-08-21","hosp":"4720","rea":"367"},{"jour":"2020-08-22","hosp":"4685","rea":"368"},{"jour":"2020-08-23","hosp":"4683","rea":"371"},{"jour":"2020-08-24","hosp":"4664","rea":"387"},{"jour":"2020-08-25","hosp":"4578","rea":"401"},{"jour":"2020-08-26","hosp":"4535","rea":"373"},{"jour":"2020-08-27","hosp":"4517","rea":"375"},{"jour":"2020-08-28","hosp":"4517","rea":"381"},{"jour":"2020-08-29","hosp":"4512","rea":"394"},{"jour":"2020-08-30","hosp":"4517","rea":"396"},{"jour":"2020-08-31","hosp":"4564","rea":"403"},{"jour":"2020-09-01","hosp":"4586","rea":"418"},{"jour":"2020-09-02","hosp":"4614","rea":"440"},{"jour":"2020-09-03","hosp":"4625","rea":"458"},{"jour":"2020-09-04","hosp":"4653","rea":"467"},{"jour":"2020-09-05","hosp":"4667","rea":"476"},{"jour":"2020-09-06","hosp":"4697","rea":"480"},{"jour":"2020-09-07","hosp":"4889","rea":"531"},{"jour":"2020-09-08","hosp":"4942","rea":"568"},{"jour":"2020-09-09","hosp":"4985","rea":"593"},{"jour":"2020-09-10","hosp":"5077","rea":"608"},{"jour":"2020-09-11","hosp":"5136","rea":"628"},{"jour":"2020-09-12","hosp":"5176","rea":"655"},{"jour":"2020-09-13","hosp":"5228","rea":"662"},{"jour":"2020-09-14","hosp":"5479","rea":"705"},{"jour":"2020-09-15","hosp":"5660","rea":"752"},{"jour":"2020-09-16","hosp":"5800","rea":"796"},{"jour":"2020-09-17","hosp":"5825","rea":"793"},{"jour":"2020-09-18","hosp":"5800","rea":"820"},{"jour":"2020-09-19","hosp":"5493","rea":"827"},{"jour":"2020-09-20","hosp":"5356","rea":"834"},{"jour":"2020-09-21","hosp":"5597","rea":"912"},{"jour":"2020-09-22","hosp":"5777","rea":"944"},{"jour":"2020-09-23","hosp":"5913","rea":"995"},{"jour":"2020-09-24","hosp":"6012","rea":"1041"},{"jour":"2020-09-25","hosp":"6110","rea":"1092"},{"jour":"2020-09-26","hosp":"6154","rea":"1105"},{"jour":"2020-09-27","hosp":"6235","rea":"1112"},{"jour":"2020-09-28","hosp":"6397","rea":"1158"},{"jour":"2020-09-29","hosp":"6482","rea":"1198"},{"jour":"2020-09-30","hosp":"6572","rea":"1232"},{"jour":"2020-10-01","hosp":"6634","rea":"1259"},{"jour":"2020-10-02","hosp":"6740","rea":"1270"},{"jour":"2020-10-03","hosp":"6740","rea":"1289"},{"jour":"2020-10-04","hosp":"6964","rea":"1335"},{"jour":"2020-10-05","hosp":"7276","rea":"1409"},{"jour":"2020-10-06","hosp":"7377","rea":"1417"},{"jour":"2020-10-07","hosp":"7514","rea":"1406"},{"jour":"2020-10-08","hosp":"7603","rea":"1418"},{"jour":"2020-10-09","hosp":"7843","rea":"1439"},{"jour":"2020-10-10","hosp":"7976","rea":"1456"},{"jour":"2020-10-11","hosp":"8231","rea":"1483"},{"jour":"2020-10-12","hosp":"8671","rea":"1539"},{"jour":"2020-10-13","hosp":"8928","rea":"1633"},{"jour":"2020-10-14","hosp":"9173","rea":"1664"},{"jour":"2020-10-15","hosp":"9584","rea":"1741"},{"jour":"2020-10-16","hosp":"10021","rea":"1791"},{"jour":"2020-10-17","hosp":"10399","rea":"1868"},{"jour":"2020-10-18","hosp":"10897","rea":"1939"},{"jour":"2020-10-19","hosp":"11640","rea":"2090"},{"jour":"2020-10-20","hosp":"12435","rea":"2168"},{"jour":"2020-10-21","hosp":"13162","rea":"2239"},{"jour":"2020-10-22","hosp":"14009","rea":"2310"},{"jour":"2020-10-23","hosp":"14985","rea":"2432"},{"jour":"2020-10-24","hosp":"15637","rea":"2491"},{"jour":"2020-10-25","hosp":"16454","rea":"2575"},{"jour":"2020-10-26","hosp":"17761","rea":"2761"},{"jour":"2020-10-27","hosp":"18955","rea":"2909"},{"jour":"2020-10-28","hosp":"20184","rea":"3036"},{"jour":"2020-10-29","hosp":"21160","rea":"3147"},{"jour":"2020-10-30","hosp":"22153","rea":"3368"},{"jour":"2020-10-31","hosp":"23013","rea":"3443"},{"jour":"2020-11-01","hosp":"24008","rea":"3569"},{"jour":"2020-11-02","hosp":"25120","rea":"3721"},{"jour":"2020-11-03","hosp":"26242","rea":"3869"},{"jour":"2020-11-04","hosp":"27511","rea":"4080"},{"jour":"2020-11-05","hosp":"28403","rea":"4221"},{"jour":"2020-11-06","hosp":"28955","rea":"4321"},{"jour":"2020-11-07","hosp":"29396","rea":"4410"},{"jour":"2020-11-08","hosp":"30217","rea":"4527"},{"jour":"2020-11-09","hosp":"31098","rea":"4677"},{"jour":"2020-11-10","hosp":"31477","rea":"4736"},{"jour":"2020-11-11","hosp":"31918","rea":"4789"},{"jour":"2020-11-12","hosp":"32654","rea":"4884"},{"jour":"2020-11-13","hosp":"32676","rea":"4887"},{"jour":"2020-11-14","hosp":"32468","rea":"4855"},{"jour":"2020-11-15","hosp":"33050","rea":"4880"},{"jour":"2020-11-16","hosp":"33466","rea":"4903"},{"jour":"2020-11-17","hosp":"33139","rea":"4838"},{"jour":"2020-11-18","hosp":"32811","rea":"4759"},{"jour":"2020-11-19","hosp":"32314","rea":"4637"},{"jour":"2020-11-20","hosp":"31875","rea":"4566"},{"jour":"2020-11-21","hosp":"31365","rea":"4493"},{"jour":"2020-11-22","hosp":"31522","rea":"4491"},{"jour":"2020-11-23","hosp":"31449","rea":"4438"},{"jour":"2020-11-24","hosp":"30594","rea":"4277"},{"jour":"2020-11-25","hosp":"29944","rea":"4136"},{"jour":"2020-11-26","hosp":"29282","rea":"4006"},{"jour":"2020-11-27","hosp":"28620","rea":"3871"},{"jour":"2020-11-28","hosp":"28139","rea":"3765"},{"jour":"2020-11-29","hosp":"28284","rea":"3744"},{"jour":"2020-11-30","hosp":"28229","rea":"3739"},{"jour":"2020-12-01","hosp":"27611","rea":"3594"},{"jour":"2020-12-02","hosp":"26986","rea":"3478"},{"jour":"2020-12-03","hosp":"26675","rea":"3415"},{"jour":"2020-12-04","hosp":"26283","rea":"3283"},{"jour":"2020-12-05","hosp":"26040","rea":"3220"},{"jour":"2020-12-06","hosp":"26262","rea":"3210"},{"jour":"2020-12-07","hosp":"26333","rea":"3188"},{"jour":"2020-12-08","hosp":"25882","rea":"3078"},{"jour":"2020-12-09","hosp":"25526","rea":"3031"},{"jour":"2020-12-10","hosp":"25199","rea":"2949"},{"jour":"2020-12-11","hosp":"24943","rea":"2874"},{"jour":"2020-12-12","hosp":"24948","rea":"2851"},{"jour":"2020-12-13","hosp":"25207","rea":"2861"},{"jour":"2020-12-14","hosp":"25449","rea":"2896"},{"jour":"2020-12-15","hosp":"25207","rea":"2871"},{"jour":"2020-12-16","hosp":"25282","rea":"2840"},{"jour":"2020-12-17","hosp":"25149","rea":"2798"},{"jour":"2020-12-18","hosp":"24945","rea":"2764"},{"jour":"2020-12-19","hosp":"24819","rea":"2718"},{"jour":"2020-12-20","hosp":"24961","rea":"2745"},{"jour":"2020-12-21","hosp":"25201","rea":"2737"},{"jour":"2020-12-22","hosp":"24932","rea":"2719"},{"jour":"2020-12-23","hosp":"24852","rea":"2701"},{"jour":"2020-12-24","hosp":"24607","rea":"2643"},{"jour":"2020-12-25","hosp":"24359","rea":"2616"},{"jour":"2020-12-26","hosp":"24444","rea":"2640"},{"jour":"2020-12-27","hosp":"24620","rea":"2650"},{"jour":"2020-12-28","hosp":"24645","rea":"2694"},{"jour":"2020-12-29","hosp":"24743","rea":"2666"},{"jour":"2020-12-30","hosp":"24560","rea":"2652"},{"jour":"2020-12-31","hosp":"24407","rea":"2625"},{"jour":"2021-01-01","hosp":"24263","rea":"2609"},{"jour":"2021-01-02","hosp":"24458","rea":"2632"},{"jour":"2021-01-03","hosp":"24780","rea":"2665"},{"jour":"2021-01-04","hosp":"24962","rea":"2657"},{"jour":"2021-01-05","hosp":"24871","rea":"2616"},{"jour":"2021-01-06","hosp":"24708","rea":"2607"},{"jour":"2021-01-07","hosp":"24488","rea":"2573"},{"jour":"2021-01-08","hosp":"24377","rea":"2606"},{"jour":"2021-01-09","hosp":"24240","rea":"2600"},{"jour":"2021-01-10","hosp":"24526","rea":"2620"},{"jour":"2021-01-11","hosp":"24812","rea":"2666"},{"jour":"2021-01-12","hosp":"24703","rea":"2678"},{"jour":"2021-01-13","hosp":"24735","rea":"2701"},{"jour":"2021-01-14","hosp":"24983","rea":"2716"},{"jour":"2021-01-15","hosp":"25009","rea":"2730"},{"jour":"2021-01-16","hosp":"24985","rea":"2731"},{"jour":"2021-01-17","hosp":"25235","rea":"2766"},{"jour":"2021-01-18","hosp":"25584","rea":"2803"},{"jour":"2021-01-19","hosp":"25532","rea":"2829"},{"jour":"2021-01-20","hosp":"25650","rea":"2842"},{"jour":"2021-01-21","hosp":"25699","rea":"2866"},{"jour":"2021-01-22","hosp":"25872","rea":"2902"},{"jour":"2021-01-23","hosp":"25864","rea":"2886"},{"jour":"2021-01-24","hosp":"26357","rea":"2955"},{"jour":"2021-01-25","hosp":"26888","rea":"3031"},{"jour":"2021-01-26","hosp":"27005","rea":"3071"},{"jour":"2021-01-27","hosp":"27131","rea":"3097"},{"jour":"2021-01-28","hosp":"27128","rea":"3101"},{"jour":"2021-01-29","hosp":"27270","rea":"3120"},{"jour":"2021-01-30","hosp":"27242","rea":"3103"},{"jour":"2021-01-31","hosp":"27573","rea":"3148"},{"jour":"2021-02-01","hosp":"27874","rea":"3218"},{"jour":"2021-02-02","hosp":"28029","rea":"3270"},{"jour":"2021-02-03","hosp":"27953","rea":"3267"},{"jour":"2021-02-04","hosp":"27766","rea":"3240"},{"jour":"2021-02-05","hosp":"27572","rea":"3235"},{"jour":"2021-02-06","hosp":"27327","rea":"3215"},{"jour":"2021-02-07","hosp":"27652","rea":"3262"},{"jour":"2021-02-08","hosp":"27995","rea":"3353"},{"jour":"2021-02-09","hosp":"27634","rea":"3332"},{"jour":"2021-02-10","hosp":"27417","rea":"3309"},{"jour":"2021-02-11","hosp":"26963","rea":"3327"},{"jour":"2021-02-12","hosp":"26424","rea":"3298"},{"jour":"2021-02-13","hosp":"26196","rea":"3294"},{"jour":"2021-02-14","hosp":"26401","rea":"3299"},{"jour":"2021-02-15","hosp":"26478","rea":"3371"},{"jour":"2021-02-16","hosp":"26195","rea":"3338"},{"jour":"2021-02-17","hosp":"25929","rea":"3340"},{"jour":"2021-02-18","hosp":"25717","rea":"3384"},{"jour":"2021-02-19","hosp":"25506","rea":"3380"},{"jour":"2021-02-20","hosp":"25269","rea":"3369"},{"jour":"2021-02-21","hosp":"25464","rea":"3392"},{"jour":"2021-02-22","hosp":"25831","rea":"3407"},{"jour":"2021-02-23","hosp":"25660","rea":"3435"},{"jour":"2021-02-24","hosp":"25614","rea":"3436"},{"jour":"2021-02-25","hosp":"25317","rea":"3430"},{"jour":"2021-02-26","hosp":"25130","rea":"3445"},{"jour":"2021-02-27","hosp":"24989","rea":"3453"},{"jour":"2021-02-28","hosp":"25280","rea":"3492"},{"jour":"2021-03-01","hosp":"25430","rea":"3544"},{"jour":"2021-03-02","hosp":"25263","rea":"3586"},{"jour":"2021-03-03","hosp":"25111","rea":"3637"},{"jour":"2021-03-04","hosp":"24891","rea":"3633"},{"jour":"2021-03-05","hosp":"24765","rea":"3680"},{"jour":"2021-03-06","hosp":"24625","rea":"3689"},{"jour":"2021-03-07","hosp":"24818","rea":"3743"},{"jour":"2021-03-08","hosp":"25195","rea":"3849"},{"jour":"2021-03-09","hosp":"25201","rea":"3918"},{"jour":"2021-03-10","hosp":"24969","rea":"3918"},{"jour":"2021-03-11","hosp":"24858","rea":"3992"},{"jour":"2021-03-12","hosp":"24749","rea":"4033"},{"jour":"2021-03-13","hosp":"24671","rea":"4070"},{"jour":"2021-03-14","hosp":"24989","rea":"4127"},{"jour":"2021-03-15","hosp":"25469","rea":"4219"},{"jour":"2021-03-16","hosp":"25492","rea":"4239"},{"jour":"2021-03-17","hosp":"25314","rea":"4219"},{"jour":"2021-03-18","hosp":"25389","rea":"4246"},{"jour":"2021-03-19","hosp":"25339","rea":"4287"},{"jour":"2021-03-20","hosp":"25537","rea":"4353"},{"jour":"2021-03-21","hosp":"25926","rea":"4406"},{"jour":"2021-03-22","hosp":"26488","rea":"4548"},{"jour":"2021-03-23","hosp":"26756","rea":"4634"},{"jour":"2021-03-24","hosp":"26876","rea":"4651"},{"jour":"2021-03-25","hosp":"27036","rea":"4709"},{"jour":"2021-03-26","hosp":"27242","rea":"4766"},{"jour":"2021-03-27","hosp":"27259","rea":"4791"},{"jour":"2021-03-28","hosp":"27712","rea":"4872"},{"jour":"2021-03-29","hosp":"28322","rea":"4974"},{"jour":"2021-03-30","hosp":"28510","rea":"5072"},{"jour":"2021-03-31","hosp":"28463","rea":"5053"},{"jour":"2021-04-01","hosp":"28581","rea":"5109"},{"jour":"2021-04-02","hosp":"28729","rea":"5254"},{"jour":"2021-04-03","hosp":"28886","rea":"5273"},{"jour":"2021-04-04","hosp":"29356","rea":"5341"},{"jour":"2021-04-05","hosp":"29907","rea":"5433"},{"jour":"2021-04-06","hosp":"30639","rea":"5626"},{"jour":"2021-04-07","hosp":"30904","rea":"5729"},{"jour":"2021-04-08","hosp":"30555","rea":"5705"},{"jour":"2021-04-09","hosp":"30326","rea":"5757"},{"jour":"2021-04-10","hosp":"30238","rea":"5769"},{"jour":"2021-04-11","hosp":"30671","rea":"5838"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"value":false,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":344,"calculated_right_value":7019,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":12,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"jour","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMM')});"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"jour","value":"jour"},{"label":"rea","value":"rea"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[jour|frenchDate]]<br>\n[[rea]] <strong>personnes en réanimation</strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["jour"],"selected_yRows":["rea"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"areaChart","chartTitle":"Nombre de personnes en service de réanimation","chartSubTitle":"","chartSource":"Santé publique France","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeAreachart(data_) {
+
+    var kValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_yRows'];
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+    // width = +svg.attr("width") - margin.left - margin.right;
+
+    updateParameters();
+
+    var data = _.cloneDeep(data_);
+    var initial_data = _.cloneDeep(data);
+
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var yScale = d3.scaleLinear()
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale)
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var area = d3.area()
+    .x(function(d) { return xScale(d.x_value) })
+    .y0(yScale(yScale.domain()[0]))
+    .y1(function(d) { return yScale(d.y_value)})
+    .curve(d3.curveLinear);
+
+    // .curve(d3.curveCatmullRom.alpha(0.5));
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+    var allArea = g_inner
+    .selectAll('.area')
+    .data(data);
+
+    allArea
+    .transition()
+    .duration(200)
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+    allArea.exit().transition().duration(200).remove();
+
+    allArea
+    .enter()
+    .append('path')
+    .attr('class', 'area')
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) })
+    .style('fill', function(d) { return colorUpdated(d[0].name) })
+    .style('stroke-width', 2)
+    .style('fill-opacity', 0.9);
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+        // AllDotPoints = g_inner
+        // .selectAll('circle.dotPoint')
+        // .data(_.flatten(data));
+
+        // AllDotPoints
+        // // .transition()
+        // // .duration(200)
+        // .attr('cx', function(d) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .style('fill-opacity', 0 );
+
+        // AllDotPoints.exit().transition().duration(200).remove();
+
+        // AllDotPoints
+        // .enter()
+        // .append('circle')
+        // .attr('class', 'dotPoint')
+        // .attr('cx', function(d, i) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .attr('r', 3)
+        // .style('stroke-width', 5)
+        // .style('stroke', 'white')
+        // .style('stroke-opacity', 0)
+        // .style('fill-opacity', 0 )
+        // // .style('fill', 'black')
+        // .on('mouseover', function(d, i){ show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        // ;
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+
+customizeAxis()
+
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeAreachart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
