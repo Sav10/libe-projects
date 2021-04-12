@@ -1,0 +1,168 @@
+//Import
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic,900,900italic,100italic,100)
+
+// Variables
+$bleu: #00A0D2
+
+// COMMUN //
+body
+	background: #F6F6F6
+	margin: 0
+	width: 100%
+	padding: 0
+	font-family: 'Lato', sans-serif
+
+h1,h2,h3,h4,h5,h6,p,span,li
+	font-family: 'Lato', sans-serif
+
+
+.clear:after
+	content: ""
+	display: block
+	clear: both
+input[type="submit"]
+	background: #FFF
+	border: 0
+.wrap
+	margin: 0 auto
+	width: 95%
+	header
+		text-align: center
+		img
+			text-align: center
+
+	nav
+		ul
+			text-align: center
+			li
+				display: inline-block
+				padding: 0 20px
+				text-transform: uppercase
+				color: #444
+				input
+		.sep
+			width: 100%
+			height: 1px
+			background: #444
+			margin-bottom: 50px
+	.container
+		.left
+			input
+				width: 100%
+				padding: 8px
+				font-size: 0.95em
+				border: 0
+			input.titre
+				margin-bottom: 15px
+			input.keywords
+				margin-bottom: 15px
+				width: 280px
+			.list-keywords
+				width: 100%
+				margin: 0
+				ul
+					margin: 0
+					padding: 0
+					li
+						display: inline-block
+						background: #FFF
+						padding: 8px
+						margin: 0 10px 0 0
+						font-size: 0.9em
+						background: url(../img/cross.png)
+						background-repeat: no-repeat
+						background-position: top right
+						background-size: 8px
+						cursor: pointer
+			input.valide
+				width: 100px
+				background: $bleu
+				color: #FFF
+			input.add-media
+				width: 150px
+				margin-bottom: 30px
+				margin-top: 30px
+				background: $bleu
+				color: #FFF
+			textarea
+				width: 100%
+				border: 0
+				min-height: 500px
+		.center
+			input.drag
+				border: dashed #555
+				padding: 20px
+				width: 100%
+				border-radius: 10px
+			.volet
+				width: 100%
+				background: #FFF
+				margin: 10px 0
+				padding: 5px
+				.item
+					.clickme
+						font-weight: 600
+						cursor: pointer
+					.article
+						h4
+							margin: 0
+							color: $bleu
+						.contenu-article
+							p
+								line-height: 1.1em
+								text-align: justify
+					a
+						text-decoration: none
+						color: #333
+					.box
+					    border-radius: 4px
+					    color: #333
+					    margin: 5px 0
+					    padding: 5px 10px
+					    width: auto
+
+		.right
+			background: #fff
+			.publier
+				h3
+					padding: 0
+					margin: 0
+				input
+					width: 100%
+					margin: 10px 0
+					padding: 10px
+					background: $bleu
+					color: #FFF
+			.commentaires
+				textarea
+					width: 100%
+					border: 0
+					background: #F6F6F6
+					min-height: 150px
+					padding: 5px
+			.discussions
+				.item
+					margin: 10px 0
+					.photo
+						display: inline-block
+						position: relative
+						.online
+							width: 13px
+							height: 13px
+							background: #4CB138
+							border-radius: 50%
+							position: absolute
+							right: -5px
+							top: -5px
+						.offline
+							width: 13px
+							height: 13px
+							background: #DC0035
+							border-radius: 50%
+							position: absolute
+							right: -5px
+							top: -5px
+						img
+							width: 50px
+					.name
+						display: inline-block
