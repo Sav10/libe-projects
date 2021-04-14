@@ -10,14 +10,9 @@
   <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
   <link rel="stylesheet" href="../utilities/css/styles.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
-
   <style type="text/css">
     
-
-    
   </style>
-
-
 </head>
 <body>
 
@@ -198,8 +193,6 @@
   // .type(annotationType)
   ;
 
-
-
   var annotations = graphParameters.annotations ? graphParameters.annotations : [];
 
   function makeAnnotation(){
@@ -271,12 +264,9 @@ function makeAreachart(data_) {
     if (manualReusableParameters.indice_100.value == 1){
 
         if (checkIfpercentageInArray(data, dValues) == true){
-
-
             data = prepareLineChartIndice100Growth(data, kValue, dValues);
         }
         else{
-
             data = prepareLineChartIndice100Value(data, kValue, dValues);
         }
     }
@@ -291,15 +281,10 @@ function makeAreachart(data_) {
   var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
   var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
 
-
-
   xScale = xScaleType()
   .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
     d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
   .range([0, width]);
-
-
-console.log(data)
 
   yScale = d3.scaleLinear()
   .domain([thisYMin,
@@ -399,38 +384,6 @@ var voronoi = d3.voronoi()
         return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
     .on('mouseout', function(){ hide_tooltip()});
 
-        // AllDotPoints = g_inner
-        // .selectAll('circle.dotPoint')
-        // .data(_.flatten(data));
-
-        // AllDotPoints
-        // // .transition()
-        // // .duration(200)
-        // .attr('cx', function(d) { return xScale(d.x_value) })
-        // .attr('cy', function(d) { return yScale(d.y_value) })
-        // .style('fill', function(d) { return colorUpdated(d.name) })
-        // .style('fill-opacity', 0 );
-
-        // AllDotPoints.exit().transition().duration(200).remove();
-
-        // AllDotPoints
-        // .enter()
-        // .append('circle')
-        // .attr('class', 'dotPoint')
-        // .attr('cx', function(d, i) { return xScale(d.x_value) })
-        // .attr('cy', function(d) { return yScale(d.y_value) })
-        // .style('fill', function(d) { return colorUpdated(d.name) })
-        // .attr('r', 3)
-        // .style('stroke-width', 5)
-        // .style('stroke', 'white')
-        // .style('stroke-opacity', 0)
-        // .style('fill-opacity', 0 )
-        // // .style('fill', 'black')
-        // .on('mouseover', function(d, i){ show_tooltip(_.find(initial_data, function(e){
-        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name)})
-        // .on('mouseout', function(d){ hide_tooltip()});
-        // ;
-
 g_inner
 .call(xAxisLabel, graphParameters.selected_xRows[0]);
 
@@ -439,9 +392,8 @@ g_inner
 
 
 customizeAxis()
-
-    drawLegend()
-    addCustomCode()
+drawLegend()
+addCustomCode()
 
 }
 
@@ -452,15 +404,9 @@ d3.csv("data.csv", function(data) {
 dataFromFile = _.cloneDeep(data);
 
 initChart();
-
 makeAreachart(data);
-
-
 addNewCode(data)
-
-
 makeAnnotation();
-
 zeroParameters()
 
 d3.select("svg").call(responsivefy)
@@ -537,13 +483,9 @@ function responsivefy(svg, width, height) {
     }
   }
 
-
 /// Rajouts
 
-
 function addNewCode (data){
-
-console.log(data)
 
 d3.select('g.graphContainer .innerGraph').append('text').attr('id', 'text_label_end');
 
@@ -553,8 +495,29 @@ d3.select('text#text_label_end')
 .attr('text-anchor', 'end')
 .style('font-size', '10px')
 .text(numbers_separators(+_.last(dataFromFile)[graphParameters['selected_yRows']]));
+
+function placeText(x_value, left_margin, top_margin){
+
+var this_x_value = xScale(moment(x_value));
+
+var this_d = _.find(dataFromFile, function(d){ return d.datetime == x_value});
+
+var this_y_value = yScale(this_d[graphParameters['selected_yRows']]);
+
+d3.select('g.graphContainer .innerGraph')
+.append('text')
+.attr('class', 'text_label_new')
+.attr('x', (this_x_value + left_margin))
+.attr('y', (this_y_value + top_margin))
+.attr('text-anchor', 'end')
+.style('font-size', '10px')
+.text(numbers_separators(+this_d[graphParameters['selected_yRows']]));
 }
 
+placeText('2020-05-18', 0, -5);
+placeText('2020-10-22', 0, -5);
+
+}
       </script>
 
     </body>
