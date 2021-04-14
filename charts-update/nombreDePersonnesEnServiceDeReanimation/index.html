@@ -539,8 +539,8 @@ function addNewCode (data){
 d3.select('g.graphContainer .innerGraph').append('text').attr('id', 'text_label_end');
 
 d3.select('text#text_label_end')
-.attr('x', (xScale.range()[1] + 35))
-.attr('y', (margin.top+10))
+.attr('x', (xScale(moment(_.last(dataFromFile)[graphParameters['selected_xRows'][0]])) + 30))
+.attr('y', (margin.top+25))
 .attr('text-anchor', 'end')
 .style('font-size', '10px')
 .text(numbers_separators(+_.last(dataFromFile)[graphParameters['selected_yRows']]));
@@ -570,7 +570,7 @@ d3.select('g.graphContainer .innerGraph')
 }
 
 placeText('2020-04-08', 10, -5);
-placeText('2020-11-16', 10, -5);
+placeText('2020-11-16', 10, -7);
 
 d3.select('svg g.innerGraph path.area')
 .style('fill', '#E60004')
