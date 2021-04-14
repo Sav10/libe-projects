@@ -447,10 +447,7 @@ d3.csv("data.csv", function(data) {
 initChart();
 
 makeAreachart(data);
-
-
-
-
+addNewCode (data)
 
 makeAnnotation();
 
@@ -534,6 +531,19 @@ function responsivefy(svg, width, height) {
 
     }
   }
+
+
+/// Rajouts
+
+function addNewCode (data){
+
+
+d3.select('svg g.innerGraph path.area')
+.style('fill', '#E60004')
+.style('stroke', '#E60004')
+.style('opacity', 1);
+
+}
 
 
       </script>

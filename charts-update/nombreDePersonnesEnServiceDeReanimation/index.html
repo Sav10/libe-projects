@@ -448,9 +448,12 @@ initChart();
 
 makeAreachart(data);
 
+addNewCode (data);
+
 makeAnnotation();
 
 zeroParameters()
+
 
 d3.select("svg").call(responsivefy)
 
@@ -526,6 +529,18 @@ function responsivefy(svg, width, height) {
     }
   }
 
+
+/// Rajouts
+
+function addNewCode (data){
+
+
+d3.select('svg g.innerGraph path.area')
+.style('fill', '#E60004')
+.style('stroke', '#E60004')
+.style('opacity', 1);
+
+}
 
       </script>
 
