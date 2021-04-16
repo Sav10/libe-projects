@@ -1,0 +1,570 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le taux d'incidence baisse davantage </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"datetime":"2021-01-01","P_moins_de_20_ans":"12058.0","T_moins_de_20_ans":"212370.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.68","tx_incidence_moins_de_20_ans":"78.3","P_20_59_ans":"54758.0","T_20_59_ans":"1135829.0","population_20_59_ans":"32075098","positivity_20_59_ans":"4.82","tx_incidence_20_59_ans":"170.7"},{"datetime":"2021-01-02","P_moins_de_20_ans":"12960.0","T_moins_de_20_ans":"212395.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.1","tx_incidence_moins_de_20_ans":"84.2","P_20_59_ans":"57195.0","T_20_59_ans":"1133844.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.04","tx_incidence_20_59_ans":"178.3"},{"datetime":"2021-01-03","P_moins_de_20_ans":"13124.0","T_moins_de_20_ans":"213021.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.16","tx_incidence_moins_de_20_ans":"85.3","P_20_59_ans":"57650.0","T_20_59_ans":"1132041.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.09","tx_incidence_20_59_ans":"179.7"},{"datetime":"2021-01-04","P_moins_de_20_ans":"14431.0","T_moins_de_20_ans":"211372.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.83","tx_incidence_moins_de_20_ans":"93.8","P_20_59_ans":"61522.0","T_20_59_ans":"1147074.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.36","tx_incidence_20_59_ans":"191.8"},{"datetime":"2021-01-05","P_moins_de_20_ans":"15299.0","T_moins_de_20_ans":"205341.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.45","tx_incidence_moins_de_20_ans":"99.4","P_20_59_ans":"63495.0","T_20_59_ans":"1129640.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.62","tx_incidence_20_59_ans":"198.0"},{"datetime":"2021-01-06","P_moins_de_20_ans":"15759.0","T_moins_de_20_ans":"193327.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.15","tx_incidence_moins_de_20_ans":"102.4","P_20_59_ans":"63653.0","T_20_59_ans":"1069205.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.95","tx_incidence_20_59_ans":"198.4"},{"datetime":"2021-01-07","P_moins_de_20_ans":"16491.0","T_moins_de_20_ans":"188450.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.75","tx_incidence_moins_de_20_ans":"107.2","P_20_59_ans":"65598.0","T_20_59_ans":"1060102.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.19","tx_incidence_20_59_ans":"204.5"},{"datetime":"2021-01-08","P_moins_de_20_ans":"19661.0","T_moins_de_20_ans":"226665.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.67","tx_incidence_moins_de_20_ans":"127.8","P_20_59_ans":"76805.0","T_20_59_ans":"1256748.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.11","tx_incidence_20_59_ans":"239.5"},{"datetime":"2021-01-09","P_moins_de_20_ans":"19353.0","T_moins_de_20_ans":"224757.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.61","tx_incidence_moins_de_20_ans":"125.8","P_20_59_ans":"75214.0","T_20_59_ans":"1230025.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.11","tx_incidence_20_59_ans":"234.5"},{"datetime":"2021-01-10","P_moins_de_20_ans":"19289.0","T_moins_de_20_ans":"223586.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.63","tx_incidence_moins_de_20_ans":"125.3","P_20_59_ans":"75035.0","T_20_59_ans":"1227211.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.11","tx_incidence_20_59_ans":"233.9"},{"datetime":"2021-01-11","P_moins_de_20_ans":"19164.0","T_moins_de_20_ans":"228637.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.38","tx_incidence_moins_de_20_ans":"124.5","P_20_59_ans":"73486.0","T_20_59_ans":"1197237.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.14","tx_incidence_20_59_ans":"229.1"},{"datetime":"2021-01-12","P_moins_de_20_ans":"19034.0","T_moins_de_20_ans":"237009.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.03","tx_incidence_moins_de_20_ans":"123.7","P_20_59_ans":"72236.0","T_20_59_ans":"1186918.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.09","tx_incidence_20_59_ans":"225.2"},{"datetime":"2021-01-13","P_moins_de_20_ans":"19154.0","T_moins_de_20_ans":"245310.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.81","tx_incidence_moins_de_20_ans":"124.5","P_20_59_ans":"72319.0","T_20_59_ans":"1180459.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.13","tx_incidence_20_59_ans":"225.5"},{"datetime":"2021-01-14","P_moins_de_20_ans":"19323.0","T_moins_de_20_ans":"252436.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.65","tx_incidence_moins_de_20_ans":"125.6","P_20_59_ans":"72930.0","T_20_59_ans":"1172029.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.22","tx_incidence_20_59_ans":"227.4"},{"datetime":"2021-01-15","P_moins_de_20_ans":"19941.0","T_moins_de_20_ans":"264046.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.55","tx_incidence_moins_de_20_ans":"129.6","P_20_59_ans":"73783.0","T_20_59_ans":"1164408.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.34","tx_incidence_20_59_ans":"230.0"},{"datetime":"2021-01-16","P_moins_de_20_ans":"20317.0","T_moins_de_20_ans":"269202.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.55","tx_incidence_moins_de_20_ans":"132.0","P_20_59_ans":"74140.0","T_20_59_ans":"1167341.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.35","tx_incidence_20_59_ans":"231.1"},{"datetime":"2021-01-17","P_moins_de_20_ans":"20375.0","T_moins_de_20_ans":"270018.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.55","tx_incidence_moins_de_20_ans":"132.4","P_20_59_ans":"74320.0","T_20_59_ans":"1168435.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.36","tx_incidence_20_59_ans":"231.7"},{"datetime":"2021-01-18","P_moins_de_20_ans":"21318.0","T_moins_de_20_ans":"277529.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.68","tx_incidence_moins_de_20_ans":"138.5","P_20_59_ans":"75915.0","T_20_59_ans":"1164082.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.52","tx_incidence_20_59_ans":"236.7"},{"datetime":"2021-01-19","P_moins_de_20_ans":"22006.0","T_moins_de_20_ans":"285857.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.7","tx_incidence_moins_de_20_ans":"143.0","P_20_59_ans":"77344.0","T_20_59_ans":"1159676.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.67","tx_incidence_20_59_ans":"241.1"},{"datetime":"2021-01-20","P_moins_de_20_ans":"22732.0","T_moins_de_20_ans":"293076.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.76","tx_incidence_moins_de_20_ans":"147.7","P_20_59_ans":"78412.0","T_20_59_ans":"1164599.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.73","tx_incidence_20_59_ans":"244.5"},{"datetime":"2021-01-21","P_moins_de_20_ans":"23411.0","T_moins_de_20_ans":"304347.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.69","tx_incidence_moins_de_20_ans":"152.1","P_20_59_ans":"79468.0","T_20_59_ans":"1173952.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.77","tx_incidence_20_59_ans":"247.8"},{"datetime":"2021-01-22","P_moins_de_20_ans":"24118.0","T_moins_de_20_ans":"317625.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.59","tx_incidence_moins_de_20_ans":"156.7","P_20_59_ans":"80346.0","T_20_59_ans":"1192096.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.74","tx_incidence_20_59_ans":"250.5"},{"datetime":"2021-01-23","P_moins_de_20_ans":"24365.0","T_moins_de_20_ans":"320686.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.6","tx_incidence_moins_de_20_ans":"158.3","P_20_59_ans":"80943.0","T_20_59_ans":"1195162.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.77","tx_incidence_20_59_ans":"252.4"},{"datetime":"2021-01-24","P_moins_de_20_ans":"24403.0","T_moins_de_20_ans":"321077.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.6","tx_incidence_moins_de_20_ans":"158.6","P_20_59_ans":"80888.0","T_20_59_ans":"1193192.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.78","tx_incidence_20_59_ans":"252.2"},{"datetime":"2021-01-25","P_moins_de_20_ans":"24739.0","T_moins_de_20_ans":"334104.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.4","tx_incidence_moins_de_20_ans":"160.7","P_20_59_ans":"81141.0","T_20_59_ans":"1210514.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.7","tx_incidence_20_59_ans":"253.0"},{"datetime":"2021-01-26","P_moins_de_20_ans":"24851.0","T_moins_de_20_ans":"340711.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.29","tx_incidence_moins_de_20_ans":"161.5","P_20_59_ans":"80919.0","T_20_59_ans":"1225260.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.6","tx_incidence_20_59_ans":"252.3"},{"datetime":"2021-01-27","P_moins_de_20_ans":"24965.0","T_moins_de_20_ans":"345718.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.22","tx_incidence_moins_de_20_ans":"162.2","P_20_59_ans":"80685.0","T_20_59_ans":"1238649.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.51","tx_incidence_20_59_ans":"251.6"},{"datetime":"2021-01-28","P_moins_de_20_ans":"25132.0","T_moins_de_20_ans":"358123.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.02","tx_incidence_moins_de_20_ans":"163.3","P_20_59_ans":"81029.0","T_20_59_ans":"1266280.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.4","tx_incidence_20_59_ans":"252.6"},{"datetime":"2021-01-29","P_moins_de_20_ans":"25154.0","T_moins_de_20_ans":"366599.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.86","tx_incidence_moins_de_20_ans":"163.4","P_20_59_ans":"81354.0","T_20_59_ans":"1286764.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.32","tx_incidence_20_59_ans":"253.6"},{"datetime":"2021-01-30","P_moins_de_20_ans":"25077.0","T_moins_de_20_ans":"368289.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.81","tx_incidence_moins_de_20_ans":"162.9","P_20_59_ans":"81537.0","T_20_59_ans":"1297745.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.28","tx_incidence_20_59_ans":"254.2"},{"datetime":"2021-01-31","P_moins_de_20_ans":"25157.0","T_moins_de_20_ans":"368682.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.82","tx_incidence_moins_de_20_ans":"163.5","P_20_59_ans":"81816.0","T_20_59_ans":"1299393.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.3","tx_incidence_20_59_ans":"255.1"},{"datetime":"2021-02-01","P_moins_de_20_ans":"25226.0","T_moins_de_20_ans":"371401.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.79","tx_incidence_moins_de_20_ans":"163.9","P_20_59_ans":"82236.0","T_20_59_ans":"1306967.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.29","tx_incidence_20_59_ans":"256.4"},{"datetime":"2021-02-02","P_moins_de_20_ans":"25339.0","T_moins_de_20_ans":"382485.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.62","tx_incidence_moins_de_20_ans":"164.6","P_20_59_ans":"82663.0","T_20_59_ans":"1316977.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.28","tx_incidence_20_59_ans":"257.7"},{"datetime":"2021-02-03","P_moins_de_20_ans":"25189.0","T_moins_de_20_ans":"388072.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.49","tx_incidence_moins_de_20_ans":"163.7","P_20_59_ans":"82638.0","T_20_59_ans":"1319171.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.26","tx_incidence_20_59_ans":"257.6"},{"datetime":"2021-02-04","P_moins_de_20_ans":"24940.0","T_moins_de_20_ans":"392007.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.36","tx_incidence_moins_de_20_ans":"162.1","P_20_59_ans":"81871.0","T_20_59_ans":"1309674.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.25","tx_incidence_20_59_ans":"255.2"},{"datetime":"2021-02-05","P_moins_de_20_ans":"24881.0","T_moins_de_20_ans":"399394.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.23","tx_incidence_moins_de_20_ans":"161.7","P_20_59_ans":"81070.0","T_20_59_ans":"1310363.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.19","tx_incidence_20_59_ans":"252.8"},{"datetime":"2021-02-06","P_moins_de_20_ans":"24964.0","T_moins_de_20_ans":"405459.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.16","tx_incidence_moins_de_20_ans":"162.2","P_20_59_ans":"80659.0","T_20_59_ans":"1310011.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.16","tx_incidence_20_59_ans":"251.5"},{"datetime":"2021-02-07","P_moins_de_20_ans":"24906.0","T_moins_de_20_ans":"405769.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.14","tx_incidence_moins_de_20_ans":"161.8","P_20_59_ans":"80400.0","T_20_59_ans":"1308940.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.14","tx_incidence_20_59_ans":"250.7"},{"datetime":"2021-02-08","P_moins_de_20_ans":"24303.0","T_moins_de_20_ans":"408799.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.94","tx_incidence_moins_de_20_ans":"157.9","P_20_59_ans":"78686.0","T_20_59_ans":"1298415.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.06","tx_incidence_20_59_ans":"245.3"},{"datetime":"2021-02-09","P_moins_de_20_ans":"24067.0","T_moins_de_20_ans":"413183.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.82","tx_incidence_moins_de_20_ans":"156.4","P_20_59_ans":"78170.0","T_20_59_ans":"1292656.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.05","tx_incidence_20_59_ans":"243.7"},{"datetime":"2021-02-10","P_moins_de_20_ans":"24017.0","T_moins_de_20_ans":"418227.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.74","tx_incidence_moins_de_20_ans":"156.1","P_20_59_ans":"77649.0","T_20_59_ans":"1288832.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.02","tx_incidence_20_59_ans":"242.1"},{"datetime":"2021-02-11","P_moins_de_20_ans":"23994.0","T_moins_de_20_ans":"419555.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.72","tx_incidence_moins_de_20_ans":"155.9","P_20_59_ans":"76593.0","T_20_59_ans":"1281339.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.98","tx_incidence_20_59_ans":"238.8"},{"datetime":"2021-02-12","P_moins_de_20_ans":"23558.0","T_moins_de_20_ans":"421489.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.59","tx_incidence_moins_de_20_ans":"153.1","P_20_59_ans":"76009.0","T_20_59_ans":"1271030.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.98","tx_incidence_20_59_ans":"237.0"},{"datetime":"2021-02-13","P_moins_de_20_ans":"23445.0","T_moins_de_20_ans":"425213.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.51","tx_incidence_moins_de_20_ans":"152.3","P_20_59_ans":"75585.0","T_20_59_ans":"1266709.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.97","tx_incidence_20_59_ans":"235.7"},{"datetime":"2021-02-14","P_moins_de_20_ans":"23415.0","T_moins_de_20_ans":"425864.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.5","tx_incidence_moins_de_20_ans":"152.1","P_20_59_ans":"75626.0","T_20_59_ans":"1265808.0","population_20_59_ans":"32075098","positivity_20_59_ans":"5.97","tx_incidence_20_59_ans":"235.8"},{"datetime":"2021-02-15","P_moins_de_20_ans":"23393.0","T_moins_de_20_ans":"426793.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.48","tx_incidence_moins_de_20_ans":"152.0","P_20_59_ans":"76189.0","T_20_59_ans":"1263289.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.03","tx_incidence_20_59_ans":"237.5"},{"datetime":"2021-02-16","P_moins_de_20_ans":"23265.0","T_moins_de_20_ans":"418570.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.56","tx_incidence_moins_de_20_ans":"151.2","P_20_59_ans":"76510.0","T_20_59_ans":"1258916.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.08","tx_incidence_20_59_ans":"238.5"},{"datetime":"2021-02-17","P_moins_de_20_ans":"23149.0","T_moins_de_20_ans":"412371.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.61","tx_incidence_moins_de_20_ans":"150.4","P_20_59_ans":"78069.0","T_20_59_ans":"1258193.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.2","tx_incidence_20_59_ans":"243.4"},{"datetime":"2021-02-18","P_moins_de_20_ans":"23464.0","T_moins_de_20_ans":"407707.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.76","tx_incidence_moins_de_20_ans":"152.5","P_20_59_ans":"80634.0","T_20_59_ans":"1261808.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.39","tx_incidence_20_59_ans":"251.4"},{"datetime":"2021-02-19","P_moins_de_20_ans":"23938.0","T_moins_de_20_ans":"401731.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.96","tx_incidence_moins_de_20_ans":"155.5","P_20_59_ans":"83405.0","T_20_59_ans":"1267963.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.58","tx_incidence_20_59_ans":"260.0"},{"datetime":"2021-02-20","P_moins_de_20_ans":"24211.0","T_moins_de_20_ans":"398119.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.08","tx_incidence_moins_de_20_ans":"157.3","P_20_59_ans":"84928.0","T_20_59_ans":"1269808.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.69","tx_incidence_20_59_ans":"264.8"},{"datetime":"2021-02-21","P_moins_de_20_ans":"24313.0","T_moins_de_20_ans":"397722.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.11","tx_incidence_moins_de_20_ans":"158.0","P_20_59_ans":"85257.0","T_20_59_ans":"1271081.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.71","tx_incidence_20_59_ans":"265.8"},{"datetime":"2021-02-22","P_moins_de_20_ans":"25024.0","T_moins_de_20_ans":"382803.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.54","tx_incidence_moins_de_20_ans":"162.6","P_20_59_ans":"88649.0","T_20_59_ans":"1273153.0","population_20_59_ans":"32075098","positivity_20_59_ans":"6.96","tx_incidence_20_59_ans":"276.4"},{"datetime":"2021-02-23","P_moins_de_20_ans":"25338.0","T_moins_de_20_ans":"366626.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.91","tx_incidence_moins_de_20_ans":"164.6","P_20_59_ans":"90876.0","T_20_59_ans":"1271488.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.15","tx_incidence_20_59_ans":"283.3"},{"datetime":"2021-02-24","P_moins_de_20_ans":"25647.0","T_moins_de_20_ans":"353152.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.26","tx_incidence_moins_de_20_ans":"166.6","P_20_59_ans":"91965.0","T_20_59_ans":"1273752.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.22","tx_incidence_20_59_ans":"286.7"},{"datetime":"2021-02-25","P_moins_de_20_ans":"25844.0","T_moins_de_20_ans":"338386.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.64","tx_incidence_moins_de_20_ans":"167.9","P_20_59_ans":"92559.0","T_20_59_ans":"1271113.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.28","tx_incidence_20_59_ans":"288.6"},{"datetime":"2021-02-26","P_moins_de_20_ans":"26012.0","T_moins_de_20_ans":"323252.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.05","tx_incidence_moins_de_20_ans":"169.0","P_20_59_ans":"92249.0","T_20_59_ans":"1269246.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.27","tx_incidence_20_59_ans":"287.6"},{"datetime":"2021-02-27","P_moins_de_20_ans":"26116.0","T_moins_de_20_ans":"314363.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.31","tx_incidence_moins_de_20_ans":"169.7","P_20_59_ans":"92298.0","T_20_59_ans":"1267643.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.28","tx_incidence_20_59_ans":"287.8"},{"datetime":"2021-02-28","P_moins_de_20_ans":"26136.0","T_moins_de_20_ans":"314190.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.32","tx_incidence_moins_de_20_ans":"169.8","P_20_59_ans":"92263.0","T_20_59_ans":"1268205.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.28","tx_incidence_20_59_ans":"287.6"},{"datetime":"2021-03-01","P_moins_de_20_ans":"26347.0","T_moins_de_20_ans":"312251.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.44","tx_incidence_moins_de_20_ans":"171.2","P_20_59_ans":"91331.0","T_20_59_ans":"1267047.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.21","tx_incidence_20_59_ans":"284.7"},{"datetime":"2021-03-02","P_moins_de_20_ans":"26552.0","T_moins_de_20_ans":"314393.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.45","tx_incidence_moins_de_20_ans":"172.5","P_20_59_ans":"90557.0","T_20_59_ans":"1260049.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.19","tx_incidence_20_59_ans":"282.3"},{"datetime":"2021-03-03","P_moins_de_20_ans":"26874.0","T_moins_de_20_ans":"314086.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.56","tx_incidence_moins_de_20_ans":"174.6","P_20_59_ans":"90360.0","T_20_59_ans":"1254452.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.2","tx_incidence_20_59_ans":"281.7"},{"datetime":"2021-03-04","P_moins_de_20_ans":"27119.0","T_moins_de_20_ans":"321199.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.44","tx_incidence_moins_de_20_ans":"176.2","P_20_59_ans":"90060.0","T_20_59_ans":"1248631.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.21","tx_incidence_20_59_ans":"280.8"},{"datetime":"2021-03-05","P_moins_de_20_ans":"27453.0","T_moins_de_20_ans":"332965.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.25","tx_incidence_moins_de_20_ans":"178.4","P_20_59_ans":"90250.0","T_20_59_ans":"1242934.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.26","tx_incidence_20_59_ans":"281.4"},{"datetime":"2021-03-06","P_moins_de_20_ans":"27749.0","T_moins_de_20_ans":"334396.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.3","tx_incidence_moins_de_20_ans":"180.3","P_20_59_ans":"90996.0","T_20_59_ans":"1246968.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.3","tx_incidence_20_59_ans":"283.7"},{"datetime":"2021-03-07","P_moins_de_20_ans":"27875.0","T_moins_de_20_ans":"334567.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.33","tx_incidence_moins_de_20_ans":"181.1","P_20_59_ans":"91188.0","T_20_59_ans":"1248613.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.3","tx_incidence_20_59_ans":"284.3"},{"datetime":"2021-03-08","P_moins_de_20_ans":"28710.0","T_moins_de_20_ans":"351913.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.16","tx_incidence_moins_de_20_ans":"186.5","P_20_59_ans":"92915.0","T_20_59_ans":"1256424.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.4","tx_incidence_20_59_ans":"289.7"},{"datetime":"2021-03-09","P_moins_de_20_ans":"29883.0","T_moins_de_20_ans":"377352.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.92","tx_incidence_moins_de_20_ans":"194.2","P_20_59_ans":"94667.0","T_20_59_ans":"1265510.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.48","tx_incidence_20_59_ans":"295.1"},{"datetime":"2021-03-10","P_moins_de_20_ans":"30984.0","T_moins_de_20_ans":"393523.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.87","tx_incidence_moins_de_20_ans":"201.3","P_20_59_ans":"97457.0","T_20_59_ans":"1278410.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.62","tx_incidence_20_59_ans":"303.8"},{"datetime":"2021-03-11","P_moins_de_20_ans":"32776.0","T_moins_de_20_ans":"441487.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.42","tx_incidence_moins_de_20_ans":"213.0","P_20_59_ans":"102078.0","T_20_59_ans":"1312637.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.78","tx_incidence_20_59_ans":"318.2"},{"datetime":"2021-03-12","P_moins_de_20_ans":"34741.0","T_moins_de_20_ans":"488105.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.12","tx_incidence_moins_de_20_ans":"225.7","P_20_59_ans":"106204.0","T_20_59_ans":"1348305.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.88","tx_incidence_20_59_ans":"331.1"},{"datetime":"2021-03-13","P_moins_de_20_ans":"35979.0","T_moins_de_20_ans":"503483.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.15","tx_incidence_moins_de_20_ans":"233.8","P_20_59_ans":"109651.0","T_20_59_ans":"1373247.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.98","tx_incidence_20_59_ans":"341.9"},{"datetime":"2021-03-14","P_moins_de_20_ans":"36207.0","T_moins_de_20_ans":"506152.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.15","tx_incidence_moins_de_20_ans":"235.3","P_20_59_ans":"110640.0","T_20_59_ans":"1380089.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.02","tx_incidence_20_59_ans":"344.9"},{"datetime":"2021-03-15","P_moins_de_20_ans":"38380.0","T_moins_de_20_ans":"544508.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.05","tx_incidence_moins_de_20_ans":"249.4","P_20_59_ans":"117231.0","T_20_59_ans":"1414605.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.29","tx_incidence_20_59_ans":"365.5"},{"datetime":"2021-03-16","P_moins_de_20_ans":"40382.0","T_moins_de_20_ans":"590639.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.84","tx_incidence_moins_de_20_ans":"262.4","P_20_59_ans":"121906.0","T_20_59_ans":"1451328.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.4","tx_incidence_20_59_ans":"380.1"},{"datetime":"2021-03-17","P_moins_de_20_ans":"41789.0","T_moins_de_20_ans":"614538.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.8","tx_incidence_moins_de_20_ans":"271.5","P_20_59_ans":"124612.0","T_20_59_ans":"1479407.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.42","tx_incidence_20_59_ans":"388.5"},{"datetime":"2021-03-18","P_moins_de_20_ans":"43252.0","T_moins_de_20_ans":"643008.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.73","tx_incidence_moins_de_20_ans":"281.0","P_20_59_ans":"125980.0","T_20_59_ans":"1501719.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.39","tx_incidence_20_59_ans":"392.8"},{"datetime":"2021-03-19","P_moins_de_20_ans":"44788.0","T_moins_de_20_ans":"675434.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.63","tx_incidence_moins_de_20_ans":"291.0","P_20_59_ans":"128290.0","T_20_59_ans":"1530115.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.38","tx_incidence_20_59_ans":"400.0"},{"datetime":"2021-03-20","P_moins_de_20_ans":"45682.0","T_moins_de_20_ans":"687247.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.65","tx_incidence_moins_de_20_ans":"296.8","P_20_59_ans":"129066.0","T_20_59_ans":"1540761.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.38","tx_incidence_20_59_ans":"402.4"},{"datetime":"2021-03-21","P_moins_de_20_ans":"45844.0","T_moins_de_20_ans":"689258.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.65","tx_incidence_moins_de_20_ans":"297.9","P_20_59_ans":"129248.0","T_20_59_ans":"1541656.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.38","tx_incidence_20_59_ans":"403.0"},{"datetime":"2021-03-22","P_moins_de_20_ans":"48497.0","T_moins_de_20_ans":"723418.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.7","tx_incidence_moins_de_20_ans":"315.1","P_20_59_ans":"133695.0","T_20_59_ans":"1577014.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.48","tx_incidence_20_59_ans":"416.8"},{"datetime":"2021-03-23","P_moins_de_20_ans":"50808.0","T_moins_de_20_ans":"755493.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.73","tx_incidence_moins_de_20_ans":"330.1","P_20_59_ans":"138355.0","T_20_59_ans":"1615638.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.56","tx_incidence_20_59_ans":"431.3"},{"datetime":"2021-03-24","P_moins_de_20_ans":"53402.0","T_moins_de_20_ans":"784576.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.81","tx_incidence_moins_de_20_ans":"347.0","P_20_59_ans":"143573.0","T_20_59_ans":"1656242.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.67","tx_incidence_20_59_ans":"447.6"},{"datetime":"2021-03-25","P_moins_de_20_ans":"55749.0","T_moins_de_20_ans":"817756.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.82","tx_incidence_moins_de_20_ans":"362.2","P_20_59_ans":"148778.0","T_20_59_ans":"1699594.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.75","tx_incidence_20_59_ans":"463.8"},{"datetime":"2021-03-26","P_moins_de_20_ans":"58498.0","T_moins_de_20_ans":"851694.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.87","tx_incidence_moins_de_20_ans":"380.1","P_20_59_ans":"153416.0","T_20_59_ans":"1744934.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.79","tx_incidence_20_59_ans":"478.3"},{"datetime":"2021-03-27","P_moins_de_20_ans":"59784.0","T_moins_de_20_ans":"871918.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.86","tx_incidence_moins_de_20_ans":"388.5","P_20_59_ans":"156582.0","T_20_59_ans":"1782172.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.79","tx_incidence_20_59_ans":"488.2"},{"datetime":"2021-03-28","P_moins_de_20_ans":"59881.0","T_moins_de_20_ans":"873293.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.86","tx_incidence_moins_de_20_ans":"389.1","P_20_59_ans":"156580.0","T_20_59_ans":"1783689.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.78","tx_incidence_20_59_ans":"488.2"},{"datetime":"2021-03-29","P_moins_de_20_ans":"62040.0","T_moins_de_20_ans":"918523.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.75","tx_incidence_moins_de_20_ans":"403.1","P_20_59_ans":"160253.0","T_20_59_ans":"1830152.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.76","tx_incidence_20_59_ans":"499.6"},{"datetime":"2021-03-30","P_moins_de_20_ans":"64152.0","T_moins_de_20_ans":"970419.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.61","tx_incidence_moins_de_20_ans":"416.8","P_20_59_ans":"163454.0","T_20_59_ans":"1886728.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.66","tx_incidence_20_59_ans":"509.6"},{"datetime":"2021-03-31","P_moins_de_20_ans":"65193.0","T_moins_de_20_ans":"1006991.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.47","tx_incidence_moins_de_20_ans":"423.6","P_20_59_ans":"165415.0","T_20_59_ans":"1934300.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.55","tx_incidence_20_59_ans":"515.7"},{"datetime":"2021-04-01","P_moins_de_20_ans":"64931.0","T_moins_de_20_ans":"1034394.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.28","tx_incidence_moins_de_20_ans":"421.9","P_20_59_ans":"167030.0","T_20_59_ans":"1990219.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.39","tx_incidence_20_59_ans":"520.7"},{"datetime":"2021-04-02","P_moins_de_20_ans":"63248.0","T_moins_de_20_ans":"1040964.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.08","tx_incidence_moins_de_20_ans":"411.0","P_20_59_ans":"167624.0","T_20_59_ans":"2024279.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.28","tx_incidence_20_59_ans":"522.6"},{"datetime":"2021-04-03","P_moins_de_20_ans":"62396.0","T_moins_de_20_ans":"1052829.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.93","tx_incidence_moins_de_20_ans":"405.4","P_20_59_ans":"167856.0","T_20_59_ans":"2064750.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.13","tx_incidence_20_59_ans":"523.3"},{"datetime":"2021-04-04","P_moins_de_20_ans":"62157.0","T_moins_de_20_ans":"1052008.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.91","tx_incidence_moins_de_20_ans":"403.9","P_20_59_ans":"167950.0","T_20_59_ans":"2068017.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.12","tx_incidence_20_59_ans":"523.6"},{"datetime":"2021-04-05","P_moins_de_20_ans":"50159.0","T_moins_de_20_ans":"876306.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"5.72","tx_incidence_moins_de_20_ans":"325.9","P_20_59_ans":"138016.0","T_20_59_ans":"1765719.0","population_20_59_ans":"32075098","positivity_20_59_ans":"7.82","tx_incidence_20_59_ans":"430.3"},{"datetime":"2021-04-06","P_moins_de_20_ans":"48887.0","T_moins_de_20_ans":"783811.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.24","tx_incidence_moins_de_20_ans":"317.7","P_20_59_ans":"148236.0","T_20_59_ans":"1806150.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.21","tx_incidence_20_59_ans":"462.2"},{"datetime":"2021-04-07","P_moins_de_20_ans":"46360.0","T_moins_de_20_ans":"718893.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"6.45","tx_incidence_moins_de_20_ans":"301.2","P_20_59_ans":"149877.0","T_20_59_ans":"1775277.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.44","tx_incidence_20_59_ans":"467.3"},{"datetime":"2021-04-08","P_moins_de_20_ans":"44441.0","T_moins_de_20_ans":"607431.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"7.32","tx_incidence_moins_de_20_ans":"288.8","P_20_59_ans":"149337.0","T_20_59_ans":"1702881.0","population_20_59_ans":"32075098","positivity_20_59_ans":"8.77","tx_incidence_20_59_ans":"465.6"},{"datetime":"2021-04-09","P_moins_de_20_ans":"43280.0","T_moins_de_20_ans":"510757.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"8.47","tx_incidence_moins_de_20_ans":"281.2","P_20_59_ans":"149115.0","T_20_59_ans":"1638818.0","population_20_59_ans":"32075098","positivity_20_59_ans":"9.1","tx_incidence_20_59_ans":"464.9"},{"datetime":"2021-04-10","P_moins_de_20_ans":"42775.0","T_moins_de_20_ans":"469158.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"9.12","tx_incidence_moins_de_20_ans":"277.9","P_20_59_ans":"148924.0","T_20_59_ans":"1580707.0","population_20_59_ans":"32075098","positivity_20_59_ans":"9.42","tx_incidence_20_59_ans":"464.3"},{"datetime":"2021-04-11","P_moins_de_20_ans":"42769.0","T_moins_de_20_ans":"465904.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"9.18","tx_incidence_moins_de_20_ans":"277.9","P_20_59_ans":"148990.0","T_20_59_ans":"1577461.0","population_20_59_ans":"32075098","positivity_20_59_ans":"9.44","tx_incidence_20_59_ans":"464.5"},{"datetime":"2021-04-12","P_moins_de_20_ans":"50308.0","T_moins_de_20_ans":"517068.0","population_moins_de_20_ans":"15390040","positivity_moins_de_20_ans":"9.73","tx_incidence_moins_de_20_ans":"326.9","P_20_59_ans":"176495.0","T_20_59_ans":"1813968.0","population_20_59_ans":"32075098","positivity_20_59_ans":"9.73","tx_incidence_20_59_ans":"550.3"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":23,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":130,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":78.3,"calculated_right_value":550.3,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":true,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":6,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"datetime","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM')});\nd3.selectAll('svg text.label').text(function(d){ return d['name'].replace('tx_incidence_moins_de_20_ans', '0 à 19 ans').replace('tx_incidence_20_59_ans', '20 à 59 ans')})"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"datetime","value":"datetime"},{"label":"tx_incidence_moins_de_20_ans","value":"tx_incidence_moins_de_20_ans"},{"label":"tx_incidence_20_59_ans","value":"tx_incidence_20_59_ans"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n<strong>Taux d'incidence des 0 à 19 ans : </strong>[[tx_incidence_moins_de_20_ans]]<br>\n<strong>Taux d'incidence des 20 à 59 ans : </strong>[[tx_incidence_20_59_ans]]"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["datetime"],"selected_yRows":["tx_incidence_moins_de_20_ans","tx_incidence_20_59_ans"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"lineChart","chartTitle":"Le taux d'incidence baisse davantage ","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeLinechart(data_) {
+
+    var data = _.cloneDeep(data_);
+      var initial_data = _.cloneDeep(data);
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+
+        var allLines = g_inner
+        .selectAll('.line')
+        .data(data);
+
+        allLines
+        .transition()
+        .duration(200)
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().transition().duration(200).remove();
+
+        allLines
+        .enter()
+        .append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('stroke-width', 2)
+        .style('fill', 'none');
+
+        AllDotPoints = g_inner
+        .selectAll('circle.dotPoint')
+        .data(_.flatten(data));
+
+        AllDotPoints
+        // .transition()
+        // .duration(200)
+        .attr('cx', function(d) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
+
+        AllDotPoints.exit().transition().duration(200).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        // .on('mouseover', function(d, i){
+        //     var thoseVars = [];
+        //     if (moment.isMoment(d.x_value)){ thoseVars.push({'name': 'date', 'value':d.x_value.locale('fr').format('DD MMMM YYYY')})};
+        //     if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':d.y_value})};
+        //     show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name, thoseVars)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+    // cells.exit().remove();
+
+
+/// Axis Label
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+
+  customizeAxis()
+
+  drawLegend()
+  addCustomCode()
+
+}
+
+initChart();
+
+makeLinechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
