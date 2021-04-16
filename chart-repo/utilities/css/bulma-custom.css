@@ -509,7 +509,7 @@ a.has-text-dark:hover, a.has-text-dark:focus {
   color: #1c1c1c !important; }
 
 .has-text-primary {
-  color: #e61e49 !important; }
+  color: #e60004 !important; }
 
 a.has-text-primary:hover, a.has-text-primary:focus {
   color: #bc1539 !important; }
@@ -1169,7 +1169,7 @@ a.box:active {
         box-shadow: none;
         color: whitesmoke; }
   .button.is-primary {
-    background-color: #e61e49;
+    background-color: #e60004;
     border-color: transparent;
     color: #fff; }
     .button.is-primary:hover, .button.is-primary.is-hovered {
@@ -1186,43 +1186,43 @@ a.box:active {
       border-color: transparent;
       color: #fff; }
     .button.is-primary[disabled] {
-      background-color: #e61e49;
+      background-color: #e60004;
       border-color: transparent;
       box-shadow: none; }
     .button.is-primary.is-inverted {
       background-color: #fff;
-      color: #e61e49; }
+      color: #e60004; }
       .button.is-primary.is-inverted:hover {
         background-color: #f2f2f2; }
       .button.is-primary.is-inverted[disabled] {
         background-color: #fff;
         border-color: transparent;
         box-shadow: none;
-        color: #e61e49; }
+        color: #e60004; }
     .button.is-primary.is-loading:after {
       border-color: transparent transparent #fff #fff !important; }
     .button.is-primary.is-outlined {
       background-color: transparent;
-      border-color: #e61e49;
-      color: #e61e49; }
+      border-color: #e60004;
+      color: #e60004; }
       .button.is-primary.is-outlined:hover, .button.is-primary.is-outlined:focus {
-        background-color: #e61e49;
-        border-color: #e61e49;
+        background-color: #e60004;
+        border-color: #e60004;
         color: #fff; }
       .button.is-primary.is-outlined.is-loading:after {
-        border-color: transparent transparent #e61e49 #e61e49 !important; }
+        border-color: transparent transparent #e60004 #e60004 !important; }
       .button.is-primary.is-outlined[disabled] {
         background-color: transparent;
-        border-color: #e61e49;
+        border-color: #e60004;
         box-shadow: none;
-        color: #e61e49; }
+        color: #e60004; }
     .button.is-primary.is-inverted.is-outlined {
       background-color: transparent;
       border-color: #fff;
       color: #fff; }
       .button.is-primary.is-inverted.is-outlined:hover, .button.is-primary.is-inverted.is-outlined:focus {
         background-color: #fff;
-        color: #e61e49; }
+        color: #e60004; }
       .button.is-primary.is-inverted.is-outlined[disabled] {
         background-color: transparent;
         border-color: #fff;
@@ -1635,7 +1635,7 @@ a.box:active {
     background-color: #363636;
     color: whitesmoke; }
   .tag:not(body).is-primary {
-    background-color: #e61e49;
+    background-color: #e60004;
     color: #fff; }
   .tag:not(body).is-link {
     background-color: #3273dc;
