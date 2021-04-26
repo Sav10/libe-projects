@@ -547,15 +547,15 @@ d3.select('text#text_label_end')
 
 function placeText(x_value, left_margin, top_margin){
 
-console.log(x_value)
+// console.log(x_value)
 
 var this_x_value = xScale(moment(x_value));
 
-console.log(this_x_value)
+// console.log(this_x_value)
 
 var this_d = _.find(dataFromFile, function(d){ return d[graphParameters['selected_xRows'][0]] == x_value});
 
-console.log(this_d)
+// console.log(this_d)
 
 var this_y_value = yScale(this_d[graphParameters['selected_yRows']]);
 
