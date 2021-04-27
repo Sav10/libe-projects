@@ -1,4 +1,4 @@
-dep,jour,n_dose1,n_complet,n_cum_dose1,n_cum_complet,couv_dose1,couv_complet,departement,libelle_reg,population
+dep,jour,n_dose1,n_dose2,n_cum_dose1,n_cum_dose2,couv_dose1,couv_dose2,departement,libelle_reg,population
 01,2021-04-25,8,0,114594,42796,17.4,6.5,Ain,Auvergne Rhône Alpes,643350
 02,2021-04-25,460,226,103098,44661,19.6,8.5,Aisne,Hauts de France,534490
 03,2021-04-25,346,5,87122,40300,26.3,12.2,Allier,Auvergne Rhône Alpes,337988
