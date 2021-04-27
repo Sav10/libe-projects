@@ -38,7 +38,7 @@ var chosenChroma = chroma.scale('OrRd');
 
 var colors = {
 'couv_dose1' : d3.scaleLinear()
-  .range(["white", "rgb(230, 30, 73)"])
+  .range(["white", "#ff0000"])
   .domain([0, 40]),
 'couv_dose2' : d3.scaleLinear()
   .range(["white", "#2dae8c"])
@@ -206,14 +206,14 @@ d3.select('#dose2')
 
 
 d3.selectAll('#button_box a')
-.style('color', 'rgba(230, 30, 73, 1)')
+.style('color', '#ff0000')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 
 d3.selectAll('#dose2')
 .style('color', '#fff')
-.style('background-color', 'rgba(230, 30, 73, 1)')
+.style('background-color', '#ff0000')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -237,13 +237,13 @@ d3.select('#dose1')
   // fillColor('couv_dose1')
 
 d3.selectAll('#button_box a')
-.style('color', 'rgba(230, 30, 73, 1)')
+.style('color', '#ff0000')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 d3.selectAll('#dose1')
 .style('color', '#fff')
-.style('background-color', 'rgba(230, 30, 73, 1)')
+.style('background-color', '#ff0000')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -359,10 +359,10 @@ function redraw_paths(){
 
 d3.select('#display_geo_paths')
 .style('color', '#fff')
-.style('background-color', 'rgba(230, 30, 73, 1)')
+.style('background-color', '#ff0000')
 
 d3.select('#display_proportional_circles')
-.style('color', 'rgba(230, 30, 73, 1)')
+.style('color', '#ff0000')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -392,10 +392,10 @@ function transform_all_paths_to_circle(){
 
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
-.style('background-color', 'rgba(230, 30, 73, 1)')
+.style('background-color', '#ff0000')
 
 d3.select('#display_geo_paths')
-.style('color', 'rgba(230, 30, 73, 1)')
+.style('color', '#ff0000')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
