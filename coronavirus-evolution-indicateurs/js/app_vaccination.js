@@ -39,13 +39,13 @@ var chosenChroma = chroma.scale('OrRd');
 var colors = {
 'couv_dose1' : d3.scaleLinear()
   .range(["white", "#23064b"])
-  .domain([0, 12]),
+  .domain([0, 30]),
 'couv_dose2' : d3.scaleLinear()
   .range(["white", "#2dae8c"])
-  .domain([0, 12])
+  .domain([0, 18])
 }
 
-var data_legend = [0,2,4,6,8,10,12, 14,16];
+var data_legend = [0,3,9,12,15,18,22, 26,30];
 
 
 // <g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(246, 185, 197);"></rect><text class="label" transform="translate(22,
@@ -146,20 +146,20 @@ const format = d3.format(',')
 
 function showTip(d){
 
-  console.log(d)
+  // console.log(d)
 
 
     let this_code = d.id;
     let this_d = _.find(app_data, d => d.dep == this_code);
 
-    console.log(this_d)
+    // console.log(this_d)
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
     <li><span class='list_element'><span style="font-weight:bold">${numbers_separators(+this_d.n_cum_dose1)}</span> premières doses administrées
     soit <span style="font-weight:bold">${String(this_d.couv_dose1).replace('.',',')}%</span> de la population</span></li>
         <li><span class='list_element'><span style="font-weight:bold">${numbers_separators(+this_d.n_cum_dose2)}</span>
-    secondes doses administrées soit <span style="font-weight:bold">${String(this_d.couv_dose2).replace('.',',')}%</span> de la population</span></li>`
+    vaccinations complètes soit <span style="font-weight:bold">${String(this_d.couv_dose2).replace('.',',')}%</span> de la population</span></li>`
 
 d3.select('#tooltip')
 .html(this_html)
