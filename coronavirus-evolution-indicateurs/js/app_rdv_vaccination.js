@@ -146,13 +146,13 @@ const format = d3.format(',')
 
 function showTip(d){
 
-  console.log(d)
+  // console.log(d)
 
 
     let this_code = d.id;
     let this_d = _.find(app_data, d => d.dep == this_code);
 
-    console.log(this_d)
+    // console.log(this_d)
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
@@ -369,6 +369,7 @@ d3.select('#display_proportional_circles')
   let pathsCount = 0;
   let departements_corrections = ['17', '56', '91', '92', '93', '94', '95', '75', '971', '51', '10', '03', '23', '34', '81'];
 
+
   allPaths
   .transition()
   .duration(500)
@@ -388,6 +389,7 @@ d3.select('#display_proportional_circles')
 }
 
 function transform_all_paths_to_circle(){
+
 
 
 d3.select('#display_proportional_circles')
@@ -458,6 +460,8 @@ d3.select('#display_proportional_circles')
 .on('click', function(){
 
 
+new Audio('img/bubbles_short_3.mp3').play()
+
   transform_all_paths_to_circle()
 
   mapstate = 1;
@@ -481,7 +485,7 @@ d3.select('#display_proportional_circles_ecart')
 d3.select('#display_geo_paths')
 .on('click', function(){
 
-
+new Audio('img/bubbles_short.mp3').play()
 
   redraw_paths()
 
