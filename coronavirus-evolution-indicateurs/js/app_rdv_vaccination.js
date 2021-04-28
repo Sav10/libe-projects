@@ -404,7 +404,8 @@ d3.select('#display_geo_paths')
   let pathsCount = 0;
 // console.log(allpaths)
 // if (mapstate == 0){
-allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
+allPaths.transition()
+.duration(500).attrTween("d", function(d){ return d.to_circle_function})
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
@@ -460,7 +461,7 @@ d3.select('#display_proportional_circles')
 .on('click', function(){
 
 
-new Audio('img/bubbles_short_3.mp3').play()
+new Audio('img/bubbles_short.mp3').play()
 
   transform_all_paths_to_circle()
 
