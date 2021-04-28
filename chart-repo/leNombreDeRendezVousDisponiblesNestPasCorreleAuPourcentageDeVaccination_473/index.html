@@ -1,0 +1,491 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le nombre de rendez-vous disponibles n'est pas corrélé au pourcentage de vaccination</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"dep":"01","departement":"Ain","population":"643350","nombre de rdv disponibles":"6090","rdv disponibles pour 1 000 habitants":"9.5","pop_55plus":"205515","rdv disponibles pour 1 000 habitants de plus de 55 ans":"29.6","n_cum_dose1":"115646","vaccines_pop55":"56.3"},{"dep":"02","departement":"Aisne","population":"534490","nombre de rdv disponibles":"385","rdv disponibles pour 1 000 habitants":"0.7","pop_55plus":"184555","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.1","n_cum_dose1":"104416","vaccines_pop55":"56.6"},{"dep":"03","departement":"Allier","population":"337988","nombre de rdv disponibles":"301","rdv disponibles pour 1 000 habitants":"0.9","pop_55plus":"142741","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.1","n_cum_dose1":"88198","vaccines_pop55":"61.8"},{"dep":"04","departement":"Alpes-de-Haute-Provence","population":"163915","nombre de rdv disponibles":"391","rdv disponibles pour 1 000 habitants":"2.4","pop_55plus":"70447","rdv disponibles pour 1 000 habitants de plus de 55 ans":"5.6","n_cum_dose1":"40143","vaccines_pop55":"57.0"},{"dep":"05","departement":"Hautes-Alpes","population":"141284","nombre de rdv disponibles":"1739","rdv disponibles pour 1 000 habitants":"12.3","pop_55plus":"56952","rdv disponibles pour 1 000 habitants de plus de 55 ans":"30.5","n_cum_dose1":"35301","vaccines_pop55":"62.0"},{"dep":"06","departement":"Alpes-Maritimes","population":"1083310","nombre de rdv disponibles":"1683","rdv disponibles pour 1 000 habitants":"1.6","pop_55plus":"416059","rdv disponibles pour 1 000 habitants de plus de 55 ans":"4.0","n_cum_dose1":"303539","vaccines_pop55":"73.0"},{"dep":"07","departement":"Ardèche","population":"325712","nombre de rdv disponibles":"2500","rdv disponibles pour 1 000 habitants":"7.7","pop_55plus":"132514","rdv disponibles pour 1 000 habitants de plus de 55 ans":"18.9","n_cum_dose1":"77425","vaccines_pop55":"58.4"},{"dep":"08","departement":"Ardennes","population":"273579","nombre de rdv disponibles":"1898","rdv disponibles pour 1 000 habitants":"6.9","pop_55plus":"98657","rdv disponibles pour 1 000 habitants de plus de 55 ans":"19.2","n_cum_dose1":"65067","vaccines_pop55":"66.0"},{"dep":"09","departement":"Ariège","population":"153153","nombre de rdv disponibles":"0","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"64501","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.0","n_cum_dose1":"42182","vaccines_pop55":"65.4"},{"dep":"10","departement":"Aube","population":"310020","nombre de rdv disponibles":"530","rdv disponibles pour 1 000 habitants":"1.7","pop_55plus":"108162","rdv disponibles pour 1 000 habitants de plus de 55 ans":"4.9","n_cum_dose1":"75499","vaccines_pop55":"69.8"},{"dep":"11","departement":"Aude","population":"370260","nombre de rdv disponibles":"3863","rdv disponibles pour 1 000 habitants":"10.4","pop_55plus":"155147","rdv disponibles pour 1 000 habitants de plus de 55 ans":"24.9","n_cum_dose1":"85843","vaccines_pop55":"55.3"},{"dep":"12","departement":"Aveyron","population":"279206","nombre de rdv disponibles":"1531","rdv disponibles pour 1 000 habitants":"5.5","pop_55plus":"119500","rdv disponibles pour 1 000 habitants de plus de 55 ans":"12.8","n_cum_dose1":"80186","vaccines_pop55":"67.1"},{"dep":"13","departement":"Bouches-du-Rhône","population":"2024162","nombre de rdv disponibles":"5822","rdv disponibles pour 1 000 habitants":"2.9","pop_55plus":"686914","rdv disponibles pour 1 000 habitants de plus de 55 ans":"8.5","n_cum_dose1":"451498","vaccines_pop55":"65.7"},{"dep":"14","departement":"Calvados","population":"694002","nombre de rdv disponibles":"2920","rdv disponibles pour 1 000 habitants":"4.2","pop_55plus":"248487","rdv disponibles pour 1 000 habitants de plus de 55 ans":"11.8","n_cum_dose1":"172568","vaccines_pop55":"69.4"},{"dep":"15","departement":"Cantal","population":"145143","nombre de rdv disponibles":"5","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"63879","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.1","n_cum_dose1":"40596","vaccines_pop55":"63.6"},{"dep":"16","departement":"Charente","population":"352335","nombre de rdv disponibles":"1005","rdv disponibles pour 1 000 habitants":"2.9","pop_55plus":"142224","rdv disponibles pour 1 000 habitants de plus de 55 ans":"7.1","n_cum_dose1":"85188","vaccines_pop55":"59.9"},{"dep":"17","departement":"Charente-Maritime","population":"644303","nombre de rdv disponibles":"23","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"281453","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.1","n_cum_dose1":"173895","vaccines_pop55":"61.8"},{"dep":"18","departement":"Cher","population":"304256","nombre de rdv disponibles":"42","rdv disponibles pour 1 000 habitants":"0.1","pop_55plus":"121647","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.3","n_cum_dose1":"74586","vaccines_pop55":"61.3"},{"dep":"19","departement":"Corrèze","population":"241464","nombre de rdv disponibles":"287","rdv disponibles pour 1 000 habitants":"1.2","pop_55plus":"102252","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.8","n_cum_dose1":"64350","vaccines_pop55":"62.9"},{"dep":"21","departement":"Côte-d'Or","population":"533819","nombre de rdv disponibles":"0","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"183944","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.0","n_cum_dose1":"116478","vaccines_pop55":"63.3"},{"dep":"22","departement":"Côtes-d'Armor","population":"598814","nombre de rdv disponibles":"2530","rdv disponibles pour 1 000 habitants":"4.2","pop_55plus":"246604","rdv disponibles pour 1 000 habitants de plus de 55 ans":"10.3","n_cum_dose1":"171781","vaccines_pop55":"69.7"},{"dep":"23","departement":"Creuse","population":"118638","nombre de rdv disponibles":"1981","rdv disponibles pour 1 000 habitants":"16.7","pop_55plus":"54506","rdv disponibles pour 1 000 habitants de plus de 55 ans":"36.3","n_cum_dose1":"34556","vaccines_pop55":"63.4"},{"dep":"24","departement":"Dordogne","population":"413606","nombre de rdv disponibles":"0","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"187714","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.0","n_cum_dose1":"108461","vaccines_pop55":"57.8"},{"dep":"25","departement":"Doubs","population":"539067","nombre de rdv disponibles":"2521","rdv disponibles pour 1 000 habitants":"4.7","pop_55plus":"176383","rdv disponibles pour 1 000 habitants de plus de 55 ans":"14.3","n_cum_dose1":"104201","vaccines_pop55":"59.1"},{"dep":"26","departement":"Drôme","population":"511553","nombre de rdv disponibles":"2618","rdv disponibles pour 1 000 habitants":"5.1","pop_55plus":"186241","rdv disponibles pour 1 000 habitants de plus de 55 ans":"14.1","n_cum_dose1":"117047","vaccines_pop55":"62.8"},{"dep":"27","departement":"Eure","population":"601843","nombre de rdv disponibles":"524","rdv disponibles pour 1 000 habitants":"0.9","pop_55plus":"200005","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.6","n_cum_dose1":"115818","vaccines_pop55":"57.9"},{"dep":"28","departement":"Eure-et-Loir","population":"433233","nombre de rdv disponibles":"71","rdv disponibles pour 1 000 habitants":"0.2","pop_55plus":"147898","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.5","n_cum_dose1":"95523","vaccines_pop55":"64.6"},{"dep":"29","departement":"Finistère","population":"909028","nombre de rdv disponibles":"1507","rdv disponibles pour 1 000 habitants":"1.7","pop_55plus":"348634","rdv disponibles pour 1 000 habitants de plus de 55 ans":"4.3","n_cum_dose1":"229250","vaccines_pop55":"65.8"},{"dep":"2A","departement":"Corse-du-Sud","population":"157249","nombre de rdv disponibles":"2398","rdv disponibles pour 1 000 habitants":"15.2","pop_55plus":"62376","rdv disponibles pour 1 000 habitants de plus de 55 ans":"38.4","n_cum_dose1":"49971","vaccines_pop55":"80.1"},{"dep":"2B","departement":"Haute-Corse","population":"177689","nombre de rdv disponibles":"3276","rdv disponibles pour 1 000 habitants":"18.4","pop_55plus":"68661","rdv disponibles pour 1 000 habitants de plus de 55 ans":"47.7","n_cum_dose1":"51447","vaccines_pop55":"74.9"},{"dep":"30","departement":"Gard","population":"744178","nombre de rdv disponibles":"1376","rdv disponibles pour 1 000 habitants":"1.8","pop_55plus":"283687","rdv disponibles pour 1 000 habitants de plus de 55 ans":"4.9","n_cum_dose1":"173769","vaccines_pop55":"61.3"},{"dep":"31","departement":"Haute-Garonne","population":"1362672","nombre de rdv disponibles":"917","rdv disponibles pour 1 000 habitants":"0.7","pop_55plus":"403532","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.3","n_cum_dose1":"279582","vaccines_pop55":"69.3"},{"dep":"32","departement":"Gers","population":"191091","nombre de rdv disponibles":"191","rdv disponibles pour 1 000 habitants":"1.0","pop_55plus":"83968","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.3","n_cum_dose1":"50592","vaccines_pop55":"60.3"},{"dep":"33","departement":"Gironde","population":"1583384","nombre de rdv disponibles":"1251","rdv disponibles pour 1 000 habitants":"0.8","pop_55plus":"522223","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.4","n_cum_dose1":"374281","vaccines_pop55":"71.7"},{"dep":"34","departement":"Hérault","population":"1144892","nombre de rdv disponibles":"562","rdv disponibles pour 1 000 habitants":"0.5","pop_55plus":"411356","rdv disponibles pour 1 000 habitants de plus de 55 ans":"1.4","n_cum_dose1":"263415","vaccines_pop55":"64.0"},{"dep":"35","departement":"Ille-et-Vilaine","population":"1060199","nombre de rdv disponibles":"2083","rdv disponibles pour 1 000 habitants":"2.0","pop_55plus":"331530","rdv disponibles pour 1 000 habitants de plus de 55 ans":"6.3","n_cum_dose1":"231064","vaccines_pop55":"69.7"},{"dep":"36","departement":"Indre","population":"222232","nombre de rdv disponibles":"600","rdv disponibles pour 1 000 habitants":"2.7","pop_55plus":"95173","rdv disponibles pour 1 000 habitants de plus de 55 ans":"6.3","n_cum_dose1":"59216","vaccines_pop55":"62.2"},{"dep":"37","departement":"Indre-et-Loire","population":"606511","nombre de rdv disponibles":"824","rdv disponibles pour 1 000 habitants":"1.4","pop_55plus":"213690","rdv disponibles pour 1 000 habitants de plus de 55 ans":"3.9","n_cum_dose1":"135142","vaccines_pop55":"63.2"},{"dep":"38","departement":"Isère","population":"1258722","nombre de rdv disponibles":"4575","rdv disponibles pour 1 000 habitants":"3.6","pop_55plus":"399775","rdv disponibles pour 1 000 habitants de plus de 55 ans":"11.4","n_cum_dose1":"261773","vaccines_pop55":"65.5"},{"dep":"39","departement":"Jura","population":"260188","nombre de rdv disponibles":"2241","rdv disponibles pour 1 000 habitants":"8.6","pop_55plus":"99828","rdv disponibles pour 1 000 habitants de plus de 55 ans":"22.4","n_cum_dose1":"57877","vaccines_pop55":"58.0"},{"dep":"40","departement":"Landes","population":"407444","nombre de rdv disponibles":"1946","rdv disponibles pour 1 000 habitants":"4.8","pop_55plus":"169331","rdv disponibles pour 1 000 habitants de plus de 55 ans":"11.5","n_cum_dose1":"108868","vaccines_pop55":"64.3"},{"dep":"41","departement":"Loir-et-Cher","population":"331915","nombre de rdv disponibles":"67","rdv disponibles pour 1 000 habitants":"0.2","pop_55plus":"129922","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.5","n_cum_dose1":"80160","vaccines_pop55":"61.7"},{"dep":"42","departement":"Loire","population":"762941","nombre de rdv disponibles":"10981","rdv disponibles pour 1 000 habitants":"14.4","pop_55plus":"270047","rdv disponibles pour 1 000 habitants de plus de 55 ans":"40.7","n_cum_dose1":"178208","vaccines_pop55":"66.0"},{"dep":"43","departement":"Haute-Loire","population":"227283","nombre de rdv disponibles":"58","rdv disponibles pour 1 000 habitants":"0.3","pop_55plus":"89939","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.6","n_cum_dose1":"53038","vaccines_pop55":"59.0"},{"dep":"44","departement":"Loire-Atlantique","population":"1394909","nombre de rdv disponibles":"4740","rdv disponibles pour 1 000 habitants":"3.4","pop_55plus":"442698","rdv disponibles pour 1 000 habitants de plus de 55 ans":"10.7","n_cum_dose1":"283730","vaccines_pop55":"64.1"},{"dep":"45","departement":"Loiret","population":"678105","nombre de rdv disponibles":"33","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"225380","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.1","n_cum_dose1":"127368","vaccines_pop55":"56.5"},{"dep":"46","departement":"Lot","population":"173828","nombre de rdv disponibles":"947","rdv disponibles pour 1 000 habitants":"5.4","pop_55plus":"81455","rdv disponibles pour 1 000 habitants de plus de 55 ans":"11.6","n_cum_dose1":"50235","vaccines_pop55":"61.7"},{"dep":"47","departement":"Lot-et-Garonne","population":"332842","nombre de rdv disponibles":"5204","rdv disponibles pour 1 000 habitants":"15.6","pop_55plus":"136156","rdv disponibles pour 1 000 habitants de plus de 55 ans":"38.2","n_cum_dose1":"78072","vaccines_pop55":"57.3"},{"dep":"48","departement":"Lozère","population":"76601","nombre de rdv disponibles":"0","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"31570","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.0","n_cum_dose1":"19365","vaccines_pop55":"61.3"},{"dep":"49","departement":"Maine-et-Loire","population":"813493","nombre de rdv disponibles":"5619","rdv disponibles pour 1 000 habitants":"6.9","pop_55plus":"276040","rdv disponibles pour 1 000 habitants de plus de 55 ans":"20.4","n_cum_dose1":"190533","vaccines_pop55":"69.0"},{"dep":"50","departement":"Manche","population":"496883","nombre de rdv disponibles":"3104","rdv disponibles pour 1 000 habitants":"6.2","pop_55plus":"199593","rdv disponibles pour 1 000 habitants de plus de 55 ans":"15.6","n_cum_dose1":"135512","vaccines_pop55":"67.9"},{"dep":"51","departement":"Marne","population":"568895","nombre de rdv disponibles":"0","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"184386","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.0","n_cum_dose1":"118449","vaccines_pop55":"64.2"},{"dep":"52","departement":"Haute-Marne","population":"175640","nombre de rdv disponibles":"88","rdv disponibles pour 1 000 habitants":"0.5","pop_55plus":"68705","rdv disponibles pour 1 000 habitants de plus de 55 ans":"1.3","n_cum_dose1":"41856","vaccines_pop55":"60.9"},{"dep":"53","departement":"Mayenne","population":"307445","nombre de rdv disponibles":"1108","rdv disponibles pour 1 000 habitants":"3.6","pop_55plus":"110951","rdv disponibles pour 1 000 habitants de plus de 55 ans":"10.0","n_cum_dose1":"66591","vaccines_pop55":"60.0"},{"dep":"54","departement":"Meurthe-et-Moselle","population":"733481","nombre de rdv disponibles":"767","rdv disponibles pour 1 000 habitants":"1.0","pop_55plus":"238607","rdv disponibles pour 1 000 habitants de plus de 55 ans":"3.2","n_cum_dose1":"161770","vaccines_pop55":"67.8"},{"dep":"55","departement":"Meuse","population":"187187","nombre de rdv disponibles":"1106","rdv disponibles pour 1 000 habitants":"5.9","pop_55plus":"69143","rdv disponibles pour 1 000 habitants de plus de 55 ans":"16.0","n_cum_dose1":"44274","vaccines_pop55":"64.0"},{"dep":"56","departement":"Morbihan","population":"750863","nombre de rdv disponibles":"4273","rdv disponibles pour 1 000 habitants":"5.7","pop_55plus":"306289","rdv disponibles pour 1 000 habitants de plus de 55 ans":"14.0","n_cum_dose1":"198838","vaccines_pop55":"64.9"},{"dep":"57","departement":"Moselle","population":"1043522","nombre de rdv disponibles":"2771","rdv disponibles pour 1 000 habitants":"2.7","pop_55plus":"361565","rdv disponibles pour 1 000 habitants de plus de 55 ans":"7.7","n_cum_dose1":"239484","vaccines_pop55":"66.2"},{"dep":"58","departement":"Nièvre","population":"207182","nombre de rdv disponibles":"69","rdv disponibles pour 1 000 habitants":"0.3","pop_55plus":"91134","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.8","n_cum_dose1":"56331","vaccines_pop55":"61.8"},{"dep":"59","departement":"Nord","population":"2604361","nombre de rdv disponibles":"1213","rdv disponibles pour 1 000 habitants":"0.5","pop_55plus":"770851","rdv disponibles pour 1 000 habitants de plus de 55 ans":"1.6","n_cum_dose1":"539457","vaccines_pop55":"70.0"},{"dep":"60","departement":"Oise","population":"824503","nombre de rdv disponibles":"4041","rdv disponibles pour 1 000 habitants":"4.9","pop_55plus":"253267","rdv disponibles pour 1 000 habitants de plus de 55 ans":"16.0","n_cum_dose1":"160508","vaccines_pop55":"63.4"},{"dep":"61","departement":"Orne","population":"283372","nombre de rdv disponibles":"1750","rdv disponibles pour 1 000 habitants":"6.2","pop_55plus":"114613","rdv disponibles pour 1 000 habitants de plus de 55 ans":"15.3","n_cum_dose1":"78008","vaccines_pop55":"68.1"},{"dep":"62","departement":"Pas-de-Calais","population":"1468018","nombre de rdv disponibles":"132","rdv disponibles pour 1 000 habitants":"0.1","pop_55plus":"476105","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.3","n_cum_dose1":"339377","vaccines_pop55":"71.3"},{"dep":"63","departement":"Puy-de-Dôme","population":"653742","nombre de rdv disponibles":"143","rdv disponibles pour 1 000 habitants":"0.2","pop_55plus":"234663","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.6","n_cum_dose1":"147005","vaccines_pop55":"62.6"},{"dep":"64","departement":"Pyrénées-Atlantiques","population":"677309","nombre de rdv disponibles":"5817","rdv disponibles pour 1 000 habitants":"8.6","pop_55plus":"266256","rdv disponibles pour 1 000 habitants de plus de 55 ans":"21.8","n_cum_dose1":"189916","vaccines_pop55":"71.3"},{"dep":"65","departement":"Hautes-Pyrénées","population":"228530","nombre de rdv disponibles":"1791","rdv disponibles pour 1 000 habitants":"7.8","pop_55plus":"97647","rdv disponibles pour 1 000 habitants de plus de 55 ans":"18.3","n_cum_dose1":"67053","vaccines_pop55":"68.7"},{"dep":"66","departement":"Pyrénées-Orientales","population":"474452","nombre de rdv disponibles":"6175","rdv disponibles pour 1 000 habitants":"13.0","pop_55plus":"195159","rdv disponibles pour 1 000 habitants de plus de 55 ans":"31.6","n_cum_dose1":"123802","vaccines_pop55":"63.4"},{"dep":"67","departement":"Bas-Rhin","population":"1125559","nombre de rdv disponibles":"593","rdv disponibles pour 1 000 habitants":"0.5","pop_55plus":"372564","rdv disponibles pour 1 000 habitants de plus de 55 ans":"1.6","n_cum_dose1":"232847","vaccines_pop55":"62.5"},{"dep":"68","departement":"Haut-Rhin","population":"764030","nombre de rdv disponibles":"540","rdv disponibles pour 1 000 habitants":"0.7","pop_55plus":"263588","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.0","n_cum_dose1":"153035","vaccines_pop55":"58.1"},{"dep":"69","departement":"Rhône","population":"1843319","nombre de rdv disponibles":"1336","rdv disponibles pour 1 000 habitants":"0.7","pop_55plus":"529494","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.5","n_cum_dose1":"363962","vaccines_pop55":"68.7"},{"dep":"70","departement":"Haute-Saône","population":"236659","nombre de rdv disponibles":"6793","rdv disponibles pour 1 000 habitants":"28.7","pop_55plus":"89897","rdv disponibles pour 1 000 habitants de plus de 55 ans":"75.6","n_cum_dose1":"50464","vaccines_pop55":"56.1"},{"dep":"71","departement":"Saône-et-Loire","population":"553595","nombre de rdv disponibles":"1675","rdv disponibles pour 1 000 habitants":"3.0","pop_55plus":"225001","rdv disponibles pour 1 000 habitants de plus de 55 ans":"7.4","n_cum_dose1":"135522","vaccines_pop55":"60.2"},{"dep":"72","departement":"Sarthe","population":"566506","nombre de rdv disponibles":"3498","rdv disponibles pour 1 000 habitants":"6.2","pop_55plus":"204592","rdv disponibles pour 1 000 habitants de plus de 55 ans":"17.1","n_cum_dose1":"105308","vaccines_pop55":"51.5"},{"dep":"73","departement":"Savoie","population":"431174","nombre de rdv disponibles":"2115","rdv disponibles pour 1 000 habitants":"4.9","pop_55plus":"152574","rdv disponibles pour 1 000 habitants de plus de 55 ans":"13.9","n_cum_dose1":"96274","vaccines_pop55":"63.1"},{"dep":"74","departement":"Haute-Savoie","population":"807360","nombre de rdv disponibles":"9460","rdv disponibles pour 1 000 habitants":"11.7","pop_55plus":"245868","rdv disponibles pour 1 000 habitants de plus de 55 ans":"38.5","n_cum_dose1":"147812","vaccines_pop55":"60.1"},{"dep":"75","departement":"Paris","population":"2187526","nombre de rdv disponibles":"7553","rdv disponibles pour 1 000 habitants":"3.5","pop_55plus":"614962","rdv disponibles pour 1 000 habitants de plus de 55 ans":"12.3","n_cum_dose1":"502728","vaccines_pop55":"81.7"},{"dep":"76","departement":"Seine-Maritime","population":"1254378","nombre de rdv disponibles":"846","rdv disponibles pour 1 000 habitants":"0.7","pop_55plus":"418422","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.0","n_cum_dose1":"288656","vaccines_pop55":"69.0"},{"dep":"77","departement":"Seine-et-Marne","population":"1403997","nombre de rdv disponibles":"1085","rdv disponibles pour 1 000 habitants":"0.8","pop_55plus":"388730","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.8","n_cum_dose1":"200687","vaccines_pop55":"51.6"},{"dep":"78","departement":"Yvelines","population":"1438266","nombre de rdv disponibles":"1934","rdv disponibles pour 1 000 habitants":"1.3","pop_55plus":"420370","rdv disponibles pour 1 000 habitants de plus de 55 ans":"4.6","n_cum_dose1":"255743","vaccines_pop55":"60.8"},{"dep":"79","departement":"Deux-Sèvres","population":"374351","nombre de rdv disponibles":"234","rdv disponibles pour 1 000 habitants":"0.6","pop_55plus":"143707","rdv disponibles pour 1 000 habitants de plus de 55 ans":"1.6","n_cum_dose1":"90299","vaccines_pop55":"62.8"},{"dep":"80","departement":"Somme","population":"572443","nombre de rdv disponibles":"954","rdv disponibles pour 1 000 habitants":"1.7","pop_55plus":"189878","rdv disponibles pour 1 000 habitants de plus de 55 ans":"5.0","n_cum_dose1":"125112","vaccines_pop55":"65.9"},{"dep":"81","departement":"Tarn","population":"387890","nombre de rdv disponibles":"2230","rdv disponibles pour 1 000 habitants":"5.7","pop_55plus":"154818","rdv disponibles pour 1 000 habitants de plus de 55 ans":"14.4","n_cum_dose1":"104060","vaccines_pop55":"67.2"},{"dep":"82","departement":"Tarn-et-Garonne","population":"258349","nombre de rdv disponibles":"1049","rdv disponibles pour 1 000 habitants":"4.1","pop_55plus":"94643","rdv disponibles pour 1 000 habitants de plus de 55 ans":"11.1","n_cum_dose1":"60879","vaccines_pop55":"64.3"},{"dep":"83","departement":"Var","population":"1058740","nombre de rdv disponibles":"4149","rdv disponibles pour 1 000 habitants":"3.9","pop_55plus":"440749","rdv disponibles pour 1 000 habitants de plus de 55 ans":"9.4","n_cum_dose1":"260548","vaccines_pop55":"59.1"},{"dep":"84","departement":"Vaucluse","population":"559479","nombre de rdv disponibles":"4623","rdv disponibles pour 1 000 habitants":"8.3","pop_55plus":"204237","rdv disponibles pour 1 000 habitants de plus de 55 ans":"22.6","n_cum_dose1":"120991","vaccines_pop55":"59.2"},{"dep":"85","departement":"Vendée","population":"675247","nombre de rdv disponibles":"1315","rdv disponibles pour 1 000 habitants":"1.9","pop_55plus":"272047","rdv disponibles pour 1 000 habitants de plus de 55 ans":"4.8","n_cum_dose1":"163125","vaccines_pop55":"60.0"},{"dep":"86","departement":"Vienne","population":"436876","nombre de rdv disponibles":"170","rdv disponibles pour 1 000 habitants":"0.4","pop_55plus":"156054","rdv disponibles pour 1 000 habitants de plus de 55 ans":"1.1","n_cum_dose1":"103956","vaccines_pop55":"66.6"},{"dep":"87","departement":"Haute-Vienne","population":"374426","nombre de rdv disponibles":"488","rdv disponibles pour 1 000 habitants":"1.3","pop_55plus":"145345","rdv disponibles pour 1 000 habitants de plus de 55 ans":"3.4","n_cum_dose1":"94464","vaccines_pop55":"65.0"},{"dep":"88","departement":"Vosges","population":"367673","nombre de rdv disponibles":"2484","rdv disponibles pour 1 000 habitants":"6.8","pop_55plus":"144154","rdv disponibles pour 1 000 habitants de plus de 55 ans":"17.2","n_cum_dose1":"91061","vaccines_pop55":"63.2"},{"dep":"89","departement":"Yonne","population":"338291","nombre de rdv disponibles":"884","rdv disponibles pour 1 000 habitants":"2.6","pop_55plus":"131123","rdv disponibles pour 1 000 habitants de plus de 55 ans":"6.7","n_cum_dose1":"73786","vaccines_pop55":"56.3"},{"dep":"90","departement":"Territoire de Belfort","population":"142622","nombre de rdv disponibles":"645","rdv disponibles pour 1 000 habitants":"4.5","pop_55plus":"47239","rdv disponibles pour 1 000 habitants de plus de 55 ans":"13.7","n_cum_dose1":"33036","vaccines_pop55":"69.9"},{"dep":"91","departement":"Essonne","population":"1296130","nombre de rdv disponibles":"1748","rdv disponibles pour 1 000 habitants":"1.3","pop_55plus":"354435","rdv disponibles pour 1 000 habitants de plus de 55 ans":"4.9","n_cum_dose1":"210519","vaccines_pop55":"59.4"},{"dep":"92","departement":"Hauts-de-Seine","population":"1609306","nombre de rdv disponibles":"1112","rdv disponibles pour 1 000 habitants":"0.7","pop_55plus":"434916","rdv disponibles pour 1 000 habitants de plus de 55 ans":"2.6","n_cum_dose1":"271859","vaccines_pop55":"62.5"},{"dep":"93","departement":"Seine-Saint-Denis","population":"1623111","nombre de rdv disponibles":"3944","rdv disponibles pour 1 000 habitants":"2.4","pop_55plus":"374168","rdv disponibles pour 1 000 habitants de plus de 55 ans":"10.5","n_cum_dose1":"237877","vaccines_pop55":"63.6"},{"dep":"94","departement":"Val-de-Marne","population":"1387926","nombre de rdv disponibles":"5016","rdv disponibles pour 1 000 habitants":"3.6","pop_55plus":"376661","rdv disponibles pour 1 000 habitants de plus de 55 ans":"13.3","n_cum_dose1":"240971","vaccines_pop55":"64.0"},{"dep":"95","departement":"Val-d'Oise","population":"1228618","nombre de rdv disponibles":"2914","rdv disponibles pour 1 000 habitants":"2.4","pop_55plus":"319191","rdv disponibles pour 1 000 habitants de plus de 55 ans":"9.1","n_cum_dose1":"205643","vaccines_pop55":"64.4"},{"dep":"971","departement":"Guadeloupe ","population":"390253","nombre de rdv disponibles":"58","rdv disponibles pour 1 000 habitants":"0.1","pop_55plus":"138876","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.4","n_cum_dose1":"17198","vaccines_pop55":"12.4"},{"dep":"972","departement":"Martinique ","population":"372594","nombre de rdv disponibles":"147","rdv disponibles pour 1 000 habitants":"0.4","pop_55plus":"143608","rdv disponibles pour 1 000 habitants de plus de 55 ans":"1.0","n_cum_dose1":"34172","vaccines_pop55":"23.8"},{"dep":"974","departement":"La Réunion","population":"853659","nombre de rdv disponibles":"8306","rdv disponibles pour 1 000 habitants":"9.7","pop_55plus":"227248","rdv disponibles pour 1 000 habitants de plus de 55 ans":"36.6","n_cum_dose1":"68120","vaccines_pop55":"30.0"},{"dep":"976","departement":"Mayotte","population":"256518","nombre de rdv disponibles":"0","rdv disponibles pour 1 000 habitants":"0.0","pop_55plus":"19263","rdv disponibles pour 1 000 habitants de plus de 55 ans":"0.0","n_cum_dose1":"13223","vaccines_pop55":"68.6"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":36,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":10,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":20,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":81.7,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":75.6,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":-8,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":51,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},"yAxisLabelText":{"value":"rdv disponibles pour 1000","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelText":{"value":"Part des plus de 55 ans vaccinée","type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":1,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.6,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"var main_color = 'grey';\nvar accented_color = 'rgb(230, 0, 4)';\nd3.selectAll('svg g.innerGraph g.ball circle').style('fill', main_color);\nd3.selectAll('svg g.innerGraph g.ball circle').filter(function(d){return ['75', '2B', '2A', '70', '62', '93', '974', '971', '972', '74', '77', '45', '06', '13', '42', '74'].includes(d.dep)}).style('fill', accented_color);\nd3.selectAll('.axis--x g.tick text').text(function(d){return d + '%'})"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"vaccines_pop55","value":"vaccines_pop55"},{"label":"rdv disponibles pour 1 000 habitants de plus de 55 ans","value":"rdv disponibles pour 1 000 habitants de plus de 55 ans"},{"label":"population","value":"population"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[departement]]<br>\n[[n_cum_dose1|number_separator]] <strong>premières doses administrées</strong><br>\n<strong>soit</strong> [[vaccines_pop55]]% <strong>par habitant de 55 ans ou plus</strong><br>\n[[nombre de rdv disponibles|number_separator]] <strong>rdv vaccinaux disponibles</strong> <br>\n<strong>soit </strong>[[rdv disponibles pour 1 000 habitants de plus de 55 ans]] <strong>pour 1 000 habitants de plus de 55 ans</strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":2,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["vaccines_pop55"],"selected_yRows":["rdv disponibles pour 1 000 habitants de plus de 55 ans"],"selected_size":["population"],"selected_color":[],"selected_label":[],"selected_tooltip":["departement","rdv disponibles pour 1 000 habitants de plus de 55 ans","vaccines_pop55","dep"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"circleChart","chartSource":"vitemadose, Santé publique France","chartTitle":"Le nombre de rendez-vous disponibles n'est pas corrélé au pourcentage de vaccination","chartSubTitle":"Nombre de rdv disponibles pour 1 000 et part de la population vaccinée chez les plus de 55 ans","annotations":[{"note":{"label":"Martinique","title":"","wrap":150,"orientation":0,"textPadding":"40","align":"right"},"x":159,"y":273,"dy":-30,"dx":0,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":1,"disable":[]},{"note":{"label":"Guadeloupe","title":"","wrap":150,"orientation":0,"textPadding":"40","align":"right"},"x":82,"y":275,"dy":-35,"dx":-14,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":2,"disable":[]},{"note":{"label":"La Réunion","title":"","wrap":150,"orientation":0,"textPadding":"40","align":"right"},"x":192,"y":138,"dy":-27,"dx":-27,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":3,"disable":[]},{"note":{"label":"Paris","title":"","wrap":150,"orientation":0,"textPadding":"20","align":"right"},"x":520,"y":225,"dy":-16,"dx":-4,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":4,"disable":[]},{"note":{"label":"Seine-Saint-Denis","title":"","wrap":150,"orientation":0,"textPadding":"50","align":"right"},"x":394,"y":238,"dy":-47,"dx":-99,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":5,"disable":[]},{"note":{"label":"Bouches-du-Rhône","title":"","wrap":150,"orientation":0,"textPadding":"50","align":"right"},"x":433,"y":246,"dy":-71,"dx":57,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":6,"disable":[]},{"note":{"label":"Seine-et-Marne","title":"","wrap":150,"orientation":0,"textPadding":"50","align":"right"},"x":317,"y":279,"dy":36,"dx":-41,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":7,"disable":[]},{"note":{"label":"Corse","title":"","wrap":150,"orientation":0,"textPadding":"10","align":"right"},"x":508,"y":134,"dy":-83,"dx":-12,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":8,"disable":[]},{"note":{"label":"","title":"","wrap":150,"orientation":0,"textPadding":0},"x":478,"y":99,"dy":-49,"dx":-3,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":9,"disable":[]},{"note":{"label":"Alpes-Maritimes","title":"","wrap":150,"orientation":"","textPadding":"40","align":"right"},"x":474,"y":279,"dy":50,"dx":26,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":10,"disable":[]},{"note":{"label":"Pas-de-Calais","title":"","wrap":150,"orientation":0,"textPadding":"40","align":"right"},"x":447,"y":293,"dy":19,"dx":-13,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":11,"disable":[]},{"note":{"label":"Loiret","title":"","wrap":150,"orientation":0,"textPadding":"20","align":"right"},"x":360,"y":293,"dy":35,"dx":-7,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":12,"disable":[]},{"note":{"label":"Haute-Savoie","title":"","wrap":150,"orientation":0,"textPadding":"40","align":"right"},"x":370,"y":128,"dy":-27,"dx":-47,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":13,"disable":[]},{"note":{"label":"Loire","title":"","wrap":150,"orientation":0,"textPadding":"20","align":"right"},"x":419,"y":120,"dy":-40,"dx":-31,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":14,"disable":[]},{"note":{"label":"Haute-Saône","title":"","wrap":150,"orientation":0,"textPadding":"40","align":"right"},"x":341,"y":1,"dy":-1,"dx":-51,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":15,"disable":[]}]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
