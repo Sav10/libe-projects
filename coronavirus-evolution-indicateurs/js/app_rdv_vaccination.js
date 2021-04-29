@@ -29,6 +29,8 @@ this_date_pretty,
 currentDate,
 maxvalues = {};
 
+var sound_bubbles = new Audio('img/bubbles_short.mp3');
+
 
 var chosenChroma = chroma.scale('OrRd');
 
@@ -382,6 +384,10 @@ d3.select('#display_proportional_circles')
       allPaths
       .transition()
       .attr('transform', 'translate(0,0)')
+
+      sound_bubbles.pause()
+      sound_bubbles.currentTime = 0
+
     }
   })
   ;
@@ -409,7 +415,9 @@ allPaths.transition()
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
-    registered_separate_circles()
+    registered_separate_circles();
+    sound_bubbles.pause()
+    sound_bubbles.currentTime = 0
   }
 })
 
@@ -461,7 +469,7 @@ d3.select('#display_proportional_circles')
 .on('click', function(){
 
 
-new Audio('img/bubbles_short.mp3').play()
+sound_bubbles.play()
 
   transform_all_paths_to_circle()
 
@@ -486,7 +494,7 @@ d3.select('#display_proportional_circles_ecart')
 d3.select('#display_geo_paths')
 .on('click', function(){
 
-new Audio('img/bubbles_short.mp3').play()
+sound_bubbles.play()
 
   redraw_paths()
 
