@@ -38,11 +38,11 @@ var chosenChroma = chroma.scale('OrRd');
 
 var colors = {
 'couv_dose1' : d3.scaleLinear()
-  .range(["white", "#23064b"])
-  .domain([0, 30]),
+  .range(["white", "#B7C4F7", "#000"])
+  .domain([0, 20, 70]),
 'couv_dose2' : d3.scaleLinear()
-  .range(["white", "#2dae8c"])
-  .domain([0, 18])
+  .range(["white", "#6E8AEF", "#000"])
+  .domain([0, 15, 60])
 }
 
 var data_legend = [0,3,9,12,15,18,22, 26,30];
@@ -208,14 +208,14 @@ d3.select('#dose2')
 
 
 d3.selectAll('#button_box a')
-.style('color', 'rgba(35, 6, 75, 1)')
+.style('color', '#6E8AEF')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 
 d3.selectAll('#dose2')
 .style('color', '#fff')
-.style('background-color', 'rgba(35, 6, 75, 1)')
+.style('background-color', '#6E8AEF')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -239,13 +239,13 @@ d3.select('#dose1')
   // fillColor('couv_dose1')
 
 d3.selectAll('#button_box a')
-.style('color', 'rgba(35, 6, 75, 1)')
+.style('color', '#6E8AEF')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 d3.selectAll('#dose1')
 .style('color', '#fff')
-.style('background-color', 'rgba(35, 6, 75, 1)')
+.style('background-color', '#6E8AEF')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -361,10 +361,10 @@ function redraw_paths(){
 
 d3.select('#display_geo_paths')
 .style('color', '#fff')
-.style('background-color', 'rgba(35, 6, 75, 1)')
+.style('background-color', '#6E8AEF')
 
 d3.select('#display_proportional_circles')
-.style('color', 'rgba(35, 6, 75, 1)')
+.style('color', '#6E8AEF')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -394,10 +394,10 @@ function transform_all_paths_to_circle(){
 
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
-.style('background-color', 'rgba(35, 6, 75, 1)')
+.style('background-color', '#6E8AEF')
 
 d3.select('#display_geo_paths')
-.style('color', 'rgba(35, 6, 75, 1)')
+.style('color', '#6E8AEF')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
