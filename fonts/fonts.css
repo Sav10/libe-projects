@@ -141,29 +141,28 @@
 
 
 
-
 /* Regular */
 @font-face {
   font-family: 'Libe-Sans';
   font-weight: 400;
   font-style: normal;
   font-stretch: normal;
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-regular.eot'); /* IE9+ Compat Modes */
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-regular.woff2') format('woff2'), /* Super modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-regular.woff') format('woff'), /* Modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/libe-sans/libesansweb-regular.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-regular.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-regular.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
 @font-face {
   font-family: 'Libe-Sans';
   font-weight: 400;
   font-style: italic;
   font-stretch: normal;
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-italic.eot'); /* IE9+ Compat Modes */
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-italic.woff2') format('woff2'), /* Super modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-italic.woff') format('woff'), /* Modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-italic.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/libe-sans/libesansweb-italic.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-italic.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-italic.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-italic.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
 
 /* Bold */
@@ -172,22 +171,22 @@
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bold.eot'); /* IE9+ Compat Modes */
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bold.woff2') format('woff2'), /* Super modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bold.woff') format('woff'), /* Modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bold.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/libe-sans/libesansweb-bold.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-bold.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-bold.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-bold.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
 @font-face {
   font-family: 'Libe-Sans';
   font-weight: 600;
   font-style: italic;
   font-stretch: normal;
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bolditalic.eot'); /* IE9+ Compat Modes */
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bolditalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bolditalic.woff2') format('woff2'), /* Super modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bolditalic.woff') format('woff'), /* Modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-bolditalic.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/libe-sans/libesansweb-bolditalic.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-bolditalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-bolditalic.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-bolditalic.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-bolditalic.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
 
 /* Black */
@@ -196,22 +195,22 @@
   font-weight: 800;
   font-style: normal;
   font-stretch: normal;
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-black.eot'); /* IE9+ Compat Modes */
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-black.woff2') format('woff2'), /* Super modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-black.woff') format('woff'), /* Modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-black.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/libe-sans/libesansweb-black.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-black.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-black.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-black.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
 @font-face {
   font-family: 'Libe-Sans';
   font-weight: 800;
   font-style: italic;
   font-stretch: normal;
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-blackitalic.eot'); /* IE9+ Compat Modes */
-  src: url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-blackitalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-blackitalic.woff2') format('woff2'), /* Super modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-blackitalic.woff') format('woff'), /* Modern browsers */
-       url('https://www.liberation.fr/apps/static/fonts/libe-sans/libesansweb-blackitalic.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/libe-sans/libesansweb-blackitalic.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-blackitalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-blackitalic.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-blackitalic.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-blackitalic.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
 
 
