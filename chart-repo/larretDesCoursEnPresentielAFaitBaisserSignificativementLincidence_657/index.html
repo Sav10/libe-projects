@@ -1,0 +1,570 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'arrêt des cours en présentiel a fait baisser significativement l'incidence</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"cl_age90":"9","datetime":"2021-01-01","P":"2452.0","T":"35992.0","tx_positivite":"6.81","population":"7412933","tx_incidence":"33.1","age_groups":"0-9","normalized_tests":"22.4"},{"cl_age90":"9","datetime":"2021-01-02","P":"2626.0","T":"35422.0","tx_positivite":"7.41","population":"7412933","tx_incidence":"35.4","age_groups":"0-9","normalized_tests":"22.1"},{"cl_age90":"9","datetime":"2021-01-03","P":"2641.0","T":"35356.0","tx_positivite":"7.47","population":"7412933","tx_incidence":"35.6","age_groups":"0-9","normalized_tests":"22.0"},{"cl_age90":"9","datetime":"2021-01-04","P":"2944.0","T":"35138.0","tx_positivite":"8.38","population":"7412933","tx_incidence":"39.7","age_groups":"0-9","normalized_tests":"21.9"},{"cl_age90":"9","datetime":"2021-01-05","P":"3080.0","T":"34711.0","tx_positivite":"8.87","population":"7412933","tx_incidence":"41.5","age_groups":"0-9","normalized_tests":"21.6"},{"cl_age90":"9","datetime":"2021-01-06","P":"3157.0","T":"33925.0","tx_positivite":"9.31","population":"7412933","tx_incidence":"42.6","age_groups":"0-9","normalized_tests":"21.1"},{"cl_age90":"9","datetime":"2021-01-07","P":"3332.0","T":"33359.0","tx_positivite":"9.99","population":"7412933","tx_incidence":"44.9","age_groups":"0-9","normalized_tests":"20.8"},{"cl_age90":"9","datetime":"2021-01-08","P":"3970.0","T":"39666.0","tx_positivite":"10.01","population":"7412933","tx_incidence":"53.6","age_groups":"0-9","normalized_tests":"24.7"},{"cl_age90":"9","datetime":"2021-01-09","P":"3901.0","T":"39631.0","tx_positivite":"9.84","population":"7412933","tx_incidence":"52.6","age_groups":"0-9","normalized_tests":"24.7"},{"cl_age90":"9","datetime":"2021-01-10","P":"3905.0","T":"39581.0","tx_positivite":"9.87","population":"7412933","tx_incidence":"52.7","age_groups":"0-9","normalized_tests":"24.7"},{"cl_age90":"9","datetime":"2021-01-11","P":"3895.0","T":"40524.0","tx_positivite":"9.61","population":"7412933","tx_incidence":"52.5","age_groups":"0-9","normalized_tests":"25.3"},{"cl_age90":"9","datetime":"2021-01-12","P":"3924.0","T":"42634.0","tx_positivite":"9.2","population":"7412933","tx_incidence":"52.9","age_groups":"0-9","normalized_tests":"26.6"},{"cl_age90":"9","datetime":"2021-01-13","P":"3966.0","T":"45132.0","tx_positivite":"8.79","population":"7412933","tx_incidence":"53.5","age_groups":"0-9","normalized_tests":"28.1"},{"cl_age90":"9","datetime":"2021-01-14","P":"4006.0","T":"47513.0","tx_positivite":"8.43","population":"7412933","tx_incidence":"54.0","age_groups":"0-9","normalized_tests":"29.6"},{"cl_age90":"9","datetime":"2021-01-15","P":"4236.0","T":"51100.0","tx_positivite":"8.29","population":"7412933","tx_incidence":"57.1","age_groups":"0-9","normalized_tests":"31.9"},{"cl_age90":"9","datetime":"2021-01-16","P":"4382.0","T":"53085.0","tx_positivite":"8.25","population":"7412933","tx_incidence":"59.1","age_groups":"0-9","normalized_tests":"33.1"},{"cl_age90":"9","datetime":"2021-01-17","P":"4400.0","T":"53597.0","tx_positivite":"8.21","population":"7412933","tx_incidence":"59.4","age_groups":"0-9","normalized_tests":"33.4"},{"cl_age90":"9","datetime":"2021-01-18","P":"4783.0","T":"57227.0","tx_positivite":"8.36","population":"7412933","tx_incidence":"64.5","age_groups":"0-9","normalized_tests":"35.7"},{"cl_age90":"9","datetime":"2021-01-19","P":"4961.0","T":"60692.0","tx_positivite":"8.17","population":"7412933","tx_incidence":"66.9","age_groups":"0-9","normalized_tests":"37.8"},{"cl_age90":"9","datetime":"2021-01-20","P":"5266.0","T":"64439.0","tx_positivite":"8.17","population":"7412933","tx_incidence":"71.0","age_groups":"0-9","normalized_tests":"40.2"},{"cl_age90":"9","datetime":"2021-01-21","P":"5555.0","T":"67947.0","tx_positivite":"8.18","population":"7412933","tx_incidence":"74.9","age_groups":"0-9","normalized_tests":"42.4"},{"cl_age90":"9","datetime":"2021-01-22","P":"5806.0","T":"71951.0","tx_positivite":"8.07","population":"7412933","tx_incidence":"78.3","age_groups":"0-9","normalized_tests":"44.9"},{"cl_age90":"9","datetime":"2021-01-23","P":"5901.0","T":"73778.0","tx_positivite":"8.0","population":"7412933","tx_incidence":"79.6","age_groups":"0-9","normalized_tests":"46.0"},{"cl_age90":"9","datetime":"2021-01-24","P":"5926.0","T":"74087.0","tx_positivite":"8.0","population":"7412933","tx_incidence":"79.9","age_groups":"0-9","normalized_tests":"46.2"},{"cl_age90":"9","datetime":"2021-01-25","P":"5976.0","T":"77842.0","tx_positivite":"7.68","population":"7412933","tx_incidence":"80.6","age_groups":"0-9","normalized_tests":"48.5"},{"cl_age90":"9","datetime":"2021-01-26","P":"6136.0","T":"80900.0","tx_positivite":"7.58","population":"7412933","tx_incidence":"82.8","age_groups":"0-9","normalized_tests":"50.4"},{"cl_age90":"9","datetime":"2021-01-27","P":"6220.0","T":"82763.0","tx_positivite":"7.52","population":"7412933","tx_incidence":"83.9","age_groups":"0-9","normalized_tests":"51.6"},{"cl_age90":"9","datetime":"2021-01-28","P":"6216.0","T":"84278.0","tx_positivite":"7.38","population":"7412933","tx_incidence":"83.9","age_groups":"0-9","normalized_tests":"52.5"},{"cl_age90":"9","datetime":"2021-01-29","P":"6196.0","T":"85017.0","tx_positivite":"7.29","population":"7412933","tx_incidence":"83.6","age_groups":"0-9","normalized_tests":"53.0"},{"cl_age90":"9","datetime":"2021-01-30","P":"6165.0","T":"85216.0","tx_positivite":"7.23","population":"7412933","tx_incidence":"83.2","age_groups":"0-9","normalized_tests":"53.1"},{"cl_age90":"9","datetime":"2021-01-31","P":"6186.0","T":"85315.0","tx_positivite":"7.25","population":"7412933","tx_incidence":"83.4","age_groups":"0-9","normalized_tests":"53.2"},{"cl_age90":"9","datetime":"2021-02-01","P":"6197.0","T":"85586.0","tx_positivite":"7.24","population":"7412933","tx_incidence":"83.6","age_groups":"0-9","normalized_tests":"53.4"},{"cl_age90":"9","datetime":"2021-02-02","P":"6177.0","T":"86185.0","tx_positivite":"7.17","population":"7412933","tx_incidence":"83.3","age_groups":"0-9","normalized_tests":"53.7"},{"cl_age90":"9","datetime":"2021-02-03","P":"6061.0","T":"88017.0","tx_positivite":"6.89","population":"7412933","tx_incidence":"81.8","age_groups":"0-9","normalized_tests":"54.9"},{"cl_age90":"9","datetime":"2021-02-04","P":"6047.0","T":"90125.0","tx_positivite":"6.71","population":"7412933","tx_incidence":"81.6","age_groups":"0-9","normalized_tests":"56.2"},{"cl_age90":"9","datetime":"2021-02-05","P":"6000.0","T":"93245.0","tx_positivite":"6.43","population":"7412933","tx_incidence":"80.9","age_groups":"0-9","normalized_tests":"58.1"},{"cl_age90":"9","datetime":"2021-02-06","P":"6038.0","T":"95755.0","tx_positivite":"6.31","population":"7412933","tx_incidence":"81.5","age_groups":"0-9","normalized_tests":"59.7"},{"cl_age90":"9","datetime":"2021-02-07","P":"6030.0","T":"96019.0","tx_positivite":"6.28","population":"7412933","tx_incidence":"81.3","age_groups":"0-9","normalized_tests":"59.9"},{"cl_age90":"9","datetime":"2021-02-08","P":"5956.0","T":"98967.0","tx_positivite":"6.02","population":"7412933","tx_incidence":"80.3","age_groups":"0-9","normalized_tests":"61.7"},{"cl_age90":"9","datetime":"2021-02-09","P":"5987.0","T":"102559.0","tx_positivite":"5.84","population":"7412933","tx_incidence":"80.8","age_groups":"0-9","normalized_tests":"63.9"},{"cl_age90":"9","datetime":"2021-02-10","P":"6027.0","T":"104700.0","tx_positivite":"5.76","population":"7412933","tx_incidence":"81.3","age_groups":"0-9","normalized_tests":"65.3"},{"cl_age90":"9","datetime":"2021-02-11","P":"6026.0","T":"107201.0","tx_positivite":"5.62","population":"7412933","tx_incidence":"81.3","age_groups":"0-9","normalized_tests":"66.8"},{"cl_age90":"9","datetime":"2021-02-12","P":"6021.0","T":"110462.0","tx_positivite":"5.45","population":"7412933","tx_incidence":"81.2","age_groups":"0-9","normalized_tests":"68.9"},{"cl_age90":"9","datetime":"2021-02-13","P":"6018.0","T":"111986.0","tx_positivite":"5.37","population":"7412933","tx_incidence":"81.2","age_groups":"0-9","normalized_tests":"69.8"},{"cl_age90":"9","datetime":"2021-02-14","P":"5997.0","T":"112230.0","tx_positivite":"5.34","population":"7412933","tx_incidence":"80.9","age_groups":"0-9","normalized_tests":"70.0"},{"cl_age90":"9","datetime":"2021-02-15","P":"6048.0","T":"113238.0","tx_positivite":"5.34","population":"7412933","tx_incidence":"81.6","age_groups":"0-9","normalized_tests":"70.6"},{"cl_age90":"9","datetime":"2021-02-16","P":"5951.0","T":"111540.0","tx_positivite":"5.34","population":"7412933","tx_incidence":"80.3","age_groups":"0-9","normalized_tests":"69.5"},{"cl_age90":"9","datetime":"2021-02-17","P":"5884.0","T":"109903.0","tx_positivite":"5.35","population":"7412933","tx_incidence":"79.4","age_groups":"0-9","normalized_tests":"68.5"},{"cl_age90":"9","datetime":"2021-02-18","P":"5888.0","T":"108374.0","tx_positivite":"5.43","population":"7412933","tx_incidence":"79.4","age_groups":"0-9","normalized_tests":"67.6"},{"cl_age90":"9","datetime":"2021-02-19","P":"5928.0","T":"106709.0","tx_positivite":"5.56","population":"7412933","tx_incidence":"80.0","age_groups":"0-9","normalized_tests":"66.5"},{"cl_age90":"9","datetime":"2021-02-20","P":"5943.0","T":"104854.0","tx_positivite":"5.67","population":"7412933","tx_incidence":"80.2","age_groups":"0-9","normalized_tests":"65.4"},{"cl_age90":"9","datetime":"2021-02-21","P":"5985.0","T":"104698.0","tx_positivite":"5.72","population":"7412933","tx_incidence":"80.7","age_groups":"0-9","normalized_tests":"65.3"},{"cl_age90":"9","datetime":"2021-02-22","P":"6076.0","T":"100200.0","tx_positivite":"6.06","population":"7412933","tx_incidence":"82.0","age_groups":"0-9","normalized_tests":"62.5"},{"cl_age90":"9","datetime":"2021-02-23","P":"6150.0","T":"96138.0","tx_positivite":"6.4","population":"7412933","tx_incidence":"83.0","age_groups":"0-9","normalized_tests":"59.9"},{"cl_age90":"9","datetime":"2021-02-24","P":"6243.0","T":"92003.0","tx_positivite":"6.79","population":"7412933","tx_incidence":"84.2","age_groups":"0-9","normalized_tests":"57.4"},{"cl_age90":"9","datetime":"2021-02-25","P":"6331.0","T":"88596.0","tx_positivite":"7.15","population":"7412933","tx_incidence":"85.4","age_groups":"0-9","normalized_tests":"55.2"},{"cl_age90":"9","datetime":"2021-02-26","P":"6454.0","T":"83706.0","tx_positivite":"7.71","population":"7412933","tx_incidence":"87.1","age_groups":"0-9","normalized_tests":"52.2"},{"cl_age90":"9","datetime":"2021-02-27","P":"6497.0","T":"80673.0","tx_positivite":"8.05","population":"7412933","tx_incidence":"87.6","age_groups":"0-9","normalized_tests":"50.3"},{"cl_age90":"9","datetime":"2021-02-28","P":"6484.0","T":"80441.0","tx_positivite":"8.06","population":"7412933","tx_incidence":"87.5","age_groups":"0-9","normalized_tests":"50.1"},{"cl_age90":"9","datetime":"2021-03-01","P":"6501.0","T":"79603.0","tx_positivite":"8.17","population":"7412933","tx_incidence":"87.7","age_groups":"0-9","normalized_tests":"49.6"},{"cl_age90":"9","datetime":"2021-03-02","P":"6538.0","T":"79388.0","tx_positivite":"8.24","population":"7412933","tx_incidence":"88.2","age_groups":"0-9","normalized_tests":"49.5"},{"cl_age90":"9","datetime":"2021-03-03","P":"6626.0","T":"78418.0","tx_positivite":"8.45","population":"7412933","tx_incidence":"89.4","age_groups":"0-9","normalized_tests":"48.9"},{"cl_age90":"9","datetime":"2021-03-04","P":"6723.0","T":"81696.0","tx_positivite":"8.23","population":"7412933","tx_incidence":"90.7","age_groups":"0-9","normalized_tests":"50.9"},{"cl_age90":"9","datetime":"2021-03-05","P":"6894.0","T":"88921.0","tx_positivite":"7.75","population":"7412933","tx_incidence":"93.0","age_groups":"0-9","normalized_tests":"55.4"},{"cl_age90":"9","datetime":"2021-03-06","P":"6989.0","T":"89674.0","tx_positivite":"7.79","population":"7412933","tx_incidence":"94.3","age_groups":"0-9","normalized_tests":"55.9"},{"cl_age90":"9","datetime":"2021-03-07","P":"7039.0","T":"89699.0","tx_positivite":"7.85","population":"7412933","tx_incidence":"95.0","age_groups":"0-9","normalized_tests":"55.9"},{"cl_age90":"9","datetime":"2021-03-08","P":"7292.0","T":"97045.0","tx_positivite":"7.51","population":"7412933","tx_incidence":"98.4","age_groups":"0-9","normalized_tests":"60.5"},{"cl_age90":"9","datetime":"2021-03-09","P":"7626.0","T":"109894.0","tx_positivite":"6.94","population":"7412933","tx_incidence":"102.9","age_groups":"0-9","normalized_tests":"68.5"},{"cl_age90":"9","datetime":"2021-03-10","P":"8003.0","T":"115207.0","tx_positivite":"6.95","population":"7412933","tx_incidence":"108.0","age_groups":"0-9","normalized_tests":"71.8"},{"cl_age90":"9","datetime":"2021-03-11","P":"8504.0","T":"138302.0","tx_positivite":"6.15","population":"7412933","tx_incidence":"114.7","age_groups":"0-9","normalized_tests":"86.2"},{"cl_age90":"9","datetime":"2021-03-12","P":"9085.0","T":"159845.0","tx_positivite":"5.68","population":"7412933","tx_incidence":"122.6","age_groups":"0-9","normalized_tests":"99.6"},{"cl_age90":"9","datetime":"2021-03-13","P":"9462.0","T":"164429.0","tx_positivite":"5.75","population":"7412933","tx_incidence":"127.6","age_groups":"0-9","normalized_tests":"102.5"},{"cl_age90":"9","datetime":"2021-03-14","P":"9534.0","T":"165446.0","tx_positivite":"5.76","population":"7412933","tx_incidence":"128.6","age_groups":"0-9","normalized_tests":"103.1"},{"cl_age90":"9","datetime":"2021-03-15","P":"10294.0","T":"184692.0","tx_positivite":"5.57","population":"7412933","tx_incidence":"138.9","age_groups":"0-9","normalized_tests":"115.1"},{"cl_age90":"9","datetime":"2021-03-16","P":"11027.0","T":"206469.0","tx_positivite":"5.34","population":"7412933","tx_incidence":"148.8","age_groups":"0-9","normalized_tests":"128.7"},{"cl_age90":"9","datetime":"2021-03-17","P":"11478.0","T":"215194.0","tx_positivite":"5.33","population":"7412933","tx_incidence":"154.8","age_groups":"0-9","normalized_tests":"134.1"},{"cl_age90":"9","datetime":"2021-03-18","P":"12159.0","T":"228183.0","tx_positivite":"5.33","population":"7412933","tx_incidence":"164.0","age_groups":"0-9","normalized_tests":"142.2"},{"cl_age90":"9","datetime":"2021-03-19","P":"12799.0","T":"243621.0","tx_positivite":"5.25","population":"7412933","tx_incidence":"172.7","age_groups":"0-9","normalized_tests":"151.9"},{"cl_age90":"9","datetime":"2021-03-20","P":"13090.0","T":"249080.0","tx_positivite":"5.26","population":"7412933","tx_incidence":"176.6","age_groups":"0-9","normalized_tests":"155.3"},{"cl_age90":"9","datetime":"2021-03-21","P":"13154.0","T":"250129.0","tx_positivite":"5.26","population":"7412933","tx_incidence":"177.4","age_groups":"0-9","normalized_tests":"155.9"},{"cl_age90":"9","datetime":"2021-03-22","P":"13983.0","T":"265887.0","tx_positivite":"5.26","population":"7412933","tx_incidence":"188.6","age_groups":"0-9","normalized_tests":"165.7"},{"cl_age90":"9","datetime":"2021-03-23","P":"14572.0","T":"280996.0","tx_positivite":"5.19","population":"7412933","tx_incidence":"196.6","age_groups":"0-9","normalized_tests":"175.2"},{"cl_age90":"9","datetime":"2021-03-24","P":"15216.0","T":"292960.0","tx_positivite":"5.19","population":"7412933","tx_incidence":"205.3","age_groups":"0-9","normalized_tests":"182.6"},{"cl_age90":"9","datetime":"2021-03-25","P":"15753.0","T":"306939.0","tx_positivite":"5.13","population":"7412933","tx_incidence":"212.5","age_groups":"0-9","normalized_tests":"191.3"},{"cl_age90":"9","datetime":"2021-03-26","P":"16312.0","T":"317566.0","tx_positivite":"5.14","population":"7412933","tx_incidence":"220.0","age_groups":"0-9","normalized_tests":"198.0"},{"cl_age90":"9","datetime":"2021-03-27","P":"16606.0","T":"324605.0","tx_positivite":"5.12","population":"7412933","tx_incidence":"224.0","age_groups":"0-9","normalized_tests":"202.4"},{"cl_age90":"9","datetime":"2021-03-28","P":"16654.0","T":"325310.0","tx_positivite":"5.12","population":"7412933","tx_incidence":"224.7","age_groups":"0-9","normalized_tests":"202.8"},{"cl_age90":"9","datetime":"2021-03-29","P":"17103.0","T":"342442.0","tx_positivite":"4.99","population":"7412933","tx_incidence":"230.7","age_groups":"0-9","normalized_tests":"213.5"},{"cl_age90":"9","datetime":"2021-03-30","P":"17675.0","T":"361359.0","tx_positivite":"4.89","population":"7412933","tx_incidence":"238.4","age_groups":"0-9","normalized_tests":"225.3"},{"cl_age90":"9","datetime":"2021-03-31","P":"17775.0","T":"370418.0","tx_positivite":"4.8","population":"7412933","tx_incidence":"239.8","age_groups":"0-9","normalized_tests":"230.9"},{"cl_age90":"9","datetime":"2021-04-01","P":"17573.0","T":"378184.0","tx_positivite":"4.65","population":"7412933","tx_incidence":"237.1","age_groups":"0-9","normalized_tests":"235.8"},{"cl_age90":"9","datetime":"2021-04-02","P":"16930.0","T":"379645.0","tx_positivite":"4.46","population":"7412933","tx_incidence":"228.4","age_groups":"0-9","normalized_tests":"236.7"},{"cl_age90":"9","datetime":"2021-04-03","P":"16552.0","T":"383761.0","tx_positivite":"4.31","population":"7412933","tx_incidence":"223.3","age_groups":"0-9","normalized_tests":"239.2"},{"cl_age90":"9","datetime":"2021-04-04","P":"16457.0","T":"383150.0","tx_positivite":"4.3","population":"7412933","tx_incidence":"222.0","age_groups":"0-9","normalized_tests":"238.8"},{"cl_age90":"9","datetime":"2021-04-05","P":"13181.0","T":"314678.0","tx_positivite":"4.19","population":"7412933","tx_incidence":"177.8","age_groups":"0-9","normalized_tests":"196.2"},{"cl_age90":"9","datetime":"2021-04-06","P":"12534.0","T":"269135.0","tx_positivite":"4.66","population":"7412933","tx_incidence":"169.1","age_groups":"0-9","normalized_tests":"167.8"},{"cl_age90":"9","datetime":"2021-04-07","P":"11801.0","T":"249747.0","tx_positivite":"4.73","population":"7412933","tx_incidence":"159.2","age_groups":"0-9","normalized_tests":"155.7"},{"cl_age90":"9","datetime":"2021-04-08","P":"11124.0","T":"203745.0","tx_positivite":"5.46","population":"7412933","tx_incidence":"150.1","age_groups":"0-9","normalized_tests":"127.0"},{"cl_age90":"9","datetime":"2021-04-09","P":"10748.0","T":"164540.0","tx_positivite":"6.53","population":"7412933","tx_incidence":"145.0","age_groups":"0-9","normalized_tests":"102.6"},{"cl_age90":"9","datetime":"2021-04-10","P":"10549.0","T":"149438.0","tx_positivite":"7.06","population":"7412933","tx_incidence":"142.3","age_groups":"0-9","normalized_tests":"93.2"},{"cl_age90":"9","datetime":"2021-04-11","P":"10527.0","T":"148224.0","tx_positivite":"7.1","population":"7412933","tx_incidence":"142.0","age_groups":"0-9","normalized_tests":"92.4"},{"cl_age90":"9","datetime":"2021-04-12","P":"12317.0","T":"161640.0","tx_positivite":"7.62","population":"7412933","tx_incidence":"166.2","age_groups":"0-9","normalized_tests":"100.8"},{"cl_age90":"9","datetime":"2021-04-13","P":"11291.0","T":"140675.0","tx_positivite":"8.03","population":"7412933","tx_incidence":"152.3","age_groups":"0-9","normalized_tests":"87.7"},{"cl_age90":"9","datetime":"2021-04-14","P":"10906.0","T":"127618.0","tx_positivite":"8.55","population":"7412933","tx_incidence":"147.1","age_groups":"0-9","normalized_tests":"79.6"},{"cl_age90":"9","datetime":"2021-04-15","P":"10547.0","T":"114991.0","tx_positivite":"9.17","population":"7412933","tx_incidence":"142.3","age_groups":"0-9","normalized_tests":"71.7"},{"cl_age90":"9","datetime":"2021-04-16","P":"10088.0","T":"99529.0","tx_positivite":"10.14","population":"7412933","tx_incidence":"136.1","age_groups":"0-9","normalized_tests":"62.0"},{"cl_age90":"9","datetime":"2021-04-17","P":"9960.0","T":"94402.0","tx_positivite":"10.55","population":"7412933","tx_incidence":"134.4","age_groups":"0-9","normalized_tests":"58.8"},{"cl_age90":"9","datetime":"2021-04-18","P":"9911.0","T":"93413.0","tx_positivite":"10.61","population":"7412933","tx_incidence":"133.7","age_groups":"0-9","normalized_tests":"58.2"},{"cl_age90":"9","datetime":"2021-04-19","P":"9762.0","T":"88436.0","tx_positivite":"11.04","population":"7412933","tx_incidence":"131.7","age_groups":"0-9","normalized_tests":"55.1"},{"cl_age90":"9","datetime":"2021-04-20","P":"9733.0","T":"85323.0","tx_positivite":"11.41","population":"7412933","tx_incidence":"131.3","age_groups":"0-9","normalized_tests":"53.2"},{"cl_age90":"9","datetime":"2021-04-21","P":"9790.0","T":"82738.0","tx_positivite":"11.83","population":"7412933","tx_incidence":"132.1","age_groups":"0-9","normalized_tests":"51.6"},{"cl_age90":"9","datetime":"2021-04-22","P":"9727.0","T":"80458.0","tx_positivite":"12.09","population":"7412933","tx_incidence":"131.2","age_groups":"0-9","normalized_tests":"50.2"},{"cl_age90":"9","datetime":"2021-04-23","P":"9827.0","T":"80976.0","tx_positivite":"12.14","population":"7412933","tx_incidence":"132.6","age_groups":"0-9","normalized_tests":"50.5"},{"cl_age90":"9","datetime":"2021-04-24","P":"9966.0","T":"81107.0","tx_positivite":"12.29","population":"7412933","tx_incidence":"134.4","age_groups":"0-9","normalized_tests":"50.6"},{"cl_age90":"9","datetime":"2021-04-25","P":"10009.0","T":"82002.0","tx_positivite":"12.21","population":"7412933","tx_incidence":"135.0","age_groups":"0-9","normalized_tests":"51.1"},{"cl_age90":"9","datetime":"2021-04-26","P":"10106.0","T":"93978.0","tx_positivite":"10.75","population":"7412933","tx_incidence":"136.3","age_groups":"0-9","normalized_tests":"58.6"},{"cl_age90":"9","datetime":"2021-04-27","P":"10172.0","T":"125619.0","tx_positivite":"8.1","population":"7412933","tx_incidence":"137.2","age_groups":"0-9","normalized_tests":"78.3"},{"cl_age90":"9","datetime":"2021-04-28","P":"10097.0","T":"133183.0","tx_positivite":"7.58","population":"7412933","tx_incidence":"136.2","age_groups":"0-9","normalized_tests":"83.0"},{"cl_age90":"9","datetime":"2021-04-29","P":"10198.0","T":"184321.0","tx_positivite":"5.53","population":"7412933","tx_incidence":"137.6","age_groups":"0-9","normalized_tests":"114.9"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":15,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":60,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":20.8,"calculated_right_value":239.8,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":6,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":-15,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"value":"Taux d'incidence","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"datetime","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"var g = d3.select('svg g.graphContainer')\ng.select(\"g.axis.axis--ybis\").remove();\nvar yScalebis = d3.scaleLinear()\n.domain([0,d3.max(dataFromFile, function(d){return  +d['T']})])\n.range([height, 0]);\n\naxis_left_bis= d3.axisLeft(yScalebis)\n.ticks(4)\n.tickFormat(numbers_separators);\n\ng.append(\"g\")\n      .attr(\"class\", \"axis axis--ybis\")\n      .attr('transform', 'translate(0,500)');\n\n g.select(\"g.axis.axis--ybis\")\n.attr('transform', 'translate(' + (manualReusableParameters.padding_left.value+515) + ',' + manualReusableParameters.padding_top.value + ')')\n.call(axis_left_bis);\n\ng.selectAll(\"g.axis.axis--ybis path\").style('display', 'none')\ng.selectAll(\"g.axis.axis--ybis line\")\n.attr('stroke', '#e4e4e4')\n.attr('stroke', '#e4e4e4')\n.attr('x1', -50)\n.attr('x2', -520)\n.attr('stroke-dasharray', 3)\nd3.select('svg g.innerGraph text.yAxisLabelBis').remove()\nd3.select('svg g.innerGraph').append('text').attr('class', 'yAxisLabelBis').attr('transform', 'rotate(-270)').attr('x', 90).attr('y', -520).text('Nombre de tests');\nd3.select('g.yAxisLabel text').style('fill', 'rgb(230, 30, 73)');\nd3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM')});\nvar xScale2 = xScaleType()\n  .domain([d3.min(dataFromFile, function(d) { return moment(d['datetime']) }),\n    d3.max(dataFromFile, function(d) { return moment(d['datetime']) }) ])\n  .range([0, width]);\nd3.select('svg g.innerGraph').selectAll('rect').remove();\nd3.select('svg g.innerGraph')\n.append('rect')\n.attr('x', xScale2(moment('2021-04-03')))\n.attr('width', (xScale2(moment('2021-04-25')) - xScale2(moment('2021-04-03')))).attr('height', height).attr('fill', '#ddd')\n.attr('opacity', 0.4)\n.style('pointer-events', 'none');\nd3.select(d3.selectAll('svg path.line').nodes()[0]).style('stroke-width', 4);\nd3.select('svg text.yAxisLabel')\n.style('font-size', '1.2rem');\nd3.select(d3.selectAll('svg text.annotation-note-label').nodes()[2]).style('font-weight', 'bold');"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"datetime","value":"datetime"},{"label":"tx_incidence","value":"tx_incidence"},{"label":"normalized_tests","value":"normalized_tests"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n<strong>Taux d'incidence : </strong>[[tx_incidence]]<br>\n<strong>Nombre de tests : </strong>[[T|number_separator]]<br>\n<strong>Taux de positivité : </strong>[[tx_positivite]]"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["datetime"],"selected_yRows":["tx_incidence","normalized_tests"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"lineChart","chartTitle":"L'arrêt des cours en présentiel a fait baisser significativement l'incidence","annotations":[{"note":{"label":"Taux d'incidence","title":"","wrap":150,"orientation":0,"textPadding":"50","align":"right"},"x":209,"y":193,"dy":-36,"dx":-44,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":1,"disable":[]},{"note":{"label":"Nombre de tests","title":"","wrap":150,"orientation":0,"textPadding":"50","align":"right"},"x":293,"y":238,"dy":34,"dx":23,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":2,"disable":[]},{"note":{"label":"Ecoles fermées","title":"","wrap":150,"orientation":0,"textPadding":0,"align":"right"},"x":447,"y":20,"functionName":"annotationLabel","color":"#3c3c3b","disable":"connector","index":3,"dx":28,"dy":-16}],"chartSource":"Santé publique France, nombre de test et taux d'incidence glissants sur 7 jours. L'échelle du graphique est double","chartSubTitle":"Taux d'incidence et nombre de tests chez les enfants de moins de 10 ans"};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeLinechart(data_) {
+
+    var data = _.cloneDeep(data_);
+      var initial_data = _.cloneDeep(data);
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+
+        var allLines = g_inner
+        .selectAll('.line')
+        .data(data);
+
+        allLines
+        .transition()
+        .duration(200)
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().transition().duration(200).remove();
+
+        allLines
+        .enter()
+        .append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('stroke-width', 2)
+        .style('fill', 'none');
+
+        AllDotPoints = g_inner
+        .selectAll('circle.dotPoint')
+        .data(_.flatten(data));
+
+        AllDotPoints
+        // .transition()
+        // .duration(200)
+        .attr('cx', function(d) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
+
+        AllDotPoints.exit().transition().duration(200).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        // .on('mouseover', function(d, i){
+        //     var thoseVars = [];
+        //     if (moment.isMoment(d.x_value)){ thoseVars.push({'name': 'date', 'value':d.x_value.locale('fr').format('DD MMMM YYYY')})};
+        //     if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':d.y_value})};
+        //     show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name, thoseVars)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+    // cells.exit().remove();
+
+
+/// Axis Label
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+
+  customizeAxis()
+
+  drawLegend()
+  addCustomCode()
+
+}
+
+initChart();
+
+makeLinechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
