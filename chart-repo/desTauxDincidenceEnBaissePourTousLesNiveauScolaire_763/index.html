@@ -1,0 +1,573 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Des taux d'incidence en baisse pour tous les niveau scolaire</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"fra":"FR","semaine":"2020-S21","age_18ans":"2","ti":"2.18","tp":"1.1","td":"197.7","num_semaine":"0","datetime":"2020-05-30","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S21","age_18ans":"5","ti":"1.47","tp":"1.07","td":"137.49","num_semaine":"0","datetime":"2020-05-30","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S21","age_18ans":"10","ti":"1.43","tp":"1.07","td":"133.5","num_semaine":"0","datetime":"2020-05-30","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S21","age_18ans":"14","ti":"2.38","tp":"2.12","td":"112.47","num_semaine":"0","datetime":"2020-05-30","age_class":"Collège"},{"fra":"FR","semaine":"2020-S21","age_18ans":"17","ti":"3.39","tp":"2.19","td":"154.53","num_semaine":"0","datetime":"2020-05-30","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S22","age_18ans":"2","ti":"2.04","tp":"0.86","td":"238.1","num_semaine":"1","datetime":"2020-06-06","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S22","age_18ans":"5","ti":"1.21","tp":"0.76","td":"159.89","num_semaine":"1","datetime":"2020-06-06","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S22","age_18ans":"10","ti":"2.06","tp":"1.31","td":"157.59","num_semaine":"1","datetime":"2020-06-06","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S22","age_18ans":"14","ti":"1.94","tp":"1.27","td":"152.41","num_semaine":"1","datetime":"2020-06-06","age_class":"Collège"},{"fra":"FR","semaine":"2020-S22","age_18ans":"17","ti":"3.87","tp":"1.94","td":"199.08","num_semaine":"1","datetime":"2020-06-06","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S23","age_18ans":"2","ti":"1.25","tp":"0.67","td":"187.16","num_semaine":"2","datetime":"2020-06-13","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S23","age_18ans":"5","ti":"1.25","tp":"1.04","td":"120.01","num_semaine":"2","datetime":"2020-06-13","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S23","age_18ans":"10","ti":"1.84","tp":"1.54","td":"119.7","num_semaine":"2","datetime":"2020-06-13","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S23","age_18ans":"14","ti":"1.46","tp":"1.16","td":"126.42","num_semaine":"2","datetime":"2020-06-13","age_class":"Collège"},{"fra":"FR","semaine":"2020-S23","age_18ans":"17","ti":"2.54","tp":"1.44","td":"175.98","num_semaine":"2","datetime":"2020-06-13","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S24","age_18ans":"2","ti":"3.25","tp":"1.73","td":"187.44","num_semaine":"3","datetime":"2020-06-20","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S24","age_18ans":"5","ti":"1.9","tp":"1.46","td":"130.37","num_semaine":"3","datetime":"2020-06-20","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S24","age_18ans":"10","ti":"2.69","tp":"2.04","td":"132.07","num_semaine":"3","datetime":"2020-06-20","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S24","age_18ans":"14","ti":"2.5","tp":"1.89","td":"132.59","num_semaine":"3","datetime":"2020-06-20","age_class":"Collège"},{"fra":"FR","semaine":"2020-S24","age_18ans":"17","ti":"3.55","tp":"1.74","td":"203.63","num_semaine":"3","datetime":"2020-06-20","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S25","age_18ans":"2","ti":"3.85","tp":"2.08","td":"185.58","num_semaine":"4","datetime":"2020-06-27","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S25","age_18ans":"5","ti":"2.24","tp":"1.6","td":"140.64","num_semaine":"4","datetime":"2020-06-27","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S25","age_18ans":"10","ti":"3.0","tp":"2.15","td":"139.53","num_semaine":"4","datetime":"2020-06-27","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S25","age_18ans":"14","ti":"3.04","tp":"2.04","td":"149.34","num_semaine":"4","datetime":"2020-06-27","age_class":"Collège"},{"fra":"FR","semaine":"2020-S25","age_18ans":"17","ti":"4.8","tp":"2.29","td":"209.32","num_semaine":"4","datetime":"2020-06-27","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S26","age_18ans":"2","ti":"2.32","tp":"0.96","td":"242.93","num_semaine":"5","datetime":"2020-07-04","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S26","age_18ans":"5","ti":"2.29","tp":"0.99","td":"230.96","num_semaine":"5","datetime":"2020-07-04","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S26","age_18ans":"10","ti":"3.37","tp":"1.58","td":"212.93","num_semaine":"5","datetime":"2020-07-04","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S26","age_18ans":"14","ti":"3.9","tp":"1.81","td":"215.67","num_semaine":"5","datetime":"2020-07-04","age_class":"Collège"},{"fra":"FR","semaine":"2020-S26","age_18ans":"17","ti":"4.92","tp":"1.9","td":"258.5","num_semaine":"5","datetime":"2020-07-04","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S27","age_18ans":"2","ti":"3.71","tp":"0.93","td":"398.51","num_semaine":"6","datetime":"2020-07-11","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S27","age_18ans":"5","ti":"3.19","tp":"0.66","td":"484.63","num_semaine":"6","datetime":"2020-07-11","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S27","age_18ans":"10","ti":"3.17","tp":"0.77","td":"413.46","num_semaine":"6","datetime":"2020-07-11","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S27","age_18ans":"14","ti":"3.49","tp":"1.09","td":"319.16","num_semaine":"6","datetime":"2020-07-11","age_class":"Collège"},{"fra":"FR","semaine":"2020-S27","age_18ans":"17","ti":"5.08","tp":"1.37","td":"370.74","num_semaine":"6","datetime":"2020-07-11","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S28","age_18ans":"2","ti":"3.06","tp":"0.61","td":"504.56","num_semaine":"7","datetime":"2020-07-18","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S28","age_18ans":"5","ti":"3.45","tp":"0.73","td":"471.59","num_semaine":"7","datetime":"2020-07-18","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S28","age_18ans":"10","ti":"3.8","tp":"0.89","td":"426.53","num_semaine":"7","datetime":"2020-07-18","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S28","age_18ans":"14","ti":"4.32","tp":"1.27","td":"340.56","num_semaine":"7","datetime":"2020-07-18","age_class":"Collège"},{"fra":"FR","semaine":"2020-S28","age_18ans":"17","ti":"5.77","tp":"1.36","td":"423.39","num_semaine":"7","datetime":"2020-07-18","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S29","age_18ans":"2","ti":"2.74","tp":"0.66","td":"414.39","num_semaine":"8","datetime":"2020-07-25","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S29","age_18ans":"5","ti":"3.41","tp":"1.07","td":"319.69","num_semaine":"8","datetime":"2020-07-25","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S29","age_18ans":"10","ti":"3.63","tp":"1.09","td":"331.83","num_semaine":"8","datetime":"2020-07-25","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S29","age_18ans":"14","ti":"4.17","tp":"1.14","td":"367.03","num_semaine":"8","datetime":"2020-07-25","age_class":"Collège"},{"fra":"FR","semaine":"2020-S29","age_18ans":"17","ti":"6.77","tp":"1.38","td":"489.67","num_semaine":"8","datetime":"2020-07-25","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S30","age_18ans":"2","ti":"4.64","tp":"1.06","td":"436.87","num_semaine":"9","datetime":"2020-08-01","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S30","age_18ans":"5","ti":"3.45","tp":"1.05","td":"328.28","num_semaine":"9","datetime":"2020-08-01","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S30","age_18ans":"10","ti":"4.63","tp":"1.3","td":"355.92","num_semaine":"9","datetime":"2020-08-01","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S30","age_18ans":"14","ti":"5.4","tp":"1.26","td":"429.63","num_semaine":"9","datetime":"2020-08-01","age_class":"Collège"},{"fra":"FR","semaine":"2020-S30","age_18ans":"17","ti":"9.35","tp":"1.57","td":"594.29","num_semaine":"9","datetime":"2020-08-01","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S31","age_18ans":"2","ti":"5.15","tp":"1.36","td":"378.87","num_semaine":"10","datetime":"2020-08-08","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S31","age_18ans":"5","ti":"3.62","tp":"1.14","td":"319.17","num_semaine":"10","datetime":"2020-08-08","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S31","age_18ans":"10","ti":"5.47","tp":"1.48","td":"368.71","num_semaine":"10","datetime":"2020-08-08","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S31","age_18ans":"14","ti":"7.78","tp":"1.51","td":"514.59","num_semaine":"10","datetime":"2020-08-08","age_class":"Collège"},{"fra":"FR","semaine":"2020-S31","age_18ans":"17","ti":"11.77","tp":"1.6","td":"733.86","num_semaine":"10","datetime":"2020-08-08","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S32","age_18ans":"2","ti":"6.78","tp":"2.15","td":"315.36","num_semaine":"11","datetime":"2020-08-15","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S32","age_18ans":"5","ti":"5.14","tp":"1.74","td":"295.09","num_semaine":"11","datetime":"2020-08-15","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S32","age_18ans":"10","ti":"7.24","tp":"2.07","td":"350.62","num_semaine":"11","datetime":"2020-08-15","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S32","age_18ans":"14","ti":"9.42","tp":"1.77","td":"532.71","num_semaine":"11","datetime":"2020-08-15","age_class":"Collège"},{"fra":"FR","semaine":"2020-S32","age_18ans":"17","ti":"14.03","tp":"1.87","td":"749.14","num_semaine":"11","datetime":"2020-08-15","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S33","age_18ans":"2","ti":"7.38","tp":"2.43","td":"304.07","num_semaine":"12","datetime":"2020-08-22","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S33","age_18ans":"5","ti":"7.38","tp":"2.63","td":"280.59","num_semaine":"12","datetime":"2020-08-22","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S33","age_18ans":"10","ti":"8.57","tp":"2.44","td":"351.03","num_semaine":"12","datetime":"2020-08-22","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S33","age_18ans":"14","ti":"12.7","tp":"2.32","td":"547.2","num_semaine":"12","datetime":"2020-08-22","age_class":"Collège"},{"fra":"FR","semaine":"2020-S33","age_18ans":"17","ti":"22.82","tp":"2.82","td":"808.32","num_semaine":"12","datetime":"2020-08-22","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S34","age_18ans":"2","ti":"10.59","tp":"3.2","td":"331.19","num_semaine":"13","datetime":"2020-08-29","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S34","age_18ans":"5","ti":"10.06","tp":"3.04","td":"330.69","num_semaine":"13","datetime":"2020-08-29","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S34","age_18ans":"10","ti":"11.55","tp":"2.77","td":"417.52","num_semaine":"13","datetime":"2020-08-29","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S34","age_18ans":"14","ti":"19.32","tp":"2.76","td":"698.71","num_semaine":"13","datetime":"2020-08-29","age_class":"Collège"},{"fra":"FR","semaine":"2020-S34","age_18ans":"17","ti":"34.59","tp":"3.03","td":"1141.05","num_semaine":"13","datetime":"2020-08-29","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S35","age_18ans":"2","ti":"14.02","tp":"3.71","td":"377.81","num_semaine":"14","datetime":"2020-09-05","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S35","age_18ans":"5","ti":"14.72","tp":"3.71","td":"396.46","num_semaine":"14","datetime":"2020-09-05","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S35","age_18ans":"10","ti":"19.66","tp":"3.77","td":"521.31","num_semaine":"14","datetime":"2020-09-05","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S35","age_18ans":"14","ti":"28.8","tp":"3.45","td":"834.43","num_semaine":"14","datetime":"2020-09-05","age_class":"Collège"},{"fra":"FR","semaine":"2020-S35","age_18ans":"17","ti":"54.55","tp":"3.96","td":"1377.37","num_semaine":"14","datetime":"2020-09-05","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S36","age_18ans":"2","ti":"20.24","tp":"4.31","td":"469.83","num_semaine":"15","datetime":"2020-09-12","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S36","age_18ans":"5","ti":"24.55","tp":"3.86","td":"636.23","num_semaine":"15","datetime":"2020-09-12","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S36","age_18ans":"10","ti":"29.74","tp":"4.32","td":"688.96","num_semaine":"15","datetime":"2020-09-12","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S36","age_18ans":"14","ti":"42.45","tp":"5.25","td":"808.44","num_semaine":"15","datetime":"2020-09-12","age_class":"Collège"},{"fra":"FR","semaine":"2020-S36","age_18ans":"17","ti":"84.5","tp":"6.26","td":"1350.93","num_semaine":"15","datetime":"2020-09-12","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S37","age_18ans":"2","ti":"24.93","tp":"3.02","td":"824.93","num_semaine":"16","datetime":"2020-09-19","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S37","age_18ans":"5","ti":"36.6","tp":"2.13","td":"1720.14","num_semaine":"16","datetime":"2020-09-19","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S37","age_18ans":"10","ti":"51.94","tp":"2.53","td":"2050.18","num_semaine":"16","datetime":"2020-09-19","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S37","age_18ans":"14","ti":"62.93","tp":"4.06","td":"1549.12","num_semaine":"16","datetime":"2020-09-19","age_class":"Collège"},{"fra":"FR","semaine":"2020-S37","age_18ans":"17","ti":"101.03","tp":"4.97","td":"2032.86","num_semaine":"16","datetime":"2020-09-19","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S38","age_18ans":"2","ti":"21.03","tp":"3.56","td":"590.23","num_semaine":"17","datetime":"2020-09-26","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S38","age_18ans":"5","ti":"26.07","tp":"2.55","td":"1020.82","num_semaine":"17","datetime":"2020-09-26","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S38","age_18ans":"10","ti":"56.08","tp":"2.77","td":"2022.38","num_semaine":"17","datetime":"2020-09-26","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S38","age_18ans":"14","ti":"78.34","tp":"3.4","td":"2302.45","num_semaine":"17","datetime":"2020-09-26","age_class":"Collège"},{"fra":"FR","semaine":"2020-S38","age_18ans":"17","ti":"140.34","tp":"4.83","td":"2902.99","num_semaine":"17","datetime":"2020-09-26","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S39","age_18ans":"2","ti":"14.67","tp":"3.98","td":"368.61","num_semaine":"18","datetime":"2020-10-03","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S39","age_18ans":"5","ti":"15.84","tp":"3.65","td":"433.7","num_semaine":"18","datetime":"2020-10-03","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S39","age_18ans":"10","ti":"37.2","tp":"4.71","td":"788.97","num_semaine":"18","datetime":"2020-10-03","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S39","age_18ans":"14","ti":"79.23","tp":"4.53","td":"1747.68","num_semaine":"18","datetime":"2020-10-03","age_class":"Collège"},{"fra":"FR","semaine":"2020-S39","age_18ans":"17","ti":"135.66","tp":"5.19","td":"2615.06","num_semaine":"18","datetime":"2020-10-03","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S40","age_18ans":"2","ti":"13.79","tp":"4.73","td":"291.82","num_semaine":"19","datetime":"2020-10-10","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S40","age_18ans":"5","ti":"14.24","tp":"4.3","td":"330.82","num_semaine":"19","datetime":"2020-10-10","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S40","age_18ans":"10","ti":"37.24","tp":"7.22","td":"515.65","num_semaine":"19","datetime":"2020-10-10","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S40","age_18ans":"14","ti":"85.61","tp":"6.15","td":"1391.91","num_semaine":"19","datetime":"2020-10-10","age_class":"Collège"},{"fra":"FR","semaine":"2020-S40","age_18ans":"17","ti":"150.01","tp":"6.26","td":"2398.0","num_semaine":"19","datetime":"2020-10-10","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S41","age_18ans":"2","ti":"18.2","tp":"5.98","td":"304.21","num_semaine":"20","datetime":"2020-10-17","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S41","age_18ans":"5","ti":"23.26","tp":"6.08","td":"382.26","num_semaine":"20","datetime":"2020-10-17","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S41","age_18ans":"10","ti":"62.77","tp":"9.74","td":"644.11","num_semaine":"20","datetime":"2020-10-17","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S41","age_18ans":"14","ti":"135.66","tp":"8.19","td":"1656.52","num_semaine":"20","datetime":"2020-10-17","age_class":"Collège"},{"fra":"FR","semaine":"2020-S41","age_18ans":"17","ti":"231.93","tp":"8.07","td":"2873.84","num_semaine":"20","datetime":"2020-10-17","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S42","age_18ans":"2","ti":"26.14","tp":"7.19","td":"363.74","num_semaine":"21","datetime":"2020-10-24","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S42","age_18ans":"5","ti":"26.02","tp":"5.24","td":"496.67","num_semaine":"21","datetime":"2020-10-24","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S42","age_18ans":"10","ti":"90.66","tp":"9.79","td":"925.95","num_semaine":"21","datetime":"2020-10-24","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S42","age_18ans":"14","ti":"190.21","tp":"8.43","td":"2255.2","num_semaine":"21","datetime":"2020-10-24","age_class":"Collège"},{"fra":"FR","semaine":"2020-S42","age_18ans":"17","ti":"316.07","tp":"8.39","td":"3767.35","num_semaine":"21","datetime":"2020-10-24","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S43","age_18ans":"2","ti":"33.24","tp":"8.32","td":"399.44","num_semaine":"22","datetime":"2020-10-31","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S43","age_18ans":"5","ti":"36.9","tp":"6.99","td":"528.13","num_semaine":"22","datetime":"2020-10-31","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S43","age_18ans":"10","ti":"124.49","tp":"12.28","td":"1014.15","num_semaine":"22","datetime":"2020-10-31","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S43","age_18ans":"14","ti":"242.94","tp":"12.53","td":"1938.45","num_semaine":"22","datetime":"2020-10-31","age_class":"Collège"},{"fra":"FR","semaine":"2020-S43","age_18ans":"17","ti":"366.51","tp":"12.28","td":"2984.34","num_semaine":"22","datetime":"2020-10-31","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S44","age_18ans":"2","ti":"39.88","tp":"9.47","td":"421.17","num_semaine":"23","datetime":"2020-11-07","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S44","age_18ans":"5","ti":"53.9","tp":"9.55","td":"564.63","num_semaine":"23","datetime":"2020-11-07","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S44","age_18ans":"10","ti":"176.85","tp":"15.6","td":"1133.7","num_semaine":"23","datetime":"2020-11-07","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S44","age_18ans":"14","ti":"344.14","tp":"17.95","td":"1916.96","num_semaine":"23","datetime":"2020-11-07","age_class":"Collège"},{"fra":"FR","semaine":"2020-S44","age_18ans":"17","ti":"486.28","tp":"16.92","td":"2874.12","num_semaine":"23","datetime":"2020-11-07","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S45","age_18ans":"2","ti":"41.18","tp":"9.57","td":"430.37","num_semaine":"24","datetime":"2020-11-14","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S45","age_18ans":"5","ti":"70.99","tp":"10.52","td":"674.55","num_semaine":"24","datetime":"2020-11-14","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S45","age_18ans":"10","ti":"210.87","tp":"15.54","td":"1356.53","num_semaine":"24","datetime":"2020-11-14","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S45","age_18ans":"14","ti":"380.78","tp":"16.67","td":"2284.86","num_semaine":"24","datetime":"2020-11-14","age_class":"Collège"},{"fra":"FR","semaine":"2020-S45","age_18ans":"17","ti":"507.77","tp":"14.96","td":"3393.3","num_semaine":"24","datetime":"2020-11-14","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S46","age_18ans":"2","ti":"25.86","tp":"7.14","td":"362.25","num_semaine":"25","datetime":"2020-11-21","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S46","age_18ans":"5","ti":"46.0","tp":"8.23","td":"559.24","num_semaine":"25","datetime":"2020-11-21","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S46","age_18ans":"10","ti":"135.66","tp":"12.86","td":"1054.71","num_semaine":"25","datetime":"2020-11-21","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S46","age_18ans":"14","ti":"240.53","tp":"10.92","td":"2202.62","num_semaine":"25","datetime":"2020-11-21","age_class":"Collège"},{"fra":"FR","semaine":"2020-S46","age_18ans":"17","ti":"297.89","tp":"10.03","td":"2969.27","num_semaine":"25","datetime":"2020-11-21","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S47","age_18ans":"2","ti":"25.26","tp":"7.25","td":"348.32","num_semaine":"26","datetime":"2020-11-28","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S47","age_18ans":"5","ti":"33.36","tp":"6.46","td":"516.3","num_semaine":"26","datetime":"2020-11-28","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S47","age_18ans":"10","ti":"96.18","tp":"10.89","td":"883.26","num_semaine":"26","datetime":"2020-11-28","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S47","age_18ans":"14","ti":"168.57","tp":"8.86","td":"1902.0","num_semaine":"26","datetime":"2020-11-28","age_class":"Collège"},{"fra":"FR","semaine":"2020-S47","age_18ans":"17","ti":"198.43","tp":"8.22","td":"2413.72","num_semaine":"26","datetime":"2020-11-28","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S48","age_18ans":"2","ti":"15.83","tp":"5.22","td":"303.56","num_semaine":"27","datetime":"2020-12-05","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S48","age_18ans":"5","ti":"18.82","tp":"4.53","td":"415.71","num_semaine":"27","datetime":"2020-12-05","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S48","age_18ans":"10","ti":"61.89","tp":"9.03","td":"685.25","num_semaine":"27","datetime":"2020-12-05","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S48","age_18ans":"14","ti":"112.94","tp":"7.98","td":"1415.05","num_semaine":"27","datetime":"2020-12-05","age_class":"Collège"},{"fra":"FR","semaine":"2020-S48","age_18ans":"17","ti":"122.03","tp":"6.7","td":"1821.04","num_semaine":"27","datetime":"2020-12-05","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S49","age_18ans":"2","ti":"19.45","tp":"6.51","td":"299.06","num_semaine":"28","datetime":"2020-12-12","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S49","age_18ans":"5","ti":"19.29","tp":"5.36","td":"359.87","num_semaine":"28","datetime":"2020-12-12","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S49","age_18ans":"10","ti":"55.19","tp":"9.62","td":"573.76","num_semaine":"28","datetime":"2020-12-12","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S49","age_18ans":"14","ti":"93.42","tp":"7.86","td":"1187.93","num_semaine":"28","datetime":"2020-12-12","age_class":"Collège"},{"fra":"FR","semaine":"2020-S49","age_18ans":"17","ti":"107.84","tp":"7.11","td":"1517.31","num_semaine":"28","datetime":"2020-12-12","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S50","age_18ans":"2","ti":"15.83","tp":"5.02","td":"315.5","num_semaine":"29","datetime":"2020-12-19","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S50","age_18ans":"5","ti":"21.36","tp":"5.2","td":"410.44","num_semaine":"29","datetime":"2020-12-19","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S50","age_18ans":"10","ti":"59.4","tp":"8.97","td":"662.08","num_semaine":"29","datetime":"2020-12-19","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S50","age_18ans":"14","ti":"101.44","tp":"7.59","td":"1336.5","num_semaine":"29","datetime":"2020-12-19","age_class":"Collège"},{"fra":"FR","semaine":"2020-S50","age_18ans":"17","ti":"122.36","tp":"6.86","td":"1782.34","num_semaine":"29","datetime":"2020-12-19","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S51","age_18ans":"2","ti":"17.88","tp":"4.0","td":"447.22","num_semaine":"30","datetime":"2020-12-26","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S51","age_18ans":"5","ti":"21.66","tp":"3.13","td":"691.85","num_semaine":"30","datetime":"2020-12-26","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S51","age_18ans":"10","ti":"67.66","tp":"4.99","td":"1355.46","num_semaine":"30","datetime":"2020-12-26","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S51","age_18ans":"14","ti":"119.23","tp":"4.64","td":"2569.89","num_semaine":"30","datetime":"2020-12-26","age_class":"Collège"},{"fra":"FR","semaine":"2020-S51","age_18ans":"17","ti":"158.92","tp":"3.57","td":"4453.48","num_semaine":"30","datetime":"2020-12-26","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S52","age_18ans":"2","ti":"13.88","tp":"3.14","td":"441.65","num_semaine":"31","datetime":"2021-01-02","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S52","age_18ans":"5","ti":"16.79","tp":"2.24","td":"747.95","num_semaine":"31","datetime":"2021-01-02","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S52","age_18ans":"10","ti":"52.11","tp":"2.89","td":"1802.36","num_semaine":"31","datetime":"2021-01-02","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S52","age_18ans":"14","ti":"88.65","tp":"2.65","td":"3347.15","num_semaine":"31","datetime":"2021-01-02","age_class":"Collège"},{"fra":"FR","semaine":"2020-S52","age_18ans":"17","ti":"116.47","tp":"2.87","td":"4060.0","num_semaine":"31","datetime":"2021-01-02","age_class":"Lycée"},{"fra":"FR","semaine":"2020-S53","age_18ans":"2","ti":"15.65","tp":"5.52","td":"283.23","num_semaine":"32","datetime":"2021-01-09","age_class":"Petite enfance"},{"fra":"FR","semaine":"2020-S53","age_18ans":"5","ti":"17.52","tp":"5.58","td":"314.21","num_semaine":"32","datetime":"2021-01-09","age_class":"Maternelle"},{"fra":"FR","semaine":"2020-S53","age_18ans":"10","ti":"62.43","tp":"8.68","td":"719.03","num_semaine":"32","datetime":"2021-01-09","age_class":"Primaire"},{"fra":"FR","semaine":"2020-S53","age_18ans":"14","ti":"104.0","tp":"7.71","td":"1348.39","num_semaine":"32","datetime":"2021-01-09","age_class":"Collège"},{"fra":"FR","semaine":"2020-S53","age_18ans":"17","ti":"137.15","tp":"5.6","td":"2447.51","num_semaine":"32","datetime":"2021-01-09","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S01","age_18ans":"2","ti":"18.43","tp":"6.76","td":"272.59","num_semaine":"33","datetime":"2021-01-09","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S01","age_18ans":"5","ti":"28.96","tp":"7.73","td":"374.67","num_semaine":"33","datetime":"2021-01-09","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S01","age_18ans":"10","ti":"94.37","tp":"11.72","td":"805.31","num_semaine":"33","datetime":"2021-01-09","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S01","age_18ans":"14","ti":"149.34","tp":"9.82","td":"1521.19","num_semaine":"33","datetime":"2021-01-09","age_class":"Collège"},{"fra":"FR","semaine":"2021-S01","age_18ans":"17","ti":"209.4","tp":"8.05","td":"2602.48","num_semaine":"33","datetime":"2021-01-09","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S02","age_18ans":"2","ti":"22.7","tp":"6.66","td":"340.71","num_semaine":"34","datetime":"2021-01-16","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S02","age_18ans":"5","ti":"38.28","tp":"6.31","td":"606.93","num_semaine":"34","datetime":"2021-01-16","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S02","age_18ans":"10","ti":"99.55","tp":"9.57","td":"1040.69","num_semaine":"34","datetime":"2021-01-16","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S02","age_18ans":"14","ti":"171.67","tp":"7.92","td":"2168.49","num_semaine":"34","datetime":"2021-01-16","age_class":"Collège"},{"fra":"FR","semaine":"2021-S02","age_18ans":"17","ti":"219.52","tp":"7.2","td":"3050.34","num_semaine":"34","datetime":"2021-01-16","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S03","age_18ans":"2","ti":"28.6","tp":"6.59","td":"433.8","num_semaine":"35","datetime":"2021-01-23","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S03","age_18ans":"5","ti":"54.68","tp":"6.08","td":"899.34","num_semaine":"35","datetime":"2021-01-23","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S03","age_18ans":"10","ti":"130.18","tp":"9.33","td":"1395.18","num_semaine":"35","datetime":"2021-01-23","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S03","age_18ans":"14","ti":"204.31","tp":"7.69","td":"2657.14","num_semaine":"35","datetime":"2021-01-23","age_class":"Collège"},{"fra":"FR","semaine":"2021-S03","age_18ans":"17","ti":"253.62","tp":"7.42","td":"3418.54","num_semaine":"35","datetime":"2021-01-23","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S04","age_18ans":"2","ti":"27.25","tp":"5.48","td":"496.95","num_semaine":"36","datetime":"2021-01-30","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S04","age_18ans":"5","ti":"54.2","tp":"5.24","td":"1034.16","num_semaine":"36","datetime":"2021-01-30","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S04","age_18ans":"10","ti":"140.91","tp":"8.81","td":"1599.75","num_semaine":"36","datetime":"2021-01-30","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S04","age_18ans":"14","ti":"213.1","tp":"6.7","td":"3182.1","num_semaine":"36","datetime":"2021-01-30","age_class":"Collège"},{"fra":"FR","semaine":"2021-S04","age_18ans":"17","ti":"250.08","tp":"6.56","td":"3809.48","num_semaine":"36","datetime":"2021-01-30","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S05","age_18ans":"2","ti":"27.02","tp":"5.2","td":"519.37","num_semaine":"37","datetime":"2021-02-06","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S05","age_18ans":"5","ti":"53.68","tp":"4.37","td":"1228.18","num_semaine":"37","datetime":"2021-02-06","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S05","age_18ans":"10","ti":"136.67","tp":"7.69","td":"1778.12","num_semaine":"37","datetime":"2021-02-06","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S05","age_18ans":"14","ti":"213.1","tp":"5.88","td":"3624.22","num_semaine":"37","datetime":"2021-02-06","age_class":"Collège"},{"fra":"FR","semaine":"2021-S05","age_18ans":"17","ti":"252.29","tp":"6.12","td":"4121.84","num_semaine":"37","datetime":"2021-02-06","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S06","age_18ans":"2","ti":"27.86","tp":"4.74","td":"587.44","num_semaine":"38","datetime":"2021-02-13","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S06","age_18ans":"5","ti":"53.68","tp":"3.72","td":"1443.26","num_semaine":"38","datetime":"2021-02-13","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S06","age_18ans":"10","ti":"134.25","tp":"6.47","td":"2074.42","num_semaine":"38","datetime":"2021-02-13","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S06","age_18ans":"14","ti":"195.22","tp":"5.29","td":"3693.53","num_semaine":"38","datetime":"2021-02-13","age_class":"Collège"},{"fra":"FR","semaine":"2021-S06","age_18ans":"17","ti":"226.49","tp":"5.54","td":"4089.71","num_semaine":"38","datetime":"2021-02-13","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S07","age_18ans":"2","ti":"30.04","tp":"5.24","td":"573.65","num_semaine":"39","datetime":"2021-02-20","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S07","age_18ans":"5","ti":"51.66","tp":"4.04","td":"1279.71","num_semaine":"39","datetime":"2021-02-20","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S07","age_18ans":"10","ti":"134.83","tp":"6.86","td":"1966.91","num_semaine":"39","datetime":"2021-02-20","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S07","age_18ans":"14","ti":"191.07","tp":"5.93","td":"3223.77","num_semaine":"39","datetime":"2021-02-20","age_class":"Collège"},{"fra":"FR","semaine":"2021-S07","age_18ans":"17","ti":"238.18","tp":"6.2","td":"3841.93","num_semaine":"39","datetime":"2021-02-20","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S08","age_18ans":"2","ti":"37.1","tp":"6.87","td":"539.94","num_semaine":"40","datetime":"2021-02-27","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S08","age_18ans":"5","ti":"52.52","tp":"5.83","td":"901.59","num_semaine":"40","datetime":"2021-02-27","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S08","age_18ans":"10","ti":"141.56","tp":"9.5","td":"1490.13","num_semaine":"40","datetime":"2021-02-27","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S08","age_18ans":"14","ti":"197.51","tp":"8.58","td":"2301.46","num_semaine":"40","datetime":"2021-02-27","age_class":"Collège"},{"fra":"FR","semaine":"2021-S08","age_18ans":"17","ti":"257.21","tp":"8.42","td":"3053.69","num_semaine":"40","datetime":"2021-02-27","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S09","age_18ans":"2","ti":"37.05","tp":"7.16","td":"517.66","num_semaine":"41","datetime":"2021-03-06","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S09","age_18ans":"5","ti":"57.35","tp":"6.21","td":"923.85","num_semaine":"41","datetime":"2021-03-06","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S09","age_18ans":"10","ti":"156.6","tp":"8.83","td":"1773.06","num_semaine":"41","datetime":"2021-03-06","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S09","age_18ans":"14","ti":"213.67","tp":"8.82","td":"2422.58","num_semaine":"41","datetime":"2021-03-06","age_class":"Collège"},{"fra":"FR","semaine":"2021-S09","age_18ans":"17","ti":"272.65","tp":"8.54","td":"3193.02","num_semaine":"41","datetime":"2021-03-06","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S10","age_18ans":"2","ti":"46.15","tp":"7.85","td":"587.67","num_semaine":"42","datetime":"2021-03-13","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S10","age_18ans":"5","ti":"86.01","tp":"4.9","td":"1754.1","num_semaine":"42","datetime":"2021-03-13","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S10","age_18ans":"10","ti":"207.7","tp":"6.05","td":"3431.99","num_semaine":"42","datetime":"2021-03-13","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S10","age_18ans":"14","ti":"282.38","tp":"7.61","td":"3711.68","num_semaine":"42","datetime":"2021-03-13","age_class":"Collège"},{"fra":"FR","semaine":"2021-S10","age_18ans":"17","ti":"352.88","tp":"8.41","td":"4197.07","num_semaine":"42","datetime":"2021-03-13","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S11","age_18ans":"2","ti":"60.68","tp":"8.19","td":"740.85","num_semaine":"43","datetime":"2021-03-20","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S11","age_18ans":"5","ti":"124.11","tp":"4.24","td":"2929.46","num_semaine":"43","datetime":"2021-03-20","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S11","age_18ans":"10","ti":"286.25","tp":"5.69","td":"5030.56","num_semaine":"43","datetime":"2021-03-20","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S11","age_18ans":"14","ti":"354.19","tp":"7.3","td":"4849.83","num_semaine":"43","datetime":"2021-03-20","age_class":"Collège"},{"fra":"FR","semaine":"2021-S11","age_18ans":"17","ti":"436.29","tp":"8.2","td":"5319.13","num_semaine":"43","datetime":"2021-03-20","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S12","age_18ans":"2","ti":"71.97","tp":"7.59","td":"948.12","num_semaine":"44","datetime":"2021-03-27","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S12","age_18ans":"5","ti":"164.59","tp":"4.04","td":"4071.72","num_semaine":"44","datetime":"2021-03-27","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S12","age_18ans":"10","ti":"363.21","tp":"5.68","td":"6389.53","num_semaine":"44","datetime":"2021-03-27","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S12","age_18ans":"14","ti":"488.62","tp":"7.73","td":"6318.47","num_semaine":"44","datetime":"2021-03-27","age_class":"Collège"},{"fra":"FR","semaine":"2021-S12","age_18ans":"17","ti":"570.74","tp":"8.45","td":"6756.13","num_semaine":"44","datetime":"2021-03-27","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S13","age_18ans":"2","ti":"75.77","tp":"6.69","td":"1133.37","num_semaine":"45","datetime":"2021-04-03","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S13","age_18ans":"5","ti":"147.03","tp":"3.25","td":"4528.86","num_semaine":"45","datetime":"2021-04-03","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S13","age_18ans":"10","ti":"364.66","tp":"4.7","td":"7763.52","num_semaine":"45","datetime":"2021-04-03","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S13","age_18ans":"14","ti":"516.37","tp":"6.39","td":"8077.3","num_semaine":"45","datetime":"2021-04-03","age_class":"Collège"},{"fra":"FR","semaine":"2021-S13","age_18ans":"17","ti":"594.25","tp":"7.36","td":"8075.09","num_semaine":"45","datetime":"2021-04-03","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S14","age_18ans":"2","ti":"65.79","tp":"8.27","td":"795.13","num_semaine":"46","datetime":"2021-04-10","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S14","age_18ans":"5","ti":"89.55","tp":"5.14","td":"1742.37","num_semaine":"46","datetime":"2021-04-10","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S14","age_18ans":"10","ti":"228.62","tp":"8.15","td":"2805.78","num_semaine":"46","datetime":"2021-04-10","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S14","age_18ans":"14","ti":"343.13","tp":"10.35","td":"3315.43","num_semaine":"46","datetime":"2021-04-10","age_class":"Collège"},{"fra":"FR","semaine":"2021-S14","age_18ans":"17","ti":"414.32","tp":"10.39","td":"3988.4","num_semaine":"46","datetime":"2021-04-10","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S15","age_18ans":"2","ti":"60.64","tp":"9.31","td":"651.14","num_semaine":"47","datetime":"2021-04-17","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S15","age_18ans":"5","ti":"80.31","tp":"8.17","td":"983.19","num_semaine":"47","datetime":"2021-04-17","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S15","age_18ans":"10","ti":"219.44","tp":"12.51","td":"1753.57","num_semaine":"47","datetime":"2021-04-17","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S15","age_18ans":"14","ti":"314.15","tp":"13.59","td":"2311.15","num_semaine":"47","datetime":"2021-04-17","age_class":"Collège"},{"fra":"FR","semaine":"2021-S15","age_18ans":"17","ti":"397.75","tp":"12.46","td":"3193.26","num_semaine":"47","datetime":"2021-04-17","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S16","age_18ans":"2","ti":"60.92","tp":"11.14","td":"546.68","num_semaine":"48","datetime":"2021-04-24","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S16","age_18ans":"5","ti":"90.19","tp":"10.35","td":"871.81","num_semaine":"48","datetime":"2021-04-24","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S16","age_18ans":"10","ti":"210.36","tp":"13.73","td":"1532.24","num_semaine":"48","datetime":"2021-04-24","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S16","age_18ans":"14","ti":"269.29","tp":"14.31","td":"1881.79","num_semaine":"48","datetime":"2021-04-24","age_class":"Collège"},{"fra":"FR","semaine":"2021-S16","age_18ans":"17","ti":"347.92","tp":"12.47","td":"2790.39","num_semaine":"48","datetime":"2021-04-24","age_class":"Lycée"},{"fra":"FR","semaine":"2021-S17","age_18ans":"2","ti":"53.86","tp":"10.12","td":"532.37","num_semaine":"49","datetime":"2021-05-01","age_class":"Petite enfance"},{"fra":"FR","semaine":"2021-S17","age_18ans":"5","ti":"96.97","tp":"3.74","td":"2595.92","num_semaine":"49","datetime":"2021-05-01","age_class":"Maternelle"},{"fra":"FR","semaine":"2021-S17","age_18ans":"10","ti":"191.76","tp":"4.01","td":"4780.39","num_semaine":"49","datetime":"2021-05-01","age_class":"Primaire"},{"fra":"FR","semaine":"2021-S17","age_18ans":"14","ti":"213.01","tp":"10.12","td":"2104.43","num_semaine":"49","datetime":"2021-05-01","age_class":"Collège"},{"fra":"FR","semaine":"2021-S17","age_18ans":"17","ti":"272.45","tp":"10.8","td":"2521.89","num_semaine":"49","datetime":"2021-05-01","age_class":"Lycée"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":140,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":1.21,"calculated_right_value":594.25,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":true,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":10,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"datetime","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('svg circle.dotPoint').attr('r', 5);\nd3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMM')});\nd3.selectAll('path.line').filter(function(d){return d[0].age_class == 'Petite enfance'}).style('stroke', '#d9d9d9');\nd3.selectAll('path.line').filter(function(d){return d[0].age_class == 'Maternelle'}).style('stroke', '#bdbdbd');\nd3.selectAll('path.line').filter(function(d){return d[0].age_class == 'Primaire'}).style('stroke', '#969696');\nd3.selectAll('path.line').filter(function(d){return d[0].age_class == 'Collège'}).style('stroke', '#636363');\nd3.selectAll('path.line').filter(function(d){return d[0].age_class == 'Lycée'}).style('stroke', '#252525');\n\nd3.selectAll('svg text.label').filter(function(d){return d.age_class == 'Petite enfance'}).style('fill', '#d9d9d9');\nd3.selectAll('svg text.label').filter(function(d){return d.age_class == 'Maternelle'}).style('fill', '#bdbdbd');\nd3.selectAll('svg text.label').filter(function(d){return d.age_class == 'Primaire'}).style('fill', '#969696');\nd3.selectAll('svg text.label').filter(function(d){return d.age_class == 'Collège'}).style('fill', '#636363');\nd3.selectAll('svg text.label').filter(function(d){return d.age_class == 'Lycée'}).style('fill', '#252525');\n\nvar xScale2 = xScaleType()\n  .domain([d3.min(dataFromFile, function(d) { return moment(d['datetime']) }),\n    d3.max(dataFromFile, function(d) { return moment(d['datetime']) }) ])\n  .range([0, width]);\nd3.select('svg g.innerGraph').selectAll('rect').remove();\nd3.select('svg g.innerGraph')\n.append('rect')\n.attr('x', xScale2(moment('2021-04-03')))\n.attr('width', (xScale2(moment('2021-05-01')) - xScale2(moment('2021-04-03')))).attr('height', height).attr('fill', '#ddd')\n.attr('opacity', 0.4)\n.style('pointer-events', 'none');"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":1,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"datetime","value":"datetime"},{"label":"age_class","value":"age_class"},{"label":"ti","value":"ti"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n[[age_class]]<br>\n<strong>Taux d'incidence : </strong>[[ti]]<br>\n<strong>Taux de positivité : </strong>[[tp]]<br>\n<strong>Taux de dépistage : </strong>[[td]]"},"moveElements":{"value":true,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"value":{"_groups":[[{"__data__":{"fra":"FR","semaine":"2021-S17","age_18ans":"17","ti":272.45,"tp":"10.8","td":"2521.89","num_semaine":"49","datetime":"2021-04-30T22:00:00.000Z","age_class":"Lycée","x_value":"2021-04-30T22:00:00.000Z","y_value":272.45,"name":"Lycée"},"__on":[{"type":"mousedown","name":"drag","capture":false}]}]],"_parents":[null]},"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{"d_57228":{"elementType":"text","elementOrder":17,"operations":{"x":"-11","y":"-0.8050483803112911"}},"d_68881":{"elementType":"text","elementOrder":18,"operations":{"x":"406","y":"296.99671855279763"}},"d_83963":{"elementType":"text","elementOrder":19,"operations":{"x":"408","y":"272.78224652923853"}},"d_85715":{"elementType":"text","elementOrder":20,"operations":{"x":"405","y":"226.73840976020193"}},"d_99543":{"elementType":"text","elementOrder":21,"operations":{"x":"405","y":"209.29541438788388"}},"d_51829":{"elementType":"text","elementOrder":22,"operations":{"x":"405","y":"179.2873369793858"}}},"thoseElementsOrder":["d_57228","d_68881","d_83963","d_85715","d_99543","d_51829"]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["datetime","age_class"],"selected_yRows":["ti"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"lineChartFromTidyData","chartTitle":"Des taux d'incidence en baisse pour tous les niveau scolaire","chartSubTitle":"Taux d'incidence par niveau scolaire","chartSource":"Santé publique France","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeLinechartFromTidyData(data_) {
+
+      var initial_data = _.cloneDeep(data_);
+      var kValue = graphParameters['selected_xRows'][0];
+      var kValue2 = graphParameters['selected_xRows'][1];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      var data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      data.forEach(function(d){
+
+        d[kValue] = (isNaN(d[kValue]) || typeof(d[kValue])  === 'object') ? d[kValue] : +d[kValue];
+        d.x_value = d[kValue]
+
+      })
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+                if (manualReusableParameters.startEndValues.manual_left_value){
+                    data = data.filter(function(d){return d.x_value >= manualReusableParameters.startEndValues.manual_left_value})
+                }
+               if (manualReusableParameters.startEndValues.manual_right_value){
+                    data = data.filter(function(d){return d.x_value <= manualReusableParameters.startEndValues.manual_right_value})
+                }
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+            if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+               
+            }
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+            data = prepareLineChartIndice100ValueForTidy(data, kValue, dValues, kValue2);
+        }
+    }
+
+    else{
+      // data = prepareLineChartData(data, kValue, dValues);
+  }
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+      //   var newScale = d3.scaleOrdinal()
+      // .domain(_.uniq(data.map(function(d){return d.kValue})))
+      // .range(_.range(1, (_.uniq(data.map(function(d){return d.kValue}))).length + 1))
+
+
+      var those_xValues = _.uniq(data.map(function(d){return d[kValue]})).filter(function(d) {return d})
+
+      // data.forEach(function(d){
+      //   d.x_value = d[kValue]
+      // })
+
+      data = _.groupBy(data, kValue2)
+      data = d3.values(data)
+
+      data.forEach(function(d){
+        d.forEach(function(e){
+        // e.x_value = those_xValues.indexOf(e.x_value)
+        e.x_value = e[kValue]
+        e.y_value = +e[dValue]
+        e.name = e[kValue2]
+
+        })
+
+        d = d.sort(function(a,b){return a.x_value - b.x_value})
+
+      })
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+        var allLines = g_inner
+        .selectAll('.line')
+        .data(data);
+
+        allLines
+        .transition()
+        .duration(200)
+        .attr('d', function(d) { return line(d) })
+        .attr('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().transition().duration(200).remove();
+
+        allLines
+        .enter()
+        .append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .attr('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('stroke-width', 2)
+        .style('fill', 'none');
+
+        AllDotPoints = g_inner
+        .selectAll('circle.dotPoint')
+        .data(_.flatten(data));
+
+        AllDotPoints
+        // .transition()
+        // .duration(200)
+        .attr('cx', function(d) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
+
+        AllDotPoints.exit().transition().duration(200).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        .on('mouseover', function(d, i){ show_tooltip(d, d.name)})
+        .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+/// Axis Label
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+  customizeAxis()
+
+  drawLegend()
+
+  colorizeOnlyOneCategory([{svg_element:'path', look_in_object:0,  property_types:['stroke'], reappend_nodes:true},
+    {svg_element:'circle', look_in_object:false,  property_types:['stroke', 'fill'], reappend_nodes:true}])
+
+  addCustomCode()
+
+}
+
+initChart();
+
+makeLinechartFromTidyData(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
