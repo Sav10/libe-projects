@@ -24,11 +24,13 @@ mapstate = 0,
 fulldata,
 daterange,
 timer_duration = 12000,
-selected_variable =  d3.select('#dose1').classed('selected') ? 'couv_dose1' : 'couv_dose2',
+selected_variable = 'taux_surmortalite',
 this_date_pretty,
 currentDate,
 maxvalues = {};
 
+
+// selected_variable =  d3.select('#dose1').classed('selected') ? 'taux_surmortalite' : 'couv_dose2',
 
 var chosenChroma = chroma.scale('OrRd');
 
@@ -37,15 +39,15 @@ var chosenChroma = chroma.scale('OrRd');
 // }
 
 var colors = {
-'couv_dose1' : d3.scaleLinear()
-  .range(["white", "#B7C4F7", "#000"])
-  .domain([0, 20, 70]),
+'taux_surmortalite' : d3.scaleLinear()
+  .range(["white", "rgb(227, 35, 74)", "rgb(109, 20, 45)", "#000"])
+  .domain([0, 15, 30, 80]),
 'couv_dose2' : d3.scaleLinear()
-  .range(["white", "#6E8AEF", "#000"])
+  .range(["white", "red", "#000"])
   .domain([0, 15, 60])
 }
 
-var data_legend = [0,3,9,12,15,18,22, 26,30];
+var data_legend = [0,3,9,12,15,18,22, 25,40];
 
 
 // <g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(246, 185, 197);"></rect><text class="label" transform="translate(22,
@@ -156,10 +158,8 @@ function showTip(d){
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
-    <li><span class='list_element'><span style="font-weight:bold">${numbers_separators(+this_d.n_cum_dose1)}</span> premières doses administrées
-    soit <span style="font-weight:bold">${String(this_d.couv_dose1).replace('.',',')}%</span> de la population</span></li>
-        <li><span class='list_element'><span style="font-weight:bold">${numbers_separators(+this_d.n_cum_dose2)}</span>
-    vaccinations complètes soit <span style="font-weight:bold">${String(this_d.couv_dose2).replace('.',',')}%</span> de la population</span></li>`
+    <li><span class='list_element'><span style="font-weight:bold">${String(this_d.taux_surmortalite).replace('.',',')}%</span> de surmortalité en 2020 et 2021
+    soit <span style="font-weight:bold">${Math.round(this_d.surmortalite)}</span> personnes</span></li>`
 
 d3.select('#tooltip')
 .html(this_html)
@@ -208,14 +208,14 @@ d3.select('#dose2')
 
 
 d3.selectAll('#button_box a')
-.style('color', '#6E8AEF')
+.style('color', 'red')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 
 d3.selectAll('#dose2')
 .style('color', '#fff')
-.style('background-color', '#6E8AEF')
+.style('background-color', 'red')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -236,16 +236,16 @@ selected_variable = 'couv_dose2';
 d3.select('#dose1')
 .on('click', function(){
 
-  // fillColor('couv_dose1')
+  // fillColor('taux_surmortalite')
 
 d3.selectAll('#button_box a')
-.style('color', '#6E8AEF')
+.style('color', 'red')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 d3.selectAll('#dose1')
 .style('color', '#fff')
-.style('background-color', '#6E8AEF')
+.style('background-color', 'red')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -255,9 +255,9 @@ d3.select('#dose1_text')
 .style('display', 'inline-block')
 
 
-fillColor('couv_dose1')
+fillColor('taux_surmortalite')
 
-selected_variable = 'couv_dose1';
+selected_variable = 'taux_surmortalite';
 
 })
 
@@ -361,10 +361,10 @@ function redraw_paths(){
 
 d3.select('#display_geo_paths')
 .style('color', '#fff')
-.style('background-color', '#6E8AEF')
+.style('background-color', 'red')
 
 d3.select('#display_proportional_circles')
-.style('color', '#6E8AEF')
+.style('color', 'red')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -394,10 +394,10 @@ function transform_all_paths_to_circle(){
 
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
-.style('background-color', '#6E8AEF')
+.style('background-color', 'red')
 
 d3.select('#display_geo_paths')
-.style('color', '#6E8AEF')
+.style('color', 'red')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -501,10 +501,11 @@ d3.select('#display_geo_paths')
 
 queue()
   .defer(d3.csv, 'data/taux_indicateurs_couleurs_departements3.csv')
-  .defer(d3.csv, 'data/data_vaccins_last.csv')
+  .defer(d3.csv, 'data/data_surmortalite.csv')
   .await(ready)
 
   function ready(error, data0, data) {
+    console.log(data)
 
     // data.forEach(d => {
     //   d.population = +d.population;
@@ -512,16 +513,17 @@ queue()
 
     data.forEach(d =>{
 
-      d.date = parseTime(d.datetime);
-      d.couv_dose1 = +d.couv_dose1;
-      d.couv_dose2 = +d.couv_dose2;
+      // d.taux_surmortalite = +d.taux_surmortalite;
+      // d.couv_dose2 = +d.couv_dose2;
       d.population = +d.population;
+      d.taux_surmortalite = +d.taux_surmortalite;
+      
 
     })
 
     app_data = data;
 
-    maxvalues['couv_dose1'] = d3.max(app_data.map(d=>d.couv_dose1));
+    maxvalues['taux_surmortalite'] = d3.max(app_data.map(d=>d.taux_surmortalite));
     maxvalues['couv_dose2'] = d3.max(app_data.map(d=>d.couv_dose2));
 
     // console.log(fulldata)
