@@ -1,0 +1,570 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Covid-19 a tué sept fois moins au royaume-Uni qu'en France ces deux derniers mois</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"datetime":"2020-03-20","France":"451","Royaume-Uni":"196","difference":"-255"},{"datetime":"2020-03-21","France":"563","Royaume-Uni":"254","difference":"-309"},{"datetime":"2020-03-22","France":"676","Royaume-Uni":"289","difference":"-387"},{"datetime":"2020-03-23","France":"862","Royaume-Uni":"365","difference":"-497"},{"datetime":"2020-03-24","France":"1102","Royaume-Uni":"513","difference":"-589"},{"datetime":"2020-03-25","France":"1333","Royaume-Uni":"704","difference":"-629"},{"datetime":"2020-03-26","France":"1697","Royaume-Uni":"886","difference":"-811"},{"datetime":"2020-03-27","France":"1996","Royaume-Uni":"1174","difference":"-822"},{"datetime":"2020-03-28","France":"2314","Royaume-Uni":"1466","difference":"-848"},{"datetime":"2020-03-29","France":"2608","Royaume-Uni":"1679","difference":"-929"},{"datetime":"2020-03-30","France":"3026","Royaume-Uni":"2053","difference":"-973"},{"datetime":"2020-03-31","France":"3526","Royaume-Uni":"2457","difference":"-1069"},{"datetime":"2020-04-01","France":"4778","Royaume-Uni":"3130","difference":"-1648"},{"datetime":"2020-04-02","France":"5387","Royaume-Uni":"3787","difference":"-1600"},{"datetime":"2020-04-03","France":"6509","Royaume-Uni":"4524","difference":"-1985"},{"datetime":"2020-04-04","France":"7562","Royaume-Uni":"5281","difference":"-2281"},{"datetime":"2020-04-05","France":"8081","Royaume-Uni":"5882","difference":"-2199"},{"datetime":"2020-04-06","France":"8914","Royaume-Uni":"6452","difference":"-2462"},{"datetime":"2020-04-07","France":"10330","Royaume-Uni":"7557","difference":"-2773"},{"datetime":"2020-04-08","France":"10874","Royaume-Uni":"8589","difference":"-2285"},{"datetime":"2020-04-09","France":"12214","Royaume-Uni":"9706","difference":"-2508"},{"datetime":"2020-04-10","France":"13199","Royaume-Uni":"10829","difference":"-2370"},{"datetime":"2020-04-11","France":"13835","Royaume-Uni":"11673","difference":"-2162"},{"datetime":"2020-04-12","France":"14396","Royaume-Uni":"12330","difference":"-2066"},{"datetime":"2020-04-13","France":"14969","Royaume-Uni":"13055","difference":"-1914"},{"datetime":"2020-04-14","France":"15712","Royaume-Uni":"14135","difference":"-1577"},{"datetime":"2020-04-15","France":"17150","Royaume-Uni":"15019","difference":"-2131"},{"datetime":"2020-04-16","France":"17903","Royaume-Uni":"16059","difference":"-1844"},{"datetime":"2020-04-17","France":"18664","Royaume-Uni":"16973","difference":"-1691"},{"datetime":"2020-04-18","France":"19305","Royaume-Uni":"18081","difference":"-1224"},{"datetime":"2020-04-19","France":"19694","Royaume-Uni":"18514","difference":"-1180"},{"datetime":"2020-04-20","France":"20241","Royaume-Uni":"19090","difference":"-1151"},{"datetime":"2020-04-21","France":"20769","Royaume-Uni":"20314","difference":"-455"},{"datetime":"2020-04-22","France":"21313","Royaume-Uni":"21171","difference":"-142"},{"datetime":"2020-04-23","France":"21829","Royaume-Uni":"21855","difference":"26"},{"datetime":"2020-04-24","France":"22219","Royaume-Uni":"22873","difference":"654"},{"datetime":"2020-04-25","France":"22588","Royaume-Uni":"23689","difference":"1101"},{"datetime":"2020-04-26","France":"22830","Royaume-Uni":"24053","difference":"1223"},{"datetime":"2020-04-27","France":"23267","Royaume-Uni":"24376","difference":"1109"},{"datetime":"2020-04-28","France":"23634","Royaume-Uni":"25347","difference":"1713"},{"datetime":"2020-04-29","France":"24060","Royaume-Uni":"26118","difference":"2058"},{"datetime":"2020-04-30","France":"24349","Royaume-Uni":"26754","difference":"2405"},{"datetime":"2020-05-01","France":"24566","Royaume-Uni":"27454","difference":"2888"},{"datetime":"2020-05-02","France":"24763","Royaume-Uni":"28039","difference":"3276"},{"datetime":"2020-05-03","France":"24898","Royaume-Uni":"28292","difference":"3394"},{"datetime":"2020-05-04","France":"25204","Royaume-Uni":"28565","difference":"3361"},{"datetime":"2020-05-05","France":"25537","Royaume-Uni":"29290","difference":"3753"},{"datetime":"2020-05-06","France":"25812","Royaume-Uni":"29937","difference":"4125"},{"datetime":"2020-05-07","France":"25991","Royaume-Uni":"30395","difference":"4404"},{"datetime":"2020-05-08","France":"26233","Royaume-Uni":"30975","difference":"4742"},{"datetime":"2020-05-09","France":"26313","Royaume-Uni":"31250","difference":"4937"},{"datetime":"2020-05-10","France":"26383","Royaume-Uni":"31467","difference":"5084"},{"datetime":"2020-05-11","France":"26646","Royaume-Uni":"31655","difference":"5009"},{"datetime":"2020-05-12","France":"26994","Royaume-Uni":"32270","difference":"5276"},{"datetime":"2020-05-13","France":"27079","Royaume-Uni":"32718","difference":"5639"},{"datetime":"2020-05-14","France":"27430","Royaume-Uni":"33071","difference":"5641"},{"datetime":"2020-05-15","France":"27532","Royaume-Uni":"33422","difference":"5890"},{"datetime":"2020-05-16","France":"27630","Royaume-Uni":"33833","difference":"6203"},{"datetime":"2020-05-17","France":"28113","Royaume-Uni":"33900","difference":"5787"},{"datetime":"2020-05-18","France":"28242","Royaume-Uni":"34046","difference":"5804"},{"datetime":"2020-05-19","France":"28025","Royaume-Uni":"34547","difference":"6522"},{"datetime":"2020-05-20","France":"28136","Royaume-Uni":"34876","difference":"6740"},{"datetime":"2020-05-21","France":"28218","Royaume-Uni":"35149","difference":"6931"},{"datetime":"2020-05-22","France":"28366","Royaume-Uni":"35440","difference":"7074"},{"datetime":"2020-05-23","France":"28452","Royaume-Uni":"35660","difference":"7208"},{"datetime":"2020-05-24","France":"28372","Royaume-Uni":"36039","difference":"7667"},{"datetime":"2020-05-25","France":"28461","Royaume-Uni":"36143","difference":"7682"},{"datetime":"2020-05-26","France":"28598","Royaume-Uni":"36274","difference":"7676"},{"datetime":"2020-05-27","France":"28599","Royaume-Uni":"36696","difference":"8097"},{"datetime":"2020-05-28","France":"28666","Royaume-Uni":"37039","difference":"8373"},{"datetime":"2020-05-29","France":"28717","Royaume-Uni":"37313","difference":"8596"},{"datetime":"2020-05-30","France":"28774","Royaume-Uni":"37467","difference":"8693"},{"datetime":"2020-05-31","France":"28805","Royaume-Uni":"37527","difference":"8722"},{"datetime":"2020-06-01","France":"28837","Royaume-Uni":"37613","difference":"8776"},{"datetime":"2020-06-02","France":"28943","Royaume-Uni":"37863","difference":"8920"},{"datetime":"2020-06-03","France":"29024","Royaume-Uni":"38117","difference":"9093"},{"datetime":"2020-06-04","France":"29069","Royaume-Uni":"38247","difference":"9178"},{"datetime":"2020-06-05","France":"29114","Royaume-Uni":"38505","difference":"9391"},{"datetime":"2020-06-06","France":"29145","Royaume-Uni":"38648","difference":"9503"},{"datetime":"2020-06-07","France":"29158","Royaume-Uni":"38702","difference":"9544"},{"datetime":"2020-06-08","France":"29213","Royaume-Uni":"38749","difference":"9536"},{"datetime":"2020-06-09","France":"29301","Royaume-Uni":"38946","difference":"9645"},{"datetime":"2020-06-10","France":"29322","Royaume-Uni":"39110","difference":"9788"},{"datetime":"2020-06-11","France":"29349","Royaume-Uni":"39186","difference":"9837"},{"datetime":"2020-06-12","France":"29377","Royaume-Uni":"39317","difference":"9940"},{"datetime":"2020-06-13","France":"29401","Royaume-Uni":"39424","difference":"10023"},{"datetime":"2020-06-14","France":"29411","Royaume-Uni":"39451","difference":"10040"},{"datetime":"2020-06-15","France":"29439","Royaume-Uni":"39480","difference":"10041"},{"datetime":"2020-06-16","France":"29553","Royaume-Uni":"39600","difference":"10047"},{"datetime":"2020-06-17","France":"29578","Royaume-Uni":"39710","difference":"10132"},{"datetime":"2020-06-18","France":"29606","Royaume-Uni":"39777","difference":"10171"},{"datetime":"2020-06-19","France":"29620","Royaume-Uni":"39861","difference":"10241"},{"datetime":"2020-06-20","France":"29638","Royaume-Uni":"39932","difference":"10294"},{"datetime":"2020-06-21","France":"29644","Royaume-Uni":"39963","difference":"10319"},{"datetime":"2020-06-22","France":"29668","Royaume-Uni":"39976","difference":"10308"},{"datetime":"2020-06-23","France":"29722","Royaume-Uni":"40070","difference":"10348"},{"datetime":"2020-06-24","France":"29735","Royaume-Uni":"40157","difference":"10422"},{"datetime":"2020-06-25","France":"29754","Royaume-Uni":"40256","difference":"10502"},{"datetime":"2020-06-26","France":"29780","Royaume-Uni":"40333","difference":"10553"},{"datetime":"2020-06-27","France":"29781","Royaume-Uni":"40373","difference":"10592"},{"datetime":"2020-06-28","France":"29781","Royaume-Uni":"40404","difference":"10623"},{"datetime":"2020-06-29","France":"29816","Royaume-Uni":"40425","difference":"10609"},{"datetime":"2020-06-30","France":"29846","Royaume-Uni":"40479","difference":"10633"},{"datetime":"2020-07-01","France":"29865","Royaume-Uni":"40576","difference":"10711"},{"datetime":"2020-07-02","France":"29878","Royaume-Uni":"40617","difference":"10739"},{"datetime":"2020-07-03","France":"29896","Royaume-Uni":"40666","difference":"10770"},{"datetime":"2020-07-04","France":"29896","Royaume-Uni":"40698","difference":"10802"},{"datetime":"2020-07-05","France":"29895","Royaume-Uni":"40717","difference":"10822"},{"datetime":"2020-07-06","France":"29925","Royaume-Uni":"40728","difference":"10803"},{"datetime":"2020-07-07","France":"29936","Royaume-Uni":"40782","difference":"10846"},{"datetime":"2020-07-08","France":"29967","Royaume-Uni":"40839","difference":"10872"},{"datetime":"2020-07-09","France":"29983","Royaume-Uni":"40870","difference":"10887"},{"datetime":"2020-07-10","France":"30009","Royaume-Uni":"40904","difference":"10895"},{"datetime":"2020-07-11","France":"30012","Royaume-Uni":"40921","difference":"10909"},{"datetime":"2020-07-12","France":"30012","Royaume-Uni":"40930","difference":"10918"},{"datetime":"2020-07-13","France":"30035","Royaume-Uni":"40940","difference":"10905"},{"datetime":"2020-07-14","France":"30037","Royaume-Uni":"40984","difference":"10947"},{"datetime":"2020-07-15","France":"30125","Royaume-Uni":"41010","difference":"10885"},{"datetime":"2020-07-16","France":"30142","Royaume-Uni":"41034","difference":"10892"},{"datetime":"2020-07-17","France":"30155","Royaume-Uni":"41060","difference":"10905"},{"datetime":"2020-07-18","France":"30158","Royaume-Uni":"41069","difference":"10911"},{"datetime":"2020-07-19","France":"30158","Royaume-Uni":"41080","difference":"10922"},{"datetime":"2020-07-20","France":"30182","Royaume-Uni":"41090","difference":"10908"},{"datetime":"2020-07-21","France":"30169","Royaume-Uni":"41115","difference":"10946"},{"datetime":"2020-07-22","France":"30175","Royaume-Uni":"41132","difference":"10957"},{"datetime":"2020-07-23","France":"30186","Royaume-Uni":"41141","difference":"10955"},{"datetime":"2020-07-24","France":"30196","Royaume-Uni":"41173","difference":"10977"},{"datetime":"2020-07-25","France":"30196","Royaume-Uni":"41188","difference":"10992"},{"datetime":"2020-07-26","France":"30196","Royaume-Uni":"41196","difference":"11000"},{"datetime":"2020-07-27","France":"30214","Royaume-Uni":"41199","difference":"10985"},{"datetime":"2020-07-28","France":"30227","Royaume-Uni":"41220","difference":"10993"},{"datetime":"2020-07-29","France":"30241","Royaume-Uni":"41254","difference":"11013"},{"datetime":"2020-07-30","France":"30257","Royaume-Uni":"41254","difference":"10997"},{"datetime":"2020-07-31","France":"30268","Royaume-Uni":"41274","difference":"11006"},{"datetime":"2020-08-01","France":"30268","Royaume-Uni":"41287","difference":"11019"},{"datetime":"2020-08-02","France":"30268","Royaume-Uni":"41292","difference":"11024"},{"datetime":"2020-08-03","France":"30298","Royaume-Uni":"41293","difference":"10995"},{"datetime":"2020-08-04","France":"30300","Royaume-Uni":"41311","difference":"11011"},{"datetime":"2020-08-05","France":"30311","Royaume-Uni":"41325","difference":"11014"},{"datetime":"2020-08-06","France":"30315","Royaume-Uni":"41343","difference":"11028"},{"datetime":"2020-08-07","France":"30328","Royaume-Uni":"41355","difference":"11027"},{"datetime":"2020-08-08","France":"30329","Royaume-Uni":"41358","difference":"11029"},{"datetime":"2020-08-09","France":"30329","Royaume-Uni":"41363","difference":"11034"},{"datetime":"2020-08-10","France":"30344","Royaume-Uni":"41381","difference":"11037"},{"datetime":"2020-08-11","France":"30358","Royaume-Uni":"41394","difference":"11036"},{"datetime":"2020-08-12","France":"30376","Royaume-Uni":"41414","difference":"11038"},{"datetime":"2020-08-13","France":"30393","Royaume-Uni":"41432","difference":"11039"},{"datetime":"2020-08-14","France":"30412","Royaume-Uni":"41443","difference":"11031"},{"datetime":"2020-08-15","France":"30413","Royaume-Uni":"41446","difference":"11033"},{"datetime":"2020-08-16","France":"30414","Royaume-Uni":"41451","difference":"11037"},{"datetime":"2020-08-17","France":"30434","Royaume-Uni":"41454","difference":"11020"},{"datetime":"2020-08-18","France":"30456","Royaume-Uni":"41466","difference":"11010"},{"datetime":"2020-08-19","France":"30474","Royaume-Uni":"41483","difference":"11009"},{"datetime":"2020-08-20","France":"30485","Royaume-Uni":"41489","difference":"11004"},{"datetime":"2020-08-21","France":"30509","Royaume-Uni":"41491","difference":"10982"},{"datetime":"2020-08-22","France":"30518","Royaume-Uni":"41509","difference":"10991"},{"datetime":"2020-08-23","France":"30518","Royaume-Uni":"41515","difference":"10997"},{"datetime":"2020-08-24","France":"30534","Royaume-Uni":"41519","difference":"10985"},{"datetime":"2020-08-25","France":"30553","Royaume-Uni":"41535","difference":"10982"},{"datetime":"2020-08-26","France":"30553","Royaume-Uni":"41552","difference":"10999"},{"datetime":"2020-08-27","France":"30588","Royaume-Uni":"41564","difference":"10976"},{"datetime":"2020-08-28","France":"30606","Royaume-Uni":"41573","difference":"10967"},{"datetime":"2020-08-29","France":"30612","Royaume-Uni":"41585","difference":"10973"},{"datetime":"2020-08-30","France":"30615","Royaume-Uni":"41586","difference":"10971"},{"datetime":"2020-08-31","France":"30646","Royaume-Uni":"41589","difference":"10943"},{"datetime":"2020-09-01","France":"30673","Royaume-Uni":"41592","difference":"10919"},{"datetime":"2020-09-02","France":"30700","Royaume-Uni":"41602","difference":"10902"},{"datetime":"2020-09-03","France":"30717","Royaume-Uni":"41616","difference":"10899"},{"datetime":"2020-09-04","France":"30696","Royaume-Uni":"41626","difference":"10930"},{"datetime":"2020-09-05","France":"30708","Royaume-Uni":"41638","difference":"10930"},{"datetime":"2020-09-06","France":"30712","Royaume-Uni":"41640","difference":"10928"},{"datetime":"2020-09-07","France":"30735","Royaume-Uni":"41643","difference":"10908"},{"datetime":"2020-09-08","France":"30773","Royaume-Uni":"41675","difference":"10902"},{"datetime":"2020-09-09","France":"30805","Royaume-Uni":"41683","difference":"10878"},{"datetime":"2020-09-10","France":"30824","Royaume-Uni":"41697","difference":"10873"},{"datetime":"2020-09-11","France":"30906","Royaume-Uni":"41703","difference":"10797"},{"datetime":"2020-09-12","France":"30924","Royaume-Uni":"41712","difference":"10788"},{"datetime":"2020-09-13","France":"30929","Royaume-Uni":"41717","difference":"10788"},{"datetime":"2020-09-14","France":"30963","Royaume-Uni":"41726","difference":"10763"},{"datetime":"2020-09-15","France":"31013","Royaume-Uni":"41753","difference":"10740"},{"datetime":"2020-09-16","France":"31061","Royaume-Uni":"41773","difference":"10712"},{"datetime":"2020-09-17","France":"31108","Royaume-Uni":"41794","difference":"10686"},{"datetime":"2020-09-18","France":"31262","Royaume-Uni":"41821","difference":"10559"},{"datetime":"2020-09-19","France":"31287","Royaume-Uni":"41848","difference":"10561"},{"datetime":"2020-09-20","France":"31298","Royaume-Uni":"41866","difference":"10568"},{"datetime":"2020-09-21","France":"31351","Royaume-Uni":"41877","difference":"10526"},{"datetime":"2020-09-22","France":"31430","Royaume-Uni":"41914","difference":"10484"},{"datetime":"2020-09-23","France":"31478","Royaume-Uni":"41951","difference":"10473"},{"datetime":"2020-09-24","France":"31524","Royaume-Uni":"41991","difference":"10467"},{"datetime":"2020-09-25","France":"31675","Royaume-Uni":"42025","difference":"10350"},{"datetime":"2020-09-26","France":"31714","Royaume-Uni":"42060","difference":"10346"},{"datetime":"2020-09-27","France":"31741","Royaume-Uni":"42077","difference":"10336"},{"datetime":"2020-09-28","France":"31825","Royaume-Uni":"42090","difference":"10265"},{"datetime":"2020-09-29","France":"31898","Royaume-Uni":"42162","difference":"10264"},{"datetime":"2020-09-30","France":"31978","Royaume-Uni":"42233","difference":"10255"},{"datetime":"2020-10-01","France":"32035","Royaume-Uni":"42292","difference":"10257"},{"datetime":"2020-10-02","France":"32171","Royaume-Uni":"42358","difference":"10187"},{"datetime":"2020-10-03","France":"32196","Royaume-Uni":"42407","difference":"10211"},{"datetime":"2020-10-04","France":"32228","Royaume-Uni":"42440","difference":"10212"},{"datetime":"2020-10-05","France":"32299","Royaume-Uni":"42459","difference":"10160"},{"datetime":"2020-10-06","France":"32386","Royaume-Uni":"42535","difference":"10149"},{"datetime":"2020-10-07","France":"32466","Royaume-Uni":"42605","difference":"10139"},{"datetime":"2020-10-08","France":"32539","Royaume-Uni":"42682","difference":"10143"},{"datetime":"2020-10-09","France":"32649","Royaume-Uni":"42769","difference":"10120"},{"datetime":"2020-10-10","France":"32684","Royaume-Uni":"42850","difference":"10166"},{"datetime":"2020-10-11","France":"32730","Royaume-Uni":"42915","difference":"10185"},{"datetime":"2020-10-12","France":"32827","Royaume-Uni":"42965","difference":"10138"},{"datetime":"2020-10-13","France":"32955","Royaume-Uni":"43108","difference":"10153"},{"datetime":"2020-10-14","France":"33061","Royaume-Uni":"43245","difference":"10184"},{"datetime":"2020-10-15","France":"33146","Royaume-Uni":"43383","difference":"10237"},{"datetime":"2020-10-16","France":"33325","Royaume-Uni":"43519","difference":"10194"},{"datetime":"2020-10-17","France":"33398","Royaume-Uni":"43669","difference":"10271"},{"datetime":"2020-10-18","France":"33483","Royaume-Uni":"43736","difference":"10253"},{"datetime":"2020-10-19","France":"33631","Royaume-Uni":"43816","difference":"10185"},{"datetime":"2020-10-20","France":"33912","Royaume-Uni":"44057","difference":"10145"},{"datetime":"2020-10-21","France":"34080","Royaume-Uni":"44248","difference":"10168"},{"datetime":"2020-10-22","France":"34234","Royaume-Uni":"44437","difference":"10203"},{"datetime":"2020-10-23","France":"34534","Royaume-Uni":"44661","difference":"10127"},{"datetime":"2020-10-24","France":"34670","Royaume-Uni":"44835","difference":"10165"},{"datetime":"2020-10-25","France":"34649","Royaume-Uni":"44986","difference":"10337"},{"datetime":"2020-10-26","France":"35038","Royaume-Uni":"45088","difference":"10050"},{"datetime":"2020-10-27","France":"35567","Royaume-Uni":"45455","difference":"9888"},{"datetime":"2020-10-28","France":"35826","Royaume-Uni":"45765","difference":"9939"},{"datetime":"2020-10-29","France":"36058","Royaume-Uni":"46045","difference":"9987"},{"datetime":"2020-10-30","France":"36605","Royaume-Uni":"46319","difference":"9714"},{"datetime":"2020-10-31","France":"36827","Royaume-Uni":"46645","difference":"9818"},{"datetime":"2020-11-01","France":"37058","Royaume-Uni":"46807","difference":"9749"},{"datetime":"2020-11-02","France":"37486","Royaume-Uni":"46943","difference":"9457"},{"datetime":"2020-11-03","France":"38765","Royaume-Uni":"47340","difference":"8575"},{"datetime":"2020-11-04","France":"38734","Royaume-Uni":"47832","difference":"9098"},{"datetime":"2020-11-05","France":"39088","Royaume-Uni":"48210","difference":"9122"},{"datetime":"2020-11-06","France":"39917","Royaume-Uni":"48565","difference":"8648"},{"datetime":"2020-11-07","France":"40220","Royaume-Uni":"48978","difference":"8758"},{"datetime":"2020-11-08","France":"40490","Royaume-Uni":"49134","difference":"8644"},{"datetime":"2020-11-09","France":"41050","Royaume-Uni":"49329","difference":"8279"},{"datetime":"2020-11-10","France":"42281","Royaume-Uni":"49861","difference":"7580"},{"datetime":"2020-11-11","France":"42609","Royaume-Uni":"50457","difference":"7848"},{"datetime":"2020-11-12","France":"43024","Royaume-Uni":"51020","difference":"7996"},{"datetime":"2020-11-13","France":"43957","Royaume-Uni":"51396","difference":"7439"},{"datetime":"2020-11-14","France":"44310","Royaume-Uni":"51858","difference":"7548"},{"datetime":"2020-11-15","France":"44613","Royaume-Uni":"52026","difference":"7413"},{"datetime":"2020-11-16","France":"45124","Royaume-Uni":"52240","difference":"7116"},{"datetime":"2020-11-17","France":"46350","Royaume-Uni":"52839","difference":"6489"},{"datetime":"2020-11-18","France":"46781","Royaume-Uni":"53368","difference":"6587"},{"datetime":"2020-11-19","France":"47198","Royaume-Uni":"53870","difference":"6672"},{"datetime":"2020-11-20","France":"48339","Royaume-Uni":"54381","difference":"6042"},{"datetime":"2020-11-21","France":"48591","Royaume-Uni":"54721","difference":"6130"},{"datetime":"2020-11-22","France":"48805","Royaume-Uni":"55120","difference":"6315"},{"datetime":"2020-11-23","France":"49311","Royaume-Uni":"55327","difference":"6016"},{"datetime":"2020-11-24","France":"50322","Royaume-Uni":"55935","difference":"5613"},{"datetime":"2020-11-25","France":"50710","Royaume-Uni":"56630","difference":"5920"},{"datetime":"2020-11-26","France":"51041","Royaume-Uni":"57128","difference":"6087"},{"datetime":"2020-11-27","France":"52000","Royaume-Uni":"57648","difference":"5648"},{"datetime":"2020-11-28","France":"52212","Royaume-Uni":"58127","difference":"5915"},{"datetime":"2020-11-29","France":"52410","Royaume-Uni":"58342","difference":"5932"},{"datetime":"2020-11-30","France":"52819","Royaume-Uni":"58545","difference":"5726"},{"datetime":"2020-12-01","France":"53596","Royaume-Uni":"59148","difference":"5552"},{"datetime":"2020-12-02","France":"53907","Royaume-Uni":"59796","difference":"5889"},{"datetime":"2020-12-03","France":"54231","Royaume-Uni":"60210","difference":"5979"},{"datetime":"2020-12-04","France":"54861","Royaume-Uni":"60714","difference":"5853"},{"datetime":"2020-12-05","France":"55073","Royaume-Uni":"61111","difference":"6038"},{"datetime":"2020-12-06","France":"55247","Royaume-Uni":"61342","difference":"6095"},{"datetime":"2020-12-07","France":"55613","Royaume-Uni":"61531","difference":"5918"},{"datetime":"2020-12-08","France":"56451","Royaume-Uni":"62130","difference":"5679"},{"datetime":"2020-12-09","France":"56748","Royaume-Uni":"62663","difference":"5915"},{"datetime":"2020-12-10","France":"57044","Royaume-Uni":"63179","difference":"6135"},{"datetime":"2020-12-11","France":"57672","Royaume-Uni":"63603","difference":"5931"},{"datetime":"2020-12-12","France":"57865","Royaume-Uni":"64123","difference":"6258"},{"datetime":"2020-12-13","France":"58015","Royaume-Uni":"64267","difference":"6252"},{"datetime":"2020-12-14","France":"58391","Royaume-Uni":"64500","difference":"6109"},{"datetime":"2020-12-15","France":"59182","Royaume-Uni":"65006","difference":"5824"},{"datetime":"2020-12-16","France":"59472","Royaume-Uni":"65618","difference":"6146"},{"datetime":"2020-12-17","France":"59733","Royaume-Uni":"66150","difference":"6417"},{"datetime":"2020-12-18","France":"60345","Royaume-Uni":"66640","difference":"6295"},{"datetime":"2020-12-19","France":"60534","Royaume-Uni":"67177","difference":"6643"},{"datetime":"2020-12-20","France":"60665","Royaume-Uni":"67503","difference":"6838"},{"datetime":"2020-12-21","France":"61019","Royaume-Uni":"67718","difference":"6699"},{"datetime":"2020-12-22","France":"61821","Royaume-Uni":"68409","difference":"6588"},{"datetime":"2020-12-23","France":"62098","Royaume-Uni":"69157","difference":"7059"},{"datetime":"2020-12-24","France":"62389","Royaume-Uni":"69732","difference":"7343"},{"datetime":"2020-12-25","France":"62548","Royaume-Uni":"70302","difference":"7754"},{"datetime":"2020-12-26","France":"62694","Royaume-Uni":"70513","difference":"7819"},{"datetime":"2020-12-27","France":"62867","Royaume-Uni":"70860","difference":"7993"},{"datetime":"2020-12-28","France":"63235","Royaume-Uni":"71217","difference":"7982"},{"datetime":"2020-12-29","France":"64204","Royaume-Uni":"71675","difference":"7471"},{"datetime":"2020-12-30","France":"64508","Royaume-Uni":"72657","difference":"8149"},{"datetime":"2020-12-31","France":"64759","Royaume-Uni":"73622","difference":"8863"},{"datetime":"2021-01-01","France":"64892","Royaume-Uni":"74237","difference":"9345"},{"datetime":"2021-01-02","France":"65048","Royaume-Uni":"74682","difference":"9634"},{"datetime":"2021-01-03","France":"65164","Royaume-Uni":"75137","difference":"9973"},{"datetime":"2021-01-04","France":"65549","Royaume-Uni":"75547","difference":"9998"},{"datetime":"2021-01-05","France":"66417","Royaume-Uni":"76428","difference":"10011"},{"datetime":"2021-01-06","France":"66699","Royaume-Uni":"77470","difference":"10771"},{"datetime":"2021-01-07","France":"66975","Royaume-Uni":"78632","difference":"11657"},{"datetime":"2021-01-08","France":"67566","Royaume-Uni":"79965","difference":"12399"},{"datetime":"2021-01-09","France":"67734","Royaume-Uni":"81000","difference":"13266"},{"datetime":"2021-01-10","France":"67885","Royaume-Uni":"81567","difference":"13682"},{"datetime":"2021-01-11","France":"68197","Royaume-Uni":"82096","difference":"13899"},{"datetime":"2021-01-12","France":"68939","Royaume-Uni":"83342","difference":"14403"},{"datetime":"2021-01-13","France":"69168","Royaume-Uni":"84910","difference":"15742"},{"datetime":"2021-01-14","France":"69452","Royaume-Uni":"86163","difference":"16711"},{"datetime":"2021-01-15","France":"70088","Royaume-Uni":"87448","difference":"17360"},{"datetime":"2021-01-16","France":"70281","Royaume-Uni":"88747","difference":"18466"},{"datetime":"2021-01-17","France":"70422","Royaume-Uni":"89429","difference":"19007"},{"datetime":"2021-01-18","France":"70826","Royaume-Uni":"90031","difference":"19205"},{"datetime":"2021-01-19","France":"71482","Royaume-Uni":"91643","difference":"20161"},{"datetime":"2021-01-20","France":"71792","Royaume-Uni":"93469","difference":"21677"},{"datetime":"2021-01-21","France":"72139","Royaume-Uni":"94765","difference":"22626"},{"datetime":"2021-01-22","France":"72788","Royaume-Uni":"96166","difference":"23378"},{"datetime":"2021-01-23","France":"73018","Royaume-Uni":"97518","difference":"24500"},{"datetime":"2021-01-24","France":"73190","Royaume-Uni":"98129","difference":"24939"},{"datetime":"2021-01-25","France":"73636","Royaume-Uni":"98723","difference":"25087"},{"datetime":"2021-01-26","France":"74250","Royaume-Uni":"100359","difference":"26109"},{"datetime":"2021-01-27","France":"74600","Royaume-Uni":"102085","difference":"27485"},{"datetime":"2021-01-28","France":"74944","Royaume-Uni":"103324","difference":"28380"},{"datetime":"2021-01-29","France":"75765","Royaume-Uni":"104572","difference":"28807"},{"datetime":"2021-01-30","France":"76006","Royaume-Uni":"105777","difference":"29771"},{"datetime":"2021-01-31","France":"76201","Royaume-Uni":"106367","difference":"30166"},{"datetime":"2021-02-01","France":"76657","Royaume-Uni":"106774","difference":"30117"},{"datetime":"2021-02-02","France":"77383","Royaume-Uni":"108225","difference":"30842"},{"datetime":"2021-02-03","France":"77741","Royaume-Uni":"109547","difference":"31806"},{"datetime":"2021-02-04","France":"77741","Royaume-Uni":"110462","difference":"32721"},{"datetime":"2021-02-05","France":"78749","Royaume-Uni":"111477","difference":"32728"},{"datetime":"2021-02-06","France":"78940","Royaume-Uni":"112305","difference":"33365"},{"datetime":"2021-02-07","France":"79111","Royaume-Uni":"112681","difference":"33570"},{"datetime":"2021-02-08","France":"79571","Royaume-Uni":"113014","difference":"33443"},{"datetime":"2021-02-09","France":"80295","Royaume-Uni":"114066","difference":"33771"},{"datetime":"2021-02-10","France":"80591","Royaume-Uni":"115068","difference":"34477"},{"datetime":"2021-02-11","France":"80951","Royaume-Uni":"115748","difference":"34797"},{"datetime":"2021-02-12","France":"81596","Royaume-Uni":"116507","difference":"34911"},{"datetime":"2021-02-13","France":"81795","Royaume-Uni":"117128","difference":"35333"},{"datetime":"2021-02-14","France":"81962","Royaume-Uni":"117387","difference":"35425"},{"datetime":"2021-02-15","France":"82374","Royaume-Uni":"117622","difference":"35248"},{"datetime":"2021-02-16","France":"82961","Royaume-Uni":"118421","difference":"35460"},{"datetime":"2021-02-17","France":"83271","Royaume-Uni":"119159","difference":"35888"},{"datetime":"2021-02-18","France":"83542","Royaume-Uni":"119614","difference":"36072"},{"datetime":"2021-02-19","France":"84114","Royaume-Uni":"120147","difference":"36033"},{"datetime":"2021-02-20","France":"84271","Royaume-Uni":"120593","difference":"36322"},{"datetime":"2021-02-21","France":"84430","Royaume-Uni":"120810","difference":"36380"},{"datetime":"2021-02-22","France":"84764","Royaume-Uni":"120988","difference":"36224"},{"datetime":"2021-02-23","France":"85195","Royaume-Uni":"121536","difference":"36341"},{"datetime":"2021-02-24","France":"85473","Royaume-Uni":"121979","difference":"36506"},{"datetime":"2021-02-25","France":"85734","Royaume-Uni":"122303","difference":"36569"},{"datetime":"2021-02-26","France":"86273","Royaume-Uni":"122648","difference":"36375"},{"datetime":"2021-02-27","France":"86458","Royaume-Uni":"122939","difference":"36481"},{"datetime":"2021-02-28","France":"86580","Royaume-Uni":"123083","difference":"36503"},{"datetime":"2021-03-01","France":"86955","Royaume-Uni":"123187","difference":"36232"},{"datetime":"2021-03-02","France":"87373","Royaume-Uni":"123530","difference":"36157"},{"datetime":"2021-03-03","France":"87695","Royaume-Uni":"124017","difference":"36322"},{"datetime":"2021-03-04","France":"87988","Royaume-Uni":"124259","difference":"36271"},{"datetime":"2021-03-05","France":"88427","Royaume-Uni":"124495","difference":"36068"},{"datetime":"2021-03-06","France":"88597","Royaume-Uni":"124654","difference":"36057"},{"datetime":"2021-03-07","France":"88727","Royaume-Uni":"124736","difference":"36009"},{"datetime":"2021-03-08","France":"89090","Royaume-Uni":"124801","difference":"35711"},{"datetime":"2021-03-09","France":"89455","Royaume-Uni":"125032","difference":"35577"},{"datetime":"2021-03-10","France":"89707","Royaume-Uni":"125222","difference":"35515"},{"datetime":"2021-03-11","France":"89984","Royaume-Uni":"125403","difference":"35419"},{"datetime":"2021-03-12","France":"90207","Royaume-Uni":"125579","difference":"35372"},{"datetime":"2021-03-13","France":"90376","Royaume-Uni":"125701","difference":"35325"},{"datetime":"2021-03-14","France":"90583","Royaume-Uni":"125753","difference":"35170"},{"datetime":"2021-03-15","France":"90924","Royaume-Uni":"125817","difference":"34893"},{"datetime":"2021-03-16","France":"91324","Royaume-Uni":"125927","difference":"34603"},{"datetime":"2021-03-17","France":"91411","Royaume-Uni":"126068","difference":"34657"},{"datetime":"2021-03-18","France":"91833","Royaume-Uni":"126163","difference":"34330"},{"datetime":"2021-03-19","France":"92118","Royaume-Uni":"126263","difference":"34145"},{"datetime":"2021-03-20","France":"92295","Royaume-Uni":"126359","difference":"34064"},{"datetime":"2021-03-21","France":"92433","Royaume-Uni":"126393","difference":"33960"},{"datetime":"2021-03-22","France":"92776","Royaume-Uni":"126411","difference":"33635"},{"datetime":"2021-03-23","France":"93064","Royaume-Uni":"126523","difference":"33459"},{"datetime":"2021-03-24","France":"93310","Royaume-Uni":"126621","difference":"33311"},{"datetime":"2021-03-25","France":"93535","Royaume-Uni":"126684","difference":"33149"},{"datetime":"2021-03-26","France":"94432","Royaume-Uni":"126755","difference":"32323"},{"datetime":"2021-03-27","France":"94623","Royaume-Uni":"126813","difference":"32190"},{"datetime":"2021-03-28","France":"94754","Royaume-Uni":"126834","difference":"32080"},{"datetime":"2021-03-29","France":"95114","Royaume-Uni":"126857","difference":"31743"},{"datetime":"2021-03-30","France":"95495","Royaume-Uni":"126912","difference":"31417"},{"datetime":"2021-03-31","France":"95798","Royaume-Uni":"126955","difference":"31157"},{"datetime":"2021-04-01","France":"96106","Royaume-Uni":"127006","difference":"30900"},{"datetime":"2021-04-02","France":"96438","Royaume-Uni":"127058","difference":"30620"},{"datetime":"2021-04-03","France":"96439","Royaume-Uni":"127068","difference":"30629"},{"datetime":"2021-04-04","France":"96808","Royaume-Uni":"127078","difference":"30270"},{"datetime":"2021-04-05","France":"97005","Royaume-Uni":"127106","difference":"30101"},{"datetime":"2021-04-06","France":"97431","Royaume-Uni":"127126","difference":"29695"},{"datetime":"2021-04-07","France":"97444","Royaume-Uni":"127171","difference":"29727"},{"datetime":"2021-04-08","France":"98196","Royaume-Uni":"127224","difference":"29028"},{"datetime":"2021-04-09","France":"98202","Royaume-Uni":"127284","difference":"29082"},{"datetime":"2021-04-10","France":"98213","Royaume-Uni":"127324","difference":"29111"},{"datetime":"2021-04-11","France":"98909","Royaume-Uni":"127331","difference":"28422"},{"datetime":"2021-04-12","France":"99294","Royaume-Uni":"127346","difference":"28052"},{"datetime":"2021-04-13","France":"99639","Royaume-Uni":"127369","difference":"27730"},{"datetime":"2021-04-14","France":"99936","Royaume-Uni":"127407","difference":"27471"},{"datetime":"2021-04-15","France":"100232","Royaume-Uni":"127438","difference":"27206"},{"datetime":"2021-04-16","France":"100563","Royaume-Uni":"127472","difference":"26909"},{"datetime":"2021-04-17","France":"100752","Royaume-Uni":"127508","difference":"26756"},{"datetime":"2021-04-18","France":"100892","Royaume-Uni":"127518","difference":"26626"},{"datetime":"2021-04-19","France":"101339","Royaume-Uni":"127524","difference":"26185"},{"datetime":"2021-04-20","France":"101713","Royaume-Uni":"127557","difference":"25844"},{"datetime":"2021-04-21","France":"102046","Royaume-Uni":"127577","difference":"25531"},{"datetime":"2021-04-22","France":"102323","Royaume-Uni":"127597","difference":"25274"},{"datetime":"2021-04-23","France":"102655","Royaume-Uni":"127638","difference":"24983"},{"datetime":"2021-04-24","France":"102872","Royaume-Uni":"127670","difference":"24798"},{"datetime":"2021-04-25","France":"103017","Royaume-Uni":"127681","difference":"24664"},{"datetime":"2021-04-26","France":"103415","Royaume-Uni":"127688","difference":"24273"},{"datetime":"2021-04-27","France":"103762","Royaume-Uni":"127705","difference":"23943"},{"datetime":"2021-04-28","France":"104077","Royaume-Uni":"127734","difference":"23657"},{"datetime":"2021-04-29","France":"104385","Royaume-Uni":"127759","difference":"23374"},{"datetime":"2021-04-30","France":"104675","Royaume-Uni":"127775","difference":"23100"},{"datetime":"2021-05-01","France":"104867","Royaume-Uni":"127782","difference":"22915"},{"datetime":"2021-05-02","France":"104980","Royaume-Uni":"127796","difference":"22816"},{"datetime":"2021-05-03","France":"105291","Royaume-Uni":"127797","difference":"22506"},{"datetime":"2021-05-04","France":"105548","Royaume-Uni":"127803","difference":"22255"},{"datetime":"2021-05-05","France":"105792","Royaume-Uni":"127830","difference":"22038"},{"datetime":"2021-05-06","France":"106011","Royaume-Uni":"127843","difference":"21832"},{"datetime":"2021-05-07","France":"106262","Royaume-Uni":"127858","difference":"21596"},{"datetime":"2021-05-08","France":"106438","Royaume-Uni":"127863","difference":"21425"},{"datetime":"2021-05-09","France":"106553","Royaume-Uni":"127865","difference":"21312"},{"datetime":"2021-05-10","France":"106845","Royaume-Uni":"127870","difference":"21025"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":30,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":100,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":196,"calculated_right_value":127870,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":true,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":15,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"datetime","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMM')});\nd3.selectAll('svg path.line').style('stroke-width', 3);"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"datetime","value":"datetime"},{"label":"France","value":"France"},{"label":"Royaume-Uni","value":"Royaume-Uni"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n[[France|number_separator]] <strong>morts cumulés en France</strong><br>\n [[Royaume-Uni|number_separator]] <strong>morts cumulés au Royaume-Uni</strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["datetime"],"selected_yRows":["France","Royaume-Uni"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{"France":"#e61e49","United Kingdom":"#7c7c7c","Royaume-Uni":"#7c7c7c"},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"lineChart","chartTitle":"Le Covid-19 a tué sept fois moins au royaume-Uni qu'en France ces deux derniers mois","chartSubTitle":"Nombre de morts cumulés en France et au Royaume-Uni","chartSource":"Santé publique France","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeLinechart(data_) {
+
+    var data = _.cloneDeep(data_);
+      var initial_data = _.cloneDeep(data);
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+
+        var allLines = g_inner
+        .selectAll('.line')
+        .data(data);
+
+        allLines
+        .transition()
+        .duration(200)
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().transition().duration(200).remove();
+
+        allLines
+        .enter()
+        .append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('stroke-width', 2)
+        .style('fill', 'none');
+
+        AllDotPoints = g_inner
+        .selectAll('circle.dotPoint')
+        .data(_.flatten(data));
+
+        AllDotPoints
+        // .transition()
+        // .duration(200)
+        .attr('cx', function(d) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
+
+        AllDotPoints.exit().transition().duration(200).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        // .on('mouseover', function(d, i){
+        //     var thoseVars = [];
+        //     if (moment.isMoment(d.x_value)){ thoseVars.push({'name': 'date', 'value':d.x_value.locale('fr').format('DD MMMM YYYY')})};
+        //     if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':d.y_value})};
+        //     show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name, thoseVars)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+    // cells.exit().remove();
+
+
+/// Axis Label
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+
+  customizeAxis()
+
+  drawLegend()
+  addCustomCode()
+
+}
+
+initChart();
+
+makeLinechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
