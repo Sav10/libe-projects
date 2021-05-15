@@ -10506,7 +10506,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-07,CZE,Europe,Czechia,3607734,33.69,23.94,9.89,République tchèque
 2021-05-07,HKG,Asia,Hong Kong,1662424,22.17,13.85,8.32,Hong Kong
 2021-05-07,BWA,Africa,Botswana,53375,2.27,2.27,,Botswana
-2021-05-08,OWID_AFR,,Africa,20417611,1.52,1.06,0.39,
+2021-05-08,OWID_AFR,,Africa,20421072,1.52,1.06,0.39,
 2021-05-08,ARE,Asia,United Arab Emirates,11126889,112.5,112.5,,Émirats Arabes Unis
 2021-05-08,MEX,North America,Mexico,21228359,16.46,10.97,7.32,Mexique
 2021-05-08,MNG,Asia,Mongolia,2154623,65.72,46.88,18.85,Mongolie
@@ -10548,7 +10548,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-08,MKD,Europe,North Macedonia,97004,4.66,4.66,,Macédoine
 2021-05-08,DNK,Europe,Denmark,2339520,40.39,25.71,14.68,Danemark
 2021-05-08,OWID_OCE,,Oceania,3223983,7.55,1.38,0.39,
-2021-05-08,OWID_UMC,,Upper middle income,494460886,18.63,4.36,2.39,
+2021-05-08,OWID_UMC,,Upper middle income,494464347,18.63,4.36,2.39,
 2021-05-08,CZE,Europe,Czechia,3638483,33.98,24.21,9.9,République tchèque
 2021-05-08,BHR,Asia,Bahrain,1357817,79.8,46.28,33.52,Bahreïn
 2021-05-08,AUS,Oceania,Australia,2627725,10.3,10.3,,Australie
@@ -10567,6 +10567,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-08,BOL,South America,Bolivia,997296,8.54,6.28,2.26,Bolivie
 2021-05-08,PAN,North America,Panama,769842,17.84,11.92,5.92,Panama
 2021-05-08,OWID_ASI,,Asia,620603576,13.38,4.58,1.64,
+2021-05-08,NAM,Africa,Namibia,39878,1.57,1.48,0.09,Namibie
 2021-05-08,BGD,Asia,Bangladesh,9221387,5.6,3.53,2.07,Bangladesh
 2021-05-08,AUT,Europe,Austria,3633629,40.34,29.61,10.8,Autriche
 2021-05-08,ALB,Europe,Albania,596766,20.74,20.74,,Albanie
@@ -10610,7 +10611,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-09,TUR,Asia,Turkey,24918773,29.55,17.29,12.25,Turquie
 2021-05-09,OWID_ASI,,Asia,629897862,13.58,4.61,1.66,
 2021-05-09,MKD,Europe,North Macedonia,107978,5.18,5.18,,Macédoine
-2021-05-09,OWID_UMC,,Upper middle income,501985506,18.91,4.37,2.4,
+2021-05-09,OWID_UMC,,Upper middle income,501989209,18.91,4.37,2.4,
 2021-05-09,PRT,Europe,Portugal,4005644,39.28,28.39,10.9,Portugal
 2021-05-09,EGY,Africa,Egypt,1300212,1.27,1.04,0.23,Égypte
 2021-05-09,ZWE,Africa,Zimbabwe,684243,4.6,3.54,1.06,Zimbabwe
@@ -10647,7 +10648,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-09,JPN,Asia,Japan,4436325,3.51,2.59,0.92,Japon
 2021-05-09,LKA,Asia,Sri Lanka,1125740,5.26,4.34,0.92,Sri Lanka
 2021-05-09,CIV,Africa,Cote d'Ivoire,262639,1.0,1.0,,Côte d’Ivoire
-2021-05-09,OWID_AFR,,Africa,21137431,1.58,1.1,0.41,
+2021-05-09,OWID_AFR,,Africa,21141134,1.58,1.1,0.41,
 2021-05-09,PHL,Asia,Philippines,2408781,2.2,1.79,0.41,Philippines
 2021-05-09,NOR,Europe,Norway,1969730,36.33,27.46,8.88,Norvège
 2021-05-09,IRL,Europe,Ireland,1848747,37.44,27.29,10.15,Irlande
@@ -10690,6 +10691,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-09,YEM,Asia,Yemen,18555,0.06,0.06,,Yémen
 2021-05-09,GBR,Europe,United Kingdom,53328845,78.56,52.25,26.3,Royaume-Uni
 2021-05-09,EST,Europe,Estonia,532502,40.14,28.14,12.0,Estonie
+2021-05-09,NAM,Africa,Namibia,40120,1.58,1.49,0.09,Namibie
 2021-05-09,ALB,Europe,Albania,600000,20.85,20.85,,Albanie
 2021-05-09,CHL,South America,Chile,15710490,82.18,44.8,37.39,Chili
 2021-05-09,SVN,Europe,Slovenia,742213,35.7,23.41,12.29,Slovénie
@@ -10704,7 +10706,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-09,UGA,Africa,Uganda,404972,0.89,0.89,,Ouganda
 2021-05-10,CHN,Asia,China,332964000,23.13,23.13,,Chine
 2021-05-10,CAN,North America,Canada,16258155,43.08,39.72,3.36,Canada
-2021-05-10,OWID_AFR,,Africa,21594554,1.61,1.13,0.41,
+2021-05-10,OWID_AFR,,Africa,21599812,1.61,1.13,0.41,
 2021-05-10,CHL,South America,Chile,15883249,83.09,45.34,37.75,Chili
 2021-05-10,SVN,Europe,Slovenia,745913,35.88,23.52,12.35,Slovénie
 2021-05-10,QAT,Asia,Qatar,1844658,64.03,39.12,24.91,Qatar
@@ -10774,7 +10776,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-10,NOR,Europe,Norway,1978255,36.49,27.5,8.99,Norvège
 2021-05-10,OWID_CYN,Asia,Northern Cyprus,122598,32.07,18.77,13.31,
 2021-05-10,DNK,Europe,Denmark,2434694,42.03,26.44,15.59,Danemark
-2021-05-10,OWID_UMC,,Upper middle income,512782119,19.32,4.43,2.43,
+2021-05-10,OWID_UMC,,Upper middle income,512787377,19.32,4.43,2.43,
 2021-05-10,MKD,Europe,North Macedonia,145043,6.96,5.82,1.15,Macédoine
 2021-05-10,BHR,Asia,Bahrain,1394873,81.98,47.38,34.6,Bahreïn
 2021-05-10,OWID_NAM,,North America,305991332,51.68,31.57,21.64,
@@ -10807,6 +10809,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-10,NZL,Oceania,New Zealand,374299,7.76,5.39,2.38,Nouvelle-Zélande
 2021-05-10,BOL,South America,Bolivia,1010981,8.66,6.35,2.31,Bolivie
 2021-05-10,ALB,Europe,Albania,612959,21.3,21.3,,Albanie
+2021-05-10,NAM,Africa,Namibia,41675,1.64,1.55,0.09,Namibie
 2021-05-10,EST,Europe,Estonia,536820,40.47,28.31,12.16,Estonie
 2021-05-11,ZWE,Africa,Zimbabwe,709772,4.78,3.63,1.15,Zimbabwe
 2021-05-11,ABW,North America,Aruba,82877,77.62,52.72,24.9,Aruba
@@ -10878,6 +10881,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-11,AUS,Oceania,Australia,2736107,10.73,10.73,,Australie
 2021-05-11,TTO,North America,Trinidad and Tobago,61666,4.41,4.32,0.08,Trinité-et-Tobago
 2021-05-11,ITA,Europe,Italy,24993435,41.34,28.85,12.81,Italie
+2021-05-11,NAM,Africa,Namibia,44586,1.75,1.66,0.1,Namibie
 2021-05-11,JPN,Asia,Japan,4994028,3.95,2.91,1.04,Japon
 2021-05-11,TON,Oceania,Tonga,16683,15.78,15.78,,Tonga
 2021-05-11,KAZ,Asia,Kazakhstan,2455655,13.08,9.36,3.72,Kazakhstan
@@ -10913,7 +10917,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-11,PRT,Europe,Portugal,4146913,40.67,29.49,11.18,Portugal
 2021-05-11,USA,North America,United States,263132561,78.68,45.88,34.86,États-Unis
 2021-05-11,DOM,North America,Dominican Republic,2640409,24.34,16.83,7.51,République dominicaine
-2021-05-11,OWID_UMC,,Upper middle income,525736573,19.8,4.52,2.48,
+2021-05-11,OWID_UMC,,Upper middle income,525744742,19.8,4.52,2.48,
 2021-05-11,OWID_SAM,,South America,87479918,20.31,13.59,6.73,
 2021-05-11,POL,Europe,Poland,14274291,37.72,28.03,10.14,Pologne
 2021-05-11,EGY,Africa,Egypt,1371976,1.34,1.11,0.23,Égypte
@@ -10927,7 +10931,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-11,RUS,Europe,Russia,21844382,14.97,9.05,5.92,Russie
 2021-05-11,CUW,North America,Curacao,111446,67.91,47.44,20.47,
 2021-05-11,BRB,North America,Barbados,112242,39.06,26.32,12.74,Barbade
-2021-05-11,OWID_AFR,,Africa,22023553,1.64,1.15,0.41,
+2021-05-11,OWID_AFR,,Africa,22031722,1.64,1.15,0.41,
 2021-05-11,SLB,Oceania,Solomon Islands,9340,1.36,1.36,,Îles Salomon
 2021-05-11,URY,South America,Uruguay,2095268,60.32,35.79,24.52,Uruguay
 2021-05-11,CYP,Europe,Cyprus,384639,43.91,33.47,10.44,Chypre
@@ -10952,7 +10956,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-12,SRB,Europe,Serbia,3915922,57.55,32.61,24.93,Serbie
 2021-05-12,SWE,Europe,Sweden,3957465,39.19,30.3,8.89,Suède
 2021-05-12,RUS,Europe,Russia,22575945,15.47,9.3,6.17,Russie
-2021-05-12,OWID_AFR,,Africa,23056572,1.72,1.21,0.43,
+2021-05-12,OWID_AFR,,Africa,23067337,1.72,1.22,0.43,
 2021-05-12,NOR,Europe,Norway,2111465,38.95,28.51,10.44,Norvège
 2021-05-12,ROU,Europe,Romania,6305850,32.78,19.49,13.35,Roumanie
 2021-05-12,OWID_OCE,,Oceania,3503292,8.21,1.56,0.44,
@@ -10966,6 +10970,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-12,MOZ,Africa,Mozambique,355995,1.14,0.95,0.19,Mozambique
 2021-05-12,SEN,Africa,Senegal,431468,2.58,2.58,,Sénégal
 2021-05-12,ESP,Europe,Spain,21071940,45.07,31.13,14.36,Espagne
+2021-05-12,NAM,Africa,Namibia,47182,1.86,1.75,0.1,Namibie
 2021-05-12,SAU,Asia,Saudi Arabia,11091242,31.86,31.86,,Arabie Saoudite
 2021-05-12,ALB,Europe,Albania,632676,21.98,15.45,6.53,Albanie
 2021-05-12,CHE,Europe,Switzerland,3495727,40.39,26.77,13.62,Suisse
@@ -10995,7 +11000,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-12,OWID_EUR,,Europe,276106137,36.88,25.61,11.39,
 2021-05-12,ETH,Africa,Ethiopia,1397647,1.22,1.22,,Éthiopie
 2021-05-12,GBR,Europe,United Kingdom,54797640,80.72,52.89,27.83,Royaume-Uni
-2021-05-12,OWID_UMC,,Upper middle income,540564306,20.36,4.6,2.53,
+2021-05-12,OWID_UMC,,Upper middle income,540575071,20.36,4.6,2.53,
 2021-05-12,EST,Europe,Estonia,553152,41.7,29.04,12.66,Estonie
 2021-05-12,ECU,South America,Ecuador,1355698,7.68,6.1,1.58,Équateur
 2021-05-12,DOM,North America,Dominican Republic,2801356,25.82,18.3,7.53,République dominicaine
@@ -11064,6 +11069,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-13,CIV,Africa,Cote d'Ivoire,295309,1.12,1.12,,Côte d’Ivoire
 2021-05-13,ALB,Europe,Albania,638338,22.18,15.48,6.7,Albanie
 2021-05-13,ISR,Asia,Israel,10525187,121.6,62.75,58.86,Israël
+2021-05-13,NAM,Africa,Namibia,47626,1.87,1.77,0.1,Namibie
 2021-05-13,HRV,Europe,Croatia,1268281,30.89,23.88,7.02,Croatie
 2021-05-13,FRO,Europe,Faeroe Islands,26253,53.73,38.9,14.83,Îles Féroé
 2021-05-13,QAT,Asia,Qatar,1944628,67.5,40.27,27.23,Qatar
@@ -11128,7 +11134,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-13,ABW,North America,Aruba,85441,80.03,53.32,26.7,Aruba
 2021-05-13,OWID_ASI,,Asia,691557155,14.9,4.83,1.85,
 2021-05-13,URY,South America,Uruguay,2201178,63.37,37.05,26.32,Uruguay
-2021-05-13,OWID_UMC,,Upper middle income,555882497,20.94,4.66,2.58,
+2021-05-13,OWID_UMC,,Upper middle income,555893706,20.94,4.66,2.58,
 2021-05-13,AUS,Oceania,Australia,2894770,11.35,11.35,,Australie
 2021-05-13,USA,North America,United States,266596486,79.71,46.23,35.58,États-Unis
 2021-05-13,GTM,North America,Guatemala,259768,1.45,1.44,0.01,Guatemala
@@ -11146,7 +11152,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-13,LCA,North America,Saint Lucia,25716,14.0,14.0,,Sainte-Lucie
 2021-05-13,IND,Asia,India,178361846,12.92,10.08,2.85,Inde
 2021-05-13,RUS,Europe,Russia,22782931,15.61,9.36,6.26,Russie
-2021-05-13,OWID_AFR,,Africa,23241014,1.73,1.23,0.43,
+2021-05-13,OWID_AFR,,Africa,23252223,1.73,1.23,0.43,
 2021-05-13,HKG,Asia,Hong Kong,1856687,24.77,14.99,9.78,Hong Kong
 2021-05-13,BRA,South America,Brazil,50308106,23.67,16.04,7.63,Brésil
 2021-05-13,LKA,Asia,Sri Lanka,1309840,6.12,5.02,1.09,Sri Lanka
@@ -11158,20 +11164,21 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-13,SGP,Asia,Singapore,3200000,54.7,32.48,22.22,Singapour
 2021-05-13,ZAF,Africa,South Africa,455169,0.77,0.77,0.77,Afrique du Sud
 2021-05-13,SVN,Europe,Slovenia,805325,38.74,25.58,13.16,Slovénie
-2021-05-14,OWID_EUN,,European Union,192635055,43.3,30.98,12.56,
+2021-05-14,OWID_EUN,,European Union,192778125,43.33,31.0,12.57,
 2021-05-14,DEU,Europe,Germany,39414342,47.04,36.32,10.81,Allemagne
 2021-05-14,GEO,Asia,Georgia,81076,2.03,2.03,,Géorgie
-2021-05-14,OWID_EUR,,Europe,284143940,37.95,26.25,11.85,
+2021-05-14,OWID_EUR,,Europe,284287010,37.97,26.26,11.86,
 2021-05-14,FIN,Europe,Finland,2370423,42.78,37.77,5.02,Finlande
 2021-05-14,BGR,Europe,Bulgaria,1106760,15.93,10.04,5.89,Bulgarie
 2021-05-14,BRA,South America,Brazil,52093242,24.51,16.65,7.86,Brésil
 2021-05-14,BOL,South America,Bolivia,1056895,9.05,6.66,2.4,Bolivie
+2021-05-14,KHM,Asia,Cambodia,3180915,19.03,12.2,6.82,Cambodge
 2021-05-14,BEL,Europe,Belgium,5100471,44.01,33.23,11.03,Belgique
 2021-05-14,BHR,Asia,Bahrain,1447963,85.1,48.59,36.51,Bahreïn
 2021-05-14,AZE,Asia,Azerbaijan,1761632,17.37,10.08,7.29,Azerbaïdjan
 2021-05-14,AUT,Europe,Austria,3969265,44.07,32.46,11.73,Autriche
 2021-05-14,AUS,Oceania,Australia,2980644,11.69,11.69,,Australie
-2021-05-14,OWID_ASI,,Asia,693662054,14.95,4.86,1.87,
+2021-05-14,OWID_ASI,,Asia,707433283,15.25,4.86,1.87,
 2021-05-14,ABW,North America,Aruba,87536,81.99,53.68,28.31,Aruba
 2021-05-14,ARG,South America,Argentina,9704364,21.47,17.6,3.87,Argentine
 2021-05-14,EST,Europe,Estonia,574891,43.34,29.95,13.39,Estonie
@@ -11180,7 +11187,8 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-14,CYP,Europe,Cyprus,424489,48.46,36.57,11.89,Chypre
 2021-05-14,CAN,North America,Canada,17734322,46.99,43.36,3.63,Canada
 2021-05-14,CUW,North America,Curacao,117613,71.67,48.11,23.56,
-2021-05-14,CHN,Asia,China,366910000,25.49,25.49,,Chine
+2021-05-14,HRV,Europe,Croatia,1310456,31.92,24.59,7.33,Croatie
+2021-05-14,CHN,Asia,China,380633000,26.45,26.45,,Chine
 2021-05-14,CHL,South America,Chile,16469052,86.15,47.13,39.02,Chili
 2021-05-14,CYM,North America,Cayman Islands,73721,112.17,60.55,51.61,Iles Cayman
 2021-05-14,GRC,Europe,Greece,4185347,40.15,26.08,14.07,Grèce
@@ -11194,11 +11202,11 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-14,POL,Europe,Poland,15509013,40.98,29.93,11.67,Pologne
 2021-05-14,PRT,Europe,Portugal,4357120,42.73,31.05,11.68,Portugal
 2021-05-14,QAT,Asia,Qatar,1976748,68.61,40.57,28.04,Qatar
-2021-05-14,OWID_AFR,,Africa,23345345,1.74,1.23,0.43,
+2021-05-14,OWID_AFR,,Africa,23359289,1.74,1.23,0.43,
 2021-05-14,ZAF,Africa,South Africa,474318,0.8,0.8,0.8,Afrique du Sud
 2021-05-14,KOR,Asia,South Korea,4636641,9.04,7.28,1.77,Corée du Sud
 2021-05-14,URY,South America,Uruguay,2247016,64.69,37.96,26.73,Uruguay
-2021-05-14,OWID_UMC,,Upper middle income,558720722,21.05,4.73,2.62,
+2021-05-14,OWID_UMC,,Upper middle income,572457666,21.56,4.73,2.62,
 2021-05-14,USA,North America,United States,268438666,80.26,46.42,35.96,États-Unis
 2021-05-14,ARE,Asia,United Arab Emirates,11445680,115.73,115.73,,Émirats Arabes Unis
 2021-05-14,UKR,Europe,Ukraine,950158,2.17,2.14,0.03,Ukraine
@@ -11218,20 +11226,22 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-05-14,GRL,North America,Greenland,16268,28.65,18.01,10.65,Groenland
 2021-05-14,LBN,Asia,Lebanon,581068,8.51,5.52,2.99,Liban
 2021-05-14,HKG,Asia,Hong Kong,1888416,25.19,15.18,10.01,Hong Kong
+2021-05-14,HUN,Europe,Hungary,7211350,74.65,47.15,27.5,Hongrie
 2021-05-14,ISL,Europe,Iceland,203735,59.7,43.25,19.05,Islande
 2021-05-14,IND,Asia,India,179646413,13.02,10.13,2.88,Inde
 2021-05-14,IDN,Asia,Indonesia,22622367,8.27,5.01,3.26,Indonésie
-2021-05-14,OWID_HIC,,High income,617716699,48.91,30.55,17.62,
+2021-05-14,OWID_HIC,,High income,617859769,48.92,30.56,17.63,
 2021-05-14,MNG,Asia,Mongolia,2398067,73.15,53.64,19.51,Mongolie
 2021-05-14,MNE,Europe,Montenegro,133626,21.28,16.01,5.27,Monténégro
 2021-05-14,MAR,Africa,Morocco,10491095,28.42,16.36,12.06,Maroc
 2021-05-14,MDA,Europe,Moldova,228971,5.68,4.9,0.78,Moldavie
+2021-05-14,NAM,Africa,Namibia,50361,1.98,1.87,0.11,Namibie
 2021-05-14,ALB,Europe,Albania,653330,22.7,15.59,7.12,Albanie
 2021-05-14,NLD,Europe,Netherlands,6875100,40.12,30.75,10.0,Pays-Bas
 2021-05-14,NGA,Africa,Nigeria,1767488,0.86,0.86,,Nigeria
 2021-05-14,GIB,Europe,Gibraltar,74461,221.01,115.48,105.54,Gibraltar
 2021-05-14,LTU,Europe,Lithuania,1301622,47.81,31.6,16.21,Lituanie
-2021-05-14,OWID_LMC,,Lower middle income,233211162,7.53,5.79,1.74,
+2021-05-14,OWID_LMC,,Lower middle income,233259391,7.53,5.79,1.74,
 2021-05-14,MAC,Asia,Macao,128147,19.73,12.7,7.07,Macao
 2021-05-14,MYS,Asia,Malaysia,1894779,5.85,3.61,2.25,Malaisie
 2021-05-14,ZWE,Africa,Zimbabwe,775241,5.22,3.84,1.37,Zimbabwe
