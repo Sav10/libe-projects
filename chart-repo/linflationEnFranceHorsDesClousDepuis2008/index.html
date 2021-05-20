@@ -1,0 +1,570 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L’inflation en France, hors des clous depuis 2008</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"mois":"2000-01","Indice":"79.17","Codes":"A","datetime":"2000-01-01","depuis_2000":"100.0","borne_basse":"100.0","borne_haute":"100.0"},{"mois":"2000-02","Indice":"79.27","Codes":"A","datetime":"2000-02-01","depuis_2000":"100.1","borne_basse":"100.14877654706025","borne_haute":"100.1643397506226"},{"mois":"2000-03","Indice":"79.64","Codes":"A","datetime":"2000-03-01","depuis_2000":"100.6","borne_basse":"100.29777443873004","borne_haute":"100.32894957678155"},{"mois":"2000-04","Indice":"79.64","Codes":"A","datetime":"2000-04-01","depuis_2000":"100.6","borne_basse":"100.44699400431826","borne_haute":"100.49382992231831"},{"mois":"2000-05","Indice":"79.8","Codes":"A","datetime":"2000-05-01","depuis_2000":"100.8","borne_basse":"100.5964355736237","borne_haute":"100.65898123180375"},{"mois":"2000-06","Indice":"80.0","Codes":"A","datetime":"2000-06-01","depuis_2000":"101.0","borne_basse":"100.74609947693581","borne_haute":"100.82440395053935"},{"mois":"2000-07","Indice":"79.87","Codes":"A","datetime":"2000-07-01","depuis_2000":"100.9","borne_basse":"100.89598604503547","borne_haute":"100.99009852455839"},{"mois":"2000-08","Indice":"80.02","Codes":"A","datetime":"2000-08-01","depuis_2000":"101.1","borne_basse":"101.04609560919566","borne_haute":"101.15606540062717"},{"mois":"2000-09","Indice":"80.43","Codes":"A","datetime":"2000-09-01","depuis_2000":"101.6","borne_basse":"101.19642850118221","borne_haute":"101.3223050262462"},{"mois":"2000-10","Indice":"80.33","Codes":"A","datetime":"2000-10-01","depuis_2000":"101.5","borne_basse":"101.34698505325456","borne_haute":"101.4888178496514"},{"mois":"2000-11","Indice":"80.51","Codes":"A","datetime":"2000-11-01","depuis_2000":"101.7","borne_basse":"101.49776559816645","borne_haute":"101.65560431981534"},{"mois":"2000-12","Indice":"80.47","Codes":"A","datetime":"2000-12-01","depuis_2000":"101.6","borne_basse":"101.6487704691667","borne_haute":"101.82266488644842"},{"mois":"2001-01","Indice":"80.13","Codes":"A","datetime":"2001-01-01","depuis_2000":"101.2","borne_basse":"101.79999999999993","borne_haute":"101.9900000000001"},{"mois":"2001-02","Indice":"80.35","Codes":"A","datetime":"2001-02-01","depuis_2000":"101.5","borne_basse":"101.95145452490726","borne_haute":"102.15761011166009"},{"mois":"2001-03","Indice":"80.71","Codes":"A","datetime":"2001-03-01","depuis_2000":"101.9","borne_basse":"102.10313437862712","borne_haute":"102.3254956733596"},{"mois":"2001-04","Indice":"81.1","Codes":"A","datetime":"2001-04-01","depuis_2000":"102.4","borne_basse":"102.25503989639593","borne_haute":"102.49365713777253"},{"mois":"2001-05","Indice":"81.6","Codes":"A","datetime":"2001-05-01","depuis_2000":"103.1","borne_basse":"102.40717141394886","borne_haute":"102.66209495831673"},{"mois":"2001-06","Indice":"81.65","Codes":"A","datetime":"2001-06-01","depuis_2000":"103.1","borne_basse":"102.5595292675206","borne_haute":"102.83080958915517"},{"mois":"2001-07","Indice":"81.48","Codes":"A","datetime":"2001-07-01","depuis_2000":"102.9","borne_basse":"102.71211379384606","borne_haute":"102.99980148519718"},{"mois":"2001-08","Indice":"81.48","Codes":"A","datetime":"2001-08-01","depuis_2000":"102.9","borne_basse":"102.86492533016113","borne_haute":"103.16907110209972"},{"mois":"2001-09","Indice":"81.63","Codes":"A","datetime":"2001-09-01","depuis_2000":"103.1","borne_basse":"103.01796421420345","borne_haute":"103.33861889626857"},{"mois":"2001-10","Indice":"81.68","Codes":"A","datetime":"2001-10-01","depuis_2000":"103.2","borne_basse":"103.1712307842131","borne_haute":"103.50844532485954"},{"mois":"2001-11","Indice":"81.46","Codes":"A","datetime":"2001-11-01","depuis_2000":"102.9","borne_basse":"103.32472537893341","borne_haute":"103.67855084577974"},{"mois":"2001-12","Indice":"81.56","Codes":"A","datetime":"2001-12-01","depuis_2000":"103.0","borne_basse":"103.47844833761167","borne_haute":"103.84893591768882"},{"mois":"2002-01","Indice":"81.94","Codes":"A","datetime":"2002-01-01","depuis_2000":"103.5","borne_basse":"103.63239999999989","borne_haute":"104.01960100000018"},{"mois":"2002-02","Indice":"82.04","Codes":"A","datetime":"2002-02-01","depuis_2000":"103.6","borne_basse":"103.78658070635555","borne_haute":"104.1905465528822"},{"mois":"2002-03","Indice":"82.4","Codes":"A","datetime":"2002-03-01","depuis_2000":"104.1","borne_basse":"103.94099079744237","borne_haute":"104.36177303725952"},{"mois":"2002-04","Indice":"82.71","Codes":"A","datetime":"2002-04-01","depuis_2000":"104.5","borne_basse":"104.09563061453102","borne_haute":"104.53328091481428"},{"mois":"2002-05","Indice":"82.81","Codes":"A","datetime":"2002-05-01","depuis_2000":"104.6","borne_basse":"104.2505004993999","borne_haute":"104.70507064798731"},{"mois":"2002-06","Indice":"82.8","Codes":"A","datetime":"2002-06-01","depuis_2000":"104.6","borne_basse":"104.40560079433594","borne_haute":"104.87714269997943"},{"mois":"2002-07","Indice":"82.8","Codes":"A","datetime":"2002-07-01","depuis_2000":"104.6","borne_basse":"104.56093184213526","borne_haute":"105.04949753475269"},{"mois":"2002-08","Indice":"82.99","Codes":"A","datetime":"2002-08-01","depuis_2000":"104.8","borne_basse":"104.71649398610401","borne_haute":"105.2221356170316"},{"mois":"2002-09","Indice":"83.14","Codes":"A","datetime":"2002-09-01","depuis_2000":"105.0","borne_basse":"104.87228757005909","borne_haute":"105.3950574123044"},{"mois":"2002-10","Indice":"83.27","Codes":"A","datetime":"2002-10-01","depuis_2000":"105.2","borne_basse":"105.02831293832891","borne_haute":"105.56826338682433"},{"mois":"2002-11","Indice":"83.27","Codes":"A","datetime":"2002-11-01","depuis_2000":"105.2","borne_basse":"105.18457043575418","borne_haute":"105.74175400761084"},{"mois":"2002-12","Indice":"83.41","Codes":"A","datetime":"2002-12-01","depuis_2000":"105.4","borne_basse":"105.34106040768864","borne_haute":"105.9155297424509"},{"mois":"2003-01","Indice":"83.57","Codes":"A","datetime":"2003-01-01","depuis_2000":"105.6","borne_basse":"105.49778319999986","borne_haute":"106.08959105990024"},{"mois":"2003-02","Indice":"84.15","Codes":"A","datetime":"2003-02-01","depuis_2000":"106.3","borne_basse":"105.65473915906992","borne_haute":"106.26393842928462"},{"mois":"2003-03","Indice":"84.49","Codes":"A","datetime":"2003-03-01","depuis_2000":"106.7","borne_basse":"105.81192863179629","borne_haute":"106.43857232070106"},{"mois":"2003-04","Indice":"84.37","Codes":"A","datetime":"2003-04-01","depuis_2000":"106.6","borne_basse":"105.96935196559254","borne_haute":"106.61349320501915"},{"mois":"2003-05","Indice":"84.27","Codes":"A","datetime":"2003-05-01","depuis_2000":"106.4","borne_basse":"106.12700950838907","borne_haute":"106.78870155388232"},{"mois":"2003-06","Indice":"84.43","Codes":"A","datetime":"2003-06-01","depuis_2000":"106.6","borne_basse":"106.28490160863394","borne_haute":"106.96419783970909"},{"mois":"2003-07","Indice":"84.34","Codes":"A","datetime":"2003-07-01","depuis_2000":"106.5","borne_basse":"106.44302861529366","borne_haute":"107.13998253569433"},{"mois":"2003-08","Indice":"84.54","Codes":"A","datetime":"2003-08-01","depuis_2000":"106.8","borne_basse":"106.60139087785385","borne_haute":"107.31605611581058"},{"mois":"2003-09","Indice":"84.86","Codes":"A","datetime":"2003-09-01","depuis_2000":"107.2","borne_basse":"106.75998874632012","borne_haute":"107.49241905480932"},{"mois":"2003-10","Indice":"85.04","Codes":"A","datetime":"2003-10-01","depuis_2000":"107.4","borne_basse":"106.9188225712188","borne_haute":"107.66907182822219"},{"mois":"2003-11","Indice":"85.14","Codes":"A","datetime":"2003-11-01","depuis_2000":"107.5","borne_basse":"107.07789270359773","borne_haute":"107.84601491236235"},{"mois":"2003-12","Indice":"85.23","Codes":"A","datetime":"2003-12-01","depuis_2000":"107.7","borne_basse":"107.23719949502701","borne_haute":"108.02324878432573"},{"mois":"2004-01","Indice":"85.23","Codes":"A","datetime":"2004-01-01","depuis_2000":"107.7","borne_basse":"107.39674329759983","borne_haute":"108.20077392199232"},{"mois":"2004-02","Indice":"85.59","Codes":"A","datetime":"2004-02-01","depuis_2000":"108.1","borne_basse":"107.55652446393316","borne_haute":"108.37859080402745"},{"mois":"2004-03","Indice":"85.93","Codes":"A","datetime":"2004-03-01","depuis_2000":"108.5","borne_basse":"107.71654334716861","borne_haute":"108.55669990988308"},{"mois":"2004-04","Indice":"86.15","Codes":"A","datetime":"2004-04-01","depuis_2000":"108.8","borne_basse":"107.87680030097319","borne_haute":"108.7351017197991"},{"mois":"2004-05","Indice":"86.47","Codes":"A","datetime":"2004-05-01","depuis_2000":"109.2","borne_basse":"108.03729567954005","borne_haute":"108.91379671480465"},{"mois":"2004-06","Indice":"86.5","Codes":"A","datetime":"2004-06-01","depuis_2000":"109.3","borne_basse":"108.19802983758935","borne_haute":"109.09278537671936"},{"mois":"2004-07","Indice":"86.36","Codes":"A","datetime":"2004-07-01","depuis_2000":"109.1","borne_basse":"108.35900313036893","borne_haute":"109.2720681881547"},{"mois":"2004-08","Indice":"86.55","Codes":"A","datetime":"2004-08-01","depuis_2000":"109.3","borne_basse":"108.5202159136552","borne_haute":"109.45164563251528"},{"mois":"2004-09","Indice":"86.63","Codes":"A","datetime":"2004-09-01","depuis_2000":"109.4","borne_basse":"108.68166854375387","borne_haute":"109.6315181940001"},{"mois":"2004-10","Indice":"86.85","Codes":"A","datetime":"2004-10-01","depuis_2000":"109.7","borne_basse":"108.84336137750073","borne_haute":"109.81168635760389"},{"mois":"2004-11","Indice":"86.9","Codes":"A","datetime":"2004-11-01","depuis_2000":"109.8","borne_basse":"109.00529477226247","borne_haute":"109.99215060911845"},{"mois":"2004-12","Indice":"87.0","Codes":"A","datetime":"2004-12-01","depuis_2000":"109.9","borne_basse":"109.16746908593748","borne_haute":"110.17291143513391"},{"mois":"2005-01","Indice":"86.52","Codes":"A","datetime":"2005-01-01","depuis_2000":"109.3","borne_basse":"109.32988467695661","borne_haute":"110.35396932304008"},{"mois":"2005-02","Indice":"87.05","Codes":"A","datetime":"2005-02-01","depuis_2000":"110.0","borne_basse":"109.49254190428394","borne_haute":"110.5353247610277"},{"mois":"2005-03","Indice":"87.6","Codes":"A","datetime":"2005-03-01","depuis_2000":"110.6","borne_basse":"109.65544112741763","borne_haute":"110.71697823808985"},{"mois":"2005-04","Indice":"87.77","Codes":"A","datetime":"2005-04-01","depuis_2000":"110.9","borne_basse":"109.81858270639069","borne_haute":"110.8989302440232"},{"mois":"2005-05","Indice":"87.83","Codes":"A","datetime":"2005-05-01","depuis_2000":"110.9","borne_basse":"109.98196700177175","borne_haute":"111.08118126942936"},{"mois":"2005-06","Indice":"87.93","Codes":"A","datetime":"2005-06-01","depuis_2000":"111.1","borne_basse":"110.14559437466593","borne_haute":"111.26373180571618"},{"mois":"2005-07","Indice":"87.8","Codes":"A","datetime":"2005-07-01","depuis_2000":"110.9","borne_basse":"110.30946518671554","borne_haute":"111.44658234509909"},{"mois":"2005-08","Indice":"88.14","Codes":"A","datetime":"2005-08-01","depuis_2000":"111.3","borne_basse":"110.47357980010096","borne_haute":"111.62973338060243"},{"mois":"2005-09","Indice":"88.48","Codes":"A","datetime":"2005-09-01","depuis_2000":"111.8","borne_basse":"110.6379385775414","borne_haute":"111.81318540606078"},{"mois":"2005-10","Indice":"88.46","Codes":"A","datetime":"2005-10-01","depuis_2000":"111.7","borne_basse":"110.80254188229571","borne_haute":"111.99693891612029"},{"mois":"2005-11","Indice":"88.28","Codes":"A","datetime":"2005-11-01","depuis_2000":"111.5","borne_basse":"110.96739007816318","borne_haute":"112.18099440623999"},{"mois":"2005-12","Indice":"88.39","Codes":"A","datetime":"2005-12-01","depuis_2000":"111.6","borne_basse":"111.13248352948435","borne_haute":"112.36535237269315"},{"mois":"2006-01","Indice":"88.3","Codes":"A","datetime":"2006-01-01","depuis_2000":"111.5","borne_basse":"111.29782260114182","borne_haute":"112.55001331256864"},{"mois":"2006-02","Indice":"88.64","Codes":"A","datetime":"2006-02-01","depuis_2000":"112.0","borne_basse":"111.46340765856104","borne_haute":"112.73497772377222"},{"mois":"2006-03","Indice":"88.89","Codes":"A","datetime":"2006-03-01","depuis_2000":"112.3","borne_basse":"111.62923906771114","borne_haute":"112.92024610502791"},{"mois":"2006-04","Indice":"89.27","Codes":"A","datetime":"2006-04-01","depuis_2000":"112.8","borne_basse":"111.79531719510571","borne_haute":"113.10581895587934"},{"mois":"2006-05","Indice":"89.65","Codes":"A","datetime":"2006-05-01","depuis_2000":"113.2","borne_basse":"111.96164240780364","borne_haute":"113.29169677669108"},{"mois":"2006-06","Indice":"89.65","Codes":"A","datetime":"2006-06-01","depuis_2000":"113.2","borne_basse":"112.1282150734099","borne_haute":"113.47788006865001"},{"mois":"2006-07","Indice":"89.5","Codes":"A","datetime":"2006-07-01","depuis_2000":"113.0","borne_basse":"112.29503556007641","borne_haute":"113.66436933376664"},{"mois":"2006-08","Indice":"89.8","Codes":"A","datetime":"2006-08-01","depuis_2000":"113.4","borne_basse":"112.46210423650277","borne_haute":"113.8511650748765"},{"mois":"2006-09","Indice":"89.6","Codes":"A","datetime":"2006-09-01","depuis_2000":"113.2","borne_basse":"112.62942147193714","borne_haute":"114.03826779564149"},{"mois":"2006-10","Indice":"89.4","Codes":"A","datetime":"2006-10-01","depuis_2000":"112.9","borne_basse":"112.79698763617702","borne_haute":"114.22567800055118"},{"mois":"2006-11","Indice":"89.5","Codes":"A","datetime":"2006-11-01","depuis_2000":"113.0","borne_basse":"112.9648030995701","borne_haute":"114.41339619492426"},{"mois":"2006-12","Indice":"89.71","Codes":"A","datetime":"2006-12-01","depuis_2000":"113.3","borne_basse":"113.13286823301506","borne_haute":"114.60142288490985"},{"mois":"2007-01","Indice":"89.4","Codes":"A","datetime":"2007-01-01","depuis_2000":"112.9","borne_basse":"113.30118340796236","borne_haute":"114.78975857748887"},{"mois":"2007-02","Indice":"89.57","Codes":"A","datetime":"2007-02-01","depuis_2000":"113.1","borne_basse":"113.46974899641512","borne_haute":"114.9784037804754"},{"mois":"2007-03","Indice":"89.95","Codes":"A","datetime":"2007-03-01","depuis_2000":"113.6","borne_basse":"113.63856537092991","borne_haute":"115.16735900251808"},{"mois":"2007-04","Indice":"90.39","Codes":"A","datetime":"2007-04-01","depuis_2000":"114.2","borne_basse":"113.80763290461758","borne_haute":"115.35662475310146"},{"mois":"2007-05","Indice":"90.61","Codes":"A","datetime":"2007-05-01","depuis_2000":"114.4","borne_basse":"113.97695197114408","borne_haute":"115.54620154254735"},{"mois":"2007-06","Indice":"90.72","Codes":"A","datetime":"2007-06-01","depuis_2000":"114.6","borne_basse":"114.14652294473126","borne_haute":"115.73608988201626"},{"mois":"2007-07","Indice":"90.49","Codes":"A","datetime":"2007-07-01","depuis_2000":"114.3","borne_basse":"114.31634620015777","borne_haute":"115.9262902835087"},{"mois":"2007-08","Indice":"90.86","Codes":"A","datetime":"2007-08-01","depuis_2000":"114.8","borne_basse":"114.4864221127598","borne_haute":"116.11680325986666"},{"mois":"2007-09","Indice":"90.96","Codes":"A","datetime":"2007-09-01","depuis_2000":"114.9","borne_basse":"114.65675105843198","borne_haute":"116.30762932477485"},{"mois":"2007-10","Indice":"91.19","Codes":"A","datetime":"2007-10-01","depuis_2000":"115.2","borne_basse":"114.82733341362818","borne_haute":"116.49876899276224"},{"mois":"2007-11","Indice":"91.69","Codes":"A","datetime":"2007-11-01","depuis_2000":"115.8","borne_basse":"114.99816955536234","borne_haute":"116.69022277920334"},{"mois":"2007-12","Indice":"92.03","Codes":"A","datetime":"2007-12-01","depuis_2000":"116.2","borne_basse":"115.1692598612093","borne_haute":"116.88199120031963"},{"mois":"2008-01","Indice":"91.92","Codes":"A","datetime":"2008-01-01","depuis_2000":"116.1","borne_basse":"115.34060470930565","borne_haute":"117.07407477318097"},{"mois":"2008-02","Indice":"92.12","Codes":"A","datetime":"2008-02-01","depuis_2000":"116.4","borne_basse":"115.51220447835057","borne_haute":"117.26647401570693"},{"mois":"2008-03","Indice":"92.81","Codes":"A","datetime":"2008-03-01","depuis_2000":"117.2","borne_basse":"115.68405954760664","borne_haute":"117.45918944666826"},{"mois":"2008-04","Indice":"93.12","Codes":"A","datetime":"2008-04-01","depuis_2000":"117.6","borne_basse":"115.85617029690069","borne_haute":"117.65222158568824"},{"mois":"2008-05","Indice":"93.62","Codes":"A","datetime":"2008-05-01","depuis_2000":"118.3","borne_basse":"116.02853710662465","borne_haute":"117.8455709532441"},{"mois":"2008-06","Indice":"93.96","Codes":"A","datetime":"2008-06-01","depuis_2000":"118.7","borne_basse":"116.20116035773641","borne_haute":"118.03923807066845"},{"mois":"2008-07","Indice":"93.76","Codes":"A","datetime":"2008-07-01","depuis_2000":"118.4","borne_basse":"116.37404043176059","borne_haute":"118.2332234601506"},{"mois":"2008-08","Indice":"93.73","Codes":"A","datetime":"2008-08-01","depuis_2000":"118.4","borne_basse":"116.54717771078946","borne_haute":"118.42752764473806"},{"mois":"2008-09","Indice":"93.67","Codes":"A","datetime":"2008-09-01","depuis_2000":"118.3","borne_basse":"116.72057257748374","borne_haute":"118.62215114833793"},{"mois":"2008-10","Indice":"93.62","Codes":"A","datetime":"2008-10-01","depuis_2000":"118.3","borne_basse":"116.89422541507346","borne_haute":"118.81709449571828"},{"mois":"2008-11","Indice":"93.18","Codes":"A","datetime":"2008-11-01","depuis_2000":"117.7","borne_basse":"117.06813660735884","borne_haute":"119.01235821250957"},{"mois":"2008-12","Indice":"92.95","Codes":"A","datetime":"2008-12-01","depuis_2000":"117.4","borne_basse":"117.24230653871103","borne_haute":"119.20794282520608"},{"mois":"2009-01","Indice":"92.57","Codes":"A","datetime":"2009-01-01","depuis_2000":"116.9","borne_basse":"117.41673559407312","borne_haute":"119.40384886116735"},{"mois":"2009-02","Indice":"92.92","Codes":"A","datetime":"2009-02-01","depuis_2000":"117.4","borne_basse":"117.59142415896083","borne_haute":"119.60007684861958"},{"mois":"2009-03","Indice":"93.09","Codes":"A","datetime":"2009-03-01","depuis_2000":"117.6","borne_basse":"117.76637261946351","borne_haute":"119.79662731665704"},{"mois":"2009-04","Indice":"93.24","Codes":"A","datetime":"2009-04-01","depuis_2000":"117.8","borne_basse":"117.94158136224485","borne_haute":"119.99350079524352"},{"mois":"2009-05","Indice":"93.38","Codes":"A","datetime":"2009-05-01","depuis_2000":"117.9","borne_basse":"118.11705077454384","borne_haute":"120.19069781521375"},{"mois":"2009-06","Indice":"93.5","Codes":"A","datetime":"2009-06-01","depuis_2000":"118.1","borne_basse":"118.2927812441756","borne_haute":"120.38821890827484"},{"mois":"2009-07","Indice":"93.08","Codes":"A","datetime":"2009-07-01","depuis_2000":"117.6","borne_basse":"118.46877315953222","borne_haute":"120.58606460700769"},{"mois":"2009-08","Indice":"93.56","Codes":"A","datetime":"2009-08-01","depuis_2000":"118.2","borne_basse":"118.6450269095836","borne_haute":"120.78423544486844"},{"mois":"2009-09","Indice":"93.33","Codes":"A","datetime":"2009-09-01","depuis_2000":"117.9","borne_basse":"118.82154288387838","borne_haute":"120.98273195618995"},{"mois":"2009-10","Indice":"93.42","Codes":"A","datetime":"2009-10-01","depuis_2000":"118.0","borne_basse":"118.99832147254473","borne_haute":"121.18155467618317"},{"mois":"2009-11","Indice":"93.55","Codes":"A","datetime":"2009-11-01","depuis_2000":"118.2","borne_basse":"119.17536306629124","borne_haute":"121.38070414093859"},{"mois":"2009-12","Indice":"93.8","Codes":"A","datetime":"2009-12-01","depuis_2000":"118.5","borne_basse":"119.35266805640778","borne_haute":"121.58018088742776"},{"mois":"2010-01","Indice":"93.59","Codes":"A","datetime":"2010-01-01","depuis_2000":"118.2","borne_basse":"119.53023683476638","borne_haute":"121.77998545350466"},{"mois":"2010-02","Indice":"94.11","Codes":"A","datetime":"2010-02-01","depuis_2000":"118.9","borne_basse":"119.70806979382209","borne_haute":"121.98011837790719"},{"mois":"2010-03","Indice":"94.57","Codes":"A","datetime":"2010-03-01","depuis_2000":"119.5","borne_basse":"119.88616732661382","borne_haute":"122.18058020025859"},{"mois":"2010-04","Indice":"94.81","Codes":"A","datetime":"2010-04-01","depuis_2000":"119.8","borne_basse":"120.06452982676522","borne_haute":"122.38137146106894"},{"mois":"2010-05","Indice":"94.92","Codes":"A","datetime":"2010-05-01","depuis_2000":"119.9","borne_basse":"120.24315768848561","borne_haute":"122.58249270173657"},{"mois":"2010-06","Indice":"94.91","Codes":"A","datetime":"2010-06-01","depuis_2000":"119.9","borne_basse":"120.42205130657075","borne_haute":"122.78394446454956"},{"mois":"2010-07","Indice":"94.64","Codes":"A","datetime":"2010-07-01","depuis_2000":"119.5","borne_basse":"120.60121107640379","borne_haute":"122.9857272926872"},{"mois":"2010-08","Indice":"94.86","Codes":"A","datetime":"2010-08-01","depuis_2000":"119.8","borne_basse":"120.7806373939561","borne_haute":"123.1878417302214"},{"mois":"2010-09","Indice":"94.79","Codes":"A","datetime":"2010-09-01","depuis_2000":"119.7","borne_basse":"120.96033065578818","borne_haute":"123.3902883221182"},{"mois":"2010-10","Indice":"94.91","Codes":"A","datetime":"2010-10-01","depuis_2000":"119.9","borne_basse":"121.14029125905053","borne_haute":"123.59306761423927"},{"mois":"2010-11","Indice":"95.02","Codes":"A","datetime":"2010-11-01","depuis_2000":"120.0","borne_basse":"121.32051960148448","borne_haute":"123.79618015334333"},{"mois":"2010-12","Indice":"95.45","Codes":"A","datetime":"2010-12-01","depuis_2000":"120.6","borne_basse":"121.50101608142312","borne_haute":"123.99962648708764"},{"mois":"2011-01","Indice":"95.22","Codes":"A","datetime":"2011-01-01","depuis_2000":"120.3","borne_basse":"121.68178109779217","borne_haute":"124.20340716402947"},{"mois":"2011-02","Indice":"95.67","Codes":"A","datetime":"2011-02-01","depuis_2000":"120.8","borne_basse":"121.86281505011087","borne_haute":"124.40752273362762"},{"mois":"2011-03","Indice":"96.45","Codes":"A","datetime":"2011-03-01","depuis_2000":"121.8","borne_basse":"122.04411833849284","borne_haute":"124.61197374624382"},{"mois":"2011-04","Indice":"96.78","Codes":"A","datetime":"2011-04-01","depuis_2000":"122.2","borne_basse":"122.22569136364697","borne_haute":"124.8167607531443"},{"mois":"2011-05","Indice":"96.83","Codes":"A","datetime":"2011-05-01","depuis_2000":"122.3","borne_basse":"122.40753452687832","borne_haute":"125.02188430650122"},{"mois":"2011-06","Indice":"96.91","Codes":"A","datetime":"2011-06-01","depuis_2000":"122.4","borne_basse":"122.589648230089","borne_haute":"125.2273449593942"},{"mois":"2011-07","Indice":"96.48","Codes":"A","datetime":"2011-07-01","depuis_2000":"121.9","borne_basse":"122.77203287577903","borne_haute":"125.43314326581178"},{"mois":"2011-08","Indice":"96.98","Codes":"A","datetime":"2011-08-01","depuis_2000":"122.5","borne_basse":"122.9546888670473","borne_haute":"125.6392797806529"},{"mois":"2011-09","Indice":"96.91","Codes":"A","datetime":"2011-09-01","depuis_2000":"122.4","borne_basse":"123.13761660759236","borne_haute":"125.84575505972846"},{"mois":"2011-10","Indice":"97.14","Codes":"A","datetime":"2011-10-01","depuis_2000":"122.7","borne_basse":"123.32081650171342","borne_haute":"126.05256965976275"},{"mois":"2011-11","Indice":"97.41","Codes":"A","datetime":"2011-11-01","depuis_2000":"123.0","borne_basse":"123.50428895431118","borne_haute":"126.25972413839499"},{"mois":"2011-12","Indice":"97.8","Codes":"A","datetime":"2011-12-01","depuis_2000":"123.5","borne_basse":"123.68803437088872","borne_haute":"126.4672190541808"},{"mois":"2012-01","Indice":"97.46","Codes":"A","datetime":"2012-01-01","depuis_2000":"123.1","borne_basse":"123.87205315755241","borne_haute":"126.67505496659378"},{"mois":"2012-02","Indice":"97.86","Codes":"A","datetime":"2012-02-01","depuis_2000":"123.6","borne_basse":"124.05634572101286","borne_haute":"126.88323243602692"},{"mois":"2012-03","Indice":"98.67","Codes":"A","datetime":"2012-03-01","depuis_2000":"124.6","borne_basse":"124.2409124685857","borne_haute":"127.09175202379417"},{"mois":"2012-04","Indice":"98.8","Codes":"A","datetime":"2012-04-01","depuis_2000":"124.8","borne_basse":"124.42575380819261","borne_haute":"127.30061429213197"},{"mois":"2012-05","Indice":"98.75","Codes":"A","datetime":"2012-05-01","depuis_2000":"124.7","borne_basse":"124.61087014836212","borne_haute":"127.50981980420069"},{"mois":"2012-06","Indice":"98.78","Codes":"A","datetime":"2012-06-01","depuis_2000":"124.8","borne_basse":"124.79626189823058","borne_haute":"127.71936912408624"},{"mois":"2012-07","Indice":"98.35","Codes":"A","datetime":"2012-07-01","depuis_2000":"124.2","borne_basse":"124.98192946754304","borne_haute":"127.92926281680153"},{"mois":"2012-08","Indice":"99.0","Codes":"A","datetime":"2012-08-01","depuis_2000":"125.0","borne_basse":"125.16787326665413","borne_haute":"128.139501448288"},{"mois":"2012-09","Indice":"98.76","Codes":"A","datetime":"2012-09-01","depuis_2000":"124.7","borne_basse":"125.354093706529","borne_haute":"128.35008558541716"},{"mois":"2012-10","Indice":"98.94","Codes":"A","datetime":"2012-10-01","depuis_2000":"125.0","borne_basse":"125.54059119874424","borne_haute":"128.56101579599212"},{"mois":"2012-11","Indice":"98.79","Codes":"A","datetime":"2012-11-01","depuis_2000":"124.8","borne_basse":"125.72736615548875","borne_haute":"128.77229264874913"},{"mois":"2012-12","Indice":"99.1","Codes":"A","datetime":"2012-12-01","depuis_2000":"125.2","borne_basse":"125.91441898956468","borne_haute":"128.9839167133591"},{"mois":"2013-01","Indice":"98.6","Codes":"A","datetime":"2013-01-01","depuis_2000":"124.5","borne_basse":"126.10175011438832","borne_haute":"129.1958885604291"},{"mois":"2013-02","Indice":"98.88","Codes":"A","datetime":"2013-02-01","depuis_2000":"124.9","borne_basse":"126.28935994399106","borne_haute":"129.40820876150397"},{"mois":"2013-03","Indice":"99.63","Codes":"A","datetime":"2013-03-01","depuis_2000":"125.8","borne_basse":"126.47724889302022","borne_haute":"129.6208778890678"},{"mois":"2013-04","Indice":"99.48","Codes":"A","datetime":"2013-04-01","depuis_2000":"125.7","borne_basse":"126.66541737674005","borne_haute":"129.8338965165455"},{"mois":"2013-05","Indice":"99.54","Codes":"A","datetime":"2013-05-01","depuis_2000":"125.7","borne_basse":"126.85386581103262","borne_haute":"130.0472652183044"},{"mois":"2013-06","Indice":"99.7","Codes":"A","datetime":"2013-06-01","depuis_2000":"125.9","borne_basse":"127.04259461239872","borne_haute":"130.26098456965568"},{"mois":"2013-07","Indice":"99.4","Codes":"A","datetime":"2013-07-01","depuis_2000":"125.6","borne_basse":"127.23160419795879","borne_haute":"130.475055146856"},{"mois":"2013-08","Indice":"99.86","Codes":"A","datetime":"2013-08-01","depuis_2000":"126.1","borne_basse":"127.42089498545387","borne_haute":"130.68947752710903"},{"mois":"2013-09","Indice":"99.63","Codes":"A","datetime":"2013-09-01","depuis_2000":"125.8","borne_basse":"127.6104673932465","borne_haute":"130.90425228856705"},{"mois":"2013-10","Indice":"99.5","Codes":"A","datetime":"2013-10-01","depuis_2000":"125.7","borne_basse":"127.80032184032162","borne_haute":"131.11938001033246"},{"mois":"2013-11","Indice":"99.46","Codes":"A","datetime":"2013-11-01","depuis_2000":"125.6","borne_basse":"127.99045874628753","borne_haute":"131.33486127245934"},{"mois":"2013-12","Indice":"99.8","Codes":"A","datetime":"2013-12-01","depuis_2000":"126.1","borne_basse":"128.18087853137683","borne_haute":"131.55069665595502"},{"mois":"2014-01","Indice":"99.24","Codes":"A","datetime":"2014-01-01","depuis_2000":"125.4","borne_basse":"128.37158161644732","borne_haute":"131.7668867427817"},{"mois":"2014-02","Indice":"99.79","Codes":"A","datetime":"2014-02-01","depuis_2000":"126.0","borne_basse":"128.5625684229829","borne_haute":"131.98343211585797"},{"mois":"2014-03","Indice":"100.24","Codes":"A","datetime":"2014-03-01","depuis_2000":"126.6","borne_basse":"128.7538393730946","borne_haute":"132.20033335906032"},{"mois":"2014-04","Indice":"100.2","Codes":"A","datetime":"2014-04-01","depuis_2000":"126.6","borne_basse":"128.94539488952137","borne_haute":"132.41759105722485"},{"mois":"2014-05","Indice":"100.22","Codes":"A","datetime":"2014-05-01","depuis_2000":"126.6","borne_basse":"129.1372353956312","borne_haute":"132.63520579614874"},{"mois":"2014-06","Indice":"100.18","Codes":"A","datetime":"2014-06-01","depuis_2000":"126.5","borne_basse":"129.3293613154219","borne_haute":"132.8531781625919"},{"mois":"2014-07","Indice":"99.86","Codes":"A","datetime":"2014-07-01","depuis_2000":"126.1","borne_basse":"129.52177307352204","borne_haute":"133.0715087442785"},{"mois":"2014-08","Indice":"100.3","Codes":"A","datetime":"2014-08-01","depuis_2000":"126.7","borne_basse":"129.71447109519204","borne_haute":"133.29019812989858"},{"mois":"2014-09","Indice":"99.92","Codes":"A","datetime":"2014-09-01","depuis_2000":"126.2","borne_basse":"129.90745580632492","borne_haute":"133.50924690910963"},{"mois":"2014-10","Indice":"99.95","Codes":"A","datetime":"2014-10-01","depuis_2000":"126.2","borne_basse":"130.10072763344738","borne_haute":"133.72865567253817"},{"mois":"2014-11","Indice":"99.78","Codes":"A","datetime":"2014-11-01","depuis_2000":"126.0","borne_basse":"130.29428700372068","borne_haute":"133.94842501178138"},{"mois":"2014-12","Indice":"99.86","Codes":"A","datetime":"2014-12-01","depuis_2000":"126.1","borne_basse":"130.48813434494159","borne_haute":"134.16855551940864"},{"mois":"2015-01","Indice":"98.86","Codes":"A","datetime":"2015-01-01","depuis_2000":"124.9","borne_basse":"130.68227008554334","borne_haute":"134.38904778896318"},{"mois":"2015-02","Indice":"99.52","Codes":"A","datetime":"2015-02-01","depuis_2000":"125.7","borne_basse":"130.87669465459655","borne_haute":"134.60990241496364"},{"mois":"2015-03","Indice":"100.17","Codes":"A","datetime":"2015-03-01","depuis_2000":"126.5","borne_basse":"131.07140848181024","borne_haute":"134.8311199929057"},{"mois":"2015-04","Indice":"100.28","Codes":"A","datetime":"2015-04-01","depuis_2000":"126.7","borne_basse":"131.2664119975327","borne_haute":"135.0527011192637"},{"mois":"2015-05","Indice":"100.52","Codes":"A","datetime":"2015-05-01","depuis_2000":"127.0","borne_basse":"131.4617056327525","borne_haute":"135.27464639149218"},{"mois":"2015-06","Indice":"100.44","Codes":"A","datetime":"2015-06-01","depuis_2000":"126.9","borne_basse":"131.65728981909942","borne_haute":"135.49695640802756"},{"mois":"2015-07","Indice":"100.03","Codes":"A","datetime":"2015-07-01","depuis_2000":"126.3","borne_basse":"131.85316498884538","borne_haute":"135.71963176828973"},{"mois":"2015-08","Indice":"100.35","Codes":"A","datetime":"2015-08-01","depuis_2000":"126.8","borne_basse":"132.04933157490544","borne_haute":"135.94267307268365"},{"mois":"2015-09","Indice":"99.95","Codes":"A","datetime":"2015-09-01","depuis_2000":"126.2","borne_basse":"132.24579001083873","borne_haute":"136.166080922601"},{"mois":"2015-10","Indice":"100.01","Codes":"A","datetime":"2015-10-01","depuis_2000":"126.3","borne_basse":"132.4425407308494","borne_haute":"136.38985592042178"},{"mois":"2015-11","Indice":"99.82","Codes":"A","datetime":"2015-11-01","depuis_2000":"126.1","borne_basse":"132.6395841697876","borne_haute":"136.61399866951592"},{"mois":"2015-12","Indice":"100.04","Codes":"A","datetime":"2015-12-01","depuis_2000":"126.4","borne_basse":"132.8369207631505","borne_haute":"136.83850977424495"},{"mois":"2016-01","Indice":"99.08","Codes":"A","datetime":"2016-01-01","depuis_2000":"125.1","borne_basse":"133.03455094708306","borne_haute":"137.06338983996363"},{"mois":"2016-02","Indice":"99.33","Codes":"A","datetime":"2016-02-01","depuis_2000":"125.5","borne_basse":"133.23247515837923","borne_haute":"137.2886394730215"},{"mois":"2016-03","Indice":"100.02","Codes":"A","datetime":"2016-03-01","depuis_2000":"126.3","borne_basse":"133.43069383448278","borne_haute":"137.51425928076463"},{"mois":"2016-04","Indice":"100.09","Codes":"A","datetime":"2016-04-01","depuis_2000":"126.4","borne_basse":"133.62920741348825","borne_haute":"137.74024987153715"},{"mois":"2016-05","Indice":"100.5","Codes":"A","datetime":"2016-05-01","depuis_2000":"126.9","borne_basse":"133.828016334142","borne_haute":"137.96661185468298"},{"mois":"2016-06","Indice":"100.63","Codes":"A","datetime":"2016-06-01","depuis_2000":"127.1","borne_basse":"134.02712103584318","borne_haute":"138.1933458405474"},{"mois":"2016-07","Indice":"100.25","Codes":"A","datetime":"2016-07-01","depuis_2000":"126.6","borne_basse":"134.22652195864455","borne_haute":"138.42045244047878"},{"mois":"2016-08","Indice":"100.58","Codes":"A","datetime":"2016-08-01","depuis_2000":"127.0","borne_basse":"134.4262195432537","borne_haute":"138.64793226683014"},{"mois":"2016-09","Indice":"100.34","Codes":"A","datetime":"2016-09-01","depuis_2000":"126.7","borne_basse":"134.62621423103377","borne_haute":"138.87578593296084"},{"mois":"2016-10","Indice":"100.37","Codes":"A","datetime":"2016-10-01","depuis_2000":"126.8","borne_basse":"134.82650646400464","borne_haute":"139.10401405323825"},{"mois":"2016-11","Indice":"100.35","Codes":"A","datetime":"2016-11-01","depuis_2000":"126.8","borne_basse":"135.02709668484374","borne_haute":"139.33261724303935"},{"mois":"2016-12","Indice":"100.65","Codes":"A","datetime":"2016-12-01","depuis_2000":"127.1","borne_basse":"135.22798533688714","borne_haute":"139.5615961187525"},{"mois":"2017-01","Indice":"100.41","Codes":"A","datetime":"2017-01-01","depuis_2000":"126.8","borne_basse":"135.4291728641305","borne_haute":"139.79095129777897"},{"mois":"2017-02","Indice":"100.53","Codes":"A","datetime":"2017-02-01","depuis_2000":"127.0","borne_basse":"135.63065971123","borne_haute":"140.02068339853471"},{"mois":"2017-03","Indice":"101.17","Codes":"A","datetime":"2017-03-01","depuis_2000":"127.8","borne_basse":"135.8324463235034","borne_haute":"140.25079304045192"},{"mois":"2017-04","Indice":"101.26","Codes":"A","datetime":"2017-04-01","depuis_2000":"127.9","borne_basse":"136.03453314693098","borne_haute":"140.4812808439808"},{"mois":"2017-05","Indice":"101.31","Codes":"A","datetime":"2017-05-01","depuis_2000":"128.0","borne_basse":"136.23692062815653","borne_haute":"140.71214743059124"},{"mois":"2017-06","Indice":"101.32","Codes":"A","datetime":"2017-06-01","depuis_2000":"128.0","borne_basse":"136.4396092144883","borne_haute":"140.9433934227744"},{"mois":"2017-07","Indice":"100.97","Codes":"A","datetime":"2017-07-01","depuis_2000":"127.5","borne_basse":"136.64259935390012","borne_haute":"141.1750194440444"},{"mois":"2017-08","Indice":"101.49","Codes":"A","datetime":"2017-08-01","depuis_2000":"128.2","borne_basse":"136.84589149503222","borne_haute":"141.40702611894017"},{"mois":"2017-09","Indice":"101.33","Codes":"A","datetime":"2017-09-01","depuis_2000":"128.0","borne_basse":"137.04948608719235","borne_haute":"141.63941407302687"},{"mois":"2017-10","Indice":"101.43","Codes":"A","datetime":"2017-10-01","depuis_2000":"128.1","borne_basse":"137.25338358035668","borne_haute":"141.8721839328978"},{"mois":"2017-11","Indice":"101.53","Codes":"A","datetime":"2017-11-01","depuis_2000":"128.2","borne_basse":"137.4575844251709","borne_haute":"142.10533632617594"},{"mois":"2017-12","Indice":"101.85","Codes":"A","datetime":"2017-12-01","depuis_2000":"128.6","borne_basse":"137.6620890729511","borne_haute":"142.3388718815158"},{"mois":"2018-01","Indice":"101.75","Codes":"A","datetime":"2018-01-01","depuis_2000":"128.5","borne_basse":"137.86689797568482","borne_haute":"142.5727912286049"},{"mois":"2018-02","Indice":"101.72","Codes":"A","datetime":"2018-02-01","depuis_2000":"128.5","borne_basse":"138.07201158603212","borne_haute":"142.80709499816567"},{"mois":"2018-03","Indice":"102.75","Codes":"A","datetime":"2018-03-01","depuis_2000":"129.8","borne_basse":"138.27743035732644","borne_haute":"143.04178382195704"},{"mois":"2018-04","Indice":"102.92","Codes":"A","datetime":"2018-04-01","depuis_2000":"130.0","borne_basse":"138.4831547435757","borne_haute":"143.27685833277616"},{"mois":"2018-05","Indice":"103.36","Codes":"A","datetime":"2018-05-01","depuis_2000":"130.6","borne_basse":"138.6891851994633","borne_haute":"143.51231916446014"},{"mois":"2018-06","Indice":"103.37","Codes":"A","datetime":"2018-06-01","depuis_2000":"130.6","borne_basse":"138.89552218034908","borne_haute":"143.74816695188773"},{"mois":"2018-07","Indice":"103.28","Codes":"A","datetime":"2018-07-01","depuis_2000":"130.5","borne_basse":"139.1021661422703","borne_haute":"143.98440233098103"},{"mois":"2018-08","Indice":"103.78","Codes":"A","datetime":"2018-08-01","depuis_2000":"131.1","borne_basse":"139.30911754194278","borne_haute":"144.2210259387072"},{"mois":"2018-09","Indice":"103.56","Codes":"A","datetime":"2018-09-01","depuis_2000":"130.8","borne_basse":"139.5163768367618","borne_haute":"144.45803841308023"},{"mois":"2018-10","Indice":"103.67","Codes":"A","datetime":"2018-10-01","depuis_2000":"130.9","borne_basse":"139.7239444848031","borne_haute":"144.69544039316258"},{"mois":"2018-11","Indice":"103.45","Codes":"A","datetime":"2018-11-01","depuis_2000":"130.7","borne_basse":"139.93182094482395","borne_haute":"144.933232519067"},{"mois":"2018-12","Indice":"103.47","Codes":"A","datetime":"2018-12-01","depuis_2000":"130.7","borne_basse":"140.1400066762642","borne_haute":"145.1714154319581"},{"mois":"2019-01","Indice":"103.01","Codes":"A","datetime":"2019-01-01","depuis_2000":"130.1","borne_basse":"140.34850213924713","borne_haute":"145.40998977405428"},{"mois":"2019-02","Indice":"103.06","Codes":"A","datetime":"2019-02-01","depuis_2000":"130.2","borne_basse":"140.55730779458068","borne_haute":"145.6489561886293"},{"mois":"2019-03","Indice":"103.89","Codes":"A","datetime":"2019-03-01","depuis_2000":"131.2","borne_basse":"140.7664241037583","borne_haute":"145.88831532001413"},{"mois":"2019-04","Indice":"104.22","Codes":"A","datetime":"2019-04-01","depuis_2000":"131.6","borne_basse":"140.97585152896008","borne_haute":"146.12806781359856"},{"mois":"2019-05","Indice":"104.33","Codes":"A","datetime":"2019-05-01","depuis_2000":"131.8","borne_basse":"141.18559053305364","borne_haute":"146.36821431583306"},{"mois":"2019-06","Indice":"104.58","Codes":"A","datetime":"2019-06-01","depuis_2000":"132.1","borne_basse":"141.39564157959535","borne_haute":"146.60875547423046"},{"mois":"2019-07","Indice":"104.38","Codes":"A","datetime":"2019-07-01","depuis_2000":"131.8","borne_basse":"141.60600513283114","borne_haute":"146.8496919373677"},{"mois":"2019-08","Indice":"104.86","Codes":"A","datetime":"2019-08-01","depuis_2000":"132.4","borne_basse":"141.81668165769773","borne_haute":"147.09102435488762"},{"mois":"2019-09","Indice":"104.5","Codes":"A","datetime":"2019-09-01","depuis_2000":"132.0","borne_basse":"142.02767161982348","borne_haute":"147.33275337750067"},{"mois":"2019-10","Indice":"104.46","Codes":"A","datetime":"2019-10-01","depuis_2000":"131.9","borne_basse":"142.23897548552952","borne_haute":"147.57487965698667"},{"mois":"2019-11","Indice":"104.52","Codes":"A","datetime":"2019-11-01","depuis_2000":"132.0","borne_basse":"142.45059372183076","borne_haute":"147.81740384619656"},{"mois":"2019-12","Indice":"104.98","Codes":"A","datetime":"2019-12-01","depuis_2000":"132.6","borne_basse":"142.6625267964369","borne_haute":"148.0603265990542"},{"mois":"2020-01","Indice":"104.54","Codes":"A","datetime":"2020-01-01","depuis_2000":"132.0","borne_basse":"142.87477517775355","borne_haute":"148.3036485705581"},{"mois":"2020-02","Indice":"104.53","Codes":"A","datetime":"2020-02-01","depuis_2000":"132.0","borne_basse":"143.0873393348831","borne_haute":"148.54737041678317"},{"mois":"2020-03","Indice":"104.59","Codes":"A","datetime":"2020-03-01","depuis_2000":"132.1","borne_basse":"143.30021973762592","borne_haute":"148.79149279488254"},{"mois":"2020-04","Indice":"104.56","Codes":"A","datetime":"2020-04-01","depuis_2000":"132.1","borne_basse":"143.5134168564813","borne_haute":"149.0360163630893"},{"mois":"2020-05","Indice":"104.71","Codes":"A","datetime":"2020-05-01","depuis_2000":"132.3","borne_basse":"143.72693116264855","borne_haute":"149.28094178071825"},{"mois":"2020-06","Indice":"104.79","Codes":"A","datetime":"2020-06-01","depuis_2000":"132.4","borne_basse":"143.940763128028","borne_haute":"149.52626970816775"},{"mois":"2020-07","Indice":"105.19","Codes":"A","datetime":"2020-07-01","depuis_2000":"132.9","borne_basse":"144.15491322522206","borne_haute":"149.77200080692143"},{"mois":"2020-08","Indice":"105.09","Codes":"A","datetime":"2020-08-01","depuis_2000":"132.7","borne_basse":"144.36938192753624","borne_haute":"150.01813573955"},{"mois":"2020-09","Indice":"104.55","Codes":"A","datetime":"2020-09-01","depuis_2000":"132.1","borne_basse":"144.58416970898026","borne_haute":"150.26467516971303"},{"mois":"2020-10","Indice":"104.51","Codes":"A","datetime":"2020-10-01","depuis_2000":"132.0","borne_basse":"144.799277044269","borne_haute":"150.5116197621608"},{"mois":"2020-11","Indice":"104.73","Codes":"A","datetime":"2020-11-01","depuis_2000":"132.3","borne_basse":"145.01470440882366","borne_haute":"150.75897018273596"},{"mois":"2020-12","Indice":"104.96","Codes":"A","datetime":"2020-12-01","depuis_2000":"132.6","borne_basse":"145.23045227877273","borne_haute":"151.00672709837548"},{"mois":"2021-01","Indice":"105.12","Codes":"A","datetime":"2021-01-01","depuis_2000":"132.8","borne_basse":"145.44652113095307","borne_haute":"151.25489117711228"},{"mois":"2021-02","Indice":"105.12","Codes":"A","datetime":"2021-02-01","depuis_2000":"132.8","borne_basse":"145.66291144291097","borne_haute":"151.50346308807724"},{"mois":"2021-03","Indice":"105.75","Codes":"A","datetime":"2021-03-01","depuis_2000":"133.6","borne_basse":"145.87962369290315","borne_haute":"151.75244350150078"},{"mois":"2021-04","Indice":"105.86","Codes":"A","datetime":"2021-04-01","depuis_2000":"133.7","borne_basse":"146.09665835989793","borne_haute":"152.00183308871485"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":500,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":100,"calculated_right_value":152.00183308871485,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"datetime","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('YYYY')});"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"datetime","value":"datetime"},{"label":"depuis_2000","value":"depuis_2000"},{"label":"borne_basse","value":"borne_basse"},{"label":"borne_haute","value":"borne_haute"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n<strong>Indice :</strong> [[depuis_2000]]<br>\n<strong>borne haute :</strong> [[borne_basse|round|1]]<br>\n<strong>borne basse : </strong>[[borne_haute|round|1]]"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["datetime"],"selected_yRows":["depuis_2000","borne_basse","borne_haute"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":["datetime","Indice","borne_basse","borne_haute"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"lineChart","chartTitle":"L’inflation en France, hors des clous depuis 2008","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeLinechart(data_) {
+
+    var data = _.cloneDeep(data_);
+      var initial_data = _.cloneDeep(data);
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+
+        var allLines = g_inner
+        .selectAll('.line')
+        .data(data);
+
+        allLines
+        .transition()
+        .duration(200)
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().transition().duration(200).remove();
+
+        allLines
+        .enter()
+        .append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('stroke-width', 2)
+        .style('fill', 'none');
+
+        AllDotPoints = g_inner
+        .selectAll('circle.dotPoint')
+        .data(_.flatten(data));
+
+        AllDotPoints
+        // .transition()
+        // .duration(200)
+        .attr('cx', function(d) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
+
+        AllDotPoints.exit().transition().duration(200).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        // .on('mouseover', function(d, i){
+        //     var thoseVars = [];
+        //     if (moment.isMoment(d.x_value)){ thoseVars.push({'name': 'date', 'value':d.x_value.locale('fr').format('DD MMMM YYYY')})};
+        //     if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':d.y_value})};
+        //     show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name, thoseVars)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+    // cells.exit().remove();
+
+
+/// Axis Label
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+
+  customizeAxis()
+
+  drawLegend()
+  addCustomCode()
+
+}
+
+initChart();
+
+makeLinechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
