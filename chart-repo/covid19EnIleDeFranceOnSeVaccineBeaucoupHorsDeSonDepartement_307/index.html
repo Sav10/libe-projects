@@ -1,0 +1,518 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Covid 19 : En Ile-de-France, on se vaccine beaucoup hors de son département</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"datetime2":"2021-05-23","departement_residence":"09","libelle_departement":"Ariège","population_insee":"153113.0","effectif_1_inj":"5450.0","effectif_termine":"2100.0","effectif_cumu_1_inj":"54980.0","effectif_cumu_termine":"29750.0","taux_1_inj":"0.036","taux_termine":"0.014","taux_cumu_1_inj":"35.9","taux_cumu_termine":"19.400000000000002","n_cum_dose1":"64399","n_cum_dose2":"34335","difference_vax":"-9419","difference_pct":"-17.1"},{"datetime2":"2021-05-23","departement_residence":"17","libelle_departement":"Charente-Maritime","population_insee":"650757.0","effectif_1_inj":"26980.0","effectif_termine":"9110.0","effectif_cumu_1_inj":"253130.0","effectif_cumu_termine":"125170.0","taux_1_inj":"0.041","taux_termine":"0.014","taux_cumu_1_inj":"38.9","taux_cumu_termine":"19.2","n_cum_dose1":"254761","n_cum_dose2":"127247","difference_vax":"-1631","difference_pct":"-0.6"},{"datetime2":"2021-05-23","departement_residence":"02","libelle_departement":"Aisne","population_insee":"528471.0","effectif_1_inj":"23750.0","effectif_termine":"6250.0","effectif_cumu_1_inj":"183780.0","effectif_cumu_termine":"78050.0","taux_1_inj":"0.045","taux_termine":"0.012","taux_cumu_1_inj":"34.8","taux_cumu_termine":"14.799999999999999","n_cum_dose1":"174477","n_cum_dose2":"75287","difference_vax":"9303","difference_pct":"5.1"},{"datetime2":"2021-05-23","departement_residence":"01","libelle_departement":"Ain","population_insee":"657907.0","effectif_1_inj":"25580.0","effectif_termine":"12360.0","effectif_cumu_1_inj":"207740.0","effectif_cumu_termine":"100520.0","taux_1_inj":"0.039","taux_termine":"0.019","taux_cumu_1_inj":"31.6","taux_cumu_termine":"15.299999999999999","n_cum_dose1":"192954","n_cum_dose2":"92957","difference_vax":"14786","difference_pct":"7.1"},{"datetime2":"2021-05-23","departement_residence":"04","libelle_departement":"Alpes-de-Haute-Provence","population_insee":"165232.0","effectif_1_inj":"3700.0","effectif_termine":"3320.0","effectif_cumu_1_inj":"51270.0","effectif_cumu_termine":"29720.0","taux_1_inj":"0.022","taux_termine":"0.02","taux_cumu_1_inj":"31.0","taux_cumu_termine":"18.0","n_cum_dose1":"53352","n_cum_dose2":"31534","difference_vax":"-2082","difference_pct":"-4.1"},{"datetime2":"2021-05-23","departement_residence":"03","libelle_departement":"Allier","population_insee":"333847.0","effectif_1_inj":"15220.0","effectif_termine":"5890.0","effectif_cumu_1_inj":"144260.0","effectif_cumu_termine":"67890.0","taux_1_inj":"0.046","taux_termine":"0.018","taux_cumu_1_inj":"43.2","taux_cumu_termine":"20.3","n_cum_dose1":"151283","n_cum_dose2":"69246","difference_vax":"-7023","difference_pct":"-4.9"},{"datetime2":"2021-05-23","departement_residence":"06","libelle_departement":"Alpes-Maritimes","population_insee":"1088178.0","effectif_1_inj":"23100.0","effectif_termine":"11930.0","effectif_cumu_1_inj":"401960.0","effectif_cumu_termine":"213320.0","taux_1_inj":"0.021","taux_termine":"0.011","taux_cumu_1_inj":"36.9","taux_cumu_termine":"19.6","n_cum_dose1":"441918","n_cum_dose2":"222702","difference_vax":"-39958","difference_pct":"-9.9"},{"datetime2":"2021-05-23","departement_residence":"26","libelle_departement":"Drôme","population_insee":"520531.0","effectif_1_inj":"22220.0","effectif_termine":"8490.0","effectif_cumu_1_inj":"185590.0","effectif_cumu_termine":"83940.0","taux_1_inj":"0.043","taux_termine":"0.016","taux_cumu_1_inj":"35.699999999999996","taux_cumu_termine":"16.1","n_cum_dose1":"200042","n_cum_dose2":"87333","difference_vax":"-14452","difference_pct":"-7.8"},{"datetime2":"2021-05-23","departement_residence":"07","libelle_departement":"Ardèche","population_insee":"327740.0","effectif_1_inj":"11610.0","effectif_termine":"5960.0","effectif_cumu_1_inj":"120540.0","effectif_cumu_termine":"58680.0","taux_1_inj":"0.035","taux_termine":"0.018","taux_cumu_1_inj":"36.8","taux_cumu_termine":"17.9","n_cum_dose1":"121562","n_cum_dose2":"59432","difference_vax":"-1022","difference_pct":"-0.8"},{"datetime2":"2021-05-23","departement_residence":"27","libelle_departement":"Eure","population_insee":"596993.0","effectif_1_inj":"23460.0","effectif_termine":"7660.0","effectif_cumu_1_inj":"200900.0","effectif_cumu_termine":"85780.0","taux_1_inj":"0.039","taux_termine":"0.013","taux_cumu_1_inj":"33.7","taux_cumu_termine":"14.399999999999999","n_cum_dose1":"198039","n_cum_dose2":"83087","difference_vax":"2861","difference_pct":"1.4"},{"datetime2":"2021-05-23","departement_residence":"05","libelle_departement":"Hautes-Alpes","population_insee":"140349.0","effectif_1_inj":"3990.0","effectif_termine":"2460.0","effectif_cumu_1_inj":"49970.0","effectif_cumu_termine":"27040.0","taux_1_inj":"0.028","taux_termine":"0.018","taux_cumu_1_inj":"35.6","taux_cumu_termine":"19.3","n_cum_dose1":"51086","n_cum_dose2":"27820","difference_vax":"-1116","difference_pct":"-2.2"},{"datetime2":"2021-05-23","departement_residence":"11","libelle_departement":"Aude","population_insee":"376059.0","effectif_1_inj":"13070.0","effectif_termine":"5780.0","effectif_cumu_1_inj":"134680.0","effectif_cumu_termine":"63100.0","taux_1_inj":"0.035","taux_termine":"0.015","taux_cumu_1_inj":"35.8","taux_cumu_termine":"16.8","n_cum_dose1":"129396","n_cum_dose2":"61877","difference_vax":"5284","difference_pct":"3.9"},{"datetime2":"2021-05-23","departement_residence":"08","libelle_departement":"Ardennes","population_insee":"267496.0","effectif_1_inj":"10170.0","effectif_termine":"5610.0","effectif_cumu_1_inj":"102270.0","effectif_cumu_termine":"47750.0","taux_1_inj":"0.038","taux_termine":"0.021","taux_cumu_1_inj":"38.2","taux_cumu_termine":"17.8","n_cum_dose1":"103761","n_cum_dose2":"48034","difference_vax":"-1491","difference_pct":"-1.5"},{"datetime2":"2021-05-23","departement_residence":"10","libelle_departement":"Aube","population_insee":"310161.0","effectif_1_inj":"12740.0","effectif_termine":"3060.0","effectif_cumu_1_inj":"117360.0","effectif_cumu_termine":"54980.0","taux_1_inj":"0.041","taux_termine":"0.01","taux_cumu_1_inj":"37.8","taux_cumu_termine":"17.7","n_cum_dose1":"120745","n_cum_dose2":"56567","difference_vax":"-3385","difference_pct":"-2.9"},{"datetime2":"2021-05-23","departement_residence":"14","libelle_departement":"Calvados","population_insee":"693310.0","effectif_1_inj":"21410.0","effectif_termine":"12520.0","effectif_cumu_1_inj":"261450.0","effectif_cumu_termine":"117740.0","taux_1_inj":"0.031","taux_termine":"0.018","taux_cumu_1_inj":"37.7","taux_cumu_termine":"17.0","n_cum_dose1":"269847","n_cum_dose2":"121302","difference_vax":"-8397","difference_pct":"-3.2"},{"datetime2":"2021-05-23","departement_residence":"31","libelle_departement":"Haute-Garonne","population_insee":"1409629.0","effectif_1_inj":"45900.0","effectif_termine":"23690.0","effectif_cumu_1_inj":"432580.0","effectif_cumu_termine":"200920.0","taux_1_inj":"0.033","taux_termine":"0.017","taux_cumu_1_inj":"30.7","taux_cumu_termine":"14.299999999999999","n_cum_dose1":"404305","n_cum_dose2":"194609","difference_vax":"28275","difference_pct":"6.5"},{"datetime2":"2021-05-23","departement_residence":"15","libelle_departement":"Cantal","population_insee":"143821.0","effectif_1_inj":"6350.0","effectif_termine":"3450.0","effectif_cumu_1_inj":"60440.0","effectif_cumu_termine":"31080.0","taux_1_inj":"0.044","taux_termine":"0.024","taux_cumu_1_inj":"42.0","taux_cumu_termine":"21.6","n_cum_dose1":"61812","n_cum_dose2":"32065","difference_vax":"-1372","difference_pct":"-2.3"},{"datetime2":"2021-05-23","departement_residence":"12","libelle_departement":"Aveyron","population_insee":"279334.0","effectif_1_inj":"9240.0","effectif_termine":"7530.0","effectif_cumu_1_inj":"109800.0","effectif_cumu_termine":"64470.0","taux_1_inj":"0.033","taux_termine":"0.027","taux_cumu_1_inj":"39.300000000000004","taux_cumu_termine":"23.1","n_cum_dose1":"113096","n_cum_dose2":"66286","difference_vax":"-3296","difference_pct":"-3.0"},{"datetime2":"2021-05-23","departement_residence":"13","libelle_departement":"Bouches-du-Rhône","population_insee":"2044355.0","effectif_1_inj":"65740.0","effectif_termine":"35230.0","effectif_cumu_1_inj":"662070.0","effectif_cumu_termine":"358350.0","taux_1_inj":"0.032","taux_termine":"0.017","taux_cumu_1_inj":"32.4","taux_cumu_termine":"17.5","n_cum_dose1":"684305","n_cum_dose2":"368938","difference_vax":"-22235","difference_pct":"-3.4"},{"datetime2":"2021-05-23","departement_residence":"18","libelle_departement":"Cher","population_insee":"299153.0","effectif_1_inj":"11350.0","effectif_termine":"6030.0","effectif_cumu_1_inj":"112560.0","effectif_cumu_termine":"59050.0","taux_1_inj":"0.038","taux_termine":"0.02","taux_cumu_1_inj":"37.6","taux_cumu_termine":"19.7","n_cum_dose1":"112772","n_cum_dose2":"58102","difference_vax":"-212","difference_pct":"-0.2"},{"datetime2":"2021-05-23","departement_residence":"16","libelle_departement":"Charente","population_insee":"349878.0","effectif_1_inj":"12380.0","effectif_termine":"6800.0","effectif_cumu_1_inj":"125690.0","effectif_cumu_termine":"61010.0","taux_1_inj":"0.035","taux_termine":"0.019","taux_cumu_1_inj":"35.9","taux_cumu_termine":"17.4","n_cum_dose1":"130407","n_cum_dose2":"63102","difference_vax":"-4717","difference_pct":"-3.8"},{"datetime2":"2021-05-23","departement_residence":"39","libelle_departement":"Jura","population_insee":"258766.0","effectif_1_inj":"10120.0","effectif_termine":"3900.0","effectif_cumu_1_inj":"89160.0","effectif_cumu_termine":"43150.0","taux_1_inj":"0.039","taux_termine":"0.015","taux_cumu_1_inj":"34.5","taux_cumu_termine":"16.7","n_cum_dose1":"93894","n_cum_dose2":"45320","difference_vax":"-4734","difference_pct":"-5.3"},{"datetime2":"2021-05-23","departement_residence":"21","libelle_departement":"Côte-d'Or","population_insee":"532576.0","effectif_1_inj":"20550.0","effectif_termine":"7730.0","effectif_cumu_1_inj":"188040.0","effectif_cumu_termine":"86980.0","taux_1_inj":"0.039","taux_termine":"0.015","taux_cumu_1_inj":"35.3","taux_cumu_termine":"16.3","n_cum_dose1":"189128","n_cum_dose2":"88513","difference_vax":"-1088","difference_pct":"-0.6"},{"datetime2":"2021-05-23","departement_residence":"19","libelle_departement":"Corrèze","population_insee":"239470.0","effectif_1_inj":"10240.0","effectif_termine":"4330.0","effectif_cumu_1_inj":"96780.0","effectif_cumu_termine":"46110.0","taux_1_inj":"0.043","taux_termine":"0.018","taux_cumu_1_inj":"40.400000000000006","taux_cumu_termine":"19.3","n_cum_dose1":"97619","n_cum_dose2":"46977","difference_vax":"-839","difference_pct":"-0.9"},{"datetime2":"2021-05-23","departement_residence":"24","libelle_departement":"Dordogne","population_insee":"411528.0","effectif_1_inj":"14850.0","effectif_termine":"7620.0","effectif_cumu_1_inj":"162800.0","effectif_cumu_termine":"82690.0","taux_1_inj":"0.036","taux_termine":"0.019","taux_cumu_1_inj":"39.6","taux_cumu_termine":"20.1","n_cum_dose1":"157900","n_cum_dose2":"81596","difference_vax":"4900","difference_pct":"3.0"},{"datetime2":"2021-05-23","departement_residence":"22","libelle_departement":"Côtes-d'Armor","population_insee":"599271.0","effectif_1_inj":"31570.0","effectif_termine":"6040.0","effectif_cumu_1_inj":"250810.0","effectif_cumu_termine":"114100.0","taux_1_inj":"0.053","taux_termine":"0.01","taux_cumu_1_inj":"41.9","taux_cumu_termine":"19.0","n_cum_dose1":"261993","n_cum_dose2":"118694","difference_vax":"-11183","difference_pct":"-4.5"},{"datetime2":"2021-05-23","departement_residence":"43","libelle_departement":"Haute-Loire","population_insee":"227878.0","effectif_1_inj":"11430.0","effectif_termine":"3730.0","effectif_cumu_1_inj":"85110.0","effectif_cumu_termine":"44490.0","taux_1_inj":"0.05","taux_termine":"0.016","taux_cumu_1_inj":"37.3","taux_cumu_termine":"19.5","n_cum_dose1":"84447","n_cum_dose2":"45220","difference_vax":"663","difference_pct":"0.8"},{"datetime2":"2021-05-23","departement_residence":"25","libelle_departement":"Doubs","population_insee":"542997.0","effectif_1_inj":"25730.0","effectif_termine":"7110.0","effectif_cumu_1_inj":"183010.0","effectif_cumu_termine":"80920.0","taux_1_inj":"0.047","taux_termine":"0.013","taux_cumu_1_inj":"33.7","taux_cumu_termine":"14.899999999999999","n_cum_dose1":"184899","n_cum_dose2":"78719","difference_vax":"-1889","difference_pct":"-1.0"},{"datetime2":"2021-05-23","departement_residence":"23","libelle_departement":"Creuse","population_insee":"115555.0","effectif_1_inj":"4000.0","effectif_termine":"1580.0","effectif_cumu_1_inj":"48240.0","effectif_cumu_termine":"23720.0","taux_1_inj":"0.035","taux_termine":"0.014","taux_cumu_1_inj":"41.699999999999996","taux_cumu_termine":"20.5","n_cum_dose1":"52354","n_cum_dose2":"25052","difference_vax":"-4114","difference_pct":"-8.5"},{"datetime2":"2021-05-23","departement_residence":"45","libelle_departement":"Loiret","population_insee":"682187.0","effectif_1_inj":"29240.0","effectif_termine":"10570.0","effectif_cumu_1_inj":"224340.0","effectif_cumu_termine":"93930.0","taux_1_inj":"0.043","taux_termine":"0.015","taux_cumu_1_inj":"32.9","taux_cumu_termine":"13.8","n_cum_dose1":"212548","n_cum_dose2":"90866","difference_vax":"11792","difference_pct":"5.3"},{"datetime2":"2021-05-23","departement_residence":"28","libelle_departement":"Eure-et-Loir","population_insee":"429641.0","effectif_1_inj":"20500.0","effectif_termine":"7960.0","effectif_cumu_1_inj":"152430.0","effectif_cumu_termine":"69890.0","taux_1_inj":"0.048","taux_termine":"0.019","taux_cumu_1_inj":"35.5","taux_cumu_termine":"16.3","n_cum_dose1":"147142","n_cum_dose2":"69005","difference_vax":"5288","difference_pct":"3.5"},{"datetime2":"2021-05-23","departement_residence":"29","libelle_departement":"Finistère","population_insee":"913187.0","effectif_1_inj":"38390.0","effectif_termine":"19470.0","effectif_cumu_1_inj":"357290.0","effectif_cumu_termine":"155980.0","taux_1_inj":"0.042","taux_termine":"0.021","taux_cumu_1_inj":"39.1","taux_cumu_termine":"17.1","n_cum_dose1":"352040","n_cum_dose2":"153171","difference_vax":"5250","difference_pct":"1.5"},{"datetime2":"2021-05-23","departement_residence":"2A","libelle_departement":"Corse-du-Sud","population_insee":"161208.0","effectif_1_inj":"3270.0","effectif_termine":"2680.0","effectif_cumu_1_inj":"64230.0","effectif_cumu_termine":"37610.0","taux_1_inj":"0.02","taux_termine":"0.017","taux_cumu_1_inj":"39.800000000000004","taux_cumu_termine":"23.3","n_cum_dose1":"70099","n_cum_dose2":"39690","difference_vax":"-5869","difference_pct":"-9.1"},{"datetime2":"2021-05-23","departement_residence":"48","libelle_departement":"Lozère","population_insee":"76573.0","effectif_1_inj":"1810.0","effectif_termine":"1350.0","effectif_cumu_1_inj":"25770.0","effectif_cumu_termine":"15590.0","taux_1_inj":"0.024","taux_termine":"0.018","taux_cumu_1_inj":"33.6","taux_cumu_termine":"20.4","n_cum_dose1":"24907","n_cum_dose2":"15429","difference_vax":"863","difference_pct":"3.3"},{"datetime2":"2021-05-23","departement_residence":"30","libelle_departement":"Gard","population_insee":"749136.0","effectif_1_inj":"27530.0","effectif_termine":"14370.0","effectif_cumu_1_inj":"259220.0","effectif_cumu_termine":"128490.0","taux_1_inj":"0.037","taux_termine":"0.019","taux_cumu_1_inj":"34.599999999999994","taux_cumu_termine":"17.2","n_cum_dose1":"259608","n_cum_dose2":"132070","difference_vax":"-388","difference_pct":"-0.1"},{"datetime2":"2021-05-23","departement_residence":"50","libelle_departement":"Manche","population_insee":"492896.0","effectif_1_inj":"17150.0","effectif_termine":"9560.0","effectif_cumu_1_inj":"193290.0","effectif_cumu_termine":"100310.0","taux_1_inj":"0.035","taux_termine":"0.019","taux_cumu_1_inj":"39.2","taux_cumu_termine":"20.4","n_cum_dose1":"194805","n_cum_dose2":"101695","difference_vax":"-1515","difference_pct":"-0.8"},{"datetime2":"2021-05-23","departement_residence":"32","libelle_departement":"Gers","population_insee":"191322.0","effectif_1_inj":"7730.0","effectif_termine":"1960.0","effectif_cumu_1_inj":"80840.0","effectif_cumu_termine":"37670.0","taux_1_inj":"0.04","taux_termine":"0.01","taux_cumu_1_inj":"42.3","taux_cumu_termine":"19.7","n_cum_dose1":"82203","n_cum_dose2":"35198","difference_vax":"-1363","difference_pct":"-1.7"},{"datetime2":"2021-05-23","departement_residence":"52","libelle_departement":"Haute-Marne","population_insee":"170339.0","effectif_1_inj":"7700.0","effectif_termine":"3010.0","effectif_cumu_1_inj":"68070.0","effectif_cumu_termine":"31470.0","taux_1_inj":"0.045","taux_termine":"0.018","taux_cumu_1_inj":"40.0","taux_cumu_termine":"18.5","n_cum_dose1":"68049","n_cum_dose2":"30756","difference_vax":"21","difference_pct":"0.0"},{"datetime2":"2021-05-23","departement_residence":"2B","libelle_departement":"Haute-Corse","population_insee":"184659.0","effectif_1_inj":"4150.0","effectif_termine":"2220.0","effectif_cumu_1_inj":"67910.0","effectif_cumu_termine":"40170.0","taux_1_inj":"0.022","taux_termine":"0.012","taux_cumu_1_inj":"36.8","taux_cumu_termine":"21.8","n_cum_dose1":"72107","n_cum_dose2":"41920","difference_vax":"-4197","difference_pct":"-6.2"},{"datetime2":"2021-05-23","departement_residence":"33","libelle_departement":"Gironde","population_insee":"1636085.0","effectif_1_inj":"59310.0","effectif_termine":"28450.0","effectif_cumu_1_inj":"546420.0","effectif_cumu_termine":"251390.0","taux_1_inj":"0.036","taux_termine":"0.017","taux_cumu_1_inj":"33.4","taux_cumu_termine":"15.4","n_cum_dose1":"555518","n_cum_dose2":"257217","difference_vax":"-9098","difference_pct":"-1.7"},{"datetime2":"2021-05-23","departement_residence":"57","libelle_departement":"Moselle","population_insee":"1041009.0","effectif_1_inj":"37950.0","effectif_termine":"14170.0","effectif_cumu_1_inj":"375910.0","effectif_cumu_termine":"190940.0","taux_1_inj":"0.036","taux_termine":"0.014","taux_cumu_1_inj":"36.1","taux_cumu_termine":"18.3","n_cum_dose1":"371859","n_cum_dose2":"191841","difference_vax":"4051","difference_pct":"1.1"},{"datetime2":"2021-05-23","departement_residence":"34","libelle_departement":"Hérault","population_insee":"1184031.0","effectif_1_inj":"49870.0","effectif_termine":"13360.0","effectif_cumu_1_inj":"429500.0","effectif_cumu_termine":"186260.0","taux_1_inj":"0.042","taux_termine":"0.011","taux_cumu_1_inj":"36.3","taux_cumu_termine":"15.7","n_cum_dose1":"428948","n_cum_dose2":"182509","difference_vax":"552","difference_pct":"0.1"},{"datetime2":"2021-05-23","departement_residence":"38","libelle_departement":"Isère","population_insee":"1269323.0","effectif_1_inj":"57740.0","effectif_termine":"22210.0","effectif_cumu_1_inj":"457920.0","effectif_cumu_termine":"198080.0","taux_1_inj":"0.045","taux_termine":"0.018","taux_cumu_1_inj":"36.1","taux_cumu_termine":"15.6","n_cum_dose1":"430774","n_cum_dose2":"186687","difference_vax":"27146","difference_pct":"5.9"},{"datetime2":"2021-05-23","departement_residence":"35","libelle_departement":"Ille-et-Vilaine","population_insee":"1085753.0","effectif_1_inj":"34430.0","effectif_termine":"19800.0","effectif_cumu_1_inj":"342380.0","effectif_cumu_termine":"152890.0","taux_1_inj":"0.032","taux_termine":"0.018","taux_cumu_1_inj":"31.5","taux_cumu_termine":"14.099999999999998","n_cum_dose1":"345449","n_cum_dose2":"157967","difference_vax":"-3069","difference_pct":"-0.9"},{"datetime2":"2021-05-23","departement_residence":"40","libelle_departement":"Landes","population_insee":"414728.0","effectif_1_inj":"16880.0","effectif_termine":"7610.0","effectif_cumu_1_inj":"168130.0","effectif_cumu_termine":"84490.0","taux_1_inj":"0.041","taux_termine":"0.018","taux_cumu_1_inj":"40.5","taux_cumu_termine":"20.4","n_cum_dose1":"157778","n_cum_dose2":"79808","difference_vax":"10352","difference_pct":"6.2"},{"datetime2":"2021-05-23","departement_residence":"60","libelle_departement":"Oise","population_insee":"829408.0","effectif_1_inj":"31770.0","effectif_termine":"11120.0","effectif_cumu_1_inj":"265170.0","effectif_cumu_termine":"122800.0","taux_1_inj":"0.038","taux_termine":"0.013","taux_cumu_1_inj":"32.0","taux_cumu_termine":"14.799999999999999","n_cum_dose1":"258506","n_cum_dose2":"122650","difference_vax":"6664","difference_pct":"2.5"},{"datetime2":"2021-05-23","departement_residence":"36","libelle_departement":"Indre","population_insee":"218129.0","effectif_1_inj":"7030.0","effectif_termine":"5240.0","effectif_cumu_1_inj":"84440.0","effectif_cumu_termine":"42180.0","taux_1_inj":"0.032","taux_termine":"0.024","taux_cumu_1_inj":"38.7","taux_cumu_termine":"19.3","n_cum_dose1":"87477","n_cum_dose2":"43817","difference_vax":"-3037","difference_pct":"-3.6"},{"datetime2":"2021-05-23","departement_residence":"61","libelle_departement":"Orne","population_insee":"277400.0","effectif_1_inj":"11860.0","effectif_termine":"4580.0","effectif_cumu_1_inj":"105640.0","effectif_cumu_termine":"55390.0","taux_1_inj":"0.043","taux_termine":"0.017","taux_cumu_1_inj":"38.1","taux_cumu_termine":"20.0","n_cum_dose1":"115431","n_cum_dose2":"62271","difference_vax":"-9791","difference_pct":"-9.3"},{"datetime2":"2021-05-23","departement_residence":"37","libelle_departement":"Indre-et-Loire","population_insee":"608781.0","effectif_1_inj":"22270.0","effectif_termine":"11420.0","effectif_cumu_1_inj":"217000.0","effectif_cumu_termine":"91260.0","taux_1_inj":"0.037","taux_termine":"0.019","taux_cumu_1_inj":"35.6","taux_cumu_termine":"15.0","n_cum_dose1":"211673","n_cum_dose2":"89877","difference_vax":"5327","difference_pct":"2.5"},{"datetime2":"2021-05-23","departement_residence":"42","libelle_departement":"Loire","population_insee":"765546.0","effectif_1_inj":"34300.0","effectif_termine":"16290.0","effectif_cumu_1_inj":"274440.0","effectif_cumu_termine":"135050.0","taux_1_inj":"0.045","taux_termine":"0.021","taux_cumu_1_inj":"35.8","taux_cumu_termine":"17.599999999999998","n_cum_dose1":"290232","n_cum_dose2":"138856","difference_vax":"-15792","difference_pct":"-5.8"},{"datetime2":"2021-05-23","departement_residence":"62","libelle_departement":"Pas-de-Calais","population_insee":"1459364.0","effectif_1_inj":"74170.0","effectif_termine":"20540.0","effectif_cumu_1_inj":"582090.0","effectif_cumu_termine":"246760.0","taux_1_inj":"0.051","taux_termine":"0.014","taux_cumu_1_inj":"39.900000000000006","taux_cumu_termine":"16.900000000000002","n_cum_dose1":"559203","n_cum_dose2":"243020","difference_vax":"22887","difference_pct":"3.9"},{"datetime2":"2021-05-23","departement_residence":"41","libelle_departement":"Loir-et-Cher","population_insee":"327835.0","effectif_1_inj":"14060.0","effectif_termine":"4620.0","effectif_cumu_1_inj":"121670.0","effectif_cumu_termine":"56380.0","taux_1_inj":"0.043","taux_termine":"0.014","taux_cumu_1_inj":"37.1","taux_cumu_termine":"17.2","n_cum_dose1":"122689","n_cum_dose2":"56984","difference_vax":"-1019","difference_pct":"-0.8"},{"datetime2":"2021-05-23","departement_residence":"47","libelle_departement":"Lot-et-Garonne","population_insee":"330756.0","effectif_1_inj":"11770.0","effectif_termine":"6050.0","effectif_cumu_1_inj":"123520.0","effectif_cumu_termine":"59220.0","taux_1_inj":"0.036","taux_termine":"0.018","taux_cumu_1_inj":"37.3","taux_cumu_termine":"17.9","n_cum_dose1":"126848","n_cum_dose2":"58854","difference_vax":"-3328","difference_pct":"-2.7"},{"datetime2":"2021-05-23","departement_residence":"67","libelle_departement":"Bas-Rhin","population_insee":"1143364.0","effectif_1_inj":"45480.0","effectif_termine":"24440.0","effectif_cumu_1_inj":"384540.0","effectif_cumu_termine":"173340.0","taux_1_inj":"0.04","taux_termine":"0.021","taux_cumu_1_inj":"33.6","taux_cumu_termine":"15.2","n_cum_dose1":"384860","n_cum_dose2":"174388","difference_vax":"-320","difference_pct":"-0.1"},{"datetime2":"2021-05-23","departement_residence":"44","libelle_departement":"Loire-Atlantique","population_insee":"1442940.0","effectif_1_inj":"49210.0","effectif_termine":"27520.0","effectif_cumu_1_inj":"455180.0","effectif_cumu_termine":"198070.0","taux_1_inj":"0.034","taux_termine":"0.019","taux_cumu_1_inj":"31.5","taux_cumu_termine":"13.700000000000001","n_cum_dose1":"447884","n_cum_dose2":"194403","difference_vax":"7296","difference_pct":"1.6"},{"datetime2":"2021-05-23","departement_residence":"68","libelle_departement":"Haut-Rhin","population_insee":"765130.0","effectif_1_inj":"29310.0","effectif_termine":"13120.0","effectif_cumu_1_inj":"245050.0","effectif_cumu_termine":"120930.0","taux_1_inj":"0.038","taux_termine":"0.017","taux_cumu_1_inj":"32.0","taux_cumu_termine":"15.8","n_cum_dose1":"251566","n_cum_dose2":"124006","difference_vax":"-6516","difference_pct":"-2.7"},{"datetime2":"2021-05-23","departement_residence":"69","libelle_departement":"Rhône","population_insee":"1882578.0","effectif_1_inj":"71170.0","effectif_termine":"32160.0","effectif_cumu_1_inj":"578980.0","effectif_cumu_termine":"274130.0","taux_1_inj":"0.038","taux_termine":"0.017","taux_cumu_1_inj":"30.8","taux_cumu_termine":"14.6","n_cum_dose1":"589261","n_cum_dose2":"284706","difference_vax":"-10281","difference_pct":"-1.8"},{"datetime2":"2021-05-23","departement_residence":"46","libelle_departement":"Lot","population_insee":"174146.0","effectif_1_inj":"5480.0","effectif_termine":"4380.0","effectif_cumu_1_inj":"66610.0","effectif_cumu_termine":"37170.0","taux_1_inj":"0.031","taux_termine":"0.025","taux_cumu_1_inj":"38.2","taux_cumu_termine":"21.3","n_cum_dose1":"74386","n_cum_dose2":"41136","difference_vax":"-7776","difference_pct":"-11.7"},{"datetime2":"2021-05-23","departement_residence":"51","libelle_departement":"Marne","population_insee":"563834.0","effectif_1_inj":"22180.0","effectif_termine":"10610.0","effectif_cumu_1_inj":"196340.0","effectif_cumu_termine":"83270.0","taux_1_inj":"0.039","taux_termine":"0.019","taux_cumu_1_inj":"34.8","taux_cumu_termine":"14.799999999999999","n_cum_dose1":"195233","n_cum_dose2":"84045","difference_vax":"1107","difference_pct":"0.6"},{"datetime2":"2021-05-23","departement_residence":"72","libelle_departement":"Sarthe","population_insee":"563536.0","effectif_1_inj":"24890.0","effectif_termine":"8480.0","effectif_cumu_1_inj":"206090.0","effectif_cumu_termine":"78530.0","taux_1_inj":"0.044","taux_termine":"0.015","taux_cumu_1_inj":"36.6","taux_cumu_termine":"13.900000000000002","n_cum_dose1":"194185","n_cum_dose2":"71721","difference_vax":"11905","difference_pct":"5.8"},{"datetime2":"2021-05-23","departement_residence":"49","libelle_departement":"Maine-et-Loire","population_insee":"818345.0","effectif_1_inj":"30350.0","effectif_termine":"16780.0","effectif_cumu_1_inj":"291510.0","effectif_cumu_termine":"132240.0","taux_1_inj":"0.037","taux_termine":"0.021","taux_cumu_1_inj":"35.6","taux_cumu_termine":"16.2","n_cum_dose1":"307558","n_cum_dose2":"135541","difference_vax":"-16048","difference_pct":"-5.5"},{"datetime2":"2021-05-23","departement_residence":"54","libelle_departement":"Meurthe-et-Moselle","population_insee":"731533.0","effectif_1_inj":"26010.0","effectif_termine":"8300.0","effectif_cumu_1_inj":"261280.0","effectif_cumu_termine":"111960.0","taux_1_inj":"0.036","taux_termine":"0.011","taux_cumu_1_inj":"35.699999999999996","taux_cumu_termine":"15.299999999999999","n_cum_dose1":"260266","n_cum_dose2":"108291","difference_vax":"1014","difference_pct":"0.4"},{"datetime2":"2021-05-23","departement_residence":"55","libelle_departement":"Meuse","population_insee":"181387.0","effectif_1_inj":"8900.0","effectif_termine":"4040.0","effectif_cumu_1_inj":"68600.0","effectif_cumu_termine":"33390.0","taux_1_inj":"0.049","taux_termine":"0.022","taux_cumu_1_inj":"37.8","taux_cumu_termine":"18.4","n_cum_dose1":"66759","n_cum_dose2":"32982","difference_vax":"1841","difference_pct":"2.7"},{"datetime2":"2021-05-23","departement_residence":"53","libelle_departement":"Mayenne","population_insee":"306123.0","effectif_1_inj":"12030.0","effectif_termine":"5480.0","effectif_cumu_1_inj":"104630.0","effectif_cumu_termine":"51160.0","taux_1_inj":"0.039","taux_termine":"0.018","taux_cumu_1_inj":"34.2","taux_cumu_termine":"16.7","n_cum_dose1":"102797","n_cum_dose2":"51901","difference_vax":"1833","difference_pct":"1.8"},{"datetime2":"2021-05-23","departement_residence":"76","libelle_departement":"Seine-Maritime","population_insee":"1252833.0","effectif_1_inj":"53080.0","effectif_termine":"18210.0","effectif_cumu_1_inj":"445570.0","effectif_cumu_termine":"200510.0","taux_1_inj":"0.042","taux_termine":"0.015","taux_cumu_1_inj":"35.6","taux_cumu_termine":"16.0","n_cum_dose1":"455802","n_cum_dose2":"210526","difference_vax":"-10232","difference_pct":"-2.3"},{"datetime2":"2021-05-23","departement_residence":"78","libelle_departement":"Yvelines","population_insee":"1449520.0","effectif_1_inj":"74800.0","effectif_termine":"14170.0","effectif_cumu_1_inj":"506720.0","effectif_cumu_termine":"206440.0","taux_1_inj":"0.052","taux_termine":"0.01","taux_cumu_1_inj":"35.0","taux_cumu_termine":"14.2","n_cum_dose1":"434819","n_cum_dose2":"175307","difference_vax":"71901","difference_pct":"14.2"},{"datetime2":"2021-05-23","departement_residence":"56","libelle_departement":"Morbihan","population_insee":"760313.0","effectif_1_inj":"20080.0","effectif_termine":"22480.0","effectif_cumu_1_inj":"282250.0","effectif_cumu_termine":"140420.0","taux_1_inj":"0.026","taux_termine":"0.03","taux_cumu_1_inj":"37.1","taux_cumu_termine":"18.5","n_cum_dose1":"287333","n_cum_dose2":"143959","difference_vax":"-5083","difference_pct":"-1.8"},{"datetime2":"2021-05-23","departement_residence":"58","libelle_departement":"Nièvre","population_insee":"201755.0","effectif_1_inj":"6880.0","effectif_termine":"3620.0","effectif_cumu_1_inj":"78040.0","effectif_cumu_termine":"40960.0","taux_1_inj":"0.034","taux_termine":"0.018","taux_cumu_1_inj":"38.7","taux_cumu_termine":"20.3","n_cum_dose1":"82660","n_cum_dose2":"45016","difference_vax":"-4620","difference_pct":"-5.9"},{"datetime2":"2021-05-23","departement_residence":"59","libelle_departement":"Nord","population_insee":"2601802.0","effectif_1_inj":"122290.0","effectif_termine":"36860.0","effectif_cumu_1_inj":"905610.0","effectif_cumu_termine":"383560.0","taux_1_inj":"0.047","taux_termine":"0.014","taux_cumu_1_inj":"34.8","taux_cumu_termine":"14.7","n_cum_dose1":"914124","n_cum_dose2":"388904","difference_vax":"-8514","difference_pct":"-0.9"},{"datetime2":"2021-05-23","departement_residence":"63","libelle_departement":"Puy-de-Dôme","population_insee":"666274.0","effectif_1_inj":"33210.0","effectif_termine":"10300.0","effectif_cumu_1_inj":"249780.0","effectif_cumu_termine":"112130.0","taux_1_inj":"0.05","taux_termine":"0.015","taux_cumu_1_inj":"37.5","taux_cumu_termine":"16.8","n_cum_dose1":"241273","n_cum_dose2":"109479","difference_vax":"8507","difference_pct":"3.4"},{"datetime2":"2021-05-23","departement_residence":"84","libelle_departement":"Vaucluse","population_insee":"560425.0","effectif_1_inj":"17290.0","effectif_termine":"10290.0","effectif_cumu_1_inj":"175640.0","effectif_cumu_termine":"86670.0","taux_1_inj":"0.031","taux_termine":"0.018","taux_cumu_1_inj":"31.3","taux_cumu_termine":"15.5","n_cum_dose1":"181251","n_cum_dose2":"89986","difference_vax":"-5611","difference_pct":"-3.2"},{"datetime2":"2021-05-23","departement_residence":"64","libelle_departement":"Pyrénées-Atlantiques","population_insee":"685441.0","effectif_1_inj":"27030.0","effectif_termine":"11660.0","effectif_cumu_1_inj":"266430.0","effectif_cumu_termine":"137470.0","taux_1_inj":"0.039","taux_termine":"0.017","taux_cumu_1_inj":"38.9","taux_cumu_termine":"20.1","n_cum_dose1":"281516","n_cum_dose2":"145148","difference_vax":"-15086","difference_pct":"-5.7"},{"datetime2":"2021-05-23","departement_residence":"65","libelle_departement":"Hautes-Pyrénées","population_insee":"229205.0","effectif_1_inj":"8100.0","effectif_termine":"5680.0","effectif_cumu_1_inj":"94050.0","effectif_cumu_termine":"48570.0","taux_1_inj":"0.035","taux_termine":"0.025","taux_cumu_1_inj":"41.0","taux_cumu_termine":"21.2","n_cum_dose1":"104102","n_cum_dose2":"53522","difference_vax":"-10052","difference_pct":"-10.7"},{"datetime2":"2021-05-23","departement_residence":"66","libelle_departement":"Pyrénées-Orientales","population_insee":"478983.0","effectif_1_inj":"18380.0","effectif_termine":"8080.0","effectif_cumu_1_inj":"182760.0","effectif_cumu_termine":"85340.0","taux_1_inj":"0.038","taux_termine":"0.017","taux_cumu_1_inj":"38.2","taux_cumu_termine":"17.8","n_cum_dose1":"192454","n_cum_dose2":"89252","difference_vax":"-9694","difference_pct":"-5.3"},{"datetime2":"2021-05-23","departement_residence":"91","libelle_departement":"Essonne","population_insee":"1309566.0","effectif_1_inj":"54590.0","effectif_termine":"12480.0","effectif_cumu_1_inj":"399920.0","effectif_cumu_termine":"164490.0","taux_1_inj":"0.042","taux_termine":"0.01","taux_cumu_1_inj":"30.5","taux_cumu_termine":"12.6","n_cum_dose1":"362058","n_cum_dose2":"153401","difference_vax":"37862","difference_pct":"9.5"},{"datetime2":"2021-05-23","departement_residence":"70","libelle_departement":"Haute-Saône","population_insee":"234567.0","effectif_1_inj":"8910.0","effectif_termine":"3630.0","effectif_cumu_1_inj":"87580.0","effectif_cumu_termine":"40080.0","taux_1_inj":"0.038","taux_termine":"0.015","taux_cumu_1_inj":"37.3","taux_cumu_termine":"17.1","n_cum_dose1":"85612","n_cum_dose2":"38895","difference_vax":"1968","difference_pct":"2.2"},{"datetime2":"2021-05-23","departement_residence":"94","libelle_departement":"Val-de-Marne","population_insee":"1411786.0","effectif_1_inj":"59630.0","effectif_termine":"14370.0","effectif_cumu_1_inj":"431440.0","effectif_cumu_termine":"186010.0","taux_1_inj":"0.042","taux_termine":"0.01","taux_cumu_1_inj":"30.599999999999998","taux_cumu_termine":"13.200000000000001","n_cum_dose1":"437590","n_cum_dose2":"185697","difference_vax":"-6150","difference_pct":"-1.4"},{"datetime2":"2021-05-23","departement_residence":"71","libelle_departement":"Saône-et-Loire","population_insee":"549364.0","effectif_1_inj":"19540.0","effectif_termine":"11000.0","effectif_cumu_1_inj":"198580.0","effectif_cumu_termine":"102020.0","taux_1_inj":"0.036","taux_termine":"0.02","taux_cumu_1_inj":"36.1","taux_cumu_termine":"18.6","n_cum_dose1":"204803","n_cum_dose2":"106011","difference_vax":"-6223","difference_pct":"-3.1"},{"datetime2":"2021-05-23","departement_residence":"74","libelle_departement":"Haute-Savoie","population_insee":"831867.0","effectif_1_inj":"33810.0","effectif_termine":"13380.0","effectif_cumu_1_inj":"236640.0","effectif_cumu_termine":"112410.0","taux_1_inj":"0.041","taux_termine":"0.016","taux_cumu_1_inj":"28.4","taux_cumu_termine":"13.5","n_cum_dose1":"247776","n_cum_dose2":"116130","difference_vax":"-11136","difference_pct":"-4.7"},{"datetime2":"2021-05-23","departement_residence":"73","libelle_departement":"Savoie","population_insee":"436834.0","effectif_1_inj":"15890.0","effectif_termine":"8490.0","effectif_cumu_1_inj":"148860.0","effectif_cumu_termine":"74540.0","taux_1_inj":"0.036","taux_termine":"0.019","taux_cumu_1_inj":"34.1","taux_cumu_termine":"17.1","n_cum_dose1":"144397","n_cum_dose2":"73682","difference_vax":"4463","difference_pct":"3.0"},{"datetime2":"2021-05-23","departement_residence":"75","libelle_departement":"Paris","population_insee":"2154092.0","effectif_1_inj":"119700.0","effectif_termine":"29760.0","effectif_cumu_1_inj":"805770.0","effectif_cumu_termine":"341770.0","taux_1_inj":"0.056","taux_termine":"0.014","taux_cumu_1_inj":"37.4","taux_cumu_termine":"15.9","n_cum_dose1":"846970","n_cum_dose2":"359609","difference_vax":"-41200","difference_pct":"-5.1"},{"datetime2":"2021-05-23","departement_residence":"77","libelle_departement":"Seine-et-Marne","population_insee":"1426334.0","effectif_1_inj":"68910.0","effectif_termine":"12850.0","effectif_cumu_1_inj":"446180.0","effectif_cumu_termine":"165910.0","taux_1_inj":"0.048","taux_termine":"0.009","taux_cumu_1_inj":"31.3","taux_cumu_termine":"11.600000000000001","n_cum_dose1":"391941","n_cum_dose2":"142553","difference_vax":"54239","difference_pct":"12.2"},{"datetime2":"2021-05-23","departement_residence":"79","libelle_departement":"Deux-Sèvres","population_insee":"374608.0","effectif_1_inj":"15460.0","effectif_termine":"5990.0","effectif_cumu_1_inj":"134670.0","effectif_cumu_termine":"66280.0","taux_1_inj":"0.041","taux_termine":"0.016","taux_cumu_1_inj":"35.9","taux_cumu_termine":"17.7","n_cum_dose1":"132287","n_cum_dose2":"67357","difference_vax":"2383","difference_pct":"1.8"},{"datetime2":"2021-05-23","departement_residence":"80","libelle_departement":"Somme","population_insee":"568750.0","effectif_1_inj":"26780.0","effectif_termine":"6840.0","effectif_cumu_1_inj":"213540.0","effectif_cumu_termine":"86640.0","taux_1_inj":"0.047","taux_termine":"0.012","taux_cumu_1_inj":"37.5","taux_cumu_termine":"15.2","n_cum_dose1":"208109","n_cum_dose2":"84523","difference_vax":"5431","difference_pct":"2.5"},{"datetime2":"2021-05-23","departement_residence":"83","libelle_departement":"Var","population_insee":"1079043.0","effectif_1_inj":"40040.0","effectif_termine":"20380.0","effectif_cumu_1_inj":"393870.0","effectif_cumu_termine":"206200.0","taux_1_inj":"0.037","taux_termine":"0.019","taux_cumu_1_inj":"36.5","taux_cumu_termine":"19.1","n_cum_dose1":"390134","n_cum_dose2":"204138","difference_vax":"3736","difference_pct":"0.9"},{"datetime2":"2021-05-23","departement_residence":"81","libelle_departement":"Tarn","population_insee":"389012.0","effectif_1_inj":"13630.0","effectif_termine":"6390.0","effectif_cumu_1_inj":"146940.0","effectif_cumu_termine":"78930.0","taux_1_inj":"0.035","taux_termine":"0.016","taux_cumu_1_inj":"37.8","taux_cumu_termine":"20.3","n_cum_dose1":"148470","n_cum_dose2":"78685","difference_vax":"-1530","difference_pct":"-1.0"},{"datetime2":"2021-05-23","departement_residence":"82","libelle_departement":"Tarn-et-Garonne","population_insee":"261307.0","effectif_1_inj":"7650.0","effectif_termine":"5830.0","effectif_cumu_1_inj":"82660.0","effectif_cumu_termine":"43210.0","taux_1_inj":"0.029","taux_termine":"0.022","taux_cumu_1_inj":"31.6","taux_cumu_termine":"16.5","n_cum_dose1":"89680","n_cum_dose2":"46534","difference_vax":"-7020","difference_pct":"-8.5"},{"datetime2":"2021-05-23","departement_residence":"85","libelle_departement":"Vendée","population_insee":"687477.0","effectif_1_inj":"30030.0","effectif_termine":"13460.0","effectif_cumu_1_inj":"265920.0","effectif_cumu_termine":"118380.0","taux_1_inj":"0.044","taux_termine":"0.02","taux_cumu_1_inj":"38.7","taux_cumu_termine":"17.2","n_cum_dose1":"268747","n_cum_dose2":"119732","difference_vax":"-2827","difference_pct":"-1.1"},{"datetime2":"2021-05-23","departement_residence":"88","libelle_departement":"Vosges","population_insee":"361749.0","effectif_1_inj":"12790.0","effectif_termine":"5800.0","effectif_cumu_1_inj":"137590.0","effectif_cumu_termine":"65680.0","taux_1_inj":"0.035","taux_termine":"0.016","taux_cumu_1_inj":"38.0","taux_cumu_termine":"18.2","n_cum_dose1":"146851","n_cum_dose2":"69402","difference_vax":"-9261","difference_pct":"-6.7"},{"datetime2":"2021-05-23","departement_residence":"86","libelle_departement":"Vienne","population_insee":"438390.0","effectif_1_inj":"20430.0","effectif_termine":"7780.0","effectif_cumu_1_inj":"170180.0","effectif_cumu_termine":"69930.0","taux_1_inj":"0.047","taux_termine":"0.018","taux_cumu_1_inj":"38.800000000000004","taux_cumu_termine":"16.0","n_cum_dose1":"176344","n_cum_dose2":"72528","difference_vax":"-6164","difference_pct":"-3.6"},{"datetime2":"2021-05-23","departement_residence":"87","libelle_departement":"Haute-Vienne","population_insee":"371228.0","effectif_1_inj":"14800.0","effectif_termine":"8920.0","effectif_cumu_1_inj":"147440.0","effectif_cumu_termine":"66990.0","taux_1_inj":"0.04","taux_termine":"0.024","taux_cumu_1_inj":"39.7","taux_cumu_termine":"18.0","n_cum_dose1":"148604","n_cum_dose2":"67512","difference_vax":"-1164","difference_pct":"-0.8"},{"datetime2":"2021-05-23","departement_residence":"90","libelle_departement":"Territoire de Belfort","population_insee":"139866.0","effectif_1_inj":"6820.0","effectif_termine":"1810.0","effectif_cumu_1_inj":"47080.0","effectif_cumu_termine":"22100.0","taux_1_inj":"0.049","taux_termine":"0.013","taux_cumu_1_inj":"33.7","taux_cumu_termine":"15.8","n_cum_dose1":"49651","n_cum_dose2":"25335","difference_vax":"-2571","difference_pct":"-5.5"},{"datetime2":"2021-05-23","departement_residence":"92","libelle_departement":"Hauts-de-Seine","population_insee":"1628798.0","effectif_1_inj":"89400.0","effectif_termine":"18900.0","effectif_cumu_1_inj":"570110.0","effectif_cumu_termine":"231020.0","taux_1_inj":"0.055","taux_termine":"0.012","taux_cumu_1_inj":"35.0","taux_cumu_termine":"14.2","n_cum_dose1":"515080","n_cum_dose2":"201532","difference_vax":"55030","difference_pct":"9.7"},{"datetime2":"2021-05-23","departement_residence":"89","libelle_departement":"Yonne","population_insee":"334626.0","effectif_1_inj":"14350.0","effectif_termine":"4400.0","effectif_cumu_1_inj":"117340.0","effectif_cumu_termine":"56460.0","taux_1_inj":"0.043","taux_termine":"0.013","taux_cumu_1_inj":"35.099999999999994","taux_cumu_termine":"16.900000000000002","n_cum_dose1":"119014","n_cum_dose2":"58173","difference_vax":"-1674","difference_pct":"-1.4"},{"datetime2":"2021-05-23","departement_residence":"93","libelle_departement":"Seine-Saint-Denis","population_insee":"1657893.0","effectif_1_inj":"56860.0","effectif_termine":"12820.0","effectif_cumu_1_inj":"376430.0","effectif_cumu_termine":"158170.0","taux_1_inj":"0.034","taux_termine":"0.008","taux_cumu_1_inj":"22.7","taux_cumu_termine":"9.5","n_cum_dose1":"458772","n_cum_dose2":"184636","difference_vax":"-82342","difference_pct":"-21.9"},{"datetime2":"2021-05-23","departement_residence":"95","libelle_departement":"Val-d'Oise","population_insee":"1253568.0","effectif_1_inj":"52000.0","effectif_termine":"11970.0","effectif_cumu_1_inj":"361360.0","effectif_cumu_termine":"150450.0","taux_1_inj":"0.041","taux_termine":"0.01","taux_cumu_1_inj":"28.799999999999997","taux_cumu_termine":"12.0","n_cum_dose1":"380713","n_cum_dose2":"155583","difference_vax":"-19353","difference_pct":"-5.4"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":14.2,"manual_left_value":-20,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":10,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":4,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":1,"category":"general"},"beeswarnCollide":{"value":17,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":1,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"var scalePowDots = d3.scalePow().exponent(0.5)\n      .domain([115555, 2154092])\n      .range([1, 4]);\nd3.selectAll('g.cell circle').attr('r', function(d){return scalePowDots(+d.population_insee)*manualReusableParameters.beeswarnRadius.value});\nd3.selectAll('g.cell circle').attr('fill', function(d){return ['75', '77','78', '91','92', '93', '94', '95'].includes(d.departement_residence) ? '#E60004' : '#aaa'});\nd3.selectAll('g.cell circle').attr('stroke', function(d){return ['75', '77','78', '91','92', '93', '94', '95'].includes(d.departement_residence) ? '#E60004' : '#aaa'});\nd3.selectAll('.axis--y .tick text').text(function(d){return d + '%'});"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"difference_pct","value":"difference_pct"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[libelle_departement]] ([[departement_residence]])<br>\n<strong>Nombre de primo-vaccinés dans un autre département : </strong>[[difference_vax|number_separator]]<br>\n<strong>Part des primo vaccinés dans un autre département : </strong>[[difference_pct]]%"},"moveElements":{"value":true,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"value":{"_groups":[[{"__data__":{"datetime2":"2021-05-23","departement_residence":"86","libelle_departement":"Vienne","population_insee":"438390.0","effectif_1_inj":"20430.0","effectif_termine":"7780.0","effectif_cumu_1_inj":"170180.0","effectif_cumu_termine":"69930.0","taux_1_inj":"0.047","taux_termine":"0.018","taux_cumu_1_inj":"38.800000000000004","taux_cumu_termine":"16.0","n_cum_dose1":"176344","n_cum_dose2":"72528","difference_vax":"-6164","difference_pct":-3.6,"this_value":-3.6,"total":-3.6,"index":69,"x":102.18113953562964,"y":169.2580358605147,"vy":-4.622720658596966,"vx":-1.5407519296418988},"__on":[{"type":"mouseover","name":"","capture":false},{"type":"mouseout","name":"","capture":false},{"type":"mousedown","name":"drag","capture":false}]}]],"_parents":[null]},"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{"d_43399":{"elementType":"circle","elementOrder":54,"operations":{"transform":"translate(7,0)"}},"d_51437":{"elementType":"circle","elementOrder":41,"operations":{"transform":"translate(3,-1)"}},"d_9910":{"elementType":"circle","elementOrder":57,"operations":{"transform":"translate(-6,1)"}},"d_5858":{"elementType":"circle","elementOrder":50,"operations":{"transform":"translate(-14,-1)"}},"d_7314":{"elementType":"circle","elementOrder":69,"operations":{"transform":"translate(1,1)"}}},"thoseElementsOrder":["d_43399","d_51437","d_9910","d_5858","d_7314"]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":[],"selected_yRows":["difference_pct"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_departement","difference_pct"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"beeSwarnChart","chartTitle":"Covid 19 : En Ile-de-France, on se vaccine beaucoup hors de son département","chartSource":"Assurance maladie, Santé publique France - administration des premières doses","chartSubTitle":"Différence entre le nombre de personnes vaccinées et le nombre de vaccins administrés par département","annotations":[{"note":{"label":"Yvelines","title":"","wrap":150,"orientation":0,"textPadding":"-10","align":"left"},"x":317,"y":8,"dy":-3,"dx":27,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":1,"disable":[]},{"note":{"label":"Seine-Saint-Denis","title":"","wrap":150,"orientation":0,"textPadding":"20","align":"right"},"x":254,"y":343,"dy":-1,"dx":-39,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":2,"disable":[]},{"note":{"label":"Hauts-de-Seine","title":"","wrap":150,"orientation":0,"textPadding":"20","align":"right"},"x":184,"y":37,"dy":-12,"dx":-39,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":3,"disable":[]},{"note":{"label":"Paris","title":"","wrap":150,"orientation":0,"textPadding":0,"align":"left"},"x":419,"y":223,"dy":19,"dx":23,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":4,"disable":[]}]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeBeeSwarnChart(data) {
+
+    var kValue = graphParameters['selected_xRows'][0];
+    var dValue = graphParameters['selected_yRows'][0];
+    var dValues = graphParameters['selected_yRows'];
+    var keys = graphParameters['selected_yRows'];
+
+
+    var data_ = _.cloneDeep(data)
+
+    color.domain([]);
+
+    data_.forEach(function(d) {
+        d[dValue] = formatNumbers(d[dValue]);
+        d.this_key = d[kValue];
+        d.this_value = formatNumbers(d[dValue]);
+
+        var this_total = 0;
+
+        for (i in keys){
+            d[dValues[i]] = +d[dValues[i]];
+            this_total = this_total + d[dValues[i]];
+        }
+
+        d.total = this_total;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data_, function(d) { return d[dValue]; });
+
+    var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+//     // reGenerateParameters();
+
+if (manualReusableParameters.sort_descending.value == 1){
+    var data = _.cloneDeep(data_).sort(function(a, b) { return b.total - a.total; });
+}
+else{
+    var data = _.cloneDeep(data_);
+}
+
+x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+
+// var x1 = d3.scaleBand().padding(0.05);
+
+// y = d3.scaleLog().base(2).rangeRound([height, 0]);
+
+y = d3.scaleLinear().rangeRound([height, 0]);
+
+
+x.domain(_.uniq(data.map(function(d) { return d[kValue]; })));
+  // x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+  y.domain([thisYMin, thisYMax]).nice();
+  // z.domain(dValues);
+
+  changeAxis(x, y)
+
+
+  var simulation = d3.forceSimulation(data)
+  .force("y", d3.forceY(function(d) { return y(d[dValue]); }).strength(manualReusableParameters.verticalStrength.value))
+  .force("x", d3.forceX(function(d) {return x(d[kValue])}))
+  // .force("y", center.y(function(d) {return x(d[kValue])}))
+  .force("collide", d3.forceCollide(manualReusableParameters.beeswarnCollide.value))
+  .stop();
+
+  for (var i = 0; i < 120; ++i) simulation.tick();
+
+    g.select('g.innerGraph')
+.attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+g.select("g.axis.axis--x")
+.attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value + height) + ")")
+.call(axis_bottom)
+.selectAll("text")
+.style("text-anchor", "middle")
+.attr("dx", "0em")
+.attr("dy", "0.7em")
+.attr("transform", "rotate(0)")
+;
+
+if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value + height) + ")")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr("transform", "translate(" + (manualReusableParameters.padding_left.value) + ","  + manualReusableParameters.padding_top.value + ")")
+    // .attr('transform', 'translate(0,0)')
+    .call(axis_left);
+
+
+
+    // var cells = g_inner
+    // .selectAll("g.cell")
+    // .data(d3.voronoi()
+    //     .extent([[0, 0], [width + margin.right, height + margin.top]])
+    //     .x(function(d) { return d.x; })
+    //     .y(function(d) { return d.y; })
+    //     .polygons(data));
+
+    // cells.exit().remove();
+
+    // cells
+    // .select('circle')
+    // .attr("r", 3)
+    // .attr("cx", function(d) {return + d.data.x + x.bandwidth()/2; })
+    // .attr("cy", function(d) { return d.data.y; })
+    // .attr('fill', function(d){ return colorUpdated(d.data[kValue])})
+    // .attr('stroke', function(d){return colorUpdated(d.data[kValue])});
+
+    // var cells_entered = cells
+    // .enter()
+    // .append("g")
+    // .attr('class', 'cell')
+    //   //     .on('mouseover', function(d, i){ show_tooltip(d.data, d3.event.pageX, d3.event.pageY, d3.event, i)})
+    //   // .on('mouseout', function(d){ hide_tooltip()})
+    //   ;
+
+    //   cells_entered.append("circle")
+    //   .attr("r", 3)
+    //   .attr("cx", function(d) {console.log(d);  return + d.data.x + x.bandwidth()/2; })
+    //   .attr("cy", function(d) { return d.data.y; })
+    //   .attr('fill', function(d){return colorUpdated(d.data[kValue])})
+    //   .attr('stroke', function(d){return colorUpdated(d.data[kValue])})
+    //   .on('mouseover', function(d, i){ show_tooltip(d.data);})
+    //   .on('mouseout', function(d){ hide_tooltip()});
+    //   ;
+
+    var cells = g_inner
+    .selectAll("g.cell")
+    .data(data);
+
+    cells.exit().remove();
+
+    cells
+    .select('circle')
+    .attr("r", manualReusableParameters.beeswarnRadius.value)
+    .attr("cx", function(d) {return + d.x + x.bandwidth()/2; })
+    .attr("cy", function(d) { return d.y; })
+    .attr('fill', function(d){var color_col = graphParameters.selected_color[0] ? d[graphParameters.selected_color[0]] : d[kValue]; return colorUpdated(color_col)})
+    .attr('stroke', function(d){var color_col = graphParameters.selected_color[0] ? d[graphParameters.selected_color[0]] : d[kValue];  return colorUpdated(color_col)});
+
+    var cells_entered = cells
+    .enter()
+    .append("g")
+    .attr('class', 'cell')
+      //     .on('mouseover', function(d, i){ show_tooltip(d.data, d3.event.pageX, d3.event.pageY, d3.event, i)})
+      // .on('mouseout', function(d){ hide_tooltip()})
+      ;
+
+      cells_entered.append("circle")
+      .attr("r", manualReusableParameters.beeswarnRadius.value)
+      .attr("cx", function(d) {return + d.x + x.bandwidth()/2; })
+      .attr("cy", function(d) { return d.y; })
+      .attr('fill', function(d){var color_col = graphParameters.selected_color[0] ? d[graphParameters.selected_color[0]] : d[kValue]; return colorUpdated(color_col)})
+      .attr('stroke', function(d){var color_col = graphParameters.selected_color[0] ? d[graphParameters.selected_color[0]] : d[kValue]; return colorUpdated(color_col)})
+      .on('mouseover', function(d, i){ show_tooltip(d);})
+      .on('mouseout', function(d){ hide_tooltip()});
+      ;
+
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+      customizeAxis()
+      drawLegend()
+      addCustomCode()
+
+  }
+
+initChart();
+
+makeBeeSwarnChart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
