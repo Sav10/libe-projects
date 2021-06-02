@@ -508,7 +508,7 @@ queue()
     //   d.population = +d.population;
     // })
 
-    console.log(data0)
+    // console.log(data0)
 
     data.forEach(d =>{
 
@@ -542,7 +542,7 @@ queue()
     let allSvgNodes = allPaths.nodes();
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-numerodepartement')
-      console.log(this_id)
+      // console.log(this_id)
       let this_pop = data.filter(d=> d.dep == this_id)[0].population;
       let this_radius = Math.round(circleScale(this_pop));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
