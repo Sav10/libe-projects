@@ -652,7 +652,6 @@ app_data['variant_delta'] = fulldata.filter(d=>d.datetime == daterange['variant_
 // app_data['rea_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['rea_pour_100k'][daterange['rea_pour_100k'].length-1])
 
 app_data['variant_delta'].forEach(function(d){
-console.log(d)
 
 d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
@@ -664,7 +663,7 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
     if (typeof app_data['variant_delta'].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return colorIncidence(+app_data['variant_delta'].filter(function(e){return e.dep == d.id})[0].variant_delta)
+      return colorVariant(+app_data['variant_delta'].filter(function(e){return e.dep == d.id})[0].variant_delta)
 
     }
     return '#fff'
