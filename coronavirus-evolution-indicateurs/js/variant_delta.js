@@ -1184,7 +1184,13 @@ function equalToEventTarget() {
 
 function display_data(data_, kValue, dValue, color_chart, maxvalues, variable_name, last_date, number_of_ticks_x=3) {
 
+
+let this_object_info = _.find(app_data['variant_delta'], d => d.dep == data_[0].dep);
 console.log(data_)
+console.log(this_object_info)
+
+d3.select('#map_info')
+.append('')
 
 }
 
