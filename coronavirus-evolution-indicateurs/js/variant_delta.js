@@ -307,6 +307,7 @@ function fillColor(column){
     if (typeof app_data[column].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
       let this_d = app_data[column].filter(function(e){return e.dep == d.id})[0];
+
       return colorVariant(+this_d[column])
 
     }
@@ -340,7 +341,9 @@ function fillColorDate(column, date){
 
     if (typeof this_date_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      let this_d = app_data[column].filter(function(e){return e.dep == d.id})[0];
+      let this_d = this_date_data.filter(function(e){return e.dep == d.id})[0]
+
+
       return colorVariant(+this_d[column])
 
     }
