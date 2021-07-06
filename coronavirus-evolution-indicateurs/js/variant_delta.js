@@ -137,8 +137,7 @@ var colorVariant = function (x){
 
 if(x <=10){return '#42B38E'}
 else if(x <=50){ return '#FF9800'}
-else if(x <150){ return '#E3234A'}
-else if(x <300){ return '#6d142d' }
+else if(x <=80){ return '#E3234A'}
 else { return '#000' }
 
 }
@@ -307,7 +306,8 @@ function fillColor(column){
 
     if (typeof app_data[column].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return color_functions[column](+app_data[column].filter(function(e){return e.dep == d.id})[0][column])
+      let this_d = app_data[column].filter(function(e){return e.dep == d.id})[0];
+      return colorVariant(+this_d[column])
 
     }
     return '#fff'
@@ -340,7 +340,8 @@ function fillColorDate(column, date){
 
     if (typeof this_date_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return color_functions[column](+this_date_data.filter(function(e){return e.dep == d.id})[0][column])
+      let this_d = app_data[column].filter(function(e){return e.dep == d.id})[0];
+      return colorVariant(+this_d[column])
 
     }
     return '#fff'
@@ -603,6 +604,7 @@ queue()
       d.date = parseTime(d.datetime);
       // d.tx_positivite = +d.tx_positivite
       d.variant_delta = +d.variant_delta
+      d.nb_crib = +d.nb_crib
       // d.hosp_pour_100k = +d.hosp_pour_100k
       // d.rea_pour_100k = +d.rea_pour_100k
 
