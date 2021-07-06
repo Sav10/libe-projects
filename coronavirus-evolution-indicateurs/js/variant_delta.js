@@ -1190,7 +1190,7 @@ console.log(data_)
 console.log(this_object_info)
 
 d3.select('#map_info')
-.append('')
+.text(`${this_object_info.departement} (${this_object_info.dep})`)
 
 }
 
