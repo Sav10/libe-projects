@@ -90,6 +90,10 @@ d3.select('#map_info')
 d3.select('#minigraph_container')
 .style('display', 'flex')
 
+console.log(fulldata.filter(d=>d.dep == this_code))
+
+console.log(selected_variable)
+
 makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
  variables_names[selected_variable], _.last(daterange[selected_variable]))
 
