@@ -583,7 +583,7 @@ d3.select('#display_geo_paths')
 
 queue()
   .defer(d3.csv, 'data/taux_indicateurs_couleurs_departements3.csv')
-  .defer(d3.csv, 'data/incid_hosp_from_sept.csv')
+  .defer(d3.csv, 'data/variant_delta.csv')
   .await(ready)
 
   function ready(error, data, data7j) {
@@ -643,12 +643,16 @@ queue()
         'radius_ecart': this_radius_ecart});
 }
 
+console.log(app_data['variant_delta'] )
+console.log(data)
+
 app_data['variant_delta'] = fulldata.filter(d=>d.datetime == daterange['variant_delta'][daterange['variant_delta'].length-1])
 // app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])
 // app_data['hosp_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['hosp_pour_100k'][daterange['hosp_pour_100k'].length-1])
 // app_data['rea_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['rea_pour_100k'][daterange['rea_pour_100k'].length-1])
 
 app_data['variant_delta'].forEach(function(d){
+console.log(d)
 
 d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
