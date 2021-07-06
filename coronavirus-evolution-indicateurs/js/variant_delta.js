@@ -133,7 +133,11 @@ d3.select("#" + "dot_rea_" +String(temp_d))
 }
 
 
-var colorVariant = function (x){
+var colorVariant = function (x, y){
+
+if (y <= 30){
+  return "#ccc"
+}
 
 if(x <=10){return '#42B38E'}
 else if(x <=50){ return '#FF9800'}
@@ -308,7 +312,7 @@ function fillColor(column){
 
       let this_d = app_data[column].filter(function(e){return e.dep == d.id})[0];
 
-      return colorVariant(+this_d[column])
+      return colorVariant(+this_d[column], this_d.nb_crib)
 
     }
     return '#fff'
@@ -344,7 +348,7 @@ function fillColorDate(column, date){
       let this_d = this_date_data.filter(function(e){return e.dep == d.id})[0]
 
 
-      return colorVariant(+this_d[column])
+      return colorVariant(+this_d[column], this_d.nb_crib)
 
     }
     return '#fff'
@@ -672,7 +676,9 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
     if (typeof app_data['variant_delta'].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return colorVariant(+app_data['variant_delta'].filter(function(e){return e.dep == d.id})[0].variant_delta)
+      let this_d = app_data['variant_delta'].filter(function(e){return e.dep == d.id})[0];
+
+      return colorVariant(+this_d['variant_delta'], this_d.nb_crib)
 
     }
     return '#fff'
