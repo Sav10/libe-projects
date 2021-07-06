@@ -66,14 +66,14 @@
     #map_info {
     position: absolute;
     display: none;
-    width: 97%;
+    width: 30%;
     max-width: 700px;
     padding: 10px;
-    /*margin-top: 10px;*/
+    margin-top: 10px;
     margin-bottom: 10px;
     font-family: "syntheselibeweb";
     font-size: .8em;
-    background-color: #f4f4f4;
+    /*background-color: #f4f4f4;*/
     /*pointer-events: none;*/
     z-index: 10;
       display: flex;
@@ -589,6 +589,9 @@ margin-left: 8px;
             <a class="actionButton" id="display_proportional_circles">Cartogramme</a>
           </div>
           <div class="carte" id='morphocarte'>
+             <div id="map_info" style="opacity: 1; display: flex;">
+              <div id="tooltip" style="display: block;"></div>
+            </div>
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 667 578" xml:space="preserve" id='geo_map'>
     <g transform="translate(0,7)">
       <g class="region region-01" data-nom="Guadeloupe" data-code_insee="01">
@@ -734,9 +737,7 @@ margin-left: 8px;
     </div>
     <div id="information">
 <br>
- <div id="map_info" style="opacity: 1; display: flex;">
-<div id='minigraph_container'></div>
-            </div>
+
 
           <div  id='incidence_text' class='explanation_text'>
 

@@ -1189,7 +1189,7 @@ let this_object_info = _.find(app_data['variant_delta'], d => d.dep == data_[0].
 console.log(data_)
 console.log(this_object_info)
 
-d3.select('#map_info')
+d3.select('#map_info #tooltip')
 .text(`${this_object_info.departement} (${this_object_info.dep})`)
 
 }
