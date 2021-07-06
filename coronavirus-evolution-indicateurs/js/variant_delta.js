@@ -90,11 +90,14 @@ d3.select('#map_info')
 d3.select('#minigraph_container')
 .style('display', 'flex')
 
-console.log(fulldata.filter(d=>d.dep == this_code))
+// console.log(fulldata.filter(d=>d.dep == this_code))
 
-console.log(selected_variable)
+// console.log(selected_variable)
 
-makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
+// makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
+//  variables_names[selected_variable], _.last(daterange[selected_variable]))
+
+display_data(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
  variables_names[selected_variable], _.last(daterange[selected_variable]))
 
 }
@@ -1177,6 +1180,13 @@ function equalToEventTarget() {
 /////
 /////////////////////                       Make Area chart
 /////
+
+
+function display_data(data_, kValue, dValue, color_chart, maxvalues, variable_name, last_date, number_of_ticks_x=3) {
+
+console.log(data_)
+
+}
 
 function makeAreachart(data_, kValue, dValue, color_chart, maxvalues, variable_name, last_date, number_of_ticks_x=3) {
 
