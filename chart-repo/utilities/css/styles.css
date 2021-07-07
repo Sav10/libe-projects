@@ -2,7 +2,7 @@ body {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
   color: #222;
-  font: 1em/1.4em "syntheselibeweb",sans-serif;
+  font: 1em/1.4em sans-serif;
 }
 
 a, a:hover  {
@@ -16,8 +16,7 @@ a, a:hover  {
 }
 
 h3 {
-  font-family: "libesansweb-semicondensed",sans-serif;
-  letter-spacing: .03em;
+  font-family: Verdana,sans-serif;
   font-size: 1.28em;
   font-weight: bold;
   padding-top: 35px;
@@ -61,9 +60,8 @@ footer {
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-family: "libesansweb-semicondensed";
+  font-family: Verdana,sans-serif;
   font-size: .9em;
-  letter-spacing: .06em;
   font-weight: 800;
   background-color: rgba(255,255,255,0.9);
   pointer-events: none;
@@ -71,7 +69,7 @@ footer {
 }
 
 #tooltip strong {
-  font-family: "syntheselibeweb";
+  font-family: sans-serif;
   font-size: .8em;
   font-weight: 400;
 }
