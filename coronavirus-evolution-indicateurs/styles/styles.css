@@ -7,7 +7,7 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 * {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 *:before, *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 html, body {margin: 0;padding: 0;}
-body {position: relative; font-family:'syntheselibeweb', Verdana, Geneva, sans-serif;font-size:1.1em;color:#222;background:#ffffff;}
+body {position: relative; font-family:Verdana, Geneva, sans-serif;font-size:1.1em;color:#222;background:#ffffff;}
 h1, h2, h3, h4, h5, h6 {font-style: normal; font-weight: normal;}
 li {list-style-type:none;}
 button {border: none; background: transparent; cursor: pointer;}
@@ -76,8 +76,7 @@ transform: translate(-50%, -50%);
 
 
 .headline-big{
-font-family: 'libesansweb-semicondensed';
-  letter-spacing: 0.05em;
+font-family: Verdana, Geneva, sans-serif;
   font-weight: 400;
   /*font-size: 36px;*/
   text-transform: uppercase;
@@ -88,7 +87,7 @@ font-family: 'libesansweb-semicondensed';
 
 .headline-small{
 color:#f4f4f4;
-    font-family: 'syntheselibeweb';
+    font-family: sans-serif;
     font-weight: normal;
     /*margin-top: 1rem;*/
     margin-bottom: 16px;
@@ -393,7 +392,7 @@ font-size: .7rem;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-family: "syntheselibeweb";
+  font-family: sans-serif;
   font-size: .8em;
   background-color: rgba(255,255,255,0.9);
   pointer-events: none;
@@ -402,9 +401,8 @@ font-size: .7rem;
 
 
 #tooltip strong{
-  font-family: "libesansweb-semicondensed";
+  font-family: Verdana, Geneva, sans-serif;
   font-size: .9em;
-  letter-spacing: .06em;
   font-weight: 800;
 }
 
@@ -605,8 +603,7 @@ margin-top: 0;
 
 div.info.city.box {
     padding: 0.5em;
-    font-family: 'libesansweb-semicondensed';
-    letter-spacing: 0.07em;
+    font-family: Verdana
     font-size: 1.2em;
     border-radius: 0;
 }
@@ -651,8 +648,7 @@ margin-bottom: 16px;
 .article h3.city {
     background-color: #222;
     color: #fff;
-    font-family: 'libesansweb-semicondensed';
-    letter-spacing: 0.08em;
+    font-family: Verdana, Geneva, sans-serif;
     font-size: 1.2em;
     overflow: hidden;
     display: inline-block;
@@ -666,7 +662,7 @@ margin-bottom: 16px;
 
 /*    background-color: black;
     color: white;*/
-    font-family: syntheselibeweb;
+    font-family: sans-serif;
         text-transform: uppercase;
     font-size: 0.7em;
         margin-left: 20px;
@@ -676,8 +672,7 @@ margin-bottom: 16px;
 
 
 .article h3.university {
-    font-family: 'libesansweb-semicondensed';
-    letter-spacing: 0.05em;
+    font-family: Verdana, Geneva, sans-serif;
     font-size: 1.4em;
     color: black;
     line-height: 1.1em;
@@ -693,8 +688,7 @@ font-family: Georgia;
 
 .article .event span.typeEvent{
 
-    font-family: 'libesansweb-semicondensed';
-    letter-spacing: 0.08em;
+    font-family: Verdana, Geneva, sans-serif;
     color: black;
     font-size: 0.8em;
 
@@ -704,7 +698,7 @@ font-family: Georgia;
 
 /*    background-color: black;
     color: white;*/
-    font-family: syntheselibeweb;
+    font-family: sans-serif;
     font-size: 0.6em;
     text-align: right;
     text-transform: uppercase;
@@ -743,7 +737,7 @@ margin: 0 auto;
 }
 
 text.dateSlider {
-    font-family: 'syntheselibeweb';
+    font-family: sans-serif;
     text-transform: uppercase;
     font-size: 0.9rem;
 }
@@ -849,7 +843,7 @@ font-size: 1.2rem;
 
 p.event .description_detail{
 
-font-family: syntheselibeweb;
+font-family: sans-serif;
 font-size: 0.9rem;
 
 }
@@ -894,7 +888,7 @@ a#play_button img {
 }
 
 text.dateSlider {
-    font-family: 'syntheselibeweb';
+    font-family: sans-serif;
     text-transform: uppercase;
     font-size: 1.3rem;
 }

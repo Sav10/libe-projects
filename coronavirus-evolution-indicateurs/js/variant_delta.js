@@ -142,10 +142,10 @@ if (y <= 30){
   return "#ccc"
 }
 
-if(x <=10){return '#42B38E'}
+if(x <=20){return '#42B38E'}
 else if(x <=50){ return '#FF9800'}
 else if(x <=80){ return '#E3234A'}
-else { return '#000' }
+else { return '#6d142d' }
 
 }
 
@@ -658,9 +658,6 @@ queue()
         'radius': this_radius,
         'radius_ecart': this_radius_ecart});
 }
-
-console.log(app_data['variant_delta'] )
-console.log(data)
 
 app_data['variant_delta'] = fulldata.filter(d=>d.datetime == daterange['variant_delta'][daterange['variant_delta'].length-1])
 // app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])
@@ -1186,11 +1183,10 @@ function display_data(data_, kValue, dValue, color_chart, maxvalues, variable_na
 
 
 let this_object_info = _.find(app_data['variant_delta'], d => d.dep == data_[0].dep);
-console.log(data_)
-console.log(this_object_info)
 
 d3.select('#map_info #tooltip')
-.text(`${this_object_info.departement} (${this_object_info.dep})`)
+.html(`<b>${this_object_info.departement} (${this_object_info.dep})</b><br>
+  Proportion détectée de variant delta : <b>${this_object_info.nb_crib >= 30 ? Math.round(this_object_info.variant_delta*10)/10 + '%' : 'NC'}</b>`)
 
 }
 

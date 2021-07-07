@@ -1,26 +1,3 @@
-@import "https://sav10.github.io/libe-projects/fonts/fonts.css";
-.libe-condensed {
-  font-family: "libesansweb-condensed";
-  letter-spacing: 0.06em; }
-
-.libe-semicondensed {
-  font-family: "libesansweb-semicondensed";
-  letter-spacing: 0.06em; }
-
-.libetypewriter {
-  font-family: "libetypewriter-regular"; }
-
-.libetypewriter-underline {
-  font-family: "libetypewriter-regular-underline"; }
-
-.libe-black {
-  font-family: "libesansweb-black";
-  letter-spacing: 0.06em; }
-
-
-
-
-
 /*! bulma.io v0.6.0 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
   from {
@@ -125,7 +102,7 @@ button,
 input,
 select,
 textarea {
-  font-family: "syntheselibeweb"; }
+  font-family: sans-serif; }
 
 code,
 pre {

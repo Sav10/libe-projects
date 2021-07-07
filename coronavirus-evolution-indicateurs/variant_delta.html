@@ -40,7 +40,7 @@
   <!-- Xiti -->
 
   <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=2">
-  <title>Libération.fr Covid-19 : la carte de vigilance</title>
+  <title>Libération.fr Covid-19 : évolution du variant delta depuis le début du mois de juin</title>
   <meta name="description" content="Reprise de l'épidéme de Coronavirus, quels départements sont les plus touchés ? La réponse avec notre carte interactive.">
   <meta name="keywords" content="actualités, news">
   <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
@@ -66,12 +66,12 @@
     #map_info {
     position: absolute;
     display: none;
-    width: 30%;
+    width: 20%;
     max-width: 700px;
-    padding: 10px;
-    margin-top: 10px;
+    min-width: 150px;
+    margin-top: 30px;
     margin-bottom: 10px;
-    font-family: "syntheselibeweb";
+    font-family: sans-serif;
     font-size: .8em;
     /*background-color: #f4f4f4;*/
     /*pointer-events: none;*/
@@ -81,7 +81,47 @@
   flex-direction: column;
   border: 0;
   margin-left: .5%;
+  border: 1px solid #ccc;
 }
+
+@media screen and (max-width: 500px) {
+
+    #map_info {
+      margin-top: 3px;
+      pointer-events: none;
+      margin-left: .5em;
+
+}
+
+#map_slider {
+    max-width: 80%;
+}
+
+
+  }
+
+@media screen and (min-width: 500px) {
+
+#representation_carto{
+top: 30px;
+margin-top: 15px;
+margin-bottom: 16px;
+left: 1%;
+
+}
+
+
+    #map_info {
+
+    margin-top: 40px;
+    margin-left: 1%;
+    padding: 6px;
+
+}
+
+
+}
+
     .intro-section {
     background-color: #E3234A;
     }
@@ -147,6 +187,7 @@ a#play_button img {
 
 #map_slider{
   max-width: 930px;
+  /*max-width: 80%;*/
 }
 
 
@@ -166,7 +207,7 @@ a#play_button img {
     font-size: .9em;
     line-height: 1.2em;
     padding: 4px 3px 5px;
-    font-family: "syntheselibeweb", sans-serif;
+    font-family: sans-serif;
     margin-right: 3px;
     border: 1px solid #e91845;
     opacity: 1;
@@ -187,7 +228,7 @@ opacity: 0.8;
 }
 
 #display_geo_paths{
-  margin-left: 2em;
+  margin-left: .5em;
 }
 
 .d3-tip{
@@ -219,10 +260,10 @@ h1#graph_title {
 }
 
 h1#graph_title{
-    font-family: 'libesansweb-semicondensed';
-    letter-spacing: 0.03em;
+    font-family: Verdana, Geneva, sans-serif;
     display: flex;
     justify-content: center;
+    font-weight: bold;
 }
 
     @media (max-width: 768px) {
@@ -257,7 +298,7 @@ h1#graph_title{
 
     position: relative;
     top: 20px;
-    left: 10%;
+    left: 1%;
 
 }
 
@@ -273,14 +314,13 @@ font-size: .8em;
 }
 
 .headline-big {
-    font-family: 'libesansweb-semicondensed';
+    font-family: Helvetica
     font-weight: 400;
      font-size: 36px; 
     text-transform: uppercase;
     padding-top: 1rem;
     color: #f4f4f4;
     margin-bottom: 0;
-    letter-spacing: 0.05em;
     text-align: center;
 }
 
@@ -301,47 +341,11 @@ font-size: .8em;
     left: -1%;
     top: 9px;
     width: 10.5em;
-    margin-top: 4px;
+    margin-top: 0;
+    position: static;
 }
     }
 
-#articles.explanation_block{
-
-    min-height: 13.5em;
-    margin-bottom: -20px;
-    font-size: .8em;
-
-}
-
-@media (min-width: 350px) {
-#articles.explanation_block{
-min-height: 13.5em;
-}
-}
-
-@media (min-width: 400px) {
-#articles.explanation_block{
-min-height: 12.5em;
-}
-}
-
-@media (min-width: 445px) {
-#articles.explanation_block{
-min-height: 11em;
-}
-}
-
-@media (min-width: 500px) {
-#articles.explanation_block{
-min-height: 11em;
-}
-}
-
-@media (min-width: 1000px) {
-#articles.explanation_block{
-min-height: 10em;
-}
-}
 
 #tooltip_content li{
     list-style-position: inside;
@@ -415,7 +419,7 @@ font-size: 2em;
     font-size: .9em;
     line-height: 1.2em;
     padding: 4px 3px 5px;
-    font-family: "syntheselibeweb", sans-serif;
+    font-family: sans-serif;
     margin-right: 3px;
     border: 1px solid #e91845;
     opacity: 1;
@@ -499,7 +503,7 @@ a#play_button img {
 a#play_button img {
         width: 20px;
         /*margin-top: 1.2em;*/
-        margin-left: 10px;
+        margin-left: 0;
 }
 
 a#play_button {
@@ -523,6 +527,7 @@ border: 0;
     display: flex;
     flex-wrap: nowrap;
     margin-left: -22px;
+    margin-bottom: 0;
 }
 
 #slider_container svg{
@@ -572,7 +577,7 @@ margin-left: 8px;
         <div class="column is-three-quarters map_container" style="z-index: 90;">
           <div id="articles" class='explanation_block'>
 
-          <h1 id="graph_title">Covid-19 : évolution des indicateurs depuis le 1er septembre</h1>
+          <h1 id="graph_title">Covid-19 : évolution du variant delta depuis le début du mois de juin</h1>
 <!--                     <div id="button_box">
                       <a style="color: #fff;background-color: #e91845;" class="actionButton selected" id="incidence_rate">Incidence</a>
                       <a class="actionButton" id="positivity">Positivité</a>
@@ -741,53 +746,15 @@ margin-left: 8px;
 
           <div  id='incidence_text' class='explanation_text'>
 
-              <p><strong>Taux d'incidence</strong> : Nombre de tests positifs pour 100&nbsp;000 habitants sur une semaine.</p>
+              <p>Proportion de variant delta détectés par les tests</p>
 
-  <span class='legende_dot'><span class="dot" style="background-color:#42B38E"></span> moins de 10</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#FF9800"></span> de 10 à 50</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#E3234A"></span> plus de 50</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#6d142d"></span> plus de 150</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#000"></span> plus de 300</span> </p>
+  <span class='legende_dot'><span class="dot" style="background-color:#42B38E"></span> moins de 20%</span>
+   <span class='legende_dot'><span class="dot" style="background-color:#FF9800"></span> de 20 à 50%</span>
+   <span class='legende_dot'><span class="dot" style="background-color:#E3234A"></span> de 50 à 75%</span>
+   <span class='legende_dot'><span class="dot" style="background-color:#6d142d"></span> plus de 75%</span>
+   <span class='legende_dot'><span class="dot" style="background-color:#ccc"></span> Données non significatives</span> </p>
              </div>
-  <div  class='explanation_text' id='positivity_text' style="display: none;">
-
-              <p><strong>Taux de positivité</strong> :  Nombre de positif pour cent tests virologiques.</p>
-
- <span class='legende_dot'><span class="dot" style="background-color:#42B38E"></span> moins de 5%</span>
- <span class='legende_dot'><span class="dot" style="background-color:#FF9800"></span> de 5 à 10%</span>
- <span class='legende_dot'><span class="dot" style="background-color:#E3234A"></span> plus de 10%</span>
- <span class='legende_dot'><span class="dot" style="background-color:#6d142d"></span> plus de 15%</span>
- <span class='legende_dot'><span class="dot" style="background-color:#000"></span> plus de 20%</span> </p>
- <br>
-
-    </div>
-
-  <div  class='explanation_text' id='hospitalisation_text' style="display: none;">
-
-              <p><strong>Taux d'hospitalisation</strong> :  Nombre d'hospitalisation pour Covid-19 pour 100&nbsp;000 habitants.</p>
-
- <div class='legende_dot'><span id="dot_hosp_0" class="dot" style="background-color:#fff"></span> 0</div>
- <div class='legende_dot'><span id="dot_hosp_10" class="dot" style="background-color:#fff"></span> 10</div>
- <div class='legende_dot'><span id="dot_hosp_30" class="dot" style="background-color:#fff"></span> 30</div>
- <div class='legende_dot'><span id="dot_hosp_80" class="dot" style="background-color:#fff"></span> 80</div>
- <div class='legende_dot'><span id="dot_hosp_150" class="dot" style="background-color:#fff"></span> 150</div> </p>
- <br>
-
-    </div>
-
-  <div  class='explanation_text' id='reanimation_text' style="display: none;">
-
-              <p><strong>Taux de réanimations</strong> : Nombre de lits occupés en réanimation pour Covid-19 pour 100&nbsp;000 habitants.</p>
-
- <div class='legende_dot'><span id="dot_rea_0" class="dot" style="background-color:#42B38E"></span> 0</div>
- <div class='legende_dot'><span id="dot_rea_5" class="dot" style="background-color:#FF9800"></span> 5</div>
- <div class='legende_dot'><span id="dot_rea_8" class="dot" style="background-color:#E3234A"></span> 8</div>
- <div class='legende_dot'><span id="dot_rea_12" class="dot" style="background-color:#6d142d"></span> 12</div>
- <div class='legende_dot'><span id="dot_rea_15" class="dot" style="background-color:#000"></span> 15</div> </p>
- <br>
-
-    </div>
-
+<br>
  <p><strong>Sources</strong> : Santé publique France, Système d’information de dépistage</p>
 <!-- <p style="font-style: italic;">*La taille des cercles du format cartogramme est proportionelle à la population de chaque département</p> -->
 
