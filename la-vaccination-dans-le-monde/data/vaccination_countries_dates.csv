@@ -17584,7 +17584,6 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-07-13,MKD,Europe,North Macedonia,686788,32.97,20.85,12.11,Macédoine
 2021-07-13,IDN,Asia,Indonesia,51433567,18.8,13.31,5.5,Indonésie
 2021-07-13,OWID_OCE,,Oceania,11611405,27.21,19.74,7.46,
-2021-07-13,SRB,Europe,Serbia,5415434,79.58,40.75,38.83,Serbie
 2021-07-13,CUB,North America,Cuba,7767601,68.58,27.84,17.38,Cuba
 2021-07-13,MYS,Asia,Malaysia,12212730,37.73,25.84,11.89,Malaisie
 2021-07-13,LKA,Asia,Sri Lanka,5697255,26.61,19.58,7.03,Sri Lanka
@@ -17675,7 +17674,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-07-13,LCA,North America,Saint Lucia,53993,29.4,17.07,12.34,Sainte-Lucie
 2021-07-13,JPN,Asia,Japan,65028817,51.42,31.73,19.69,Japon
 2021-07-13,NPL,Asia,Nepal,3714937,12.75,8.96,3.79,Népal
-2021-07-13,OWID_EUR,,Europe,569178344,76.02,44.84,32.95,
+2021-07-13,OWID_EUR,,Europe,569081885,76.01,44.84,32.95,
 2021-07-13,URY,South America,Uruguay,4369365,125.78,69.31,56.47,Uruguay
 2021-07-13,NAM,Africa,Namibia,164617,6.48,5.23,1.25,Namibie
 2021-07-13,TUN,Africa,Tunisia,2206980,18.67,12.95,5.72,Tunisie
@@ -17701,6 +17700,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-07-14,ALB,Europe,Albania,1043499,36.26,20.66,15.6,Albanie
 2021-07-14,AFG,Asia,Afghanistan,1024168,2.63,1.98,,Afghanistan
 2021-07-14,OWID_AFR,,Africa,57667119,4.3,2.95,1.4,
+2021-07-14,SRB,Europe,Serbia,5409274,79.49,40.68,38.82,Serbie
 2021-07-14,FIN,Europe,Finland,4951925,89.37,63.54,25.83,Finlande
 2021-07-14,NPL,Asia,Nepal,3730344,12.8,9.0,3.81,Népal
 2021-07-14,FRA,Europe,France,62321355,92.24,53.9,39.3,France
@@ -17728,7 +17728,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-07-14,EST,Europe,Estonia,1041907,78.54,44.48,34.06,Estonie
 2021-07-14,SWZ,Africa,Eswatini,60069,5.18,3.28,1.9,Eswatini
 2021-07-14,ETH,Africa,Ethiopia,2077549,1.81,1.81,,Éthiopie
-2021-07-14,OWID_EUR,,Europe,577466565,77.13,45.12,33.41,
+2021-07-14,OWID_EUR,,Europe,577460405,77.13,45.12,33.41,
 2021-07-14,FRO,Europe,Faeroe Islands,58353,119.42,67.86,51.55,Îles Féroé
 2021-07-14,MNG,Asia,Mongolia,3902647,119.05,64.18,54.87,Mongolie
 2021-07-14,GUY,South America,Guyana,363442,46.21,30.56,15.64,Guyane
@@ -17828,6 +17828,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-07-15,PHL,Asia,Philippines,14074514,12.84,9.15,3.69,Philippines
 2021-07-15,MAR,Africa,Morocco,20584812,55.77,29.89,25.88,Maroc
 2021-07-15,QAT,Asia,Qatar,3474944,120.61,65.71,54.9,Qatar
+2021-07-15,KHM,Asia,Cambodia,9453858,56.55,32.4,24.14,Cambodge
 2021-07-15,URY,South America,Uruguay,4458394,128.35,70.5,57.85,Uruguay
 2021-07-15,CAN,North America,Canada,44293659,117.36,69.93,47.43,Canada
 2021-07-15,USA,North America,United States,336054953,100.48,55.36,47.96,États-Unis
@@ -17843,7 +17844,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-07-15,ZMB,Africa,Zambia,243818,1.33,1.03,0.3,Zambie
 2021-07-15,ARG,South America,Argentina,26134815,57.83,46.43,11.39,Argentine
 2021-07-15,ABW,North America,Aruba,133421,124.97,66.37,58.6,Aruba
-2021-07-15,OWID_ASI,,Asia,2237009218,48.21,26.04,9.38,
+2021-07-15,OWID_ASI,,Asia,2237220151,48.22,26.04,9.38,
 2021-07-15,AUS,Oceania,Australia,9631807,37.77,27.66,10.11,Australie
 2021-07-15,AUT,Europe,Austria,8866474,98.45,56.61,43.59,Autriche
 2021-07-15,AZE,Asia,Azerbaijan,4242727,41.84,24.96,16.88,Azerbaïdjan
@@ -17870,7 +17871,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-07-15,TUR,Asia,Turkey,61747399,73.21,45.85,23.18,Turquie
 2021-07-15,EST,Europe,Estonia,1049416,79.11,44.71,34.4,Estonie
 2021-07-15,ETH,Africa,Ethiopia,2090997,1.82,1.82,,Éthiopie
-2021-07-15,OWID_EUR,,Europe,580918200,77.59,45.28,33.72,
+2021-07-15,OWID_EUR,,Europe,580912040,77.59,45.28,33.72,
 2021-07-15,OWID_EUN,,European Union,421041105,94.63,55.27,41.75,
 2021-07-15,FRO,Europe,Faeroe Islands,58843,120.42,68.3,52.12,Îles Féroé
 2021-07-15,TTO,North America,Trinidad and Tobago,375924,26.86,16.38,10.48,Trinité-et-Tobago
