@@ -44,7 +44,7 @@ departement_variable = 'departement';
 
 var colors = {
 [selected_variable] : d3.scaleLinear()
-  .range(["white", "#ff0000"])
+  .range(["white", "#6E8AEF"])
   .domain([0, 40])
 }
 
@@ -155,7 +155,7 @@ function showTip(d){
     let this_code = d.id;
     let this_d = _.find(app_data, d => d.dep == this_code);
 
-    console.log(this_d)
+    // console.log(this_d)
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
@@ -521,7 +521,7 @@ queue()
     //   d.population = +d.population;
     // })
 
-    console.log(data0)
+    // console.log(data0)
 
     data.forEach(d =>{
 
@@ -534,7 +534,7 @@ queue()
     })
 
     app_data = data;
-    console.log(data)
+    // console.log(data)
 
     maxvalues[selected_variable] = d3.max(app_data.map(d=>d[selected_variable]));
     // maxvalues['couv_dose2'] = d3.max(app_data.map(d=>d.couv_dose2));
@@ -548,8 +548,6 @@ queue()
     let allSvgNodes = allPaths.nodes();
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-numerodepartement')
-      console.log(data.filter(d=> d.dep == this_id)[0])
-      console.log(this_id)
       let this_pop = data.filter(d=> d.dep == this_id)[0].population;
       let this_radius = Math.round(circleScale(this_pop));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
