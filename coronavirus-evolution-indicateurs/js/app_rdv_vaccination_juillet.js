@@ -38,8 +38,8 @@ var chosenChroma = chroma.scale('OrRd');
 // }
 
 var csvfilepath = 'data/dep_appointement.csv',
-color_variable = 'appointment_mean',
-selected_variable =  'appointment_mean',
+color_variable = 'appointment_per_1000',
+selected_variable =  'appointment_per_1000',
 departement_variable = 'departement';
 
 var colors = {
@@ -155,12 +155,12 @@ function showTip(d){
     let this_code = d.id;
     let this_d = _.find(app_data, d => d.dep == this_code);
 
-    // console.log(this_d)
+    console.log(this_d)
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
-    <li><span class='list_element'><span style="font-weight:bold">${numbers_separators(+this_d['nombre de rdv disponibles'])}</span> rdv disponibles
-    soit <span style="font-weight:bold">${String(this_d[selected_variable]).replace('.',',')}</span> pour 1 000 habitants de plus de 55 ans</span></li>`
+    <li><span class='list_element'><span style="font-weight:bold">${numbers_separators(+this_d['appointment_mean'])}</span> rdv disponibles
+    soit <span style="font-weight:bold">${String(this_d[selected_variable]).replace('.',',')}</span> pour 1 000 habitants</span></li>`
 
 d3.select('#tooltip')
 .html(this_html)
@@ -529,6 +529,7 @@ queue()
       d[selected_variable] = +d[color_variable];
       d.dep = d[departement_variable];
       d.population = d.population ? +d.population : +data0.filter(e=> e.dep == d.dep)[0].population;
+      d.departement = data0.filter(e=> e.dep == d.dep)[0].departement;
 
     })
 
