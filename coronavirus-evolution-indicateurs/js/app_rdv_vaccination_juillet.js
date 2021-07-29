@@ -51,6 +51,8 @@ var colors = {
 var data_legend = [0,5,10,15,20,25,30, 35,40];
 
 
+var mainColor = '#6E8AEF';
+
 // <g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(246, 185, 197);"></rect><text class="label" transform="translate(22,
 //           30)" style="text-anchor: middle;">10</text></g>
 
@@ -124,8 +126,6 @@ if($(window).width() >= 1000){
 
   this_zoom_level = 6;
 }
-
-var mainColor = '#E3234A';
 
 var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
@@ -202,21 +202,19 @@ const height = 500 - margin.top - margin.bottom
 
 
 
-
-
 d3.select('#dose2')
 .on('click', function(){
 
 
 d3.selectAll('#button_box a')
-.style('color', '#ff0000')
+.style('color', mainColor)
 .style('background-color', '#fff')
 .classed('selected', false)
 
 
 d3.selectAll('#dose2')
 .style('color', '#fff')
-.style('background-color', '#ff0000')
+.style('background-color', mainColor)
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -240,13 +238,13 @@ d3.select('#dose1')
   // fillColor('couv_dose1')
 
 d3.selectAll('#button_box a')
-.style('color', '#ff0000')
+.style('color', mainColor)
 .style('background-color', '#fff')
 .classed('selected', false)
 
 d3.selectAll('#dose1')
 .style('color', '#fff')
-.style('background-color', '#ff0000')
+.style('background-color', mainColor)
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -361,10 +359,10 @@ function redraw_paths(){
 
 d3.select('#display_geo_paths')
 .style('color', '#fff')
-.style('background-color', '#ff0000')
+.style('background-color', mainColor)
 
 d3.select('#display_proportional_circles')
-.style('color', '#ff0000')
+.style('color', mainColor)
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -400,10 +398,10 @@ function transform_all_paths_to_circle(){
 
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
-.style('background-color', '#ff0000')
+.style('background-color', mainColor)
 
 d3.select('#display_geo_paths')
-.style('color', '#ff0000')
+.style('color', mainColor)
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
