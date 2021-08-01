@@ -486,6 +486,8 @@ initChart();
 
 makeLinechartFromTidyData(data);
 
+d3.select(d3.selectAll('svg text.label').nodes()[1]).attr('y', 310);
+
 makeAnnotation();
 
 zeroParameters()
