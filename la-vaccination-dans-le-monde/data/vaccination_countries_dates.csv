@@ -19959,7 +19959,6 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-02,MDA,Europe,Moldova,1051038,26.05,13.67,12.39,Moldavie
 2021-08-02,FIN,Europe,Finland,5660607,102.16,66.75,35.41,Finlande
 2021-08-02,MEX,North America,Mexico,68089659,52.81,37.3,20.1,Mexique
-2021-08-02,CRI,North America,Costa Rica,6847533,134.42,83.91,50.51,Costa Rica
 2021-08-02,TTO,North America,Trinidad and Tobago,590829,42.22,28.28,13.94,Trinité-et-Tobago
 2021-08-02,MLT,Europe,Malta,762832,172.77,90.76,87.21,Malte
 2021-08-02,HKG,Asia,Hong Kong,5788062,77.21,43.92,33.29,Hong Kong
@@ -19970,7 +19969,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-02,BRN,Asia,Brunei,169025,38.64,31.39,7.24,Brunei Darussalam
 2021-08-02,NOR,Europe,Norway,5429972,100.16,66.5,33.66,Norvège
 2021-08-02,BGR,Europe,Bulgaria,2038611,29.34,14.86,14.48,Bulgarie
-2021-08-02,OWID_NAM,,North America,505948753,85.45,49.2,38.3,
+2021-08-02,OWID_NAM,,North America,502525498,84.88,48.91,38.01,
 2021-08-02,THA,Asia,Thailand,18198825,26.07,20.35,5.72,Thaïlande
 2021-08-02,ARE,Asia,United Arab Emirates,16832021,170.19,79.0,70.7,Émirats Arabes Unis
 2021-08-02,PYF,Oceania,French Polynesia,161482,57.49,31.24,26.25,Polynésie française
@@ -20148,7 +20147,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-03,NOR,Europe,Norway,5462466,100.76,66.78,33.98,Norvège
 2021-08-03,KHM,Asia,Cambodia,12644209,75.63,45.5,30.31,Cambodge
 2021-08-03,BRA,South America,Brazil,145558264,68.48,50.3,20.11,Brésil
-2021-08-03,OWID_NAM,,North America,507917864,85.79,49.39,38.44,
+2021-08-03,OWID_NAM,,North America,504494609,85.21,49.1,38.14,
 2021-08-03,THA,Asia,Thailand,18578096,26.62,20.76,5.85,Thaïlande
 2021-08-03,ARE,Asia,United Arab Emirates,16884412,170.72,79.3,71.0,Émirats Arabes Unis
 2021-08-03,BGR,Europe,Bulgaria,2050991,29.52,14.93,14.58,Bulgarie
@@ -20211,7 +20210,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-04,MKD,Europe,North Macedonia,920442,44.18,24.92,19.26,Macédoine
 2021-08-04,ISL,Europe,Iceland,472176,138.37,79.33,74.63,Islande
 2021-08-04,IND,Asia,India,489342295,35.46,27.62,7.84,Inde
-2021-08-04,OWID_NAM,,North America,510096472,86.15,49.62,38.58,
+2021-08-04,OWID_NAM,,North America,506673217,85.58,49.34,38.29,
 2021-08-04,IDN,Asia,Indonesia,70471394,25.76,17.73,8.03,Indonésie
 2021-08-04,THA,Asia,Thailand,18961703,27.17,21.18,5.99,Thaïlande
 2021-08-04,GBR,Europe,United Kingdom,85801167,126.39,69.13,57.26,Royaume-Uni
@@ -20313,7 +20312,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-05,SAU,Asia,Saudi Arabia,29094173,83.57,56.39,27.23,Arabie Saoudite
 2021-08-05,NPL,Asia,Nepal,6490177,22.27,14.96,7.31,Népal
 2021-08-05,SVN,Europe,Slovenia,1760611,84.69,44.97,39.72,Slovénie
-2021-08-05,OWID_NAM,,North America,511246479,86.35,49.74,38.66,
+2021-08-05,OWID_NAM,,North America,507823224,85.77,49.45,38.37,
 2021-08-05,MKD,Europe,North Macedonia,932603,44.76,25.12,19.64,Macédoine
 2021-08-05,SRB,Europe,Serbia,5562125,81.74,41.85,39.89,Serbie
 2021-08-05,OWID_OCE,,Oceania,16327176,38.26,25.61,12.65,
@@ -20329,12 +20328,13 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-05,ZMB,Africa,Zambia,465760,2.53,1.59,0.94,Zambie
 2021-08-05,ARG,South America,Argentina,33735965,74.64,57.1,17.54,Argentine
 2021-08-05,ABW,North America,Aruba,139303,130.48,68.29,62.19,Aruba
-2021-08-05,OWID_ASI,,Asia,2816707547,60.71,29.76,11.38,
+2021-08-05,OWID_ASI,,Asia,2817215345,60.72,29.77,11.38,
 2021-08-05,AUS,Oceania,Australia,13030257,51.1,34.42,16.68,Australie
 2021-08-05,AZE,Asia,Azerbaijan,5251051,51.79,30.12,21.67,Azerbaïdjan
 2021-08-05,BHR,Asia,Bahrain,2351581,138.2,65.52,62.43,Bahreïn
 2021-08-05,BGD,Asia,Bangladesh,14510568,8.81,6.11,2.7,Bangladesh
 2021-08-05,BOL,South America,Bolivia,4710183,40.35,25.05,15.3,Bolivie
+2021-08-05,VNM,Asia,Vietnam,8061116,8.28,7.44,0.84,Viêt Nam
 2021-08-05,BGR,Europe,Bulgaria,2076157,29.88,15.09,14.79,Bulgarie
 2021-08-05,MRT,Africa,Mauritania,224000,4.82,4.41,0.4,Mauritanie
 2021-08-05,OWID_EUN,,European Union,480746197,108.05,60.34,50.7,
