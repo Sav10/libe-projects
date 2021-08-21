@@ -21930,6 +21930,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-19,THA,Asia,Thailand,25818666,36.99,28.06,8.17,Thaïlande
 2021-08-19,KOR,Asia,South Korea,34794324,67.87,48.4,21.66,Corée du Sud
 2021-08-19,OWID_AFR,,Africa,88674411,6.61,4.48,2.34,
+2021-08-19,SGP,Asia,Singapore,8681501,148.39,77.66,72.93,Singapour
 2021-08-19,TUR,Asia,Turkey,87195574,103.39,53.72,40.84,Turquie
 2021-08-19,ARG,South America,Argentina,37689167,83.39,59.53,23.87,Argentine
 2021-08-19,SUR,South America,Suriname,288230,49.13,33.2,15.93,Suriname
@@ -21998,7 +21999,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-19,OWID_OCE,,Oceania,20318829,47.61,30.75,16.86,
 2021-08-19,ROU,Europe,Romania,9640934,50.11,26.8,26.17,Roumanie
 2021-08-19,LCA,North America,Saint Lucia,61015,33.23,18.62,14.61,Sainte-Lucie
-2021-08-19,OWID_ASI,,Asia,3195745614,68.88,32.68,24.96,
+2021-08-19,OWID_ASI,,Asia,3195880002,68.88,32.68,24.96,
 2021-08-19,USA,North America,United States,359623380,107.53,59.77,50.71,États-Unis
 2021-08-19,AUT,Europe,Austria,10278377,114.12,60.22,56.47,Autriche
 2021-08-19,BRB,North America,Barbados,190718,66.37,35.4,30.97,Barbade
@@ -22043,7 +22044,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-20,TUR,Asia,Turkey,88059440,104.41,54.11,41.25,Turquie
 2021-08-20,CUW,North America,Curacao,179997,109.69,57.79,51.9,
 2021-08-20,GAB,Africa,Gabon,127757,5.74,3.36,2.38,Gabon
-2021-08-20,OWID_ASI,,Asia,3219535273,69.39,32.85,25.07,
+2021-08-20,OWID_ASI,,Asia,3219669661,69.39,32.85,25.07,
 2021-08-20,SLV,North America,El Salvador,5602223,86.37,51.52,34.85,Salvador
 2021-08-20,FIN,Europe,Finland,6414095,115.76,70.63,45.13,Finlande
 2021-08-20,PRT,Europe,Portugal,13945281,136.76,78.79,67.2,Portugal
