@@ -1,856 +1,856 @@
 datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_hundred,people_vaccinated_per_hundred,people_fully_vaccinated_per_hundred,Pays
-2020-12-21,CAN,North America,Canada,20866,0.06,0.06,,Canada
-2020-12-21,ISR,Asia,Israel,32322,0.37,0.37,,Israël
-2020-12-21,OWID_EUN,,European Union,11,0.0,0.0,,
-2020-12-21,NOR,Europe,Norway,26,0.0,0.0,,Norvège
 2020-12-21,OWID_NAM,,North America,634983,0.11,0.11,,
-2020-12-21,OWID_EUR,,Europe,703823,0.09,0.09,,
-2020-12-21,OWID_ASI,,Asia,1532322,0.03,0.0,,
-2020-12-21,DNK,Europe,Denmark,4,0.0,0.0,,Danemark
+2020-12-21,NOR,Europe,Norway,26,0.0,0.0,,Norvège
 2020-12-21,LVA,Europe,Latvia,7,0.0,0.0,,Lettonie
+2020-12-21,ISR,Asia,Israel,32322,0.37,0.37,,Israël
+2020-12-21,CAN,North America,Canada,20866,0.06,0.06,,Canada
+2020-12-21,OWID_EUN,,European Union,11,0.0,0.0,,
+2020-12-21,OWID_ASI,,Asia,1532322,0.03,0.0,,
+2020-12-21,OWID_EUR,,Europe,703823,0.09,0.09,,
 2020-12-21,USA,North America,United States,614117,0.18,0.18,,États-Unis
+2020-12-21,DNK,Europe,Denmark,4,0.0,0.0,,Danemark
 2020-12-22,OWID_EUR,,Europe,727343,0.1,0.1,,
-2020-12-22,LVA,Europe,Latvia,11,0.0,0.0,,Lettonie
-2020-12-22,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-22,CHE,Europe,Switzerland,2,0.0,0.0,,Suisse
-2020-12-22,ISR,Asia,Israel,76941,0.89,0.89,,Israël
-2020-12-22,CAN,North America,Canada,26603,0.07,0.07,,Canada
-2020-12-22,NOR,Europe,Norway,38,0.0,0.0,,Norvège
 2020-12-22,RUS,Europe,Russia,52000,0.04,0.04,,Russie
-2020-12-22,DNK,Europe,Denmark,6,0.0,0.0,,Danemark
-2020-12-22,OWID_NAM,,North America,640720,0.11,0.11,,
-2020-12-22,OWID_EUN,,European Union,17,0.0,0.0,,
 2020-12-22,OWID_ASI,,Asia,1576941,0.03,0.0,,
+2020-12-22,CHE,Europe,Switzerland,2,0.0,0.0,,Suisse
+2020-12-22,OWID_EUN,,European Union,17,0.0,0.0,,
+2020-12-22,DNK,Europe,Denmark,6,0.0,0.0,,Danemark
+2020-12-22,LVA,Europe,Latvia,11,0.0,0.0,,Lettonie
+2020-12-22,CAN,North America,Canada,26603,0.07,0.07,,Canada
+2020-12-22,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2020-12-22,ISR,Asia,Israel,76941,0.89,0.89,,Israël
+2020-12-22,OWID_NAM,,North America,640720,0.11,0.11,,
+2020-12-22,NOR,Europe,Norway,38,0.0,0.0,,Norvège
 2020-12-22,QAT,Asia,Qatar,0,0.0,0.0,,Qatar
-2020-12-23,OWID_ASI,,Asia,1678746,0.04,0.0,,
-2020-12-23,BHR,Asia,Bahrain,38965,2.29,2.29,,Bahreïn
-2020-12-23,OWID_NAM,,North America,1043114,0.18,0.18,,
-2020-12-23,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-23,USA,North America,United States,1008025,0.3,0.3,,États-Unis
-2020-12-23,CHE,Europe,Switzerland,428,0.0,0.0,,Suisse
 2020-12-23,OWID_EUN,,European Union,20,0.0,0.0,,
-2020-12-23,DNK,Europe,Denmark,9,0.0,0.0,,Danemark
 2020-12-23,NOR,Europe,Norway,48,0.0,0.0,,Norvège
+2020-12-23,BHR,Asia,Bahrain,38965,2.29,2.29,,Bahreïn
+2020-12-23,CHE,Europe,Switzerland,428,0.0,0.0,,Suisse
+2020-12-23,OWID_NAM,,North America,1043114,0.18,0.18,,
+2020-12-23,DNK,Europe,Denmark,9,0.0,0.0,,Danemark
+2020-12-23,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2020-12-23,OWID_EUR,,Europe,727782,0.1,0.1,,
+2020-12-23,OWID_ASI,,Asia,1678746,0.04,0.0,,
 2020-12-23,CAN,North America,Canada,35089,0.09,0.09,,Canada
 2020-12-23,ISR,Asia,Israel,139781,1.61,1.61,,Israël
-2020-12-23,OWID_EUR,,Europe,727782,0.1,0.1,,
+2020-12-23,USA,North America,United States,1008025,0.3,0.3,,États-Unis
 2020-12-24,OWID_ASI,,Asia,1763188,0.04,0.01,,
-2020-12-24,CAN,North America,Canada,45398,0.12,0.12,,Canada
-2020-12-24,OWID_SAM,,South America,420,0.0,0.0,,
-2020-12-24,CHE,Europe,Switzerland,691,0.01,0.01,,Suisse
-2020-12-24,MEX,North America,Mexico,2924,0.0,0.0,,Mexique
-2020-12-24,LVA,Europe,Latvia,13,0.0,0.0,,Lettonie
 2020-12-24,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-24,OWID_NAM,,North America,1056402,0.18,0.18,,
+2020-12-24,MEX,North America,Mexico,2924,0.0,0.0,,Mexique
 2020-12-24,BHR,Asia,Bahrain,50071,2.94,2.94,,Bahreïn
+2020-12-24,CRI,North America,Costa Rica,55,0.0,0.0,,Costa Rica
 2020-12-24,OWID_EUR,,Europe,728061,0.1,0.1,,
 2020-12-24,CHL,South America,Chile,420,0.0,0.0,,Chili
-2020-12-24,OWID_EUN,,European Union,26,0.0,0.0,,
-2020-12-24,NOR,Europe,Norway,58,0.0,0.0,,Norvège
-2020-12-24,DNK,Europe,Denmark,13,0.0,0.0,,Danemark
-2020-12-24,CRI,North America,Costa Rica,55,0.0,0.0,,Costa Rica
 2020-12-24,ISR,Asia,Israel,213117,2.46,2.46,,Israël
-2020-12-25,CAN,North America,Canada,45398,0.12,0.12,,Canada
-2020-12-25,NOR,Europe,Norway,58,0.0,0.0,,Norvège
-2020-12-25,ISR,Asia,Israel,251573,2.91,2.91,,Israël
-2020-12-25,OWID_ASI,,Asia,1802116,0.04,0.01,,
-2020-12-25,OWID_EUR,,Europe,728061,0.1,0.1,,
-2020-12-25,OWID_NAM,,North America,1056402,0.18,0.18,,
-2020-12-25,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-25,CHE,Europe,Switzerland,691,0.01,0.01,,Suisse
+2020-12-24,NOR,Europe,Norway,58,0.0,0.0,,Norvège
+2020-12-24,OWID_EUN,,European Union,26,0.0,0.0,,
+2020-12-24,OWID_SAM,,South America,420,0.0,0.0,,
+2020-12-24,LVA,Europe,Latvia,13,0.0,0.0,,Lettonie
+2020-12-24,OWID_NAM,,North America,1056402,0.18,0.18,,
+2020-12-24,DNK,Europe,Denmark,13,0.0,0.0,,Danemark
+2020-12-24,CAN,North America,Canada,45398,0.12,0.12,,Canada
+2020-12-24,CHE,Europe,Switzerland,691,0.01,0.01,,Suisse
 2020-12-25,BHR,Asia,Bahrain,50543,2.97,2.97,,Bahreïn
-2020-12-25,CHL,South America,Chile,5201,0.03,0.03,,Chili
+2020-12-25,CHE,Europe,Switzerland,691,0.01,0.01,,Suisse
+2020-12-25,OWID_ASI,,Asia,1802116,0.04,0.01,,
+2020-12-25,OWID_NAM,,North America,1056402,0.18,0.18,,
+2020-12-25,NOR,Europe,Norway,58,0.0,0.0,,Norvège
+2020-12-25,OWID_EUR,,Europe,728061,0.1,0.1,,
 2020-12-25,OWID_SAM,,South America,5201,0.0,0.0,,
+2020-12-25,CAN,North America,Canada,45398,0.12,0.12,,Canada
+2020-12-25,CHL,South America,Chile,5201,0.03,0.03,,Chili
+2020-12-25,ISR,Asia,Israel,251573,2.91,2.91,,Israël
+2020-12-25,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2020-12-26,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2020-12-26,CYM,North America,Cayman Islands,0,0.0,0.0,,Iles Cayman
+2020-12-26,OWID_SAM,,South America,8344,0.0,0.0,,
+2020-12-26,CAN,North America,Canada,48417,0.13,0.13,,Canada
+2020-12-26,OWID_EUR,,Europe,728505,0.1,0.1,,
 2020-12-26,CHL,South America,Chile,8344,0.04,0.04,,Chili
-2020-12-26,USA,North America,United States,1944585,0.58,0.58,,États-Unis
+2020-12-26,ISR,Asia,Israel,284146,3.28,3.28,,Israël
 2020-12-26,CHE,Europe,Switzerland,1127,0.01,0.01,,Suisse
 2020-12-26,OWID_EUN,,European Union,28,0.0,0.0,,
-2020-12-26,DNK,Europe,Denmark,15,0.0,0.0,,Danemark
 2020-12-26,OWID_ASI,,Asia,1835702,0.04,0.01,,
-2020-12-26,BHR,Asia,Bahrain,51556,3.03,3.03,,Bahreïn
-2020-12-26,CYM,North America,Cayman Islands,0,0.0,0.0,,Iles Cayman
-2020-12-26,CAN,North America,Canada,48417,0.13,0.13,,Canada
-2020-12-26,NOR,Europe,Norway,64,0.0,0.0,,Norvège
-2020-12-26,OWID_SAM,,South America,8344,0.0,0.0,,
-2020-12-26,ISR,Asia,Israel,284146,3.28,3.28,,Israël
-2020-12-26,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
 2020-12-26,OWID_NAM,,North America,1995981,0.34,0.34,,
-2020-12-26,OWID_EUR,,Europe,728505,0.1,0.1,,
-2020-12-27,DEU,Europe,Germany,24086,0.03,0.03,0.0,Allemagne
-2020-12-27,OWID_NAM,,North America,2003744,0.34,0.34,,
-2020-12-27,FRA,Europe,France,255,0.0,0.0,,France
-2020-12-27,CZE,Europe,Czechia,1271,0.01,0.01,,République tchèque
-2020-12-27,EST,Europe,Estonia,191,0.01,0.01,,Estonie
+2020-12-26,USA,North America,United States,1944585,0.58,0.58,,États-Unis
+2020-12-26,NOR,Europe,Norway,64,0.0,0.0,,Norvège
+2020-12-26,DNK,Europe,Denmark,15,0.0,0.0,,Danemark
+2020-12-26,BHR,Asia,Bahrain,51556,3.03,3.03,,Bahreïn
+2020-12-27,LVA,Europe,Latvia,17,0.0,0.0,,Lettonie
+2020-12-27,NOR,Europe,Norway,80,0.0,0.0,,Norvège
 2020-12-27,AUT,Europe,Austria,747,0.01,0.01,,Autriche
-2020-12-27,PRT,Europe,Portugal,4963,0.05,0.05,,Portugal
-2020-12-27,LTU,Europe,Lithuania,2454,0.09,0.09,,Lituanie
+2020-12-27,BHR,Asia,Bahrain,53614,3.15,3.15,,Bahreïn
+2020-12-27,SWE,Europe,Sweden,2446,0.02,0.02,,Suède
+2020-12-27,GBR,Europe,United Kingdom,1005073,1.48,1.48,,Royaume-Uni
 2020-12-27,OWID_ASI,,Asia,1942143,0.04,0.01,,
 2020-12-27,ISR,Asia,Israel,388529,4.49,4.49,,Israël
-2020-12-27,NOR,Europe,Norway,80,0.0,0.0,,Norvège
 2020-12-27,SVN,Europe,Slovenia,6176,0.3,0.3,0.0,Slovénie
-2020-12-27,CAN,North America,Canada,52280,0.14,0.14,,Canada
-2020-12-27,OWID_SAM,,South America,8655,0.0,0.0,,
-2020-12-27,ROU,Europe,Romania,965,0.01,0.01,,Roumanie
-2020-12-27,MEX,North America,Mexico,6824,0.01,0.01,,Mexique
-2020-12-27,CHE,Europe,Switzerland,1127,0.01,0.01,,Suisse
-2020-12-27,CHL,South America,Chile,8655,0.05,0.05,,Chili
 2020-12-27,ITA,Europe,Italy,7246,0.01,0.01,,Italie
-2020-12-27,BHR,Asia,Bahrain,53614,3.15,3.15,,Bahreïn
-2020-12-27,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-27,LVA,Europe,Latvia,17,0.0,0.0,,Lettonie
-2020-12-27,SWE,Europe,Sweden,2446,0.02,0.02,,Suède
+2020-12-27,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2020-12-27,EST,Europe,Estonia,191,0.01,0.01,,Estonie
+2020-12-27,OWID_SAM,,South America,8655,0.0,0.0,,
+2020-12-27,CAN,North America,Canada,52280,0.14,0.14,,Canada
 2020-12-27,OWID_EUN,,European Union,56973,0.01,0.01,0.0,
-2020-12-27,GBR,Europe,United Kingdom,1005073,1.48,1.48,,Royaume-Uni
 2020-12-27,DNK,Europe,Denmark,6156,0.11,0.11,,Danemark
+2020-12-27,MEX,North America,Mexico,6824,0.01,0.01,,Mexique
+2020-12-27,DEU,Europe,Germany,24086,0.03,0.03,0.0,Allemagne
+2020-12-27,ROU,Europe,Romania,965,0.01,0.01,,Roumanie
+2020-12-27,OWID_NAM,,North America,2003744,0.34,0.34,,
+2020-12-27,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2020-12-27,CZE,Europe,Czechia,1271,0.01,0.01,,République tchèque
+2020-12-27,CHE,Europe,Switzerland,1127,0.01,0.01,,Suisse
 2020-12-27,OWID_EUR,,Europe,1115253,0.15,0.15,0.0,
-2020-12-28,KWT,Asia,Kuwait,2500,0.06,0.06,,Koweït
-2020-12-28,OMN,Asia,Oman,1717,0.03,0.03,,Oman
-2020-12-28,CZE,Europe,Czechia,3570,0.03,0.03,,République tchèque
-2020-12-28,ITA,Europe,Italy,8692,0.01,0.01,,Italie
-2020-12-28,DNK,Europe,Denmark,8129,0.14,0.14,,Danemark
-2020-12-28,OWID_NAM,,North America,2196226,0.37,0.37,,
-2020-12-28,DEU,Europe,Germany,42076,0.05,0.05,0.0,Allemagne
-2020-12-28,HUN,Europe,Hungary,1094,0.01,0.01,,Hongrie
-2020-12-28,CHL,South America,Chile,8655,0.05,0.05,,Chili
-2020-12-28,USA,North America,United States,2127143,0.64,0.64,,États-Unis
-2020-12-28,OWID_ASI,,Asia,2082595,0.04,0.01,,
-2020-12-28,MEX,North America,Mexico,9579,0.01,0.01,,Mexique
-2020-12-28,POL,Europe,Poland,2000,0.01,0.01,,Pologne
-2020-12-28,FRA,Europe,France,530,0.0,0.0,,France
-2020-12-28,OWID_SAM,,South America,8655,0.0,0.0,,
-2020-12-28,GRC,Europe,Greece,447,0.0,0.0,,Grèce
-2020-12-28,ISR,Asia,Israel,523364,6.05,6.05,,Israël
-2020-12-28,NOR,Europe,Norway,701,0.01,0.01,,Norvège
+2020-12-27,FRA,Europe,France,255,0.0,0.0,,France
+2020-12-27,LTU,Europe,Lithuania,2454,0.09,0.09,,Lituanie
+2020-12-27,PRT,Europe,Portugal,4963,0.05,0.05,,Portugal
 2020-12-28,PRT,Europe,Portugal,7754,0.08,0.08,,Portugal
 2020-12-28,CAN,North America,Canada,59449,0.16,0.16,,Canada
 2020-12-28,SVN,Europe,Slovenia,7820,0.38,0.38,0.0,Slovénie
+2020-12-28,EST,Europe,Estonia,509,0.04,0.04,,Estonie
+2020-12-28,ITA,Europe,Italy,8692,0.01,0.01,,Italie
+2020-12-28,GRC,Europe,Greece,447,0.0,0.0,,Grèce
+2020-12-28,OWID_SAM,,South America,8655,0.0,0.0,,
+2020-12-28,LVA,Europe,Latvia,620,0.03,0.03,,Lettonie
+2020-12-28,BLR,Europe,Belarus,0,0.0,0.0,,Biélorussie
+2020-12-28,MEX,North America,Mexico,9579,0.01,0.01,,Mexique
+2020-12-28,NOR,Europe,Norway,701,0.01,0.01,,Norvège
+2020-12-28,OWID_EUR,,Europe,1155867,0.15,0.15,0.0,
+2020-12-28,BEL,Europe,Belgium,317,0.0,0.0,,Belgique
+2020-12-28,USA,North America,United States,2127143,0.64,0.64,,États-Unis
+2020-12-28,POL,Europe,Poland,2000,0.01,0.01,,Pologne
+2020-12-28,HUN,Europe,Hungary,1094,0.01,0.01,,Hongrie
+2020-12-28,OWID_EUN,,European Union,95346,0.02,0.02,0.0,
+2020-12-28,OMN,Asia,Oman,1717,0.03,0.03,,Oman
+2020-12-28,LTU,Europe,Lithuania,5211,0.19,0.19,,Lituanie
+2020-12-28,BHR,Asia,Bahrain,55014,3.23,3.23,,Bahreïn
+2020-12-28,CZE,Europe,Czechia,3570,0.03,0.03,,République tchèque
+2020-12-28,ROU,Europe,Romania,2066,0.01,0.01,,Roumanie
+2020-12-28,ISR,Asia,Israel,523364,6.05,6.05,,Israël
+2020-12-28,DNK,Europe,Denmark,8129,0.14,0.14,,Danemark
+2020-12-28,FRA,Europe,France,530,0.0,0.0,,France
+2020-12-28,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2020-12-28,OWID_NAM,,North America,2196226,0.37,0.37,,
+2020-12-28,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
 2020-12-28,AUT,Europe,Austria,2065,0.02,0.02,0.0,Autriche
 2020-12-28,CHE,Europe,Switzerland,2747,0.03,0.03,0.0,Suisse
-2020-12-28,LVA,Europe,Latvia,620,0.03,0.03,,Lettonie
-2020-12-28,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-28,BEL,Europe,Belgium,317,0.0,0.0,,Belgique
-2020-12-28,LTU,Europe,Lithuania,5211,0.19,0.19,,Lituanie
-2020-12-28,EST,Europe,Estonia,509,0.04,0.04,,Estonie
-2020-12-28,BHR,Asia,Bahrain,55014,3.23,3.23,,Bahreïn
-2020-12-28,BLR,Europe,Belarus,0,0.0,0.0,,Biélorussie
-2020-12-28,ROU,Europe,Romania,2066,0.01,0.01,,Roumanie
-2020-12-28,OWID_EUR,,Europe,1155867,0.15,0.15,0.0,
-2020-12-28,OWID_EUN,,European Union,95346,0.02,0.02,0.0,
-2020-12-29,AUT,Europe,Austria,3701,0.04,0.04,0.0,Autriche
-2020-12-29,ISR,Asia,Israel,679353,7.85,7.85,,Israël
+2020-12-28,DEU,Europe,Germany,42076,0.05,0.05,0.0,Allemagne
+2020-12-28,KWT,Asia,Kuwait,2500,0.06,0.06,,Koweït
+2020-12-28,OWID_ASI,,Asia,2082595,0.04,0.01,,
+2020-12-29,ROU,Europe,Romania,2778,0.01,0.01,,Roumanie
+2020-12-29,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2020-12-29,OWID_NAM,,North America,2216190,0.37,0.37,,
+2020-12-29,OMN,Asia,Oman,3363,0.07,0.07,,Oman
+2020-12-29,CZE,Europe,Czechia,7026,0.07,0.07,,République tchèque
+2020-12-29,DNK,Europe,Denmark,16710,0.29,0.29,,Danemark
+2020-12-29,FRA,Europe,France,732,0.0,0.0,,France
 2020-12-29,ITA,Europe,Italy,9721,0.02,0.02,,Italie
+2020-12-29,NOR,Europe,Norway,1784,0.03,0.03,,Norvège
+2020-12-29,BEL,Europe,Belgium,344,0.0,0.0,0.0,Belgique
+2020-12-29,PRT,Europe,Portugal,20368,0.2,0.2,,Portugal
+2020-12-29,BGR,Europe,Bulgaria,1719,0.02,0.02,,Bulgarie
+2020-12-29,EST,Europe,Estonia,876,0.07,0.07,,Estonie
+2020-12-29,POL,Europe,Poland,6300,0.02,0.02,,Pologne
+2020-12-29,CAN,North America,Canada,70463,0.19,0.19,,Canada
+2020-12-29,LVA,Europe,Latvia,1496,0.08,0.08,,Lettonie
+2020-12-29,OWID_SAM,,South America,9355,0.0,0.0,,
 2020-12-29,GRC,Europe,Greece,1077,0.01,0.01,,Grèce
 2020-12-29,OWID_EUN,,European Union,185790,0.04,0.04,0.0,
-2020-12-29,OMN,Asia,Oman,3363,0.07,0.07,,Oman
-2020-12-29,CHL,South America,Chile,8655,0.05,0.05,,Chili
-2020-12-29,BGR,Europe,Bulgaria,1719,0.02,0.02,,Bulgarie
-2020-12-29,ROU,Europe,Romania,2778,0.01,0.01,,Roumanie
-2020-12-29,FRA,Europe,France,732,0.0,0.0,,France
-2020-12-29,PRT,Europe,Portugal,20368,0.2,0.2,,Portugal
 2020-12-29,OWID_EUR,,Europe,1249086,0.17,0.17,0.0,
-2020-12-29,BEL,Europe,Belgium,344,0.0,0.0,0.0,Belgique
-2020-12-29,BHR,Asia,Bahrain,56041,3.29,3.29,,Bahreïn
-2020-12-29,EST,Europe,Estonia,876,0.07,0.07,,Estonie
 2020-12-29,MEX,North America,Mexico,18529,0.01,0.01,,Mexique
-2020-12-29,SVN,Europe,Slovenia,9139,0.44,0.44,0.0,Slovénie
-2020-12-29,DNK,Europe,Denmark,16710,0.29,0.29,,Danemark
-2020-12-29,CZE,Europe,Czechia,7026,0.07,0.07,,République tchèque
-2020-12-29,POL,Europe,Poland,6300,0.02,0.02,,Pologne
-2020-12-29,ARG,South America,Argentina,700,0.0,0.0,,Argentine
-2020-12-29,DEU,Europe,Germany,92078,0.11,0.11,0.0,Allemagne
-2020-12-29,OWID_ASI,,Asia,2241257,0.05,0.02,,
-2020-12-29,CAN,North America,Canada,70463,0.19,0.19,,Canada
-2020-12-29,NOR,Europe,Norway,1784,0.03,0.03,,Norvège
 2020-12-29,LTU,Europe,Lithuania,8185,0.3,0.3,,Lituanie
-2020-12-29,OWID_SAM,,South America,9355,0.0,0.0,,
+2020-12-29,BHR,Asia,Bahrain,56041,3.29,3.29,,Bahreïn
+2020-12-29,ISR,Asia,Israel,679353,7.85,7.85,,Israël
 2020-12-29,CHE,Europe,Switzerland,4439,0.05,0.05,0.0,Suisse
-2020-12-29,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-29,LVA,Europe,Latvia,1496,0.08,0.08,,Lettonie
-2020-12-29,OWID_NAM,,North America,2216190,0.37,0.37,,
-2020-12-30,GRC,Europe,Greece,1722,0.02,0.02,,Grèce
-2020-12-30,ITA,Europe,Italy,14491,0.02,0.02,,Italie
-2020-12-30,OWID_ASI,,Asia,2396983,0.05,0.02,,
-2020-12-30,ISR,Asia,Israel,832123,9.61,9.61,,Israël
-2020-12-30,NOR,Europe,Norway,2239,0.04,0.04,,Norvège
-2020-12-30,EST,Europe,Estonia,1889,0.14,0.14,,Estonie
-2020-12-30,SVN,Europe,Slovenia,9547,0.46,0.46,0.0,Slovénie
-2020-12-30,BHR,Asia,Bahrain,57317,3.37,3.37,,Bahreïn
-2020-12-30,MEX,North America,Mexico,24998,0.02,0.02,,Mexique
-2020-12-30,HRV,Europe,Croatia,7864,0.19,0.19,,Croatie
-2020-12-30,PRT,Europe,Portugal,30543,0.3,0.3,,Portugal
-2020-12-30,ISL,Europe,Iceland,4875,1.43,1.43,,Islande
-2020-12-30,LTU,Europe,Lithuania,9717,0.36,0.36,,Lituanie
-2020-12-30,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2020-12-30,OWID_NAM,,North America,2903783,0.49,0.49,,
-2020-12-30,CHE,Europe,Switzerland,6110,0.07,0.07,0.0,Suisse
-2020-12-30,LVA,Europe,Latvia,2294,0.12,0.12,,Lettonie
-2020-12-30,CAN,North America,Canada,84142,0.22,0.22,,Canada
+2020-12-29,AUT,Europe,Austria,3701,0.04,0.04,0.0,Autriche
+2020-12-29,ARG,South America,Argentina,700,0.0,0.0,,Argentine
+2020-12-29,OWID_ASI,,Asia,2241257,0.05,0.02,,
+2020-12-29,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2020-12-29,SVN,Europe,Slovenia,9139,0.44,0.44,0.0,Slovénie
+2020-12-29,DEU,Europe,Germany,92078,0.11,0.11,0.0,Allemagne
 2020-12-30,OWID_SAM,,South America,9355,0.0,0.0,,
-2020-12-30,POL,Europe,Poland,36300,0.1,0.1,,Pologne
-2020-12-30,CZE,Europe,Czechia,10519,0.1,0.1,,République tchèque
-2020-12-30,USA,North America,United States,2794588,0.84,0.84,,États-Unis
-2020-12-30,BGR,Europe,Bulgaria,4608,0.07,0.07,,Bulgarie
-2020-12-30,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2020-12-30,AUT,Europe,Austria,5076,0.06,0.06,0.0,Autriche
+2020-12-30,OWID_NAM,,North America,2903783,0.49,0.49,,
 2020-12-30,MCO,Europe,Monaco,0,0.0,0.0,,Monaco
-2020-12-30,BEL,Europe,Belgium,844,0.01,0.01,0.0,Belgique
+2020-12-30,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2020-12-30,OWID_ASI,,Asia,2396983,0.05,0.02,,
+2020-12-30,BGR,Europe,Bulgaria,4608,0.07,0.07,,Bulgarie
+2020-12-30,DEU,Europe,Germany,155571,0.19,0.18,0.0,Allemagne
+2020-12-30,ITA,Europe,Italy,14491,0.02,0.02,,Italie
+2020-12-30,LVA,Europe,Latvia,2294,0.12,0.12,,Lettonie
+2020-12-30,LUX,Europe,Luxembourg,1200,0.19,0.19,,Luxembourg
+2020-12-30,ISL,Europe,Iceland,4875,1.43,1.43,,Islande
+2020-12-30,CHE,Europe,Switzerland,6110,0.07,0.07,0.0,Suisse
+2020-12-30,HRV,Europe,Croatia,7864,0.19,0.19,,Croatie
+2020-12-30,CZE,Europe,Czechia,10519,0.1,0.1,,République tchèque
 2020-12-30,ROU,Europe,Romania,5666,0.03,0.03,,Roumanie
 2020-12-30,FRA,Europe,France,981,0.0,0.0,,France
+2020-12-30,ISR,Asia,Israel,832123,9.61,9.61,,Israël
+2020-12-30,LTU,Europe,Lithuania,9717,0.36,0.36,,Lituanie
+2020-12-30,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
 2020-12-30,DNK,Europe,Denmark,27696,0.48,0.48,,Danemark
-2020-12-30,AUT,Europe,Austria,5076,0.06,0.06,0.0,Autriche
-2020-12-30,OWID_EUN,,European Union,330068,0.07,0.07,0.0,
-2020-12-30,OWID_EUR,,Europe,1400365,0.19,0.19,0.0,
-2020-12-30,LUX,Europe,Luxembourg,1200,0.19,0.19,,Luxembourg
-2020-12-30,DEU,Europe,Germany,155571,0.19,0.18,0.0,Allemagne
 2020-12-30,OMN,Asia,Oman,5043,0.1,0.1,,Oman
-2020-12-31,CHE,Europe,Switzerland,6363,0.07,0.07,0.0,Suisse
-2020-12-31,LVA,Europe,Latvia,2298,0.12,0.12,,Lettonie
-2020-12-31,FRA,Europe,France,1170,0.0,0.0,,France
-2020-12-31,OWID_NAM,,North America,2917223,0.49,0.49,,
-2020-12-31,ROU,Europe,Romania,10289,0.05,0.05,,Roumanie
-2020-12-31,ISR,Asia,Israel,990345,11.44,11.44,,Israël
-2020-12-31,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2020-12-30,BHR,Asia,Bahrain,57317,3.37,3.37,,Bahreïn
+2020-12-30,GRC,Europe,Greece,1722,0.02,0.02,,Grèce
+2020-12-30,NOR,Europe,Norway,2239,0.04,0.04,,Norvège
+2020-12-30,OWID_EUN,,European Union,330068,0.07,0.07,0.0,
+2020-12-30,MEX,North America,Mexico,24998,0.02,0.02,,Mexique
+2020-12-30,OWID_EUR,,Europe,1400365,0.19,0.19,0.0,
+2020-12-30,USA,North America,United States,2794588,0.84,0.84,,États-Unis
+2020-12-30,CAN,North America,Canada,84142,0.22,0.22,,Canada
+2020-12-30,POL,Europe,Poland,36300,0.1,0.1,,Pologne
+2020-12-30,EST,Europe,Estonia,1889,0.14,0.14,,Estonie
+2020-12-30,SVN,Europe,Slovenia,9547,0.46,0.46,0.0,Slovénie
+2020-12-30,PRT,Europe,Portugal,30543,0.3,0.3,,Portugal
+2020-12-30,BEL,Europe,Belgium,844,0.01,0.01,0.0,Belgique
 2020-12-31,OMN,Asia,Oman,6516,0.13,0.13,,Oman
-2020-12-31,OWID_EUR,,Europe,1508187,0.2,0.2,0.0,
-2020-12-31,AUT,Europe,Austria,5088,0.06,0.06,0.0,Autriche
-2020-12-31,OWID_EUN,,European Union,437552,0.1,0.1,0.0,
-2020-12-31,FIN,Europe,Finland,1767,0.03,0.03,,Finlande
-2020-12-31,IRL,Europe,Ireland,1800,0.04,0.04,,Irlande
-2020-12-31,BEL,Europe,Belgium,866,0.01,0.01,0.0,Belgique
+2020-12-31,ROU,Europe,Romania,10289,0.05,0.05,,Roumanie
 2020-12-31,CZE,Europe,Czechia,11824,0.11,0.11,,République tchèque
-2020-12-31,DNK,Europe,Denmark,33522,0.58,0.58,,Danemark
-2020-12-31,CHN,Asia,China,4500000,0.31,0.31,,Chine
-2020-12-31,ARG,South America,Argentina,32013,0.07,0.07,,Argentine
-2020-12-31,GRC,Europe,Greece,2339,0.02,0.02,,Grèce
-2020-12-31,DEU,Europe,Germany,205262,0.24,0.24,0.0,Allemagne
-2020-12-31,OWID_ASI,,Asia,5558004,0.12,0.02,,
-2020-12-31,CAN,North America,Canada,97582,0.26,0.26,,Canada
-2020-12-31,NOR,Europe,Norway,2324,0.04,0.04,,Norvège
-2020-12-31,LTU,Europe,Lithuania,9742,0.36,0.36,,Lituanie
-2020-12-31,OWID_SAM,,South America,40668,0.01,0.0,,
-2020-12-31,SVN,Europe,Slovenia,11395,0.55,0.55,0.0,Slovénie
-2020-12-31,POL,Europe,Poland,47600,0.13,0.13,,Pologne
-2020-12-31,BHR,Asia,Bahrain,58643,3.45,3.45,,Bahreïn
-2020-12-31,EST,Europe,Estonia,2475,0.19,0.19,,Estonie
-2020-12-31,ITA,Europe,Italy,40154,0.07,0.07,,Italie
+2020-12-31,BEL,Europe,Belgium,866,0.01,0.01,0.0,Belgique
 2020-12-31,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2020-12-31,ISR,Asia,Israel,990345,11.44,11.44,,Israël
+2020-12-31,ITA,Europe,Italy,40154,0.07,0.07,,Italie
+2020-12-31,IRL,Europe,Ireland,1800,0.04,0.04,,Irlande
+2020-12-31,POL,Europe,Poland,47600,0.13,0.13,,Pologne
+2020-12-31,DEU,Europe,Germany,205262,0.24,0.24,0.0,Allemagne
+2020-12-31,CAN,North America,Canada,97582,0.26,0.26,,Canada
+2020-12-31,OWID_SAM,,South America,40668,0.01,0.0,,
+2020-12-31,EST,Europe,Estonia,2475,0.19,0.19,,Estonie
+2020-12-31,CHN,Asia,China,4500000,0.31,0.31,,Chine
+2020-12-31,SVN,Europe,Slovenia,11395,0.55,0.55,0.0,Slovénie
+2020-12-31,OWID_EUR,,Europe,1508187,0.2,0.2,0.0,
+2020-12-31,ARG,South America,Argentina,32013,0.07,0.07,,Argentine
+2020-12-31,OWID_EUN,,European Union,437552,0.1,0.1,0.0,
+2020-12-31,OWID_NAM,,North America,2917223,0.49,0.49,,
 2020-12-31,PRT,Europe,Portugal,32749,0.32,0.32,,Portugal
-2021-01-01,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2021-01-01,OWID_SAM,,South America,40668,0.01,0.0,,
-2021-01-01,CZE,Europe,Czechia,12087,0.11,0.11,,République tchèque
-2021-01-01,OWID_NAM,,North America,2923431,0.49,0.49,,
+2020-12-31,GRC,Europe,Greece,2339,0.02,0.02,,Grèce
+2020-12-31,LTU,Europe,Lithuania,9742,0.36,0.36,,Lituanie
+2020-12-31,FIN,Europe,Finland,1767,0.03,0.03,,Finlande
+2020-12-31,DNK,Europe,Denmark,33522,0.58,0.58,,Danemark
+2020-12-31,OWID_ASI,,Asia,5558004,0.12,0.02,,
+2020-12-31,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2020-12-31,AUT,Europe,Austria,5088,0.06,0.06,0.0,Autriche
+2020-12-31,NOR,Europe,Norway,2324,0.04,0.04,,Norvège
+2020-12-31,FRA,Europe,France,1170,0.0,0.0,,France
+2020-12-31,LVA,Europe,Latvia,2298,0.12,0.12,,Lettonie
+2020-12-31,BHR,Asia,Bahrain,58643,3.45,3.45,,Bahreïn
+2020-12-31,CHE,Europe,Switzerland,6363,0.07,0.07,0.0,Suisse
+2021-01-01,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2021-01-01,NOR,Europe,Norway,2342,0.04,0.04,,Norvège
+2021-01-01,BGR,Europe,Bulgaria,4739,0.07,0.07,,Bulgarie
+2021-01-01,GRC,Europe,Greece,2603,0.02,0.02,,Grèce
 2021-01-01,DEU,Europe,Germany,230612,0.28,0.27,0.0,Allemagne
+2021-01-01,BEL,Europe,Belgium,874,0.01,0.01,0.0,Belgique
+2021-01-01,PRT,Europe,Portugal,32749,0.32,0.32,,Portugal
 2021-01-01,AUT,Europe,Austria,5095,0.06,0.06,0.0,Autriche
+2021-01-01,BHR,Asia,Bahrain,59351,3.49,3.49,,Bahreïn
+2021-01-01,EST,Europe,Estonia,2475,0.19,0.19,,Estonie
+2021-01-01,ROU,Europe,Romania,11656,0.06,0.06,,Roumanie
+2021-01-01,OWID_EUN,,European Union,478645,0.11,0.11,0.0,
+2021-01-01,DNK,Europe,Denmark,35736,0.62,0.62,,Danemark
+2021-01-01,OWID_SAM,,South America,40668,0.01,0.0,,
+2021-01-01,LTU,Europe,Lithuania,9742,0.36,0.36,,Lituanie
+2021-01-01,ITA,Europe,Italy,51285,0.08,0.08,,Italie
 2021-01-01,OWID_EUR,,Europe,1549338,0.21,0.21,0.0,
+2021-01-01,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2021-01-01,ISR,Asia,Israel,1061598,12.26,12.26,,Israël
+2021-01-01,FRA,Europe,France,1373,0.0,0.0,,France
 2021-01-01,CAN,North America,Canada,103790,0.27,0.27,,Canada
 2021-01-01,CHE,Europe,Switzerland,6403,0.07,0.07,0.0,Suisse
 2021-01-01,LVA,Europe,Latvia,2302,0.12,0.12,,Lettonie
-2021-01-01,DNK,Europe,Denmark,35736,0.62,0.62,,Danemark
-2021-01-01,CHL,South America,Chile,8655,0.05,0.05,,Chili
-2021-01-01,OWID_EUN,,European Union,478645,0.11,0.11,0.0,
-2021-01-01,ROU,Europe,Romania,11656,0.06,0.06,,Roumanie
-2021-01-01,BHR,Asia,Bahrain,59351,3.49,3.49,,Bahreïn
-2021-01-01,PRT,Europe,Portugal,32749,0.32,0.32,,Portugal
-2021-01-01,EST,Europe,Estonia,2475,0.19,0.19,,Estonie
-2021-01-01,ITA,Europe,Italy,51285,0.08,0.08,,Italie
-2021-01-01,FRA,Europe,France,1373,0.0,0.0,,France
-2021-01-01,BGR,Europe,Bulgaria,4739,0.07,0.07,,Bulgarie
-2021-01-01,GRC,Europe,Greece,2603,0.02,0.02,,Grèce
+2021-01-01,CZE,Europe,Czechia,12087,0.11,0.11,,République tchèque
 2021-01-01,OWID_ASI,,Asia,5629965,0.12,0.02,,
-2021-01-01,LTU,Europe,Lithuania,9742,0.36,0.36,,Lituanie
-2021-01-01,BEL,Europe,Belgium,874,0.01,0.01,0.0,Belgique
-2021-01-01,ISR,Asia,Israel,1061598,12.26,12.26,,Israël
-2021-01-01,NOR,Europe,Norway,2342,0.04,0.04,,Norvège
 2021-01-01,SVN,Europe,Slovenia,11546,0.56,0.56,0.0,Slovénie
-2021-01-02,CAN,North America,Canada,108732,0.29,0.29,,Canada
-2021-01-02,PRT,Europe,Portugal,32750,0.32,0.32,,Portugal
-2021-01-02,ISR,Asia,Israel,1133231,13.09,13.09,,Israël
-2021-01-02,DEU,Europe,Germany,278555,0.33,0.33,0.0,Allemagne
-2021-01-02,ITA,Europe,Italy,90033,0.15,0.15,,Italie
-2021-01-02,OWID_ASI,,Asia,5703059,0.12,0.03,,
+2021-01-01,OWID_NAM,,North America,2923431,0.49,0.49,,
 2021-01-02,GRC,Europe,Greece,3149,0.03,0.03,,Grèce
-2021-01-02,OWID_SAM,,South America,40668,0.01,0.0,,
-2021-01-02,CZE,Europe,Czechia,13360,0.12,0.12,,République tchèque
+2021-01-02,RUS,Europe,Russia,800000,0.55,0.55,,Russie
+2021-01-02,AUT,Europe,Austria,5105,0.06,0.06,0.0,Autriche
+2021-01-02,NOR,Europe,Norway,2357,0.04,0.04,,Norvège
 2021-01-02,POL,Europe,Poland,50391,0.13,0.13,,Pologne
 2021-01-02,SVN,Europe,Slovenia,11950,0.57,0.57,0.0,Slovénie
+2021-01-02,BEL,Europe,Belgium,890,0.01,0.01,0.0,Belgique
+2021-01-02,CAN,North America,Canada,108732,0.29,0.29,,Canada
+2021-01-02,ROU,Europe,Romania,13242,0.07,0.07,,Roumanie
+2021-01-02,CHE,Europe,Switzerland,6407,0.07,0.07,0.0,Suisse
+2021-01-02,DEU,Europe,Germany,278555,0.33,0.33,0.0,Allemagne
+2021-01-02,OWID_EUR,,Europe,2399221,0.32,0.32,0.0,
+2021-01-02,CHL,South America,Chile,8655,0.05,0.05,,Chili
+2021-01-02,LVA,Europe,Latvia,2304,0.12,0.12,,Lettonie
+2021-01-02,BHR,Asia,Bahrain,60097,3.53,3.53,,Bahreïn
+2021-01-02,OWID_SAM,,South America,40668,0.01,0.0,,
 2021-01-02,OWID_EUN,,European Union,580509,0.13,0.13,0.0,
-2021-01-02,NOR,Europe,Norway,2357,0.04,0.04,,Norvège
 2021-01-02,LTU,Europe,Lithuania,9742,0.36,0.36,,Lituanie
 2021-01-02,DNK,Europe,Denmark,44093,0.76,0.76,,Danemark
-2021-01-02,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2021-01-02,USA,North America,United States,4225756,1.26,1.26,,États-Unis
-2021-01-02,AUT,Europe,Austria,5105,0.06,0.06,0.0,Autriche
-2021-01-02,OMN,Asia,Oman,7231,0.14,0.14,,Oman
-2021-01-02,BEL,Europe,Belgium,890,0.01,0.01,0.0,Belgique
-2021-01-02,OWID_EUR,,Europe,2399221,0.32,0.32,0.0,
+2021-01-02,CZE,Europe,Czechia,13360,0.12,0.12,,République tchèque
 2021-01-02,EST,Europe,Estonia,2505,0.19,0.19,,Estonie
-2021-01-02,LVA,Europe,Latvia,2304,0.12,0.12,,Lettonie
+2021-01-02,ITA,Europe,Italy,90033,0.15,0.15,,Italie
+2021-01-02,ISR,Asia,Israel,1133231,13.09,13.09,,Israël
+2021-01-02,PRT,Europe,Portugal,32750,0.32,0.32,,Portugal
+2021-01-02,OWID_ASI,,Asia,5703059,0.12,0.03,,
 2021-01-02,OWID_NAM,,North America,4359541,0.74,0.74,,
+2021-01-02,OMN,Asia,Oman,7231,0.14,0.14,,Oman
+2021-01-02,USA,North America,United States,4225756,1.26,1.26,,États-Unis
+2021-01-02,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
 2021-01-02,FRA,Europe,France,1530,0.0,0.0,,France
-2021-01-02,RUS,Europe,Russia,800000,0.55,0.55,,Russie
-2021-01-02,CHL,South America,Chile,8655,0.05,0.05,,Chili
-2021-01-02,CHE,Europe,Switzerland,6407,0.07,0.07,0.0,Suisse
-2021-01-02,BHR,Asia,Bahrain,60097,3.53,3.53,,Bahreïn
-2021-01-02,ROU,Europe,Romania,13242,0.07,0.07,,Roumanie
-2021-01-03,OWID_EUN,,European Union,665383,0.15,0.15,0.0,
-2021-01-03,SWE,Europe,Sweden,16205,0.16,0.16,,Suède
-2021-01-03,ROU,Europe,Romania,13596,0.07,0.07,,Roumanie
-2021-01-03,CHL,South America,Chile,8655,0.05,0.05,,Chili
-2021-01-03,GRC,Europe,Greece,3869,0.04,0.04,,Grèce
-2021-01-03,BEL,Europe,Belgium,903,0.01,0.01,0.0,Belgique
-2021-01-03,ISR,Asia,Israel,1282668,14.82,14.82,,Israël
-2021-01-03,NOR,Europe,Norway,2385,0.04,0.04,,Norvège
-2021-01-03,SVN,Europe,Slovenia,12502,0.6,0.6,0.0,Slovénie
-2021-01-03,HRV,Europe,Croatia,12285,0.3,0.3,,Croatie
-2021-01-03,ITA,Europe,Italy,125481,0.21,0.21,,Italie
-2021-01-03,BHR,Asia,Bahrain,60689,3.57,3.57,,Bahreïn
-2021-01-03,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
-2021-01-03,DNK,Europe,Denmark,49710,0.86,0.86,,Danemark
-2021-01-03,CRI,North America,Costa Rica,2455,0.05,0.05,,Costa Rica
-2021-01-03,OWID_SAM,,South America,40668,0.01,0.0,,
-2021-01-03,DEU,Europe,Germany,300966,0.36,0.36,0.0,Allemagne
-2021-01-03,CAN,North America,Canada,114034,0.3,0.3,,Canada
-2021-01-03,OWID_EUR,,Europe,2859481,0.38,0.38,0.0,
-2021-01-03,CHE,Europe,Switzerland,6408,0.07,0.07,0.0,Suisse
-2021-01-03,LVA,Europe,Latvia,2305,0.12,0.12,,Lettonie
-2021-01-03,OWID_NAM,,North America,4367243,0.74,0.74,,
 2021-01-03,OWID_ASI,,Asia,5854683,0.13,0.03,,
-2021-01-03,GBR,Europe,United Kingdom,1380430,2.03,2.03,,Royaume-Uni
+2021-01-03,OWID_NAM,,North America,4367243,0.74,0.74,,
+2021-01-03,CHE,Europe,Switzerland,6408,0.07,0.07,0.0,Suisse
+2021-01-03,SWE,Europe,Sweden,16205,0.16,0.16,,Suède
+2021-01-03,OWID_SAM,,South America,40668,0.01,0.0,,
+2021-01-03,CAN,North America,Canada,114034,0.3,0.3,,Canada
+2021-01-03,ISR,Asia,Israel,1282668,14.82,14.82,,Israël
+2021-01-03,CRI,North America,Costa Rica,2455,0.05,0.05,,Costa Rica
 2021-01-03,CZE,Europe,Czechia,14278,0.13,0.13,,République tchèque
-2021-01-03,POL,Europe,Poland,50833,0.13,0.13,,Pologne
-2021-01-03,PRT,Europe,Portugal,32750,0.32,0.32,,Portugal
-2021-01-03,FRA,Europe,France,1723,0.0,0.0,,France
+2021-01-03,GBR,Europe,United Kingdom,1380430,2.03,2.03,,Royaume-Uni
+2021-01-03,ITA,Europe,Italy,125481,0.21,0.21,,Italie
+2021-01-03,OWID_EUR,,Europe,2859481,0.38,0.38,0.0,
+2021-01-03,LVA,Europe,Latvia,2305,0.12,0.12,,Lettonie
+2021-01-03,DNK,Europe,Denmark,49710,0.86,0.86,,Danemark
+2021-01-03,OWID_EUN,,European Union,665383,0.15,0.15,0.0,
+2021-01-03,BEL,Europe,Belgium,903,0.01,0.01,0.0,Belgique
+2021-01-03,BHR,Asia,Bahrain,60689,3.57,3.57,,Bahreïn
+2021-01-03,GRC,Europe,Greece,3869,0.04,0.04,,Grèce
 2021-01-03,EST,Europe,Estonia,2523,0.19,0.19,,Estonie
-2021-01-03,OMN,Asia,Oman,8826,0.17,0.17,,Oman
+2021-01-03,LIE,Europe,Liechtenstein,0,0.0,0.0,,Liechtenstein
+2021-01-03,POL,Europe,Poland,50833,0.13,0.13,,Pologne
+2021-01-03,NOR,Europe,Norway,2385,0.04,0.04,,Norvège
+2021-01-03,PRT,Europe,Portugal,32750,0.32,0.32,,Portugal
+2021-01-03,ROU,Europe,Romania,13596,0.07,0.07,,Roumanie
+2021-01-03,FRA,Europe,France,1723,0.0,0.0,,France
 2021-01-03,AUT,Europe,Austria,5112,0.06,0.06,0.0,Autriche
 2021-01-03,LTU,Europe,Lithuania,9742,0.36,0.36,,Lituanie
-2021-01-04,LVA,Europe,Latvia,3010,0.16,0.16,,Lettonie
-2021-01-04,AUT,Europe,Austria,5239,0.06,0.06,0.0,Autriche
-2021-01-04,OWID_NAM,,North America,4747410,0.8,0.8,,
-2021-01-04,PRT,Europe,Portugal,33670,0.33,0.33,,Portugal
-2021-01-04,EST,Europe,Estonia,3165,0.24,0.24,,Estonie
-2021-01-04,CAN,North America,Canada,137735,0.36,0.36,,Canada
-2021-01-04,FRA,Europe,France,3376,0.0,0.0,,France
-2021-01-04,SVK,Europe,Slovakia,0,0.0,0.0,,Slovaquie
-2021-01-04,POL,Europe,Poland,92220,0.24,0.24,,Pologne
-2021-01-04,ROU,Europe,Romania,25508,0.13,0.13,,Roumanie
-2021-01-04,IRL,Europe,Ireland,4000,0.08,0.08,,Irlande
-2021-01-04,ITA,Europe,Italy,194845,0.32,0.32,0.0,Italie
-2021-01-04,BEL,Europe,Belgium,931,0.01,0.01,0.0,Belgique
-2021-01-04,BHR,Asia,Bahrain,61612,3.62,3.62,,Bahreïn
-2021-01-04,OWID_EUR,,Europe,3136135,0.42,0.42,0.0,
-2021-01-04,OWID_ASI,,Asia,6009383,0.13,0.03,0.0,
-2021-01-04,OWID_SAM,,South America,48659,0.01,0.0,,
-2021-01-04,OMN,Asia,Oman,10728,0.21,0.21,,Oman
-2021-01-04,CZE,Europe,Czechia,17872,0.17,0.17,,République tchèque
-2021-01-04,LIE,Europe,Liechtenstein,2,0.01,0.01,,Liechtenstein
-2021-01-04,FIN,Europe,Finland,3604,0.07,0.07,,Finlande
-2021-01-04,USA,North America,United States,4563260,1.36,1.36,,États-Unis
-2021-01-04,ISR,Asia,Israel,1434543,16.57,16.57,0.0,Israël
+2021-01-03,DEU,Europe,Germany,300966,0.36,0.36,0.0,Allemagne
+2021-01-03,SVN,Europe,Slovenia,12502,0.6,0.6,0.0,Slovénie
+2021-01-03,OMN,Asia,Oman,8826,0.17,0.17,,Oman
+2021-01-03,HRV,Europe,Croatia,12285,0.3,0.3,,Croatie
+2021-01-03,CHL,South America,Chile,8655,0.05,0.05,,Chili
 2021-01-04,GRC,Europe,Greece,10327,0.1,0.1,,Grèce
-2021-01-04,DEU,Europe,Germany,346808,0.41,0.41,0.0,Allemagne
-2021-01-04,CHL,South America,Chile,9060,0.05,0.05,,Chili
-2021-01-04,OWID_EUN,,European Union,938355,0.21,0.21,0.0,
-2021-01-04,MEX,North America,Mexico,43960,0.03,0.03,,Mexique
-2021-01-04,ESP,Europe,Spain,82834,0.18,0.18,,Espagne
-2021-01-04,SVN,Europe,Slovenia,13588,0.65,0.65,0.0,Slovénie
-2021-01-04,LTU,Europe,Lithuania,9744,0.36,0.36,,Lituanie
-2021-01-04,NOR,Europe,Norway,2410,0.04,0.04,,Norvège
-2021-01-04,DNK,Europe,Denmark,52091,0.9,0.9,0.0,Danemark
+2021-01-04,BHR,Asia,Bahrain,61612,3.62,3.62,,Bahreïn
+2021-01-04,ISR,Asia,Israel,1434543,16.57,16.57,0.0,Israël
+2021-01-04,OWID_SAM,,South America,48659,0.01,0.0,,
+2021-01-04,AUT,Europe,Austria,5239,0.06,0.06,0.0,Autriche
+2021-01-04,LIE,Europe,Liechtenstein,2,0.01,0.01,,Liechtenstein
 2021-01-04,ARG,South America,Argentina,39599,0.09,0.09,,Argentine
+2021-01-04,SVK,Europe,Slovakia,0,0.0,0.0,,Slovaquie
+2021-01-04,LVA,Europe,Latvia,3010,0.16,0.16,,Lettonie
+2021-01-04,LTU,Europe,Lithuania,9744,0.36,0.36,,Lituanie
+2021-01-04,EST,Europe,Estonia,3165,0.24,0.24,,Estonie
+2021-01-04,ESP,Europe,Spain,82834,0.18,0.18,,Espagne
+2021-01-04,POL,Europe,Poland,92220,0.24,0.24,,Pologne
+2021-01-04,PRT,Europe,Portugal,33670,0.33,0.33,,Portugal
+2021-01-04,USA,North America,United States,4563260,1.36,1.36,,États-Unis
+2021-01-04,FIN,Europe,Finland,3604,0.07,0.07,,Finlande
+2021-01-04,DNK,Europe,Denmark,52091,0.9,0.9,0.0,Danemark
+2021-01-04,CZE,Europe,Czechia,17872,0.17,0.17,,République tchèque
+2021-01-04,ITA,Europe,Italy,194845,0.32,0.32,0.0,Italie
+2021-01-04,FRA,Europe,France,3376,0.0,0.0,,France
+2021-01-04,OMN,Asia,Oman,10728,0.21,0.21,,Oman
+2021-01-04,OWID_ASI,,Asia,6009383,0.13,0.03,0.0,
+2021-01-04,OWID_NAM,,North America,4747410,0.8,0.8,,
+2021-01-04,SVN,Europe,Slovenia,13588,0.65,0.65,0.0,Slovénie
+2021-01-04,DEU,Europe,Germany,346808,0.41,0.41,0.0,Allemagne
+2021-01-04,CAN,North America,Canada,137735,0.36,0.36,,Canada
+2021-01-04,IRL,Europe,Ireland,4000,0.08,0.08,,Irlande
 2021-01-04,CHE,Europe,Switzerland,10063,0.12,0.11,0.0,Suisse
-2021-01-05,NOR,Europe,Norway,5838,0.11,0.11,,Norvège
-2021-01-05,PRT,Europe,Portugal,46433,0.46,0.46,,Portugal
-2021-01-05,SVK,Europe,Slovakia,425,0.01,0.01,,Slovaquie
+2021-01-04,OWID_EUN,,European Union,938355,0.21,0.21,0.0,
+2021-01-04,OWID_EUR,,Europe,3136135,0.42,0.42,0.0,
+2021-01-04,MEX,North America,Mexico,43960,0.03,0.03,,Mexique
+2021-01-04,BEL,Europe,Belgium,931,0.01,0.01,0.0,Belgique
+2021-01-04,ROU,Europe,Romania,25508,0.13,0.13,,Roumanie
+2021-01-04,NOR,Europe,Norway,2410,0.04,0.04,,Norvège
+2021-01-04,CHL,South America,Chile,9060,0.05,0.05,,Chili
+2021-01-05,POL,Europe,Poland,140226,0.37,0.37,,Pologne
 2021-01-05,ITA,Europe,Italy,275017,0.45,0.45,0.0,Italie
-2021-01-05,BHR,Asia,Bahrain,63893,3.75,3.75,,Bahreïn
-2021-01-05,OWID_NAM,,North America,5042357,0.85,0.85,,
+2021-01-05,OWID_EUR,,Europe,3455548,0.46,0.46,0.0,
 2021-01-05,SVN,Europe,Slovenia,16045,0.77,0.77,0.0,Slovénie
-2021-01-05,HRV,Europe,Croatia,13798,0.34,0.34,,Croatie
+2021-01-05,CHL,South America,Chile,10503,0.05,0.05,,Chili
+2021-01-05,GRC,Europe,Greece,16631,0.16,0.16,,Grèce
+2021-01-05,ESP,Europe,Spain,139339,0.3,0.3,,Espagne
+2021-01-05,ARE,Asia,United Arab Emirates,826301,8.35,8.35,,Émirats Arabes Unis
+2021-01-05,OMN,Asia,Oman,12751,0.25,0.25,,Oman
+2021-01-05,OWID_NAM,,North America,5042357,0.85,0.85,,
+2021-01-05,CZE,Europe,Czechia,22373,0.21,0.21,,République tchèque
+2021-01-05,EST,Europe,Estonia,4976,0.38,0.38,0.0,Estonie
+2021-01-05,BGR,Europe,Bulgaria,5448,0.08,0.08,,Bulgarie
+2021-01-05,NOR,Europe,Norway,5838,0.11,0.11,,Norvège
+2021-01-05,FIN,Europe,Finland,5445,0.1,0.1,,Finlande
 2021-01-05,OWID_ASI,,Asia,6964872,0.15,0.04,0.0,
 2021-01-05,FRA,Europe,France,8985,0.01,0.01,,France
-2021-01-05,ARE,Asia,United Arab Emirates,826301,8.35,8.35,,Émirats Arabes Unis
-2021-01-05,LTU,Europe,Lithuania,10368,0.38,0.38,,Lituanie
-2021-01-05,ROU,Europe,Romania,41609,0.22,0.22,,Roumanie
-2021-01-05,LVA,Europe,Latvia,3901,0.21,0.21,,Lettonie
-2021-01-05,ISR,Asia,Israel,1559427,18.02,18.02,0.0,Israël
+2021-01-05,PRT,Europe,Portugal,46433,0.46,0.46,,Portugal
+2021-01-05,DNK,Europe,Denmark,64970,1.12,1.12,0.0,Danemark
+2021-01-05,USA,North America,United States,4836469,1.45,1.45,,États-Unis
+2021-01-05,MEX,North America,Mexico,48236,0.04,0.04,,Mexique
+2021-01-05,AUT,Europe,Austria,7047,0.08,0.08,0.0,Autriche
+2021-01-05,SVK,Europe,Slovakia,425,0.01,0.01,,Slovaquie
+2021-01-05,OWID_SAM,,South America,50102,0.01,0.0,,
+2021-01-05,OWID_EUN,,European Union,1247248,0.28,0.28,0.0,
+2021-01-05,CAN,North America,Canada,155197,0.41,0.41,,Canada
 2021-01-05,LIE,Europe,Liechtenstein,2,0.01,0.01,,Liechtenstein
 2021-01-05,BEL,Europe,Belgium,2674,0.02,0.02,0.0,Belgique
-2021-01-05,AUT,Europe,Austria,7047,0.08,0.08,0.0,Autriche
-2021-01-05,CZE,Europe,Czechia,22373,0.21,0.21,,République tchèque
-2021-01-05,CAN,North America,Canada,155197,0.41,0.41,,Canada
-2021-01-05,BGR,Europe,Bulgaria,5448,0.08,0.08,,Bulgarie
-2021-01-05,DNK,Europe,Denmark,64970,1.12,1.12,0.0,Danemark
-2021-01-05,OWID_SAM,,South America,50102,0.01,0.0,,
+2021-01-05,LTU,Europe,Lithuania,10368,0.38,0.38,,Lituanie
 2021-01-05,CHE,Europe,Switzerland,17155,0.2,0.19,0.0,Suisse
-2021-01-05,FIN,Europe,Finland,5445,0.1,0.1,,Finlande
-2021-01-05,MEX,North America,Mexico,48236,0.04,0.04,,Mexique
-2021-01-05,OWID_EUN,,European Union,1247248,0.28,0.28,0.0,
-2021-01-05,CHL,South America,Chile,10503,0.05,0.05,,Chili
-2021-01-05,ESP,Europe,Spain,139339,0.3,0.3,,Espagne
+2021-01-05,ISR,Asia,Israel,1559427,18.02,18.02,0.0,Israël
 2021-01-05,DEU,Europe,Germany,399039,0.48,0.47,0.0,Allemagne
-2021-01-05,GRC,Europe,Greece,16631,0.16,0.16,,Grèce
-2021-01-05,USA,North America,United States,4836469,1.45,1.45,,États-Unis
-2021-01-05,OWID_EUR,,Europe,3455548,0.46,0.46,0.0,
-2021-01-05,POL,Europe,Poland,140226,0.37,0.37,,Pologne
-2021-01-05,OMN,Asia,Oman,12751,0.25,0.25,,Oman
-2021-01-05,EST,Europe,Estonia,4976,0.38,0.38,0.0,Estonie
-2021-01-06,GRC,Europe,Greece,20616,0.2,0.2,,Grèce
-2021-01-06,ITA,Europe,Italy,340461,0.56,0.56,0.0,Italie
-2021-01-06,OMN,Asia,Oman,14005,0.27,0.27,,Oman
-2021-01-06,DEU,Europe,Germany,461543,0.55,0.55,0.0,Allemagne
-2021-01-06,ISR,Asia,Israel,1662517,19.21,19.21,0.0,Israël
-2021-01-06,MEX,North America,Mexico,53185,0.04,0.04,,Mexique
-2021-01-06,OWID_EUN,,European Union,1496006,0.34,0.33,0.0,
-2021-01-06,SVN,Europe,Slovenia,21405,1.03,1.03,0.0,Slovénie
-2021-01-06,USA,North America,United States,5306797,1.59,1.59,,États-Unis
-2021-01-06,LTU,Europe,Lithuania,13873,0.51,0.51,,Lituanie
+2021-01-05,LVA,Europe,Latvia,3901,0.21,0.21,,Lettonie
+2021-01-05,BHR,Asia,Bahrain,63893,3.75,3.75,,Bahreïn
+2021-01-05,HRV,Europe,Croatia,13798,0.34,0.34,,Croatie
+2021-01-05,ROU,Europe,Romania,41609,0.22,0.22,,Roumanie
 2021-01-06,NOR,Europe,Norway,14965,0.28,0.28,0.0,Norvège
+2021-01-06,BHR,Asia,Bahrain,68472,4.02,4.02,,Bahreïn
+2021-01-06,ARE,Asia,United Arab Emirates,826301,8.35,8.35,,Émirats Arabes Unis
 2021-01-06,CHL,South America,Chile,10708,0.06,0.06,,Chili
-2021-01-06,SAU,Asia,Saudi Arabia,137862,0.4,0.4,,Arabie Saoudite
-2021-01-06,CHE,Europe,Switzerland,22998,0.27,0.25,0.0,Suisse
-2021-01-06,LVA,Europe,Latvia,4680,0.25,0.25,0.0,Lettonie
-2021-01-06,CYP,Europe,Cyprus,3901,0.44,0.44,,Chypre
+2021-01-06,GRC,Europe,Greece,20616,0.2,0.2,,Grèce
+2021-01-06,SVN,Europe,Slovenia,21405,1.03,1.03,0.0,Slovénie
+2021-01-06,DEU,Europe,Germany,461543,0.55,0.55,0.0,Allemagne
+2021-01-06,BEL,Europe,Belgium,6653,0.06,0.06,0.0,Belgique
+2021-01-06,PRT,Europe,Portugal,61454,0.6,0.6,,Portugal
+2021-01-06,ISR,Asia,Israel,1662517,19.21,19.21,0.0,Israël
+2021-01-06,SVK,Europe,Slovakia,6618,0.12,0.12,,Slovaquie
+2021-01-06,USA,North America,United States,5306797,1.59,1.59,,États-Unis
 2021-01-06,POL,Europe,Poland,160359,0.42,0.42,,Pologne
+2021-01-06,DNK,Europe,Denmark,83702,1.45,1.45,0.0,Danemark
+2021-01-06,SAU,Asia,Saudi Arabia,137862,0.4,0.4,,Arabie Saoudite
+2021-01-06,EST,Europe,Estonia,6587,0.5,0.5,0.0,Estonie
+2021-01-06,CYP,Europe,Cyprus,3901,0.44,0.44,,Chypre
+2021-01-06,OMN,Asia,Oman,14005,0.27,0.27,,Oman
+2021-01-06,OWID_NAM,,North America,5545797,0.94,0.94,0.0,
+2021-01-06,CZE,Europe,Czechia,28209,0.26,0.26,,République tchèque
+2021-01-06,ITA,Europe,Italy,340461,0.56,0.56,0.0,Italie
+2021-01-06,OWID_EUR,,Europe,3719279,0.5,0.49,0.0,
+2021-01-06,LIE,Europe,Liechtenstein,5,0.01,0.01,,Liechtenstein
+2021-01-06,MEX,North America,Mexico,53185,0.04,0.04,,Mexique
+2021-01-06,CHE,Europe,Switzerland,22998,0.27,0.25,0.0,Suisse
+2021-01-06,OWID_EUN,,European Union,1496006,0.34,0.33,0.0,
+2021-01-06,BGR,Europe,Bulgaria,7913,0.11,0.11,,Bulgarie
+2021-01-06,CAN,North America,Canada,183360,0.49,0.48,0.0,Canada
+2021-01-06,OWID_SAM,,South America,50307,0.01,0.0,,
+2021-01-06,LTU,Europe,Lithuania,13873,0.51,0.51,,Lituanie
+2021-01-06,AUT,Europe,Austria,7907,0.09,0.09,0.0,Autriche
+2021-01-06,FRA,Europe,France,20490,0.03,0.03,,France
+2021-01-06,LVA,Europe,Latvia,4680,0.25,0.25,0.0,Lettonie
 2021-01-06,OWID_ASI,,Asia,7211657,0.16,0.04,0.0,
 2021-01-06,ROU,Europe,Romania,58554,0.3,0.3,,Roumanie
-2021-01-06,OWID_SAM,,South America,50307,0.01,0.0,,
-2021-01-06,ARE,Asia,United Arab Emirates,826301,8.35,8.35,,Émirats Arabes Unis
-2021-01-06,EST,Europe,Estonia,6587,0.5,0.5,0.0,Estonie
-2021-01-06,LIE,Europe,Liechtenstein,5,0.01,0.01,,Liechtenstein
-2021-01-06,FRA,Europe,France,20490,0.03,0.03,,France
-2021-01-06,BEL,Europe,Belgium,6653,0.06,0.06,0.0,Belgique
-2021-01-06,DNK,Europe,Denmark,83702,1.45,1.45,0.0,Danemark
-2021-01-06,AUT,Europe,Austria,7907,0.09,0.09,0.0,Autriche
-2021-01-06,BGR,Europe,Bulgaria,7913,0.11,0.11,,Bulgarie
-2021-01-06,BHR,Asia,Bahrain,68472,4.02,4.02,,Bahreïn
-2021-01-06,OWID_EUR,,Europe,3719279,0.5,0.49,0.0,
-2021-01-06,OWID_NAM,,North America,5545797,0.94,0.94,0.0,
-2021-01-06,SVK,Europe,Slovakia,6618,0.12,0.12,,Slovaquie
-2021-01-06,CAN,North America,Canada,183360,0.49,0.48,0.0,Canada
-2021-01-06,PRT,Europe,Portugal,61454,0.6,0.6,,Portugal
-2021-01-06,CZE,Europe,Czechia,28209,0.26,0.26,,République tchèque
-2021-01-07,NOR,Europe,Norway,21565,0.4,0.4,0.0,Norvège
-2021-01-07,BGR,Europe,Bulgaria,11117,0.16,0.16,,Bulgarie
-2021-01-07,ESP,Europe,Spain,207323,0.44,0.44,,Espagne
-2021-01-07,USA,North America,United States,5919418,1.77,1.77,,États-Unis
-2021-01-07,CHE,Europe,Switzerland,30208,0.35,0.32,0.0,Suisse
-2021-01-07,GRC,Europe,Greece,26445,0.25,0.25,,Grèce
-2021-01-07,HRV,Europe,Croatia,20603,0.5,0.5,,Croatie
-2021-01-07,EST,Europe,Estonia,7929,0.6,0.6,0.0,Estonie
-2021-01-07,ITA,Europe,Italy,433111,0.72,0.72,0.0,Italie
-2021-01-07,BHR,Asia,Bahrain,72239,4.25,4.25,,Bahreïn
-2021-01-07,CHL,South America,Chile,10708,0.06,0.06,,Chili
-2021-01-07,BEL,Europe,Belgium,15099,0.13,0.13,0.0,Belgique
 2021-01-07,AUT,Europe,Austria,11193,0.12,0.12,0.0,Autriche
-2021-01-07,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
-2021-01-07,FRA,Europe,France,49438,0.07,0.07,,France
-2021-01-07,ARE,Asia,United Arab Emirates,887697,8.98,8.98,,Émirats Arabes Unis
-2021-01-07,OWID_ASI,,Asia,7393570,0.16,0.04,0.0,
-2021-01-07,SVK,Europe,Slovakia,13707,0.25,0.25,,Slovaquie
-2021-01-07,DEU,Europe,Germany,516122,0.62,0.61,0.0,Allemagne
-2021-01-07,ROU,Europe,Romania,76400,0.4,0.4,,Roumanie
-2021-01-07,CZE,Europe,Czechia,36172,0.34,0.34,,République tchèque
-2021-01-07,CAN,North America,Canada,219446,0.58,0.58,0.0,Canada
-2021-01-07,OWID_SAM,,South America,50307,0.01,0.0,,
-2021-01-07,FIN,Europe,Finland,8155,0.15,0.15,,Finlande
-2021-01-07,POL,Europe,Poland,188956,0.5,0.5,,Pologne
-2021-01-07,DNK,Europe,Denmark,100310,1.73,1.73,0.0,Danemark
+2021-01-07,ESP,Europe,Spain,207323,0.44,0.44,,Espagne
+2021-01-07,OWID_NAM,,North America,6199721,1.05,1.05,0.0,
 2021-01-07,IRL,Europe,Ireland,15314,0.31,0.31,,Irlande
+2021-01-07,SVN,Europe,Slovenia,26885,1.29,1.29,0.0,Slovénie
 2021-01-07,OMN,Asia,Oman,14911,0.29,0.29,,Oman
 2021-01-07,OWID_EUR,,Europe,4119063,0.55,0.55,0.0,
-2021-01-07,ISR,Asia,Israel,1778361,20.55,20.55,0.0,Israël
-2021-01-07,OWID_EUN,,European Union,1881979,0.42,0.42,0.0,
-2021-01-07,MEX,North America,Mexico,58402,0.05,0.05,,Mexique
-2021-01-07,SVN,Europe,Slovenia,26885,1.29,1.29,0.0,Slovénie
-2021-01-07,LTU,Europe,Lithuania,18057,0.66,0.66,,Lituanie
+2021-01-07,NOR,Europe,Norway,21565,0.4,0.4,0.0,Norvège
+2021-01-07,BGR,Europe,Bulgaria,11117,0.16,0.16,,Bulgarie
 2021-01-07,PRT,Europe,Portugal,71751,0.7,0.7,,Portugal
-2021-01-07,OWID_NAM,,North America,6199721,1.05,1.05,0.0,
+2021-01-07,ISR,Asia,Israel,1778361,20.55,20.55,0.0,Israël
 2021-01-07,LVA,Europe,Latvia,5492,0.29,0.29,0.0,Lettonie
-2021-01-08,OWID_EUN,,European Union,2253952,0.51,0.5,0.0,
-2021-01-08,ESP,Europe,Spain,277976,0.59,0.59,,Espagne
-2021-01-08,BGR,Europe,Bulgaria,13355,0.19,0.19,,Bulgarie
+2021-01-07,BEL,Europe,Belgium,15099,0.13,0.13,0.0,Belgique
+2021-01-07,ARE,Asia,United Arab Emirates,887697,8.98,8.98,,Émirats Arabes Unis
+2021-01-07,BHR,Asia,Bahrain,72239,4.25,4.25,,Bahreïn
+2021-01-07,DEU,Europe,Germany,516122,0.62,0.61,0.0,Allemagne
+2021-01-07,OWID_SAM,,South America,50307,0.01,0.0,,
+2021-01-07,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
+2021-01-07,ROU,Europe,Romania,76400,0.4,0.4,,Roumanie
+2021-01-07,HRV,Europe,Croatia,20603,0.5,0.5,,Croatie
+2021-01-07,CAN,North America,Canada,219446,0.58,0.58,0.0,Canada
+2021-01-07,EST,Europe,Estonia,7929,0.6,0.6,0.0,Estonie
+2021-01-07,SVK,Europe,Slovakia,13707,0.25,0.25,,Slovaquie
+2021-01-07,FIN,Europe,Finland,8155,0.15,0.15,,Finlande
+2021-01-07,MEX,North America,Mexico,58402,0.05,0.05,,Mexique
+2021-01-07,POL,Europe,Poland,188956,0.5,0.5,,Pologne
+2021-01-07,DNK,Europe,Denmark,100310,1.73,1.73,0.0,Danemark
+2021-01-07,FRA,Europe,France,49438,0.07,0.07,,France
+2021-01-07,CHL,South America,Chile,10708,0.06,0.06,,Chili
+2021-01-07,OWID_ASI,,Asia,7393570,0.16,0.04,0.0,
+2021-01-07,CHE,Europe,Switzerland,30208,0.35,0.32,0.0,Suisse
+2021-01-07,GRC,Europe,Greece,26445,0.25,0.25,,Grèce
+2021-01-07,LTU,Europe,Lithuania,18057,0.66,0.66,,Lituanie
+2021-01-07,OWID_EUN,,European Union,1881979,0.42,0.42,0.0,
+2021-01-07,USA,North America,United States,5919418,1.77,1.77,,États-Unis
+2021-01-07,ITA,Europe,Italy,433111,0.72,0.72,0.0,Italie
+2021-01-07,CZE,Europe,Czechia,36172,0.34,0.34,,République tchèque
+2021-01-08,LTU,Europe,Lithuania,23249,0.85,0.85,,Lituanie
+2021-01-08,BEL,Europe,Belgium,24462,0.21,0.21,0.0,Belgique
 2021-01-08,DNK,Europe,Denmark,108362,1.87,1.87,0.0,Danemark
-2021-01-08,CRI,North America,Costa Rica,9751,0.19,0.19,,Costa Rica
+2021-01-08,BHR,Asia,Bahrain,78291,4.6,4.6,,Bahreïn
+2021-01-08,SVK,Europe,Slovakia,20742,0.38,0.38,,Slovaquie
 2021-01-08,DEU,Europe,Germany,578339,0.69,0.69,0.0,Allemagne
+2021-01-08,CHL,South America,Chile,10708,0.06,0.06,,Chili
+2021-01-08,ARG,South America,Argentina,107542,0.24,0.24,,Argentine
+2021-01-08,MEX,North America,Mexico,67468,0.05,0.05,,Mexique
+2021-01-08,LVA,Europe,Latvia,6405,0.34,0.34,0.0,Lettonie
+2021-01-08,HRV,Europe,Croatia,24985,0.61,0.61,,Croatie
+2021-01-08,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
+2021-01-08,ROU,Europe,Romania,92706,0.48,0.48,,Roumanie
+2021-01-08,OWID_SAM,,South America,118250,0.03,0.0,,
+2021-01-08,OWID_ASI,,Asia,7519860,0.16,0.04,0.0,
+2021-01-08,GRC,Europe,Greece,35272,0.34,0.34,,Grèce
+2021-01-08,POL,Europe,Poland,198787,0.53,0.53,,Pologne
+2021-01-08,CZE,Europe,Czechia,46140,0.43,0.43,,République tchèque
+2021-01-08,OWID_EUR,,Europe,4507729,0.6,0.6,0.0,
+2021-01-08,FRA,Europe,France,86060,0.13,0.13,,France
+2021-01-08,NOR,Europe,Norway,23218,0.43,0.43,0.0,Norvège
+2021-01-08,BGR,Europe,Bulgaria,13355,0.19,0.19,,Bulgarie
+2021-01-08,OMN,Asia,Oman,14980,0.29,0.29,,Oman
+2021-01-08,ITA,Europe,Italy,529374,0.88,0.88,0.0,Italie
+2021-01-08,USA,North America,United States,6688231,2.0,2.0,,États-Unis
+2021-01-08,OWID_NAM,,North America,7026104,1.19,1.19,0.0,
+2021-01-08,CHE,Europe,Switzerland,38248,0.44,0.39,0.0,Suisse
+2021-01-08,SVN,Europe,Slovenia,30119,1.45,1.45,0.0,Slovénie
 2021-01-08,SRB,Europe,Serbia,7000,0.1,0.1,,Serbie
 2021-01-08,PRT,Europe,Portugal,74254,0.73,0.73,,Portugal
-2021-01-08,NOR,Europe,Norway,23218,0.43,0.43,0.0,Norvège
-2021-01-08,SVN,Europe,Slovenia,30119,1.45,1.45,0.0,Slovénie
-2021-01-08,HRV,Europe,Croatia,24985,0.61,0.61,,Croatie
-2021-01-08,LTU,Europe,Lithuania,23249,0.85,0.85,,Lituanie
-2021-01-08,ISR,Asia,Israel,1844671,21.31,21.31,0.0,Israël
-2021-01-08,FRA,Europe,France,86060,0.13,0.13,,France
-2021-01-08,OWID_ASI,,Asia,7519860,0.16,0.04,0.0,
-2021-01-08,OMN,Asia,Oman,14980,0.29,0.29,,Oman
-2021-01-08,OWID_EUR,,Europe,4507729,0.6,0.6,0.0,
-2021-01-08,EST,Europe,Estonia,10144,0.76,0.76,0.0,Estonie
-2021-01-08,ROU,Europe,Romania,92706,0.48,0.48,,Roumanie
-2021-01-08,SVK,Europe,Slovakia,20742,0.38,0.38,,Slovaquie
-2021-01-08,BHR,Asia,Bahrain,78291,4.6,4.6,,Bahreïn
-2021-01-08,BEL,Europe,Belgium,24462,0.21,0.21,0.0,Belgique
-2021-01-08,AUT,Europe,Austria,24372,0.27,0.27,0.0,Autriche
-2021-01-08,ITA,Europe,Italy,529374,0.88,0.88,0.0,Italie
-2021-01-08,CZE,Europe,Czechia,46140,0.43,0.43,,République tchèque
-2021-01-08,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
-2021-01-08,ARG,South America,Argentina,107542,0.24,0.24,,Argentine
-2021-01-08,CHE,Europe,Switzerland,38248,0.44,0.39,0.0,Suisse
-2021-01-08,ARE,Asia,United Arab Emirates,941556,9.52,9.52,,Émirats Arabes Unis
-2021-01-08,CHL,South America,Chile,10708,0.06,0.06,,Chili
-2021-01-08,CAN,North America,Canada,260654,0.69,0.69,0.01,Canada
-2021-01-08,POL,Europe,Poland,198787,0.53,0.53,,Pologne
+2021-01-08,CRI,North America,Costa Rica,9751,0.19,0.19,,Costa Rica
+2021-01-08,OWID_EUN,,European Union,2253952,0.51,0.5,0.0,
+2021-01-08,ESP,Europe,Spain,277976,0.59,0.59,,Espagne
 2021-01-08,FIN,Europe,Finland,11135,0.2,0.2,,Finlande
-2021-01-08,OWID_SAM,,South America,118250,0.03,0.0,,
-2021-01-08,OWID_NAM,,North America,7026104,1.19,1.19,0.0,
-2021-01-08,USA,North America,United States,6688231,2.0,2.0,,États-Unis
-2021-01-08,MEX,North America,Mexico,67468,0.05,0.05,,Mexique
-2021-01-08,GRC,Europe,Greece,35272,0.34,0.34,,Grèce
-2021-01-08,LVA,Europe,Latvia,6405,0.34,0.34,0.0,Lettonie
-2021-01-09,AUT,Europe,Austria,28876,0.32,0.32,0.0,Autriche
-2021-01-09,OWID_EUR,,Europe,4704435,0.63,0.62,0.0,
-2021-01-09,OMN,Asia,Oman,15023,0.29,0.29,,Oman
-2021-01-09,CHN,Asia,China,9000000,0.63,0.63,,Chine
+2021-01-08,AUT,Europe,Austria,24372,0.27,0.27,0.0,Autriche
+2021-01-08,CAN,North America,Canada,260654,0.69,0.69,0.01,Canada
+2021-01-08,ARE,Asia,United Arab Emirates,941556,9.52,9.52,,Émirats Arabes Unis
+2021-01-08,ISR,Asia,Israel,1844671,21.31,21.31,0.0,Israël
+2021-01-08,EST,Europe,Estonia,10144,0.76,0.76,0.0,Estonie
 2021-01-09,ARE,Asia,United Arab Emirates,1020349,10.32,10.32,,Émirats Arabes Unis
-2021-01-09,LTU,Europe,Lithuania,23553,0.87,0.87,,Lituanie
-2021-01-09,FRA,Europe,France,97096,0.14,0.14,,France
-2021-01-09,SVN,Europe,Slovenia,30373,1.46,1.46,0.0,Slovénie
-2021-01-09,PRT,Europe,Portugal,74352,0.73,0.73,,Portugal
-2021-01-09,BEL,Europe,Belgium,27716,0.24,0.24,0.0,Belgique
-2021-01-09,ISR,Asia,Israel,1889154,21.83,21.83,0.0,Israël
-2021-01-09,OWID_AFR,,Africa,0,0.0,0.0,,
-2021-01-09,SVK,Europe,Slovakia,22351,0.41,0.41,,Slovaquie
-2021-01-09,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
-2021-01-09,ROU,Europe,Romania,102301,0.53,0.53,,Roumanie
-2021-01-09,OWID_NAM,,North America,7069017,1.19,1.19,0.0,
-2021-01-09,LVA,Europe,Latvia,6710,0.36,0.36,0.0,Lettonie
-2021-01-09,NOR,Europe,Norway,23386,0.43,0.43,0.0,Norvège
-2021-01-09,OWID_ASI,,Asia,12189521,0.26,0.04,0.0,
-2021-01-09,HRV,Europe,Croatia,30000,0.73,0.73,,Croatie
-2021-01-09,CHL,South America,Chile,10708,0.06,0.06,,Chili
-2021-01-09,DNK,Europe,Denmark,110230,1.9,1.9,0.0,Danemark
-2021-01-09,CZE,Europe,Czechia,48158,0.45,0.45,,République tchèque
-2021-01-09,CAN,North America,Canada,296241,0.78,0.78,0.01,Canada
-2021-01-09,GRC,Europe,Greece,40427,0.39,0.39,,Grèce
-2021-01-09,BGR,Europe,Bulgaria,13473,0.19,0.19,,Bulgarie
-2021-01-09,SYC,Africa,Seychelles,0,0.0,0.0,,Seychelles
-2021-01-09,DEU,Europe,Germany,638341,0.76,0.76,0.0,Allemagne
 2021-01-09,CHE,Europe,Switzerland,40370,0.47,0.41,0.0,Suisse
-2021-01-09,EST,Europe,Estonia,10695,0.81,0.81,0.0,Estonie
-2021-01-09,BHR,Asia,Bahrain,84157,4.95,4.95,,Bahreïn
+2021-01-09,PRT,Europe,Portugal,74352,0.73,0.73,,Portugal
 2021-01-09,MEX,North America,Mexico,74794,0.06,0.06,,Mexique
+2021-01-09,ROU,Europe,Romania,102301,0.53,0.53,,Roumanie
+2021-01-09,CZE,Europe,Czechia,48158,0.45,0.45,,République tchèque
+2021-01-09,FRA,Europe,France,97096,0.14,0.14,,France
+2021-01-09,OWID_NAM,,North America,7069017,1.19,1.19,0.0,
+2021-01-09,OWID_AFR,,Africa,0,0.0,0.0,,
+2021-01-09,OWID_ASI,,Asia,12189521,0.26,0.04,0.0,
+2021-01-09,SAU,Asia,Saudi Arabia,178338,0.51,0.51,,Arabie Saoudite
+2021-01-09,DNK,Europe,Denmark,110230,1.9,1.9,0.0,Danemark
+2021-01-09,SYC,Africa,Seychelles,0,0.0,0.0,,Seychelles
+2021-01-09,BEL,Europe,Belgium,27716,0.24,0.24,0.0,Belgique
+2021-01-09,HRV,Europe,Croatia,30000,0.73,0.73,,Croatie
+2021-01-09,OMN,Asia,Oman,15023,0.29,0.29,,Oman
+2021-01-09,NOR,Europe,Norway,23386,0.43,0.43,0.0,Norvège
+2021-01-09,BGR,Europe,Bulgaria,13473,0.19,0.19,,Bulgarie
+2021-01-09,EST,Europe,Estonia,10695,0.81,0.81,0.0,Estonie
+2021-01-09,DEU,Europe,Germany,638341,0.76,0.76,0.0,Allemagne
+2021-01-09,CHL,South America,Chile,10708,0.06,0.06,,Chili
+2021-01-09,BHR,Asia,Bahrain,84157,4.95,4.95,,Bahreïn
+2021-01-09,LTU,Europe,Lithuania,23553,0.87,0.87,,Lituanie
+2021-01-09,LVA,Europe,Latvia,6710,0.36,0.36,0.0,Lettonie
+2021-01-09,AUT,Europe,Austria,28876,0.32,0.32,0.0,Autriche
+2021-01-09,GRC,Europe,Greece,40427,0.39,0.39,,Grèce
+2021-01-09,CAN,North America,Canada,296241,0.78,0.78,0.01,Canada
+2021-01-09,SVN,Europe,Slovenia,30373,1.46,1.46,0.0,Slovénie
+2021-01-09,OWID_EUR,,Europe,4704435,0.63,0.62,0.0,
+2021-01-09,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
+2021-01-09,ISR,Asia,Israel,1889154,21.83,21.83,0.0,Israël
+2021-01-09,OWID_SAM,,South America,118250,0.03,0.0,,
+2021-01-09,CHN,Asia,China,9000000,0.63,0.63,,Chine
 2021-01-09,POL,Europe,Poland,200022,0.53,0.53,,Pologne
 2021-01-09,OWID_EUN,,European Union,2448368,0.55,0.54,0.0,
-2021-01-09,OWID_SAM,,South America,118250,0.03,0.0,,
+2021-01-09,SVK,Europe,Slovakia,22351,0.41,0.41,,Slovaquie
 2021-01-09,ITA,Europe,Italy,616869,1.02,1.02,0.0,Italie
-2021-01-09,SAU,Asia,Saudi Arabia,178338,0.51,0.51,,Arabie Saoudite
-2021-01-10,OWID_NAM,,North America,7098885,1.2,1.2,0.0,
-2021-01-10,MEX,North America,Mexico,81300,0.06,0.06,,Mexique
-2021-01-10,GBR,Europe,United Kingdom,2677971,3.94,3.37,0.58,Royaume-Uni
-2021-01-10,OWID_EUN,,European Union,2668924,0.6,0.59,0.0,
-2021-01-10,LVA,Europe,Latvia,7046,0.37,0.37,0.0,Lettonie
-2021-01-10,PRT,Europe,Portugal,74392,0.73,0.73,,Portugal
-2021-01-10,OWID_SAM,,South America,118250,0.03,0.0,,
-2021-01-10,NLD,Europe,Netherlands,33756,0.2,0.2,,Pays-Bas
-2021-01-10,CYP,Europe,Cyprus,6035,0.68,0.68,,Chypre
-2021-01-10,POL,Europe,Poland,203053,0.54,0.54,,Pologne
-2021-01-10,IRL,Europe,Ireland,40000,0.81,0.81,,Irlande
+2021-01-10,NOR,Europe,Norway,23519,0.43,0.43,0.0,Norvège
+2021-01-10,DNK,Europe,Denmark,111050,1.92,1.92,0.0,Danemark
+2021-01-10,SVN,Europe,Slovenia,30374,1.46,1.46,0.0,Slovénie
+2021-01-10,CHL,South America,Chile,10708,0.06,0.06,,Chili
 2021-01-10,SWE,Europe,Sweden,51923,0.51,0.51,0.0,Suède
+2021-01-10,ROU,Europe,Romania,108294,0.56,0.56,,Roumanie
+2021-01-10,GIB,Europe,Gibraltar,420,1.25,1.25,,Gibraltar
+2021-01-10,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
 2021-01-10,OWID_EUR,,Europe,6225417,0.83,0.77,0.05,
 2021-01-10,OMN,Asia,Oman,15907,0.31,0.31,,Oman
-2021-01-10,ALB,Europe,Albania,0,0.0,0.0,,Albanie
-2021-01-10,BMU,North America,Bermuda,0,0.0,0.0,,Bermudes
-2021-01-10,AUT,Europe,Austria,31130,0.35,0.35,0.0,Autriche
-2021-01-10,OWID_ASI,,Asia,12305253,0.27,0.06,0.01,
-2021-01-10,ARE,Asia,United Arab Emirates,1086568,10.99,8.46,2.53,Émirats Arabes Unis
-2021-01-10,DEU,Europe,Germany,674070,0.8,0.8,0.0,Allemagne
-2021-01-10,FRA,Europe,France,102828,0.15,0.15,,France
-2021-01-10,ROU,Europe,Romania,108294,0.56,0.56,,Roumanie
+2021-01-10,NLD,Europe,Netherlands,33756,0.2,0.2,,Pays-Bas
 2021-01-10,BEL,Europe,Belgium,28138,0.24,0.24,0.0,Belgique
-2021-01-10,CZE,Europe,Czechia,49917,0.47,0.47,0.0,République tchèque
-2021-01-10,SVK,Europe,Slovakia,25396,0.47,0.47,,Slovaquie
-2021-01-10,LIE,Europe,Liechtenstein,6,0.02,0.02,,Liechtenstein
-2021-01-10,DNK,Europe,Denmark,111050,1.92,1.92,0.0,Danemark
-2021-01-10,SRB,Europe,Serbia,9300,0.14,0.14,,Serbie
-2021-01-10,CAN,North America,Canada,319603,0.85,0.84,0.01,Canada
-2021-01-10,LTU,Europe,Lithuania,23556,0.87,0.87,,Lituanie
-2021-01-10,GRC,Europe,Greece,44645,0.43,0.43,,Grèce
-2021-01-10,BHR,Asia,Bahrain,89250,5.25,5.25,,Bahreïn
-2021-01-10,CHE,Europe,Switzerland,40402,0.47,0.42,0.0,Suisse
-2021-01-10,GIB,Europe,Gibraltar,420,1.25,1.25,,Gibraltar
-2021-01-10,ITA,Europe,Italy,677525,1.12,1.12,0.0,Italie
+2021-01-10,GBR,Europe,United Kingdom,2677971,3.94,3.37,0.58,Royaume-Uni
 2021-01-10,ISR,Asia,Israel,1932690,22.33,22.26,0.07,Israël
-2021-01-10,TCA,North America,Turks and Caicos Islands,0,0.0,0.0,,Îles Turques-et-Caïques
-2021-01-10,NOR,Europe,Norway,23519,0.43,0.43,0.0,Norvège
-2021-01-10,CHL,South America,Chile,10708,0.06,0.06,,Chili
 2021-01-10,EST,Europe,Estonia,10918,0.82,0.82,0.0,Estonie
-2021-01-10,SVN,Europe,Slovenia,30374,1.46,1.46,0.0,Slovénie
-2021-01-11,USA,North America,United States,8987322,2.69,2.69,,États-Unis
+2021-01-10,SRB,Europe,Serbia,9300,0.14,0.14,,Serbie
+2021-01-10,CYP,Europe,Cyprus,6035,0.68,0.68,,Chypre
+2021-01-10,LVA,Europe,Latvia,7046,0.37,0.37,0.0,Lettonie
+2021-01-10,SVK,Europe,Slovakia,25396,0.47,0.47,,Slovaquie
+2021-01-10,AUT,Europe,Austria,31130,0.35,0.35,0.0,Autriche
+2021-01-10,OWID_EUN,,European Union,2668924,0.6,0.59,0.0,
+2021-01-10,FRA,Europe,France,102828,0.15,0.15,,France
+2021-01-10,BHR,Asia,Bahrain,89250,5.25,5.25,,Bahreïn
+2021-01-10,BMU,North America,Bermuda,0,0.0,0.0,,Bermudes
+2021-01-10,LTU,Europe,Lithuania,23556,0.87,0.87,,Lituanie
+2021-01-10,PRT,Europe,Portugal,74392,0.73,0.73,,Portugal
+2021-01-10,IRL,Europe,Ireland,40000,0.81,0.81,,Irlande
+2021-01-10,ITA,Europe,Italy,677525,1.12,1.12,0.0,Italie
+2021-01-10,MEX,North America,Mexico,81300,0.06,0.06,,Mexique
+2021-01-10,OWID_ASI,,Asia,12305253,0.27,0.06,0.01,
+2021-01-10,GRC,Europe,Greece,44645,0.43,0.43,,Grèce
+2021-01-10,TCA,North America,Turks and Caicos Islands,0,0.0,0.0,,Îles Turques-et-Caïques
+2021-01-10,CZE,Europe,Czechia,49917,0.47,0.47,0.0,République tchèque
+2021-01-10,CHE,Europe,Switzerland,40402,0.47,0.42,0.0,Suisse
+2021-01-10,OWID_NAM,,North America,7098885,1.2,1.2,0.0,
+2021-01-10,DEU,Europe,Germany,674070,0.8,0.8,0.0,Allemagne
+2021-01-10,OWID_SAM,,South America,118250,0.03,0.0,,
+2021-01-10,POL,Europe,Poland,203053,0.54,0.54,,Pologne
+2021-01-10,ARE,Asia,United Arab Emirates,1086568,10.99,8.46,2.53,Émirats Arabes Unis
+2021-01-10,CAN,North America,Canada,319603,0.85,0.84,0.01,Canada
+2021-01-10,ALB,Europe,Albania,0,0.0,0.0,,Albanie
 2021-01-11,SVN,Europe,Slovenia,30853,1.48,1.48,0.0,Slovénie
-2021-01-11,AUT,Europe,Austria,36814,0.41,0.41,0.0,Autriche
-2021-01-11,LIE,Europe,Liechtenstein,7,0.02,0.02,,Liechtenstein
-2021-01-11,SVK,Europe,Slovakia,29451,0.54,0.54,,Slovaquie
-2021-01-11,BGR,Europe,Bulgaria,14161,0.2,0.2,,Bulgarie
-2021-01-11,GIB,Europe,Gibraltar,1445,4.29,4.29,,Gibraltar
-2021-01-11,BEL,Europe,Belgium,33789,0.29,0.29,0.0,Belgique
-2021-01-11,OMN,Asia,Oman,18287,0.36,0.36,,Oman
-2021-01-11,CAN,North America,Canada,359049,0.95,0.94,0.01,Canada
-2021-01-11,ITA,Europe,Italy,759198,1.26,1.26,0.0,Italie
-2021-01-11,ROU,Europe,Romania,125190,0.65,0.65,,Roumanie
-2021-01-11,DNK,Europe,Denmark,111709,1.93,1.93,0.0,Danemark
-2021-01-11,EST,Europe,Estonia,11768,0.89,0.89,0.0,Estonie
-2021-01-11,CZE,Europe,Czechia,59733,0.56,0.56,0.0,République tchèque
-2021-01-11,POL,Europe,Poland,257834,0.68,0.68,,Pologne
-2021-01-11,OWID_EUR,,Europe,6839266,0.91,0.85,0.06,
-2021-01-11,GBR,Europe,United Kingdom,2843815,4.19,3.58,0.61,Royaume-Uni
-2021-01-11,DEU,Europe,Germany,741880,0.89,0.88,0.0,Allemagne
-2021-01-11,OWID_SAM,,South America,118250,0.03,0.0,,
-2021-01-11,BHR,Asia,Bahrain,92598,5.44,5.44,,Bahreïn
-2021-01-11,SGP,Asia,Singapore,3400,0.06,0.06,,Singapour
-2021-01-11,CHE,Europe,Switzerland,47813,0.55,0.49,0.0,Suisse
-2021-01-11,FIN,Europe,Finland,14196,0.26,0.26,,Finlande
-2021-01-11,GRC,Europe,Greece,50045,0.48,0.48,,Grèce
-2021-01-11,LUX,Europe,Luxembourg,1943,0.31,0.31,,Luxembourg
-2021-01-11,ESP,Europe,Spain,406091,0.87,0.87,,Espagne
-2021-01-11,FRA,Europe,France,142331,0.21,0.21,,France
-2021-01-11,LVA,Europe,Latvia,8419,0.45,0.45,0.0,Lettonie
-2021-01-11,ISR,Asia,Israel,1972955,22.79,22.5,0.29,Israël
-2021-01-11,LTU,Europe,Lithuania,25762,0.95,0.95,,Lituanie
-2021-01-11,NOR,Europe,Norway,23924,0.44,0.44,0.0,Norvège
-2021-01-11,MEX,North America,Mexico,87060,0.07,0.07,,Mexique
-2021-01-11,OWID_ASI,,Asia,12435329,0.27,0.06,0.01,
-2021-01-11,OWID_NAM,,North America,9443182,1.59,1.59,0.0,
-2021-01-11,OWID_EUN,,European Union,3108087,0.7,0.69,0.0,
-2021-01-11,ARE,Asia,United Arab Emirates,1167251,11.8,11.8,,Émirats Arabes Unis
-2021-01-11,PRT,Europe,Portugal,84112,0.82,0.82,0.0,Portugal
 2021-01-11,CHL,South America,Chile,10708,0.06,0.06,,Chili
-2021-01-12,POL,Europe,Poland,309620,0.82,0.82,,Pologne
-2021-01-12,LVA,Europe,Latvia,10051,0.53,0.53,0.0,Lettonie
-2021-01-12,BHR,Asia,Bahrain,97776,5.75,5.75,,Bahreïn
-2021-01-12,CHE,Europe,Switzerland,58206,0.67,0.61,0.0,Suisse
-2021-01-12,ALB,Europe,Albania,128,0.0,0.0,,Albanie
-2021-01-12,FIN,Europe,Finland,17617,0.32,0.32,,Finlande
-2021-01-12,SGP,Asia,Singapore,6200,0.11,0.11,,Singapour
-2021-01-12,ROU,Europe,Romania,140447,0.73,0.73,,Roumanie
-2021-01-12,CHL,South America,Chile,10708,0.06,0.06,,Chili
-2021-01-12,MEX,North America,Mexico,92879,0.07,0.07,,Mexique
-2021-01-12,EST,Europe,Estonia,13348,1.01,1.01,0.0,Estonie
-2021-01-12,LTU,Europe,Lithuania,27855,1.02,1.02,,Lituanie
-2021-01-12,DNK,Europe,Denmark,112172,1.94,1.94,0.0,Danemark
-2021-01-12,CZE,Europe,Czechia,73135,0.68,0.68,0.0,République tchèque
-2021-01-12,OWID_NAM,,North America,9818261,1.66,1.66,0.0,
-2021-01-12,LUX,Europe,Luxembourg,2372,0.38,0.38,,Luxembourg
-2021-01-12,DEU,Europe,Germany,820425,0.98,0.98,0.0,Allemagne
-2021-01-12,ISR,Asia,Israel,2032511,23.48,22.78,0.7,Israël
-2021-01-12,ITA,Europe,Italy,841996,1.39,1.39,0.0,Italie
+2021-01-11,CZE,Europe,Czechia,59733,0.56,0.56,0.0,République tchèque
+2021-01-11,OMN,Asia,Oman,18287,0.36,0.36,,Oman
+2021-01-11,ITA,Europe,Italy,759198,1.26,1.26,0.0,Italie
+2021-01-11,POL,Europe,Poland,257834,0.68,0.68,,Pologne
+2021-01-11,GIB,Europe,Gibraltar,1445,4.29,4.29,,Gibraltar
+2021-01-11,AUT,Europe,Austria,36814,0.41,0.41,0.0,Autriche
+2021-01-11,EST,Europe,Estonia,11768,0.89,0.89,0.0,Estonie
+2021-01-11,NOR,Europe,Norway,23924,0.44,0.44,0.0,Norvège
+2021-01-11,USA,North America,United States,8987322,2.69,2.69,,États-Unis
+2021-01-11,BGR,Europe,Bulgaria,14161,0.2,0.2,,Bulgarie
+2021-01-11,ESP,Europe,Spain,406091,0.87,0.87,,Espagne
+2021-01-11,OWID_NAM,,North America,9443182,1.59,1.59,0.0,
+2021-01-11,DNK,Europe,Denmark,111709,1.93,1.93,0.0,Danemark
+2021-01-11,OWID_EUR,,Europe,6839266,0.91,0.85,0.06,
+2021-01-11,FIN,Europe,Finland,14196,0.26,0.26,,Finlande
+2021-01-11,ISR,Asia,Israel,1972955,22.79,22.5,0.29,Israël
+2021-01-11,FRA,Europe,France,142331,0.21,0.21,,France
+2021-01-11,OWID_EUN,,European Union,3108087,0.7,0.69,0.0,
+2021-01-11,PRT,Europe,Portugal,84112,0.82,0.82,0.0,Portugal
+2021-01-11,BEL,Europe,Belgium,33789,0.29,0.29,0.0,Belgique
+2021-01-11,CAN,North America,Canada,359049,0.95,0.94,0.01,Canada
+2021-01-11,LTU,Europe,Lithuania,25762,0.95,0.95,,Lituanie
+2021-01-11,LIE,Europe,Liechtenstein,7,0.02,0.02,,Liechtenstein
+2021-01-11,BHR,Asia,Bahrain,92598,5.44,5.44,,Bahreïn
+2021-01-11,GBR,Europe,United Kingdom,2843815,4.19,3.58,0.61,Royaume-Uni
+2021-01-11,CHE,Europe,Switzerland,47813,0.55,0.49,0.0,Suisse
+2021-01-11,MEX,North America,Mexico,87060,0.07,0.07,,Mexique
+2021-01-11,SGP,Asia,Singapore,3400,0.06,0.06,,Singapour
+2021-01-11,LVA,Europe,Latvia,8419,0.45,0.45,0.0,Lettonie
+2021-01-11,ARE,Asia,United Arab Emirates,1167251,11.8,11.8,,Émirats Arabes Unis
+2021-01-11,DEU,Europe,Germany,741880,0.89,0.88,0.0,Allemagne
+2021-01-11,LUX,Europe,Luxembourg,1943,0.31,0.31,,Luxembourg
+2021-01-11,GRC,Europe,Greece,50045,0.48,0.48,,Grèce
+2021-01-11,OWID_SAM,,South America,118250,0.03,0.0,,
+2021-01-11,OWID_ASI,,Asia,12435329,0.27,0.06,0.01,
+2021-01-11,ROU,Europe,Romania,125190,0.65,0.65,,Roumanie
+2021-01-11,SVK,Europe,Slovakia,29451,0.54,0.54,,Slovaquie
 2021-01-12,OWID_SAM,,South America,118250,0.03,0.0,,
 2021-01-12,CAN,North America,Canada,388493,1.03,1.02,0.01,Canada
-2021-01-12,IDN,Asia,Indonesia,0,0.0,0.0,,Indonésie
-2021-01-12,AUT,Europe,Austria,51808,0.58,0.58,0.0,Autriche
+2021-01-12,OWID_NAM,,North America,9818261,1.66,1.66,0.0,
+2021-01-12,CHE,Europe,Switzerland,58206,0.67,0.61,0.0,Suisse
+2021-01-12,LTU,Europe,Lithuania,27855,1.02,1.02,,Lituanie
+2021-01-12,ALB,Europe,Albania,128,0.0,0.0,,Albanie
 2021-01-12,GRC,Europe,Greece,56475,0.54,0.54,,Grèce
-2021-01-12,BGR,Europe,Bulgaria,15780,0.23,0.23,,Bulgarie
-2021-01-12,PRT,Europe,Portugal,94994,0.93,0.93,0.0,Portugal
-2021-01-12,GIB,Europe,Gibraltar,2501,7.42,7.42,,Gibraltar
 2021-01-12,OWID_ASI,,Asia,12613626,0.27,0.06,0.01,
-2021-01-12,ARE,Asia,United Arab Emirates,1275652,12.9,12.9,,Émirats Arabes Unis
-2021-01-12,SVN,Europe,Slovenia,32724,1.57,1.57,0.0,Slovénie
-2021-01-12,NOR,Europe,Norway,28272,0.52,0.52,0.0,Norvège
-2021-01-12,USA,North America,United States,9327138,2.79,2.79,,États-Unis
-2021-01-12,SVK,Europe,Slovakia,40131,0.74,0.74,,Slovaquie
-2021-01-12,LIE,Europe,Liechtenstein,17,0.04,0.04,,Liechtenstein
-2021-01-12,BEL,Europe,Belgium,49782,0.43,0.43,0.0,Belgique
-2021-01-12,GBR,Europe,United Kingdom,3067541,4.52,3.89,0.63,Royaume-Uni
-2021-01-12,ESP,Europe,Spain,488122,1.04,1.04,,Espagne
-2021-01-12,JOR,Asia,Jordan,0,0.0,0.0,,Jordanie
-2021-01-12,OWID_EUR,,Europe,7536350,1.01,0.94,0.06,
+2021-01-12,MEX,North America,Mexico,92879,0.07,0.07,,Mexique
+2021-01-12,ITA,Europe,Italy,841996,1.39,1.39,0.0,Italie
 2021-01-12,OWID_EUN,,European Union,3565510,0.8,0.79,0.0,
+2021-01-12,SGP,Asia,Singapore,6200,0.11,0.11,,Singapour
+2021-01-12,CZE,Europe,Czechia,73135,0.68,0.68,0.0,République tchèque
+2021-01-12,USA,North America,United States,9327138,2.79,2.79,,États-Unis
+2021-01-12,LIE,Europe,Liechtenstein,17,0.04,0.04,,Liechtenstein
+2021-01-12,GIB,Europe,Gibraltar,2501,7.42,7.42,,Gibraltar
+2021-01-12,PRT,Europe,Portugal,94994,0.93,0.93,0.0,Portugal
+2021-01-12,IDN,Asia,Indonesia,0,0.0,0.0,,Indonésie
 2021-01-12,FRA,Europe,France,203848,0.3,0.3,,France
+2021-01-12,FIN,Europe,Finland,17617,0.32,0.32,,Finlande
+2021-01-12,JOR,Asia,Jordan,0,0.0,0.0,,Jordanie
+2021-01-12,ESP,Europe,Spain,488122,1.04,1.04,,Espagne
+2021-01-12,POL,Europe,Poland,309620,0.82,0.82,,Pologne
+2021-01-12,LUX,Europe,Luxembourg,2372,0.38,0.38,,Luxembourg
+2021-01-12,LVA,Europe,Latvia,10051,0.53,0.53,0.0,Lettonie
+2021-01-12,DNK,Europe,Denmark,112172,1.94,1.94,0.0,Danemark
+2021-01-12,GBR,Europe,United Kingdom,3067541,4.52,3.89,0.63,Royaume-Uni
+2021-01-12,SVK,Europe,Slovakia,40131,0.74,0.74,,Slovaquie
+2021-01-12,EST,Europe,Estonia,13348,1.01,1.01,0.0,Estonie
+2021-01-12,ISR,Asia,Israel,2032511,23.48,22.78,0.7,Israël
+2021-01-12,BGR,Europe,Bulgaria,15780,0.23,0.23,,Bulgarie
 2021-01-12,OMN,Asia,Oman,20649,0.4,0.4,,Oman
-2021-01-13,CHE,Europe,Switzerland,69290,0.8,0.72,0.0,Suisse
-2021-01-13,CZE,Europe,Czechia,86630,0.81,0.81,0.0,République tchèque
-2021-01-13,GBR,Europe,United Kingdom,3356229,4.94,4.3,0.65,Royaume-Uni
-2021-01-13,USA,North America,United States,10278462,3.07,3.07,,États-Unis
-2021-01-13,EST,Europe,Estonia,14743,1.11,1.11,0.0,Estonie
+2021-01-12,BEL,Europe,Belgium,49782,0.43,0.43,0.0,Belgique
+2021-01-12,CHL,South America,Chile,10708,0.06,0.06,,Chili
+2021-01-12,ROU,Europe,Romania,140447,0.73,0.73,,Roumanie
+2021-01-12,SVN,Europe,Slovenia,32724,1.57,1.57,0.0,Slovénie
+2021-01-12,ARE,Asia,United Arab Emirates,1275652,12.9,12.9,,Émirats Arabes Unis
+2021-01-12,DEU,Europe,Germany,820425,0.98,0.98,0.0,Allemagne
+2021-01-12,OWID_EUR,,Europe,7536350,1.01,0.94,0.06,
+2021-01-12,NOR,Europe,Norway,28272,0.52,0.52,0.0,Norvège
+2021-01-12,BHR,Asia,Bahrain,97776,5.75,5.75,,Bahreïn
+2021-01-12,AUT,Europe,Austria,51808,0.58,0.58,0.0,Autriche
+2021-01-13,GRC,Europe,Greece,64932,0.62,0.62,,Grèce
+2021-01-13,OWID_ASI,,Asia,13843407,0.3,0.06,0.01,
 2021-01-13,CHL,South America,Chile,11741,0.06,0.06,0.01,Chili
+2021-01-13,GBR,Europe,United Kingdom,3356229,4.94,4.3,0.65,Royaume-Uni
+2021-01-13,LUX,Europe,Luxembourg,2871,0.46,0.46,,Luxembourg
+2021-01-13,DNK,Europe,Denmark,124594,2.15,2.15,0.0,Danemark
+2021-01-13,OWID_AFR,,Africa,2000,0.0,0.0,,
+2021-01-13,LTU,Europe,Lithuania,34123,1.25,1.25,,Lituanie
+2021-01-13,POL,Europe,Poland,369212,0.98,0.98,,Pologne
 2021-01-13,ESP,Europe,Spain,581638,1.24,1.24,,Espagne
-2021-01-13,OWID_EUN,,European Union,4159150,0.93,0.91,0.0,
+2021-01-13,LVA,Europe,Latvia,11571,0.61,0.61,0.0,Lettonie
+2021-01-13,SVK,Europe,Slovakia,46887,0.86,0.86,,Slovaquie
+2021-01-13,LIE,Europe,Liechtenstein,17,0.04,0.04,,Liechtenstein
+2021-01-13,PRT,Europe,Portugal,108793,1.07,1.07,0.0,Portugal
+2021-01-13,IRL,Europe,Ireland,77303,1.57,1.57,,Irlande
+2021-01-13,HRV,Europe,Croatia,34553,0.84,0.84,,Croatie
+2021-01-13,BEL,Europe,Belgium,71635,0.62,0.62,0.0,Belgique
+2021-01-13,ROU,Europe,Romania,154268,0.8,0.8,,Roumanie
+2021-01-13,OWID_SAM,,South America,178574,0.04,0.0,0.0,
+2021-01-13,ARE,Asia,United Arab Emirates,1394580,14.1,14.1,,Émirats Arabes Unis
+2021-01-13,DEU,Europe,Germany,931643,1.11,1.11,0.0,Allemagne
+2021-01-13,CHE,Europe,Switzerland,69290,0.8,0.72,0.0,Suisse
+2021-01-13,CAN,North America,Canada,419209,1.11,1.08,0.03,Canada
 2021-01-13,SYC,Africa,Seychelles,2000,2.03,2.03,,Seychelles
 2021-01-13,ARG,South America,Argentina,166833,0.37,0.37,,Argentine
-2021-01-13,GRC,Europe,Greece,64932,0.62,0.62,,Grèce
-2021-01-13,DEU,Europe,Germany,931643,1.11,1.11,0.0,Allemagne
-2021-01-13,BGR,Europe,Bulgaria,17038,0.25,0.25,,Bulgarie
-2021-01-13,OWID_ASI,,Asia,13843407,0.3,0.06,0.01,
-2021-01-13,NOR,Europe,Norway,38194,0.7,0.7,0.0,Norvège
-2021-01-13,SVK,Europe,Slovakia,46887,0.86,0.86,,Slovaquie
-2021-01-13,ARE,Asia,United Arab Emirates,1394580,14.1,14.1,,Émirats Arabes Unis
-2021-01-13,OWID_AFR,,Africa,2000,0.0,0.0,,
-2021-01-13,AUT,Europe,Austria,67921,0.75,0.75,0.0,Autriche
-2021-01-13,BEL,Europe,Belgium,71635,0.62,0.62,0.0,Belgique
-2021-01-13,LIE,Europe,Liechtenstein,17,0.04,0.04,,Liechtenstein
-2021-01-13,HRV,Europe,Croatia,34553,0.84,0.84,,Croatie
-2021-01-13,SVN,Europe,Slovenia,37443,1.8,1.8,0.0,Slovénie
-2021-01-13,OWID_NAM,,North America,10899989,1.84,1.68,0.0,
 2021-01-13,ISR,Asia,Israel,2141264,24.74,23.38,1.36,Israël
-2021-01-13,LTU,Europe,Lithuania,34123,1.25,1.25,,Lituanie
-2021-01-13,LVA,Europe,Latvia,11571,0.61,0.61,0.0,Lettonie
-2021-01-13,LUX,Europe,Luxembourg,2871,0.46,0.46,,Luxembourg
-2021-01-13,FRA,Europe,France,268310,0.4,0.4,,France
-2021-01-13,PRT,Europe,Portugal,108793,1.07,1.07,0.0,Portugal
-2021-01-13,ITA,Europe,Italy,937108,1.55,1.55,0.0,Italie
-2021-01-13,RUS,Europe,Russia,1000000,0.69,0.69,,Russie
-2021-01-13,OWID_EUR,,Europe,8639744,1.15,1.08,0.06,
-2021-01-13,FIN,Europe,Finland,23126,0.42,0.42,,Finlande
-2021-01-13,ALB,Europe,Albania,188,0.01,0.01,,Albanie
-2021-01-13,OWID_SAM,,South America,178574,0.04,0.0,0.0,
-2021-01-13,DNK,Europe,Denmark,124594,2.15,2.15,0.0,Danemark
-2021-01-13,ROU,Europe,Romania,154268,0.8,0.8,,Roumanie
-2021-01-13,CAN,North America,Canada,419209,1.11,1.08,0.03,Canada
+2021-01-13,EST,Europe,Estonia,14743,1.11,1.11,0.0,Estonie
 2021-01-13,MEX,North America,Mexico,192567,0.15,0.15,,Mexique
-2021-01-13,IRL,Europe,Ireland,77303,1.57,1.57,,Irlande
-2021-01-13,CHN,Asia,China,10000000,0.69,0.69,,Chine
+2021-01-13,USA,North America,United States,10278462,3.07,3.07,,États-Unis
 2021-01-13,TUR,Asia,Turkey,0,0.0,0.0,,Turquie
-2021-01-13,POL,Europe,Poland,369212,0.98,0.98,,Pologne
+2021-01-13,ALB,Europe,Albania,188,0.01,0.01,,Albanie
+2021-01-13,OWID_NAM,,North America,10899989,1.84,1.68,0.0,
+2021-01-13,FRA,Europe,France,268310,0.4,0.4,,France
+2021-01-13,FIN,Europe,Finland,23126,0.42,0.42,,Finlande
+2021-01-13,OWID_EUN,,European Union,4159150,0.93,0.91,0.0,
+2021-01-13,ITA,Europe,Italy,937108,1.55,1.55,0.0,Italie
+2021-01-13,CZE,Europe,Czechia,86630,0.81,0.81,0.0,République tchèque
+2021-01-13,AUT,Europe,Austria,67921,0.75,0.75,0.0,Autriche
+2021-01-13,RUS,Europe,Russia,1000000,0.69,0.69,,Russie
+2021-01-13,NOR,Europe,Norway,38194,0.7,0.7,0.0,Norvège
+2021-01-13,BGR,Europe,Bulgaria,17038,0.25,0.25,,Bulgarie
+2021-01-13,OWID_EUR,,Europe,8639744,1.15,1.08,0.06,
+2021-01-13,CHN,Asia,China,10000000,0.69,0.69,,Chine
 2021-01-13,OMN,Asia,Oman,22749,0.45,0.45,,Oman
-2021-01-14,OWID_NAM,,North America,11948217,2.02,1.77,0.23,
-2021-01-14,CZE,Europe,Czechia,101822,0.95,0.95,0.0,République tchèque
-2021-01-14,DEU,Europe,Germany,1015214,1.21,1.21,0.0,Allemagne
+2021-01-13,SVN,Europe,Slovenia,37443,1.8,1.8,0.0,Slovénie
+2021-01-14,LTU,Europe,Lithuania,42809,1.57,1.57,,Lituanie
+2021-01-14,NOR,Europe,Norway,46769,0.86,0.86,0.0,Norvège
+2021-01-14,AUT,Europe,Austria,84869,0.94,0.94,0.0,Autriche
+2021-01-14,FIN,Europe,Finland,33033,0.6,0.6,,Finlande
+2021-01-14,USA,North America,United States,11148991,3.33,2.9,0.4,États-Unis
+2021-01-14,LUX,Europe,Luxembourg,3233,0.52,0.52,,Luxembourg
 2021-01-14,ARE,Asia,United Arab Emirates,1527833,15.45,15.45,,Émirats Arabes Unis
-2021-01-14,OWID_EUN,,European Union,4685366,1.05,1.03,0.0,
-2021-01-14,HRV,Europe,Croatia,38000,0.93,0.93,,Croatie
+2021-01-14,CHE,Europe,Switzerland,79916,0.92,0.83,0.0,Suisse
+2021-01-14,LVA,Europe,Latvia,13410,0.71,0.71,0.0,Lettonie
+2021-01-14,CZE,Europe,Czechia,101822,0.95,0.95,0.0,République tchèque
 2021-01-14,SRB,Europe,Serbia,18136,0.27,0.27,,Serbie
+2021-01-14,FRA,Europe,France,349690,0.52,0.52,,France
+2021-01-14,SVK,Europe,Slovakia,54349,1.0,1.0,,Slovaquie
+2021-01-14,SVN,Europe,Slovenia,44171,2.12,2.12,0.0,Slovénie
+2021-01-14,EST,Europe,Estonia,16523,1.25,1.25,0.0,Estonie
+2021-01-14,ESP,Europe,Spain,676186,1.45,1.45,,Espagne
+2021-01-14,PRT,Europe,Portugal,119943,1.18,1.18,0.0,Portugal
+2021-01-14,MEX,North America,Mexico,329983,0.26,0.26,,Mexique
+2021-01-14,BEL,Europe,Belgium,95108,0.82,0.82,0.0,Belgique
+2021-01-14,HRV,Europe,Croatia,38000,0.93,0.93,,Croatie
+2021-01-14,OMN,Asia,Oman,24204,0.47,0.47,,Oman
+2021-01-14,ROU,Europe,Romania,154268,0.8,0.8,,Roumanie
+2021-01-14,ITA,Europe,Italy,1031511,1.71,1.71,0.0,Italie
+2021-01-14,ALB,Europe,Albania,266,0.01,0.01,,Albanie
+2021-01-14,BGR,Europe,Bulgaria,17686,0.25,0.25,,Bulgarie
+2021-01-14,OWID_NAM,,North America,11948217,2.02,1.77,0.23,
+2021-01-14,DEU,Europe,Germany,1015214,1.21,1.21,0.0,Allemagne
+2021-01-14,POL,Europe,Poland,410480,1.08,1.08,,Pologne
+2021-01-14,CAN,North America,Canada,459492,1.22,1.18,0.04,Canada
+2021-01-14,GBR,Europe,United Kingdom,3678180,5.42,4.77,0.65,Royaume-Uni
+2021-01-14,OWID_EUN,,European Union,4685366,1.05,1.03,0.0,
+2021-01-14,OWID_SAM,,South America,185490,0.04,0.0,0.0,
+2021-01-14,OWID_CYN,Asia,Northern Cyprus,0,0.0,0.0,,
+2021-01-14,OWID_EUR,,Europe,9516032,1.27,1.2,0.06,
+2021-01-14,ISR,Asia,Israel,2266332,26.18,24.03,2.15,Israël
+2021-01-14,TUR,Asia,Turkey,279452,0.33,0.33,,Turquie
+2021-01-14,LIE,Europe,Liechtenstein,23,0.06,0.06,,Liechtenstein
+2021-01-14,OWID_ASI,,Asia,14382635,0.31,0.07,0.01,
 2021-01-14,GRC,Europe,Greece,70960,0.68,0.68,,Grèce
 2021-01-14,CHL,South America,Chile,18657,0.1,0.07,0.03,Chili
-2021-01-14,USA,North America,United States,11148991,3.33,2.9,0.4,États-Unis
-2021-01-14,BEL,Europe,Belgium,95108,0.82,0.82,0.0,Belgique
-2021-01-14,ESP,Europe,Spain,676186,1.45,1.45,,Espagne
-2021-01-14,LIE,Europe,Liechtenstein,23,0.06,0.06,,Liechtenstein
-2021-01-14,SVK,Europe,Slovakia,54349,1.0,1.0,,Slovaquie
-2021-01-14,MEX,North America,Mexico,329983,0.26,0.26,,Mexique
-2021-01-14,TUR,Asia,Turkey,279452,0.33,0.33,,Turquie
-2021-01-14,ITA,Europe,Italy,1031511,1.71,1.71,0.0,Italie
-2021-01-14,OWID_SAM,,South America,185490,0.04,0.0,0.0,
-2021-01-14,ISR,Asia,Israel,2266332,26.18,24.03,2.15,Israël
-2021-01-14,POL,Europe,Poland,410480,1.08,1.08,,Pologne
-2021-01-14,NOR,Europe,Norway,46769,0.86,0.86,0.0,Norvège
-2021-01-14,SVN,Europe,Slovenia,44171,2.12,2.12,0.0,Slovénie
-2021-01-14,FIN,Europe,Finland,33033,0.6,0.6,,Finlande
-2021-01-14,CHE,Europe,Switzerland,79916,0.92,0.83,0.0,Suisse
-2021-01-14,AUT,Europe,Austria,84869,0.94,0.94,0.0,Autriche
-2021-01-14,OWID_ASI,,Asia,14382635,0.31,0.07,0.01,
-2021-01-14,BGR,Europe,Bulgaria,17686,0.25,0.25,,Bulgarie
-2021-01-14,FRA,Europe,France,349690,0.52,0.52,,France
-2021-01-14,ROU,Europe,Romania,154268,0.8,0.8,,Roumanie
-2021-01-14,LVA,Europe,Latvia,13410,0.71,0.71,0.0,Lettonie
-2021-01-14,OMN,Asia,Oman,24204,0.47,0.47,,Oman
-2021-01-14,GBR,Europe,United Kingdom,3678180,5.42,4.77,0.65,Royaume-Uni
-2021-01-14,OWID_CYN,Asia,Northern Cyprus,0,0.0,0.0,,
 2021-01-14,DNK,Europe,Denmark,141990,2.45,2.45,0.0,Danemark
-2021-01-14,CAN,North America,Canada,459492,1.22,1.18,0.04,Canada
-2021-01-14,EST,Europe,Estonia,16523,1.25,1.25,0.0,Estonie
-2021-01-14,ALB,Europe,Albania,266,0.01,0.01,,Albanie
-2021-01-14,PRT,Europe,Portugal,119943,1.18,1.18,0.0,Portugal
-2021-01-14,OWID_EUR,,Europe,9516032,1.27,1.2,0.06,
-2021-01-14,LUX,Europe,Luxembourg,3233,0.52,0.52,,Luxembourg
-2021-01-14,LTU,Europe,Lithuania,42809,1.57,1.57,,Lituanie
-2021-01-15,ARE,Asia,United Arab Emirates,1665987,16.84,16.84,,Émirats Arabes Unis
-2021-01-15,OWID_SAM,,South America,222847,0.05,0.0,0.0,
-2021-01-15,USA,North America,United States,12279180,3.67,3.17,0.48,États-Unis
-2021-01-15,LVA,Europe,Latvia,15288,0.81,0.81,0.0,Lettonie
-2021-01-15,FIN,Europe,Finland,43143,0.78,0.78,,Finlande
-2021-01-15,LIE,Europe,Liechtenstein,44,0.12,0.12,,Liechtenstein
-2021-01-15,PRT,Europe,Portugal,127429,1.25,1.25,0.0,Portugal
-2021-01-15,LTU,Europe,Lithuania,50144,1.84,1.84,,Lituanie
-2021-01-15,FRA,Europe,France,418006,0.62,0.62,,France
-2021-01-15,EST,Europe,Estonia,17804,1.34,1.34,0.0,Estonie
-2021-01-15,OWID_ASI,,Asia,14924498,0.32,0.07,0.01,
-2021-01-15,GBR,Europe,United Kingdom,4023705,5.93,5.27,0.66,Royaume-Uni
-2021-01-15,AUT,Europe,Austria,103451,1.15,1.15,0.0,Autriche
-2021-01-15,BGR,Europe,Bulgaria,18126,0.26,0.26,,Bulgarie
-2021-01-15,CAN,North America,Canada,507687,1.35,1.3,0.05,Canada
-2021-01-15,ESP,Europe,Spain,768950,1.64,1.64,,Espagne
-2021-01-15,CZE,Europe,Czechia,115782,1.08,1.08,0.0,République tchèque
-2021-01-15,ARG,South America,Argentina,200759,0.44,0.44,,Argentine
+2021-01-15,ISR,Asia,Israel,2332841,26.95,24.38,2.57,Israël
 2021-01-15,SYC,Africa,Seychelles,4000,4.07,4.07,,Seychelles
 2021-01-15,MEX,North America,Mexico,417375,0.32,0.32,0.0,Mexique
-2021-01-15,POL,Europe,Poland,436963,1.15,1.15,,Pologne
-2021-01-15,OWID_NAM,,North America,13229101,2.23,1.95,0.28,
-2021-01-15,GIB,Europe,Gibraltar,5135,15.24,15.24,,Gibraltar
-2021-01-15,DNK,Europe,Denmark,156697,2.71,2.71,0.0,Danemark
-2021-01-15,ROU,Europe,Romania,183669,0.95,0.95,,Roumanie
-2021-01-15,SVK,Europe,Slovakia,62197,1.14,1.14,,Slovaquie
-2021-01-15,CHL,South America,Chile,22088,0.12,0.07,0.04,Chili
-2021-01-15,GRC,Europe,Greece,75412,0.72,0.72,,Grèce
-2021-01-15,SVN,Europe,Slovenia,49096,2.36,2.35,0.01,Slovénie
-2021-01-15,DEU,Europe,Germany,1106195,1.32,1.32,0.0,Allemagne
-2021-01-15,IND,Asia,India,0,0.0,0.0,,Inde
-2021-01-15,OWID_AFR,,Africa,4000,0.0,0.0,,
-2021-01-15,ITA,Europe,Italy,1122001,1.86,1.86,0.0,Italie
-2021-01-15,BEL,Europe,Belgium,118734,1.02,1.02,0.0,Belgique
-2021-01-15,HRV,Europe,Croatia,41532,1.01,1.01,,Croatie
-2021-01-15,ALB,Europe,Albania,308,0.01,0.01,,Albanie
-2021-01-15,OWID_EUR,,Europe,10398218,1.39,1.31,0.06,
-2021-01-15,CRI,North America,Costa Rica,24859,0.49,0.49,0.0,Costa Rica
+2021-01-15,ARG,South America,Argentina,200759,0.44,0.44,,Argentine
 2021-01-15,TUR,Asia,Turkey,616652,0.73,0.73,,Turquie
+2021-01-15,USA,North America,United States,12279180,3.67,3.17,0.48,États-Unis
 2021-01-15,OWID_EUN,,European Union,5203963,1.17,1.14,0.0,
-2021-01-15,ISR,Asia,Israel,2332841,26.95,24.38,2.57,Israël
+2021-01-15,OWID_SAM,,South America,222847,0.05,0.0,0.0,
+2021-01-15,CRI,North America,Costa Rica,24859,0.49,0.49,0.0,Costa Rica
+2021-01-15,LIE,Europe,Liechtenstein,44,0.12,0.12,,Liechtenstein
+2021-01-15,GIB,Europe,Gibraltar,5135,15.24,15.24,,Gibraltar
+2021-01-15,CAN,North America,Canada,507687,1.35,1.3,0.05,Canada
 2021-01-15,CHE,Europe,Switzerland,90692,1.05,0.95,0.0,Suisse
+2021-01-15,HRV,Europe,Croatia,41532,1.01,1.01,,Croatie
+2021-01-15,ROU,Europe,Romania,183669,0.95,0.95,,Roumanie
+2021-01-15,LVA,Europe,Latvia,15288,0.81,0.81,0.0,Lettonie
+2021-01-15,DEU,Europe,Germany,1106195,1.32,1.32,0.0,Allemagne
+2021-01-15,ARE,Asia,United Arab Emirates,1665987,16.84,16.84,,Émirats Arabes Unis
+2021-01-15,BEL,Europe,Belgium,118734,1.02,1.02,0.0,Belgique
+2021-01-15,SVK,Europe,Slovakia,62197,1.14,1.14,,Slovaquie
+2021-01-15,OWID_EUR,,Europe,10398218,1.39,1.31,0.06,
+2021-01-15,FIN,Europe,Finland,43143,0.78,0.78,,Finlande
+2021-01-15,ITA,Europe,Italy,1122001,1.86,1.86,0.0,Italie
+2021-01-15,FRA,Europe,France,418006,0.62,0.62,,France
+2021-01-15,POL,Europe,Poland,436963,1.15,1.15,,Pologne
+2021-01-15,GBR,Europe,United Kingdom,4023705,5.93,5.27,0.66,Royaume-Uni
+2021-01-15,ALB,Europe,Albania,308,0.01,0.01,,Albanie
+2021-01-15,OWID_NAM,,North America,13229101,2.23,1.95,0.28,
+2021-01-15,PRT,Europe,Portugal,127429,1.25,1.25,0.0,Portugal
+2021-01-15,OWID_AFR,,Africa,4000,0.0,0.0,,
+2021-01-15,CHL,South America,Chile,22088,0.12,0.07,0.04,Chili
+2021-01-15,CZE,Europe,Czechia,115782,1.08,1.08,0.0,République tchèque
+2021-01-15,DNK,Europe,Denmark,156697,2.71,2.71,0.0,Danemark
+2021-01-15,AUT,Europe,Austria,103451,1.15,1.15,0.0,Autriche
+2021-01-15,SVN,Europe,Slovenia,49096,2.36,2.35,0.01,Slovénie
+2021-01-15,ESP,Europe,Spain,768950,1.64,1.64,,Espagne
+2021-01-15,EST,Europe,Estonia,17804,1.34,1.34,0.0,Estonie
+2021-01-15,IND,Asia,India,0,0.0,0.0,,Inde
+2021-01-15,OWID_ASI,,Asia,14924498,0.32,0.07,0.01,
+2021-01-15,GRC,Europe,Greece,75412,0.72,0.72,,Grèce
+2021-01-15,LTU,Europe,Lithuania,50144,1.84,1.84,,Lituanie
 2021-01-15,NOR,Europe,Norway,51360,0.95,0.95,0.0,Norvège
-2021-01-16,BEL,Europe,Belgium,123962,1.07,1.07,0.0,Belgique
-2021-01-16,BGR,Europe,Bulgaria,18332,0.26,0.26,,Bulgarie
-2021-01-16,SVK,Europe,Slovakia,63439,1.16,1.16,,Slovaquie
-2021-01-16,OWID_NAM,,North America,13312241,2.25,1.96,0.28,
-2021-01-16,DEU,Europe,Germany,1163664,1.39,1.38,0.01,Allemagne
-2021-01-16,AUT,Europe,Austria,110339,1.23,1.22,0.0,Autriche
-2021-01-16,BRA,South America,Brazil,0,0.0,0.0,,Brésil
-2021-01-16,OMN,Asia,Oman,24773,0.49,0.49,,Oman
-2021-01-16,CYP,Europe,Cyprus,10226,1.15,1.15,,Chypre
-2021-01-16,GBR,Europe,United Kingdom,4322456,6.37,5.7,0.66,Royaume-Uni
-2021-01-16,OWID_EUN,,European Union,5418506,1.22,1.19,0.0,
-2021-01-16,GIB,Europe,Gibraltar,5847,17.35,17.35,,Gibraltar
-2021-01-16,EST,Europe,Estonia,18024,1.36,1.36,0.0,Estonie
-2021-01-16,ALB,Europe,Albania,369,0.01,0.01,,Albanie
-2021-01-16,OWID_EUR,,Europe,10917453,1.46,1.38,0.06,
-2021-01-16,OWID_AFR,,Africa,7000,0.0,0.0,,
-2021-01-16,IND,Asia,India,191181,0.01,0.01,,Inde
+2021-01-15,BGR,Europe,Bulgaria,18126,0.26,0.26,,Bulgarie
+2021-01-16,CHL,South America,Chile,22178,0.12,0.07,0.04,Chili
+2021-01-16,POL,Europe,Poland,457303,1.21,1.21,,Pologne
+2021-01-16,CAN,North America,Canada,543291,1.44,1.39,0.05,Canada
+2021-01-16,OWID_SAM,,South America,222937,0.05,0.0,0.0,
 2021-01-16,LTU,Europe,Lithuania,51249,1.88,1.88,,Lituanie
-2021-01-16,SAU,Asia,Saudi Arabia,295530,0.85,0.85,,Arabie Saoudite
-2021-01-16,DNK,Europe,Denmark,161168,2.78,2.78,0.0,Danemark
+2021-01-16,GRC,Europe,Greece,80391,0.77,0.77,0.0,Grèce
+2021-01-16,SVN,Europe,Slovenia,49419,2.38,2.37,0.01,Slovénie
+2021-01-16,OWID_EUR,,Europe,10917453,1.46,1.38,0.06,
+2021-01-16,BMU,North America,Bermuda,1665,2.67,2.67,,Bermudes
+2021-01-16,ISR,Asia,Israel,2388189,27.59,24.72,2.87,Israël
+2021-01-16,AUT,Europe,Austria,110339,1.23,1.22,0.0,Autriche
+2021-01-16,LVA,Europe,Latvia,15960,0.85,0.85,0.0,Lettonie
+2021-01-16,SVK,Europe,Slovakia,63439,1.16,1.16,,Slovaquie
+2021-01-16,ITA,Europe,Italy,1187473,1.96,1.96,0.0,Italie
+2021-01-16,NOR,Europe,Norway,52167,0.96,0.96,0.0,Norvège
+2021-01-16,OMN,Asia,Oman,24773,0.49,0.49,,Oman
+2021-01-16,BGR,Europe,Bulgaria,18332,0.26,0.26,,Bulgarie
+2021-01-16,OWID_NAM,,North America,13312241,2.25,1.96,0.28,
+2021-01-16,ALB,Europe,Albania,369,0.01,0.01,,Albanie
+2021-01-16,EST,Europe,Estonia,18024,1.36,1.36,0.0,Estonie
+2021-01-16,CYP,Europe,Cyprus,10226,1.15,1.15,,Chypre
 2021-01-16,PRT,Europe,Portugal,128964,1.26,1.26,0.0,Portugal
 2021-01-16,FRA,Europe,France,438035,0.65,0.65,0.0,France
-2021-01-16,ROU,Europe,Romania,196090,1.02,1.02,,Roumanie
+2021-01-16,DNK,Europe,Denmark,161168,2.78,2.78,0.0,Danemark
+2021-01-16,SAU,Asia,Saudi Arabia,295530,0.85,0.85,,Arabie Saoudite
+2021-01-16,GBR,Europe,United Kingdom,4322456,6.37,5.7,0.66,Royaume-Uni
+2021-01-16,IND,Asia,India,191181,0.01,0.01,,Inde
 2021-01-16,OWID_ASI,,Asia,15480978,0.33,0.07,0.01,
-2021-01-16,ITA,Europe,Italy,1187473,1.96,1.96,0.0,Italie
-2021-01-16,SYC,Africa,Seychelles,7000,7.12,7.12,,Seychelles
-2021-01-16,GRC,Europe,Greece,80391,0.77,0.77,0.0,Grèce
-2021-01-16,TUR,Asia,Turkey,676903,0.8,0.8,,Turquie
-2021-01-16,LVA,Europe,Latvia,15960,0.85,0.85,0.0,Lettonie
-2021-01-16,CAN,North America,Canada,543291,1.44,1.39,0.05,Canada
-2021-01-16,CHE,Europe,Switzerland,95051,1.1,1.0,0.0,Suisse
-2021-01-16,HRV,Europe,Croatia,45906,1.12,1.12,,Croatie
-2021-01-16,OWID_SAM,,South America,222937,0.05,0.0,0.0,
-2021-01-16,ARE,Asia,United Arab Emirates,1797926,18.18,18.18,,Émirats Arabes Unis
-2021-01-16,BMU,North America,Bermuda,1665,2.67,2.67,,Bermudes
-2021-01-16,POL,Europe,Poland,457303,1.21,1.21,,Pologne
-2021-01-16,ISR,Asia,Israel,2388189,27.59,24.72,2.87,Israël
-2021-01-16,MEX,North America,Mexico,463246,0.36,0.36,0.0,Mexique
-2021-01-16,LIE,Europe,Liechtenstein,46,0.12,0.12,,Liechtenstein
-2021-01-16,CHL,South America,Chile,22178,0.12,0.07,0.04,Chili
 2021-01-16,CZE,Europe,Czechia,119160,1.11,1.11,0.0,République tchèque
-2021-01-16,SVN,Europe,Slovenia,49419,2.38,2.37,0.01,Slovénie
-2021-01-16,NOR,Europe,Norway,52167,0.96,0.96,0.0,Norvège
-2021-01-17,GBR,Europe,United Kingdom,4514802,6.65,5.98,0.67,Royaume-Uni
-2021-01-17,OMN,Asia,Oman,25446,0.5,0.49,0.01,Oman
+2021-01-16,BRA,South America,Brazil,0,0.0,0.0,,Brésil
+2021-01-16,OWID_AFR,,Africa,7000,0.0,0.0,,
+2021-01-16,MEX,North America,Mexico,463246,0.36,0.36,0.0,Mexique
+2021-01-16,DEU,Europe,Germany,1163664,1.39,1.38,0.01,Allemagne
+2021-01-16,BEL,Europe,Belgium,123962,1.07,1.07,0.0,Belgique
+2021-01-16,ARE,Asia,United Arab Emirates,1797926,18.18,18.18,,Émirats Arabes Unis
+2021-01-16,ROU,Europe,Romania,196090,1.02,1.02,,Roumanie
+2021-01-16,HRV,Europe,Croatia,45906,1.12,1.12,,Croatie
+2021-01-16,TUR,Asia,Turkey,676903,0.8,0.8,,Turquie
+2021-01-16,SYC,Africa,Seychelles,7000,7.12,7.12,,Seychelles
+2021-01-16,LIE,Europe,Liechtenstein,46,0.12,0.12,,Liechtenstein
+2021-01-16,GIB,Europe,Gibraltar,5847,17.35,17.35,,Gibraltar
+2021-01-16,OWID_EUN,,European Union,5418506,1.22,1.19,0.0,
+2021-01-16,CHE,Europe,Switzerland,95051,1.1,1.0,0.0,Suisse
 2021-01-17,TUR,Asia,Turkey,706451,0.84,0.84,,Turquie
-2021-01-17,MEX,North America,Mexico,472142,0.37,0.36,0.0,Mexique
-2021-01-17,SVK,Europe,Slovakia,63493,1.16,1.16,,Slovaquie
-2021-01-17,SVN,Europe,Slovenia,49423,2.38,2.37,0.01,Slovénie
-2021-01-17,NOR,Europe,Norway,52552,0.97,0.97,0.0,Norvège
-2021-01-17,OWID_NAM,,North America,13348588,2.25,1.97,0.28,
-2021-01-17,POL,Europe,Poland,469466,1.24,1.24,0.0,Pologne
-2021-01-17,ROU,Europe,Romania,204185,1.06,1.06,0.0,Roumanie
-2021-01-17,PRT,Europe,Portugal,130132,1.28,1.26,0.01,Portugal
-2021-01-17,CHE,Europe,Switzerland,95715,1.11,1.0,0.0,Suisse
-2021-01-17,SWE,Europe,Sweden,130230,1.29,1.29,0.0,Suède
-2021-01-17,NLD,Europe,Netherlands,76945,0.45,0.45,,Pays-Bas
+2021-01-17,GBR,Europe,United Kingdom,4514802,6.65,5.98,0.67,Royaume-Uni
 2021-01-17,OWID_SAM,,South America,223049,0.05,0.0,0.0,
+2021-01-17,CHE,Europe,Switzerland,95715,1.11,1.0,0.0,Suisse
+2021-01-17,MEX,North America,Mexico,472142,0.37,0.36,0.0,Mexique
+2021-01-17,SVN,Europe,Slovenia,49423,2.38,2.37,0.01,Slovénie
+2021-01-17,POL,Europe,Poland,469466,1.24,1.24,0.0,Pologne
+2021-01-17,SWE,Europe,Sweden,130230,1.29,1.29,0.0,Suède
+2021-01-17,NOR,Europe,Norway,52552,0.97,0.97,0.0,Norvège
+2021-01-17,NLD,Europe,Netherlands,76945,0.45,0.45,,Pays-Bas
+2021-01-17,ROU,Europe,Romania,204185,1.06,1.06,0.0,Roumanie
+2021-01-17,SVK,Europe,Slovakia,63493,1.16,1.16,,Slovaquie
+2021-01-17,OMN,Asia,Oman,25446,0.5,0.49,0.01,Oman
+2021-01-17,OWID_NAM,,North America,13348588,2.25,1.97,0.28,
+2021-01-17,PRT,Europe,Portugal,130132,1.28,1.26,0.01,Portugal
 2021-01-17,ARE,Asia,United Arab Emirates,1882778,19.04,19.04,,Émirats Arabes Unis
 2021-01-17,BEL,Europe,Belgium,127218,1.1,1.1,0.0,Belgique
 2021-01-17,CHL,South America,Chile,22178,0.12,0.07,0.04,Chili
