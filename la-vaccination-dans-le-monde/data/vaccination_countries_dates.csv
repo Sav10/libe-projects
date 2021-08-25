@@ -22228,8 +22228,9 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-21,KOR,Asia,South Korea,36317016,70.84,50.48,22.56,Corée du Sud
 2021-08-21,MYS,Asia,Malaysia,30954685,95.64,56.2,39.44,Malaisie
 2021-08-21,TUR,Asia,Turkey,88443350,104.87,54.3,41.46,Turquie
-2021-08-21,OWID_AFR,,Africa,90686647,6.76,4.54,2.43,
+2021-08-21,OWID_AFR,,Africa,90820922,6.77,4.54,2.43,
 2021-08-21,POL,Europe,Poland,35805427,94.61,50.29,48.73,Pologne
+2021-08-21,UGA,Africa,Uganda,1297726,2.84,2.84,,Ouganda
 2021-08-21,DEU,Europe,Germany,99595727,118.87,63.61,58.5,Allemagne
 2021-08-21,MNG,Asia,Mongolia,4280748,130.58,67.93,62.64,Mongolie
 2021-08-21,PAK,Asia,Pakistan,46456077,21.03,16.77,6.08,Pakistan
@@ -22261,7 +22262,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-22,CHE,Europe,Switzerland,9400252,108.62,56.12,50.48,Suisse
 2021-08-22,KEN,Africa,Kenya,2396064,4.46,3.0,1.45,Kenya
 2021-08-22,RWA,Africa,Rwanda,1473408,11.38,8.1,3.28,Rwanda
-2021-08-22,OWID_AFR,,Africa,91048643,6.79,4.56,2.45,
+2021-08-22,OWID_AFR,,Africa,91182918,6.8,4.56,2.45,
 2021-08-22,HKG,Asia,Hong Kong,7054121,94.09,52.41,41.69,Hong Kong
 2021-08-22,FIN,Europe,Finland,6516711,117.61,71.24,46.38,Finlande
 2021-08-22,DNK,Europe,Denmark,8357922,144.3,75.48,69.61,Danemark
@@ -22355,7 +22356,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-22,QAT,Asia,Qatar,4252387,147.6,78.82,68.78,Qatar
 2021-08-22,POL,Europe,Poland,35824579,94.66,50.33,48.77,Pologne
 2021-08-22,CAN,North America,Canada,52379446,138.78,73.16,65.62,Canada
-2021-08-23,OWID_AFR,,Africa,92003965,6.86,4.6,2.48,
+2021-08-23,OWID_AFR,,Africa,92138240,6.87,4.6,2.48,
 2021-08-23,ARG,South America,Argentina,39133726,86.59,60.21,26.38,Argentine
 2021-08-23,ALB,Europe,Albania,1386713,48.19,27.54,20.64,Albanie
 2021-08-23,TUR,Asia,Turkey,89651157,106.3,54.92,41.98,Turquie
@@ -22490,7 +22491,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-08-24,SVK,Europe,Slovakia,4494137,82.32,43.2,39.12,Slovaquie
 2021-08-24,OWID_OCE,,Oceania,21959730,51.45,32.97,18.48,
 2021-08-24,SWE,Europe,Sweden,12135571,120.16,67.38,52.78,Suède
-2021-08-24,OWID_AFR,,Africa,93068434,6.94,4.64,2.53,
+2021-08-24,OWID_AFR,,Africa,93202709,6.95,4.64,2.53,
 2021-08-24,SVN,Europe,Slovenia,1861524,89.54,46.88,42.66,Slovénie
 2021-08-24,SUR,South America,Suriname,312646,53.29,33.75,19.54,Suriname
 2021-08-24,PAK,Asia,Pakistan,47802106,21.64,17.17,6.32,Pakistan
