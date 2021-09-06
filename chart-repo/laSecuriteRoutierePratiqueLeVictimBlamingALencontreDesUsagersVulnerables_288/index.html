@@ -426,6 +426,9 @@ initChart();
 makeBeeSwarnChart(data);
 
 
+var objNumToDate = {0:"septembre 2020", 100:"décembre 2020", 200: "mars 2021", 300: "juin 2021", 400:"septembre 2021" }
+d3.selectAll('.axis--y .tick text').text(function(d){return objNumToDate[d]}).style('font-size', '8px')
+d3.selectAll('.axis.axis--y g.tick').filter(d=>d == 400).attr('transform', 'translate(0,20)')
 
 
 
