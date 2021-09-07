@@ -80,6 +80,10 @@ function show_tooltip(d, name, vars, thoseParam) {
  if (d){
     d3.select("#tooltip").style('display', 'block');
 
+    d3.select("#tooltip").datum(d);
+
+
+
     var dx = d3.event.pageX;
     var dy = d3.event.pageY - 28;
 
@@ -177,6 +181,11 @@ else
 {
     d3.select("#tooltip").style('display', 'none');
 }
+
+
+// if (isMobile()){
+//         d3.select("#tooltip").style('pointer-events', 'all').style('display', 'block');
+// }
 
 }
 
