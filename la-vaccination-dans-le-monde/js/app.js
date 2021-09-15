@@ -126,14 +126,15 @@ const tip = d3
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d){
+    console.log(d)
     var this_array = app_data.filter( e=> e.pays_iso == d.id);
     if (this_array.length == 0){var this_country = d.properties.nom
     var this_html = `<span class='details'>${this_country}<br></span></span>`}
     else {var this_d = _.last(app_data.filter( e=> e.pays_iso == d.id))
-    var this_html = `<span class='details'>${this_d.pays}<br>
+    var this_html = `<span class='details'>${d.properties.nom}<br>
     <span><b>${this_d.people_vaccinated_per_hundred}%</b> ont reçu au moins une dose de vaccin</span><br>
     <span> ${this_d.people_fully_vaccinated_per_hundred ? 
-      'et <b>'+ this_d.people_fully_vaccinated_per_hundred + '%</b> ont reçu les deux doses' : 
+      'et <b>'+ this_d.people_fully_vaccinated_per_hundred + '%</b> sont complètement vaccinés' : 
       'Données non communiquées pour la seconde dose'} </span><br>
       </span></span>`
 
