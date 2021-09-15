@@ -126,7 +126,6 @@ const tip = d3
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d){
-    console.log(d)
     var this_array = app_data.filter( e=> e.pays_iso == d.id);
     if (this_array.length == 0){var this_country = d.properties.nom
     var this_html = `<span class='details'>${this_country}<br></span></span>`}
