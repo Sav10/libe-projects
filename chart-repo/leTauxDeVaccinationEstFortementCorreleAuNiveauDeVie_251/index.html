@@ -1,0 +1,491 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le taux de vaccination est fortement corrélé au niveau de vie</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+
+  <style type="text/css">
+    
+
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <h3 id="chartTitle" style="text-align: center"></h3>
+      <h4 id="chartSubTitle" style="text-align: center"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"iso_code":"ISR","continent":"Asia","location":"Israel","gdp_per_capita":"33132","population":"8789776.0","Pays":"Israël","total_vaccinations":"14511866","total_vaccinations_per_hundred":"165.1","people_vaccinated_per_hundred":"68.81","people_fully_vaccinated_per_hundred":"63.2","gdp_log2":"15.015951607275891"},{"iso_code":"CAN","continent":"North America","location":"Canada","gdp_per_capita":"44018","population":"38067913.0","Pays":"Canada","total_vaccinations":"54509507","total_vaccinations_per_hundred":"143.19","people_vaccinated_per_hundred":"74.64","people_fully_vaccinated_per_hundred":"68.6","gdp_log2":"15.425792570952153"},{"iso_code":"USA","continent":"North America","location":"United States","gdp_per_capita":"54225","population":"332915074.0","Pays":"États-Unis","total_vaccinations":"380831725","total_vaccinations_per_hundred":"113.23","people_vaccinated_per_hundred":"62.35","people_fully_vaccinated_per_hundred":"53.2","gdp_log2":"15.726682393548282"},{"iso_code":"DNK","continent":"Europe","location":"Denmark","gdp_per_capita":"46683","population":"5813302.0","Pays":"Danemark","total_vaccinations":"8688480","total_vaccinations_per_hundred":"149.46","people_vaccinated_per_hundred":"76.28","people_fully_vaccinated_per_hundred":"74.0","gdp_log2":"15.510594667250396"},{"iso_code":"LVA","continent":"Europe","location":"Latvia","gdp_per_capita":"25064","population":"1866934.0","Pays":"Lettonie","total_vaccinations":"1561221","total_vaccinations_per_hundred":"83.62","people_vaccinated_per_hundred":"47.25","people_fully_vaccinated_per_hundred":"42.4","gdp_log2":"14.613320190035"},{"iso_code":"NOR","continent":"Europe","location":"Norway","gdp_per_capita":"64800","population":"5465629.0","Pays":"Norvège","total_vaccinations":"7435756","total_vaccinations_per_hundred":"136.05","people_vaccinated_per_hundred":"72.71","people_fully_vaccinated_per_hundred":"63.3","gdp_log2":"15.983707461696095"},{"iso_code":"QAT","continent":"Asia","location":"Qatar","gdp_per_capita":"116936","population":"2930524.0","Pays":"Qatar","total_vaccinations":"4578600","total_vaccinations_per_hundred":"156.24","people_vaccinated_per_hundred":"80.54","people_fully_vaccinated_per_hundred":"75.7","gdp_log2":"16.83535468680958"},{"iso_code":"CHE","continent":"Europe","location":"Switzerland","gdp_per_capita":"57410","population":"8715494.0","Pays":"Suisse","total_vaccinations":"9910340","total_vaccinations_per_hundred":"113.71","people_vaccinated_per_hundred":"59.36","people_fully_vaccinated_per_hundred":"52.1","gdp_log2":"15.809018606679803"},{"iso_code":"RUS","continent":"Asia","location":"Russia","gdp_per_capita":"24766","population":"145912022.0","Pays":"Russie","total_vaccinations":"85977322","total_vaccinations_per_hundred":"58.92","people_vaccinated_per_hundred":"31.63","people_fully_vaccinated_per_hundred":"27.3","gdp_log2":"14.596070575105266"},{"iso_code":"BHR","continent":"Asia","location":"Bahrain","gdp_per_capita":"43291","population":"1748295.0","Pays":"Bahreïn","total_vaccinations":"2525212","total_vaccinations_per_hundred":"144.44","people_vaccinated_per_hundred":"66.2","people_fully_vaccinated_per_hundred":"62.9","gdp_log2":"15.401769674941988"},{"iso_code":"CRI","continent":"North America","location":"Costa Rica","gdp_per_capita":"15525","population":"5139053.0","Pays":"Costa Rica","total_vaccinations":"4580610","total_vaccinations_per_hundred":"89.13","people_vaccinated_per_hundred":"59.77","people_fully_vaccinated_per_hundred":"29.4","gdp_log2":"13.922305183359049"},{"iso_code":"MEX","continent":"North America","location":"Mexico","gdp_per_capita":"17336","population":"130262220.0","Pays":"Mexique","total_vaccinations":"92080595","total_vaccinations_per_hundred":"70.69","people_vaccinated_per_hundred":"46.77","people_fully_vaccinated_per_hundred":"30.2","gdp_log2":"14.08152246755963"},{"iso_code":"CHL","continent":"South America","location":"Chile","gdp_per_capita":"22767","population":"19212362.0","Pays":"Chili","total_vaccinations":"30204979","total_vaccinations_per_hundred":"157.22","people_vaccinated_per_hundred":"75.34","people_fully_vaccinated_per_hundred":"72.4","gdp_log2":"14.474658924710488"},{"iso_code":"CYM","continent":"North America","location":"Cayman Islands","gdp_per_capita":"49903","population":"66498.0","Pays":"Iles Cayman","total_vaccinations":"102860","total_vaccinations_per_hundred":"154.68","people_vaccinated_per_hundred":"79.45","people_fully_vaccinated_per_hundred":"75.2","gdp_log2":"15.606839766066974"},{"iso_code":"PRT","continent":"Europe","location":"Portugal","gdp_per_capita":"27937","population":"10167923.0","Pays":"Portugal","total_vaccinations":"15479913","total_vaccinations_per_hundred":"152.24","people_vaccinated_per_hundred":"86.85","people_fully_vaccinated_per_hundred":"81.1","gdp_log2":"14.7698841148933"},{"iso_code":"DEU","continent":"Europe","location":"Germany","gdp_per_capita":"45229","population":"83900471.0","Pays":"Allemagne","total_vaccinations":"104230296","total_vaccinations_per_hundred":"124.23","people_vaccinated_per_hundred":"65.93","people_fully_vaccinated_per_hundred":"61.6","gdp_log2":"15.464968293187423"},{"iso_code":"ROU","continent":"Europe","location":"Romania","gdp_per_capita":"23313","population":"19127772.0","Pays":"Roumanie","total_vaccinations":"9872288","total_vaccinations_per_hundred":"51.61","people_vaccinated_per_hundred":"27.8","people_fully_vaccinated_per_hundred":"27.2","gdp_log2":"14.508859361913157"},{"iso_code":"AUT","continent":"Europe","location":"Austria","gdp_per_capita":"45437","population":"9043072.0","Pays":"Autriche","total_vaccinations":"10634566","total_vaccinations_per_hundred":"117.6","people_vaccinated_per_hundred":"62.04","people_fully_vaccinated_per_hundred":"58.7","gdp_log2":"15.471569992875326"},{"iso_code":"EST","continent":"Europe","location":"Estonia","gdp_per_capita":"29481","population":"1325188.0","Pays":"Estonie","total_vaccinations":"1310615","total_vaccinations_per_hundred":"98.9","people_vaccinated_per_hundred":"55.91","people_fully_vaccinated_per_hundred":"43.0","gdp_log2":"14.847510173176358"},{"iso_code":"CZE","continent":"Europe","location":"Czechia","gdp_per_capita":"32606","population":"10724553.0","Pays":"République tchèque","total_vaccinations":"11647582","total_vaccinations_per_hundred":"108.61","people_vaccinated_per_hundred":"56.06","people_fully_vaccinated_per_hundred":"54.6","gdp_log2":"14.992845687109748"},{"iso_code":"ITA","continent":"Europe","location":"Italy","gdp_per_capita":"35220","population":"60367471.0","Pays":"Italie","total_vaccinations":"81097687","total_vaccinations_per_hundred":"134.34","people_vaccinated_per_hundred":"72.61","people_fully_vaccinated_per_hundred":"64.2","gdp_log2":"15.10411072955443"},{"iso_code":"GBR","continent":"Europe","location":"United Kingdom","gdp_per_capita":"39753","population":"68207114.0","Pays":"Royaume-Uni","total_vaccinations":"92487365","total_vaccinations_per_hundred":"135.6","people_vaccinated_per_hundred":"71.02","people_fully_vaccinated_per_hundred":"64.6","gdp_log2":"15.278784973575403"},{"iso_code":"LTU","continent":"Europe","location":"Lithuania","gdp_per_capita":"29524","population":"2689862.0","Pays":"Lituanie","total_vaccinations":"3278523","total_vaccinations_per_hundred":"121.88","people_vaccinated_per_hundred":"63.36","people_fully_vaccinated_per_hundred":"58.5","gdp_log2":"14.849613524047278"},{"iso_code":"SWE","continent":"Europe","location":"Sweden","gdp_per_capita":"46949","population":"10160159.0","Pays":"Suède","total_vaccinations":"13138198","total_vaccinations_per_hundred":"129.31","people_vaccinated_per_hundred":"68.96","people_fully_vaccinated_per_hundred":"60.4","gdp_log2":"15.518815505048458"},{"iso_code":"SVN","continent":"Europe","location":"Slovenia","gdp_per_capita":"31401","population":"2078723.0","Pays":"Slovénie","total_vaccinations":"1964522","total_vaccinations_per_hundred":"94.51","people_vaccinated_per_hundred":"49.4","people_fully_vaccinated_per_hundred":"45.1","gdp_log2":"14.93851553253976"},{"iso_code":"FRA","continent":"Europe","location":"France","gdp_per_capita":"38606","population":"67564251.0","Pays":"France","total_vaccinations":"91481145","total_vaccinations_per_hundred":"135.4","people_vaccinated_per_hundred":"73.25","people_fully_vaccinated_per_hundred":"63.1","gdp_log2":"15.236525168043658"},{"iso_code":"GRC","continent":"Europe","location":"Greece","gdp_per_capita":"24574","population":"10370747.0","Pays":"Grèce","total_vaccinations":"11728334","total_vaccinations_per_hundred":"113.09","people_vaccinated_per_hundred":"60.57","people_fully_vaccinated_per_hundred":"56.5","gdp_log2":"14.584867515474572"},{"iso_code":"KWT","continent":"Asia","location":"Kuwait","gdp_per_capita":"65531","population":"4328553.0","Pays":"Koweït","total_vaccinations":"2375455","total_vaccinations_per_hundred":"54.88","people_vaccinated_per_hundred":"33.55","people_fully_vaccinated_per_hundred":"21.3","gdp_log2":"15.999879733710932"},{"iso_code":"LUX","continent":"Europe","location":"Luxembourg","gdp_per_capita":"94278","population":"634814.0","Pays":"Luxembourg","total_vaccinations":"779620","total_vaccinations_per_hundred":"122.81","people_vaccinated_per_hundred":"65.68","people_fully_vaccinated_per_hundred":"60.0","gdp_log2":"16.52463299774621"},{"iso_code":"BEL","continent":"Europe","location":"Belgium","gdp_per_capita":"42659","population":"11632334.0","Pays":"Belgique","total_vaccinations":"16390091","total_vaccinations_per_hundred":"140.9","people_vaccinated_per_hundred":"73.03","people_fully_vaccinated_per_hundred":"71.0","gdp_log2":"15.380548186952568"},{"iso_code":"BLR","continent":"Europe","location":"Belarus","gdp_per_capita":"17168","population":"9442867.0","Pays":"Biélorussie","total_vaccinations":"3085256","total_vaccinations_per_hundred":"32.67","people_vaccinated_per_hundred":"17.92","people_fully_vaccinated_per_hundred":"14.8","gdp_log2":"14.067431587633148"},{"iso_code":"POL","continent":"Europe","location":"Poland","gdp_per_capita":"27216","population":"37797000.0","Pays":"Pologne","total_vaccinations":"36749445","total_vaccinations_per_hundred":"97.23","people_vaccinated_per_hundred":"51.68","people_fully_vaccinated_per_hundred":"50.6","gdp_log2":"14.732191014509825"},{"iso_code":"OMN","continent":"Asia","location":"Oman","gdp_per_capita":"37961","population":"5223376.0","Pays":"Oman","total_vaccinations":"4036350","total_vaccinations_per_hundred":"77.27","people_vaccinated_per_hundred":"49.63","people_fully_vaccinated_per_hundred":"27.6","gdp_log2":"15.21221931767327"},{"iso_code":"HUN","continent":"Europe","location":"Hungary","gdp_per_capita":"26778","population":"9634162.0","Pays":"Hongrie","total_vaccinations":"9249943","total_vaccinations_per_hundred":"96.01","people_vaccinated_per_hundred":"54.6","people_fully_vaccinated_per_hundred":"41.4","gdp_log2":"14.708736940157548"},{"iso_code":"BGR","continent":"Europe","location":"Bulgaria","gdp_per_capita":"18563","population":"6896655.0","Pays":"Bulgarie","total_vaccinations":"2176168","total_vaccinations_per_hundred":"31.55","people_vaccinated_per_hundred":"15.79","people_fully_vaccinated_per_hundred":"15.8","gdp_log2":"14.180166124902092"},{"iso_code":"ARG","continent":"South America","location":"Argentina","gdp_per_capita":"18934","population":"45605823.0","Pays":"Argentine","total_vaccinations":"46995734","total_vaccinations_per_hundred":"103.05","people_vaccinated_per_hundred":"62.98","people_fully_vaccinated_per_hundred":"40.1","gdp_log2":"14.208684520539787"},{"iso_code":"HRV","continent":"Europe","location":"Croatia","gdp_per_capita":"22670","population":"4081657.0","Pays":"Croatie","total_vaccinations":"3331246","total_vaccinations_per_hundred":"81.62","people_vaccinated_per_hundred":"43.12","people_fully_vaccinated_per_hundred":"40.4","gdp_log2":"14.46848385186306"},{"iso_code":"ISL","continent":"Europe","location":"Iceland","gdp_per_capita":"46483","population":"343360.0","Pays":"Islande","total_vaccinations":"535408","total_vaccinations_per_hundred":"155.93","people_vaccinated_per_hundred":"81.69","people_fully_vaccinated_per_hundred":"77.5","gdp_log2":"15.504414258880198"},{"iso_code":"IRL","continent":"Europe","location":"Ireland","gdp_per_capita":"67335","population":"4982904.0","Pays":"Irlande","total_vaccinations":"7035048","total_vaccinations_per_hundred":"141.18","people_vaccinated_per_hundred":"74.96","people_fully_vaccinated_per_hundred":"70.9","gdp_log2":"16.03907525422106"},{"iso_code":"CHN","continent":"Asia","location":"China","gdp_per_capita":"15309","population":"1444216102.0","Pays":"Chine","total_vaccinations":"2113083000","total_vaccinations_per_hundred":"146.31","people_vaccinated_per_hundred":"75.82","people_fully_vaccinated_per_hundred":"67.2","gdp_log2":"13.902065286202957"},{"iso_code":"FIN","continent":"Europe","location":"Finland","gdp_per_capita":"40586","population":"5548361.0","Pays":"Finlande","total_vaccinations":"7227414","total_vaccinations_per_hundred":"130.26","people_vaccinated_per_hundred":"73.55","people_fully_vaccinated_per_hundred":"56.7","gdp_log2":"15.308684622578472"},{"iso_code":"ESP","continent":"Europe","location":"Spain","gdp_per_capita":"34272","population":"46745211.0","Pays":"Espagne","total_vaccinations":"68486683","total_vaccinations_per_hundred":"146.51","people_vaccinated_per_hundred":"79.62","people_fully_vaccinated_per_hundred":"75.5","gdp_log2":"15.064757919030338"},{"iso_code":"SVK","continent":"Europe","location":"Slovakia","gdp_per_capita":"30155","population":"5460726.0","Pays":"Slovaquie","total_vaccinations":"4611905","total_vaccinations_per_hundred":"84.46","people_vaccinated_per_hundred":"44.02","people_fully_vaccinated_per_hundred":"40.4","gdp_log2":"14.880116886811509"},{"iso_code":"ARE","continent":"Asia","location":"United Arab Emirates","gdp_per_capita":"67293","population":"9991083.0","Pays":"Émirats Arabes Unis","total_vaccinations":"18997951","total_vaccinations_per_hundred":"190.15","people_vaccinated_per_hundred":"89.59","people_fully_vaccinated_per_hundred":"78.5","gdp_log2":"16.038179174149757"},{"iso_code":"CYP","continent":"Europe","location":"Cyprus","gdp_per_capita":"32415","population":"888005.0","Pays":"Chypre","total_vaccinations":"1121722","total_vaccinations_per_hundred":"126.32","people_vaccinated_per_hundred":"66.01","people_fully_vaccinated_per_hundred":"60.3","gdp_log2":"14.984379827382654"},{"iso_code":"SAU","continent":"Asia","location":"Saudi Arabia","gdp_per_capita":"49045","population":"35340680.0","Pays":"Arabie Saoudite","total_vaccinations":"39839942","total_vaccinations_per_hundred":"112.73","people_vaccinated_per_hundred":"64.63","people_fully_vaccinated_per_hundred":"48.1","gdp_log2":"15.581830534602275"},{"iso_code":"SRB","continent":"Europe","location":"Serbia","gdp_per_capita":"14049","population":"6804596.0","Pays":"Serbie","total_vaccinations":"6129144","total_vaccinations_per_hundred":"90.07","people_vaccinated_per_hundred":"43.64","people_fully_vaccinated_per_hundred":"41.7","gdp_log2":"13.7781676032311"},{"iso_code":"SYC","continent":"Africa","location":"Seychelles","gdp_per_capita":"26382","population":"98910.0","Pays":"Seychelles","total_vaccinations":"145620","total_vaccinations_per_hundred":"147.22","people_vaccinated_per_hundred":"75.54","people_fully_vaccinated_per_hundred":"71.7","gdp_log2":"14.687282012393078"},{"iso_code":"BMU","continent":"North America","location":"Bermuda","gdp_per_capita":"50669","population":"62092.0","Pays":"Bermudes","total_vaccinations":"85914","total_vaccinations_per_hundred":"138.37","people_vaccinated_per_hundred":"69.86","people_fully_vaccinated_per_hundred":"68.5","gdp_log2":"15.628824704703904"},{"iso_code":"ALB","continent":"Europe","location":"Albania","gdp_per_capita":"11803","population":"2872934.0","Pays":"Albanie","total_vaccinations":"1601552","total_vaccinations_per_hundred":"55.75","people_vaccinated_per_hundred":"31.22","people_fully_vaccinated_per_hundred":"24.5","gdp_log2":"13.526918660086016"},{"iso_code":"NLD","continent":"Europe","location":"Netherlands","gdp_per_capita":"48473","population":"17173094.0","Pays":"Pays-Bas","total_vaccinations":"22102538","total_vaccinations_per_hundred":"128.7","people_vaccinated_per_hundred":"70.06","people_fully_vaccinated_per_hundred":"63.3","gdp_log2":"15.564880211228283"},{"iso_code":"SGP","continent":"Asia","location":"Singapore","gdp_per_capita":"85535","population":"5896684.0","Pays":"Singapour","total_vaccinations":"9044030","total_vaccinations_per_hundred":"153.37","people_vaccinated_per_hundred":"78.74","people_fully_vaccinated_per_hundred":"75.9","gdp_log2":"16.38423371555992"},{"iso_code":"IDN","continent":"Asia","location":"Indonesia","gdp_per_capita":"11189","population":"276361788.0","Pays":"Indonésie","total_vaccinations":"116168745","total_vaccinations_per_hundred":"42.04","people_vaccinated_per_hundred":"26.72","people_fully_vaccinated_per_hundred":"15.3","gdp_log2":"13.44976047424869"},{"iso_code":"JOR","continent":"Asia","location":"Jordan","gdp_per_capita":"8337","population":"10269022.0","Pays":"Jordanie","total_vaccinations":"6695777","total_vaccinations_per_hundred":"65.2","people_vaccinated_per_hundred":"34.94","people_fully_vaccinated_per_hundred":"30.3","gdp_log2":"13.025397410589408"},{"iso_code":"TUR","continent":"Asia","location":"Turkey","gdp_per_capita":"25129","population":"85042736.0","Pays":"Turquie","total_vaccinations":"102431607","total_vaccinations_per_hundred":"120.45","people_vaccinated_per_hundred":"60.89","people_fully_vaccinated_per_hundred":"47.8","gdp_log2":"14.617085217560774"},{"iso_code":"IND","continent":"Asia","location":"India","gdp_per_capita":"6427","population":"1393409033.0","Pays":"Inde","total_vaccinations":"750284569","total_vaccinations_per_hundred":"53.85","people_vaccinated_per_hundred":"40.91","people_fully_vaccinated_per_hundred":"12.9","gdp_log2":"12.649856576624009"},{"iso_code":"BRA","continent":"South America","location":"Brazil","gdp_per_capita":"14103","population":"213993441.0","Pays":"Brésil","total_vaccinations":"210549234","total_vaccinations_per_hundred":"98.39","people_vaccinated_per_hundred":"66.48","people_fully_vaccinated_per_hundred":"34.0","gdp_log2":"13.78376070343236"},{"iso_code":"AZE","continent":"Asia","location":"Azerbaijan","gdp_per_capita":"15847","population":"10223344.0","Pays":"Azerbaïdjan","total_vaccinations":"7611206","total_vaccinations_per_hundred":"74.45","people_vaccinated_per_hundred":"44.1","people_fully_vaccinated_per_hundred":"30.4","gdp_log2":"13.951960273598234"},{"iso_code":"MLT","continent":"Europe","location":"Malta","gdp_per_capita":"36513","population":"514564.0","Pays":"Malte","total_vaccinations":"805479","total_vaccinations_per_hundred":"156.54","people_vaccinated_per_hundred":"81.05","people_fully_vaccinated_per_hundred":"80.9","gdp_log2":"15.15613535090962"},{"iso_code":"PAN","continent":"North America","location":"Panama","gdp_per_capita":"22267","population":"4381583.0","Pays":"Panama","total_vaccinations":"4947260","total_vaccinations_per_hundred":"112.91","people_vaccinated_per_hundred":"65.52","people_fully_vaccinated_per_hundred":"47.4","gdp_log2":"14.442621975851896"},{"iso_code":"ECU","continent":"South America","location":"Ecuador","gdp_per_capita":"10582","population":"17888474.0","Pays":"Équateur","total_vaccinations":"20320001","total_vaccinations_per_hundred":"113.59","people_vaccinated_per_hundred":"59.81","people_fully_vaccinated_per_hundred":"53.8","gdp_log2":"13.36931597695262"},{"iso_code":"EGY","continent":"Africa","location":"Egypt","gdp_per_capita":"10550","population":"104258327.0","Pays":"Égypte","total_vaccinations":"11487985","total_vaccinations_per_hundred":"11.02","people_vaccinated_per_hundred":"7.16","people_fully_vaccinated_per_hundred":"4.7","gdp_log2":"13.36498354836598"},{"iso_code":"MUS","continent":"Africa","location":"Mauritius","gdp_per_capita":"20293","population":"1273428.0","Pays":"Maurice","total_vaccinations":"1591414","total_vaccinations_per_hundred":"124.97","people_vaccinated_per_hundred":"65.03","people_fully_vaccinated_per_hundred":"59.9","gdp_log2":"14.308676411229884"},{"iso_code":"BGD","continent":"Asia","location":"Bangladesh","gdp_per_capita":"3524","population":"166303494.0","Pays":"Bangladesh","total_vaccinations":"34779989","total_vaccinations_per_hundred":"20.91","people_vaccinated_per_hundred":"12.57","people_fully_vaccinated_per_hundred":"8.3","gdp_log2":"11.78299165864429"},{"iso_code":"NPL","continent":"Asia","location":"Nepal","gdp_per_capita":"2443","population":"29674920.0","Pays":"Népal","total_vaccinations":"11032131","total_vaccinations_per_hundred":"37.18","people_vaccinated_per_hundred":"19.66","people_fully_vaccinated_per_hundred":"17.5","gdp_log2":"11.254322397316884"},{"iso_code":"MMR","continent":"Asia","location":"Myanmar","gdp_per_capita":"5592","population":"54806014.0","Pays":"Myanmar","total_vaccinations":"6253687","total_vaccinations_per_hundred":"11.41","people_vaccinated_per_hundred":"8.13","people_fully_vaccinated_per_hundred":"3.3","gdp_log2":"12.449044670580614"},{"iso_code":"BOL","continent":"South America","location":"Bolivia","gdp_per_capita":"6886","population":"11832936.0","Pays":"Bolivie","total_vaccinations":"6277737","total_vaccinations_per_hundred":"53.05","people_vaccinated_per_hundred":"34.88","people_fully_vaccinated_per_hundred":"25.1","gdp_log2":"12.74941463868708"},{"iso_code":"MAR","continent":"Africa","location":"Morocco","gdp_per_capita":"7485","population":"37344787.0","Pays":"Maroc","total_vaccinations":"36271200","total_vaccinations_per_hundred":"97.13","people_vaccinated_per_hundred":"53.25","people_fully_vaccinated_per_hundred":"43.9","gdp_log2":"12.869789106626373"},{"iso_code":"LKA","continent":"Asia","location":"Sri Lanka","gdp_per_capita":"11669","population":"21497306.0","Pays":"Sri Lanka","total_vaccinations":"24077046","total_vaccinations_per_hundred":"112.0","people_vaccinated_per_hundred":"62.79","people_fully_vaccinated_per_hundred":"49.2","gdp_log2":"13.510402830895904"},{"iso_code":"DZA","continent":"Africa","location":"Algeria","gdp_per_capita":"13914","population":"44616626.0","Pays":"Algérie","total_vaccinations":"9989662","total_vaccinations_per_hundred":"22.39","people_vaccinated_per_hundred":"13.03","people_fully_vaccinated_per_hundred":"9.4","gdp_log2":"13.764232911731582"},{"iso_code":"KAZ","continent":"Asia","location":"Kazakhstan","gdp_per_capita":"24056","population":"18994958.0","Pays":"Kazakhstan","total_vaccinations":"12994074","total_vaccinations_per_hundred":"68.41","people_vaccinated_per_hundred":"37.32","people_fully_vaccinated_per_hundred":"31.1","gdp_log2":"14.55408444375097"},{"iso_code":"PAK","continent":"Asia","location":"Pakistan","gdp_per_capita":"5035","population":"225199929.0","Pays":"Pakistan","total_vaccinations":"68227337","total_vaccinations_per_hundred":"30.3","people_vaccinated_per_hundred":"22.82","people_fully_vaccinated_per_hundred":"9.8","gdp_log2":"12.297692392751566"},{"iso_code":"MDV","continent":"Asia","location":"Maldives","gdp_per_capita":"15184","population":"543620.0","Pays":"Maldives","total_vaccinations":"703328","total_vaccinations_per_hundred":"129.38","people_vaccinated_per_hundred":"71.43","people_fully_vaccinated_per_hundred":"58.0","gdp_log2":"13.890227791121411"},{"iso_code":"PER","continent":"South America","location":"Peru","gdp_per_capita":"12237","population":"33359415.0","Pays":"Pérou","total_vaccinations":"20840250","total_vaccinations_per_hundred":"62.47","people_vaccinated_per_hundred":"36.09","people_fully_vaccinated_per_hundred":"26.4","gdp_log2":"13.578927630632716"},{"iso_code":"MAC","continent":"Asia","location":"Macao","gdp_per_capita":"104862","population":"658391.0","Pays":"Macao","total_vaccinations":"621410","total_vaccinations_per_hundred":"94.38","people_vaccinated_per_hundred":"50.46","people_fully_vaccinated_per_hundred":"44.2","gdp_log2":"16.678130391787004"},{"iso_code":"IRN","continent":"Asia","location":"Iran","gdp_per_capita":"19083","population":"85028760.0","Pays":"Iran","total_vaccinations":"35047143","total_vaccinations_per_hundred":"41.22","people_vaccinated_per_hundred":"26.98","people_fully_vaccinated_per_hundred":"14.2","gdp_log2":"14.219971643215311"},{"iso_code":"KHM","continent":"Asia","location":"Cambodia","gdp_per_capita":"3645","population":"16946446.0","Pays":"Cambodge","total_vaccinations":"20898628","total_vaccinations_per_hundred":"123.32","people_vaccinated_per_hundred":"67.69","people_fully_vaccinated_per_hundred":"56.8","gdp_log2":"11.831730805025868"},{"iso_code":"DMA","continent":"North America","location":"Dominica","gdp_per_capita":"9673","population":"72172.0","Pays":"Dominique","total_vaccinations":"43394","total_vaccinations_per_hundred":"60.13","people_vaccinated_per_hundred":"31.77","people_fully_vaccinated_per_hundred":"28.4","gdp_log2":"13.23980241931998"},{"iso_code":"GRD","continent":"North America","location":"Grenada","gdp_per_capita":"13594","population":"113015.0","Pays":"Grenade","total_vaccinations":"48140","total_vaccinations_per_hundred":"42.6","people_vaccinated_per_hundred":"25.23","people_fully_vaccinated_per_hundred":"17.4","gdp_log2":"13.730669353755092"},{"iso_code":"GUY","continent":"South America","location":"Guyana","gdp_per_capita":"7435","population":"790329.0","Pays":"Guyane","total_vaccinations":"502064","total_vaccinations_per_hundred":"63.53","people_vaccinated_per_hundred":"41.74","people_fully_vaccinated_per_hundred":"21.8","gdp_log2":"12.860126146839256"},{"iso_code":"BIH","continent":"Europe","location":"Bosnia and Herzegovina","gdp_per_capita":"11714","population":"3263459.0","Pays":"Bosnie-Herzégovine","total_vaccinations":"1060145","total_vaccinations_per_hundred":"32.49","people_vaccinated_per_hundred":"19.43","people_fully_vaccinated_per_hundred":"13.1","gdp_log2":"13.515933247262309"},{"iso_code":"LBN","continent":"Asia","location":"Lebanon","gdp_per_capita":"13368","population":"6769151.0","Pays":"Liban","total_vaccinations":"2628922","total_vaccinations_per_hundred":"38.84","people_vaccinated_per_hundred":"21.55","people_fully_vaccinated_per_hundred":"17.3","gdp_log2":"13.706449071430896"},{"iso_code":"RWA","continent":"Africa","location":"Rwanda","gdp_per_capita":"1854","population":"13276517.0","Pays":"Rwanda","total_vaccinations":"2822493","total_vaccinations_per_hundred":"21.26","people_vaccinated_per_hundred":"13.72","people_fully_vaccinated_per_hundred":"7.5","gdp_log2":"10.856589709495474"},{"iso_code":"AUS","continent":"Oceania","location":"Australia","gdp_per_capita":"44649","population":"25788217.0","Pays":"Australie","total_vaccinations":"22802573","total_vaccinations_per_hundred":"88.42","people_vaccinated_per_hundred":"54.64","people_fully_vaccinated_per_hundred":"33.8","gdp_log2":"15.446330872846948"},{"iso_code":"DOM","continent":"North America","location":"Dominican Republic","gdp_per_capita":"14601","population":"10953714.0","Pays":"République dominicaine","total_vaccinations":"11458752","total_vaccinations_per_hundred":"104.61","people_vaccinated_per_hundred":"53.98","people_fully_vaccinated_per_hundred":"43.4","gdp_log2":"13.833765825627683"},{"iso_code":"TTO","continent":"North America","location":"Trinidad and Tobago","gdp_per_capita":"28763","population":"1403374.0","Pays":"Trinité-et-Tobago","total_vaccinations":"989288","total_vaccinations_per_hundred":"70.49","people_vaccinated_per_hundred":"38.89","people_fully_vaccinated_per_hundred":"31.6","gdp_log2":"14.811930098440069"},{"iso_code":"BRB","continent":"North America","location":"Barbados","gdp_per_capita":"16978","population":"287708.0","Pays":"Barbade","total_vaccinations":"217255","total_vaccinations_per_hundred":"75.51","people_vaccinated_per_hundred":"42.01","people_fully_vaccinated_per_hundred":"33.5","gdp_log2":"14.05138467793386"},{"iso_code":"ZAF","continent":"Africa","location":"South Africa","gdp_per_capita":"12295","population":"60041996.0","Pays":"Afrique du Sud","total_vaccinations":"14922954","total_vaccinations_per_hundred":"24.85","people_vaccinated_per_hundred":"18.09","people_fully_vaccinated_per_hundred":"12.2","gdp_log2":"13.585769564252685"},{"iso_code":"LCA","continent":"North America","location":"Saint Lucia","gdp_per_capita":"12952","population":"184401.0","Pays":"Sainte-Lucie","total_vaccinations":"64523","total_vaccinations_per_hundred":"34.99","people_vaccinated_per_hundred":"19.93","people_fully_vaccinated_per_hundred":"15.1","gdp_log2":"13.66086933675213"},{"iso_code":"MKD","continent":"Europe","location":"North Macedonia","gdp_per_capita":"13111","population":"2082661.0","Pays":"Macédoine","total_vaccinations":"1381901","total_vaccinations_per_hundred":"66.35","people_vaccinated_per_hundred":"36.43","people_fully_vaccinated_per_hundred":"29.9","gdp_log2":"13.678513654025396"},{"iso_code":"ATG","continent":"North America","location":"Antigua and Barbuda","gdp_per_capita":"21491","population":"98728.0","Pays":"Antigua-et-Barbuda","total_vaccinations":"79390","total_vaccinations_per_hundred":"80.41","people_vaccinated_per_hundred":"44.24","people_fully_vaccinated_per_hundred":"36.2","gdp_log2":"14.39144116764671"},{"iso_code":"VEN","continent":"South America","location":"Venezuela","gdp_per_capita":"16745","population":"28704947.0","Pays":"Venezuela","total_vaccinations":"11094206","total_vaccinations_per_hundred":"38.65","people_vaccinated_per_hundred":"23.77","people_fully_vaccinated_per_hundred":"14.9","gdp_log2":"14.031444651041678"},{"iso_code":"COL","continent":"South America","location":"Colombia","gdp_per_capita":"13255","population":"51265841.0","Pays":"Colombie","total_vaccinations":"37346540","total_vaccinations_per_hundred":"72.85","people_vaccinated_per_hundred":"47.66","people_fully_vaccinated_per_hundred":"30.6","gdp_log2":"13.694243498823754"},{"iso_code":"JPN","continent":"Asia","location":"Japan","gdp_per_capita":"39002","population":"126050796.0","Pays":"Japon","total_vaccinations":"145790344","total_vaccinations_per_hundred":"115.66","people_vaccinated_per_hundred":"63.92","people_fully_vaccinated_per_hundred":"51.7","gdp_log2":"15.251268734798098"},{"iso_code":"SLV","continent":"North America","location":"El Salvador","gdp_per_capita":"7292","population":"6518500.0","Pays":"Salvador","total_vaccinations":"6954648","total_vaccinations_per_hundred":"106.69","people_vaccinated_per_hundred":"59.02","people_fully_vaccinated_per_hundred":"47.7","gdp_log2":"12.832189456787772"},{"iso_code":"ZWE","continent":"Africa","location":"Zimbabwe","gdp_per_capita":"1900","population":"15092171.0","Pays":"Zimbabwe","total_vaccinations":"4752356","total_vaccinations_per_hundred":"31.49","people_vaccinated_per_hundred":"18.93","people_fully_vaccinated_per_hundred":"12.6","gdp_log2":"10.891612847636294"},{"iso_code":"NZL","continent":"Oceania","location":"New Zealand","gdp_per_capita":"36086","population":"4860642.0","Pays":"Nouvelle-Zélande","total_vaccinations":"4380953","total_vaccinations_per_hundred":"90.13","people_vaccinated_per_hundred":"59.61","people_fully_vaccinated_per_hundred":"30.5","gdp_log2":"15.139145337450492"},{"iso_code":"MNE","continent":"Europe","location":"Montenegro","gdp_per_capita":"16409","population":"628051.0","Pays":"Monténégro","total_vaccinations":"418150","total_vaccinations_per_hundred":"66.58","people_vaccinated_per_hundred":"35.27","people_fully_vaccinated_per_hundred":"31.3","gdp_log2":"14.002225021133928"},{"iso_code":"KNA","continent":"North America","location":"Saint Kitts and Nevis","gdp_per_capita":"24654","population":"53546.0","Pays":"Saint-Kitts-et-Nevis","total_vaccinations":"46716","total_vaccinations_per_hundred":"87.24","people_vaccinated_per_hundred":"46.32","people_fully_vaccinated_per_hundred":"40.9","gdp_log2":"14.589556645022174"},{"iso_code":"MNG","continent":"Asia","location":"Mongolia","gdp_per_capita":"11841","population":"3329282.0","Pays":"Mongolie","total_vaccinations":"4362413","total_vaccinations_per_hundred":"131.03","people_vaccinated_per_hundred":"67.49","people_fully_vaccinated_per_hundred":"63.5","gdp_log2":"13.531484541293503"},{"iso_code":"AFG","continent":"Asia","location":"Afghanistan","gdp_per_capita":"1804","population":"39835428.0","Pays":"Afghanistan","total_vaccinations":"1979652","total_vaccinations_per_hundred":"4.97","people_vaccinated_per_hundred":"1.94","people_fully_vaccinated_per_hundred":"0.0","gdp_log2":"10.816973226856762"},{"iso_code":"SUR","continent":"South America","location":"Suriname","gdp_per_capita":"13767","population":"591798.0","Pays":"Suriname","total_vaccinations":"368566","total_vaccinations_per_hundred":"62.28","people_vaccinated_per_hundred":"36.01","people_fully_vaccinated_per_hundred":"26.3","gdp_log2":"13.748939062531328"},{"iso_code":"SEN","continent":"Africa","location":"Senegal","gdp_per_capita":"2471","population":"17196308.0","Pays":"Sénégal","total_vaccinations":"1744098","total_vaccinations_per_hundred":"10.14","people_vaccinated_per_hundred":"6.86","people_fully_vaccinated_per_hundred":"3.3","gdp_log2":"11.270634057199024"},{"iso_code":"HKG","continent":"Asia","location":"Hong Kong","gdp_per_capita":"56055","population":"7552800.0","Pays":"Hong Kong","total_vaccinations":"8188087","total_vaccinations_per_hundred":"108.41","people_vaccinated_per_hundred":"57.61","people_fully_vaccinated_per_hundred":"50.8","gdp_log2":"15.774553385017082"},{"iso_code":"PRY","continent":"South America","location":"Paraguay","gdp_per_capita":"8827","population":"7219641.0","Pays":"Paraguay","total_vaccinations":"4271051","total_vaccinations_per_hundred":"59.16","people_vaccinated_per_hundred":"33.78","people_fully_vaccinated_per_hundred":"25.4","gdp_log2":"13.107709116796409"},{"iso_code":"MYS","continent":"Asia","location":"Malaysia","gdp_per_capita":"26808","population":"32776195.0","Pays":"Malaisie","total_vaccinations":"38990335","total_vaccinations_per_hundred":"118.96","people_vaccinated_per_hundred":"65.83","people_fully_vaccinated_per_hundred":"53.3","gdp_log2":"14.710384796975248"},{"iso_code":"UKR","continent":"Europe","location":"Ukraine","gdp_per_capita":"7894","population":"43466822.0","Pays":"Ukraine","total_vaccinations":"10846167","total_vaccinations_per_hundred":"24.95","people_vaccinated_per_hundred":"13.71","people_fully_vaccinated_per_hundred":"11.2","gdp_log2":"12.94661262616801"},{"iso_code":"GTM","continent":"North America","location":"Guatemala","gdp_per_capita":"7424","population":"18249868.0","Pays":"Guatemala","total_vaccinations":"5589348","total_vaccinations_per_hundred":"30.63","people_vaccinated_per_hundred":"20.85","people_fully_vaccinated_per_hundred":"9.8","gdp_log2":"12.857943683566448"},{"iso_code":"KOR","continent":"Asia","location":"South Korea","gdp_per_capita":"35938","population":"51305184.0","Pays":"Corée du Sud","total_vaccinations":"53120777","total_vaccinations_per_hundred":"103.54","people_vaccinated_per_hundred":"66.23","people_fully_vaccinated_per_hundred":"39.9","gdp_log2":"15.133237516410576"},{"iso_code":"SMR","continent":"Europe","location":"San Marino","gdp_per_capita":"56861","population":"34010.0","Pays":"Saint-Marin","total_vaccinations":"46573","total_vaccinations_per_hundred":"136.94","people_vaccinated_per_hundred":"70.54","people_fully_vaccinated_per_hundred":"70.5","gdp_log2":"15.795163776037567"},{"iso_code":"THA","continent":"Asia","location":"Thailand","gdp_per_capita":"16278","population":"69950844.0","Pays":"Thaïlande","total_vaccinations":"40276356","total_vaccinations_per_hundred":"57.58","people_vaccinated_per_hundred":"39.03","people_fully_vaccinated_per_hundred":"17.7","gdp_log2":"13.990606673925424"},{"iso_code":"URY","continent":"South America","location":"Uruguay","gdp_per_capita":"20551","population":"3485152.0","Pays":"Uruguay","total_vaccinations":"5941362","total_vaccinations_per_hundred":"170.48","people_vaccinated_per_hundred":"77.77","people_fully_vaccinated_per_hundred":"73.1","gdp_log2":"14.32694968769623"},{"iso_code":"HND","continent":"North America","location":"Honduras","gdp_per_capita":"4542","population":"10062994.0","Pays":"Honduras","total_vaccinations":"4637151","total_vaccinations_per_hundred":"46.08","people_vaccinated_per_hundred":"29.29","people_fully_vaccinated_per_hundred":"16.8","gdp_log2":"12.149046874203613"},{"iso_code":"BLZ","continent":"North America","location":"Belize","gdp_per_capita":"7824","population":"404915.0","Pays":"Belize","total_vaccinations":"255857","total_vaccinations_per_hundred":"63.19","people_vaccinated_per_hundred":"43.21","people_fully_vaccinated_per_hundred":"20.0","gdp_log2":"12.933757403868816"},{"iso_code":"PHL","continent":"Asia","location":"Philippines","gdp_per_capita":"7599","population":"111046910.0","Pays":"Philippines","total_vaccinations":"27806881","total_vaccinations_per_hundred":"25.04","people_vaccinated_per_hundred":"16.84","people_fully_vaccinated_per_hundred":"11.3","gdp_log2":"12.89162955440795"},{"iso_code":"AGO","continent":"Africa","location":"Angola","gdp_per_capita":"5819","population":"33933611.0","Pays":"Angola","total_vaccinations":"2469333","total_vaccinations_per_hundred":"7.28","people_vaccinated_per_hundred":"4.45","people_fully_vaccinated_per_hundred":"2.8","gdp_log2":"12.506678250062656"},{"iso_code":"GHA","continent":"Africa","location":"Ghana","gdp_per_capita":"4228","population":"31732128.0","Pays":"Ghana","total_vaccinations":"1271393","total_vaccinations_per_hundred":"4.01","people_vaccinated_per_hundred":"2.73","people_fully_vaccinated_per_hundred":"1.3","gdp_log2":"12.045633402980773"},{"iso_code":"IRQ","continent":"Asia","location":"Iraq","gdp_per_capita":"15664","population":"41179351.0","Pays":"Irak","total_vaccinations":"5739867","total_vaccinations_per_hundred":"13.94","people_vaccinated_per_hundred":"8.95","people_fully_vaccinated_per_hundred":"5.0","gdp_log2":"13.935163760166796"},{"iso_code":"CIV","continent":"Africa","location":"Cote d'Ivoire","gdp_per_capita":"3601","population":"27053629.0","Pays":"Côte d’Ivoire","total_vaccinations":"1467277","total_vaccinations_per_hundred":"5.42","people_vaccinated_per_hundred":"4.41","people_fully_vaccinated_per_hundred":"1.0","gdp_log2":"11.814184288012283"},{"iso_code":"NIC","continent":"North America","location":"Nicaragua","gdp_per_capita":"5321","population":"6702379.0","Pays":"Nicaragua","total_vaccinations":"735252","total_vaccinations_per_hundred":"10.97","people_vaccinated_per_hundred":"7.11","people_fully_vaccinated_per_hundred":"3.9","gdp_log2":"12.377602065907949"},{"iso_code":"NGA","continent":"Africa","location":"Nigeria","gdp_per_capita":"5338","population":"211400704.0","Pays":"Nigeria","total_vaccinations":"5712019","total_vaccinations_per_hundred":"2.7","people_vaccinated_per_hundred":"1.9","people_fully_vaccinated_per_hundred":"0.8","gdp_log2":"12.382206286975382"},{"iso_code":"KEN","continent":"Africa","location":"Kenya","gdp_per_capita":"2993","population":"54985702.0","Pays":"Kenya","total_vaccinations":"3090932","total_vaccinations_per_hundred":"5.62","people_vaccinated_per_hundred":"4.12","people_fully_vaccinated_per_hundred":"1.5","gdp_log2":"11.547390060080858"},{"iso_code":"MDA","continent":"Europe","location":"Moldova","gdp_per_capita":"5190","population":"4024025.0","Pays":"Moldavie","total_vaccinations":"1145800","total_vaccinations_per_hundred":"28.47","people_vaccinated_per_hundred":"14.24","people_fully_vaccinated_per_hundred":"14.2","gdp_log2":"12.341511039898402"},{"iso_code":"MOZ","continent":"Africa","location":"Mozambique","gdp_per_capita":"1136","population":"32163045.0","Pays":"Mozambique","total_vaccinations":"2405890","total_vaccinations_per_hundred":"7.48","people_vaccinated_per_hundred":"5.11","people_fully_vaccinated_per_hundred":"2.4","gdp_log2":"10.149877921311916"},{"iso_code":"VNM","continent":"Asia","location":"Vietnam","gdp_per_capita":"6172","population":"98168829.0","Pays":"Viêt Nam","total_vaccinations":"29280307","total_vaccinations_per_hundred":"29.83","people_vaccinated_per_hundred":"24.4","people_fully_vaccinated_per_hundred":"5.4","gdp_log2":"12.591495231503105"},{"iso_code":"GMB","continent":"Africa","location":"Gambia","gdp_per_capita":"1562","population":"2486937.0","Pays":"Gambie","total_vaccinations":"201835","total_vaccinations_per_hundred":"8.12","people_vaccinated_per_hundred":"7.23","people_fully_vaccinated_per_hundred":"6.7","gdp_log2":"10.608963518540037"},{"iso_code":"TGO","continent":"Africa","location":"Togo","gdp_per_capita":"1430","population":"8478242.0","Pays":"Togo","total_vaccinations":"651941","total_vaccinations_per_hundred":"7.69","people_vaccinated_per_hundred":"4.89","people_fully_vaccinated_per_hundred":"2.8","gdp_log2":"10.481610759208476"},{"iso_code":"UGA","continent":"Africa","location":"Uganda","gdp_per_capita":"1698","population":"47123533.0","Pays":"Ouganda","total_vaccinations":"1436264","total_vaccinations_per_hundred":"3.05","people_vaccinated_per_hundred":"2.19","people_fully_vaccinated_per_hundred":"0.8","gdp_log2":"10.729371776461338"},{"iso_code":"LSO","continent":"Africa","location":"Lesotho","gdp_per_capita":"2851","population":"2159067.0","Pays":"Lesotho","total_vaccinations":"103778","total_vaccinations_per_hundred":"4.81","people_vaccinated_per_hundred":"3.32","people_fully_vaccinated_per_hundred":"1.5","gdp_log2":"11.47732974463898"},{"iso_code":"JAM","continent":"North America","location":"Jamaica","gdp_per_capita":"8194","population":"2973462.0","Pays":"Jamaïque","total_vaccinations":"647687","total_vaccinations_per_hundred":"21.78","people_vaccinated_per_hundred":"16.34","people_fully_vaccinated_per_hundred":"5.9","gdp_log2":"13.000276642653"},{"iso_code":"SDN","continent":"Africa","location":"Sudan","gdp_per_capita":"4467","population":"44909351.0","Pays":"Soudan","total_vaccinations":"1255213","total_vaccinations_per_hundred":"2.79","people_vaccinated_per_hundred":"1.44","people_fully_vaccinated_per_hundred":"0.8","gdp_log2":"12.124931307625063"},{"iso_code":"TUN","continent":"Africa","location":"Tunisia","gdp_per_capita":"10849","population":"11935764.0","Pays":"Tunisie","total_vaccinations":"6823657","total_vaccinations_per_hundred":"57.17","people_vaccinated_per_hundred":"38.0","people_fully_vaccinated_per_hundred":"25.1","gdp_log2":"13.405313943189528"},{"iso_code":"BHS","continent":"North America","location":"Bahamas","gdp_per_capita":"27718","population":"396914.0","Pays":"Bahamas","total_vaccinations":"161613","total_vaccinations_per_hundred":"40.72","people_vaccinated_per_hundred":"26.64","people_fully_vaccinated_per_hundred":"14.9","gdp_log2":"14.758527579194316"},{"iso_code":"GEO","continent":"Asia","location":"Georgia","gdp_per_capita":"9745","population":"3979773.0","Pays":"Géorgie","total_vaccinations":"1507986","total_vaccinations_per_hundred":"37.89","people_vaccinated_per_hundred":"22.68","people_fully_vaccinated_per_hundred":"15.2","gdp_log2":"13.250458165624602"},{"iso_code":"SLE","continent":"Africa","location":"Sierra Leone","gdp_per_capita":"1390","population":"8141343.0","Pays":"Sierra Leone","total_vaccinations":"221110","total_vaccinations_per_hundred":"2.72","people_vaccinated_per_hundred":"2.22","people_fully_vaccinated_per_hundred":"0.5","gdp_log2":"10.441180507044706"},{"iso_code":"STP","continent":"Africa","location":"Sao Tome and Principe","gdp_per_capita":"3053","population":"223364.0","Pays":"Sao Tomé-et-Principe","total_vaccinations":"57154","total_vaccinations_per_hundred":"25.59","people_vaccinated_per_hundred":"20.19","people_fully_vaccinated_per_hundred":"5.4","gdp_log2":"11.575876718586326"},{"iso_code":"GNQ","continent":"Africa","location":"Equatorial Guinea","gdp_per_capita":"22605","population":"1449891.0","Pays":"Guinée équatoriale","total_vaccinations":"366836","total_vaccinations_per_hundred":"25.3","people_vaccinated_per_hundred":"14.33","people_fully_vaccinated_per_hundred":"11.0","gdp_log2":"14.464346191796704"},{"iso_code":"MWI","continent":"Africa","location":"Malawi","gdp_per_capita":"1095","population":"19647681.0","Pays":"Malawi","total_vaccinations":"946765","total_vaccinations_per_hundred":"4.82","people_vaccinated_per_hundred":"3.65","people_fully_vaccinated_per_hundred":"2.3","gdp_log2":"10.096770489675464"},{"iso_code":"FJI","continent":"Oceania","location":"Fiji","gdp_per_capita":"8703","population":"902899.0","Pays":"Fidji","total_vaccinations":"866153","total_vaccinations_per_hundred":"95.93","people_vaccinated_per_hundred":"62.71","people_fully_vaccinated_per_hundred":"33.2","gdp_log2":"13.087292936666849"},{"iso_code":"VCT","continent":"North America","location":"Saint Vincent and the Grenadines","gdp_per_capita":"10727","population":"111269.0","Pays":"Saint-Vincent-et-les Grenadines","total_vaccinations":"32126","total_vaccinations_per_hundred":"28.87","people_vaccinated_per_hundred":"17.54","people_fully_vaccinated_per_hundred":"11.4","gdp_log2":"13.38897867192251"},{"iso_code":"LAO","continent":"Asia","location":"Laos","gdp_per_capita":"6397","population":"7379358.0","Pays":"Laos","total_vaccinations":"4402770","total_vaccinations_per_hundred":"59.66","people_vaccinated_per_hundred":"34.7","people_fully_vaccinated_per_hundred":"25.0","gdp_log2":"12.643260955294805"},{"iso_code":"CPV","continent":"Africa","location":"Cape Verde","gdp_per_capita":"6223","population":"561901.0","Pays":"Cap-Vert","total_vaccinations":"368789","total_vaccinations_per_hundred":"65.63","people_vaccinated_per_hundred":"48.5","people_fully_vaccinated_per_hundred":"16.9","gdp_log2":"12.603291129787108"},{"iso_code":"NAM","continent":"Africa","location":"Namibia","gdp_per_capita":"9542","population":"2587344.0","Pays":"Namibie","total_vaccinations":"352962","total_vaccinations_per_hundred":"13.64","people_vaccinated_per_hundred":"8.62","people_fully_vaccinated_per_hundred":"5.0","gdp_log2":"13.220046941406157"},{"iso_code":"GAB","continent":"Africa","location":"Gabon","gdp_per_capita":"16562","population":"2278829.0","Pays":"Gabon","total_vaccinations":"146464","total_vaccinations_per_hundred":"6.43","people_vaccinated_per_hundred":"3.7","people_fully_vaccinated_per_hundred":"2.7","gdp_log2":"14.015625255860682"},{"iso_code":"SLB","continent":"Oceania","location":"Solomon Islands","gdp_per_capita":"2206","population":"703995.0","Pays":"Îles Salomon","total_vaccinations":"89038","total_vaccinations_per_hundred":"12.65","people_vaccinated_per_hundred":"9.6","people_fully_vaccinated_per_hundred":"3.0","gdp_log2":"11.107166717723324"},{"iso_code":"BWA","continent":"Africa","location":"Botswana","gdp_per_capita":"15807","population":"2397240.0","Pays":"Botswana","total_vaccinations":"573691","total_vaccinations_per_hundred":"23.93","people_vaccinated_per_hundred":"14.82","people_fully_vaccinated_per_hundred":"9.1","gdp_log2":"13.948310099437784"},{"iso_code":"BTN","continent":"Asia","location":"Bhutan","gdp_per_capita":"8709","population":"779900.0","Pays":"Bhoutan","total_vaccinations":"1045228","total_vaccinations_per_hundred":"134.02","people_vaccinated_per_hundred":"72.72","people_fully_vaccinated_per_hundred":"61.3","gdp_log2":"13.088224596576906"},{"iso_code":"MRT","continent":"Africa","location":"Mauritania","gdp_per_capita":"3598","population":"4775110.0","Pays":"Mauritanie","total_vaccinations":"306666","total_vaccinations_per_hundred":"6.42","people_vaccinated_per_hundred":"5.97","people_fully_vaccinated_per_hundred":"0.4","gdp_log2":"11.812832307247852"},{"iso_code":"KGZ","continent":"Asia","location":"Kyrgyzstan","gdp_per_capita":"3393","population":"6628347.0","Pays":"Kirghizistan","total_vaccinations":"1277536","total_vaccinations_per_hundred":"19.27","people_vaccinated_per_hundred":"11.21","people_fully_vaccinated_per_hundred":"8.0","gdp_log2":"11.728547244238827"},{"iso_code":"NER","continent":"Africa","location":"Niger","gdp_per_capita":"926","population":"25130810.0","Pays":"Niger","total_vaccinations":"621853","total_vaccinations_per_hundred":"2.47","people_vaccinated_per_hundred":"1.61","people_fully_vaccinated_per_hundred":"0.4","gdp_log2":"9.854868383260236"},{"iso_code":"ABW","continent":"North America","location":"Aruba","gdp_per_capita":"35974","population":"107195.0","Pays":"Aruba","total_vaccinations":"153193","total_vaccinations_per_hundred":"142.91","people_vaccinated_per_hundred":"74.95","people_fully_vaccinated_per_hundred":"68.0","gdp_log2":"15.134658180481637"},{"iso_code":"PSE","continent":"Asia","location":"Palestine","gdp_per_capita":"4450","population":"5222756.0","Pays":"Palestine","total_vaccinations":"1673806","total_vaccinations_per_hundred":"32.05","people_vaccinated_per_hundred":"22.69","people_fully_vaccinated_per_hundred":"9.4","gdp_log2":"12.119556551846586"},{"iso_code":"PNG","continent":"Oceania","location":"Papua New Guinea","gdp_per_capita":"3823","population":"9119005.0","Pays":"Papouasie-Nouvelle-Guinée","total_vaccinations":"134444","total_vaccinations_per_hundred":"1.47","people_vaccinated_per_hundred":"1.13","people_fully_vaccinated_per_hundred":"0.4","gdp_log2":"11.900562693240817"},{"iso_code":"SWZ","continent":"Africa","location":"Eswatini","gdp_per_capita":"7739","population":"1172369.0","Pays":"Eswatini","total_vaccinations":"210277","total_vaccinations_per_hundred":"17.94","people_vaccinated_per_hundred":"15.41","people_fully_vaccinated_per_hundred":"14.8","gdp_log2":"12.91792678380425"},{"iso_code":"MLI","continent":"Africa","location":"Mali","gdp_per_capita":"2014","population":"20855724.0","Pays":"Mali","total_vaccinations":"370529","total_vaccinations_per_hundred":"1.78","people_vaccinated_per_hundred":"1.36","people_fully_vaccinated_per_hundred":"0.4","gdp_log2":"10.97606714931196"},{"iso_code":"GIN","continent":"Africa","location":"Guinea","gdp_per_capita":"1999","population":"13497237.0","Pays":"Guinée","total_vaccinations":"1333682","total_vaccinations_per_hundred":"9.88","people_vaccinated_per_hundred":"6.8","people_fully_vaccinated_per_hundred":"3.1","gdp_log2":"10.965009349336368"},{"iso_code":"ARM","continent":"Asia","location":"Armenia","gdp_per_capita":"8788","population":"2968128.0","Pays":"Arménie","total_vaccinations":"335721","total_vaccinations_per_hundred":"11.31","people_vaccinated_per_hundred":"7.25","people_fully_vaccinated_per_hundred":"4.1","gdp_log2":"13.10125020285328"},{"iso_code":"UZB","continent":"Asia","location":"Uzbekistan","gdp_per_capita":"6253","population":"33935765.0","Pays":"Ouzbékistan","total_vaccinations":"15978140","total_vaccinations_per_hundred":"47.08","people_vaccinated_per_hundred":"28.84","people_fully_vaccinated_per_hundred":"8.5","gdp_log2":"12.61035679663951"},{"iso_code":"BRN","continent":"Asia","location":"Brunei","gdp_per_capita":"71809","population":"441532.0","Pays":"Brunei Darussalam","total_vaccinations":"378598","total_vaccinations_per_hundred":"85.75","people_vaccinated_per_hundred":"53.54","people_fully_vaccinated_per_hundred":"32.2","gdp_log2":"16.131882094239796"},{"iso_code":"TKM","continent":"Asia","location":"Turkmenistan","gdp_per_capita":"16389","population":"6117933.0","Pays":"Turkménistan","total_vaccinations":"41993","total_vaccinations_per_hundred":"0.69","people_vaccinated_per_hundred":"0.53","people_fully_vaccinated_per_hundred":"0.2","gdp_log2":"14.000442233067552"},{"iso_code":"SSD","continent":"Africa","location":"South Sudan","gdp_per_capita":"1570","population":"11381377.0","Pays":"Sud-Soudan","total_vaccinations":"67109","total_vaccinations_per_hundred":"0.59","people_vaccinated_per_hundred":"0.48","people_fully_vaccinated_per_hundred":"0.1","gdp_log2":"10.616445921735496"},{"iso_code":"NRU","continent":"Oceania","location":"Nauru","gdp_per_capita":"12896","population":"10873.0","Pays":"Nauru","total_vaccinations":"14863","total_vaccinations_per_hundred":"136.7","people_vaccinated_per_hundred":"70.01","people_fully_vaccinated_per_hundred":"66.7","gdp_log2":"13.654595194847593"},{"iso_code":"ETH","continent":"Africa","location":"Ethiopia","gdp_per_capita":"1730","population":"117876226.0","Pays":"Éthiopie","total_vaccinations":"2826786","total_vaccinations_per_hundred":"2.4","people_vaccinated_per_hundred":"1.98","people_fully_vaccinated_per_hundred":"0.4","gdp_log2":"10.7564954445125"},{"iso_code":"CMR","continent":"Africa","location":"Cameroon","gdp_per_capita":"3365","population":"27224262.0","Pays":"Cameroun","total_vaccinations":"444521","total_vaccinations_per_hundred":"1.63","people_vaccinated_per_hundred":"1.34","people_fully_vaccinated_per_hundred":"0.3","gdp_log2":"11.716359062719992"},{"iso_code":"ZMB","continent":"Africa","location":"Zambia","gdp_per_capita":"3689","population":"18920657.0","Pays":"Zambie","total_vaccinations":"649919","total_vaccinations_per_hundred":"3.43","people_vaccinated_per_hundred":"1.87","people_fully_vaccinated_per_hundred":"1.6","gdp_log2":"11.84911223149818"},{"iso_code":"TLS","continent":"Asia","location":"Timor","gdp_per_capita":"6570","population":"1343875.0","Pays":"Timor-Leste","total_vaccinations":"615462","total_vaccinations_per_hundred":"45.8","people_vaccinated_per_hundred":"29.71","people_fully_vaccinated_per_hundred":"16.1","gdp_log2":"12.681700053041029"},{"iso_code":"COG","continent":"Africa","location":"Congo","gdp_per_capita":"4881","population":"5657017.0","Pays":"République du Congo","total_vaccinations":"309575","total_vaccinations_per_hundred":"5.47","people_vaccinated_per_hundred":"3.52","people_fully_vaccinated_per_hundred":"2.0","gdp_log2":"12.253081034309554"},{"iso_code":"LBY","continent":"Africa","location":"Libya","gdp_per_capita":"17882","population":"6958538.0","Pays":"Libye","total_vaccinations":"1322307","total_vaccinations_per_hundred":"19.0","people_vaccinated_per_hundred":"17.27","people_fully_vaccinated_per_hundred":"1.7","gdp_log2":"14.12618086858498"},{"iso_code":"DJI","continent":"Africa","location":"Djibouti","gdp_per_capita":"2705","population":"1002197.0","Pays":"Djibouti","total_vaccinations":"64721","total_vaccinations_per_hundred":"6.46","people_vaccinated_per_hundred":"3.85","people_fully_vaccinated_per_hundred":"2.6","gdp_log2":"11.401629400057567"},{"iso_code":"COD","continent":"Africa","location":"Democratic Republic of Congo","gdp_per_capita":"808","population":"92377986.0","Pays":"République démocratique du Congo","total_vaccinations":"120062","total_vaccinations_per_hundred":"0.13","people_vaccinated_per_hundred":"0.09","people_fully_vaccinated_per_hundred":"0.0","gdp_log2":"9.658448936526788"},{"iso_code":"TON","continent":"Oceania","location":"Tonga","gdp_per_capita":"5426","population":"106759.0","Pays":"Tonga","total_vaccinations":"68404","total_vaccinations_per_hundred":"64.07","people_vaccinated_per_hundred":"38.53","people_fully_vaccinated_per_hundred":"25.6","gdp_log2":"12.40557255813564"},{"iso_code":"COM","continent":"Africa","location":"Comoros","gdp_per_capita":"1414","population":"888456.0","Pays":"Comores","total_vaccinations":"334369","total_vaccinations_per_hundred":"37.63","people_vaccinated_per_hundred":"19.67","people_fully_vaccinated_per_hundred":"18.0","gdp_log2":"10.46545416815622"},{"iso_code":"TUV","continent":"Oceania","location":"Tuvalu","gdp_per_capita":"3575","population":"11925.0","Pays":"Tuvalu","total_vaccinations":"10692","total_vaccinations_per_hundred":"89.66","people_vaccinated_per_hundred":"51.71","people_fully_vaccinated_per_hundred":"38.0","gdp_log2":"11.803769495252943"},{"iso_code":"WSM","continent":"Oceania","location":"Samoa","gdp_per_capita":"6022","population":"200144.0","Pays":"Samoa","total_vaccinations":"137958","total_vaccinations_per_hundred":"68.93","people_vaccinated_per_hundred":"47.19","people_fully_vaccinated_per_hundred":"21.7","gdp_log2":"12.555920858979738"},{"iso_code":"TJK","continent":"Asia","location":"Tajikistan","gdp_per_capita":"2897","population":"9749625.0","Pays":"Tadjikistan","total_vaccinations":"3174535","total_vaccinations_per_hundred":"32.56","people_vaccinated_per_hundred":"21.51","people_fully_vaccinated_per_hundred":"11.0","gdp_log2":"11.500300642948948"},{"iso_code":"SXM","continent":"North America","location":"Sint Maarten (Dutch part)","gdp_per_capita":"36327","population":"43421.0","Pays":"Saint-Martin (partie néerlandaise)","total_vaccinations":"48882","total_vaccinations_per_hundred":"112.58","people_vaccinated_per_hundred":"58.76","people_fully_vaccinated_per_hundred":"53.8","gdp_log2":"15.148763821493056"},{"iso_code":"YEM","continent":"Asia","location":"Yemen","gdp_per_capita":"1479","population":"30490639.0","Pays":"Yémen","total_vaccinations":"322934","total_vaccinations_per_hundred":"1.06","people_vaccinated_per_hundred":"1.01","people_fully_vaccinated_per_hundred":"0.0","gdp_log2":"10.530549721569944"},{"iso_code":"BEN","continent":"Africa","location":"Benin","gdp_per_capita":"2064","population":"12451031.0","Pays":"Bénin","total_vaccinations":"174074","total_vaccinations_per_hundred":"1.4","people_vaccinated_per_hundred":"1.23","people_fully_vaccinated_per_hundred":"0.2","gdp_log2":"11.01139220530985"},{"iso_code":"MDG","continent":"Africa","location":"Madagascar","gdp_per_capita":"1416","population":"28427333.0","Pays":"Madagascar","total_vaccinations":"283091","total_vaccinations_per_hundred":"1.0","people_vaccinated_per_hundred":"0.74","people_fully_vaccinated_per_hundred":"0.3","gdp_log2":"10.468053775516262"},{"iso_code":"GNB","continent":"Africa","location":"Guinea-Bissau","gdp_per_capita":"1549","population":"2015490.0","Pays":"Guinée-Bissau","total_vaccinations":"31090","total_vaccinations_per_hundred":"1.54","people_vaccinated_per_hundred":"1.39","people_fully_vaccinated_per_hundred":"0.2","gdp_log2":"10.596818701169656"},{"iso_code":"LBR","continent":"Africa","location":"Liberia","gdp_per_capita":"753","population":"5180208.0","Pays":"Libéria","total_vaccinations":"113680","total_vaccinations_per_hundred":"2.19","people_vaccinated_per_hundred":"2.02","people_fully_vaccinated_per_hundred":"0.5","gdp_log2":"9.556099820393678"},{"iso_code":"CAF","continent":"Africa","location":"Central African Republic","gdp_per_capita":"661","population":"4919987.0","Pays":"République centrafricaine","total_vaccinations":"112492","total_vaccinations_per_hundred":"2.29","people_vaccinated_per_hundred":"2.09","people_fully_vaccinated_per_hundred":"0.2","gdp_log2":"9.369030189142034"},{"iso_code":"KIR","continent":"Oceania","location":"Kiribati","gdp_per_capita":"1981","population":"121388.0","Pays":"Kiribati","total_vaccinations":"29158","total_vaccinations_per_hundred":"24.02","people_vaccinated_per_hundred":"18.8","people_fully_vaccinated_per_hundred":"5.2","gdp_log2":"10.9521092928052"},{"iso_code":"VUT","continent":"Oceania","location":"Vanuatu","gdp_per_capita":"2922","population":"314464.0","Pays":"Vanuatu","total_vaccinations":"50606","total_vaccinations_per_hundred":"16.09","people_vaccinated_per_hundred":"12.51","people_fully_vaccinated_per_hundred":"3.6","gdp_log2":"11.512695532176163"},{"iso_code":"BFA","continent":"Africa","location":"Burkina Faso","gdp_per_capita":"1703","population":"21497097.0","Pays":"Burkina Faso","total_vaccinations":"166160","total_vaccinations_per_hundred":"0.77","people_vaccinated_per_hundred":"0.77","people_fully_vaccinated_per_hundred":"0.5","gdp_log2":"10.733949126306538"},{"iso_code":"TCD","continent":"Africa","location":"Chad","gdp_per_capita":"1768","population":"16914985.0","Pays":"Tchad","total_vaccinations":"98302","total_vaccinations_per_hundred":"0.58","people_vaccinated_per_hundred":"0.47","people_fully_vaccinated_per_hundred":"0.1","gdp_log2":"10.788027402598948"},{"iso_code":"HTI","continent":"North America","location":"Haiti","gdp_per_capita":"1653","population":"11541683.0","Pays":"Haïti","total_vaccinations":"50624","total_vaccinations_per_hundred":"0.44","people_vaccinated_per_hundred":"0.32","people_fully_vaccinated_per_hundred":"0.1","gdp_log2":"10.691021991253816"},{"iso_code":"TZA","continent":"Africa","location":"Tanzania","gdp_per_capita":"2683","population":"61498438.0","Pays":"Tanzanie","total_vaccinations":"350000","total_vaccinations_per_hundred":"0.57","people_vaccinated_per_hundred":"0.57","people_fully_vaccinated_per_hundred":"0.6","gdp_log2":"11.38979479600576"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":550,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":8,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":51,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":16.83535468680958,"manual_left_value":9,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":81.1,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"value":true,"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":"topLeft","activated":1,"category":"legend"},"padding_left_legend":{"value":-19,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},"padding_top_legend":{"value":-84,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":"vertical","activated":true,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":4,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"activated":true,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","activated":true,"category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":4,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":-13,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},"yAxisLabelText":{"value":"Pourcentage de la pulation complètement vaccinée","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelText":{"value":"PIB par tête","type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":4,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.4,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(d=>1000*Math.floor(2**d/1000));\nd3.selectAll('.axis--y .tick text').text(d=>d+'%');\nd3.selectAll('g.legendCells g.cell').filter(d=>['Asia', 'North America', 'South America'].includes(d)).style('display', 'none');\nd3.selectAll('g.legendCells g.cell').filter(d=> d == 'Africa').attr('transform', 'translate(0, 68)');\nd3.selectAll('g.legendCells g.cell text').filter(d=> d == 'Africa').text('Afrique');\nd3.selectAll('g.legendCells g.cell').filter(d=> d == 'Oceania').attr('transform', 'translate(0, 87)');\nd3.selectAll('g.legendCells g.cell text').filter(d=> d == 'Oceania').text('Reste du monde')\n"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"gdp_log2","value":"gdp_log2"},{"label":"people_fully_vaccinated_per_hundred","value":"people_fully_vaccinated_per_hundred"},{"label":"population","value":"population"},{"label":"continent","value":"continent"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[Pays]]<br>\n<strong>Taux de vaccination complète : </strong>[[people_fully_vaccinated_per_hundred]]%<br>\n<strong>PIB par tête : </strong>[[gdp_per_capita|number_separator]] $"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["gdp_log2"],"selected_yRows":["people_fully_vaccinated_per_hundred"],"selected_size":["population"],"selected_color":["continent"],"selected_label":[],"selected_tooltip":["Pays","people_fully_vaccinated_per_hundred","gdp_per_capita"],"personalizedColorsObject":{"Asia":"#666","North America":"#666","Europe":"#026db5","South America":"#666","Africa":"#cd0420","Oceania":"#666"},"selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Le taux de vaccination est fortement corrélé au niveau de vie","chartSource":"Our world in data, échelle logarithmique pour le PIB","annotations":[],"chartSubTitle":"Pourcentage de la population complètement vaccinée comparée au PIB"};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
