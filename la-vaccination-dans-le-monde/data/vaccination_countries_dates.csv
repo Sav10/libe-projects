@@ -23827,7 +23827,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-14,ISR,Asia,Israel,14584312,165.92,68.88,63.29,Israël
 2021-09-14,IRL,Europe,Ireland,7059629,141.68,75.06,71.32,Irlande
 2021-09-15,ALB,Europe,Albania,1625636,56.58,31.61,24.97,Albanie
-2021-09-15,OWID_AFR,,Africa,128619824,9.36,5.93,3.75,
+2021-09-15,OWID_AFR,,Africa,128553976,9.36,5.93,3.75,
 2021-09-15,ZAF,Africa,South Africa,15447034,25.73,18.66,12.67,Afrique du Sud
 2021-09-15,MKD,Europe,North Macedonia,1411735,67.79,36.68,31.1,Macédoine
 2021-09-15,DEU,Europe,Germany,104949545,125.09,66.26,62.1,Allemagne
@@ -23901,7 +23901,6 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-15,KHM,Asia,Cambodia,21188897,125.03,67.9,58.36,Cambodge
 2021-09-15,CAN,North America,Canada,54674772,143.62,74.83,68.79,Canada
 2021-09-15,LCA,North America,Saint Lucia,70929,38.46,22.86,15.61,Sainte-Lucie
-2021-09-15,SYC,Africa,Seychelles,209338,211.64,141.16,70.48,Seychelles
 2021-09-15,SOM,Africa,Somalia,351305,2.15,1.41,0.73,Somalie
 2021-09-15,OWID_SAM,,South America,402811430,92.76,58.1,35.9,
 2021-09-15,ARG,South America,Argentina,47543513,104.25,63.19,41.09,Argentine
@@ -23988,7 +23987,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-16,OWID_EUN,,European Union,550139976,123.02,66.04,60.85,
 2021-09-16,FRO,Europe,Faeroe Islands,73208,149.24,76.59,72.66,Îles Féroé
 2021-09-16,UKR,Europe,Ukraine,11229655,25.84,14.19,11.64,Ukraine
-2021-09-16,OWID_AFR,,Africa,128911893,9.39,5.94,3.77,
+2021-09-16,OWID_AFR,,Africa,128846045,9.38,5.94,3.77,
 2021-09-16,GEO,Asia,Georgia,1610309,40.46,23.5,16.97,Géorgie
 2021-09-16,GRC,Europe,Greece,11817112,113.95,61.07,56.91,Grèce
 2021-09-16,ZAF,Africa,South Africa,15683797,26.12,18.93,12.88,Afrique du Sud
