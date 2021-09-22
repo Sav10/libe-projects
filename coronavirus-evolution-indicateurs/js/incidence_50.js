@@ -131,7 +131,7 @@ d3.select("#" + "dot_rea_" +String(temp_d))
 
 var colorIncidence = function (x){
 
-if(x <=10){return '#efefef'}
+if(x <=50){return 'green'}
 else if(x <=50){ return '#efefef'}
 else if(x <300){ return '#efefef'}
 else if(x <400){ return '#efefef' }
