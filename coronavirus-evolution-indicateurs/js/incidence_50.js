@@ -583,7 +583,7 @@ d3.select('#display_geo_paths')
 
 queue()
   .defer(d3.csv, 'data/taux_indicateurs_couleurs_departements3.csv')
-  .defer(d3.csv, 'data/incid_hosp_from_sept.csv')
+  .defer(d3.csv, 'data/incidence_since_august.csv')
   .await(ready)
 
   function ready(error, data, data7j) {
