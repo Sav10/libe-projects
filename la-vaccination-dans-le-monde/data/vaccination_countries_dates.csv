@@ -25422,13 +25422,14 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-29,IDN,Asia,Indonesia,140235980,50.74,32.5,18.24,Indonésie
 2021-09-29,CYM,North America,Cayman Islands,106655,160.39,82.9,77.42,Iles Cayman
 2021-09-29,MNG,Asia,Mongolia,4380175,131.57,67.61,63.95,Mongolie
-2021-09-29,KHM,Asia,Cambodia,24190533,142.75,78.65,65.06,Cambodge
+2021-09-29,KHM,Asia,Cambodia,24190543,142.75,78.65,65.06,Cambodge
 2021-09-29,GRL,North America,Greenland,78271,137.64,72.59,65.05,Groenland
 2021-09-29,BGD,Asia,Bangladesh,48225447,29.0,18.94,10.06,Bangladesh
 2021-09-29,MKD,Europe,North Macedonia,1510665,72.54,37.73,34.8,Macédoine
+2021-09-29,TUN,Africa,Tunisia,8122053,68.05,42.62,32.35,Tunisie
 2021-09-29,SWE,Europe,Sweden,13730445,135.14,70.35,64.52,Suède
 2021-09-29,LKA,Asia,Sri Lanka,26171815,121.74,67.32,54.43,Sri Lanka
-2021-09-29,OWID_ASI,,Asia,4207091136,89.9,51.56,36.77,
+2021-09-29,OWID_ASI,,Asia,4207091146,89.9,51.56,36.77,
 2021-09-29,OWID_EUR,,Europe,799982307,106.99,56.63,52.22,
 2021-09-29,HRV,Europe,Croatia,3428029,83.99,44.53,41.77,Croatie
 2021-09-29,AUT,Europe,Austria,10833507,119.8,63.36,59.85,Autriche
@@ -25449,7 +25450,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-29,SVK,Europe,Slovakia,4700168,86.07,44.83,41.24,Slovaquie
 2021-09-29,BIH,Europe,Bosnia and Herzegovina,1242203,38.06,22.5,15.57,Bosnie-Herzégovine
 2021-09-29,COL,South America,Colombia,40404815,78.81,51.37,33.02,Colombie
-2021-09-29,OWID_AFR,,Africa,151872747,11.06,6.72,4.4,
+2021-09-29,OWID_AFR,,Africa,151967448,11.06,6.72,4.4,
 2021-09-29,ISR,Asia,Israel,15068315,171.43,69.5,64.08,Israël
 2021-09-29,JOR,Asia,Jordan,6976290,67.94,36.09,31.85,Jordanie
 2021-09-29,DEU,Europe,Germany,107679536,128.34,67.41,63.86,Allemagne
@@ -25478,7 +25479,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-29,BRB,North America,Barbados,239948,83.4,46.94,36.46,Barbade
 2021-09-29,ARE,Asia,United Arab Emirates,20018034,200.36,92.95,82.46,Émirats Arabes Unis
 2021-09-29,BLZ,North America,Belize,321277,79.34,47.85,31.49,Belize
-2021-09-30,OWID_AFR,,Africa,153059631,11.14,6.77,4.44,
+2021-09-30,OWID_AFR,,Africa,153154332,11.15,6.78,4.44,
 2021-09-30,SAU,Asia,Saudi Arabia,42109715,119.15,66.18,52.98,Arabie Saoudite
 2021-09-30,OWID_EUN,,European Union,567285477,126.86,67.23,62.87,
 2021-09-30,NAM,Africa,Namibia,428989,16.58,10.1,6.48,Namibie
@@ -25554,7 +25555,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-30,ARG,South America,Argentina,51711461,113.39,65.07,48.43,Argentine
 2021-09-30,ABW,North America,Aruba,156179,145.7,75.91,69.78,Aruba
 2021-09-30,VCT,North America,Saint Vincent and the Grenadines,34149,30.69,18.57,12.12,Saint-Vincent-et-les Grenadines
-2021-09-30,OWID_ASI,,Asia,4227357028,90.33,51.75,36.97,
+2021-09-30,OWID_ASI,,Asia,4227356928,90.33,51.75,36.97,
 2021-09-30,LCA,North America,Saint Lucia,78510,42.58,24.93,17.65,Sainte-Lucie
 2021-09-30,AUS,Oceania,Australia,28091630,108.93,64.78,44.15,Australie
 2021-09-30,AUT,Europe,Austria,10845962,119.94,63.44,59.92,Autriche
@@ -25577,7 +25578,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-09-30,PAK,Asia,Pakistan,82830350,36.78,26.45,12.9,Pakistan
 2021-09-30,HRV,Europe,Croatia,3436799,84.2,44.66,41.89,Croatie
 2021-09-30,URY,South America,Uruguay,6259384,179.6,78.47,73.75,Uruguay
-2021-09-30,KHM,Asia,Cambodia,24272721,143.23,78.9,65.27,Cambodge
+2021-09-30,KHM,Asia,Cambodia,24272621,143.23,78.9,65.27,Cambodge
 2021-09-30,SVK,Europe,Slovakia,4700240,86.07,44.83,41.24,Slovaquie
 2021-09-30,COG,Africa,Congo,346613,6.13,4.08,2.05,République du Congo
 2021-10-01,MWI,Africa,Malawi,1062929,5.41,4.17,2.54,Malawi
@@ -25596,7 +25597,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-10-01,RUS,Europe,Russia,90667000,62.14,33.13,29.01,Russie
 2021-10-01,KOR,Asia,South Korea,64714459,126.14,77.16,51.8,Corée du Sud
 2021-10-01,MKD,Europe,North Macedonia,1518087,72.89,37.85,35.04,Macédoine
-2021-10-01,OWID_AFR,,Africa,153239169,11.16,6.78,4.44,
+2021-10-01,OWID_AFR,,Africa,153333870,11.16,6.78,4.44,
 2021-10-01,URY,South America,Uruguay,6279780,180.19,78.5,73.8,Uruguay
 2021-10-01,KHM,Asia,Cambodia,24332508,143.58,79.08,65.41,Cambodge
 2021-10-01,CAN,North America,Canada,56340815,148.0,76.96,71.04,Canada
