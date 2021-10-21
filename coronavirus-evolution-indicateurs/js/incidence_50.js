@@ -84,8 +84,31 @@ function showTip(d){
 
 let this_code = d.id;
 
+let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);
+
+console.log(this_d)
+
+    this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
+    <span class='details'>
+    <li>Taux d'incidence : <span style="font-weight:bold">${String(Math.round(this_d.tx_incidence, 1)).replace('.',',')}%</li>
+        <li>Taux de positivité : <span style="font-weight:bold">${String(Math.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>`
+
+console.log(this_html)
+
+
 d3.select('#map_info')
 .style('display', 'flex')
+
+
+d3.select('#map_info2, #tooltip')
+.style('display', 'flex')
+
+
+d3.select('#tooltip')
+.html(this_html)
+.style('opacity', '1')
+.style('display', 'block')
+
 
 d3.select('#minigraph_container')
 .style('display', 'flex')
@@ -401,6 +424,10 @@ d3.select('#map_info')
 
 d3.select('#minigraph_container')
 .style('display', 'none')
+
+d3.select('#map_info2, #tooltip')
+.style('display', 'none')
+
 
 }
 
