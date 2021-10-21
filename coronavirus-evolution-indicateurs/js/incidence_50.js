@@ -89,8 +89,8 @@ let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
-    <li>Taux d'incidence : <span style="font-weight:bold">${String(Math.round(this_d.tx_incidence, 1)).replace('.',',')}%</li>
-        <li>Taux de positivité : <span style="font-weight:bold">${String(Math.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>`
+    <li>Taux d'incidence : <span style="font-weight:bold">${String(_.round(this_d.tx_incidence, 1)).replace('.',',')}%</li>
+        <li>Taux de positivité : <span style="font-weight:bold">${String(_.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>`
 
 d3.select('#map_info')
 .style('display', 'flex')
