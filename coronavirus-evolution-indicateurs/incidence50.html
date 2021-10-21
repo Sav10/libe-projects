@@ -222,8 +222,9 @@ h1#graph_title {
 h1#graph_title{
     font-family: 'libesansweb-semicondensed';
     letter-spacing: 0.03em;
-    display: flex;
+    /*display: flex;*/
     justify-content: left;
+        line-height: 1.2em;
 }
 
     @media (max-width: 768px) {
@@ -591,7 +592,7 @@ margin-left: 8px;
         <div class="column is-three-quarters map_container" style="z-index: 90;">
           <div id="articles" class='explanation_block'>
 
-          <h1 id="graph_title">Covid-19 : Dans quel département le taux d'incidence est-il supérieur à 50&nbsp;?</h1>
+          <h1 id="graph_title"><span style="color:red; display: inline;">Covid-19 </span> : dans quel département le taux d'incidence est-il supérieur à 50&nbsp;?</h1>
           </div>
           <div id="representation_carto">
             <a class="actionButton"  id="display_geo_paths">Carte</a>
