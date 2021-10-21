@@ -156,8 +156,8 @@ function showTip(d){
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
-    <li><span style="font-weight:bold">${String(Math.round(this_d.couv_dose1, 1)).replace('.',',')}%</span> des plus de 75 ans ont reçu au moins une dose</span></li>
-        <li><span style="font-weight:bold">${String(Math.round(this_d.couv_dose2, 1)).replace('.',',')}%</span> des plus de 75 ans ont été vaccinés complètement</span></li>`
+    <li><span style="font-weight:bold">${String(_.round(this_d.couv_dose1, 1)).replace('.',',')}%</span> des plus de 75 ans ont reçu au moins une dose</span></li>
+        <li><span style="font-weight:bold">${String(_.round(this_d.couv_dose2, 1)).replace('.',',')}%</span> des plus de 75 ans ont été vaccinés complètement</span></li>`
 
 d3.select('#tooltip')
 .html(this_html)
