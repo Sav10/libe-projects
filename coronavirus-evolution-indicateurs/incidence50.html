@@ -40,7 +40,7 @@
   <!-- Xiti -->
 
   <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=2">
-  <title>Libération.fr Covid-19 : Dans quel département le taux d'incidence est-il supérieur à 400 ?</title>
+  <title>Libération.fr Covid-19 : Dans quel département le taux d'incidence est-il inférieur à 50 ?</title>
   <meta name="description" content="Reprise de l'épidéme de Coronavirus, quels départements sont les plus touchés ? La réponse avec notre carte interactive.">
   <meta name="keywords" content="actualités, news">
   <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
@@ -114,7 +114,7 @@
     .headline-section .headline-big.headline-big.title {
     color: #fff;
     }
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 800px) {
     .column.is-three-quarters.map_container{
     margin: 0;
     padding: 0;
@@ -533,7 +533,7 @@ margin-left: 8px;
   }
 
 #morphocarte.carte{
-  max-width: 550px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -557,7 +557,7 @@ margin-left: 8px;
         <div class="column is-three-quarters map_container" style="z-index: 90;">
           <div id="articles" class='explanation_block'>
 
-          <h1 id="graph_title">Covid-19 : Dans quel département le taux d'incidence est-il supérieur à 400&nbsp;?</h1>
+          <h1 id="graph_title">Covid-19 : Dans quel département le taux d'incidence est-il inférieur à 50&nbsp;?</h1>
           </div>
           <div id="representation_carto">
             <a class="actionButton"  id="display_geo_paths">Carte</a>
@@ -720,8 +720,8 @@ margin-left: 8px;
 <!--   <span class='legende_dot'><span class="dot" style="background-color:#42B38E"></span> moins de 10</span>
    <span class='legende_dot'><span class="dot" style="background-color:#FF9800"></span> de 10 à 50</span>
    <span class='legende_dot'><span class="dot" style="background-color:#E3234A"></span> plus de 50</span> -->
-   <span class='legende_dot'><span class="dot" style="background-color:#efefef"></span> Moins de 400</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#e60004"></span> plus de 400</span> </p>
+   <span class='legende_dot'><span class="dot" style="background-color:#efefef"></span> Plus de de 50</span>
+   <span class='legende_dot'><span class="dot" style="background-color:green"></span> Moins de 50</span> </p>
              </div>
 
  <p><strong>Sources</strong> : Santé publique France, Système d’information de dépistage</p>

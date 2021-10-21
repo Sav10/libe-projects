@@ -91,7 +91,7 @@ d3.select('#minigraph_container')
 .style('display', 'flex')
 
 makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
- variables_names[selected_variable], _.last(daterange[selected_variable]))
+ variables_names[selected_variable], _.last(daterange[selected_variable]), 2)
 
 }
 
@@ -135,7 +135,7 @@ if(x <=50){return 'green'}
 else if(x <=50){ return '#efefef'}
 else if(x <300){ return '#efefef'}
 else if(x <400){ return '#efefef' }
-else { return '#e60004' }
+else { return '#efefef' }
 
 }
 
@@ -583,7 +583,7 @@ d3.select('#display_geo_paths')
 
 queue()
   .defer(d3.csv, 'data/taux_indicateurs_couleurs_departements3.csv')
-  .defer(d3.csv, 'data/incidence_since_august.csv')
+  .defer(d3.csv, 'https://libedata.github.io/data/updated_data/incid_pos_from_sept_2021.csv')
   .await(ready)
 
   function ready(error, data, data7j) {
