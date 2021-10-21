@@ -100,9 +100,11 @@ d3.select('#map_info')
 .style('display', 'flex')
 
 
-d3.select('#map_info2, #tooltip')
+d3.select('#tooltip')
 .style('display', 'flex')
 
+d3.select('#map_info2')
+.style('visibility', 'visible')
 
 d3.select('#tooltip')
 .html(this_html)
@@ -425,9 +427,11 @@ d3.select('#map_info')
 d3.select('#minigraph_container')
 .style('display', 'none')
 
-d3.select('#map_info2, #tooltip')
+d3.select('#tooltip')
 .style('display', 'none')
 
+d3.select('#map_info2')
+.style('visibility', 'hidden')
 
 }
 
