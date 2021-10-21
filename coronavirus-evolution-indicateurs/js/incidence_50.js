@@ -86,15 +86,11 @@ let this_code = d.id;
 
 let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);
 
-console.log(this_d)
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
     <li>Taux d'incidence : <span style="font-weight:bold">${String(Math.round(this_d.tx_incidence, 1)).replace('.',',')}%</li>
         <li>Taux de positivité : <span style="font-weight:bold">${String(Math.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>`
-
-console.log(this_html)
-
 
 d3.select('#map_info')
 .style('display', 'flex')
@@ -153,14 +149,10 @@ d3.select("#" + "dot_rea_" +String(temp_d))
 .style('background-color', color_rea(temp_d))
 }
 
-
 var colorIncidence = function (x){
 
-if(x <=50){return 'green'}
-else if(x <=50){ return '#efefef'}
-else if(x <300){ return '#efefef'}
-else if(x <400){ return '#efefef' }
-else { return '#efefef' }
+if(x <=50){return '#ddd'}
+else { return '#ff0000' }
 
 }
 
@@ -697,7 +689,7 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
     return '#fff'
   })
   .style('fill-opacity', 1)
-  .style('stroke', '#555')
+  .style('stroke', '#fff')
   .style('stroke-width', 1)
   .style('stroke-opacity', 0.5)
   .on('mouseover', function(d) {
