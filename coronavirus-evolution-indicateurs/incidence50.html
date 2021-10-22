@@ -225,7 +225,7 @@ h1#graph_title{
     /*display: flex;*/
     justify-content: left;
     line-height: 1.2em;
-    margin-bottom: 1.2em;
+    margin-bottom: .8em;
 }
 
     @media (max-width: 768px) {
@@ -260,7 +260,15 @@ h1#graph_title{
 
     position: relative;
     top: 20px;
-    left: 10%;
+    left: 0;
+
+}
+
+@media (max-width: 768px) {
+
+#display_geo_paths {
+    margin-left: 1.5em;
+}
 
 }
 
@@ -545,7 +553,8 @@ font-family: 'syntheselibeweb';
 
 #information{
      max-width: 500px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
+    margin: 0;
 }
 
 #map_info{
@@ -581,6 +590,10 @@ font-family: 'syntheselibeweb';
 
 }
 
+h1#graph_title {
+    margin-bottom: 1.5em;
+}
+
 
 }
 
@@ -595,7 +608,12 @@ font-family: 'syntheselibeweb';
 
 #sources{
 
- font-size: .8em;   
+ font-size: .8em;
+ margin-left: 8px;
+}
+
+#representation_carto {
+    z-index: 100;
 }
 
   </style>

@@ -183,13 +183,13 @@ d3.select('#positivity')
 .on('click', function(){
 
 d3.selectAll('#button_box a')
-.style('color', '#e60004')
+.style('color', 'red')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 d3.selectAll('#positivity')
 .style('color', '#fff')
-.style('background-color', '#e60004')
+.style('background-color', 'red')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -219,13 +219,13 @@ d3.select('#incidence_rate')
   fillColor('tx_incidence')
 
 d3.selectAll('#button_box a')
-.style('color', '#e60004')
+.style('color', 'red')
 .style('background-color', '#fff')
 .classed('selected', false)
 
 d3.selectAll('#incidence_rate')
 .style('color', '#fff')
-.style('background-color', '#e60004')
+.style('background-color', 'red')
 .classed('selected', true)
 
 d3.selectAll('.explanation_text')
@@ -254,12 +254,12 @@ d3.select('#hospitalisation')
   fillColor('hosp_pour_100k')
 
 d3.selectAll('#button_box a')
-.style('color', '#e60004')
+.style('color', 'red')
 .style('background-color', '#fff')
 
 d3.selectAll('#hospitalisation')
 .style('color', '#fff')
-.style('background-color', '#e60004')
+.style('background-color', 'red')
 
 d3.selectAll('.explanation_text')
 .style('display', 'none')
@@ -289,12 +289,12 @@ d3.select('#reanimation')
   fillColor('rea_pour_100k')
 
 d3.selectAll('#button_box a')
-.style('color', '#e60004')
+.style('color', 'red')
 .style('background-color', '#fff')
 
 d3.selectAll('#reanimation')
 .style('color', '#fff')
-.style('background-color', '#e60004')
+.style('background-color', 'red')
 
 d3.selectAll('.explanation_text')
 .style('display', 'none')
@@ -500,10 +500,10 @@ function redraw_paths(){
 
 d3.select('#display_geo_paths')
 .style('color', '#fff')
-.style('background-color', '#e60004')
+.style('background-color', 'red')
 
 d3.select('#display_proportional_circles')
-.style('color', '#e60004')
+.style('color', 'red')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -532,10 +532,10 @@ function transform_all_paths_to_circle(){
 
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
-.style('background-color', '#e60004')
+.style('background-color', 'red')
 
 d3.select('#display_geo_paths')
-.style('color', '#e60004')
+.style('color', 'red')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
