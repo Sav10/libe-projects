@@ -224,7 +224,8 @@ h1#graph_title{
     letter-spacing: 0.03em;
     /*display: flex;*/
     justify-content: left;
-        line-height: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: 1.2em;
 }
 
     @media (max-width: 768px) {
@@ -486,6 +487,7 @@ border: 0;
  align-self: center;
  margin: 0;
  padding: 3px;
+font-family: 'syntheselibeweb';
 }
 
 #slider_container {
@@ -532,6 +534,7 @@ padding: 8px;
 
 #information .explanation_text, #information p {
 margin-left: 8px; 
+font-family: 'syntheselibeweb';
   }
 
 #morphocarte.carte{
@@ -582,6 +585,19 @@ margin-left: 8px;
 }
 
 
+#sparkline svg path {
+  stroke: red;
+  stroke-width: 2;
+  fill: none;
+  stroke-opacity: 1;
+}
+
+
+#sources{
+
+ font-size: .8em;   
+}
+
   </style>
 
 </head>
@@ -601,6 +617,7 @@ margin-left: 8px;
           <div class="carte" id='morphocarte'>
             <div id="map_info2" >
               <div id="tooltip"></div>
+              <!-- <div id="sparkline"></div> -->
             </div>
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 667 578" xml:space="preserve" id='geo_map'>
     <g transform="translate(0,7)">
@@ -747,9 +764,9 @@ margin-left: 8px;
     </div>
     <div id="information">
 <br>
- <div id="map_info" style="opacity: 1; display: flex;">
+<!--  <div id="map_info" style="opacity: 1; display: flex;">
 <div id='minigraph_container'></div>
-            </div>
+            </div> -->
 
           <div  id='incidence_text' class='explanation_text'>
 
@@ -762,10 +779,12 @@ margin-left: 8px;
    <span class='legende_dot'><span class="dot" style="background-color:#ddd"></span> Moins de 50</span> </p>
              </div>
 
-
+<br><br>
+<div id="sources">
  <p><strong>Sources</strong> : Santé publique France, Système d’information de dépistage</p>
  <p>Données mises à jour toutes les 3 heures</p>
 <!-- <p style="font-style: italic;">*La taille des cercles du format cartogramme est proportionelle à la population de chaque département</p> -->
+</div>
 
 </div>
         </div>

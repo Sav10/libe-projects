@@ -87,14 +87,16 @@ let this_code = d.id;
 let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);
 
 
-    this_html =  `<ul id='tooltip_content'><span style="font-weight:bold">${this_d.departement} (${this_d.dep})</span></ul></span>
+    this_html =  `<ul id='tooltip_content'><span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
-    <li>Taux d'incidence : <span style="font-weight:bold">${String(_.round(this_d.tx_incidence, 1)).replace('.',',')}%</li>
+    <li>Taux d'incidence : <span style="font-weight:bold">${String(_.round(this_d.tx_incidence, 1)).replace('.',',')}</li>
+        <li><em>Evolution depuis septembre</em></li>
+        <li id="sparkline"></li>
         <li>Taux de positivité : <span style="font-weight:bold">${String(_.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>`
 
-d3.select('#map_info')
-.style('display', 'flex')
-
+// d3.select('#map_info')
+// .style('display', 'flex')
+        // 
 
 d3.select('#tooltip')
 .style('display', 'flex')
@@ -111,8 +113,12 @@ d3.select('#tooltip')
 d3.select('#minigraph_container')
 .style('display', 'flex')
 
-makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
- variables_names[selected_variable], _.last(daterange[selected_variable]), 2)
+d3.select('#sparkline').select('*').remove()
+
+makeSparkline(fulldata.filter(d => d.dep == this_code).map(d => d.tx_incidence))
+
+// makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
+//  variables_names[selected_variable], _.last(daterange[selected_variable]), 2)
 
 }
 
@@ -413,8 +419,8 @@ else{
 // d3.select('#slider_container')
 // .style('display', 'flex')
 
-d3.select('#map_info')
-.style('display', 'none')
+// d3.select('#map_info')
+// .style('display', 'none')
 
 d3.select('#minigraph_container')
 .style('display', 'none')
@@ -424,6 +430,9 @@ d3.select('#tooltip')
 
 d3.select('#map_info2')
 .style('visibility', 'hidden')
+
+
+d3.select('#sparkline').select('*').remove()
 
 }
 
@@ -936,3 +945,38 @@ function getBoundingBoxCenter (selection) {
 function equalToEventTarget() {
     return this == d3.event.target;
 }
+
+
+function makeSparkline(this_data){
+
+const el_width = parseInt(d3.select('#map_info2').style('width'));
+
+const WIDTH        = el_width;
+const HEIGHT       = 30;
+const MARGIN       = { top: 5, right: 5, bottom: 5, left: 5 };
+const INNER_WIDTH  = WIDTH - MARGIN.left - MARGIN.right;
+const INNER_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
+const DATA_COUNT   = this_data.length;
+const DATA_Max = d3.max(this_data)
+const data_spark = this_data;
+const x_spark    = d3.scaleLinear().domain([0, DATA_COUNT]).range([0, INNER_WIDTH]);
+const y_spark    = d3.scaleLinear().domain([0, DATA_Max]).range([INNER_HEIGHT, 0]);
+
+const svg_spark = d3.select('#sparkline').append('svg')
+  .attr('width', WIDTH)
+  .attr('height', HEIGHT)
+  .append('g')
+    .attr('transform', 'translate(' + MARGIN.left + ',' + MARGIN.top + ')');
+
+const line_spark = d3.line()
+  .x((d, i) => x_spark(i))
+  .y(d => y_spark(d));
+
+svg_spark.append('path').datum(data_spark)
+  .attr('fill', 'none')
+  .attr('stroke', '#bbb')
+  .attr('stroke-width', 1)
+  .attr('d', line_spark);
+
+
+  }
