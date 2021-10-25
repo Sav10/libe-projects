@@ -27974,7 +27974,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-10-24,OWID_ASI,,Asia,4639681117,99.17,55.73,40.91,
 2021-10-24,OWID_EUN,,European Union,585299023,130.88,68.65,64.68,
 2021-10-24,FIN,Europe,Finland,8007597,144.32,75.87,68.46,Finlande
-2021-10-24,OWID_SAM,,South America,497965227,114.67,66.2,49.49,
+2021-10-24,OWID_SAM,,South America,498913884,114.89,66.25,49.65,
 2021-10-24,KOR,Asia,South Korea,75308637,146.79,79.46,70.15,Corée du Sud
 2021-10-24,BHR,Asia,Bahrain,2741537,156.81,67.11,65.08,Bahreïn
 2021-10-24,SVN,Europe,Slovenia,2294768,110.39,56.91,53.49,Slovénie
@@ -28000,6 +28000,7 @@ datetime,iso_code,continent,location,total_vaccinations,total_vaccinations_per_h
 2021-10-24,JOR,Asia,Jordan,7354774,71.62,37.83,33.79,Jordanie
 2021-10-24,KAZ,Asia,Kazakhstan,15477640,81.48,42.95,38.53,Kazakhstan
 2021-10-24,PAN,North America,Panama,5403579,123.32,67.75,53.79,Panama
+2021-10-24,BRA,South America,Brazil,269148527,125.77,74.05,53.97,Brésil
 2021-10-24,OWID_OCE,,Oceania,43549674,100.76,55.38,45.39,
 2021-10-24,DEU,Europe,Germany,110840177,132.11,68.52,65.64,Allemagne
 2021-10-24,MNG,Asia,Mongolia,4392350,131.93,67.72,64.21,Mongolie
