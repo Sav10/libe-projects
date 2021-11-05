@@ -551,16 +551,14 @@ d3.selectAll('svg text.label').filter(function(d){return d[accented_col] == acce
 
 d3.selectAll('circle.dotPoint').on('mouseover', function(d){
 show_tooltip(d);
-d3.selectAll('path.line').filter(function(e){return e[0][accented_col] != d[accented_col]}).style('stroke-width', 1);
-d3.selectAll('path.line').filter(function(e){return e[0][accented_col] == d[accented_col]}).style('stroke-width', 3);
+d3.selectAll('path.line').filter(function(e){return e[0][accented_col] != d[accented_col]}).style('stroke-width', 1).style('opacity', 0.5);
 d3.selectAll('path.line').filter(function(e){return e[0][accented_col] == d[accented_col]}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
 d3.selectAll('svg text.label').filter(function(e){return e[accented_col] == d[accented_col]}).style('fill', color_hover)
 });
 
 d3.selectAll('circle.dotPoint').on('click', function(d){
 show_tooltip(d);
-d3.selectAll('path.line').filter(function(d){return d[0][accented_col] != d[accented_col]}).style('stroke', '#ccc').style('stroke-width', 1);
-d3.selectAll('path.line').filter(function(d){return d[0][accented_col] == d[accented_col]}).style('stroke-width', 3);
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] != d[accented_col]}).style('stroke', '#ccc').style('stroke-width', 1).style('opacity', 0.5);
 d3.selectAll('path.line').filter(function(e){return e[0][accented_col] == d[accented_col]}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
 d3.selectAll('svg text.label').filter(function(e){return e[accented_col] == d[accented_col]}).style('fill', color_hover)
 });
