@@ -509,12 +509,18 @@ g_inner
 
   addCustomCode()
 
+ const color_common = '#aaa';
+ const color_accent = '#e61e49';
+const color_hover = '#FF9999';
+const accented_var = 'Union européenne';
+
+
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', .9);
 d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')});
-d3.selectAll('path.line').filter(function(d){return d[0].Pays != 'Union européenne'}).style('stroke', '#aaa').style('stroke-width', 1);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays == 'Union européenne'}).style('stroke-width', 3);
-d3.selectAll('svg text.label').filter(function(d){return d.Pays == "Union européenne"}).style('fill', '#e61e49').style('opacity', 1);
-d3.selectAll('svg text.label').filter(function(d){return d.Pays != "Union européenne"}).style('fill', '#aaa').style('opacity', 1);
+d3.selectAll('path.line').filter(function(d){return d[0].Pays != accented_var}).style('stroke', color_common).style('stroke-width', 1);
+d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke-width', 3);
+d3.selectAll('svg text.label').filter(function(d){return d.Pays == accented_var}).style('fill', color_accent).style('opacity', 1);
+d3.selectAll('svg text.label').filter(function(d){return d.Pays != accented_var}).style('fill', color_common).style('opacity', 1);
 
 // d3.selectAll('path.line').on('mouseover', function(d){
 // d3.selectAll('path.line').style('stroke-width', 1).style('opacity', 0.5)
@@ -524,22 +530,22 @@ d3.selectAll('svg text.label').filter(function(d){return d.Pays != "Union europ�
 
 // d3.selectAll('path.line').on('mouseout', function(d){
 // d3.selectAll('path.line').style('stroke-width', 1).style('opacity', .9)
-// d3.selectAll('path.line').filter(function(d){return d[0].Pays == 'Union européenne'}).style('stroke-width', 3)
+// d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke-width', 3)
 // });
 
 d3.selectAll('svg text.label').on('mouseover', function(d){
 d3.selectAll('svg text.label').style('opacity', 0.5)
-d3.select(this).style('opacity', 1).style('stroke', '#FF9999');
+d3.select(this).style('opacity', 1).style('fill', color_hover);
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', 0.5)
-d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', '#FF9999');
+d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
 });
 
 d3.selectAll('svg text.label').on('mouseout', function(d){
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', .9);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays != 'Union européenne'}).style('stroke', '#aaa')
-d3.selectAll('path.line').filter(function(d){return d[0].Pays == 'Union européenne'}).style('stroke', '#e61e49')
-d3.selectAll('svg text.label').style('opacity', 1).style('stroke', '#aaa');
-d3.selectAll('svg text.label').filter(function(d){return d.Pays == "Union européenne"}).style('fill', '#e61e49')
+d3.selectAll('path.line').filter(function(d){return d[0].Pays != accented_var}).style('stroke', color_common)
+d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke', color_accent)
+d3.selectAll('svg text.label').style('opacity', 1).style('fill', color_common);
+d3.selectAll('svg text.label').filter(function(d){return d.Pays == accented_var}).style('fill', color_accent)
 });
 
 d3.selectAll('circle.dotPoint').on('mouseover', function(d){
@@ -547,22 +553,25 @@ show_tooltip(d);
 console.log(d.Pays)
 d3.selectAll('path.line').filter(function(e){return e[0].Pays != d.Pays}).style('stroke-width', 1);
 d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3);
-d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', '#FF9999');
+d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
+d3.selectAll('svg text.label').filter(function(e){return e.Pays == d.Pays}).style('fill', color_hover)
 });
 
 d3.selectAll('circle.dotPoint').on('click', function(d){
 show_tooltip(d);
 d3.selectAll('path.line').filter(function(d){return d[0].Pays != d.Pays}).style('stroke', '#ccc').style('stroke-width', 1);
 d3.selectAll('path.line').filter(function(d){return d[0].Pays == d.Pays}).style('stroke-width', 3);
-d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', '#FF9999');
-
+d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
+d3.selectAll('svg text.label').filter(function(e){return e.Pays == d.Pays}).style('fill', color_hover)
 });
 
 d3.selectAll('circle.dotPoint').on('mouseout', function(d){
 hide_tooltip(d);
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', 1);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays != 'Union européenne'}).style('stroke', '#aaa')
-d3.selectAll('path.line').filter(function(d){return d[0].Pays == 'Union européenne'}).style('stroke', '#e61e49')
+d3.selectAll('path.line').filter(function(d){return d[0].Pays != accented_var}).style('stroke', color_common)
+d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke', color_accent)
+d3.selectAll('svg text.label').style('opacity', 1).style('fill', color_common);
+d3.selectAll('svg text.label').filter(function(d){return d.Pays == accented_var}).style('fill', color_accent)
 })
 
 }
