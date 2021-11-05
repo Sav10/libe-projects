@@ -512,15 +512,16 @@ g_inner
  const color_common = '#aaa';
  const color_accent = '#e61e49';
 const color_hover = '#FF9999';
-const accented_var = 'Union européenne';
+const accented_col = 'Pays';
+const accented_val = 'Union européenne';
 
 
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', .9);
 d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')});
-d3.selectAll('path.line').filter(function(d){return d[0].Pays != accented_var}).style('stroke', color_common).style('stroke-width', 1);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke-width', 3);
-d3.selectAll('svg text.label').filter(function(d){return d.Pays == accented_var}).style('fill', color_accent).style('opacity', 1);
-d3.selectAll('svg text.label').filter(function(d){return d.Pays != accented_var}).style('fill', color_common).style('opacity', 1);
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] != accented_val}).style('stroke', color_common).style('stroke-width', 1);
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] == accented_val}).style('stroke-width', 3);
+d3.selectAll('svg text.label').filter(function(d){return d[accented_col] == accented_val}).style('fill', color_accent).style('opacity', 1);
+d3.selectAll('svg text.label').filter(function(d){return d[accented_col] != accented_val}).style('fill', color_common).style('opacity', 1);
 
 // d3.selectAll('path.line').on('mouseover', function(d){
 // d3.selectAll('path.line').style('stroke-width', 1).style('opacity', 0.5)
@@ -530,48 +531,47 @@ d3.selectAll('svg text.label').filter(function(d){return d.Pays != accented_var}
 
 // d3.selectAll('path.line').on('mouseout', function(d){
 // d3.selectAll('path.line').style('stroke-width', 1).style('opacity', .9)
-// d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke-width', 3)
+// d3.selectAll('path.line').filter(function(d){return d[0][accented_col] == accented_val}).style('stroke-width', 3)
 // });
 
 d3.selectAll('svg text.label').on('mouseover', function(d){
 d3.selectAll('svg text.label').style('opacity', 0.5)
 d3.select(this).style('opacity', 1).style('fill', color_hover);
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', 0.5)
-d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
+d3.selectAll('path.line').filter(function(e){return e[0][accented_col] == d[accented_col]}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
 });
 
 d3.selectAll('svg text.label').on('mouseout', function(d){
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', .9);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays != accented_var}).style('stroke', color_common)
-d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke', color_accent)
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] != accented_val}).style('stroke', color_common)
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] == accented_val}).style('stroke', color_accent)
 d3.selectAll('svg text.label').style('opacity', 1).style('fill', color_common);
-d3.selectAll('svg text.label').filter(function(d){return d.Pays == accented_var}).style('fill', color_accent)
+d3.selectAll('svg text.label').filter(function(d){return d[accented_col] == accented_val}).style('fill', color_accent)
 });
 
 d3.selectAll('circle.dotPoint').on('mouseover', function(d){
 show_tooltip(d);
-console.log(d.Pays)
-d3.selectAll('path.line').filter(function(e){return e[0].Pays != d.Pays}).style('stroke-width', 1);
-d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3);
-d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
-d3.selectAll('svg text.label').filter(function(e){return e.Pays == d.Pays}).style('fill', color_hover)
+d3.selectAll('path.line').filter(function(e){return e[0][accented_col] != d[accented_col]}).style('stroke-width', 1);
+d3.selectAll('path.line').filter(function(e){return e[0][accented_col] == d[accented_col]}).style('stroke-width', 3);
+d3.selectAll('path.line').filter(function(e){return e[0][accented_col] == d[accented_col]}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
+d3.selectAll('svg text.label').filter(function(e){return e[accented_col] == d[accented_col]}).style('fill', color_hover)
 });
 
 d3.selectAll('circle.dotPoint').on('click', function(d){
 show_tooltip(d);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays != d.Pays}).style('stroke', '#ccc').style('stroke-width', 1);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays == d.Pays}).style('stroke-width', 3);
-d3.selectAll('path.line').filter(function(e){return e[0].Pays == d.Pays}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
-d3.selectAll('svg text.label').filter(function(e){return e.Pays == d.Pays}).style('fill', color_hover)
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] != d[accented_col]}).style('stroke', '#ccc').style('stroke-width', 1);
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] == d[accented_col]}).style('stroke-width', 3);
+d3.selectAll('path.line').filter(function(e){return e[0][accented_col] == d[accented_col]}).style('stroke-width', 3).style('opacity', 1).style('stroke', color_hover);
+d3.selectAll('svg text.label').filter(function(e){return e[accented_col] == d[accented_col]}).style('fill', color_hover)
 });
 
 d3.selectAll('circle.dotPoint').on('mouseout', function(d){
 hide_tooltip(d);
 d3.selectAll('path.line').style('stroke-width', 1).style('opacity', 1);
-d3.selectAll('path.line').filter(function(d){return d[0].Pays != accented_var}).style('stroke', color_common)
-d3.selectAll('path.line').filter(function(d){return d[0].Pays == accented_var}).style('stroke', color_accent)
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] != accented_val}).style('stroke', color_common)
+d3.selectAll('path.line').filter(function(d){return d[0][accented_col] == accented_val}).style('stroke', color_accent)
 d3.selectAll('svg text.label').style('opacity', 1).style('fill', color_common);
-d3.selectAll('svg text.label').filter(function(d){return d.Pays == accented_var}).style('fill', color_accent)
+d3.selectAll('svg text.label').filter(function(d){return d[accented_col] == accented_val}).style('fill', color_accent)
 })
 
 }
