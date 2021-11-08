@@ -626,6 +626,8 @@ queue()
       d.population = +d.population;
     })
 
+    console.log(data);
+
     data7j.forEach(d =>{
 
       d.date = parseTime(d.datetime);
