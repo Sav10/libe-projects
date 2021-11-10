@@ -618,81 +618,69 @@ queue()
   // .defer(d3.csv, 'https://libedata.github.io/data/updated_data/incid_pos_from_sept_2021.csv')
   .await(ready)
 
-  function ready(error, data, data7j) {
+  function ready(error, data) {
 
     data.forEach(d => {
-      d.taux_de_positivite = +d.taux_de_positivite;
-      d.taux_incidence = +d.taux_incidence;
       d.population = +d.population;
+      d.morts_depuis_septembre = +d.morts_depuis_septembre;
+      d.morts_par_million_depuis_septembre = +d.morts_par_million_depuis_septembre;
+      d.population = +d.population;
+      d.vaccination_septembre = +d.vaccination_septembre;
+      d.total_deaths_per_million = +d.total_deaths_per_million;
+      d.morts_vague_3 = +d.morts_vague_3;
     })
 
     console.log(data);
 
-    data7j.forEach(d =>{
 
-      d.date = parseTime(d.datetime);
-      d.tx_positivite = +d.tx_positivite
-      d.tx_incidence = +d.tx_incidence
-      d.hosp_pour_100k = +d.hosp_pour_100k
-      d.rea_pour_100k = +d.rea_pour_100k
+    // maxvalues['population'] = d3.max(fulldata.map(d=>d.population));
+    // maxvalues['tx_incidence'] = d3.max(fulldata.map(d=>d.tx_incidence));
+    // maxvalues['hosp_pour_100k'] = d3.max(fulldata.map(d=>d.hosp_pour_100k));
+    // maxvalues['rea_pour_100k'] = d3.max(fulldata.map(d=>d.rea_pour_100k));
 
-    })
-
-    fulldata = data7j;
-
-    maxvalues['tx_positivite'] = d3.max(fulldata.map(d=>d.tx_positivite));
-    maxvalues['tx_incidence'] = d3.max(fulldata.map(d=>d.tx_incidence));
-    maxvalues['hosp_pour_100k'] = d3.max(fulldata.map(d=>d.hosp_pour_100k));
-    maxvalues['rea_pour_100k'] = d3.max(fulldata.map(d=>d.rea_pour_100k));
-
-    daterange['tx_incidence'] = _.uniq(fulldata.filter(d=>d.tx_incidence).map(d=>d.datetime));
-    daterange['tx_positivite'] = _.uniq(fulldata.filter(d=>d.tx_positivite).map(d=>d.datetime));
-    daterange['hosp_pour_100k'] = _.uniq(fulldata.filter(d=>d.hosp_pour_100k).map(d=>d.datetime));
-    daterange['rea_pour_100k'] = _.uniq(fulldata.filter(d=>d.rea_pour_100k).map(d=>d.datetime));
+    // daterange['tx_incidence'] = _.uniq(fulldata.filter(d=>d.tx_incidence).map(d=>d.datetime));
+    // daterange['tx_positivite'] = _.uniq(fulldata.filter(d=>d.tx_positivite).map(d=>d.datetime));
+    // daterange['hosp_pour_100k'] = _.uniq(fulldata.filter(d=>d.hosp_pour_100k).map(d=>d.datetime));
+    // daterange['rea_pour_100k'] = _.uniq(fulldata.filter(d=>d.rea_pour_100k).map(d=>d.datetime));
     // daterange = _.uniq(fulldata.map(d=>d.datetime));
 
     circleScale.domain(d3.extent(data, d=>d.population));
 
-    circleScaleEcart.domain([0,d3.max(data, d=>d.ecart2020)]);
+    // circleScaleEcart.domain([0,d3.max(data, d=>d.ecart2020)]);
 
     let allSvgNodes = allPaths.nodes();
     for (i in allSvgNodes){
-      let this_id = d3.select(allSvgNodes[i]).attr('data-numerodepartement')
-      let this_pop = data.filter(d=> d.dep == this_id)[0].population;
-      let this_ecart = data.filter(d=> d.dep == this_id)[0].ecart2020;
+      let this_id = d3.select(allSvgNodes[i]).attr('data-id')
+      let this_pop = data.filter(d=> d.iso_code == this_id)[0].population;
+      // let this_ecart = data.filter(d=> d.dep == this_id)[0].ecart2020;
       let this_radius = Math.round(circleScale(this_pop));
-      let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
+      // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
       let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
-      let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
+      // let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
       let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
 
       d3.select(allSvgNodes[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
         'to_circle_function': this_to_circle_function,
-        'to_circle_ecart_function': this_to_circle_ecart_function,
+        // 'to_circle_ecart_function': this_to_circle_ecart_function,
         'from_circle_function': this_from_circle_function,
         'population':this_pop,
-        'radius': this_radius,
-        'radius_ecart': this_radius_ecart});
+        'radius': this_radius
+        // 'radius_ecart': this_radius_ecart
+      });
 }
 
-app_data['tx_incidence'] = fulldata.filter(d=>d.datetime == daterange['tx_incidence'][daterange['tx_incidence'].length-1])
-app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])
-app_data['hosp_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['hosp_pour_100k'][daterange['hosp_pour_100k'].length-1])
-app_data['rea_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['rea_pour_100k'][daterange['rea_pour_100k'].length-1])
-
-app_data['tx_incidence'].forEach(function(d){
-
-d.departement = data.filter(e=>e.dep == d.dep)[0].departement
-
-})
+// app_data['tx_incidence'] = fulldata.filter(d=>d.datetime == daterange['tx_incidence'][daterange['tx_incidence'].length-1])
+// app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])
+// app_data['hosp_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['hosp_pour_100k'][daterange['hosp_pour_100k'].length-1])
+// app_data['rea_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['rea_pour_100k'][daterange['rea_pour_100k'].length-1])
 
 
   allPaths
   .style('fill', d => {
 
-    if (typeof app_data['tx_incidence'].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
+    if (typeof data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
       return colorIncidence(+app_data['tx_incidence'].filter(function(e){return e.dep == d.id})[0].tx_incidence)
 
