@@ -784,7 +784,7 @@ else{
   })
 
 
-fillColorDate('tx_incidence', _.last(daterange['tx_incidence']))
+// fillColorDate('tx_incidence', _.last(daterange['tx_incidence']))
 
 
 setTimeout(() => {
