@@ -651,6 +651,7 @@ queue()
     let allSvgNodes = allPaths.nodes();
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-id')
+      console.log(this_id)
       let this_pop = data.filter(d=> d.iso_code == this_id)[0].population;
       // let this_ecart = data.filter(d=> d.dep == this_id)[0].ecart2020;
       let this_radius = Math.round(circleScale(this_pop));
