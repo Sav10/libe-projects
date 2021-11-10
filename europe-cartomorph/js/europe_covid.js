@@ -14,7 +14,7 @@ width_slider = (width2 < (mainWidth -70) ? width2 : (mainWidth -70)),
 width_slider_g = 960,
 width2 = width2 < mainWidth ? width2 : mainWidth,
 map,
-app_data = {},
+app_data,
 minMaxRectWidth = [12,30],
 scaleWidth,
 thisMinZoom = 2,
@@ -84,10 +84,12 @@ function showTip(d){
 
 let this_code = d.id;
 
-let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);
+console.log(this_code)
+
+let this_d = _.find(app_data, d => d.iso_code == this_code);
 
 
-    this_html =  `<ul id='tooltip_content'><span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_d.departement} (${this_d.dep})</span></ul></span>
+    this_html =  `<ul id='tooltip_content'><span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_d.Pays} </span></ul></span>
     <span class='details'>
     <li>Taux d'incidence : <span style="font-weight:bold">${String(_.round(this_d.tx_incidence, 1)).replace('.',',')}</li>
         <li><em>Evolution depuis septembre</em></li>
@@ -632,6 +634,7 @@ queue()
 
     console.log(data);
 
+    app_data = data;
 
     // maxvalues['population'] = d3.max(fulldata.map(d=>d.population));
     // maxvalues['tx_incidence'] = d3.max(fulldata.map(d=>d.tx_incidence));
