@@ -689,7 +689,7 @@ queue()
     return '#fff'
   })
   .style('fill-opacity', 1)
-  .style('stroke', '#fff')
+  .style('stroke', '#333')
   .style('stroke-width', 1)
   .style('stroke-opacity', 0.5)
   .on('mouseover', function(d) {
