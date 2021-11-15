@@ -677,7 +677,7 @@ queue()
 
 
 
-////// New method
+////// New method for Europe with new svg
 
 // var this_sel = d3.select(d3.selectAll('svg g#graph g').nodes()[8])
 
