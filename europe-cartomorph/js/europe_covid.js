@@ -675,6 +675,26 @@ queue()
       });
 }
 
+
+
+////// New method
+
+// var this_sel = d3.select(d3.selectAll('svg g#graph g').nodes()[8])
+
+// var path_generic = this_sel.select('path').attr('d')
+
+// let this_centroid_generic = getBoundingBoxCenter(this_sel.select('path'))
+
+// let this_to_circle_function_generic = flubber.toCircle(path_generic,this_centroid_generic[0], this_centroid_generic[1], 50);
+
+// let this_from_circle_function_generic = flubber.fromCircle(this_centroid_generic[0], this_centroid_generic[1], 50, path_generic);
+
+
+// this_sel.select('path').transition().attrTween("d", function(d){ return this_to_circle_function_generic})
+
+// this_sel.select('path').transition().attrTween("d", function(d){ return this_from_circle_function_generic})
+
+
 // app_data['tx_incidence'] = fulldata.filter(d=>d.datetime == daterange['tx_incidence'][daterange['tx_incidence'].length-1])
 // app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])
 // app_data['hosp_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['hosp_pour_100k'][daterange['hosp_pour_100k'].length-1])
