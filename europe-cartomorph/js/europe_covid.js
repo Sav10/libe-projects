@@ -790,14 +790,14 @@ else{
 // fillColorDate('tx_incidence', _.last(daterange['tx_incidence']))
 
 
-setTimeout(() => {
+// setTimeout(() => {
 
-  transform_all_paths_to_circle()
-mapstate = 1;
+//   transform_all_paths_to_circle()
+// mapstate = 1;
 
 
-},
-   500);
+// },
+//    500);
 
 }
 
