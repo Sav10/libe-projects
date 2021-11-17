@@ -55,7 +55,7 @@ d3.select('#information')
 var parseTime2 = d3.timeParse("%Y-%m-%d");
 var tooltip_initial_content = '';
 const svg = d3.select(".carte svg#geo_map");
-const allPaths = svg.selectAll('path');
+const allPaths = svg.selectAll('g#graph g');
 svg.style('max-height', $(window).height()*0.9 + 'px')
 
 window.addEventListener("resize", function(d){
@@ -462,7 +462,7 @@ function force_separate_circles(){
 
   for (var i = 0; i < 200; ++i) simulation.tick();
 
-    allPaths
+    allPaths.select('path')
   .transition().attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
 
 }
@@ -486,7 +486,7 @@ function force_separate_circles_ecart(){
 
 function registered_separate_circles(){
 
-  allPaths
+  allPaths.select('path')
   .transition().attr('transform', function(d) { return 'translate(' +position_departements[d.id][0]+ ',' +position_departements[d.id][1] + ')'});
 
 }
@@ -512,7 +512,7 @@ d3.select('#display_proportional_circles')
   let pathsCount = 0;
   let departements_corrections = ['17', '56', '91', '92', '93', '94', '95', '75', '971', '51', '10', '03', '23', '34', '81'];
 
-  allPaths
+  allPaths.select('path')
   .transition()
   .duration(500)
   .attrTween("d", function(d){ return d.from_circle_function})
@@ -543,7 +543,7 @@ d3.select('#display_geo_paths')
   let pathsize = allPaths.size();
   let pathsCount = 0;
 
-allPaths.transition().attrTween("d", function(d){ return d.to_circle_function})
+allPaths.select('path').transition().attrTween("d", function(d){ return d.to_circle_function})
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
@@ -655,12 +655,13 @@ queue()
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-id')
       console.log(this_id)
-      let this_pop = data.filter(d=> d.iso_code == this_id)[0].population;
+      let this_pop = data.filter(d=> d.iso_code == this_id)[0] ? data.filter(d=> d.iso_code == this_id)[0].population : 10000;
+      console.log(this_pop)
       // let this_ecart = data.filter(d=> d.dep == this_id)[0].ecart2020;
       let this_radius = Math.round(circleScale(this_pop));
       // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
-      let this_path_d = d3.select(allSvgNodes[i]).attr('d');
-      let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
+      let this_path_d = d3.select(allSvgNodes[i]).select('path').attr('d');
+      let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]).select('path'));
       let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
       // let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
       let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
