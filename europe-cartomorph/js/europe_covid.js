@@ -341,6 +341,24 @@ function fillColor(column){
 
 // fillColorDate('tx_incidence', '2020-08-01')
 
+
+function reposition_elements(){
+
+var obj_startobj = {};
+var obj_endobj = {};
+allPaths.select('path').call(d3.drag()
+.on("start", function(d){
+obj_startobj[d.id] = [event.x, event.y]})
+.on('end', function(d){
+obj_endobj[d.id] = [event.x, event.y];
+let changeObj = [obj_endobj[d.id][0] - obj_startobj[d.id][0], obj_endobj[d.id][1] - obj_startobj[d.id][1]];
+console.log(changeObj)
+position_pays[d.id] = [position_pays[d.id][0] + changeObj[0], position_pays[d.id][1] + changeObj[1]]
+d3.select(this).attr('transform', function(d) { return 'translate(' +position_pays[d.id][0]+
+ ',' +position_pays[d.id][1] + ')'})}))
+
+}
+
 function fillColorDate(column, date){
 
   var this_date_data = fulldata.filter(function(e){return e.datetime == date})
@@ -915,13 +933,13 @@ const position_departements  = {
   };
 
 
-const position_pays  = {
-    "FRA": [ -3, 6], "DEU": [ 2, -4], "GBR": [ 0, 0], "ESP": [ 0, 3], "PRT": [ -5, 0], "ITA": [ -4, 8], "ISL": [ 0, 0], "IRL": [ 0, 0], 
-    "NOR": [ 1, -5], "SWE": [ 0, 3], "FIN": [ 0, 0], "BEL": [ -3, -6], "NLD": [ -5, -28], "CHE": [ -4, 8], "DNK": [ -2, -9],
-     "POL": [ 5, -10], "CZE": [ 11, 5], "AUT": [ 8, 11], "SVN": [ 16, -1], "LUX": [ -3, 4], "HRV": [ 1, 5], "BIH": [ 4, 1],
-      "ALB": [ 0, 0], "SVK": [ 15, -1], "HUN": [ -1, 7], "EST": [ 0, 0], "LVA": [ 0, -1], "LTU": [ 0, 0], "BLR": [ 0, 0], 
-      "RUS": [ 0, 0], "UKR": [ 0, 0], "ROU": [ 0, -2], "SRB": [ 0, 0], "MDA": [ 0, 0], "BGR": [ 1, 4], "MNE": [ 0, 0], "GRC": [ 0, 0]
-}
+var position_pays  = { "FRA": [ -3, 6 ], "DEU": [ 2, -4 ], "GBR": [ 0, 0 ], "ESP": [ 0, 3 ], "PRT": [ -5, 0 ], "ITA": [ -4, 8 ],
+ "ISL": [ 0, 0 ], "IRL": [ 0, 0 ], "NOR": [ -41, 7 ], "SWE": [ -10, -5 ], "FIN": [ -46, 9 ],
+ "BEL": [ -3, -6 ], "NLD": [ -5, -28 ], "CHE": [ -4, 8 ], "DNK": [ -2, -9 ], "POL": [ 5, -10 ],
+ "CZE": [ 11, 5 ], "AUT": [ 8, 11 ], "SVN": [ 16, -1 ], "LUX": [ -3, 4 ], "HRV": [ 1, 5 ], "BIH": [ 4, 1 ],
+ "ALB": [ 0, 0 ], "SVK": [ 15, -1 ], "HUN": [ -1, 7 ], "EST": [ 0, 0 ], "LVA": [ 0, -1 ], "LTU": [ 0, 0 ],
+ "BLR": [ 0, 0 ], "RUS": [ 0, 0 ], "UKR": [ 0, 0 ], "ROU": [ 0, -2 ], "SRB": [ 0, 0 ], "MDA": [ 0, 0 ],
+  "BGR": [ 1, 4 ], "MNE": [ 0, 0 ], "GRC": [ 0, 0 ] }
 
  const position_departements_ecart = 
  { "971": [0, 0], "972": [0, 0], "973": [0, 0], "974": [0, 0], "976": [0, 0], "75": [5, 27], "77": [24, 28],
