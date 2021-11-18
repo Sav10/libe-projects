@@ -84,7 +84,7 @@ function showTip(d){
 
 let this_code = d.id;
 
-console.log(this_code)
+// console.log(this_code)
 
 let this_d = _.find(app_data, d => d.iso_code == this_code);
 
@@ -117,7 +117,7 @@ d3.select('#minigraph_container')
 
 d3.select('#sparkline').select('*').remove()
 
-makeSparkline(fulldata.filter(d => d.dep == this_code).map(d => d.tx_incidence))
+// makeSparkline(fulldata.filter(d => d.dep == this_code).map(d => d.tx_incidence))
 
 // makeAreachart(fulldata.filter(d=>d.dep == this_code), 'datetime', selected_variable, 'rgb(227, 35, 74)', maxvalues,
 //  variables_names[selected_variable], _.last(daterange[selected_variable]), 2)
@@ -487,7 +487,7 @@ function force_separate_circles_ecart(){
 function registered_separate_circles(){
 
   allPaths.select('path')
-  .transition().attr('transform', function(d) { return 'translate(' +position_departements[d.id][0]+ ',' +position_departements[d.id][1] + ')'});
+  .transition().attr('transform', function(d) { return 'translate(' +position_pays[d.id][0]+ ',' +position_pays[d.id][1] + ')'});
 
 }
 
@@ -520,7 +520,7 @@ d3.select('#display_proportional_circles')
     pathsCount++;
 
     if (pathsCount >= pathsize){
-      console.log(pathsCount)
+      // console.log(pathsCount)
 
       allPaths.filter(function(d){return departements_corrections.includes(d.id) }).attr("d", function(d){ return d.path})
 
@@ -555,8 +555,8 @@ allPaths.select('path').transition().attrTween("d", function(d){ return d.to_cir
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
-    // registered_separate_circles()
-    force_separate_circles()
+    registered_separate_circles()
+    // force_separate_circles()
   }
 })
 
@@ -665,9 +665,9 @@ queue()
     let allSvgNodes = allPaths.nodes();
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-id')
-      console.log(this_id)
+      // console.log(this_id)
       let this_pop = data.filter(d=> d.iso_code == this_id)[0] ? data.filter(d=> d.iso_code == this_id)[0].population : 10000;
-      console.log(this_pop)
+      // console.log(this_pop)
       // let this_ecart = data.filter(d=> d.dep == this_id)[0].ecart2020;
       let this_radius = Math.round(circleScale(this_pop));
       // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
@@ -913,6 +913,15 @@ const position_departements  = {
   "73" : [7, 2], "74" : [9, 0], "04" : [0, 0], "05" : [0, 0], "06" : [1, 0], "13" : [-2, 6], "83" : [1, 1], "84" : [10, -16],
   "2A" : [0, 0], "2B" : [0, 0]
   };
+
+
+const position_pays  = {
+    "FRA": [ -3, 6], "DEU": [ 2, -4], "GBR": [ 0, 0], "ESP": [ 0, 3], "PRT": [ -5, 0], "ITA": [ -4, 8], "ISL": [ 0, 0], "IRL": [ 0, 0], 
+    "NOR": [ 1, -5], "SWE": [ 0, 3], "FIN": [ 0, 0], "BEL": [ -3, -6], "NLD": [ -5, -28], "CHE": [ -4, 8], "DNK": [ -2, -9],
+     "POL": [ 5, -10], "CZE": [ 11, 5], "AUT": [ 8, 11], "SVN": [ 16, -1], "LUX": [ -3, 4], "HRV": [ 1, 5], "BIH": [ 4, 1],
+      "ALB": [ 0, 0], "SVK": [ 15, -1], "HUN": [ -1, 7], "EST": [ 0, 0], "LVA": [ 0, -1], "LTU": [ 0, 0], "BLR": [ 0, 0], 
+      "RUS": [ 0, 0], "UKR": [ 0, 0], "ROU": [ 0, -2], "SRB": [ 0, 0], "MDA": [ 0, 0], "BGR": [ 1, 4], "MNE": [ 0, 0], "GRC": [ 0, 0]
+}
 
  const position_departements_ecart = 
  { "971": [0, 0], "972": [0, 0], "973": [0, 0], "974": [0, 0], "976": [0, 0], "75": [5, 27], "77": [24, 28],
