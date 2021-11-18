@@ -508,7 +508,7 @@ d3.select('#display_proportional_circles')
 .style('color', 'red')
 .style('background-color', '#fff')
 
-  let pathsize = allPaths.size();
+  let pathsize = allPaths.select('path').size();
   let pathsCount = 0;
   let departements_corrections = ['17', '56', '91', '92', '93', '94', '95', '75', '971', '51', '10', '03', '23', '34', '81'];
 
@@ -518,15 +518,23 @@ d3.select('#display_proportional_circles')
   .attrTween("d", function(d){ return d.from_circle_function})
   .on('end', function(){
     pathsCount++;
+
     if (pathsCount >= pathsize){
+      console.log(pathsCount)
+
       allPaths.filter(function(d){return departements_corrections.includes(d.id) }).attr("d", function(d){ return d.path})
 
-      allPaths
+      allPaths.select('path')
       .transition()
       .attr('transform', 'translate(0,0)')
+
+      allPaths.selectAll('path')
+      .style('display', 'block')
     }
   })
   ;
+
+ // svg.selectAll('g#graph g path:not(:first-of-type)').style('display', 'block'); 
 
 }
 
@@ -547,9 +555,12 @@ allPaths.select('path').transition().attrTween("d", function(d){ return d.to_cir
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
-    registered_separate_circles()
+    // registered_separate_circles()
+    force_separate_circles()
   }
 })
+
+svg.selectAll('g#graph g path:not(:first-of-type)').style('display', 'none')
 
 }
 
