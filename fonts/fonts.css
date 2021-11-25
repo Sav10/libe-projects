@@ -139,6 +139,18 @@
 		src: url('fonts/Roboto-Medium.woff') format('woff');
 	}
 
+/* Regular */
+@font-face {
+  font-family: 'Libe-Sans-light';
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-light.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-light.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-light.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-light.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
 
 
 /* Regular */
@@ -153,6 +165,7 @@
        url('fonts/libe-sans/libesansweb-regular.woff') format('woff'), /* Modern browsers */
        url('fonts/libe-sans/libesansweb-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
+
 @font-face {
   font-family: 'Libe-Sans';
   font-weight: 400;
