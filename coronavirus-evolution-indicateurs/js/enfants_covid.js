@@ -157,9 +157,11 @@ d3.select("#" + "dot_rea_" +String(temp_d))
 
 var colorIncidence = function (x){
 
-if(x <=50){return '#ddd'}
-else { return '#ff0000' }
 
+if (x <=100) { return '#FF9800' }
+else if(x <=200){ return '#E3234A'}
+else if(x <=300){ return '#6d142d'}
+else { return '#000'}
 }
 
 var colorPositivity = function (x){
@@ -615,7 +617,7 @@ d3.select('#display_geo_paths')
 
 queue()
   .defer(d3.csv, 'data/taux_indicateurs_couleurs_departements3.csv')
-  .defer(d3.csv, 'https://libedata.github.io/data/updated_data/incid_pos_from_sept_2021.csv')
+  .defer(d3.csv, 'data/taux_incidence_enfants26nov.csv')
   .await(ready)
 
   function ready(error, data, data7j) {
@@ -629,24 +631,21 @@ queue()
     data7j.forEach(d =>{
 
       d.date = parseTime(d.datetime);
-      d.tx_positivite = +d.tx_positivite
+/*      d.tx_positivite = +d.tx_positivite*/
       d.tx_incidence = +d.tx_incidence
-      d.hosp_pour_100k = +d.hosp_pour_100k
-      d.rea_pour_100k = +d.rea_pour_100k
+
 
     })
 
     fulldata = data7j;
 
     maxvalues['tx_positivite'] = d3.max(fulldata.map(d=>d.tx_positivite));
-    maxvalues['tx_incidence'] = d3.max(fulldata.map(d=>d.tx_incidence));
-    maxvalues['hosp_pour_100k'] = d3.max(fulldata.map(d=>d.hosp_pour_100k));
-    maxvalues['rea_pour_100k'] = d3.max(fulldata.map(d=>d.rea_pour_100k));
+    /*maxvalues['tx_incidence'] = d3.max(fulldata.map(d=>d.tx_incidence));*/
+
 
     daterange['tx_incidence'] = _.uniq(fulldata.filter(d=>d.tx_incidence).map(d=>d.datetime));
-    daterange['tx_positivite'] = _.uniq(fulldata.filter(d=>d.tx_positivite).map(d=>d.datetime));
-    daterange['hosp_pour_100k'] = _.uniq(fulldata.filter(d=>d.hosp_pour_100k).map(d=>d.datetime));
-    daterange['rea_pour_100k'] = _.uniq(fulldata.filter(d=>d.rea_pour_100k).map(d=>d.datetime));
+    /*daterange['tx_positivite'] = _.uniq(fulldata.filter(d=>d.tx_positivite).map(d=>d.datetime));*/
+
     // daterange = _.uniq(fulldata.map(d=>d.datetime));
 
     circleScale.domain(d3.extent(data, d=>d.population));
@@ -676,9 +675,8 @@ queue()
 }
 
 app_data['tx_incidence'] = fulldata.filter(d=>d.datetime == daterange['tx_incidence'][daterange['tx_incidence'].length-1])
-app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])
-app_data['hosp_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['hosp_pour_100k'][daterange['hosp_pour_100k'].length-1])
-app_data['rea_pour_100k'] = fulldata.filter(d=>d.datetime == daterange['rea_pour_100k'][daterange['rea_pour_100k'].length-1])
+/*app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])*/
+
 
 app_data['tx_incidence'].forEach(function(d){
 
