@@ -504,7 +504,7 @@ function force_separate_circles_for_scatter(column_y){
 
   for (var i = 0; i < 200; ++i) simulation.tick();
 
-    allPathsEurope
+    allPaths
   .transition()
   .duration(800)
   // .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'})
