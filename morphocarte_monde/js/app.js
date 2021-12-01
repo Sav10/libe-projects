@@ -24,8 +24,8 @@ const g_x_translation_europe = 0;
 const g_y_translation_europe = 0;
 
 
-const rangeX = [-400, 500];
-const rangeY = [380, 0];
+const rangeX = [30, 1980];
+const rangeY = [980, 0];
 
 var circleScalePop = 
 d3.scaleSqrt()
