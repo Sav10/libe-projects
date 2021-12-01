@@ -19,6 +19,10 @@ scaleWidth,
 thisMinZoom = 2,
 mapstate = 0;
 
+
+const rangeX = [-400, 500];
+const rangeY = [380, 0];
+
 var circleScalePop = 
 d3.scaleSqrt()
 .range([1, 100]);
@@ -475,6 +479,99 @@ color
 //    500);
 
 }
+
+
+// New functions
+
+
+function force_separate_circles_for_scatter(column_y){
+
+  // g.transition().attr('transform', `translate(${-g_x_translation_europe},${g_y_translation_europe}) scale(2)`)
+
+
+  var features = allPaths.data();
+
+  simulation = d3.forceSimulation(features)
+  .force("y", d3.forceY(function(d) { return column_y ? scaleY(d[column_y]) : 150}).strength(5))
+  .force("x", d3.forceX(function(d) { return scaleX(d.deaths_for_100k) }).strength(8))
+  .force("collide", d3.forceCollide(7).radius(d=> d['radius_pop']))
+  .stop();
+
+  for (var i = 0; i < 200; ++i) simulation.tick();
+
+    allPathsEurope
+  .transition()
+  .duration(800)
+  // .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'})
+  .attr('transform', function(d) { return moveToPoint2(d, [d.x, d.y])});
+
+}
+// 'transform', d=> moveToPoint2(d, [scaleEurope(d.deaths_for_100k),150])
+
+function moveToPoint2(d, newCoords){
+
+return `translate(${g_x_translation_europe-d.centroid[0] + newCoords[0]}, ${g_y_translation_europe-d.centroid[1] + newCoords[1]})`
+
+}
+
+const scaleX = d3.scaleLinear()
+.range(rangeX)
+.domain([0, 100]);
+
+var scaleY = d3.scaleLinear()
+.range(rangeY)
+.domain([0, 90000]);
+
+
+function changeYAxisScale(newScale){
+
+  scaleY.domain(newScale)
+
+  g.select('g#axisLeft')
+  .transition()
+  .call(d3.axisLeft(scaleY).tickFormat(d=>formatNumber(d)))
+}
+
+function drawAxisLeft(){
+
+var axisL = d3.axisLeft(scaleY);
+
+
+axisL.tickFormat(d=>formatNumber(d));
+
+d3.select('g#axisLeft')
+.remove()
+
+g.append("g")
+.attr('class', 'axis')
+.attr('id', 'axisLeft')
+    .attr("transform", `translate(${g_x_translation_europe + rangeX[0] - 20},${g_y_translation_europe})`)
+    .call(axisL);
+
+}
+
+
+
+
+function drawAxisBottom(){
+
+var axisT = d3.axisBottom(scaleX);
+
+d3.select('g#axisBottom')
+.remove()
+
+g.append("g")
+.attr('class', 'axis')
+.attr('id', 'axisBottom')
+    .attr("transform", `translate(${g_x_translation_europe},${g_y_translation_europe + rangeY[0]})`)
+    .call(axisT);
+
+}
+
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+}
+
 
 function responsivefy(svg) {
 
