@@ -19,6 +19,10 @@ scaleWidth,
 thisMinZoom = 2,
 mapstate = 0;
 
+const g_x_translation_europe = 0;
+
+const g_y_translation_europe = 0;
+
 
 const rangeX = [-400, 500];
 const rangeY = [380, 0];
@@ -68,6 +72,7 @@ return convertToString(this_arr)
 
 const svg = d3.select(".carte svg");
 const allPaths = svg.selectAll('path');
+const g = d3.select('svg g#graph');
 
 svg.style('max-height', $(window).height()*0.9 + 'px')
 
