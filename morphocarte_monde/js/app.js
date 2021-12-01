@@ -497,7 +497,8 @@ function force_separate_circles_for_scatter(column_y){
   var features = allPaths.data();
 
   simulation = d3.forceSimulation(features)
-  .force("y", d3.forceY(function(d) { return column_y ? scaleY(d[column_y]) : 150}).strength(5))
+  .force("y", d3.forceY(function(d) { 
+    return column_y ? scaleY(d[column_y]) : 150}).strength(5))
   .force("x", d3.forceX(function(d) { return scaleX(d.deaths_for_100k) }).strength(8))
   .force("collide", d3.forceCollide(7).radius(d=> d['radius_pop']))
   .stop();
@@ -525,7 +526,7 @@ const scaleX = d3.scaleLinear()
 
 var scaleY = d3.scaleLinear()
 .range(rangeY)
-.domain([0, 90000]);
+.domain([0, 100]);
 
 
 function changeYAxisScale(newScale){
@@ -572,6 +573,18 @@ g.append("g")
     .call(axisT);
 
 }
+
+
+function makeScatterPlot(){
+
+drawAxisBottom()
+
+drawAxisLeft()
+
+force_separate_circles_for_scatter('deaths_for_100k')
+
+}
+
 
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
