@@ -423,9 +423,9 @@ if (mapstate == 0){
 // ;
 
 
-transform_all_paths_to_circle('radius_pop')
+// transform_all_paths_to_circle('radius_pop')
 
-force_separate_circles_for_scatter(column_x, column_y)
+// force_separate_circles_for_scatter(column_x, column_y)
 
 
 // async function myFetch() {
@@ -441,6 +441,24 @@ force_separate_circles_for_scatter(column_x, column_y)
 //   force_separate_circles_for_scatter(column_x, column_y)
 // }).catch(e => console.log(e));
 
+
+// async function myFetch() {
+//   transform_all_paths_to_circle('radius_pop')
+//   let response = await transform_all_paths_to_circle('radius_pop');
+
+//   return await response;
+
+// }
+
+
+async function myFetch(){
+  return transform_all_paths_to_circle('radius_pop');
+}
+
+
+myFetch()
+.then()
+.then(force_separate_circles_for_scatter(column_x, column_y));
 
 }
 
