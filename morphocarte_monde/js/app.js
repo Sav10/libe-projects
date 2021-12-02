@@ -337,11 +337,10 @@ function force_separate_circles_for_scatter(column_x, column_y){
   .transition()
   .duration(800)
   // .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'})
-  .attr('transform', function(d) { return moveToPoint2(d, [d.x, d.y])}).on('end', function(){
+  .attr('transform', function(d) { return moveToPoint2(d, [d.x, d.y])})
+  .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
-    // registered_separate_circles_ecarts()
-    force_separate_circles(radius_name)
     mapstate = 2
   }
 })
@@ -397,30 +396,31 @@ function makeScatterPlot(column_x, column_y){
 drawAxisBottom()
 
 // drawAxisLeft()
-// if (mapstate == 0){
+if (mapstate == 0){
 
 
-// console.log('From 0 mapstate')
+console.log('From 0 mapstate')
 
-// let promise1 = new Promise((resolve, reject) => {
-// console.log('transforming to circle')
+let promise1 = new Promise((resolve, reject) => {
+console.log('transforming to circle')
 
-//   transform_all_paths_to_circle('radius_pop')
-// });
-
-
-// promise1.then(() => {
-
-// console.log('moving on axis')
-
-//   force_separate_circles_for_scatter(column_x, column_y)
-// });
+  resolve(transform_all_paths_to_circle('radius_pop'))
+});
 
 
-// }
+promise1.then((value) => {
 
 
-if (mapstate == 1){
+console.log('moving on axis')
+
+  force_separate_circles_for_scatter(column_x, column_y)
+});
+
+
+}
+
+
+else if (mapstate == 1){
 
   console.log('From 1 mapstate')
 
