@@ -397,28 +397,32 @@ function makeScatterPlot(column_x, column_y){
 drawAxisBottom()
 
 // drawAxisLeft()
-if (mapstate == 0){
+// if (mapstate == 0){
 
 
-console.log('From 0 mapstate')
+// console.log('From 0 mapstate')
 
-let promise1 = new Promise((resolve, reject) => {
-console.log('transforming to circle')
+// let promise1 = new Promise((resolve, reject) => {
+// console.log('transforming to circle')
 
-  transform_all_paths_to_circle('radius_pop')
-});
-
-
-promise1.then(() => {
-
-console.log('moving on axis')
-
-  force_separate_circles_for_scatter(column_x, column_y)
-});
+//   transform_all_paths_to_circle('radius_pop')
+// });
 
 
-}
-else if (mapstate == 1){
+// promise1.then(() => {
+
+// console.log('moving on axis')
+
+//   force_separate_circles_for_scatter(column_x, column_y)
+// });
+
+
+// }
+
+
+if (mapstate == 1){
+
+  console.log('From 1 mapstate')
 
 force_separate_circles_for_scatter(column_x, column_y)
 }
