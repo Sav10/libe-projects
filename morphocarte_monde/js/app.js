@@ -308,6 +308,7 @@ allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.sel
     // registered_separate_circles_ecarts()
     force_separate_circles(radius_name)
     mapstate = 1
+    return 'OK'
   }
 })
 
@@ -399,28 +400,46 @@ drawAxisBottom()
 if (mapstate == 0){
 
 
-console.log('From 0 mapstate')
+// console.log('From 0 mapstate')
 
-let promise1 = new Promise((resolve, reject) => {
-
-
-});
+// let promise1 = new Promise((resolve, reject) => {
 
 
-promise1.then(() => {
+// });
 
-console.log('moving on axis')
+
+// promise1.then(() => {
+
+// console.log('moving on axis')
+// transform_all_paths_to_circle('radius_pop')
+
+// })
+// .then(() => {
+
+// console.log('moving on axis')
+
+//   force_separate_circles_for_scatter(column_x, column_y)
+// })
+// ;
+
+
 transform_all_paths_to_circle('radius_pop')
 
-})
-.then(() => {
+force_separate_circles_for_scatter(column_x, column_y)
 
 
-console.log('moving on axis')
+// async function myFetch() {
+//   transform_all_paths_to_circle('radius_pop')
+//   let response = await transform_all_paths_to_circle('radius_pop');
 
-  force_separate_circles_for_scatter(column_x, column_y)
-})
-;
+//   return await response;
+
+// }
+
+
+// myFetch().then((value) => {
+//   force_separate_circles_for_scatter(column_x, column_y)
+// }).catch(e => console.log(e));
 
 
 }
