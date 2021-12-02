@@ -19,6 +19,12 @@ scaleWidth,
 thisMinZoom = 2,
 mapstate = 0;
 
+const code_pays = 'code2d';
+
+const radius_name = 'radius_pop';
+
+// const code_pays = 'geoId';
+
 const g_x_translation_europe = 0;
 
 const g_y_translation_europe = 0;
@@ -100,7 +106,6 @@ function getBoundingBoxCenter (selection) {
 
 /////////////////////////
 //////////////////////////////////////// configuration
-const geoIDVariable = 'id'
 const format = d3.format(',')
 
 const tip = d3
@@ -110,7 +115,7 @@ const tip = d3
 .html(
   d =>{
     let this_code = d.id;
-    let this_d = _.find(app_data, d => d.geoId == this_code);
+    let this_d = _.find(app_data, d => d[code_pays] == this_code);
     if(this_d){
     let this_deaths = this_d.deaths;
     let this_deaths_for_100k = this_d.deaths_for_100k;
@@ -279,6 +284,9 @@ function redraw_paths(radius_name, duration, callback_value){
         transform_all_paths_to_circle(callback_value)
         // setTimeout(() => {  callback_function(); }, 2000);
       }
+      else if (pathsCount >= pathsize){
+        mapstate = 0
+      }
 
       })
     }
@@ -299,11 +307,49 @@ allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.sel
   if (pathsCount >= pathsize){
     // registered_separate_circles_ecarts()
     force_separate_circles(radius_name)
+    mapstate = 1
   }
 })
 
 }
 
+
+function force_separate_circles_for_scatter(column_x, column_y){
+
+  // g.transition().attr('transform', `translate(${-g_x_translation_europe},${g_y_translation_europe}) scale(2)`)
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
+
+
+  var features = allPaths.data();
+
+  simulation = d3.forceSimulation(features)
+  .force("y", d3.forceY(function(d) { 
+    return column_y ? scaleY(d[column_y]) : 500}).strength(5))
+  .force("x", d3.forceX(function(d) { return scaleX(d[column_x]) }).strength(8))
+  .force("collide", d3.forceCollide(7).radius(d=> d['radius_pop']))
+  .stop();
+
+  for (var i = 0; i < 200; ++i) simulation.tick();
+
+    allPaths
+  .transition()
+  .duration(800)
+  // .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'})
+  .attr('transform', function(d) { return moveToPoint2(d, [d.x, d.y])}).on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    // registered_separate_circles_ecarts()
+    force_separate_circles(radius_name)
+    mapstate = 2
+  }
+})
+
+
+  ;
+
+}
 
 
 d3.select('#display_proportional_circles_pop')
@@ -315,19 +361,15 @@ allPaths.attr('visibility', 'visible')
 
 transform_all_paths_to_circle('radius_pop')
 
-  mapstate = 1;
 
 })
 
-d3.select('#display_proportional_circles_deaths')
+d3.select('#order_by_vax')
 .on('click', function(){
 
 
-  transform_all_paths_to_circle('radius_deaths')
-  allPaths.filter(d=> d.deaths==0).attr('visibility', 'hidden')
+makeScatterPlot('people_fully_vaccinated_per_hundred')
 
-
-  mapstate = 2;
 
 })
 
@@ -344,15 +386,47 @@ else if (mapstate == 2){
 redraw_paths('radius_deaths', 500)
 
 }
-
-
-  
-
-
-
-  mapstate = 0;
-  
+ 
 })
+
+
+// Ex : makeScatterPlot('deaths_for_100k', 'deaths_for_100k')
+
+function makeScatterPlot(column_x, column_y){
+
+drawAxisBottom()
+
+// drawAxisLeft()
+if (mapstate == 0){
+
+
+console.log('From 0 mapstate')
+
+let promise1 = new Promise((resolve, reject) => {
+console.log('transforming to circle')
+
+  transform_all_paths_to_circle('radius_pop')
+});
+
+
+promise1.then(() => {
+
+console.log('moving on axis')
+
+  force_separate_circles_for_scatter(column_x, column_y)
+});
+
+
+}
+else if (mapstate == 1){
+
+force_separate_circles_for_scatter(column_x, column_y)
+}
+
+
+
+}
+
 
 // color2.domain([0, 1, 2, 4, 5]);
 
@@ -363,7 +437,8 @@ d3.select(".carte svg")
 
 
 Promise.all([
-    d3.csv("data/deaths_countries_last.csv")
+    // d3.csv("data/deaths_countries_last.csv")
+    d3.csv("data/vaccination_monde.csv")
 ]).then(function(files) {
   ready(files[0])
 }).catch(function(err) {
@@ -381,9 +456,10 @@ Promise.all([
     // })
 
     data.forEach(d => {
-      d.deaths = +d.deaths;
-      d.population = +d.popData2018;
-      d.deaths_for_100k = _.round(100000*d.deaths / d.population, 1)
+      // d.deaths = +d.deaths;
+      d.population = +d.population;
+      d.pourcentage_vaccins = +d.pourcentage_vaccins;
+      d.people_fully_vaccinated_per_hundred = +d.people_fully_vaccinated_per_hundred;
     })
 
     // console.log(data0)
@@ -397,18 +473,18 @@ Promise.all([
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-id')
       let this_nom = d3.select(allSvgNodes[i]).attr('data-nom')
-      let this_d = data.filter(d=> d.geoId == this_id)[0]
+      let this_d = data.filter(d=> d[code_pays] == this_id)[0]
       // console.log(this_id, this_d)
       let this_pop = this_d ? this_d.population : 0;
-      let this_deaths = this_d ? this_d.deaths : null;
-      let this_deaths_for_100k = this_d ? this_d.deaths_for_100k : 0;
+      // let this_deaths = this_d ? this_d.deaths : null;
+      let people_fully_vaccinated_per_hundred = this_d ? this_d.people_fully_vaccinated_per_hundred : 0;
       // let this_ecart = data.filter(d=> d.CodeDepartement == this_id)[0].ecart2020;
       // let this_radius = Math.round(circleScale(this_pop));
       // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
       let this_radius_random = Math.round(Math.random()*50);
       let this_radius_fixed = 10;
       let this_radius_pop = Math.round(circleScalePop(this_pop));
-      let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
+      // let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
       // let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
@@ -422,10 +498,10 @@ Promise.all([
         // 'to_circle_ecart_function': this_to_circle_ecart_function,
         // 'from_circle_function': this_from_circle_function,
         'population':this_pop,
-        'deaths':this_deaths,
-        'deaths_for_100k':this_deaths_for_100k,
+        // 'deaths':this_deaths,
+        'people_fully_vaccinated_per_hundred':people_fully_vaccinated_per_hundred,
         'radius_pop': this_radius_pop,
-        'radius_deaths': this_radius_deaths,
+        // 'radius_deaths': this_radius_deaths,
         'radius_fixed': this_radius_fixed,
         'nom': this_nom,
         // 'radius': this_radius,
@@ -448,7 +524,7 @@ color
 
     // if (typeof data.filter(function(e){return e.CodeDepartement == d.id})[0] !== 'undefined') {
 
-      return color(d.deaths_for_100k)
+      return color(d.people_fully_vaccinated_per_hundred)
 
     // }
     // return '#fff'
@@ -489,29 +565,7 @@ color
 // New functions
 
 
-function force_separate_circles_for_scatter(column_y){
 
-  // g.transition().attr('transform', `translate(${-g_x_translation_europe},${g_y_translation_europe}) scale(2)`)
-
-
-  var features = allPaths.data();
-
-  simulation = d3.forceSimulation(features)
-  .force("y", d3.forceY(function(d) { 
-    return column_y ? scaleY(d[column_y]) : 150}).strength(5))
-  .force("x", d3.forceX(function(d) { return scaleX(d.deaths_for_100k) }).strength(8))
-  .force("collide", d3.forceCollide(7).radius(d=> d['radius_pop']))
-  .stop();
-
-  for (var i = 0; i < 200; ++i) simulation.tick();
-
-    allPaths
-  .transition()
-  .duration(800)
-  // .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'})
-  .attr('transform', function(d) { return moveToPoint2(d, [d.x, d.y])});
-
-}
 // 'transform', d=> moveToPoint2(d, [scaleEurope(d.deaths_for_100k),150])
 
 function moveToPoint2(d, newCoords){
@@ -575,15 +629,7 @@ g.append("g")
 }
 
 
-function makeScatterPlot(){
 
-drawAxisBottom()
-
-drawAxisLeft()
-
-force_separate_circles_for_scatter('deaths_for_100k')
-
-}
 
 
 function formatNumber(num) {
