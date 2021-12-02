@@ -451,17 +451,20 @@ if (mapstate == 0){
 // }
 
 
-async function test(){
-    const promise = new Promise((resolve, reject) => {
-        transform_all_paths_to_circle('radius_pop');
-    });
-    
-    let result = await promise; //Attend que la promesse soit résolue ou rejetée
-    console.log('OK');
-}
+transform_all_paths_to_circle('radius_pop');
+.then(toppings => force_separate_circles_for_scatter(column_x, column_y))
 
-test()
-.then(force_separate_circles_for_scatter(column_x, column_y))
+// async function test(){
+//     const promise = new Promise((resolve, reject) => {
+//         transform_all_paths_to_circle('radius_pop');
+//     });
+    
+//     let result = await promise; //Attend que la promesse soit résolue ou rejetée
+//     console.log('OK');
+// }
+
+// test()
+// .then(force_separate_circles_for_scatter(column_x, column_y))
 
 // async function myFetch(){
 //   return transform_all_paths_to_circle('radius_pop');
