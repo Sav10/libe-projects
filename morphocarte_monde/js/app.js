@@ -402,19 +402,25 @@ if (mapstate == 0){
 console.log('From 0 mapstate')
 
 let promise1 = new Promise((resolve, reject) => {
-console.log('transforming to circle')
 
-  resolve(transform_all_paths_to_circle('radius_pop'))
+
 });
 
 
-promise1.then((value) => {
+promise1.then(() => {
+
+console.log('moving on axis')
+transform_all_paths_to_circle('radius_pop')
+
+})
+.then(() => {
 
 
 console.log('moving on axis')
 
   force_separate_circles_for_scatter(column_x, column_y)
-});
+})
+;
 
 
 }
