@@ -451,8 +451,13 @@ if (mapstate == 0){
 // }
 
 
-transform_all_paths_to_circle('radius_pop');
-.then(toppings => force_separate_circles_for_scatter(column_x, column_y))
+transform_all_paths_to_circle('radius_pop')
+.then(function(){
+force_separate_circles_for_scatter(column_x, column_y)
+
+})
+
+
 
 // async function test(){
 //     const promise = new Promise((resolve, reject) => {
