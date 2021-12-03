@@ -404,7 +404,8 @@ if (mapstate ==1){
 redraw_paths('radius_pop', 500)
 }
 else if (mapstate == 2){
-redraw_paths('radius_deaths', 500)
+  
+redraw_paths('radius_pop', 500)
 
 }
  
@@ -418,22 +419,17 @@ function makeScatterPlot(column_x, column_y){
 drawAxisBottom()
 
 // drawAxisLeft()
+
 if (mapstate == 0){
 
 transform_all_paths_to_circle(radius_name, column_x, column_y)
 
-
 }
-
 
 else if (mapstate == 1){
 
-  console.log('From 1 mapstate')
-
 force_separate_circles_for_scatter(column_x, column_y)
 }
-
-
 
 }
 
