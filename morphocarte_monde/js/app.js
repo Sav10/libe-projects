@@ -523,7 +523,7 @@ app_data = data;
 // .domain(d3.extent(data.map( d => d.deaths_for_100k)));
 
 color
-.domain([0, 10 ,80]);
+.domain([0, 10 ,85]);
 
   allPaths
   .style('fill', d => {
