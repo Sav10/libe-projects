@@ -224,7 +224,10 @@ function transformToCircle(thisPath){
 
 }
 
-function force_separate_circles(radius_name){
+function force_separate_circles(radius_name, to_scatter_x, to_scatter_y){
+
+  let pathsize = allPaths.size();
+  let pathsCount = 0;
 
   var features = allPaths.data();
 
@@ -239,7 +242,20 @@ function force_separate_circles(radius_name){
     allPaths
   .transition()
   .duration(800)
-  .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
+  .attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'})
+  .on('end', function(){
+  pathsCount++;
+  if (pathsCount >= pathsize){
+    // registered_separate_circles_ecarts()
+        mapstate = 1
+
+    if (to_scatter_x){
+      force_separate_circles_for_scatter(to_scatter_x, to_scatter_y)
+    }
+    
+
+  }
+});
 
 }
 
@@ -295,7 +311,7 @@ function redraw_paths(radius_name, duration, callback_value){
 }
 
 
-function transform_all_paths_to_circle(radius_name){
+function transform_all_paths_to_circle(radius_name, to_scatter_x, to_scatter_y){
 
   let pathsize = allPaths.size();
   let pathsCount = 0;
@@ -306,7 +322,13 @@ allPaths.transition().attrTween("d", function(d){ return flubber.toCircle(d3.sel
   pathsCount++;
   if (pathsCount >= pathsize){
     // registered_separate_circles_ecarts()
-    force_separate_circles(radius_name)
+    if (to_scatter_x){
+      force_separate_circles(radius_name, to_scatter_x, to_scatter_y)
+    }
+    else{
+      force_separate_circles(radius_name)
+    }
+    
     mapstate = 1
   }
 })
@@ -397,6 +419,8 @@ drawAxisBottom()
 
 // drawAxisLeft()
 if (mapstate == 0){
+
+transform_all_paths_to_circle(radius_name, column_x, column_y)
 
 
 }
