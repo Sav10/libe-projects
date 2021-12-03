@@ -117,13 +117,13 @@ const tip = d3
     let this_code = d.id;
     let this_d = _.find(app_data, d => d[code_pays] == this_code);
     if(this_d){
-    let this_deaths = this_d.deaths;
-    let this_deaths_for_100k = this_d.deaths_for_100k;
+    /*let this_deaths = this_d.deaths;*/
+    let people_fully_vaccinated_per_hundred = this_d.people_fully_vaccinated_per_hundred;
 
     return `<span class='details'>${
       d.nom
-    }<br><span style="font-weight:bold">${this_deaths}</span> morts du Coronavirus
-    <br>Soit une mortalité de <span style="font-weight:bold">${this_deaths_for_100k}</span> pour 100 000 habitants</span></span>`
+    }<br><span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est complètement vaccinée`
+/*    <br>Soit une mortalité de <span style="font-weight:bold">${people_fully_vaccinated_per_hundred}</span> pour 100 000 habitants</span></span>*/
   }
   else{
     console.log(this_code + ' not found')
@@ -404,7 +404,7 @@ if (mapstate ==1){
 redraw_paths('radius_pop', 500)
 }
 else if (mapstate == 2){
-  
+
 redraw_paths('radius_pop', 500)
 
 }
@@ -523,7 +523,7 @@ app_data = data;
 // .domain(d3.extent(data.map( d => d.deaths_for_100k)));
 
 color
-.domain([0, 3 ,70]);
+.domain([0, 10 ,80]);
 
   allPaths
   .style('fill', d => {
