@@ -250,6 +250,100 @@ h1#graph_title{
 }
 }
 
+
+.actionButton {
+    background-color: #fff;
+    color: #e60004;
+    display: inline-block;
+    font-size: .9em;
+    line-height: 1.2em;
+    padding: 4px 3px 5px;
+    font-family: "syntheselibeweb", sans-serif;
+    margin-right: 3px;
+    border: 1px solid #e60004;
+    opacity: 1;
+}
+.actionButton:hover{
+color:  #e60004;
+opacity: 0.8;
+
+}
+    @media (max-width: 768px) {
+    a#play_button {
+    margin-top: 12px;
+    }
+.actionButton {
+    font-size: .9em;
+}
+
+    }
+
+    @media (max-width: 398px) {
+.actionButton {
+    font-size: .8em;
+}
+    }
+
+    @media (max-width: 349px) {
+.actionButton {
+    font-size: .7em;
+}
+    }
+
+    @media (min-width: 768px) {
+.actionButton {
+    font-size: 1.2em;
+}
+}
+#representation_carto{
+
+    position: relative;
+    top: 20px;
+    left: 0;
+
+}
+@media (max-width: 768px) {
+
+#display_geo_paths {
+    margin-left: 1.5em;
+}
+
+}
+
+#representation_carto a.actionButton{
+
+margin-right: 0;
+font-size: .8em;
+
+}
+
+#display_proportional_circles{
+  margin-left: -5px;
+}
+
+
+
+#representation_carto {
+    left: -1%;
+    top: 9px;
+    width: 10.5em;
+    margin-top: 4px;
+}
+    }
+
+
+
+@media screen and (min-width: 700px){
+#representation_carto{
+
+    top: 0;
+
+}
+#representation_carto {
+    z-index: 100;
+}
+}
+
   </style>
 </head>
 <body>
@@ -260,12 +354,18 @@ h1#graph_title{
         <div class="column is-three-quarters map_container" style="z-index: 90;">
 
           <div id="articles">
-            
+
           <h1 id="graph_title"><span style="color:red; display: inline;">Covid-19 </span> : la vaccination dans le monde</h1>
-                    <p><div id="button_box">
-                    <button class="actionButton"  id="display_geo_paths" href="#">Carte</button><br>
-                    <button class="actionButton" id="display_proportional_circles_pop" href="#">Cartogramme population</button> <br>
-                	<button class="actionButton" id="order_by_vax" href="#">Classer par vaccination</button></div>
+                    <p>
+
+
+                    <div id="representation_carto">
+                    <a class="actionButton"  id="display_geo_paths" href="#">Carte</a><br>
+                    <a class="actionButton" id="display_proportional_circles_pop" href="#">Cartogramme population</a> <br>
+                  <a class="actionButton" id="order_by_vax" href="#">Classer par vaccination</a>
+
+          </div>
+
 
           </div>
           <div class="carte" id='morphocarte'>
