@@ -376,6 +376,15 @@ function force_separate_circles_for_scatter(column_x, column_y){
 d3.select('#display_proportional_circles_pop')
 .on('click', function(){
 
+d3.selectAll('#representation_carto .actionButton')
+.style('color', 'red')
+.style('background-color', '#fff')
+
+d3.select('#display_proportional_circles_pop')
+.style('color', '#fff')
+.style('background-color', 'red')
+
+
 allPaths.attr('visibility', 'visible')
   // transform_all_paths_to_circle('radius_pop')
 
@@ -389,6 +398,15 @@ d3.select('#order_by_vax')
 .on('click', function(){
 
 
+d3.selectAll('#representation_carto .actionButton')
+.style('color', 'red')
+.style('background-color', '#fff')
+
+d3.select('#order_by_vax')
+.style('color', '#fff')
+.style('background-color', 'red')
+
+
 makeScatterPlot('people_fully_vaccinated_per_hundred')
 
 
@@ -396,6 +414,15 @@ makeScatterPlot('people_fully_vaccinated_per_hundred')
 
 d3.select('#display_geo_paths')
 .on('click', function(){
+
+d3.selectAll('#representation_carto .actionButton')
+.style('color', 'red')
+.style('background-color', '#fff')
+
+d3.select('#display_geo_paths')
+.style('color', '#fff')
+.style('background-color', 'red')
+
 
 allPaths.attr('visibility', 'visible')
 
