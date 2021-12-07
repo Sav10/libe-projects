@@ -25,9 +25,9 @@ const radius_name = 'radius_pop';
 
 // const code_pays = 'geoId';
 
-const g_x_translation_europe = 0;
+const g_x_translation_europe = 30;
 
-const g_y_translation_europe = 0;
+const g_y_translation_europe = 20;
 
 
 const rangeX = [30, 1980];
@@ -340,6 +340,8 @@ function force_separate_circles_for_scatter(column_x, column_y){
 
   // g.transition().attr('transform', `translate(${-g_x_translation_europe},${g_y_translation_europe}) scale(2)`)
 
+  /*console.log(column_y)*/
+
   let pathsize = allPaths.size();
   let pathsCount = 0;
 
@@ -347,7 +349,7 @@ function force_separate_circles_for_scatter(column_x, column_y){
   var features = allPaths.data();
 
   simulation = d3.forceSimulation(features)
-  .force("y", d3.forceY(function(d) { 
+  .force("y", d3.forceY(function(d) {
     return column_y ? scaleY(d[column_y]) : 500}).strength(5))
   .force("x", d3.forceX(function(d) { return scaleX(d[column_x]) }).strength(8))
   .force("collide", d3.forceCollide(7).radius(d=> d['radius_pop']))
@@ -407,7 +409,7 @@ d3.select('#order_by_vax')
 .style('background-color', 'red')
 
 
-makeScatterPlot('people_fully_vaccinated_per_hundred')
+makeScatterPlot('people_fully_vaccinated_per_hundred', 'gdp_capita')
 
 
 })
@@ -443,9 +445,11 @@ redraw_paths('radius_pop', 500)
 
 function makeScatterPlot(column_x, column_y){
 
+
+
 drawAxisBottom()
 
-// drawAxisLeft()
+drawAxisLeft()
 
 if (mapstate == 0){
 
@@ -492,6 +496,7 @@ Promise.all([
       // d.deaths = +d.deaths;
       d.population = +d.population;
       d.pourcentage_vaccins = +d.pourcentage_vaccins;
+      d.gdp_capita = +d.gdp_capita;
       d.people_fully_vaccinated_per_hundred = +d.people_fully_vaccinated_per_hundred;
     })
 
@@ -511,6 +516,7 @@ Promise.all([
       let this_pop = this_d ? this_d.population : 0;
       // let this_deaths = this_d ? this_d.deaths : null;
       let people_fully_vaccinated_per_hundred = this_d ? this_d.people_fully_vaccinated_per_hundred : 0;
+      let gdp_capita = this_d ? this_d.gdp_capita : 1;
       // let this_ecart = data.filter(d=> d.CodeDepartement == this_id)[0].ecart2020;
       // let this_radius = Math.round(circleScale(this_pop));
       // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
@@ -533,6 +539,7 @@ Promise.all([
         'population':this_pop,
         // 'deaths':this_deaths,
         'people_fully_vaccinated_per_hundred':people_fully_vaccinated_per_hundred,
+        'gdp_capita':gdp_capita,
         'radius_pop': this_radius_pop,
         // 'radius_deaths': this_radius_deaths,
         'radius_fixed': this_radius_fixed,
@@ -611,9 +618,9 @@ const scaleX = d3.scaleLinear()
 .range(rangeX)
 .domain([0, 100]);
 
-var scaleY = d3.scaleLinear()
+var scaleY = d3.scaleLog(2)
 .range(rangeY)
-.domain([0, 100]);
+.domain([400, 120000]);
 
 
 function changeYAxisScale(newScale){
@@ -668,6 +675,38 @@ g.append("g")
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
 }
+
+
+
+var data_legend = [0,5,10,15,20,25,30, 35,40];
+var legend = d3.select('#legend .mapLegend .legendCells').selectAll('.cell')
+.data(data_legend)
+
+legend.exit().remove()
+
+
+var legend_cells = legend
+.enter()
+.append('g')
+.attr('class', 'cell')
+.attr('transform', function(d, i){ return 'translate(' + i*46 + ',0)'})
+
+legend_cells
+.append('rect')
+.attr('class', 'swatch')
+.attr('height', 15)
+.attr('width', 44)
+.style('fill', function(d){ return color(d)})
+
+
+legend_cells
+.append('text')
+.attr('class', 'label')
+.attr('height', 15)
+.attr('width', 44)
+.style('text-anchor', 'middle')
+.text(function(d){return d})
+.attr('transform', 'translate(22,30)')
 
 
 function responsivefy(svg) {
