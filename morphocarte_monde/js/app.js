@@ -179,7 +179,8 @@ const width = 960 - margin.left - margin.right
 const height = 500 - margin.top - margin.bottom
 
   var color = d3.scaleLinear()
-  .range(["white", '#F9D3DB', "#E3234A"]);
+  .range(["white", '#F9D3DB', "#E3234A"])
+  .domain([0, 10 ,85]);;
 
   // .range(["white", "#D4000C"]);
   // A70021
@@ -556,9 +557,6 @@ app_data = data;
 // color
 // .domain(d3.extent(data.map( d => d.deaths_for_100k)));
 
-color
-.domain([0, 10 ,85]);
-
   allPaths
   .style('fill', d => {
 
@@ -678,7 +676,7 @@ function formatNumber(num) {
 
 
 
-var data_legend = [0,5,10,15,20,25,30, 35,40];
+var data_legend = [0,10,20,30,40,50,60, 70, 80, 90];
 var legend = d3.select('#legend .mapLegend .legendCells').selectAll('.cell')
 .data(data_legend)
 
