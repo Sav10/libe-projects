@@ -25,7 +25,7 @@ const radius_name = 'radius_pop';
 
 // const code_pays = 'geoId';
 
-const g_x_translation_europe = 30;
+const g_x_translation_europe = 40;
 
 const g_y_translation_europe = 20;
 
@@ -122,8 +122,8 @@ const tip = d3
 
     return `<span class='details'>${
       d.nom
-    }<br><span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est complètement vaccinée`
-/*    <br>Soit une mortalité de <span style="font-weight:bold">${people_fully_vaccinated_per_hundred}</span> pour 100 000 habitants</span></span>*/
+    }<br><span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est complètement vaccinée
+    <br>Et le PIB par tête est de <span style="font-weight:bold">${this_d.gdp_capita}$</span> pour 100 000 habitants</span></span>`
   }
   else{
     console.log(this_code + ' not found')
@@ -392,6 +392,11 @@ allPaths.attr('visibility', 'visible')
   // transform_all_paths_to_circle('radius_pop')
 
 
+d3.select('g#axisLeft')
+.remove()
+d3.select('g#axisBottom')
+.remove()
+
 transform_all_paths_to_circle('radius_pop')
 
 
@@ -409,8 +414,29 @@ d3.select('#order_by_vax')
 .style('color', '#fff')
 .style('background-color', 'red')
 
+changeYAxisScale([400,120000], 'log')
 
 makeScatterPlot('people_fully_vaccinated_per_hundred', 'gdp_capita')
+
+
+})
+
+
+d3.select('#order_by_vax_and_education')
+.on('click', function(){
+
+
+d3.selectAll('#representation_carto .actionButton')
+.style('color', 'red')
+.style('background-color', '#fff')
+
+d3.select('#order_by_vax_and_education')
+.style('color', '#fff')
+.style('background-color', 'red')
+
+changeYAxisScale([0,1])
+
+makeScatterPlot('people_fully_vaccinated_per_hundred', 'education_index')
 
 
 })
@@ -428,6 +454,11 @@ d3.select('#display_geo_paths')
 
 
 allPaths.attr('visibility', 'visible')
+
+d3.select('g#axisLeft')
+.remove()
+d3.select('g#axisBottom')
+.remove()
 
 if (mapstate ==1){
 
@@ -498,6 +529,7 @@ Promise.all([
       d.population = +d.population;
       d.pourcentage_vaccins = +d.pourcentage_vaccins;
       d.gdp_capita = +d.gdp_capita;
+      d.education_index = +d.education_index;
       d.people_fully_vaccinated_per_hundred = +d.people_fully_vaccinated_per_hundred;
     })
 
@@ -518,6 +550,7 @@ Promise.all([
       // let this_deaths = this_d ? this_d.deaths : null;
       let people_fully_vaccinated_per_hundred = this_d ? this_d.people_fully_vaccinated_per_hundred : 0;
       let gdp_capita = this_d ? this_d.gdp_capita : 1;
+      let education_index = this_d ? this_d.education_index : 0;
       // let this_ecart = data.filter(d=> d.CodeDepartement == this_id)[0].ecart2020;
       // let this_radius = Math.round(circleScale(this_pop));
       // let this_radius_ecart = Math.round(circleScaleEcart(this_ecart >=0 ? this_ecart : 0));
@@ -541,6 +574,7 @@ Promise.all([
         // 'deaths':this_deaths,
         'people_fully_vaccinated_per_hundred':people_fully_vaccinated_per_hundred,
         'gdp_capita':gdp_capita,
+        'education_index':education_index,
         'radius_pop': this_radius_pop,
         // 'radius_deaths': this_radius_deaths,
         'radius_fixed': this_radius_fixed,
@@ -621,7 +655,20 @@ var scaleY = d3.scaleLog(2)
 .domain([400, 120000]);
 
 
-function changeYAxisScale(newScale){
+function changeYAxisScale(newScale, log){
+
+if (log){
+scaleY = d3.scaleLog(2)
+.range(rangeY)
+.domain(newScale)
+}
+
+else {
+scaleY = d3.scaleLinear()
+.range(rangeY)
+.domain(newScale)
+
+}
 
   scaleY.domain(newScale)
 
@@ -637,6 +684,7 @@ var axisL = d3.axisLeft(scaleY);
 
 axisL.tickFormat(d=>formatNumber(d));
 
+
 d3.select('g#axisLeft')
 .remove()
 
@@ -644,7 +692,15 @@ g.append("g")
 .attr('class', 'axis')
 .attr('id', 'axisLeft')
     .attr("transform", `translate(${g_x_translation_europe + rangeX[0] - 20},${g_y_translation_europe})`)
-    .call(axisL);
+    .call(axisL.ticks(2));
+
+d3.selectAll('#axisLeft .tick line')
+.style('stroke', '#ccc')
+.attr('x2', rangeX[1])
+
+
+d3.select('#axisLeft path.domain')
+.style('opacity', 0)
 
 }
 
@@ -653,7 +709,7 @@ g.append("g")
 
 function drawAxisBottom(){
 
-var axisT = d3.axisBottom(scaleX);
+var axisT = d3.axisTop(scaleX);
 
 d3.select('g#axisBottom')
 .remove()
@@ -661,8 +717,16 @@ d3.select('g#axisBottom')
 g.append("g")
 .attr('class', 'axis')
 .attr('id', 'axisBottom')
-    .attr("transform", `translate(${g_x_translation_europe},${g_y_translation_europe + rangeY[0]})`)
+    .attr("transform", `translate(${g_x_translation_europe},${g_y_translation_europe + rangeY[1]})`)
     .call(axisT);
+
+d3.selectAll('#axisBottom .tick line')
+.style('stroke', '#ccc')
+.attr('y2', rangeY[0])
+
+
+d3.select('#axisBottom path.domain')
+.style('opacity', 0)
 
 }
 
