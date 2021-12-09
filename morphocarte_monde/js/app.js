@@ -25,12 +25,12 @@ const radius_name = 'radius_pop';
 
 // const code_pays = 'geoId';
 
-const g_x_translation_europe = 40;
+const g_x_translation_europe = 30;
 
 const g_y_translation_europe = 20;
 
 
-const rangeX = [30, 1980];
+const rangeX = [62, 1980];
 const rangeY = [980, 0];
 
 var circleScalePop = 
