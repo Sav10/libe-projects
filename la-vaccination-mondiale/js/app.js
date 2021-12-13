@@ -27,7 +27,7 @@ const radius_name = 'radius_pop';
 
 const g_x_translation_europe = 30;
 
-const g_y_translation_europe = 20;
+const g_y_translation_europe = 40;
 
 
 const rangeX = [62, 1980];
