@@ -25,7 +25,7 @@ const radius_name = 'radius_pop';
 
 // const code_pays = 'geoId';
 
-const g_x_translation_europe = 30;
+const g_x_translation_europe = 60;
 
 const g_y_translation_europe = 40;
 
@@ -722,6 +722,9 @@ g.append("g")
 d3.selectAll('#axisLeft .tick line')
 .style('stroke', '#ccc')
 .attr('x2', rangeX[1])
+
+d3.selectAll('#axisLeft .tick text')
+.attr('x', -2)
 
 
 d3.select('#axisLeft path.domain')
