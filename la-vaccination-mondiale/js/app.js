@@ -772,6 +772,9 @@ d3.select('#morphocarte svg')
 .append('text')
 .text('Taux de vaccination')
 .attr('text-anchor', 'middle')
+.attr('x', 1000)
+.attr('y', 50)
+.attr('font-size', '3rem')
 
 
 }
