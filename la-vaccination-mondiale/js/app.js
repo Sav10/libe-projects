@@ -421,6 +421,9 @@ d3.select('g#axisLeft')
 d3.select('g#axisBottom')
 .remove()
 
+d3.selectAll('g.axisTitle')
+.remove()
+
 transform_all_paths_to_circle('radius_pop')
 
 
@@ -506,6 +509,8 @@ function makeScatterPlot(column_x, column_y){
 drawAxisBottom()
 
 drawAxisLeft()
+
+drawAxisTitles()
 
 if (mapstate == 0){
 
@@ -758,6 +763,17 @@ d3.select('#axisBottom path.domain')
 
 }
 
+
+drawAxisTitles(){
+
+d3.select('#morphocarte svg')
+.append('g')
+.attr('class', 'axisTitle')
+.append('text')
+.text('Taux de vaccination')
+
+
+}
 
 
 
