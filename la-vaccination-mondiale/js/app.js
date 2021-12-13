@@ -764,13 +764,14 @@ d3.select('#axisBottom path.domain')
 }
 
 
-drawAxisTitles(){
+function drawAxisTitles(){
 
 d3.select('#morphocarte svg')
 .append('g')
 .attr('class', 'axisTitle')
 .append('text')
 .text('Taux de vaccination')
+.attr('text-anchor', 'middle')
 
 
 }
