@@ -27,10 +27,10 @@ const radius_name = 'radius_pop';
 
 const g_x_translation_europe = 80;
 
-const g_y_translation_europe = 40;
+const g_y_translation_europe = 120;
 
 
-const rangeX = [62, 1980];
+const rangeX = [112, 1980];
 const rangeY = [1180, 0];
 
 var circleScalePop = 
