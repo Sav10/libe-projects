@@ -25,13 +25,13 @@ const radius_name = 'radius_pop';
 
 // const code_pays = 'geoId';
 
-const g_x_translation_europe = 60;
+const g_x_translation_europe = 80;
 
 const g_y_translation_europe = 40;
 
 
 const rangeX = [62, 1980];
-const rangeY = [980, 0];
+const rangeY = [1180, 0];
 
 var circleScalePop = 
 d3.scaleSqrt()
