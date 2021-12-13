@@ -30,7 +30,7 @@ const g_x_translation_europe = 80;
 const g_y_translation_europe = 120;
 
 
-const rangeX = [112, 1980];
+const rangeX = [122, 1980];
 const rangeY = [1180, 0];
 
 var circleScalePop = 
@@ -487,6 +487,9 @@ d3.select('g#axisLeft')
 d3.select('g#axisBottom')
 .remove()
 
+d3.selectAll('g.axisTitle')
+.remove()
+
 if (mapstate ==1){
 
 redraw_paths('radius_pop', 500)
@@ -766,6 +769,9 @@ d3.select('#axisBottom path.domain')
 
 function drawAxisTitles(){
 
+d3.selectAll('g.axisTitle')
+.remove()  
+
 d3.select('#morphocarte svg')
 .append('g')
 .attr('class', 'axisTitle')
@@ -774,7 +780,19 @@ d3.select('#morphocarte svg')
 .attr('text-anchor', 'middle')
 .attr('x', 1000)
 .attr('y', 50)
-.attr('font-size', '3rem')
+.attr('font-size', '2em')
+
+
+
+d3.select('#morphocarte svg')
+.append('g')
+.attr('class', 'axisTitle')
+.append('text')
+.text('PIB par tête')
+.attr('text-anchor', 'middle')
+.attr('x', 120)
+.attr('y', 50)
+.attr('font-size', '2em')
 
 
 }
