@@ -76,7 +76,7 @@ img.libeLosange {
   <section>
     <div id="chart" style="max-width:1000px">
       <img src="Libe-Losange.png" class="libeLosange">
-      <h1 id="chartTitle"></h1>
+      <h1 id="chartTitle">Plus le revenu médian d'une commune est élevé,<br> plus ses habitants sont vaccinés</h1>
       <h4 id="chartSubTitle"></h4>
       <div id="varSwitch" class='tags'></div>
       <svg></svg>
@@ -195,8 +195,8 @@ img.libeLosange {
     d3.select("#chart")
     .attr("class", graphParameters.selected_graph);
 
-    d3.select("#chartTitle")
-    .text(graphParameters['chartTitle']);
+    // d3.select("#chartTitle")
+    // .text(graphParameters['chartTitle']);
 
     d3.select("#chartSubTitle")
     .text(graphParameters['chartSubTitle']);
