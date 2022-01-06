@@ -41,12 +41,6 @@ d3.scaleSqrt()
 var x_scale = d3.scaleTime()
 .range([0, 100]);
 
-const variables_names= {
-  tx_incidence : `taux d'incidence`,
-  tx_positivite : `taux de positivité`,
-  hosp_pour_100k : `taux d'hospitalisation`,
-  rea_pour_100k : `taux de réanimation`
-}
 
 let article_height = $(window).width()/2 > 220 ? ($(window).width()/2 + 50) : 240;
 d3.select('#information')
@@ -88,7 +82,7 @@ departement_variable = 'departement';
 
 var colors = d3.scaleLinear()
   .range(["white", "#6E8AEF"])
-  .domain([0, 40])
+  .domain([0, 30])
 
 var data_legend = [0,5,10,15,20,25,30, 35,40];
 
@@ -132,13 +126,13 @@ let this_code = d.id;
 
 let this_d = _.find(app_data, d => d.dep == this_code);
 
+console.log(this_d)
+
 
     this_html =  `<ul id='tooltip_content'><span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_d.departement} (${this_d.dep})</span></ul></span>
     <span class='details'>
-    <li>Taux d'incidence : <span style="font-weight:bold">${String(_.round(this_d.tx_incidence, 1)).replace('.',',')}</li>
-        <li><em>Evolution depuis septembre</em></li>
-        <li id="sparkline"></li>
-        <li>Taux de positivité : <span style="font-weight:bold">${String(_.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>`
+    <li><span style="font-weight:bold">${this_d.creneaux}</span> créneaux de vaccination d'enfants de 5 à 11 ans disponibles</li>
+        <li>Soit <span style="font-weight:bold">${this_d.pour1000hab}<span> pour 1000</li>`
 
 // d3.select('#map_info')
 // .style('display', 'flex')
@@ -372,12 +366,11 @@ function fillColor(column){
   allPaths
   .style('fill', d => {
 
-    if (typeof app_datafilter(function(e){return e.dep == d.id})[0] !== 'undefined') {
+    if (typeof app_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return color_functions[column](+app_datafilter(function(e){return e.dep == d.id})[0][column])
+      return colors(+app_data.filter(function(e){return e.dep == d.id})[0].pour1000hab)
 
     }
-    return '#fff'
   })
 
 }
@@ -510,10 +503,10 @@ function redraw_paths(){
 
 d3.select('#display_geo_paths')
 .style('color', '#fff')
-.style('background-color', 'red')
+.style('background-color', '#6E8AEF')
 
 d3.select('#display_proportional_circles')
-.style('color', 'red')
+.style('color', '#6E8AEF')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -542,10 +535,10 @@ function transform_all_paths_to_circle(){
 
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
-.style('background-color', 'red')
+.style('background-color', '#6E8AEF')
 
 d3.select('#display_geo_paths')
-.style('color', 'red')
+.style('color', '#6E8AEF')
 .style('background-color', '#fff')
 
   let pathsize = allPaths.size();
@@ -701,18 +694,13 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
     if (typeof app_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      console.log(d)
-
-      console.log(app_data.filter(function(e){return e.dep == d.id})[0].pour1000hab)
-      console.log(colors(+app_data.filter(function(e){return e.dep == d.id})[0].pour1000hab))
-
       return colors(+app_data.filter(function(e){return e.dep == d.id})[0].pour1000hab)
 
     }
     return '#fff'
   })
   .style('fill-opacity', 1)
-  .style('stroke', '#fff')
+  .style('stroke', '#555')
   .style('stroke-width', 1)
   .style('stroke-opacity', 0.5)
   .on('mouseover', function(d) {

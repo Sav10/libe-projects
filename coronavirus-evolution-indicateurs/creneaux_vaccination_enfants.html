@@ -40,7 +40,7 @@
   <!-- Xiti -->
 
   <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=2">
-  <title>Libération.fr Covid-19 : Taux d'incidence chez les enfants de moins de 10 ans</title>
+  <title>Libération.fr Covid-19 : Dix-neuf département n'ont aucun créneaux disponibles pour la vaccination des enfants de 5 à 11 ans</title>
   <meta name="description" content="Coronavirus, le taux d'incidence à l'école élémentaire est supérieur à 1000 dans 45 départements.">
   <meta name="keywords" content="actualités, news">
   <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
@@ -162,14 +162,14 @@ a#play_button img {
 
 .actionButton {
     background-color: #fff;
-    color: #e60004;
+    color: #6E8AEF;
     display: inline-block;
     font-size: .9em;
     line-height: 1.2em;
     padding: 4px 3px 5px;
     font-family: "syntheselibeweb", sans-serif;
     margin-right: 3px;
-    border: 1px solid #e60004;
+    border: 1px solid #6E8AEF;
     opacity: 1;
 }
 
@@ -182,7 +182,7 @@ margin-bottom: -18px;
 }
 
 .actionButton:hover{
-color:  #e60004;
+color:  #6E8AEF;
 opacity: 0.8;
 
 }
@@ -193,6 +193,12 @@ opacity: 0.8;
 
 .d3-tip{
   max-width: 80vW;
+}
+
+
+h2#graph_subtitle {
+    line-height: 1.2em;
+    font-size: .8em;
 }
 
 @media (max-width: 768px)
@@ -391,14 +397,14 @@ font-size: 2em;
 #evolution_indicateur{
 
     background-color: #fff;
-    color: #e60004;
+    color: #6E8AEF;
     display: inline-block;
     font-size: .9em;
     line-height: 1.2em;
     padding: 4px 3px 5px;
     font-family: "syntheselibeweb", sans-serif;
     margin-right: 3px;
-    border: 1px solid #e60004;
+    border: 1px solid #6E8AEF;
     opacity: 1;
     pointer-events: all;
     cursor: pointer;
@@ -599,7 +605,7 @@ h1#graph_title {
 
 
 #sparkline svg path {
-  stroke: red;
+  stroke: #6E8AEF;
   stroke-width: 2;
   fill: none;
   stroke-opacity: 1;
@@ -637,13 +643,14 @@ h1#graph_title {
         <div class="column is-three-quarters map_container" style="z-index: 90;">
           <div id="articles" class='explanation_block'>
 
-          <h1 id="graph_title"><span style="color:red; display: inline;">Covid-19 </span> : le taux d'incidence à l'école élémentaire est supérieur à  1000 dans 45 départements</h1>
+          <h1 id="graph_title"><span style="color:#6E8AEF; display: inline;">Covid-19 </span> : Dix-neuf département n'ont aucun créneaux disponibles pour la vaccination des enfants de 5 à 11 ans</h1>
+          <!-- <h2 id="graph_subtitle">Nombre de créneaux de vaccination disponibles pour les enfants de 5 à 11 ans</h2> -->
           </div>
           <div id="representation_carto">
             <a class="actionButton"  id="display_geo_paths">Carte</a>
             <a class="actionButton" id="display_proportional_circles">Cartogramme</a>
           </div>
-                              <svg  id="legend" viewbox="-10 0 500 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;">Nombre de créneaux disponibles pour 1&nbsp;000 personnes</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells">
+                              <svg  id="legend" viewbox="-10 0 500 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;">Nombre de créneaux disponibles pour 1&nbsp;000 enfants</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells">
 
         </g></g></svg>
           <div class="carte" id='morphocarte'>
@@ -800,22 +807,9 @@ h1#graph_title {
 <div id='minigraph_container'></div>
             </div> -->
 
-          <div  id='incidence_text' class='explanation_text'>
-
-              <p><strong>Taux d'incidence</strong> : Nombre de test positifs pour 100&nbsp;000 habitants sur une semaine.</p>
-
-
-  <span class='legende_dot'><span class="dot" style="background-color:#FF9800"></span> moins de 100</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#E3234A"></span> de 100 à 500</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#6d142d"></span> de 500 à 1 000</span>
-   <span class='legende_dot'><span class="dot" style="background-color:#000"></span> Plus de 1 000</span>
-
-             </div>
-
 <br><br>
 <div id="sources">
- <p><strong>Sources</strong> : Santé publique France, Système d’information de dépistage</p>
- <p>Données mises à jour toutes les 3 heures</p>
+ <p><strong>Sources</strong> : Données de <a href='https://vitemadose.covidtracker.fr/' style="color:#000">Vitemadose</a></p>
 <!-- <p style="font-style: italic;">*La taille des cercles du format cartogramme est-il proportionelle à la population de chaque département</p> -->
 </div>
 
