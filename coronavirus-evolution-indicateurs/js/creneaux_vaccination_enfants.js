@@ -82,9 +82,9 @@ departement_variable = 'departement';
 
 var colors = d3.scaleLinear()
   .range(["white", "#6E8AEF"])
-  .domain([0, 30])
+  .domain([0, 20])
 
-var data_legend = [0,5,10,15,20,25,30, 35,40];
+var data_legend = [0,2,4,6,8,10,12, 14,16, 18, 20];
 
 
 // <g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(246, 185, 197);"></rect><text class="label" transform="translate(22,
@@ -100,7 +100,7 @@ var legend_cells = legend
 .enter()
 .append('g')
 .attr('class', 'cell')
-.attr('transform', function(d, i){ return 'translate(' + i*46 + ',0)'})
+.attr('transform', function(d, i){ return 'translate(' + i*42 + ',0)'})
 
 legend_cells
 .append('rect')
