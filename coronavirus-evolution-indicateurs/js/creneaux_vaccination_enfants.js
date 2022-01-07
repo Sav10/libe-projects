@@ -41,8 +41,9 @@ d3.scaleSqrt()
 var x_scale = d3.scaleTime()
 .range([0, 100]);
 
-
-let article_height = $(window).width()/2 > 220 ? ($(window).width()/2 + 50) : 240;
+/*
+let article_height = $(window).width()/2 > 220 ? ($(window).width()/2 + 50) : 240;*/
+let article_height = 150;
 d3.select('#information')
 .style('min-height', article_height + 'px')
 
@@ -931,7 +932,7 @@ svg_slider
 .attr('width', (slider_width + 10))
 handle_factor = slider_width/100;
 
-let article_height = $(window).width()/4 > 150 ? ($(window).width()/4 + 10) : 150;
+let article_height = 150;
 d3.select('#information')
 .style('min-height', article_height + 'px')
 
