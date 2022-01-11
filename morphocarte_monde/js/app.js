@@ -179,8 +179,8 @@ const width = 960 - margin.left - margin.right
 const height = 500 - margin.top - margin.bottom
 
   var color = d3.scaleLinear()
-  .range(["white", '#F9D3DB', "#E3234A"])
-  .domain([0, 10 ,85]);;
+  .range(["white", "red"])
+  .domain([0, 90]);;
 
   // .range(["white", "#D4000C"]);
   // A70021
