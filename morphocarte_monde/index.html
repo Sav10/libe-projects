@@ -24,9 +24,9 @@
   <meta name="twitter:title" content="Quel impact du coronavirus sur la mortalité en France" />
   <meta name="twitter:description" content="Y a-t-il eu plus de morts que d’habitude dans votre département à cause du coronavirus ? La réponse avec notre carte interactive." />
   <meta name="twitter:image" content="https://www.liberation.fr/apps/2020/04/impact-coronavirus-mortalite-france/social.jpg"> -->
-    <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
   <link type="text/css" rel="stylesheet" href="styles/six-plus.css">
   <link type="text/css" rel="stylesheet" href="styles/styles.css">
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
   <style type="text/css">
     .intro-section {
     background-color: #E3234A;
@@ -163,8 +163,8 @@ a#play_button img {
     }
 
 .actionButton {
-    background-color: #e91845;
-    color: #fff;
+    background-color: #fff;
+    color: red;
     display: inline-block;
     font-size: 1.3em;
     line-height: 1.2em;
@@ -196,7 +196,7 @@ margin-bottom: -18px;
 }
 
 .actionButton:hover{
-color: #fff;
+color: #red;
 opacity: 0.8;
 cursor: pointer;
 
@@ -228,7 +228,7 @@ font-size: 0.7em;
 
 }
 
-h1#graph_title {
+/*h1#graph_title {
     line-height: 1.2em;
     font-size: 1.6em;
 }
@@ -241,7 +241,7 @@ h1#graph_title{
     letter-spacing: 0.03em;
     display: flex;
     justify-content: center;
-}
+}*/
 
 @media (min-width: 768px) {
 
@@ -253,18 +253,19 @@ h1#graph_title{
 
 .actionButton {
     background-color: #fff;
-    color: #e60004;
+    color: red;
     display: inline-block;
     font-size: .9em;
     line-height: 1.2em;
     padding: 4px 3px 5px;
     font-family: "syntheselibeweb", sans-serif;
     margin-right: 3px;
-    border: 1px solid #e60004;
+    border: 1px solid red;
     opacity: 1;
 }
+
 .actionButton:hover{
-color:  #e60004;
+color:  red;
 opacity: 0.8;
 
 }
@@ -368,6 +369,65 @@ display: inline-block;
 
 g#graph g.axis g.tick text{
 font-size: 1.8em;	
+}
+
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.6em;
+letter-spacing: 0.6;
+font-size: 1.5rem;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+
+#tooltip {
+    font-family: 'syntheselibeweb';
 }
 
 
