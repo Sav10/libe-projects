@@ -866,7 +866,7 @@ let this_code = d.id;
 
     var this_inner_html =  `<span class='details'>${d.nom}<br>
     <span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est complètement vaccinée
-    <br>Et le PIB par tête est de <span style="font-weight:bold">${this_d.gdp_capita}$</span> pour 100 000 habitants</span></span>`
+    <br>Et le PIB par habitant est de <span style="font-weight:bold">${this_d.gdp_capita}$</span></span></span>`
 
 
 
