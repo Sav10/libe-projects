@@ -25,7 +25,7 @@ const radius_name = 'radius_pop';
 
 // const code_pays = 'geoId';
 
-const g_x_translation_europe = 30;
+const g_x_translation_europe = 40;
 
 const g_y_translation_europe = 30;
 
@@ -90,9 +90,9 @@ window.addEventListener("resize", function(d){
 
 var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
-var div = d3.select("body").append("div")
-.attr("id", "tooltip")
-.attr('class', 'box');
+// var div = d3.select("body").append("div")
+// .attr("id", "tooltip")
+// .attr('class', 'box');
 
 function getBoundingBoxCenter (selection) {
   // get the DOM element from a D3 selection
@@ -122,8 +122,8 @@ const tip = d3
 
     return `<span class='details'>${
       d.nom
-    }<br><span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est complètement vaccinée
-    <br>Et le PIB par tête est de <span style="font-weight:bold">${this_d.gdp_capita}$</span> pour 100 000 habitants</span></span>`
+    }<br><span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est vaccinée (deux doses)
+    <br>Et le PIB par habitant est de <span style="font-weight:bold">${this_d.gdp_capita}$</span></span></span>`
   }
   else{
     console.log(this_code + ' not found')
@@ -392,6 +392,9 @@ allPaths.attr('visibility', 'visible')
   // transform_all_paths_to_circle('radius_pop')
 
 
+d3.selectAll('#title_x, #title_y')
+.style('visibility', 'hidden');
+
 d3.select('g#axisLeft')
 .remove()
 d3.select('g#axisBottom')
@@ -415,6 +418,9 @@ d3.select('#order_by_vax')
 .style('background-color', 'red')
 
 changeYAxisScale([400,120000], 'log')
+
+d3.selectAll('#title_x, #title_y')
+.style('visibility', 'visible');
 
 makeScatterPlot('people_fully_vaccinated_per_hundred', 'gdp_capita')
 
@@ -459,6 +465,9 @@ d3.select('g#axisLeft')
 .remove()
 d3.select('g#axisBottom')
 .remove()
+
+d3.selectAll('#title_x, #title_y')
+.style('visibility', 'hidden');
 
 if (mapstate ==1){
 
@@ -606,7 +615,7 @@ app_data = data;
   .style('stroke-width', 1)
   .style('stroke-opacity', 1)
   .on('mouseover', function(d) {
-    tip.show(d)
+    show_tooltip(d)
     d3.select(this)
     .raise()
     .style('fill-opacity', 1)
@@ -615,7 +624,7 @@ app_data = data;
     .style('stroke', '#aaa')
   })
   .on('mouseout', function(d) {
-    tip.hide(d)
+    hide_tooltip()
     d3.select(this)
     .style('fill-opacity', 1)
     // .style('stroke-opacity', 0.8)
@@ -839,3 +848,69 @@ function responsivefy(svg) {
 
        }
 
+////////////////////////////////////
+//////////////////////Tooltip
+
+function show_tooltip(d) {
+
+
+
+
+let this_code = d.id;
+    let this_d = _.find(app_data, d => d[code_pays] == this_code);
+    if(this_d){
+    /*let this_deaths = this_d.deaths;*/
+    let people_fully_vaccinated_per_hundred = this_d.people_fully_vaccinated_per_hundred;
+
+    d3.select("#tooltip").style('display', 'block');
+
+    var this_inner_html =  `<span class='details'>${d.nom}<br>
+    <span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est complètement vaccinée
+    <br>Et le PIB par tête est de <span style="font-weight:bold">${this_d.gdp_capita}$</span> pour 100 000 habitants</span></span>`
+
+
+
+  var dx = d3.event.pageX;
+  var dy = d3.event.pageY - 28;
+
+    // var this_chart_width = Math.round(svgGraphContainer.node().getBBox().width);
+    // var this_chart_right = d3.select('#morphocarte svg').node().getBoundingClientRect().right
+
+
+d3.select("#tooltip")
+.classed('is-active', true)
+.html(this_inner_html);
+
+// var thisTooltip = d3.select('#tooltip').node().getBoundingClientRect();
+
+// if (dx > (this_chart_right - thisTooltip.width)){
+
+// dx = (this_chart_right - thisTooltip.width - 10)
+
+// }
+
+
+// d3.select("#tooltip")
+// .style("left", 0)
+// .style("top", 0);
+
+
+}
+
+else
+{
+    d3.select("#tooltip").style('display', 'none');
+}
+
+}
+
+
+function hide_tooltip() {
+
+    d3.select("#tooltip")
+    .classed('is-active', false);
+
+    d3.select("#tooltip")
+    .style('display', 'none');
+
+}

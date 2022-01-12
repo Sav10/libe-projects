@@ -359,7 +359,7 @@ display: inline-block;
     display: flex;
     padding: 0 60px;
     margin-top: 15px;
-    margin-bottom: 2em;
+    margin-bottom: .5em;
 
 }
 
@@ -431,6 +431,58 @@ img.libeLosange {
 }
 
 
+
+#title_x{
+    text-align: center;
+    visibility: hidden;
+}
+
+
+#title_y{
+      position: absolute;
+      visibility: hidden;
+      top: 7em;
+      left: -2em;
+}
+
+#title_x, #title_y{
+font-size: .9rem;
+}
+
+
+@media screen and (max-width: 700px){
+
+
+#title_x, #title_y{
+font-size: .7rem;
+}
+
+.carte#morphocarte{
+    margin-left: 15px;
+
+}
+
+#title_y {
+    top: 2em;
+    left: 1.2em;
+    width: 5em;
+}
+
+#tooltip{
+
+    left: 23px;
+    top: -100px;
+    font-size: 11px;
+    width: 200px;
+}
+
+}
+
+#source{
+  text-align: center;
+  font-family: 'syntheselibeweb', Arial, sans-serif;
+}
+
   </style>
 </head>
 <body>
@@ -454,8 +506,14 @@ img.libeLosange {
 
           </div>
 
-                    <svg  id="legend" viewbox="-10 0 500 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;">Taux de vaccination complète</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells">
+                    <svg  id="legend" viewbox="-10 0 500 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;">«Taux de vaccination (deux doses)</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells">
         </g></g></svg>
+
+        <p id='title_x'>Taux de vaccination</p>
+        <div style="position: relative;">
+        <p id='title_y'>PIB par habitant</p>
+        <div id="tooltip", style="display: none"> </div>
+      </div>
 
           <div class="carte" id='morphocarte'>
    <svg class="sightline-svg" style="max-height: 562.5px;" version="1.1" viewbox="0 0 2000 1000" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
@@ -680,6 +738,12 @@ img.libeLosange {
       </div>
     </div>
   </section>
+
+  <div id="source">
+    
+Sources : Our world in data. La surface des cercles est proportionnelle à la population de chaque pays.
+
+  </div>
 <!--   <div id="conclusion">
     <p class="conclusion-prose">
       <span> <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538"><img src="img/logos/LibeLaboLogo.svg" style="width: 50px;position: relative;top: 10px;"></a></span>
