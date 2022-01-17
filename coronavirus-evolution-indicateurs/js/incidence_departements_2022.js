@@ -28,7 +28,8 @@ currentDate,
 maxvalues = {},
 tMax,
 t0,
-selected_dep = [];
+selected_dep = [],
+last_week_day;
 
 var circleScale = 
 d3.scaleSqrt()
@@ -135,6 +136,12 @@ var color_hospi = d3.scaleLinear()
   .range(["white", '#E3234A', "#6d142d", '#000']);
 color_hospi.domain([0, 30, 75, 150]);
 
+
+var color_evo_incidence = d3.scaleLinear()
+  .range(["#006690", 'white', 'red'])
+  .domain([-25, 0, 70]);
+
+
 var color_rea = d3.scaleLinear()
   .range(["white", '#E3234A', "#6d142d", '#000']);
 color_rea.domain([0, 5, 10, 15]);
@@ -209,9 +216,9 @@ if (daterange[selected_variable].indexOf(currentDate) == -1){
  currentDate = _.last(daterange[selected_variable])
 }
 
-fillColorDate(selected_variable, currentDate)
-d3.select('svg#map_slider g.date-container text.endDate')
-.text(moment(tMax).format('Do MMMM'))
+// fillColorDate(selected_variable, currentDate)
+// d3.select('svg#map_slider g.date-container text.endDate')
+// .text(moment(tMax).format('Do MMMM'))
 
 })
 
@@ -244,7 +251,7 @@ if (daterange[selected_variable].indexOf(currentDate) == -1){
  currentDate = _.last(daterange[selected_variable])
 }
 
-fillColorDate(selected_variable, currentDate)
+// fillColorDate(selected_variable, currentDate)
 
 d3.select('svg#map_slider g.date-container text.endDate')
 .text(moment(tMax).format('Do MMMM'))
@@ -275,7 +282,7 @@ currentDate = _.last(daterange[selected_variable])
 }
 selected_variable = 'hosp_pour_100k';
 
-fillColorDate(selected_variable, currentDate)
+// fillColorDate(selected_variable, currentDate)
 
 
 tMax = parseTime2(_.last(daterange[selected_variable]))
@@ -311,7 +318,7 @@ currentDate = _.last(daterange[selected_variable])
 }
 selected_variable = 'rea_pour_100k';
 
-fillColorDate(selected_variable, currentDate)
+// fillColorDate(selected_variable, currentDate)
 
 tMax = parseTime2(_.last(daterange[selected_variable]))
 x_scale
@@ -326,9 +333,10 @@ function fillColor(column){
   allPaths
   .style('fill', d => {
 
-    if (typeof app_data[column].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
+    if (typeof app_data['tx_incidence'].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return color_functions[column](+app_data[column].filter(function(e){return e.dep == d.id})[0][column])
+
+      return color_evo_incidence(+app_data['tx_incidence'].filter(function(e){return e.dep == d.id})[0][column])
 
     }
     return '#fff'
@@ -341,33 +349,6 @@ function fillColor(column){
 
 // fillColorDate('tx_incidence', '2020-08-01')
 
-function fillColorDate(column, date){
-
-  var this_date_data = fulldata.filter(function(e){return e.datetime == date})
-
-  this_date_pretty = moment(date).format('Do MMMM')
-
-  // d3.select('#tooltip')
-  // .style('display', 'block')
-  // .html('<span class="details"><span class="date_tooltip">' + this_date_pretty + '</span></span>')
-
-  d3.select('.date-container .currentDate')
-  .text(this_date_pretty)
-
-  allPaths
-  .transition()
-  .duration(0)
-  .style('fill', d => {
-
-    if (typeof this_date_data.filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
-
-      return color_functions[column](+this_date_data.filter(function(e){return e.dep == d.id})[0][column])
-
-    }
-    return '#fff'
-  })
-
-}
 
 function FillWithTimer(total_time, column) {
 
@@ -646,6 +627,23 @@ queue()
     daterange['tx_incidence'] = _.uniq(fulldata.filter(d=>d.tx_incidence).map(d=>d.datetime));
     /*daterange['tx_positivite'] = _.uniq(fulldata.filter(d=>d.tx_positivite).map(d=>d.datetime));*/
 
+    last_week_day = _.slice(daterange['tx_incidence'], -8, -7);
+
+    console.log(data)
+
+  app_data['tx_incidence'] = fulldata.filter(d=>d.datetime == daterange['tx_incidence'][daterange['tx_incidence'].length-1])
+/*app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])*/
+
+app_data['tx_incidence'].forEach(function(d){
+
+d.departement = data.filter(e=>e.dep == d.dep)[0].departement;
+d.last_week_incid = +fulldata.filter(e=>e.datetime == last_week_day && e.dep == d.dep)[0].tx_incidence;
+d.evolution_incidence = Math.round(1000*((d.tx_incidence - d.last_week_incid) / d.last_week_incid)) / 10;
+})
+
+
+console.log(app_data['tx_incidence'])
+
     // daterange = _.uniq(fulldata.map(d=>d.datetime));
 
     circleScale.domain(d3.extent(data, d=>d.population));
@@ -674,15 +672,6 @@ queue()
         'radius_ecart': this_radius_ecart});
 }
 
-app_data['tx_incidence'] = fulldata.filter(d=>d.datetime == daterange['tx_incidence'][daterange['tx_incidence'].length-1])
-/*app_data['tx_positivite'] = fulldata.filter(d=>d.datetime == daterange['tx_positivite'][daterange['tx_positivite'].length-1])*/
-
-
-app_data['tx_incidence'].forEach(function(d){
-
-d.departement = data.filter(e=>e.dep == d.dep)[0].departement
-
-})
 
 
   allPaths
@@ -690,13 +679,13 @@ d.departement = data.filter(e=>e.dep == d.dep)[0].departement
 
     if (typeof app_data['tx_incidence'].filter(function(e){return e.dep == d.id})[0] !== 'undefined') {
 
-      return colorIncidence(+app_data['tx_incidence'].filter(function(e){return e.dep == d.id})[0].tx_incidence)
+      return color_evo_incidence(+app_data['tx_incidence'].filter(function(e){return e.dep == d.id})[0].color_evo_incidence)
 
     }
     return '#fff'
   })
   .style('fill-opacity', 1)
-  .style('stroke', '#fff')
+  .style('stroke', '#aaa')
   .style('stroke-width', 1)
   .style('stroke-opacity', 0.5)
   .on('mouseover', function(d) {
@@ -761,16 +750,6 @@ selected_dep = [];
     .style('stroke-width', 1)
     }
 else{
-
-    //   showTip(d)
-    // allPaths
-    // .style('stroke-opacity', .5)
-    // .style('fill-opacity', .5)
-    // d3.select(this)
-    // .style('fill-opacity', 1)
-    // .style('stroke-opacity', 1)
-    // .style('stroke-width', 2)
-
 }
 });
 
@@ -791,8 +770,9 @@ else{
   })
 
 
-fillColorDate('tx_incidence', _.last(daterange['tx_incidence']))
+// fillColorDate('tx_incidence', _.last(daterange['tx_incidence']))
 
+ fillColor('evolution_incidence');
 
 setTimeout(() => {
 
