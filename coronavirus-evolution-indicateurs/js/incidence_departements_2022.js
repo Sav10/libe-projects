@@ -51,7 +51,7 @@ const variables_names= {
 
 let article_height = $(window).width()/2 > 220 ? ($(window).width()/2 + 50) : 240;
 d3.select('#information')
-.style('min-height', 100 + 'px')
+.style('min-height', 50 + 'px')
 
 var parseTime2 = d3.timeParse("%Y-%m-%d");
 var tooltip_initial_content = '';
@@ -949,7 +949,7 @@ svg_slider
 handle_factor = slider_width/100;
 
 d3.select('#information')
-.style('min-height', 100 + 'px')
+.style('min-height', 50 + 'px')
 
 }
 
