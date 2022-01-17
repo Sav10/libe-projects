@@ -93,7 +93,8 @@ let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);
     <li>Taux d'incidence : <span style="font-weight:bold">${String(_.round(this_d.tx_incidence, 1)).replace('.',',')}</li>
         <li><em>Evolution depuis septembre</em></li>
         <li id="sparkline"></li>
-        <li>Taux de positivité : <span style="font-weight:bold">${String(_.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>`
+        <li>Taux de positivité : <span style="font-weight:bold">${String(_.round(this_d.tx_positivite, 1)).replace('.',',')}%</li>
+        <li>Evolution depuis une semaine: <span style="font-weight:bold">${String(_.round(this_d.evolution_incidence, 1)).replace('.',',')}%</li>`
 
 // d3.select('#map_info')
 // .style('display', 'flex')
