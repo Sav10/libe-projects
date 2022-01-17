@@ -616,6 +616,17 @@ h1#graph_title {
     z-index: 100;
 }
 
+#legend {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    /* margin-bottom: -51px; */
+    padding: 0 60px;
+    margin-top: 15px;
+}
+
   </style>
 
 </head>
@@ -632,6 +643,9 @@ h1#graph_title {
             <a class="actionButton"  id="display_geo_paths">Carte</a>
             <a class="actionButton" id="display_proportional_circles">Cartogramme</a>
           </div>
+                                        <svg  id="legend" viewbox="-10 0 500 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;">Nombre de créneaux disponibles pour 1&nbsp;000 enfants</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells">
+
+        </g></g></svg>
           <div class="carte" id='morphocarte'>
             <div id="map_info2" >
               <div id="tooltip"></div>

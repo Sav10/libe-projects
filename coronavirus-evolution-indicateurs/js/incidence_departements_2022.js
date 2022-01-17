@@ -81,6 +81,49 @@ reset_tooltip()
 const geoIDVariable = 'id'
 const format = d3.format(',')
 
+
+
+var color_evo_incidence = d3.scaleLinear()
+  .range(["#006690", 'white', 'red'])
+  .domain([-25, 0, 70]);
+
+
+var data_legend = [-30,-20,-10,0,10,20,30, 40,50, 60, 70];
+
+
+// <g class="cell" transform="translate(46,0)"><rect class="swatch" height="15" width="44" style="fill: rgb(246, 185, 197);"></rect><text class="label" transform="translate(22,
+//           30)" style="text-anchor: middle;">10</text></g>
+
+var legend = d3.select('#legend .mapLegend .legendCells').selectAll('.cell')
+.data(data_legend)
+
+legend.exit().remove()
+
+
+var legend_cells = legend
+.enter()
+.append('g')
+.attr('class', 'cell')
+.attr('transform', function(d, i){ return 'translate(' + i*42 + ',0)'})
+
+legend_cells
+.append('rect')
+.attr('class', 'swatch')
+.attr('height', 15)
+.attr('width', 44)
+.style('fill', function(d){ return color_evo_incidence(d)})
+
+
+legend_cells
+.append('text')
+.attr('class', 'label')
+.attr('height', 15)
+.attr('width', 44)
+.style('text-anchor', 'middle')
+.text(function(d){return d})
+.attr('transform', 'translate(22,30)')
+
+
 function showTip(d){
 
 let this_code = d.id;
@@ -138,9 +181,6 @@ var color_hospi = d3.scaleLinear()
 color_hospi.domain([0, 30, 75, 150]);
 
 
-var color_evo_incidence = d3.scaleLinear()
-  .range(["#006690", 'white', 'red'])
-  .domain([-25, 0, 70]);
 
 
 var color_rea = d3.scaleLinear()
