@@ -176,14 +176,14 @@ stroke:#888;
   "sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},
   "invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},
   "differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},
-  "rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":92.8,"manual_left_value":60,"manual_right_value":null,"activated":1,"category":"general"},
-  "rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":46280,"manual_left_value":10000,"manual_right_value":null,"activated":1,"category":"general"},
+  "rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":92.8,"manual_left_value":65,"manual_right_value":null,"activated":1,"category":"general"},
+  "rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":46280,"manual_left_value":1.9,"manual_right_value":null,"activated":1,"category":"general"},
   "color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},
   "persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},
   "indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},
   "displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},
   "startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},
-  "caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":"topLeft","activated":1,"category":"legend"},
+  "caseLegend":{"value":false,"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":"topLeft","activated":1,"category":"legend"},
   "padding_left_legend":{"value":25,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},
   "padding_top_legend":{"value":-35,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},
   "legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"activated":true,"category":"legend","dependOn":"caseLegend"},
@@ -212,7 +212,7 @@ stroke:#888;
   "beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},
   "beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},
   "verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},
-  "circleRadius":{"value":1.1,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},
+  "circleRadius":{"value":.9,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},
   "circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},
   "customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return d+'%'});\nd3.selectAll('.axis--y .tick text').text(function(d){return numbers_separators(d)});\nd3.selectAll('g.legendCells .cell rect').filter(d=> d == 'Agglomération lyonnaise').style('fill', '#95DEAB');\nd3.selectAll('g.legendCells .cell rect').filter(d=> d == 'Agglomération parisienne').style('fill', '#95DED7');\nd3.selectAll('g.legendCells .cell rect').filter(d=> d == 'Agglomération marseillaise').style('fill', '#FF0000');\nd3.selectAll('g.ball circle').filter(d=> d.aglomeration == 'Agglomération lyonnaise').style('fill', '#95DEAB');\nd3.selectAll('g.ball circle').filter(d=> d.aglomeration == 'Agglomération parisienne').style('fill', '#95DED7');\nd3.selectAll('g.ball circle').filter(d=> d.aglomeration == 'Agglomération marseillaise').style('fill', '#FF0000');\nd3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');"},
   "colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},
@@ -224,7 +224,7 @@ stroke:#888;
   "automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},
   "ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},
   "caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
-  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[libelle_epci]] ([[departement]])<br>\n[[taux_vaccination_adultes]]% <strong>des adultes sont vaccinés</strong><br>\n<strong>Revenu médian : </strong>[[niveau_vie_median|number_separator]] euros<br>\n Interdécile : [['interdecile']] \n [[taux_chomage]]% <strong>de chômage</strong>"},
+  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[libelle_epci]] ([[dep]])<br>\n[[taux_vaccination_adultes]]% <strong>des adultes sont vaccinés</strong><br>\n<strong>Revenu médian : </strong>[[niveau_vie_median|number_separator]] euros<br>\n Interdécile : [[interdecile]] \n<br> [[taux_chomage]]% <strong>de chômage</strong><br>[[population_carto]] habitants"},
   "moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},
   "selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},
   "selectedElement":{"type":"none","activated":0,"category":"none"},
@@ -523,7 +523,7 @@ g_inner
 }
 
 
-d3.csv("data.csv", function(data) {
+d3.csv("data_1.csv", function(data) {
 
 dataFromFile = _.cloneDeep(data);
 
