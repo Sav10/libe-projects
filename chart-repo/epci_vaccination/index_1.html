@@ -3,7 +3,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plus le revenu médian d'une commune est élevé, plus ses habitants sont vaccinés</title>
+  <title>Vaccination et inégalités</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
   <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
@@ -85,8 +85,8 @@ stroke:#888;
   <section>
     <div id="chart" style="max-width:1000px">
       <img src="Libe-Losange.png" class="libeLosange">
-      <h1 id="chartTitle">Plus le revenu médian d'une commune est élevé, plus ses habitants sont vaccinés</h1>
-      <h4 id="chartSubTitle"></h4>
+      <h1 id="chartTitle">Plus les inégalités sont élevées, moins une zone est vaccinée</h1>
+      <h4 id="chartSubTitle">Taux de vaccination des adultes et indice d'inégalités dans les intercommunalités de moins de 50 000 habitants</h4>
       <div id="varSwitch" class='tags'></div>
       <svg></svg>
       <footer>
@@ -176,7 +176,7 @@ stroke:#888;
   "sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},
   "invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},
   "differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},
-  "rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":92.8,"manual_left_value":65,"manual_right_value":null,"activated":1,"category":"general"},
+  "rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":92.8,"manual_left_value":60,"manual_right_value":null,"activated":1,"category":"general"},
   "rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":46280,"manual_left_value":1.9,"manual_right_value":null,"activated":1,"category":"general"},
   "color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},
   "persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},
@@ -200,7 +200,7 @@ stroke:#888;
   "xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},
   "yAxisLabelPadding":{"value":-24,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},
   "xAxisLabelPadding":{"value":13,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},
-  "yAxisLabelText":{"value":"Revenu médian","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
+  "yAxisLabelText":{"value":"Indice d'inégalités","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
   "xAxisLabelText":{"value":"Taux de vaccination des adultes","type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},
   "trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},
   "hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},
@@ -236,8 +236,8 @@ stroke:#888;
   "miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},
   "alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
 
-  var graphParameters = {"selected_xRows":["taux_vaccination_adultes"],"selected_yRows":["interdecile"],"selected_size":["population_carto"],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune","taux_vaccination_adultes","taux_chomage","departement","aglomeration"],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
-  "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Plus le revenu médian d'une commune est élevé, plus ses habitants sont vaccinés","chartSubTitle":"Comparaison entre le revenu médian et le taux de vaccination des adultes dans les grandes agglomérations","chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
+  var graphParameters = {"selected_xRows":["vaccination_septembre"],"selected_yRows":["interdecile"],"selected_size":["population_carto"],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune","taux_vaccination_adultes","taux_chomage","departement","aglomeration"],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
+  "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Vaccination et inégalités","chartSubTitle":"Taux de vaccination des adultes et indice d'inégalités dans les intercommunalités de moins de 50 000 habitants","chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
 
   var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
 
