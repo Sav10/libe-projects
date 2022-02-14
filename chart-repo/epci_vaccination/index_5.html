@@ -200,7 +200,7 @@ stroke:#888;
   "xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},
   "yAxisLabelPadding":{"value":-24,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},
   "xAxisLabelPadding":{"value":13,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},
-  "yAxisLabelText":{"value":"Revenu médian","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
+  "yAxisLabelText":{"value":"Taux de chômage","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
   "xAxisLabelText":{"value":"Taux de vaccination des adultes","type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},
   "trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},
   "hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},
@@ -531,6 +531,10 @@ dataFromFile = _.cloneDeep(data);
 initChart();
 
 makeCirclechart(data);
+
+d3.selectAll('circle').filter(d=>+d.vote_fn <= 20).style('fill', 'orange')
+
+d3.selectAll('circle').filter(d=>+d.vote_fn >= 35).style('fill', 'purple')
 
 makeAnnotation();
 
