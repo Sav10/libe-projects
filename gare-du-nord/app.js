@@ -19,7 +19,7 @@ loaded_data()
  	
 
 allZones
-.style('fill', 'blue')
+.style('fill', 'red')
 .style('opacity', 0)
 .on('mouseover', function(){
 let that = this;
