@@ -70,3 +70,59 @@ console.log(all_person[let_this_id].title)
 	)
 
   }
+
+
+
+
+function show_tooltip(d) {
+
+ var d = d.data ? d.data : d;
+
+ if (d){
+    d3.select("#tooltip").style('display', 'block');
+
+    var dx = d3.event.pageX;
+    var dy = d3.event.pageY - 28;
+
+    // var this_chart_width = Math.round(svgGraphContainer.node().getBBox().width);
+    // var this_chart_right = d3.select('#chart svg').node().getBoundingClientRect().right;
+
+        var this_inner_html = ``;
+        this_inner_html = name ? '<strong>' + name + '</strong><br />' : '';
+
+this_inner_html += '<strong>'+ inner_array[j] + '</strong> : '+ (d[inner_array[j]] ?  formatIfNumbers(d[inner_array[j]]) : formatIfNumbers(d3.values(d)[i]))+ '</strong><br />'
+
+        this_inner_html = name ? '<strong>' + name + '</strong><br />' : '';
+
+
+
+d3.select("#tooltip")
+.classed('is-active', true)
+.html(this_inner_html);
+
+var thisTooltip = d3.select('#tooltip').node().getBoundingClientRect();
+
+// if (dx > (this_chart_right - thisTooltip.width)){
+
+// dx = (this_chart_right - thisTooltip.width - 10)
+
+// }
+
+d3.select("#tooltip")
+.style("left", (dx) + "px")
+.style("top", (dy) + "px");
+
+}
+
+}
+
+
+function hide_tooltip() {
+
+    d3.select("#tooltip")
+    .classed('is-active', false);
+
+    d3.select("#tooltip")
+    .style('display', 'none');
+
+}
