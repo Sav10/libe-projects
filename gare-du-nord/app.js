@@ -35,6 +35,10 @@ let all_person = {
 }
 
 
+var div = d3.select("#fortip").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
 d3.xml("plan-gdn_1.svg")
   .then(data => {
     d3.select("#svg-container").node().append(data.documentElement)
@@ -58,6 +62,8 @@ allZones
 .on('mouseover', function(){
 
 let_this_id = d3.select(this).attr('id')
+
+console.log(d3.event);
 
 console.log(all_person[let_this_id].title)
 }
