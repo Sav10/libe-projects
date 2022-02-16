@@ -63,11 +63,18 @@ allZones
 
 let_this_id = d3.select(this).attr('id')
 
-console.log(d3.event);
+// console.log(d3.event);
 
 console.log(all_person[let_this_id].title)
+
+show_tooltip(all_person[let_this_id])
+
+
 }
 	)
+.on('mouseout', function(){hide_tooltip() })
+
+
 
   }
 
@@ -87,13 +94,10 @@ function show_tooltip(d) {
     // var this_chart_width = Math.round(svgGraphContainer.node().getBBox().width);
     // var this_chart_right = d3.select('#chart svg').node().getBoundingClientRect().right;
 
-        var this_inner_html = ``;
-        this_inner_html = name ? '<strong>' + name + '</strong><br />' : '';
-
-this_inner_html += '<strong>'+ inner_array[j] + '</strong> : '+ (d[inner_array[j]] ?  formatIfNumbers(d[inner_array[j]]) : formatIfNumbers(d3.values(d)[i]))+ '</strong><br />'
-
-        this_inner_html = name ? '<strong>' + name + '</strong><br />' : '';
-
+        var this_inner_html = `
+        <h3> ${d.title}</h3><br />
+         ${d.text}<br />
+         <a href='${d.link}'> Lire l'article</a>`;
 
 
 d3.select("#tooltip")
