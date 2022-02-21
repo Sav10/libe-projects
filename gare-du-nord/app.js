@@ -235,5 +235,5 @@ function hide_tooltip() {
 
 
 function equalToEventTarget() {
-    return this == d3.event.target;
+    return this == event.target;
 }
