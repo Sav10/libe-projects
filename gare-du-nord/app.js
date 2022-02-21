@@ -129,10 +129,14 @@ selected_zone = [this, this_d, position_tooltip]
 
 svg = d3.select('#svg-container svg');
 
-svg
-.call(d3.zoom().on("zoom", function () {
-       svg.attr("transform", d3.event.transform)
-    }))
+svg.call(d3.zoom()
+      .extent([[0, 0], [1366, 768]])
+      .scaleExtent([1, 8])
+      .on("zoom", zoomed));
+
+  function zoomed({transform}) {
+    g.attr("transform", transform);
+  }
 
 
 
