@@ -29,6 +29,15 @@ color: red;
 display: inline;
 }
 
+
+h2{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
 h4#chartSubTitle{
     text-align: left;
     font-family: 'Libe-Sans-light';
@@ -83,23 +92,33 @@ stroke:#888;
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    font-family: Verdana,sans-serif;
+    font-family: 'syntheselibeweb', Verdana,sans-serif;
     font-size: .9em;
     font-weight: 800;
-    background-color: rgba(255,255,255,0.9);
-    pointer-events: none;
+    background-color: #444;
+    color: white;
+    /*pointer-events: none;*/
     z-index: 10;
 }
 
 
 .box {
-    background-color: white;
-    border-radius: 5px;
+    background-color: black;
+    color: white;
+    /*border-radius: 5px;*/
     box-shadow: 0 2px 3px rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 10%);
-    color: #4a4a4a;
+    /*color: #4a4a4a;*/
     display: block;
     padding: 1.25rem;
 }
+
+#tooltip a{
+
+color: white;
+text-decoration: none;
+
+}
+
 
   </style>
 
@@ -111,10 +130,10 @@ stroke:#888;
     <div id="chart" style="max-width:1000px">
       <img src="Libe-Losange.png" class="libeLosange">
       <h1 id="chartTitle">Gare du Nord</h1>
-      <h4 id="chartSubTitle">TGare du Nord</h4>
+      <h4 id="chartSubTitle">Gare du Nord</h4>
       <div id="varSwitch" class='tags'></div>
       <div id="fortip"></div>
-      <div id="svg-container"></div>
+      <div id="svg-container" style="position: relative;"></div>
       <footer>
         <div class="credits">
           

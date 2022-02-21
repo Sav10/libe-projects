@@ -1,4 +1,5 @@
-let allzones;
+let allZones,
+selected_zone  = [];
 
 let all_person = {
 'MathieuSabrinaVelib':{
@@ -61,43 +62,127 @@ allZones
 .style('opacity', 0)
 .on('mouseover', function(){
 
-let_this_id = d3.select(this).attr('id')
+let this_id = d3.select(this).attr('id')
+let this_position = this.getBoundingClientRect();
+let this_d = all_person[this_id]
 
-// console.log(d3.event);
+// let position_tooltip= [parseFloat(d3.select(this).style('x')),  parseFloat(d3.select(this).style('y'))]
 
-console.log(all_person[let_this_id].title)
 
-show_tooltip(all_person[let_this_id])
+let position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
+						  (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+
+
+show_tooltip(this_d, position_tooltip)
 
 
 }
 	)
-.on('mouseout', function(){hide_tooltip() })
+.on('mouseout', function(){
+
+
+    if (selected_zone.length > 0){
+
+     show_tooltip(selected_zone[1], selected_zone[2])}
+
+    else{
+
+	hide_tooltip() 
+
+}
+
+})
+
+
+
+  allZones
+  .on('click', function() {
+
+let this_id = d3.select(this).attr('id')
+let this_d = all_person[this_id]
+show_tooltip(this_d)
+
+// let position_tooltip= [parseFloat(d3.select(this).style('x')),  parseFloat(d3.select(this).style('y'))]
+
+let this_position = this.getBoundingClientRect();
+
+
+let position_tooltip= [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
+						  (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+
+selected_zone = [this, this_d, position_tooltip]
+
+
+    show_tooltip(this_d, selected_zone[2])
+
+    // allPaths
+    // .style('stroke-opacity', .5)
+    // .style('fill-opacity', .5)
+    // d3.select(this)
+    // .style('fill-opacity', 1)
+    // .style('stroke-opacity', 1)
+    // .style('stroke-width', 2)
+
+  })
+
 
 
 
   }
 
 
+d3.select('body').on("click",function(){
+    var outside = allZones.filter(equalToEventTarget).empty();
+    if (outside) {
+    hide_tooltip()
+selected_zone = [];
+
+    // allPaths
+    // .style('stroke-opacity', .8)
+    // .style('fill-opacity', 1)
+
+    // d3.select(this)
+    // .style('fill-opacity', 1)
+    // .style('stroke-opacity', 0.5)
+    // .style('stroke-width', 1)
 
 
-function show_tooltip(d) {
+    }
+});
+
+
+
+
+
+
+function show_tooltip(d, position_tooltip) {
 
  var d = d.data ? d.data : d;
 
  if (d){
     d3.select("#tooltip").style('display', 'block');
 
-    var dx = d3.event.pageX;
-    var dy = d3.event.pageY - 28;
+
+    if (position_tooltip){
+    var dx = position_tooltip[0]
+    var dy = position_tooltip[1] - 80
+
+    }
+    else
+    {
+
+    // var dx = d3.event.pageX;
+    // var dy = d3.event.pageY - 28;
+
+    }
 
     // var this_chart_width = Math.round(svgGraphContainer.node().getBBox().width);
     // var this_chart_right = d3.select('#chart svg').node().getBoundingClientRect().right;
 
         var this_inner_html = `
-        <h3> ${d.title}</h3><br />
+        <h2> ${d.title}</h2><br />
          ${d.text}<br />
-         <a href='${d.link}'> Lire l'article</a>`;
+         <a href="${d.url}" target="_blank"> LIRE LA SUITE</a>`;
 
 
 d3.select("#tooltip")
@@ -129,4 +214,9 @@ function hide_tooltip() {
     d3.select("#tooltip")
     .style('display', 'none');
 
+}
+
+
+function equalToEventTarget() {
+    return this == d3.event.target;
 }
