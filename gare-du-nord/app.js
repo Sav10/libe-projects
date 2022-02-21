@@ -1,5 +1,6 @@
 let allZones,
-selected_zone  = [];
+selected_zone  = [],
+svg;
 
 let all_person = {
 'MathieuSabrinaVelib':{
@@ -124,6 +125,14 @@ selected_zone = [this, this_d, position_tooltip]
     // .style('stroke-width', 2)
 
   })
+
+
+svg = d3.select('#svg-container svg');
+
+svg
+.call(d3.zoom().on("zoom", function () {
+       svg.attr("transform", d3.event.transform)
+    }))
 
 
 
