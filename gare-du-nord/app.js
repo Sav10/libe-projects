@@ -1,6 +1,7 @@
 let allZones,
 selected_zone  = [],
-svg;
+svg,
+g;
 
 let all_person = {
 'MathieuSabrinaVelib':{
@@ -128,6 +129,9 @@ selected_zone = [this, this_d, position_tooltip]
 
 
 svg = d3.select('#svg-container svg');
+
+
+g = svg.select("g#all_map");
 
 svg.call(d3.zoom()
       .extent([[0, 0], [1366, 768]])
