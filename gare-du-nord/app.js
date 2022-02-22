@@ -66,7 +66,19 @@ loaded_data()
   function loaded_data(){
 
 
- allZones = d3.selectAll('svg g#Zone_Cliquable rect');
+svg = d3.select('#svg-container svg');
+g = svg.select("g#all_map");
+allZones = g.selectAll('g#Zone_Cliquable rect');
+
+if (window_width > 1000){
+    svg.attr('viewBox', '0 0 1366 768')
+}
+else if (window_width > 600){
+    svg.attr('viewBox', '0 0 1366 1068')
+}
+else {
+    svg.attr('viewBox', '0 0 1366 1268')
+}
  	
 
 allZones
@@ -138,10 +150,7 @@ selected_zone = [this, this_d, position_tooltip]
   })
 
 
-svg = d3.select('#svg-container svg');
 
-
-g = svg.select("g#all_map");
 
 svg.call(d3.zoom()
       .extent([[0, 0], [1366, 768]])
