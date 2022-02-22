@@ -3,6 +3,16 @@ selected_zone  = [],
 svg,
 g;
 
+const width_svg = {
+    'small' : 1300,
+    'middle' : 1000,
+    'big' : 768
+}
+
+let window_width = parseFloat(d3.select('body').style('width'));
+
+console.log(window_width)
+
 let all_person = {
 'MathieuSabrinaVelib':{
 'title':"Mathieu et Sabrina 1",
