@@ -86,6 +86,8 @@ allZones
 .style('opacity', 0)
 .on('mouseover', function(){
 
+    console.log('over it');
+
 let this_id = d3.select(this).attr('id')
 let this_position = this.getBoundingClientRect();
 let this_d = all_person[this_id]
@@ -97,6 +99,8 @@ let position_tooltip = [(this_position.x - d3.select('#svg-container svg').node(
 						  (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
 
 
+console.log(position_tooltip);
+
 show_tooltip(this_d, position_tooltip)
 
 
@@ -104,6 +108,7 @@ show_tooltip(this_d, position_tooltip)
 	)
 .on('mouseout', function(){
 
+console.log('out of it');
 
     if (selected_zone.length > 0){
 
@@ -121,6 +126,9 @@ show_tooltip(this_d, position_tooltip)
 
   allZones
   .on('click', function() {
+
+
+    console.log('clicked');
 
 let this_id = d3.select(this).attr('id')
 let this_d = all_person[this_id]
