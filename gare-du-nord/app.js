@@ -41,7 +41,7 @@ let all_person = {
 'url': "https://www.liberation.fr",
 'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
-'title':"Jean-Pierre",
+'title':"Jean-Pierre, un mur de la gare",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 'url': "https://www.liberation.fr",
 'img': "img/JEAN-PIERRE.jpg"},
