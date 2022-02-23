@@ -111,8 +111,9 @@ console.log(position_tooltip);
 
 show_tooltip(this_d, position_tooltip)
 
-
+if (window_width >= 500){
 d3.select('#tooltip').style('pointer-events', 'none');
+}
 
 
 }
@@ -122,8 +123,10 @@ d3.select('#tooltip').style('pointer-events', 'none');
 console.log('out of it');
 
     if (selected_zone.length > 0){
+      if (window_width >= 500){
 
       d3.select('#tooltip').style('pointer-events', 'auto');
+    }
 
      show_tooltip(selected_zone[1], selected_zone[2])}
 
@@ -147,7 +150,9 @@ let this_id = d3.select(this).attr('id')
 let this_d = all_person[this_id]
 show_tooltip(this_d)
 
+if (window_width >= 500){
 d3.select('#tooltip').style('pointer-events', 'auto');
+}
 
 // let position_tooltip= [parseFloat(d3.select(this).style('x')),  parseFloat(d3.select(this).style('y'))]
 
