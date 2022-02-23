@@ -171,8 +171,23 @@ svg.call(d3.zoom()
 
 
 
+if (window_width > 500){
+
+g
+.attr('transform', 'translate(-470, -243) scale(1.8)')
+
+}
+else{
+
+g
+.attr('transform', 'translate(-950, -460) scale(2.8)')
+  
+}
+
 
   }
+
+
 
 
 d3.select('body').on("click",function(){
