@@ -224,7 +224,7 @@ position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().ge
 
 if (window_width < 500){
 
-position_tooltip = [(d3.select('#svg-container svg').node().getBoundingClientRect().x),
+position_tooltip = [10,
               (window.scrollY + 250)]
 }
 
