@@ -105,16 +105,7 @@ let this_d = all_person[this_id]
 
 
 
-position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
-              (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
-
-if (window_width < 500){
-
-position_tooltip = [(d3.select('#svg-container svg').node().getBoundingClientRect().x),
-						  (window.scrollY + 200)]
-
-
-}
+position_tooltip = positioning_tooltip(this_position)
 
 console.log(position_tooltip);
 
@@ -156,8 +147,7 @@ show_tooltip(this_d)
 this_position = this.getBoundingClientRect();
 
 
-position_tooltip= [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
-						  (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+position_tooltip = positioning_tooltip(this_position)
 
 selected_zone = [this, this_d, position_tooltip]
 
@@ -227,7 +217,20 @@ selected_zone = [];
 });
 
 
+function positioning_tooltip(this_position){
 
+position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
+              (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+
+if (window_width < 500){
+
+position_tooltip = [(d3.select('#svg-container svg').node().getBoundingClientRect().x),
+              (window.scrollY + 250)]
+}
+
+return position_tooltip
+
+}
 
 
 
