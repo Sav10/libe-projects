@@ -144,15 +144,18 @@ console.log('out of it');
   .on('click', function() {
 
 
+
+if (window_width >= 500){
+
     console.log('clicked');
 
 let this_id = d3.select(this).attr('id')
 let this_d = all_person[this_id]
 show_tooltip(this_d)
 
-if (window_width >= 500){
+
 d3.select('#tooltip').style('pointer-events', 'auto');
-}
+
 
 // let position_tooltip= [parseFloat(d3.select(this).style('x')),  parseFloat(d3.select(this).style('y'))]
 
@@ -173,6 +176,9 @@ selected_zone = [this, this_d, position_tooltip]
     // .style('fill-opacity', 1)
     // .style('stroke-opacity', 1)
     // .style('stroke-width', 2)
+
+
+}
 
   })
 
