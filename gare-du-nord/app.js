@@ -1,7 +1,8 @@
 let allZones,
 selected_zone  = [],
 svg,
-g;
+g,
+position_tooltip;
 
 const width_svg = {
     'small' : 1300,
@@ -103,9 +104,17 @@ let this_d = all_person[this_id]
 // let position_tooltip= [parseFloat(d3.select(this).style('x')),  parseFloat(d3.select(this).style('y'))]
 
 
-let position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
-						  (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
 
+position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
+              (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+
+if (window_width < 500){
+
+position_tooltip = [(d3.select('#svg-container svg').node().getBoundingClientRect().x),
+						  (window.scrollY + 200)]
+
+
+}
 
 console.log(position_tooltip);
 
@@ -144,10 +153,10 @@ show_tooltip(this_d)
 
 // let position_tooltip= [parseFloat(d3.select(this).style('x')),  parseFloat(d3.select(this).style('y'))]
 
-let this_position = this.getBoundingClientRect();
+this_position = this.getBoundingClientRect();
 
 
-let position_tooltip= [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
+position_tooltip= [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x),
 						  (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
 
 selected_zone = [this, this_d, position_tooltip]
