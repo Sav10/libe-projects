@@ -232,7 +232,7 @@ function show_tooltip(d, position_tooltip) {
 
     if (position_tooltip){
     var dx = position_tooltip[0]
-    var dy = position_tooltip[1] - 80
+    var dy = position_tooltip[1] - 250
 
     }
     else
