@@ -219,13 +219,20 @@ selected_zone = [];
 
 function positioning_tooltip(this_position){
 
-position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x -30),
-              (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+
 
 if (window_width < 500){
 
-position_tooltip = [0,
-              (window.scrollY + 280)]
+position_tooltip = [0, (window.scrollY + 30)]
+}
+
+else{
+
+position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x -20),
+              (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+
+position_tooltip[1] = position_tooltip[1] < (window.scrollY + 20) ? (window.scrollY + 20) : position_tooltip[1];
+
 }
 
 return position_tooltip
@@ -244,7 +251,7 @@ function show_tooltip(d, position_tooltip) {
 
     if (position_tooltip){
     var dx = position_tooltip[0]
-    var dy = position_tooltip[1] - 250
+    var dy = position_tooltip[1]
 
     }
     else
