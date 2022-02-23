@@ -180,8 +180,8 @@ selected_zone = [this, this_d, position_tooltip]
 
 
 svg.call(d3.zoom()
-      .extent([[0, 0], [1366, 768]])
-      .scaleExtent([1, 8])
+      // .extent([[0, 0], [1366, 768]])
+      .scaleExtent([1, 9])
       .on("zoom", zoomed));
 
   function zoomed({transform}) {
@@ -196,12 +196,12 @@ g
 .attr('transform', 'translate(-470, -243) scale(1.8)')
 
 }
-else{
+// else{
 
-g
-.attr('transform', 'translate(-950, -460) scale(2.8)')
+// g
+// .attr('transform', 'translate(-950, -460) scale(2.8)')
   
-}
+// }
 
 
   }
