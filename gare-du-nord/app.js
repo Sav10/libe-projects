@@ -17,34 +17,42 @@ let all_person = {
 'MathieuSabrinaVelib':{
 'title':"Mathieu et Sabrina 1",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"},
+'url': "https://www.liberation.fr",
+'img': "img/MATHIEU-SABRINA-ILLUSTRATION.jpg"},
 'Disparus':{
 'title':"Les disparus",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"},
+'url': "https://www.liberation.fr",
+'img': "img/DISPARUS.jpg"},
 'AnitaDoctor':{
 'title':"Anita",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"},
+'url': "https://www.liberation.fr",
+'img': "img/ANITA.jpg"},
 'HorlogeGareDuNord':{
 'title':"L'horloge",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"},
+'url': "https://www.liberation.fr",
+'img': "img/HORLOGE.jpg"},
 'OdileCarnet':{
 'title':"Les carnets d'Odile",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"},
+'url': "https://www.liberation.fr",
+'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
 'title':"Jean-Pierre",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"},
+'url': "https://www.liberation.fr",
+'img': "img/JEAN-PIERRE.jpg"},
 'MathieuSabrinaTrain':{
 'title':"Mathieu et Sabrina",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"},
+'url': "https://www.liberation.fr",
+'img': "img/MATHIEU-SABRINA-PICARDIE.jpg"},
 'OdileEquipe':{'title':"L'équipe d'Odile",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr"}
+'url': "https://www.liberation.fr",
+'img': "img/ODILE.jpg"}
 }
 
 
@@ -239,6 +247,7 @@ function show_tooltip(d, position_tooltip) {
     // var this_chart_right = d3.select('#chart svg').node().getBoundingClientRect().right;
 
         var this_inner_html = `
+        <img src="${d.img}"" width="200px">
         <h2> ${d.title}</h2><br />
          ${d.text}<br />
          <a href="${d.url}" target="_blank"> LIRE LA SUITE</a>`;
