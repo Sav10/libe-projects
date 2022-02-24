@@ -12,7 +12,7 @@ const width_svg = {
 
 let window_width = parseFloat(d3.select('body').style('width'));
 
-console.log(window_width)
+// console.log(window_width)
 
 let all_person = {
 'MathieuSabrinaVelib':{
@@ -161,11 +161,11 @@ d3.selectAll('#Zone_Cliquable circle').remove()
 
 
 
-    console.log('clicked');
+    // console.log('clicked');
 
 let this_id = d3.select(this).attr('id')
 let this_d = all_person[this_id]
-show_tooltip(this_d)
+// show_tooltip(this_d)
 
 
 d3.select('#tooltip').style('pointer-events', 'auto');
