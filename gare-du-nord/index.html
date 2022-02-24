@@ -89,7 +89,7 @@ stroke:#888;
     position: absolute;
     display: none;
     max-width: 300px;
-    padding: 10px;
+    padding: 0;
     margin-top: 10px;
     margin-bottom: 10px;
     font-family: 'syntheselibeweb', Verdana,sans-serif;
@@ -99,6 +99,10 @@ stroke:#888;
     color: white;
     pointer-events: all;
     z-index: 10;
+}
+
+#text_tooltip{
+  padding: 5px;
 }
 
 
@@ -163,6 +167,17 @@ position: relative;
 
 }
 
+
+#HorlogeGareDuNord, #OdileEquipe, #OdileCarnet, #JeanPierre,
+#MathieuSabrinaVelib, #AnitaDoctor, #Disparus {
+cursor: pointer;
+
+}
+
+#Zone_Cliquable circle{
+pointer-events : none;
+
+}
 
 
   </style>

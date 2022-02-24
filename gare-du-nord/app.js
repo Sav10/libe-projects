@@ -104,6 +104,8 @@ let this_id = d3.select(this).attr('id')
 let this_position = this.getBoundingClientRect();
 let this_d = all_person[this_id]
 
+draw_circle(this)
+
 // let position_tooltip= [parseFloat(d3.select(this).style('x')),  parseFloat(d3.select(this).style('y'))]
 
 
@@ -125,6 +127,9 @@ d3.select('#tooltip').style('pointer-events', 'none');
 
 
       if (window_width >= 500){
+
+
+d3.selectAll('#Zone_Cliquable circle').remove()
 
 console.log('out of it');
 
@@ -293,9 +298,11 @@ function show_tooltip(d, position_tooltip) {
 
         var this_inner_html = `
         <img src="${d.img}"" width="200px">
+        <div id="text_tooltip">
         <h2> ${d.title}</h2><br />
          ${d.text}<br />
-         <a href="${d.url}" target="_blank"> LIRE LA SUITE</a>`;
+         <a href="${d.url}" target="_blank"> LIRE LA SUITE</a>
+         </div`;
 
 
 d3.select("#tooltip")
@@ -332,4 +339,26 @@ function hide_tooltip() {
 
 function equalToEventTarget() {
     return this == event.target;
+}
+
+function draw_circle(selection_node){
+
+  d3.selectAll('#Zone_Cliquable circle').remove()
+
+  let this_sel = d3.select(selection_node)
+
+ let this_center_x = parseFloat(this_sel.attr('x')) + parseFloat(this_sel.attr('width') /2 )
+ let this_center_y = parseFloat(this_sel.attr('y')) + parseFloat(this_sel.attr('height') /2 )
+
+ d3.select('#Zone_Cliquable')
+ .append('circle')
+ .attr('cx', this_center_x)
+ .attr('cy', this_center_y)
+ .attr('r', 10)
+ .attr('stroke', 'red')
+ .attr('stroke-dasharray', 3)
+ .attr('fill', 'red')
+ .attr('fill-opacity', 0.3)
+
+
 }
