@@ -1,0 +1,207 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, , maximum-scale=1" />
+  <title>Gare du nord</title>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+  
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+
+h2{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+
+
+/*svg {
+      max-height: calc(100vh - 10px);
+      max-width: calc(100vw - 10px);
+    }*/
+
+#tooltip {
+    position: absolute;
+    display: none;
+    max-width: 300px;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'syntheselibeweb', Verdana,sans-serif;
+    font-size: .9em;
+    font-weight: 800;
+    background-color: #777;
+    color: white;
+    pointer-events: all;
+    z-index: 10;
+}
+
+#text_tooltip{
+  padding: 5px;
+}
+
+
+.box {
+    background-color: black;
+    color: white;
+    /*border-radius: 5px;*/
+    box-shadow: 0 2px 3px rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 10%);
+    /*color: #4a4a4a;*/
+    display: block;
+    padding: 1.25rem;
+}
+
+#tooltip a{
+
+color: white;
+text-decoration: none;
+
+}
+
+#tooltip{
+
+  width: 200px;
+}
+
+
+#chart{
+
+max-width: 1200px;
+margin: 0 auto;
+}
+
+
+
+#svg-container{
+position: relative;
+
+
+}
+
+
+@media screen and (max-width: 700px){
+
+
+
+
+}
+
+
+@media screen and (max-width: 500px){
+
+#tooltip {
+  
+/*    width: 80%;
+    margin-left: 7%;*/
+    margin: 0 auto;
+    left: 50% !important;
+    transform: translate(-50%, 0);
+
+}
+
+
+}
+
+
+#HorlogeGareDuNord, #OdileEquipe, #OdileCarnet, #JeanPierre,
+#MathieuSabrinaVelib, #AnitaDoctor, #Disparus {
+cursor: pointer;
+
+}
+
+#Zone_Cliquable circle{
+pointer-events : none;
+
+}
+
+
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart">
+      <div id="fortip"></div>
+      <div id="svg-container"></div>
+
+    </div>
+  </section>
+
+
+  <!-- JS -->
+  <!-- <script src="../utilities/js/jquery-1.10.2.js"></script> -->
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="app.js"></script>
+
+
+
+    </body>
+    </html>
