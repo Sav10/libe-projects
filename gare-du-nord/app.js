@@ -188,9 +188,9 @@ function show_tooltip(d, position_tooltip) {
   }
 
   var this_inner_html = `
-  <img src="${d.img}"" width="200px">
+  <a href="${d.url}" target="_blank"><img src="${d.img}"" width="200px"></a>
   <div id="text_tooltip">
-  <h2> ${d.title}</h2><br />
+   <a href="${d.url}" target="_blank"><h2> ${d.title}</h2></a>
   ${d.text}<br /><br />
   <a href="${d.url}" target="_blank"> LIRE LA SUITE</a>
   <br /><br />
