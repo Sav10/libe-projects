@@ -95,6 +95,9 @@ allZones
 .style('opacity', 0)
 .on('mouseover', function(){
 
+if (window_width >= 500){
+
+
     console.log('over it');
 
 let this_id = d3.select(this).attr('id')
@@ -114,19 +117,22 @@ show_tooltip(this_d, position_tooltip)
 if (window_width >= 500){
 d3.select('#tooltip').style('pointer-events', 'none');
 }
-
+}
 
 }
 	)
 .on('mouseout', function(){
 
+
+      if (window_width >= 500){
+
 console.log('out of it');
 
     if (selected_zone.length > 0){
-      if (window_width >= 500){
+
 
       d3.select('#tooltip').style('pointer-events', 'auto');
-    }
+
 
      show_tooltip(selected_zone[1], selected_zone[2])}
 
@@ -135,6 +141,8 @@ console.log('out of it');
 	hide_tooltip() 
 
 }
+
+    }
 
 })
 
@@ -145,7 +153,7 @@ console.log('out of it');
 
 
 
-if (window_width >= 500){
+
 
     console.log('clicked');
 
@@ -178,7 +186,7 @@ selected_zone = [this, this_d, position_tooltip]
     // .style('stroke-width', 2)
 
 
-}
+
 
   })
 
