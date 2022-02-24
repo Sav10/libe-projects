@@ -310,8 +310,9 @@ function show_tooltip(d, position_tooltip) {
         <img src="${d.img}"" width="200px">
         <div id="text_tooltip">
         <h2> ${d.title}</h2><br />
-         ${d.text}<br />
+         ${d.text}<br /><br />
          <a href="${d.url}" target="_blank"> LIRE LA SUITE</a>
+         <br /><br />
          </div`;
 
 
