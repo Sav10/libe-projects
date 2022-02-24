@@ -4,17 +4,8 @@ svg,
 g,
 position_tooltip;
 
-const width_svg = {
-    'small' : 1300,
-    'middle' : 1000,
-    'big' : 768
-}
 
-let window_width = parseFloat(d3.select('body').style('width'));
-
-// console.log(window_width)
-
-let all_person = {
+const all_person = {
 'MathieuSabrinaVelib':{
 'title':"Mathieu et Sabrina 1",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -55,6 +46,14 @@ let all_person = {
 'url': "https://www.liberation.fr",
 'img': "img/ODILE.jpg"}
 }
+
+const width_svg = {
+    'small' : 1300,
+    'middle' : 1000,
+    'big' : 768
+}
+
+let window_width = parseFloat(d3.select('body').style('width'));
 
 
 var div = d3.select("#fortip").append("div")
@@ -268,6 +267,9 @@ position_tooltip = [(this_position.x - position_svg.x -20),
 
 
 position_tooltip[1] = position_tooltip[1] < (window.scrollY + 20) ? (window.scrollY + 20) : position_tooltip[1];
+
+
+position_tooltip[0] = position_tooltip[0] < position_svg.x ? position_svg.x : position_tooltip[0];
 
 
 
