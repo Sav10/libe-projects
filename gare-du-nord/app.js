@@ -98,11 +98,11 @@ allZones
 if (window_width >= 500){
 
 
-    console.log('over it');
+//     console.log('over it');
 
-let this_id = d3.select(this).attr('id')
-let this_position = this.getBoundingClientRect();
-let this_d = all_person[this_id]
+// let this_id = d3.select(this).attr('id')
+// let this_position = this.getBoundingClientRect();
+// let this_d = all_person[this_id]
 
 draw_circle(this)
 
@@ -110,15 +110,16 @@ draw_circle(this)
 
 
 
-position_tooltip = positioning_tooltip(this_position)
+// position_tooltip = positioning_tooltip(this_position)
 
-console.log(position_tooltip);
+// console.log(position_tooltip);
 
-show_tooltip(this_d, position_tooltip)
+// show_tooltip(this_d, position_tooltip)
 
-if (window_width >= 500){
-d3.select('#tooltip').style('pointer-events', 'none');
-}
+// if (window_width >= 500){
+// d3.select('#tooltip').style('pointer-events', 'none');
+// }
+
 }
 
 }
@@ -131,21 +132,21 @@ d3.select('#tooltip').style('pointer-events', 'none');
 
 d3.selectAll('#Zone_Cliquable circle').remove()
 
-console.log('out of it');
+// console.log('out of it');
 
-    if (selected_zone.length > 0){
-
-
-      d3.select('#tooltip').style('pointer-events', 'auto');
+//     if (selected_zone.length > 0){
 
 
-     show_tooltip(selected_zone[1], selected_zone[2])}
+//       d3.select('#tooltip').style('pointer-events', 'auto');
 
-    else{
 
-	hide_tooltip() 
+//      show_tooltip(selected_zone[1], selected_zone[2])}
 
-}
+//     else{
+
+// 	hide_tooltip() 
+
+// }
 
     }
 
@@ -259,10 +260,17 @@ position_tooltip = [0, (window.scrollY + 30)]
 
 else{
 
-position_tooltip = [(this_position.x - d3.select('#svg-container svg').node().getBoundingClientRect().x -20),
-              (this_position.y - d3.select('#svg-container svg').node().getBoundingClientRect().y)]
+  let position_svg = svg.node().getBoundingClientRect();
+
+position_tooltip = [(this_position.x - position_svg.x -20),
+              (this_position.y - position_svg.y)]
+
+
 
 position_tooltip[1] = position_tooltip[1] < (window.scrollY + 20) ? (window.scrollY + 20) : position_tooltip[1];
+
+
+
 
 }
 
@@ -309,17 +317,25 @@ d3.select("#tooltip")
 .classed('is-active', true)
 .html(this_inner_html);
 
-var thisTooltip = d3.select('#tooltip').node().getBoundingClientRect();
+
+dy = dy > (window.scrollY + 30) ? (window.scrollY + 30) : dy;
+
+d3.select("#tooltip")
+.style("left", (dx) + "px")
+.style("top", (dy) + "px");
+
+
+
+// var thisTooltip = d3.select('#tooltip').node().getBoundingClientRect();
+
+
+// console.log(thisTooltip)
 
 // if (dx > (this_chart_right - thisTooltip.width)){
 
 // dx = (this_chart_right - thisTooltip.width - 10)
 
 // }
-
-d3.select("#tooltip")
-.style("left", (dx) + "px")
-.style("top", (dy) + "px");
 
 }
 
