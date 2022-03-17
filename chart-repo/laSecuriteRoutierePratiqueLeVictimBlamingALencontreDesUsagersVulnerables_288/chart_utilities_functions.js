@@ -183,9 +183,9 @@ else
 }
 
 
-// if (isMobile()){
-//         d3.select("#tooltip").style('pointer-events', 'all').style('display', 'block');
-// }
+if (isMobile()){
+        d3.select("#tooltip").style('pointer-events', 'all').style('display', 'block');
+}
 
 }
 
