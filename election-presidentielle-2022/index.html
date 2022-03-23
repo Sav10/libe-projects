@@ -29,6 +29,12 @@
   <style type="text/css">
 
 
+
+#morphocarte.carte{
+  max-width: 800px;
+  margin: 0 auto;
+}
+
     #map_info {
     position: absolute;
     display: none;
@@ -476,6 +482,7 @@ display: none;
 
 }
 
+
 @media screen and (max-width: 700px){
 
 a#play_button img{
@@ -635,6 +642,7 @@ margin-left: -5px;
     margin: 0;
 }
 
+
   </style>
 
 </head>
@@ -672,9 +680,10 @@ margin-left: -5px;
 
           <div id="representation_territoriale">Découpage
             <a class="actionButton decoupage"  id="display_regions" data-value="svg-container-reg">regions</a>
-            <a class="actionButton decoupage" id="display_departements" data-value="svg-container-dep">départements</a>
+            <a class="actionButton decoupage" id="display_departements" data-value="svg-container-dep" style="color: #fff; background-color: red">départements</a>
             <a class="actionButton decoupage" id="display_circonscriptions" data-value="svg-container-circ">circonscriptions</a>
           </div>
+
 
 
     </div>
