@@ -391,6 +391,16 @@ d3.selectAll('#representation_territoriale .actionButton')
 .on('click', function(){
 
 let id_map =  d3.select(this).attr('data-value')
+let this_id =  d3.select(this).attr('id')
+
+
+d3.selectAll('#representation_territoriale .actionButton')
+.style('color', 'red')
+.style('background-color', '#fff')
+
+d3.select('#' +this_id)
+.style('color', '#fff')
+.style('background-color', 'red')
 
 d3.selectAll('.svg_map')
 .style('visibility', 'hidden')

@@ -627,6 +627,14 @@ cursor: pointer;
 
 }
 
+#display_circonscriptions, #display_departements{
+margin-left: -5px;
+}
+
+.actionButton{
+    margin: 0;
+}
+
   </style>
 
 </head>
@@ -658,14 +666,14 @@ cursor: pointer;
       <div id="svg-container-circ" class='svg_map' style="visibility: hidden;"></div>
       
           <div id="representation_carto">Affichage
-            <a class="actionButton"  id="display_geo_paths">TERRITOIRE</a>
-            <a class="actionButton" id="display_proportional_circles">POPULATION</a>
+            <a class="actionButton affichage"  id="display_geo_paths">TERRITOIRE</a>
+            <a class="actionButton affichage" id="display_proportional_circles">POPULATION</a>
           </div>
 
           <div id="representation_territoriale">Découpage
-            <a class="actionButton"  id="display_regions" data-value="svg-container-reg">regions</a>
-            <a class="actionButton" id="display_departements" data-value="svg-container-dep">départements</a>
-            <a class="actionButton" id="display_circonscriptions" data-value="svg-container-circ">circonscriptions</a>
+            <a class="actionButton decoupage"  id="display_regions" data-value="svg-container-reg">regions</a>
+            <a class="actionButton decoupage" id="display_departements" data-value="svg-container-dep">départements</a>
+            <a class="actionButton decoupage" id="display_circonscriptions" data-value="svg-container-circ">circonscriptions</a>
           </div>
 
 
