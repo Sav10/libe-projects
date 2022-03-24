@@ -38,11 +38,11 @@ const all_person = {
 'url': "https://www.liberation.fr/societe/gdn-episode-2-jp-papi-noel-est-en-or-dur-20220328_Q32SRC46AFFY3MPLCVF4TETWTI/",
 'img': "img/JEAN-PIERRE.jpg"},
 'MathieuSabrinaTrain':{
-'title':"Mathieu et Sabrina",
+'title':"Sabrina et Mathieu, Somme sweet home",
  "text": "On a retrouvé Mathieu et Sabrina, deux ans et demi après leur opération du cœur.  Ils ont fui la Gare du Nord et la drogue et se remplument dans la Somme.",
 'url': "https://www.liberation.fr",
 'img': "img/MATHIEU-SABRINA-PICARDIE.jpg"},
-'OdileEquipe':{'title':"Sabrina et Mathieu, Somme sweet home",
+'OdileEquipe':{'title':"L'équipe d'Odile",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 'url': "https://www.liberation.fr/societe/gdn-episode-8-sabrina-et-mathieu-somme-sweet-home-20220328_MYGNGCJ4BND6FPI3VWJPQTVIXA/",
 'img': "img/ODILE.jpg"}
