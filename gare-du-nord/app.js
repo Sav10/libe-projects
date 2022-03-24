@@ -9,8 +9,8 @@ position_tooltip;
 const all_person = {
 'MathieuSabrinaVelib':{
 'title':"Mathieu et Sabrina 1",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr",
+ "text": "Tombés dans l’héroïne dans leur Picardie natale, Sabrina et Mathieu ont dégringolé dans le crack à Paris, où tous les deux ont tutoyé la mort.",
+'url': "https://www.liberation.fr/societe/gdn-episode-4-mat-et-sab-une-histoire-de-came-et-damour-20220328_YJFBLCTARFBBZKSYRHCMWWR3RM/",
 'img': "img/MATHIEU-SABRINA-ILLUSTRATION.jpg"},
 'Disparus':{
 'title':"Les disparus",
@@ -19,8 +19,8 @@ const all_person = {
 'img': "img/DISPARUS.jpg"},
 'AnitaDoctor':{
 'title':"Anita",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr",
+ "text": "Anita, «I’English doctor», pouvait passer pour un voyageuse lambda. Sauf qu’elle arrivait tous les jours à 5 heures et repartait à 1 heure, ne faisant rien d’autre qu’attendre.",
+'url': "https://www.liberation.fr/societe/gdn-episode-3-anita-ienglish-doctor-20220328_KRQ7JUJCTRF7BCA2SND66H6PRE/",
 'img': "img/ANITA.jpg"},
 'HorlogeGareDuNord':{
 'title':"L'horloge",
@@ -34,17 +34,17 @@ const all_person = {
 'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
 'title':"Jean-Pierre, un mur de la gare",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr",
+ "text": "47 ans après son arrivée, gravement accidenté. JP, dit Papi Noël, a quitté la gare pour une maison de retraite.",
+'url': "https://www.liberation.fr/societe/gdn-episode-2-jp-papi-noel-est-en-or-dur-20220328_Q32SRC46AFFY3MPLCVF4TETWTI/",
 'img': "img/JEAN-PIERRE.jpg"},
 'MathieuSabrinaTrain':{
 'title':"Mathieu et Sabrina",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+ "text": "On a retrouvé Mathieu et Sabrina, deux ans et demi après leur opération du cœur.  Ils ont fui la Gare du Nord et la drogue et se remplument dans la Somme.",
 'url': "https://www.liberation.fr",
 'img': "img/MATHIEU-SABRINA-PICARDIE.jpg"},
 'OdileEquipe':{'title':"L'équipe d'Odile",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr",
+'url': "https://www.liberation.fr/societe/gdn-episode-8-sabrina-et-mathieu-somme-sweet-home-20220328_MYGNGCJ4BND6FPI3VWJPQTVIXA/",
 'img': "img/ODILE.jpg"}
 }
 
