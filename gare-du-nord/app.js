@@ -18,22 +18,22 @@ const all_person = {
 'url': "https://www.liberation.fr",
 'img': "img/DISPARUS.jpg"},
 'AnitaDoctor':{
-'title':"Anita",
- "text": "Anita, «I’English doctor», pouvait passer pour un voyageuse lambda. Sauf qu’elle arrivait tous les jours à 5 heures et repartait à 1 heure, ne faisant rien d’autre qu’attendre.",
+'title':"Anita, «L’English doctor»",
+ "text": "Anita, «L’English doctor», pouvait passer pour un voyageuse lambda. Sauf qu’elle arrivait tous les jours à 5 heures et repartait à 1 heure, ne faisant rien d’autre qu’attendre.",
 'url': "https://www.liberation.fr/societe/gdn-episode-3-anita-ienglish-doctor-20220328_KRQ7JUJCTRF7BCA2SND66H6PRE/",
 'img': "img/ANITA.jpg"},
 'HorlogeGareDuNord':{
-'title':"L'horloge",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr",
+'title':"C’est beau une gare, la nuit",
+ "text": "La gare ferme ses portes vers 1 heure du matin. Elle se livre alors dans toute sa démesure et son architecture exceptionnelle.",
+'url': "https://www.liberation.fr/societe/gdn-episode-6-cest-beau-une-gare-la-nuit-20220328_WY2DVJTMYVHTBEDU2QKEM7YQUU/",
 'img': "img/HORLOGE.jpg"},
 'OdileCarnet':{
-'title':"Odile et ses carnets",
+'title':"Odile et ses carnets d’histoire",
  "text": "Officiellement Odile est « référente sociale de la gare ». Dans les faits: elle retricote des liens avec les sans-abri. Et note tout dans ses carnets.",
 'url': "https://www.liberation.fr/societe/gdn-episode-1-odile-et-ses-carnets-dhistoire-20220328_TWBZQBWSEJCDJMRRKC445ADITM/",
 'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
-'title':"Jean-Pierre, un mur de la gare",
+'title':"JP, «Papi Noël» est en or dur",
  "text": "47 ans après son arrivée, gravement accidenté. JP, dit Papi Noël, a quitté la gare pour une maison de retraite.",
 'url': "https://www.liberation.fr/societe/gdn-episode-2-jp-papi-noel-est-en-or-dur-20220328_Q32SRC46AFFY3MPLCVF4TETWTI/",
 'img': "img/JEAN-PIERRE.jpg"},
@@ -42,7 +42,7 @@ const all_person = {
  "text": "On a retrouvé Mathieu et Sabrina, deux ans et demi après leur opération du cœur.  Ils ont fui la Gare du Nord et la drogue et se remplument dans la Somme.",
 'url': "https://www.liberation.fr",
 'img': "img/MATHIEU-SABRINA-PICARDIE.jpg"},
-'OdileEquipe':{'title':"L'équipe d'Odile",
+'OdileEquipe':{'title':"Sabrina et Mathieu, Somme sweet home",
  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 'url': "https://www.liberation.fr/societe/gdn-episode-8-sabrina-et-mathieu-somme-sweet-home-20220328_MYGNGCJ4BND6FPI3VWJPQTVIXA/",
 'img': "img/ODILE.jpg"}
