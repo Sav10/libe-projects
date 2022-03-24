@@ -28,9 +28,9 @@ const all_person = {
 'url': "https://www.liberation.fr",
 'img': "img/HORLOGE.jpg"},
 'OdileCarnet':{
-'title':"Les carnets d'Odile",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-'url': "https://www.liberation.fr",
+'title':"Odile et ses carnets",
+ "text": "Officiellement Odile est « référente sociale de la gare ». Dans les faits: elle retricote des liens avec les sans-abri. Et note tout dans ses carnets.",
+'url': "https://www.liberation.fr/societe/gdn-episode-1-odile-et-ses-carnets-dhistoire-20220328_TWBZQBWSEJCDJMRRKC445ADITM/",
 'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
 'title':"Jean-Pierre, un mur de la gare",
