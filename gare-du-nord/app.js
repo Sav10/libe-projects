@@ -8,7 +8,7 @@ position_tooltip;
 
 const all_person = {
 'MathieuSabrinaVelib':{
-'title':"Mathieu et Sabrina 1",
+'title':"Mat et Sab, une histoire de came et d’amour",
  "text": "Tombés dans l’héroïne dans leur Picardie natale, Sabrina et Mathieu ont dégringolé dans le crack à Paris, où tous les deux ont tutoyé la mort.",
 'url': "https://www.liberation.fr/societe/gdn-episode-4-mat-et-sab-une-histoire-de-came-et-damour-20220328_YJFBLCTARFBBZKSYRHCMWWR3RM/",
 'img': "img/MATHIEU-SABRINA-ILLUSTRATION.jpg"},
