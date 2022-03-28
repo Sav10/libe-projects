@@ -5,6 +5,7 @@ var isChromium = !!window.chrome;
 var datapol;
 var circosData;
 var representation_territoriale = 'departement';
+const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 
 
 var geo_objects = {
@@ -253,11 +254,25 @@ elements_selection
 .enter()
 .append('div')
 .attr('class', 'display_element')
-.text(d=> d)
+.text(d=> _.capitalize(d).replace('Le pen', 'Le Pen'))
 .on('click', function(event, d){
   console.log(d)
+
+d3.selectAll('#affichage .display_element')
+.style('background-color', '#eee')
+.style('color', '#000')
+
+d3.select(this)
+.style('background-color', 'black')
+.style('color', '#fff')
+
 fillOnClick(d)
 })
+
+d3.select('#affichage .display_element')
+.style('background-color', 'black')
+.style('color', '#fff')
+
 }
 
 draw_affichage()
@@ -348,6 +363,22 @@ let all_those_paths = d3.select('#'+ geo_objects[representation_territoriale].co
 
 redraw_paths_generic(all_those_paths, correction_paths[representation_territoriale])
 
+
+for (i in arr_representation_territoriale){
+
+  let this_d = arr_representation_territoriale[i]
+
+if (this_d != representation_territoriale){
+
+all_those_paths = d3.select('#'+ geo_objects[this_d].container + ' svg').selectAll('path');
+
+redraw_paths_generic(all_those_paths, correction_paths[this_d])
+
+}
+
+}
+
+
 }
 
 function transform_all_paths_to_circle(){
@@ -364,6 +395,21 @@ d3.select('#display_geo_paths')
 let all_those_paths = d3.select('#'+ geo_objects[representation_territoriale].container + ' svg').selectAll('path');
 
 transform_all_paths_to_circle_generic(all_those_paths, position_circles[representation_territoriale], geo_objects[representation_territoriale].location_prefix)
+
+for (i in arr_representation_territoriale){
+
+  let this_d = arr_representation_territoriale[i]
+
+if (this_d != representation_territoriale){
+
+
+all_those_paths = d3.select('#'+ geo_objects[this_d].container + ' svg').selectAll('path');
+
+transform_all_paths_to_circle_generic(all_those_paths, position_circles[this_d], geo_objects[this_d].location_prefix)
+
+}
+
+}
 
 }
 
@@ -556,10 +602,17 @@ d3.xml("img/carte-regions.svg")
 .then(data => {
   d3.select("#svg-container-reg").node().append(data.documentElement)
 
+let svg_container = 'svg-container-reg'
+let circle_range = [4, 45]
+let location_variable = 'code_region'
+let location_prefix = 'R_'
+let location_type = 'region'
 
   geo_objects['region']['data'] = data_reg;
 
-  loadMapFromSvgReg(data_reg)
+ /* loadMapFromSvgReg(data_reg)*/
+
+  loadMapFromSvgGeneric(data_reg, svg_container, circle_range, location_variable, location_prefix, location_type)
 
   d3.select("#svg-container-reg").style('height', 0)
 
@@ -648,7 +701,7 @@ mapstate = 1;
 function loadMapFromSvgGeneric(data, svg_container, circle_range, location_variable, location_prefix, location_type) {
 
   let this_svg_map = d3.select('#'+ svg_container + ' svg');
-  let all_those_paths = this_svg_map.selectAll('path');
+  var all_those_paths = this_svg_map.selectAll('path');
 
 console.log(all_those_paths)
 
@@ -698,7 +751,7 @@ thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
   .style('stroke', '#aaa')
   .style('stroke-width', 0)
   .on('mouseover', function(event, d) {
-    showTip(data, d)
+   /* showTip(data, d)*/
     all_those_paths
     .style('stroke-width', 0)
     .style('fill-opacity', .5)
@@ -712,7 +765,7 @@ thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
 
     if (selected_dep.length > 0){
 
-     showTip(data, selected_dep[1])
+     /*showTip(data, selected_dep[1])*/
     all_those_paths
     .style('stroke-width', 0)
     .style('fill-opacity', .5)
@@ -723,7 +776,7 @@ thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
 
     }
     else{
-    reset_tooltip()
+    /*reset_tooltip()*/
 
     all_those_paths
     .style('stroke-width', 0)
@@ -739,13 +792,22 @@ thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
 
 /// Click function for shape
 
-d3.select('body').on("click",function(){
-    var outside = all_those_paths.filter(equalToEventTarget).empty();
+d3.select('body').on("click",function(event, d){
+    /*var outside = all_those_paths.filter(equalToEventTarget).empty();*/
+    var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
+    console.log(outside)
     if (outside) {
+      console.log('click outside')
     reset_tooltip()
 selected_dep = [];
+
+console.log(all_those_paths)
+
     all_those_paths
     .style('stroke-width', 0)
+    .style('fill-opacity', 1)
+
+    d3.selectAll('path')
     .style('fill-opacity', 1)
 
     }
@@ -756,6 +818,7 @@ else{
 
   all_those_paths
   .on('click', function(event, d) {
+    console.log('clicking')
     selected_dep = [this, d];
     showTip(data, d)
     all_those_paths
@@ -1038,6 +1101,9 @@ those_paths.transition().attrTween("d", function(d){ return d.to_circle_function
 
 
 function reset_tooltip(){
+
+
+  console.log('reseting tip')
 
 d3.select('#minigraph_container')
 .style('display', 'none')

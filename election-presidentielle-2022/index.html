@@ -159,7 +159,7 @@ opacity: 0.8;
 }
 
 #display_geo_paths{
-  margin-left: 2em;
+
 }
 
 .d3-tip{
@@ -218,8 +218,16 @@ h1#graph_title{
 #representation_carto a.actionButton{
 
 margin-right: 0;
-font-size: .8em;
 
+
+}
+
+a.actionButton{
+
+font-family: 'libesansweb-semicondensed';
+letter-spacing: .12em;
+text-transform: uppercase;
+cursor: pointer;
 }
 
 #display_proportional_circles{
@@ -435,6 +443,12 @@ font-family: 'syntheselibeweb';
 
 }
 
+@media screen and (max-width: 700px){
+
+#map_info2{
+left: 2px;
+}
+}
 
 
 #sources{
@@ -504,12 +518,12 @@ width: 1800px;
 #affichage .display_element{
 display: inline-block;
 margin-left: 1.5em;
-padding: 4px;
+padding: 8px;
 border-radius: 15px;
 border: 0;
 background-color: #eee;
 cursor: pointer;
-
+font-size: 15px;
 }
 
 #display_circonscriptions, #display_departements{
@@ -520,6 +534,20 @@ margin-left: -5px;
     margin: 0;
 }
 
+
+#morphocarte svg path{
+    cursor: pointer;
+}
+
+body{
+font-family: SFProText, Arial, sans-serif;
+
+}
+
+.text_affichage{
+display: inline-block;
+width: 90px;
+}
 
   </style>
 
@@ -551,12 +579,12 @@ margin-left: -5px;
     <div id="svg-container-reg" class='svg_map' style="visibility: hidden;"></div>
       <div id="svg-container-circ" class='svg_map' style="visibility: hidden;"></div>
       
-          <div id="representation_carto">Affichage
+          <div id="representation_carto"><span class='text_affichage'>Affichage</span>
             <a class="actionButton affichage"  id="display_geo_paths">TERRITOIRE</a>
             <a class="actionButton affichage" id="display_proportional_circles">POPULATION</a>
-          </div>
+          </div><br>
 
-          <div id="representation_territoriale">Découpage
+          <div id="representation_territoriale"><span class='text_affichage'>Découpage</span>
             <a class="actionButton decoupage"  id="display_regions" data-value="svg-container-reg">regions</a>
             <a class="actionButton decoupage" id="display_departements" data-value="svg-container-dep" style="color: #fff; background-color: red">départements</a>
             <a class="actionButton decoupage" id="display_circonscriptions" data-value="svg-container-circ">circonscriptions</a>
