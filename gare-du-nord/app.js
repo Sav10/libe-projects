@@ -13,8 +13,8 @@ const all_person = {
 'url': "https://www.liberation.fr/societe/gdn-episode-4-mat-et-sab-une-histoire-de-came-et-damour-20220328_YJFBLCTARFBBZKSYRHCMWWR3RM/",
 'img': "img/MATHIEU-SABRINA-ILLUSTRATION.jpg"},
 'Disparus':{
-'title':"Les disparus",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+'title':"Les disparus de la gare",
+ "text": "L’histoire de Lukas, qui vient de réapparaître gare du nord, après trois ans d’absence. L’alcool. Encore. D’autres ne réapparaissent pas: Hicham, un ancien prof, s’est suicidé à petit feu avec l’alcool. L’Avocat aussi: une bande décimée au début de l’automne. La vie est courte dans la rue.",
 'url': "https://www.liberation.fr",
 'img': "img/DISPARUS.jpg"},
 'AnitaDoctor':{
@@ -23,9 +23,9 @@ const all_person = {
 'url': "https://www.liberation.fr/societe/gdn-episode-3-anita-ienglish-doctor-20220328_KRQ7JUJCTRF7BCA2SND66H6PRE/",
 'img': "img/ANITA.jpg"},
 'HorlogeGareDuNord':{
-'title':"C’est beau une gare, la nuit",
- "text": "La gare ferme ses portes vers 1 heure du matin. Elle se livre alors dans toute sa démesure et son architecture exceptionnelle.",
-'url': "https://www.liberation.fr/societe/gdn-episode-6-cest-beau-une-gare-la-nuit-20220328_WY2DVJTMYVHTBEDU2QKEM7YQUU/",
+'title':"Plus qu’une gare: une cathédrale, un refuge, un caravansérail",
+ "text": "Patrick Cognasson, ex-cheminot, raconte l’histoire d’un endroit hors norme.",
+'url': "https://www.liberation.fr/societe/gdn-episode-5-plus-quune-gare-une-cathedrale-un-refuge-un-caravanserail-20220328_IY4BZVUZ3RHH5J22QXYQVOGY34/",
 'img': "img/HORLOGE.jpg"},
 'OdileCarnet':{
 'title':"Les carnets d’Odile",
@@ -34,17 +34,17 @@ const all_person = {
 'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
 'title':"Jean-Pierre, un mur de la gare",
- "text": "Il est arrivé gare du nord, à 20 ans, après un grave accident. Il a 67 ans aujourd’hui, s’apprête à quitter la gare et ressemble au Père Noel. Tout le monde le connaît et s’occupe de lui. L’un des rares sans abri à tenir aussi longtemps sans mourir, ni perdre la tête. Tous les agents s’occupent de lui, les asso…Avec cette question: faut-il aider les comme-lui, ou les laisser jusqu’à ce qu’il se passe qq chose de grave et que les pompiers interviennent? Ils ont monté un dossier pour qu’il ait une place en Ehpad, il vient de partir.",
+ "text": "47 ans après son arrivée, gravement accidenté. JP, dit Papi Noël, a quitté la gare pour une maison de retraite.",
 'url': "https://www.liberation.fr/societe/gdn-episode-2-jp-papi-noel-est-en-or-dur-20220328_Q32SRC46AFFY3MPLCVF4TETWTI/",
 'img': "img/JEAN-PIERRE.jpg"},
 'MathieuSabrinaTrain':{
 'title':"Sabrina et Mathieu, Somme sweet home",
  "text": "On a retrouvé Mathieu et Sabrina, deux ans et demi après leur opération du cœur.  Ils ont fui la Gare du Nord et la drogue et se remplument dans la Somme.",
-'url': "https://www.liberation.fr",
-'img': "img/MATHIEU-SABRINA-PICARDIE.jpg"},
-'OdileEquipe':{'title':"L'équipe d'Odile",
- "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 'url': "https://www.liberation.fr/societe/gdn-episode-8-sabrina-et-mathieu-somme-sweet-home-20220328_MYGNGCJ4BND6FPI3VWJPQTVIXA/",
+'img': "img/MATHIEU-SABRINA-PICARDIE.jpg"},
+'OdileEquipe':{'title':"C’est beau une gare, la nuit",
+ "text": "La gare ferme ses portes vers 1 heure du matin. Elle se livre alors dans toute sa démesure et son architecture exceptionnelle.",
+'url': "https://www.liberation.fr/societe/gdn-episode-6-cest-beau-une-gare-la-nuit-20220328_WY2DVJTMYVHTBEDU2QKEM7YQUU/",
 'img': "img/ODILE.jpg"}
 }
 
