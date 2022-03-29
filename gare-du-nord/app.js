@@ -15,7 +15,7 @@ const all_person = {
 'Disparus':{
 'title':"Les disparus de la gare",
  "text": "L’histoire de Lukas, qui vient de réapparaître gare du nord, après trois ans d’absence. L’alcool. Encore. D’autres ne réapparaissent pas: Hicham, un ancien prof, s’est suicidé à petit feu avec l’alcool. L’Avocat aussi: une bande décimée au début de l’automne. La vie est courte dans la rue.",
-'url': "https://www.liberation.fr",
+'url': "https://www.liberation.fr/societe/hicham-lavocat-la-mort-et-les-pouvait-on-leviter-20220329_URHTBQUK7FAU3CSS4EUDDZEJYY/",
 'img': "img/DISPARUS.jpg"},
 'AnitaDoctor':{
 'title':"Anita, «L’English doctor»",
