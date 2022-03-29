@@ -28,13 +28,13 @@ const all_person = {
 'url': "https://www.liberation.fr/societe/gdn-episode-6-cest-beau-une-gare-la-nuit-20220328_WY2DVJTMYVHTBEDU2QKEM7YQUU/",
 'img': "img/HORLOGE.jpg"},
 'OdileCarnet':{
-'title':"Odile et ses carnets d’histoire",
- "text": "Officiellement Odile est « référente sociale de la gare ». Dans les faits: elle retricote des liens avec les sans-abri. Et note tout dans ses carnets.",
+'title':"Les carnets d’Odile",
+ "text": "Extraits de carnets, où elle note, au fil de ses maraudes, des mots pour se souvenir de chacun des sans-abri qu’elle rencontre. Portrait en creux de cette agent SNCF, une femme extraordinaire et un métier de l’ombre, pour reconstruire des fils.",
 'url': "https://www.liberation.fr/societe/gdn-episode-1-odile-et-ses-carnets-dhistoire-20220328_TWBZQBWSEJCDJMRRKC445ADITM/",
 'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
-'title':"JP, «Papi Noël» est en or dur",
- "text": "47 ans après son arrivée, gravement accidenté. JP, dit Papi Noël, a quitté la gare pour une maison de retraite.",
+'title':"Jean-Pierre, un mur de la gare",
+ "text": "Il est arrivé gare du nord, à 20 ans, après un grave accident. Il a 67 ans aujourd’hui, s’apprête à quitter la gare et ressemble au Père Noel. Tout le monde le connaît et s’occupe de lui. L’un des rares sans abri à tenir aussi longtemps sans mourir, ni perdre la tête. Tous les agents s’occupent de lui, les asso…Avec cette question: faut-il aider les comme-lui, ou les laisser jusqu’à ce qu’il se passe qq chose de grave et que les pompiers interviennent? Ils ont monté un dossier pour qu’il ait une place en Ehpad, il vient de partir.",
 'url': "https://www.liberation.fr/societe/gdn-episode-2-jp-papi-noel-est-en-or-dur-20220328_Q32SRC46AFFY3MPLCVF4TETWTI/",
 'img': "img/JEAN-PIERRE.jpg"},
 'MathieuSabrinaTrain':{
