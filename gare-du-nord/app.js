@@ -8,18 +8,18 @@ position_tooltip;
 
 const all_person = {
 'MathieuSabrinaVelib':{
-'title':"Mat et Sab, une histoire de came et d’amour",
+'title':"Mathieu et Sabrina, une histoire de came et d’amour (1/2)",
  "text": "Tombés dans l’héroïne dans leur Picardie natale, Sabrina et Mathieu ont dégringolé dans le crack à Paris, où tous les deux ont tutoyé la mort.",
 'url': "https://www.liberation.fr/societe/gdn-episode-4-mat-et-sab-une-histoire-de-came-et-damour-20220328_YJFBLCTARFBBZKSYRHCMWWR3RM/",
 'img': "img/MATHIEU-SABRINA-ILLUSTRATION.jpg"},
 'Disparus':{
-'title':"Les disparus de la gare",
- "text": "L’histoire de Lukas, qui vient de réapparaître gare du nord, après trois ans d’absence. L’alcool. Encore. D’autres ne réapparaissent pas: Hicham, un ancien prof, s’est suicidé à petit feu avec l’alcool. L’Avocat aussi: une bande décimée au début de l’automne. La vie est courte dans la rue.",
+'title':"Hicham, «l’Avocat»...  la mort et les «pouvait-on l’éviter?»",
+ "text": "La dèche est meurtrière. A chaque disparition d’un «habitant» de la gare, Odile, «référente sociale», et son équipe s’interrogent sur le thème n’y avait-il pas moyen de faire plus?",
 'url': "https://www.liberation.fr/societe/hicham-lavocat-la-mort-et-les-pouvait-on-leviter-20220329_URHTBQUK7FAU3CSS4EUDDZEJYY/",
 'img': "img/DISPARUS.jpg"},
 'AnitaDoctor':{
-'title':"Anita, «L’English doctor»",
- "text": "Anita, «L’English doctor», pouvait passer pour un voyageuse lambda. Sauf qu’elle arrivait tous les jours à 5 heures et repartait à 1 heure, ne faisant rien d’autre qu’attendre.",
+'title':"Anita, «l’English doctor»",
+ "text": "Elle pouvait passer pour un voyageuse lambda. Sauf qu’elle arrivait tous les jours à 5 heures et repartait à 1 heure, ne faisant rien d’autre qu’attendre.",
 'url': "https://www.liberation.fr/societe/gdn-episode-3-anita-ienglish-doctor-20220328_KRQ7JUJCTRF7BCA2SND66H6PRE/",
 'img': "img/ANITA.jpg"},
 'HorlogeGareDuNord':{
@@ -28,24 +28,24 @@ const all_person = {
 'url': "https://www.liberation.fr/societe/gdn-episode-5-plus-quune-gare-une-cathedrale-un-refuge-un-caravanserail-20220328_IY4BZVUZ3RHH5J22QXYQVOGY34/",
 'img': "img/HORLOGE.jpg"},
 'OdileCarnet':{
-'title':"Les carnets d’Odile",
- "text": "Extraits de carnets, où elle note, au fil de ses maraudes, des mots pour se souvenir de chacun des sans-abri qu’elle rencontre. Portrait en creux de cette agent SNCF, une femme extraordinaire et un métier de l’ombre, pour reconstruire des fils.",
+'title':"Odile et ses carnets d’histoire",
+ "text": "Officiellement elle est « référente sociale de la gare ». Dans les faits: elle retricote des liens avec les sans-abri. Et note tout dans ses carnets.",
 'url': "https://www.liberation.fr/societe/gdn-episode-1-odile-et-ses-carnets-dhistoire-20220328_TWBZQBWSEJCDJMRRKC445ADITM/",
 'img': "img/CARNET-ODILE.jpg"},
 'JeanPierre':{
-'title':"Jean-Pierre, un mur de la gare",
+'title':"JP, «Papi Noël» est en or dur",
  "text": "47 ans après son arrivée, gravement accidenté. JP, dit Papi Noël, a quitté la gare pour une maison de retraite.",
 'url': "https://www.liberation.fr/societe/gdn-episode-2-jp-papi-noel-est-en-or-dur-20220328_Q32SRC46AFFY3MPLCVF4TETWTI/",
 'img': "img/JEAN-PIERRE.jpg"},
 'MathieuSabrinaTrain':{
-'title':"Sabrina et Mathieu, Somme sweet home",
+'title':"Sabrina et Mathieu, Somme sweet home (2/2)",
  "text": "On a retrouvé Mathieu et Sabrina, deux ans et demi après leur opération du cœur.  Ils ont fui la Gare du Nord et la drogue et se remplument dans la Somme.",
 'url': "https://www.liberation.fr/societe/gdn-episode-8-sabrina-et-mathieu-somme-sweet-home-20220328_MYGNGCJ4BND6FPI3VWJPQTVIXA/",
 'img': "img/MATHIEU-SABRINA-PICARDIE.jpg"},
-'OdileEquipe':{'title':"C’est beau une gare, la nuit",
- "text": "La gare ferme ses portes vers 1 heure du matin. Elle se livre alors dans toute sa démesure et son architecture exceptionnelle.",
+'OdileEquipe':{'title':"C'est beau une gare la nuit",
+ "text": "L'enceinte ferme ses portes vers 1 heure du matin. Elle se livre alors dans toute sa démesure et son architecture exceptionnelle.",
 'url': "https://www.liberation.fr/societe/gdn-episode-6-cest-beau-une-gare-la-nuit-20220328_WY2DVJTMYVHTBEDU2QKEM7YQUU/",
-'img': "img/ODILE.jpg"}
+'img': "img/gare-nuit.jpg"}
 }
 
 const width_svg = {
