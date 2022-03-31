@@ -1294,7 +1294,7 @@ d3.select('#triangle_droite')
   d3.select('#affichage')
   .style('margin-left', function(){
     let current_margin = parseInt(d3.select(this).style('margin-left'))
-    let new_margin = current_margin-100
+    let new_margin = current_margin-150
     new_margin = new_margin > 0 ? 0 : new_margin
     return new_margin + 'px'
   })
@@ -1306,7 +1306,7 @@ d3.select('#triangle_gauche')
   d3.select('#affichage')
   .style('margin-left', function(){
     let current_margin = parseInt(d3.select(this).style('margin-left'))
-    let new_margin = current_margin+100
+    let new_margin = current_margin+150
     new_margin = new_margin > 0 ? 0 : new_margin
     return new_margin + 'px'
   })
