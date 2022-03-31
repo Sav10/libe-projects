@@ -1126,12 +1126,17 @@ d3.select('#sparkline').select('*').remove()
 if (name == 'candidat en tête') {
 
 for (i in geo_objects){
+  console.log(i)
 
   let this_data = geo_objects[i].data
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
   all_those_paths
   .style('fill', d => {
+    console.log(d.id)
+    console.log(this_data)
+    console.log(d)
+  console.log(this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id}))
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
 
  return colors_candidats[this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner]
