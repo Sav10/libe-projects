@@ -1293,8 +1293,32 @@ d3.select('#triangle_droite')
 .on('click', function () {
   d3.select('#affichage')
   .style('margin-left', function(){
+
+let all_display_nodes = d3.selectAll('.display_element').nodes()
+let total_width_blocks = 0
+let those_blocks_widths = []
+for (i in all_display_nodes){
+    let this_width = d3.select(all_display_nodes[i]).style('width')
+    let this_width_calc = parseInt(this_width) + 22.5
+    those_blocks_widths.push(this_width_calc)
+    total_width_blocks += this_width_calc
+}
+
+
+
+
     let current_margin = parseInt(d3.select(this).style('margin-left'))
-    let new_margin = current_margin-150
+
+let this_block_width_cumulated = 0
+let incremented_margin
+for (i in those_blocks_widths){
+this_block_width_cumulated += those_blocks_widths[i]
+if (this_block_width_cumulated >= current_margin){
+incremented_margin = those_blocks_widths[i]
+}
+}
+
+    let new_margin = current_margin-incremented_margin
     new_margin = new_margin > 0 ? 0 : new_margin
     return new_margin + 'px'
   })
@@ -1305,28 +1329,10 @@ d3.select('#triangle_gauche')
 .on('click', function () {
   d3.select('#affichage')
   .style('margin-left', function(){
-let all_display_nodes = d3.selectAll('.display_element').nodes()
 
-let total_width_blocks = 0
-let those_blocks_widths = []
-for (i in all_display_nodes){
-    let this_width = d3.select(all_display_nodes[i]).style('width')
-    let this_width_calc = parseInt(this_width) + 22.5
-    those_blocks_widths.push(this_width_calc)
-    total_width_blocks += this_width_calc
-}
     let current_margin = parseInt(d3.select(this).style('margin-left'))
 
-let this_block_width_cumulated = 0
-let incremented_margin
-for (i in those_blocks_widths){
-this_block_width += those_blocks_widths[i]
-if (this_block_width_cumulated >= current_margin){
-incremented_margin = this_block_width
-}
-}
-
-    let new_margin = current_margin+this_block_width
+    let new_margin = current_margin+150
     new_margin = new_margin > 0 ? 0 : new_margin
     return new_margin + 'px'
   })
