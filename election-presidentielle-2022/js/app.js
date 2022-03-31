@@ -1289,6 +1289,30 @@ return this_html
 }
 
 
+d3.select('#triangle_droite')
+.on('click', function () {
+  d3.select('#affichage')
+  .style('margin-left', function(){
+    let current_margin = parseInt(d3.select(this).style('margin-left'))
+    let new_margin = current_margin-100
+    new_margin = new_margin > 0 ? 0 : new_margin
+    return new_margin + 'px'
+  })
+})
+
+
+d3.select('#triangle_gauche')
+.on('click', function () {
+  d3.select('#affichage')
+  .style('margin-left', function(){
+    let current_margin = parseInt(d3.select(this).style('margin-left'))
+    let new_margin = current_margin+100
+    new_margin = new_margin > 0 ? 0 : new_margin
+    return new_margin + 'px'
+  })
+})
+
+
 ////////////////////////// Utilities functions
 
 function responsivefy(svg) {
