@@ -141,7 +141,7 @@ var color_progressive_scale = d3.scaleLinear()
   .domain([0, 70]);
 
 
-var data_legend = [0,10,20,30, 40,50, 60, 70];
+var data_legend = [0,5,10, 15 ,20, 25 ,30, 35];
 
 const parentWidth = d3
 .select('body')
@@ -193,6 +193,8 @@ var path = d3.geoPath()
 
 /////////// Legends and tags
 
+const legend_rect_size = 60
+
 var legend = d3.select('#legend .mapLegend .legendCells').selectAll('.cell')
 .data(data_legend)
 
@@ -202,20 +204,20 @@ var legend_cells = legend
 .enter()
 .append('g')
 .attr('class', 'cell')
-.attr('transform', function(d, i){ return 'translate(' + i*60 + ',0)'})
+.attr('transform', function(d, i){ return 'translate(' + i*legend_rect_size + ',0)'})
 
 legend_cells
 .append('rect')
 .attr('class', 'swatch')
 .attr('height', 15)
-.attr('width', 62)
+.attr('width', legend_rect_size + 2)
 .style('fill', function(d){ return color_progressive_scale(d)})
 
 legend_cells
 .append('text')
 .attr('class', 'label')
 .attr('height', 15)
-.attr('width', 62)
+.attr('width', legend_rect_size + 2)
 .style('text-anchor', 'middle')
 .text(function(d){return d + '%'})
 .attr('transform', 'translate(22,12)')
