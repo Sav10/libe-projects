@@ -481,13 +481,15 @@ left: 2px;
 }
 
 #legendots {
-    max-width: 700px;
+    max-width: 750px;
     width: 100%;
     margin: 0 auto;
     text-align: center;
     display: flex;
     padding: 0 60px;
     margin-top: 15px;
+    font-size: 14px;
+    flex-wrap:wrap;
 }
 
 #legendots .dot{
@@ -498,6 +500,13 @@ left: 2px;
     width: 1em;
     border: 0;
 }
+
+#legendots .text_legend{
+display: inline-block;
+}
+
+}
+
 
 #legend{
     display: none;
@@ -525,6 +534,11 @@ border: 0;
 background-color: #eee;
 cursor: pointer;
 font-size: 15px;
+}
+
+#affichage .display_element:hover{
+background-color: #ddd;
+
 }
 
 #display_circonscriptions, #display_departements{

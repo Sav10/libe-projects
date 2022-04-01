@@ -224,17 +224,34 @@ function draw_legendots(){
 
 d3.selectAll('div#legendots .legende_dot').remove();
 
+
+let data_for_legendots = Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0]))
+
+data_for_legendots.push(['Résultats non parvenus', '#eee'])
+
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
-.data(Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0])))
+.data(data_for_legendots)
+
+
 
 legendots
 .enter()
 .append('span')
-.attr('class', 'legende_dot')
+.attr('class', 'legende_dot');
+
+
+d3.select('div#legendots').selectAll('span.legende_dot')
+.append('span')
+.attr('class', 'text_legend')
 .text(d=>_.capitalize(d[0]))
+
+d3.select('div#legendots').selectAll('span.legende_dot')
 .append('span')
 .attr('class', 'dot')
 .style('background-color', d=>d[1])
+
+
+
 
 }
 
@@ -256,14 +273,25 @@ elements_selection
 .attr('class', 'display_element')
 .text(d=> _.capitalize(d).replace('Le pen', 'Le Pen'))
 .on('click', function(event, d){
-  console.log(d)
+
 
 d3.selectAll('#affichage .display_element')
 .style('background-color', '#eee')
 .style('color', '#000')
 
+let this_background_color = ''
+
+if(d == 'candidat en tête' || d == 'participation'){
+
+this_background_color = 'black'
+}
+else {
+  this_background_color = colors_candidats[d]
+}
+
+
 d3.select(this)
-.style('background-color', 'black')
+.style('background-color', this_background_color)
 .style('color', '#fff')
 
 fillOnClick(d)
@@ -753,11 +781,11 @@ thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
   .on('mouseover', function(event, d) {
    /* showTip(data, d)*/
     all_those_paths
-    .style('stroke-width', 0)
+    .style('stroke-opacity', 0)
     .style('fill-opacity', .5)
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-width', 2)
+    .style('stroke-opacity', 1)
 
   })
   .on('mouseout', function(event, d) {
@@ -767,24 +795,23 @@ thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
 
      /*showTip(data, selected_dep[1])*/
     all_those_paths
-    .style('stroke-width', 0)
+    .style('stroke-opacity', 1)
     .style('fill-opacity', .5)
 
     d3.select(selected_dep[0])
     .style('fill-opacity', 1)
-    .style('stroke-width', 2)
 
     }
     else{
     /*reset_tooltip()*/
 
     all_those_paths
-    .style('stroke-width', 0)
+    .style('stroke-opacity', 1)
     .style('fill-opacity', 1)
 
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-width', 0)
+    .style('stroke-opacity', 1)
     }
 
   })
@@ -801,7 +828,7 @@ selected_dep = [];
 
 
     all_those_paths
-    .style('stroke-width', 0)
+    .style('stroke-opacity', 1)
     .style('fill-opacity', 1)
 
     d3.selectAll('path')
@@ -819,11 +846,11 @@ else{
     selected_dep = [this, d];
     showTip(data, d)
     all_those_paths
-    .style('stroke-width', 0)
+    .style('stroke-opacity', 0)
     .style('fill-opacity', .5)
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-width', 2)
+    .style('stroke-opacity', 1)
   })
 
 
@@ -1128,6 +1155,7 @@ for (i in geo_objects){
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
   all_those_paths
+  .style('stroke-width', 0)
   .style('fill', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id}) !== 'undefined') {
 
@@ -1165,6 +1193,7 @@ for (i in geo_objects){
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
   all_those_paths
+  .style('stroke-width', 0)
   .style('fill', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
  let this_dep_participation = +this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]['Exprimés_ins']
@@ -1203,10 +1232,12 @@ d3.select('#legend #intitule_legend')
 
 else{
 
+d3.selectAll ('#morphocarte svg path')
+.style('stroke', 'black')
+.style('stroke-opacity', 1)
 
 let this_color = colors_candidats[name];
 
-console.log(this_color)
 
 let this_color_range = d3.scaleLinear()
   .range(['white', this_color])
@@ -1215,7 +1246,11 @@ let this_color_range = d3.scaleLinear()
 for (i in geo_objects){
 
   let this_data = geo_objects[i].data
+
+
     if (this_data){
+  console.log(this_data)
+
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
   all_those_paths
@@ -1225,10 +1260,14 @@ for (i in geo_objects){
  return this_color_range(this_dep_candidate_score)
     }
     return '#fff'
-
-
   })
-
+  .style('stroke-width', d => {
+    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
+ let this_dep_winner = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner
+ return this_dep_winner == name ? 1 : 0;
+    }
+    return 0
+  })
 }
 
 
