@@ -158,9 +158,9 @@ const height = 500 - margin.top - margin.bottom
 var margin_map = { top: 0, right: 20, bottom: 10, left: 0 },
     width_map = 600 - margin_map.left - margin_map.right,
     height_map = 600 - margin_map.top - margin_map.bottom,
-    width_legend_map = 200,
+    width_legend_map = 600 - margin_map.left - margin_map.right,
     margin_top_legend_map = 30,
-    margin_right_legend_map = 20,
+    margin_right_legend_map = 0,
     padding_legend_map = 10,
     mapData,
     xAxis_map,
@@ -202,23 +202,23 @@ var legend_cells = legend
 .enter()
 .append('g')
 .attr('class', 'cell')
-.attr('transform', function(d, i){ return 'translate(' + i*42 + ',0)'})
+.attr('transform', function(d, i){ return 'translate(' + i*60 + ',0)'})
 
 legend_cells
 .append('rect')
 .attr('class', 'swatch')
 .attr('height', 15)
-.attr('width', 44)
+.attr('width', 62)
 .style('fill', function(d){ return color_progressive_scale(d)})
 
 legend_cells
 .append('text')
 .attr('class', 'label')
 .attr('height', 15)
-.attr('width', 44)
+.attr('width', 62)
 .style('text-anchor', 'middle')
-.text(function(d){return d})
-.attr('transform', 'translate(22,30)')
+.text(function(d){return d + '%'})
+.attr('transform', 'translate(22,12)')
 
 function draw_legendots(){
 
@@ -1225,8 +1225,8 @@ d3.select('#legend')
 .style('display', 'block')
 
 
-d3.select('#legend #intitule_legend')
-.text('Répartition de la participation')
+/*d3.select('#legend #intitule_legend')
+.text('Répartition de la participation')*/
 
 }
 
@@ -1289,8 +1289,8 @@ d3.select('#legend')
 .style('display', 'block')
 
 
-d3.select('#legend #intitule_legend')
-.text('Répartition du vote ' + _.capitalize(name))
+/*d3.select('#legend #intitule_legend')
+.text('Répartition du vote ' + _.capitalize(name))*/
 
 }
   }

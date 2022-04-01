@@ -24,6 +24,7 @@
   <meta name="twitter:description" content="Présidentielle, La carte des élections." />
   <meta name="twitter:image" content="https://sav10.github.io/libe-projects/election-presidentielle-2022//social.png">
     <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+<!--     <link type="text/css" rel="stylesheet" href="css/fonts.css"> -->
 <!--   <link type="text/css" rel="stylesheet" href="styles/six-plus.css"> -->
   <link type="text/css" rel="stylesheet" href="styles/styles.css">
   <style type="text/css">
@@ -465,7 +466,7 @@ left: 2px;
     text-align: center;
     display: flex;
     /* margin-bottom: -51px; */
-    padding: 0 60px;
+    padding: 0;
     margin-top: 15px;
 }
 
@@ -580,6 +581,12 @@ width: 90px;
     
 }
 
+#legend .legendCells text{
+font-size: 13px;
+
+
+}
+
   </style>
 
 </head>
@@ -599,7 +606,11 @@ width: 90px;
                     <div id="legendots"></div>
 
 
-          <svg  id="legend" viewbox="-10 0 500 55" preserveAspectRatio="xMinYMin meet"><g transform="translate(45,15)"><text style="fill: black;" id="intitule_legend">Répartition de la participation</text></g><g class="mapLegend" transform="translate(10,22)"><g class="legendCells"></g></g></svg>
+          <svg  id="legend" viewbox="-10 0 500 55" preserveAspectRatio="xMinYMin meet" style="display: none;">
+<!--             <g transform="translate(45,15)"><text style="fill: black;" id="intitule_legend">Répartition de la participation</text></g> -->
+
+<g class="mapLegend" transform="translate(0,0)">
+                <g class="legendCells"></g></g></svg>
 
           <div class="carte" id='morphocarte'>
             <div id="map_info2" >
@@ -645,6 +656,7 @@ width: 90px;
   <script type="text/javascript" src="js/moment-with-locales.js"></script>
   <!-- <script src="js/d3.v4.min.js"></script> -->
   <script src="https://d3js.org/d3.v6.min.js"></script>
+<!--     <script src="js/d3.v6.min.js"></script> -->
   <script src="js/queue.v1.min.js"></script>
   <script src="js/flubber.min.js"></script>
   <script src='js/app.js' type='text/javascript'></script>
