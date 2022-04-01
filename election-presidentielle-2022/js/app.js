@@ -795,13 +795,10 @@ thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
 d3.select('body').on("click",function(event, d){
     /*var outside = all_those_paths.filter(equalToEventTarget).empty();*/
     var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
-    console.log(outside)
     if (outside) {
-      console.log('click outside')
     reset_tooltip()
 selected_dep = [];
 
-console.log(all_those_paths)
 
     all_those_paths
     .style('stroke-width', 0)
@@ -1103,8 +1100,6 @@ those_paths.transition().attrTween("d", function(d){ return d.to_circle_function
 function reset_tooltip(){
 
 
-  console.log('reseting tip')
-
 d3.select('#minigraph_container')
 .style('display', 'none')
 
@@ -1288,6 +1283,7 @@ this_html += '</div>'
 return this_html
 }
 
+////////////////////////// Move candidate filters
 
 d3.select('#triangle_droite')
 .on('click', function () {
@@ -1295,35 +1291,27 @@ d3.select('#triangle_droite')
   .style('margin-left', function(){
 
 let all_display_nodes = d3.selectAll('.display_element').nodes()
-let total_width_blocks = 0
-let those_blocks_widths = []
+let current_margin = parseInt(d3.select('#affichage').style('margin-left'))
+let this_parent_pos = d3.selectAll('#affichage').node().getBoundingClientRect().x
+let new_margin
+
 for (i in all_display_nodes){
-    let this_width = d3.select(all_display_nodes[i]).style('width')
-    let this_width_calc = parseInt(this_width) + 22.5
-    those_blocks_widths.push(this_width_calc)
-    total_width_blocks += this_width_calc
+
+let this_pos = all_display_nodes[i].getBoundingClientRect().x - this_parent_pos
+
+if (this_pos > -current_margin){
+
+
+let next_element_order = (+i+1) <  all_display_nodes.length ? (+i+1) : (+i);
+
+new_margin = 22.5 -(all_display_nodes[next_element_order].getBoundingClientRect().x - this_parent_pos)
+break
 }
 
-
-
-
-    let current_margin = parseInt(d3.select(this).style('margin-left'))
-
-let this_block_width_cumulated = 0
-let incremented_margin
-for (i in those_blocks_widths){
-this_block_width_cumulated += those_blocks_widths[i]
-if (this_block_width_cumulated >= current_margin){
-incremented_margin = those_blocks_widths[i]
 }
-}
-
-    let new_margin = current_margin-incremented_margin
-    new_margin = new_margin > 0 ? 0 : new_margin
     return new_margin + 'px'
   })
 })
-
 
 d3.select('#triangle_gauche')
 .on('click', function () {
@@ -1338,6 +1326,28 @@ d3.select('#triangle_gauche')
   })
 })
 
+let drag_start;
+let margin_affichage;
+
+var drag = d3.drag()
+      .on("start", function(event){
+        drag_start = event.x
+
+        margin_affichage = parseInt(d3.select('#affichage').style('margin-left'))
+      })
+      .on("drag", function(event){
+
+        let this_drag = event.x - drag_start
+        let this_margin = margin_affichage+this_drag
+        this_margin = this_margin >= 0 ?  this_margin = 0 : this_margin
+        this_margin = this_margin <= -1200 ?  this_margin = -1200 : this_margin
+        d3.select('#affichage').style('margin-left', d=>this_margin+ 'px')
+
+    })
+      .on("end", function(){
+
+      });
+d3.select("#affichage").call(drag);
 
 ////////////////////////// Utilities functions
 
