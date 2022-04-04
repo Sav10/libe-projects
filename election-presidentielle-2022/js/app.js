@@ -784,7 +784,6 @@ console.log(data)
   for (i in allSvgNodes){
  let this_id = d3.select(allSvgNodes[i]).attr('id')
  this_id = this_id.substring(2)
- console.log(this_id)
  let this_pop = +data.filter(d=> d[location_variable] == this_id)[0].Inscrits;
 /* let this_pop = +circosData.filter(d=> d.id_circo == this_id)[0].votants;*/
  let this_radius = Math.round(thisCircleScale(this_pop));
@@ -859,8 +858,13 @@ console.log(data)
 /// Click function for shape
 
 d3.select('body').on("click",function(event, d){
-    /*var outside = all_those_paths.filter(equalToEventTarget).empty();*/
-    var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
+
+  console.log(event)
+
+
+
+    var outside = d3.selectAll('svg path').filter(equalToEventTarget).empty();
+    // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
     if (outside) {
     reset_tooltip()
 selected_dep = [];
@@ -876,6 +880,9 @@ selected_dep = [];
     }
 else{
 }
+
+
+
 });
 
 
