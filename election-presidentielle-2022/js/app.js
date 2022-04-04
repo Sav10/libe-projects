@@ -20,7 +20,7 @@ location_prefix : 'R_'}
 ,
 circonscription : 
 {'container' : 'svg-container-circ',
-'location_variable' : 'code_circ',
+'location_variable' : 'id_circo',
 location_prefix : 'M_'}
 }
 
@@ -516,7 +516,7 @@ Promise.all([
     d3.csv('data/presidentielle_2017_departement_T1.csv'),
     d3.csv('data/election_data_reg.csv'),
     d3.csv('data/election_data_dep.csv'),
-    d3.csv('data/data_circos.csv')
+    d3.csv('data/data_circos2.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2], files[3], files[4])
 }).catch(function(err) {
@@ -586,6 +586,29 @@ console.log(data_dep)
     })
 
 
+    circos_data.forEach(d =>{
+
+ candidate_names.forEach(e =>{
+   d[e] = +d[e]
+ })
+
+ vote_variables.forEach(e =>{
+   d[e] = +d[e]
+ })
+
+ candidate_names.forEach(e =>{
+   d[e + '_score'] = _.round(+ 100*d[e] / d['Exprimes'], 1)
+ })
+
+ let this_dep_score = candidate_names.map(function(e){ return {'name': e, 'score': d[e]} })
+ let this_winner = this_dep_score.sort(function(a,b) {  return b.score - a.score})[0]
+
+ d['loc_winner'] = this_winner['name']
+ d['loc_winner_score'] = this_winner['score']
+
+    })
+
+
     datapol = data_pol;
     console.log(datapol)
     circleScale.domain(d3.extent(data, d=>d.population));
@@ -600,7 +623,18 @@ d3.xml("img/carte-circonscriptions.svg")
 .then(data => {
   d3.select("#svg-container-circ").node().append(data.documentElement)
 
-  loadMapFromSvgCirc()
+
+let svg_container = 'svg-container-circ'
+let circle_range = [3, 4]
+let location_variable = 'id_circo'
+let location_prefix = 'M_'
+let location_type = 'circonscription'
+
+geo_objects['circonscription']['data'] = circosData;
+
+console.log(circos_data)
+
+loadMapFromSvgGeneric(circos_data, svg_container, circle_range, location_variable, location_prefix, location_type)
 
   d3.select("#svg-container-circ")
   .style('height', 0)
@@ -743,11 +777,14 @@ d3.scaleSqrt()
 thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
 
 
+console.log(data)
+
   let allSvgNodes = all_those_paths.nodes();
 
   for (i in allSvgNodes){
  let this_id = d3.select(allSvgNodes[i]).attr('id')
  this_id = this_id.substring(2)
+ console.log(this_id)
  let this_pop = +data.filter(d=> d[location_variable] == this_id)[0].Inscrits;
 /* let this_pop = +circosData.filter(d=> d.id_circo == this_id)[0].votants;*/
  let this_radius = Math.round(thisCircleScale(this_pop));
@@ -1082,7 +1119,7 @@ function redraw_paths_generic(those_paths, circos_corrections){
  
   those_paths
   .transition()
-  .duration(1000)
+  .duration(700)
   .attrTween("d", function(d){ return d.from_circle_function})
   .on('end', function(){
     pathsCount++;
@@ -1115,7 +1152,9 @@ d3.select('#display_geo_paths')
   let pathsize = those_paths.size();
   let pathsCount = 0;
 
-those_paths.transition().attrTween("d", function(d){ return d.to_circle_function})
+those_paths.transition()
+.duration(1000)
+.attrTween("d", function(d){ return d.to_circle_function})
 .on('end', function(){
   pathsCount++;
   if (pathsCount >= pathsize){
