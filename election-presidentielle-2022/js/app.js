@@ -346,7 +346,7 @@ if (selected_element == 'candidat en tête'){
 
 else if (selected_element == 'participation'){
 
-let this_selected_candidate = [{'name':'Participation', 'score': _.round(100*this_d['Votants'] / this_d['Inscrits'], 1) + '%'}]
+let this_selected_candidate = [{'name':'Participation', 'score': _.round(100*this_d['Votants'] / this_d['Inscrits'], 1)}]
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
 
