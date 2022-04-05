@@ -307,20 +307,31 @@ d3.select('#affichage .display_element')
 
 draw_affichage()
 
-function showTip(data, d){
+function showTip(data, d, location_variable){
 
 
 let this_code = d.id;
 /*let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);*/
-let this_d = _.find(data, d => d['code_departement'] == this_code);
-
+let this_d = _.find(data, d => d[location_variable] == this_code);
 console.log(this_d)
 let this_dep_scores = candidate_names.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })
-console.log(this_dep_scores)
+
 this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
 this_dep_scores = _.slice(this_dep_scores, 0, 4)
 
-    this_html =  `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_d['lib_departement']} (${this_d['code_departement']})</span>
+let this_loc_name
+
+if(location_variable == 'code_departement'){
+  this_loc_name = this_d['lib_departement'] + ' (' + this_d['code_departement'] + ')'
+}
+else if (location_variable == 'code_region'){
+this_loc_name = this_d['lib_region']
+}
+else{
+this_loc_name = `${this_d['nom_circo']}  ${this_d['num_circo']}<sup>e</sup> circonscription `
+}
+
+    this_html =  `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_loc_name}</span>
     <span class='details'>
     ${drawGraph(this_dep_scores)}</span>`
 
@@ -906,7 +917,7 @@ else{
   .on('click', function(event, d) {
     console.log('clicking')
     selected_dep = [this, d];
-    showTip(data, d)
+    showTip(data, d, location_variable)
     all_those_paths
     .style('stroke-opacity', 0)
     .style('fill-opacity', .5)
