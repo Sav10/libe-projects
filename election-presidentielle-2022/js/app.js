@@ -342,6 +342,7 @@ if (selected_element == 'candidat en tête'){
 
     this_html +=  `<span class='details'>
     ${drawGraph(this_dep_scores)}</span>`
+
 }
 
 else if (selected_element == 'participation'){
@@ -350,6 +351,7 @@ let this_selected_candidate = [{'name':'Participation', 'score': _.round(100*thi
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
 
+
 }
 
 else{
@@ -357,6 +359,15 @@ else{
 let this_selected_candidate = [{'name':selected_element, 'score': this_d[selected_element+'_score']}]
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
+
+
+
+    console.log(selected_element)
+    console.log(this_dep_scores[0].name)
+
+    if (selected_element == this_dep_scores[0].name){
+      this_html +=  'Arrivé en tête<br>'
+    }
 
 }
 
@@ -1407,7 +1418,7 @@ for (i in range){
   var html_chunk = '<div style="margin-top:5px">'
   // html_chunk += `<div >${d.tete_liste}</div>
   html_chunk += `<div style="float:right;margin-right: 4px;">  ${d.score != 100 ? d.score + ' %' : '' }</div><div >${d.name}</div>
-      <div style="height:12px;background-color: #eee"><div style="height:12px;width:${d.score}%;background-color:${colors_candidats[d.name]};"></div>
+      <div style="height:12px;background-color: #eee"><div style="height:12px;width:${d.score}%;background-color:${selected_element == 'participation' ? 'grey' : colors_candidats[d.name]};"></div>
       </div>`
 
       if (d.score == 100){
