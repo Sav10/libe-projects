@@ -6,6 +6,7 @@ var datapol;
 var circosData;
 var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
+let selected_element = 'candidat en tête'
 
 
 var geo_objects = {
@@ -276,6 +277,8 @@ elements_selection
 .text(d=> _.capitalize(d).replace('Le pen', 'Le Pen'))
 .on('click', function(event, d){
 
+selected_element = d
+
 
 d3.selectAll('#affichage .display_element')
 .style('background-color', '#eee')
@@ -331,9 +334,31 @@ else{
 this_loc_name = `${this_d['nom_circo']}  ${this_d['num_circo']}<sup>e</sup> circonscription `
 }
 
-    this_html =  `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_loc_name}</span>
-    <span class='details'>
+let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_loc_name}</span>`
+
+console.log(this_dep_scores)
+
+if (selected_element == 'candidat en tête'){
+
+    this_html +=  `<span class='details'>
     ${drawGraph(this_dep_scores)}</span>`
+}
+
+else if (selected_element == 'participation'){
+
+let this_selected_candidate = [{'name':'Participation', 'score': _.round(100*this_d['Votants'] / this_d['Inscrits'], 1) + '%'}]
+    this_html +=  `<span class='details'>
+    ${drawGraph(this_selected_candidate)}</span>`
+
+}
+
+else{
+
+let this_selected_candidate = [{'name':selected_element, 'score': this_d[selected_element+'_score']}]
+    this_html +=  `<span class='details'>
+    ${drawGraph(this_selected_candidate)}</span>`
+
+}
 
 this_html += `Nombre de votes exprimés : ${this_d['Exprimes']}<br>
 Taux de participation : ${String(_.round(100*this_d['Exprimes'] / +this_d['Inscrits'], 1)).replace('.', ',')}%`
