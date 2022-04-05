@@ -383,10 +383,18 @@ function redraw_paths(){
 d3.select('#display_geo_paths')
 .style('color', '#fff')
 .style('background-color', 'red')
+.style('border-color', 'red')
 
 d3.select('#display_proportional_circles')
 .style('color', 'red')
 .style('background-color', '#fff')
+.style('border-color', '#ddd')
+
+
+d3.select('#taille_proportionnelle')
+.style('display', 'none')
+
+
 
 let all_those_paths = d3.select('#'+ geo_objects[representation_territoriale].container + ' svg').selectAll('path');
 
@@ -416,10 +424,16 @@ function transform_all_paths_to_circle(){
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
 .style('background-color', 'red')
+.style('border-color', 'red;')
+
 
 d3.select('#display_geo_paths')
 .style('color', 'red')
 .style('background-color', '#fff')
+.style('border-color', '#ddd;')
+
+d3.select('#taille_proportionnelle')
+.style('display', 'block')
 
 
 let all_those_paths = d3.select('#'+ geo_objects[representation_territoriale].container + ' svg').selectAll('path');
@@ -473,10 +487,12 @@ let this_id =  d3.select(this).attr('id')
 d3.selectAll('#representation_territoriale .actionButton')
 .style('color', 'red')
 .style('background-color', '#fff')
+.style('border-color', '#ddd')
 
 d3.select('#' +this_id)
 .style('color', '#fff')
 .style('background-color', 'red')
+.style('border-color', 'red')
 
 d3.selectAll('.svg_map')
 .style('visibility', 'hidden')
@@ -1151,10 +1167,13 @@ function transform_all_paths_to_circle_generic(those_paths, those_positions, thi
 d3.select('#display_proportional_circles')
 .style('color', '#fff')
 .style('background-color', 'red')
+.style('border-color', 'red')
 
 d3.select('#display_geo_paths')
 .style('color', 'red')
 .style('background-color', '#fff')
+.style('border-color', '#ddd')
+
 
   let pathsize = those_paths.size();
   let pathsCount = 0;

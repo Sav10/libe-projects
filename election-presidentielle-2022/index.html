@@ -134,14 +134,14 @@ a#play_button img {
 
 .actionButton {
     background-color: #fff;
-    color: #e60004;
+    color: red;
     display: inline-block;
     font-size: .9em;
     line-height: 1.2em;
     padding: 4px 3px 5px;
     font-family: "syntheselibeweb", sans-serif;
     margin-right: 3px;
-    border: 1px solid #e60004;
+    border: 1px solid #ddd;
     opacity: 1;
 }
 
@@ -154,7 +154,7 @@ margin-bottom: -18px;
 }
 
 .actionButton:hover{
-color:  #e60004;
+color:  red;
 opacity: 0.8;
 
 }
@@ -562,7 +562,8 @@ font-family: SFProText, Arial, sans-serif;
 
 .text_affichage{
 display: inline-block;
-width: 90px;
+font-size: 14px;
+width: 70px;
 }
 
 .triangle{
@@ -598,6 +599,42 @@ font-size: 13px;
 
 }
 
+
+}
+
+#taille_proportionnelle {
+    font-size: 13px;
+    margin-top: 1em;
+}
+
+   @media screen and (max-width: 420px) {
+.actionButton{
+font-size: 13px;
+
+}
+   }
+
+
+   @media screen and (max-width: 370px) {
+.actionButton{
+font-size: 12px;
+
+}
+   }
+
+
+   @media screen and (max-width: 340px) {
+.actionButton{
+font-size: 11px;
+
+}
+   }
+
+#representations{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 5px;
 }
 
   </style>
@@ -635,18 +672,24 @@ font-size: 13px;
     <div id="svg-container-dep" class='svg_map'></div>
     <div id="svg-container-reg" class='svg_map' style="visibility: hidden;"></div>
       <div id="svg-container-circ" class='svg_map' style="visibility: hidden;"></div>
+
+      <div id="representations">
       
           <div id="representation_carto"><span class='text_affichage'>Affichage</span>
             <a class="actionButton affichage"  id="display_geo_paths">TERRITOIRE</a>
-            <a class="actionButton affichage" id="display_proportional_circles">POPULATION</a>
-          </div><br>
+            <a class="actionButton affichage" id="display_proportional_circles" style="border-color: red">POPULATION</a>
+          </div>
 
           <div id="representation_territoriale"><span class='text_affichage'>Découpage</span>
             <a class="actionButton decoupage"  id="display_regions" data-value="svg-container-reg">regions</a>
-            <a class="actionButton decoupage" id="display_departements" data-value="svg-container-dep" style="color: #fff; background-color: red">départements</a>
+            <a class="actionButton decoupage" id="display_departements" data-value="svg-container-dep" style="color: #fff; background-color: red; border-color: red">départements</a>
             <a class="actionButton decoupage" id="display_circonscriptions" data-value="svg-container-circ">circonscriptions</a>
           </div>
-
+          </div>
+          <div id="taille_proportionnelle">Taille des cercles proportionnelle à la population</div>
+<div id="sources">
+ <p><strong>Sources</strong> : Ministère de l'intérieur</p>
+</div>
 
 
     </div>
@@ -656,10 +699,6 @@ font-size: 13px;
 <div id='minigraph_container'></div>
             </div> -->
 <br><br>
-<div id="sources">
- <p><strong>Sources</strong> : Ministère de l'intérieur</p>
-<!-- <p style="font-style: italic;">*La taille des cercles du format cartogramme est-il proportionelle à la population de chaque département</p> -->
-</div>
 
 </div>
         </div>
