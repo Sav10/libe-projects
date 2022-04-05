@@ -320,7 +320,7 @@ console.log(this_d)
 let this_dep_scores = candidate_names.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })
 
 this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
-this_dep_scores = _.slice(this_dep_scores, 0, 4)
+this_dep_scores = _.slice(this_dep_scores, 0, 7)
 
 let this_loc_name
 
