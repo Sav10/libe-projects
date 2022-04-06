@@ -219,9 +219,13 @@ legend_cells
 .attr('class', 'label')
 .attr('height', 15)
 .attr('width', legend_rect_size + 2)
-.style('text-anchor', 'middle')
+.style('text-anchor', 'end')
 .text(function(d){return d + '%'})
-.attr('transform', 'translate(22,12)')
+.attr('transform', 'translate(11,12)')
+.style('fill', d=> d >= 25 ? 'white' : 'black')
+
+
+d3.select('#legend .mapLegend .legendCells text').remove()
 
 function draw_legendots(){
 
