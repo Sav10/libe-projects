@@ -581,7 +581,7 @@ else{
 
 
 Promise.all([
-    d3.csv('data/election_data_reg.csv'),
+    d3.csv('data/election_data_reg2.csv'),
     d3.csv('data/election_data_dep2.csv'),
     d3.csv('data/data_circos2.csv')
 ]).then(function(files) {
