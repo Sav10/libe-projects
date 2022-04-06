@@ -923,7 +923,7 @@ function registered_separate_circles_generic(those_paths, those_positions, this_
 
   those_paths
   .transition()
-  .duration(2000)
+  .duration(1000)
   .attr('transform', function(d) { 
     return 'translate(' +those_positions[this_prefix +  d.id][0]+ ',' +those_positions[this_prefix +  d.id][1] + ')'});
 }
