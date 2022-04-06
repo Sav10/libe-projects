@@ -1165,8 +1165,8 @@ for (i in range){
   var d = range[i]
   var html_chunk = '<div style="margin-top:5px">'
   // html_chunk += `<div >${d.tete_liste}</div>
-  html_chunk += `<div style="float:right;margin-right: 4px;">  ${d.score != 100 ? d.score + ' %' : '' }</div><div >${d.name}</div>
-      <div style="height:12px;background-color: #eee"><div style="height:12px;width:${d.score}%;background-color:${selected_element == 'participation' ? 'grey' : colors_candidats[d.name]};"></div>
+  html_chunk += `<div style="float:right;margin-right: 4px;">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.name)}</div>
+      <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score}%;background-color:${selected_element == 'participation' ? 'grey' : colors_candidats[d.name]};"></div>
       </div>`
 
       if (d.score == 100){
