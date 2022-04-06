@@ -1200,7 +1200,7 @@ if (this_pos > -current_margin){
 
 
 let next_element_order = (+i+1) <  all_display_nodes.length ? (+i+1) : (+i);
-new_margin = 22.5 -(all_display_nodes[next_element_order].getBoundingClientRect().x - this_parent_pos)
+new_margin = 15.5 -(all_display_nodes[next_element_order].getBoundingClientRect().x - this_parent_pos)
 break
 }
 
@@ -1217,7 +1217,7 @@ d3.select('#triangle_gauche')
     let current_margin = parseInt(d3.select(this).style('margin-left'))
 
     let new_margin = current_margin+150
-    new_margin = new_margin > 0 ? 0 : new_margin
+    new_margin = new_margin > 7 ? 7 : new_margin
     return new_margin + 'px'
   })
 })
