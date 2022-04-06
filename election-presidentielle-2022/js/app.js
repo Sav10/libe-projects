@@ -1099,7 +1099,7 @@ let this_color = colors_candidats[name];
 
 let this_color_range = d3.scaleLinear()
   .range(['white', this_color])
-  .domain([0, 50]);
+  .domain([-5, 35]);
 
 for (i in geo_objects){
 
@@ -1133,7 +1133,7 @@ for (i in geo_objects){
 
 color_progressive_scale
 .range(['white', this_color])
-.domain([0, 50]);
+.domain([-5, 35]);
 
 legend_cells.select('.swatch')
 .style('fill', function(d){ return color_progressive_scale(d)})
