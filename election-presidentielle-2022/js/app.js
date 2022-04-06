@@ -1192,7 +1192,7 @@ let current_margin = parseInt(d3.select('#affichage').style('margin-left'))
 let this_parent_pos = d3.selectAll('#affichage').node().getBoundingClientRect().x
 let new_margin
 
-for (i in all_display_nodes){
+for (i in _.slice(all_display_nodes, 0,10)){
 
 let this_pos = all_display_nodes[i].getBoundingClientRect().x - this_parent_pos
 
@@ -1200,7 +1200,6 @@ if (this_pos > -current_margin){
 
 
 let next_element_order = (+i+1) <  all_display_nodes.length ? (+i+1) : (+i);
-
 new_margin = 22.5 -(all_display_nodes[next_element_order].getBoundingClientRect().x - this_parent_pos)
 break
 }
