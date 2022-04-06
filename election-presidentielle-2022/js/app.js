@@ -353,7 +353,7 @@ else{
 this_loc_name = `${this_d['nom_circo']}  ${this_d['num_circo']}<sup>e</sup> circonscription `
 }
 
-let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_loc_name}</span>`
+let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 16px;">${this_loc_name}</span>`
 
 if (selected_element == 'candidat en tête'){
 
@@ -388,7 +388,7 @@ let this_selected_candidate = [{'name':selected_element, 'score': this_d[selecte
 
 }
 
-this_html += `Nombre de votes exprimés : ${this_d['Exprimes']}<br>
+this_html += `<hr>Nombre de votes exprimés : ${this_d['Exprimes']}<br>
 Taux de participation : ${String(_.round(100*this_d['Exprimes'] / +this_d['Inscrits'], 1)).replace('.', ',')}%`
 
 d3.select('#tooltip')
@@ -1165,7 +1165,7 @@ for (i in range){
   var d = range[i]
   var html_chunk = '<div style="margin-top:5px">'
   // html_chunk += `<div >${d.tete_liste}</div>
-  html_chunk += `<div style="float:right;margin-right: 4px;">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.name)}</div>
+  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.name)}</div>
       <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score}%;background-color:${selected_element == 'participation' ? 'grey' : colors_candidats[d.name]};"></div>
       </div>`
 
