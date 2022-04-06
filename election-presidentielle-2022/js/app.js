@@ -286,7 +286,7 @@ selected_element = d
 
 d3.selectAll('#affichage .display_element')
 .style('background-color', '#eee')
-.style('color', '#000')
+.style('color', '#6E6E6E')
 
 let this_background_color = ''
 
