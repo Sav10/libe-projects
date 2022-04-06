@@ -337,6 +337,13 @@ if(location_variable == 'code_departement'){
 }
 else if (location_variable == 'code_region'){
 this_loc_name = this_d['lib_region']
+  if (this_d['url_libe']){
+
+    console.log(this_d)
+    this_loc_name = `<a target="_blank" href="${this_d.url_libe}" style="display:inline-block"> ${this_loc_name}<img src="img/Voir-Plus.svg" style="width:1em;display:inline-block;margin-left:1em"></a>`
+}
+
+
 }
 else{
 this_loc_name = `${this_d['nom_circo']}  ${this_d['num_circo']}<sup>e</sup> circonscription `
