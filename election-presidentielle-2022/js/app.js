@@ -234,7 +234,7 @@ d3.selectAll('div#legendots .legende_dot').remove();
 
 let data_for_legendots = Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0]))
 
-data_for_legendots.push(['Résultats non parvenus', '#eee'])
+data_for_legendots.push(['Résultats non parvenus', '#ddd'])
 
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
 .data(data_for_legendots)

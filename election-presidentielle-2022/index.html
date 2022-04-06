@@ -671,7 +671,17 @@ font-size: 11px;
   font-size: 14px;
 }
 
+
+svg #empty_circle .empty_circle{
+font-size: 14px;
+
+}
+
+
     }
+
+
+
 
   </style>
 
@@ -683,11 +693,12 @@ font-size: 11px;
         <div class="column is-three-quarters map_container" style="z-index: 90;">
           <div id="articles" class='explanation_block'>
          </div>
-          <div id="information_button" style="max-width: 700px; margin:0 auto; position: relative;"><span>Filtrer les résultats </span><img src="img/I-info.svg" style="display:inline-block;float: right; width: 2em"> 
+          <div id="information_button" style="max-width: 700px; margin:0 auto; position: relative; cursor: pointer;"><span>Filtrer les résultats </span><img src="img/I-info.svg" style="display:inline-block;float: right; width: 1.5em"> 
             <div id="map_information">
              <p>Réalisation Alice Clair, Savinien de Rivet, Julien Guillot</p>
             <p>Source Ministère de l'intérieur</p>
-            <p>Les cercles sont proportionnels à la taille de la population pour les régions et départements, et proportionnels au nombre d'inscrits pour les circonscriptions législatives.</p>
+            <p>Les cercles sont proportionnels à la taille de la population pour les régions et départements, et proportionnels au nombre d'inscrits pour les circonscriptions législatives. </p>
+              <p>Les territoires d'Outre-mer ne sont pas à l'échelle de la France métropolitaine</p>
             </div>
           </div>
           <div id="affichage_outer">
@@ -727,10 +738,6 @@ font-size: 11px;
             <a class="actionButton decoupage" id="display_circonscriptions" data-value="svg-container-circ">circonscriptions</a>
           </div>
           </div>
-          <div id="taille_proportionnelle">Taille des cercles proportionnelle à la population</div>
-<div id="sources">
- <p><strong>Sources</strong> : Ministère de l'intérieur</p>
-</div>
 
 
     </div>
