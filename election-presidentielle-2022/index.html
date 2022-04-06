@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
@@ -377,6 +378,11 @@ border: 0;
 font-family: 'syntheselibeweb';
 }
 
+
+#tooltip a{
+pointer-events: all;
+}
+
 #slider_container {
     margin: 0 auto;
     position: relative;
@@ -440,7 +446,6 @@ font-family: 'syntheselibeweb';
     left: -25px;
     opacity: 1; 
     display: flex;
-    pointer-events: none;
 
 }
 
@@ -516,10 +521,11 @@ display: inline-block;
 
 #affichage_outer {
     height: 3em;
-    max-width: 600px;
+    max-width: 700px;
     overflow-x: hidden;
     margin: 0 auto;
     position: relative;
+    clear: both;
 }
 
 #affichage{
@@ -569,8 +575,9 @@ width: 70px;
 
 .triangle{
     position: absolute;
-    width: 20px;
+    width: 0.7em;
     cursor: pointer;
+    margin-top: 0.4em;
 
 }
 
@@ -638,7 +645,18 @@ font-size: 11px;
     column-gap: 5px;
 }
 
+#map_information{
+  display: none;
+  background-color: black;
+  color:white;
+  position: absolute;
+  right:20px; 
+  clear: both;
+  z-index: 1000;
+  margin-top: 2em;
+  padding: 1em;
 
+}
 
   </style>
 
@@ -649,8 +667,12 @@ font-size: 11px;
       <div class='columns is-centered mainMap'>
         <div class="column is-three-quarters map_container" style="z-index: 90;">
           <div id="articles" class='explanation_block'>
-
-          <p>Filtrer les résultats</p>
+         </div>
+          <div id="information_button" style="max-width: 700px; margin:0 auto; position: relative;"><span>Filtrer les résultats </span><img src="img/I-info.svg" style="display:inline-block;float: right; width: 2em"> 
+            <div id="map_information">
+             <p>Réalisation Alice Clair, Savinien de Rivet, Julien Guillot</p>
+            <p>Source Ministère de l'intérieur</p>
+            </div>
           </div>
           <div id="affichage_outer">
 <img id="triangle_gauche" class="triangle" src="img/triangle-gauche.png"><img id="triangle_droite" class="triangle" src="img/triangle-droite.png">

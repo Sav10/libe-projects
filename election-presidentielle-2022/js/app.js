@@ -316,7 +316,7 @@ function showTip(data, d, location_variable){
 let this_code = d.id;
 /*let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);*/
 let this_d = _.find(data, d => d[location_variable] == this_code);
-console.log(this_d)
+
 let this_dep_scores = candidate_names.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })
 
 this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
@@ -326,6 +326,14 @@ let this_loc_name
 
 if(location_variable == 'code_departement'){
   this_loc_name = this_d['lib_departement'] + ' (' + this_d['code_departement'] + ')'
+
+  if (this_d['url_libe']){
+
+    console.log(this_d)
+    this_loc_name = `<a target="_blank" href="${this_d.url_libe}" style="display:inline-block"> ${this_loc_name}<img src="img/Voir-Plus.svg" style="width:1em;display:inline-block;margin-left:1em"></a>`
+}
+
+
 }
 else if (location_variable == 'code_region'){
 this_loc_name = this_d['lib_region']
@@ -335,8 +343,6 @@ this_loc_name = `${this_d['nom_circo']}  ${this_d['num_circo']}<sup>e</sup> circ
 }
 
 let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed';     letter-spacing: 0.04em;">${this_loc_name}</span>`
-
-console.log(this_dep_scores)
 
 if (selected_element == 'candidat en tête'){
 
@@ -575,31 +581,18 @@ else{
 
 
 Promise.all([
-    d3.csv('data/taux_indicateurs_couleurs_departements3.csv'),
-    d3.csv('data/presidentielle_2017_departement_T1.csv'),
     d3.csv('data/election_data_reg.csv'),
-    d3.csv('data/election_data_dep.csv'),
+    d3.csv('data/election_data_dep2.csv'),
     d3.csv('data/data_circos2.csv')
 ]).then(function(files) {
-  ready(files[0], files[1], files[2], files[3], files[4])
+  ready(files[0], files[1], files[2])
 }).catch(function(err) {
   console.log('erreur' + ' ' + err)
 })
 
-
 //// Ready function (to load data)
 
-  function ready(data, data_pol, data_reg, data_dep, circos_data) {
-
-
-
-    data.forEach(d => {
- d.taux_de_positivite = +d.taux_de_positivite;
- d.taux_incidence = +d.taux_incidence;
- d.population = +d.population;
-    })
-
-
+  function ready(data_reg, data_dep, circos_data) {
 
     data_dep.forEach(d =>{
 
@@ -622,9 +615,6 @@ Promise.all([
  d['loc_winner_score'] = this_winner['score']
 
     })
-
-console.log(data_dep)
-
 
     data_reg.forEach(d =>{
 
@@ -671,15 +661,7 @@ console.log(data_dep)
 
     })
 
-
-    datapol = data_pol;
-    console.log(datapol)
-    circleScale.domain(d3.extent(data, d=>d.population));
-
     circosData = circos_data;
-
-    console.log(circos_data)
-
 
 
 d3.xml("img/carte-circonscriptions.svg")
@@ -694,8 +676,6 @@ let location_prefix = 'M_'
 let location_type = 'circonscription'
 
 geo_objects['circonscription']['data'] = circosData;
-
-console.log(circos_data)
 
 loadMapFromSvgGeneric(circos_data, svg_container, circle_range, location_variable, location_prefix, location_type)
 
@@ -750,87 +730,14 @@ let location_type = 'region'
 
 ///// End of (long) ready function
 
-//// Map of circos
 
-
-function loadMapFromSvgCirc() {
-
-  var svg_map_circos = d3.select('#svg-container-circ svg');
-
-
-  let all_paths_circo = svg_map_circos.selectAll('path');
-
-
-  console.log(all_paths_circo)
-
-
-var circleScaleCirco = 
-d3.scaleSqrt()
-.range([3, 4]);
-
-circleScaleCirco.domain(d3.extent(circosData, d=>+d.votants));
-
-
-    let allSvgNodes_circo = all_paths_circo.nodes();
-    for (i in allSvgNodes_circo){
- let this_id = d3.select(allSvgNodes_circo[i]).attr('id')
- this_id = this_id.substring(2)
- let this_pop = +circosData.filter(d=> d.id_circo == this_id)[0].votants;
- let this_radius = Math.round(circleScaleCirco(this_pop));
- let this_path_d = d3.select(allSvgNodes_circo[i]).attr('d');
- let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes_circo[i]));
- let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
- let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
-
- d3.select(allSvgNodes_circo[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
-   'to_circle_function': this_to_circle_function,
-   'from_circle_function': this_from_circle_function,
-   'population':this_pop,
-   'radius': this_radius
- });
-  }
-
-
-all_paths_circo.style('fill', 'black')
-
-
-
-
-//// Transformation to circle when starting 
-setTimeout(() => {
-
-  transform_all_paths_to_circle_generic(all_paths_circo, position_circles.circonscription, 'M_')
-mapstate = 1;
-
-
-},
-   500);
-
-
-// setTimeout(() => {
-
-//   redraw_paths_generic(all_paths_circo, correction_paths.circonscription)
-// mapstate = 1;
-
-
-// },
-//    5000)
-
-}
-
-
-/// End map from svg circos function
-
-
-//// SVG map of dep
+//// load SVG map
 
 
 function loadMapFromSvgGeneric(data, svg_container, circle_range, location_variable, location_prefix, location_type) {
 
   let this_svg_map = d3.select('#'+ svg_container + ' svg');
   var all_those_paths = this_svg_map.selectAll('path');
-
-console.log(all_those_paths)
 
 let thisCircleScale = 
 d3.scaleSqrt()
@@ -922,9 +829,6 @@ console.log(data)
 
 d3.select('body').on("click",function(event, d){
 
-  console.log(event)
-
-
 
     var outside = d3.selectAll('svg path').filter(equalToEventTarget).empty();
     // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
@@ -951,7 +855,6 @@ else{
 
   all_those_paths
   .on('click', function(event, d) {
-    console.log('clicking')
     selected_dep = [this, d];
     showTip(data, d, location_variable)
     all_those_paths
@@ -976,173 +879,11 @@ mapstate = 1;
 
 
 
-
-
-
-
-// setTimeout(() => {
-
-//   redraw_paths_generic(all_those_paths, correction_paths.departement)
-// mapstate = 1;
-
-
-// },
-//    5000)
-
-
-
 }
 
 
 
-/// End map from svg dep function
-
-function loadMapFromSvgReg(data) {
-
-  var svg_map_circos = d3.select('#svg-container-reg svg');
-  let all_paths_circo = svg_map_circos.selectAll('path');
-
-
-
-var circleScaleCirco = 
-d3.scaleSqrt()
-.range([4, 45]);
-
-
-console.log(data)
-
-
-circleScaleCirco.domain(d3.extent(data, d=>+d.Inscrits));
-
-/*circleScaleCirco.domain(d3.extent(circosData, d=>+d.votants));*/
-
-
-  let allSvgNodes_circo = all_paths_circo.nodes();
-
-  for (i in allSvgNodes_circo){
- let this_id = d3.select(allSvgNodes_circo[i]).attr('id')
- this_id = this_id.substring(2)
- let this_pop = +data.filter(d=> d['code_region'] == this_id)[0].Inscrits;
-/* let this_pop = +circosData.filter(d=> d.id_circo == this_id)[0].votants;*/
- let this_radius = Math.round(circleScaleCirco(this_pop));
- let this_path_d = d3.select(allSvgNodes_circo[i]).attr('d');
- let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes_circo[i]));
- let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
- let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
-
- d3.select(allSvgNodes_circo[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
-   'to_circle_function': this_to_circle_function,
-   'from_circle_function': this_from_circle_function,
-   'population':this_pop,
-   'radius': this_radius
- });
-  }
-
-
-all_paths_circo.style('fill', 'black')
-
-
-  all_paths_circo
-  .style('fill', d => {
-
-    if (typeof data.filter(function(e){return e['code_region'] == d.id})[0] !== 'undefined') {
- return colors_candidats[data.filter(function(e){return e['code_region']  == d.id})[0].loc_winner]
-    }
-    return '#fff'
-  })
-
-
-/// Transformation to circle when starting 
-// setTimeout(() => {
-
-  /*transform_all_paths_to_circle_generic(all_paths_circo, position_circles.region, 'R_')*/
-//   force_separate_circles_generic(all_paths_circo)
-// mapstate = 1;
-
-
-// },
-//    500);
-
-
-
-/*console.log(all_paths_circo)
-
-var circleScaleCirco = 
-d3.scaleSqrt()
-.range([3, 20]);
-
-
-circleScaleCirco.domain(d3.extent(datapol, d=>+d.Votants));*/
-
-/*circleScaleCirco.domain(d3.extent(circosData, d=>+d.votants));*/
-
-
-/*  let allSvgNodes_circo = all_paths_circo.nodes();
-  for (i in allSvgNodes_circo){
- let this_id = d3.select(allSvgNodes_circo[i]).attr('id')
- this_id = this_id.substring(2)
- let this_pop = +datapol.filter(d=> d['CodeDépartement'] == this_id)[0].Votants;*/
-/* let this_pop = +circosData.filter(d=> d.id_circo == this_id)[0].votants;*/
-/* let this_radius = Math.round(circleScaleCirco(this_pop));
- let this_path_d = d3.select(allSvgNodes_circo[i]).attr('d');
- let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes_circo[i]));
- let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
- let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
-
- d3.select(allSvgNodes_circo[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
-   'to_circle_function': this_to_circle_function,
-   'from_circle_function': this_from_circle_function,
-   'population':this_pop,
-   'radius': this_radius
- });
-  }*/
-
-
-/*all_paths_circo.style('fill', 'black')
-
-  let pathsize = all_paths_circo.size();
-  let pathsCount = 0;
-
-
-
-all_paths_circo
-.transition()
-.duration(2000)
-.attrTween("d", function(d){ return d.to_circle_function})
-.on('end', function(){
-  pathsCount++;
-  if (pathsCount >= pathsize){
-    //force_separate_circles_generic(all_paths_circo)
-    registered_separate_circles_generic(all_paths_circo, position_circles.departement, 'D_')
-  }
-})*/
-
-//// Transformation to circle when starting 
-setTimeout(() => {
-
-  transform_all_paths_to_circle_generic(all_paths_circo, position_circles.region, 'R_')
-mapstate = 1;
-
-
-},
-   500);
-
-
-/*setTimeout(() => {
-
-  redraw_paths_generic(all_paths_circo, correction_paths.region)
-mapstate = 1;
-
-
-},
-   5000)*/
-
-
-
-}
-
-
-
+/// End map from svgn
 
 /// Transform functions for map
 
@@ -1168,10 +909,6 @@ function force_separate_circles_generic(those_paths){
 
 
 function registered_separate_circles_generic(those_paths, those_positions, this_prefix){
-
-  console.log(this_prefix)
-  console.log(those_positions)
-  console.log(those_paths)
 
   those_paths
   .transition()
@@ -1501,6 +1238,21 @@ var drag = d3.drag()
 
       });
 d3.select("#affichage").call(drag);
+
+
+d3.select("#information_button")
+.on("mouseover", function(){
+
+d3.select("#map_information")
+.style('display', 'block')
+
+})
+.on("mouseout", function(){
+
+d3.select("#map_information")
+.style('display', 'none')
+
+})
 
 ////////////////////////// Utilities functions
 

@@ -11,9 +11,7 @@ body {position: relative; font-family:Verdana, Geneva, sans-serif;font-size:1.1e
 h1, h2, h3, h4, h5, h6 {font-style: normal; font-weight: normal;}
 li {list-style-type:none;}
 button {border: none; background: transparent; cursor: pointer;}
-a{text-decoration:none; cursor:pointer;
-
- color: #fff;
+a{text-decoration:none; cursor:pointer;color:black;
 }
 a:visited{text-decoration:none;cursor:pointer;}
 a:hover{text-decoration:none;cursor:pointer;}
@@ -395,7 +393,6 @@ font-size: .7rem;
   font-family: sans-serif;
   font-size: .8em;
   background-color: rgba(255,255,255,0.9);
-  pointer-events: none;
   z-index: 10;
 }
 
