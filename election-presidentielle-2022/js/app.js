@@ -1036,6 +1036,10 @@ d3.select('#legend')
 else if (name == 'participation'){
 
 
+d3.select("#legend .empty_circle")
+.style('display', 'none')
+
+
 let this_color_range = d3.scaleLinear()
   .range(['white', 'black'])
   .domain([0, 100]);
@@ -1089,6 +1093,9 @@ else{
 d3.selectAll ('#morphocarte svg path')
 .style('stroke', 'black')
 .style('stroke-opacity', 1)
+
+d3.select("#legend .empty_circle")
+.style('display', 'block')
 
 let this_color = colors_candidats[name];
 
