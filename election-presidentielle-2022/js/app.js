@@ -740,6 +740,16 @@ let location_type = 'region'
   .style('display', 'flex')
 
 
+setTimeout(() => {
+
+  d3.select("#svg-container-dep")
+  .style('height', 'initial')
+
+
+},
+   100);
+
+
 });
 
 
