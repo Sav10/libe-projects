@@ -269,7 +269,7 @@ function draw_affichage(){
 d3.selectAll('#affichage .display_element')
 
 let all_displayed_elements = _.cloneDeep(candidate_names)
-all_displayed_elements.unshift('candidat en tête', 'participation');
+all_displayed_elements.unshift('candidat en tête', 'abstention');
 
 const elements_selection = d3.select('div#affichage').selectAll('div.display_element')
 .data(all_displayed_elements)
@@ -290,7 +290,7 @@ d3.selectAll('#affichage .display_element')
 
 let this_background_color = ''
 
-if(d == 'candidat en tête' || d == 'participation'){
+if(d == 'candidat en tête' || d == 'abstention'){
 
 this_background_color = 'black'
 }
@@ -362,9 +362,9 @@ if (selected_element == 'candidat en tête'){
 
 }
 
-else if (selected_element == 'participation'){
+else if (selected_element == 'abstention'){
 
-let this_selected_candidate = [{'name':'Participation', 'score': _.round(100*this_d['Votants'] / this_d['Inscrits'], 1)}]
+let this_selected_candidate = [{'name':'Abstention', 'score': _.round(100*this_d['Abstentions'] / this_d['Inscrits'], 1)}]
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
 
@@ -389,7 +389,7 @@ let this_selected_candidate = [{'name':selected_element, 'score': this_d[selecte
 }
 
 this_html += `<hr>Nombre de votes exprimés : ${this_d['Exprimes']}<br>
-Taux de participation : ${String(_.round(100*this_d['Exprimes'] / +this_d['Inscrits'], 1)).replace('.', ',')}%`
+Taux d'abstention : ${String(_.round(100*this_d['Abstentions'] / +this_d['Inscrits'], 1)).replace('.', ',')}%`
 
 d3.select('#tooltip')
 .style('display', 'flex')
@@ -1033,7 +1033,7 @@ d3.select('#legend')
 
 }
 
-else if (name == 'participation'){
+else if (name == 'abstention'){
 
 
 d3.select("#legend .empty_circle")
@@ -1042,7 +1042,7 @@ d3.select("#legend .empty_circle")
 
 let this_color_range = d3.scaleLinear()
   .range(['white', 'black'])
-  .domain([0, 100]);
+  .domain([0, 50]);
 
 for (i in geo_objects){
 
@@ -1054,8 +1054,10 @@ for (i in geo_objects){
   .style('stroke-width', 0)
   .style('fill', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
- let this_dep_participation = +this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]['Exprimés_ins']
- return this_color_range(this_dep_participation)
+      let this_dep_data = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]
+
+ let this_dep_abstention = _.round(100*this_dep_data['Abstentions'] / this_dep_data['Inscrits'], 1)
+ return this_color_range(this_dep_abstention)
     }
     return '#fff'
 
@@ -1070,7 +1072,7 @@ for (i in geo_objects){
 
 color_progressive_scale
 .range(['white', 'black'])
-.domain([0, 100]);
+.domain([0, 50]);
 legend_cells.select('.swatch')
 .style('fill', function(d){ return color_progressive_scale(d)})
 
@@ -1084,7 +1086,7 @@ d3.select('#legend')
 
 
 /*d3.select('#legend #intitule_legend')
-.text('Répartition de la participation')*/
+.text('Répartition de la abstention')*/
 
 }
 
@@ -1165,7 +1167,7 @@ for (i in range){
   var html_chunk = '<div style="margin-top:5px">'
   // html_chunk += `<div >${d.tete_liste}</div>
   html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.name)}</div>
-      <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score}%;background-color:${selected_element == 'participation' ? 'grey' : colors_candidats[d.name]};"></div>
+      <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score}%;background-color:${selected_element == 'abstention' ? 'grey' : colors_candidats[d.name]};"></div>
       </div>`
 
       if (d.score == 100){
