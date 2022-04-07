@@ -1341,8 +1341,6 @@ function responsivefy(svg) {
 ////// Positioning bubble elements
 
 
-console.log('position')
-
 const correction_paths = {
    circonscription : 
    ['56002', '56005', '56006', '29006', '85003', '17001', '35007', '17005', 'ZZ001', 'ZZ002', 'ZZ003', 'ZZ004', 'ZZ005',
