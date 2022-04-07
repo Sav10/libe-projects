@@ -560,11 +560,13 @@ d3.select('#' +this_id)
 
 d3.selectAll('.svg_map')
 .style('visibility', 'hidden')
+.style('display', 'none')
 .style('height', 0)
 
 d3.select('#' + id_map)
 .style('visibility', 'visible')
 .style('height', 'initial')
+.style('display', 'block')
 
 if (id_map =='svg-container-dep'){
   representation_territoriale = 'departement'
@@ -581,14 +583,6 @@ else{
 )
 
 ///Loading data
-
-// queue()
-//   .defer(d3.csv, 'data/taux_indicateurs_couleurs_departements3.csv')
-//   .defer(d3.csv, 'data/presidentielle_2017_departement_T1.csv')
-//   .defer(d3.json, 'data/circonscriptions.geojson')
-//   .defer(d3.csv, 'data/data_circos.csv')
-//   .await(ready)
-
 
 
 Promise.all([
@@ -674,6 +668,27 @@ Promise.all([
 
     circosData = circos_data;
 
+d3.xml("img/carte-departements.svg")
+.then(data => {
+  d3.select("#svg-container-dep").node().append(data.documentElement)
+
+  // loadMapFromSvgDep(data_dep)
+
+let svg_container = 'svg-container-dep'
+let circle_range = [3, 20]
+let location_variable = 'code_departement'
+let location_prefix = 'D_'
+let location_type = 'departement'
+
+geo_objects['departement']['data'] = data_dep;
+
+loadMapFromSvgGeneric(data_dep, svg_container, circle_range, location_variable, location_prefix, location_type)
+
+  d3.select("#svg-container-dep")
+  .style('height', 0)
+
+});
+
 
 d3.xml("img/carte-circonscriptions.svg")
 .then(data => {
@@ -692,29 +707,10 @@ loadMapFromSvgGeneric(circos_data, svg_container, circle_range, location_variabl
 
   d3.select("#svg-container-circ")
   .style('height', 0)
+  .style('display', 'none')
 
 });
 
-
-d3.xml("img/carte-departements.svg")
-.then(data => {
-  d3.select("#svg-container-dep").node().append(data.documentElement)
-
-  // loadMapFromSvgDep(data_dep)
-
-let svg_container = 'svg-container-dep'
-let circle_range = [3, 20]
-let location_variable = 'code_departement'
-let location_prefix = 'D_'
-let location_type = 'departement'
-
-geo_objects['departement']['data'] = data_dep;
-
-loadMapFromSvgGeneric(data_dep, svg_container, circle_range, location_variable, location_prefix, location_type)
-
-
-
-});
 
 d3.xml("img/carte-regions.svg")
 .then(data => {
@@ -728,13 +724,26 @@ let location_type = 'region'
 
   geo_objects['region']['data'] = data_reg;
 
- /* loadMapFromSvgReg(data_reg)*/
 
   loadMapFromSvgGeneric(data_reg, svg_container, circle_range, location_variable, location_prefix, location_type)
 
-  d3.select("#svg-container-reg").style('height', 0)
+  d3.select("#svg-container-reg")
+  .style('height', 0)
+  .style('display', 'none')
+
+
+  d3.select("#svg-container-dep")
+  .style('height', 'initial')
+
+
+    d3.select("#representations")
+  .style('display', 'flex')
+
 
 });
+
+
+
 
 
 }
@@ -1475,24 +1484,6 @@ const position_circles = {
 "M_ZZ005": [0,0], "M_ZZ006": [0,0], "M_ZZ007": [0,0], "M_ZZ008": [0,0], "M_ZZ009": [0,0], "M_ZZ010": [0,0], "M_ZZ011": [0,0]
 },
 
-// departement : 
-
-// {
-// "D_2B": [0,0], "D_2A": [0,0], "D_09": [3,6], "D_11": [0,-3], "D_12": [0,0], "D_30": [1,-3], "D_32": [0,0], "D_46": [0,0],
-// "D_48": [0,2], "D_65": [0,0], "D_66": [0,2], "D_81": [0,0], "D_82": [0,0], "D_31": [-1,-1], "D_34": [-2,1],
-// "D_22": [0,0], "D_56": [0,0], "D_29": [0,0], "D_35": [0,-1], "D_39": [0,-1], "D_58": [0,0], "D_70": [0,0],
-// "D_71": [-1,-4], "D_89": [5,5], "D_90": [-4,5], "D_25": [0,0], "D_21": [0,0], "D_18": [2,4], "D_36": [0,0],
-// "D_41": [-3,8], "D_28": [-15,10], "D_37": [-4,1], "D_45": [-5,19], "D_01": [8,-7], "D_03": [0,-1], "D_07": [-2,-1],
-// "D_15": [0,0], "D_26": [-4,1], "D_43": [-4,7], "D_38": [1,-1], "D_63": [-4,-2], "D_73": [5,2], "D_74": [6,0], "D_42": [-11,11],
-// "D_69": [0,-3], "D_14": [-5,1], "D_50": [-4,0], "D_61": [0,0], "D_27": [-17,-1], "D_76": [-17,-12], "D_04": [1,0], "D_05": [0,0],
-// "D_06": [0,0], "D_13": [-1,4], "D_83": [0,0], "D_84": [8,-5], "D_53": [-2,-1], "D_72": [-6,4], "D_44": [-1,-1], "D_49": [0,1], 
-// "D_85": [1,2], "D_16": [0,0], "D_17": [0,0], "D_19": [0,0], "D_23": [0,0], "D_24": [0,0], "D_40": [0,0], "D_47": [0,0], "D_79": [0,0], 
-// "D_86": [0,1], "D_33": [0,0], "D_64": [0,0], "D_87": [0,0], "D_08": [0,0], "D_51": [7,4], "D_52": [0,0], "D_55": [-2,-1], 
-// "D_67": [2,2], "D_88": [0,0], "D_54": [-7,4], "D_57": [4,-5], "D_68": [1,-1], "D_10": [13,4], "D_75": [28,-15], "D_77": [19,9], 
-// "D_78": [-14,0], "D_91": [-13,19], "D_92": [7,9], "D_93": [-5,-17], "D_95": [-22,-17], "D_94": [10,35], "D_02": [10,-17], "D_60": [9,-19], 
-// "D_62": [-8,-7], "D_80": [-10,-1], "D_59": [8,-3], "D_ZA": [0,0], "D_ZB": [0,0], "D_ZC": [0,0], "D_ZD": [0,0], "D_ZS": [0,0], "D_ZM": [0,0], 
-// "D_ZX": [0,0], "D_ZW": [0,0], "D_ZP": [0,0], "D_ZN": [0,0], "D_ZZ": [0,0]
-// },
 
 departement : 
 {
