@@ -800,11 +800,9 @@ console.log(data)
   .on('mouseover', function(event, d) {
    /* showTip(data, d)*/
     all_those_paths
-    .style('stroke-opacity', 0)
     .style('fill-opacity', .5)
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-opacity', 1)
 
   })
   .on('mouseout', function(event, d) {
@@ -814,7 +812,6 @@ console.log(data)
 
      /*showTip(data, selected_dep[1])*/
     all_those_paths
-    .style('stroke-opacity', 1)
     .style('fill-opacity', .5)
 
     d3.select(selected_dep[0])
@@ -825,12 +822,10 @@ console.log(data)
     /*reset_tooltip()*/
 
     all_those_paths
-    .style('stroke-opacity', 1)
     .style('fill-opacity', 1)
 
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-opacity', 1)
     }
 
   })
@@ -849,7 +844,6 @@ selected_dep = [];
 
 
     all_those_paths
-    .style('stroke-opacity', 1)
     .style('fill-opacity', 1)
 
     d3.selectAll('path')
@@ -869,11 +863,9 @@ else{
     selected_dep = [this, d];
     showTip(data, d, location_variable)
     all_those_paths
-    .style('stroke-opacity', 0)
     .style('fill-opacity', .5)
     d3.select(this)
     .style('fill-opacity', 1)
-    .style('stroke-opacity', 1)
   })
 
 
