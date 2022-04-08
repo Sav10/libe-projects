@@ -547,7 +547,7 @@ map.on('popupclose', function(e) {
 
     if (mainWidth < 800){
       d3.select('.info.city.box.leaflet-control')
-      .style('width', (mainWidth) + 'px');
+      .style('width', (mainWidth*.8) + 'px');
     }
 
 
