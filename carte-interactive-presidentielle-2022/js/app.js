@@ -181,7 +181,7 @@ var position_politique =
 
     d3.queue()
     .defer(d3.csv, 'data/communes_presidentielle_2022.csv')
-    .defer(d3.csv, 'data/communes_presidentielle_short.csv')
+    .defer(d3.csv, 'data/communes_presidentielle_votes.csv')
     .await(load_Data);
 
     function load_Data(error, geoloc_data, data2){
@@ -205,8 +205,6 @@ var position_politique =
 
 
     votes_data = data2
-
-      console.log(data2)
 
       geoloc_data = geoloc_data.filter(d=> d.latLong[0] && d.latLong[1]);
 
@@ -297,15 +295,10 @@ var position_politique =
 
       let this_obj_city = o? _.find(cities_data, e => e.code_commune == o) : d;
 
-      console.log(this_obj_city)
-
       let this_obj2 = o? _.find(votes_data, e => e.code_commune == o) : _.find(votes_data, e => e.code_commune == d.code_commune);
 
       let this_code = this_obj_city.code_commune;
       let this_name = this_obj_city.LibSubCom;
-
-      console.log(this_obj2)
-
 
       let html_popup;
       let html_info;
@@ -330,15 +323,17 @@ var position_politique =
         this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
         // this_dep_scores = _.slice(this_dep_scores, 0, 11)
 
-        console.log(this_obj2)
-
-        console.log(this_dep_scores)
-
         html_popup = 
         `${this_name}`
 
         html_info = 
-        `<strong style="font-size:18px">${this_obj_city.LibSubCom}</strong>`;
+        `<strong style="font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 15px;">${this_obj_city.LibSubCom}</strong>`;
+
+  if (this_obj_city.url_libe){
+
+    html_info = `<a target="_blank" href="${this_obj_city.url_libe}" style="color:#000;display:inline-block;font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 15px;"> ${this_obj_city.LibSubCom}<img src="img/Voir-Plus.svg" style="width:1em;display:inline-block;margin-left:1em"></a>`
+}
+
 
     var tooltip_graph =  drawGraph(this_dep_scores)
 
@@ -527,8 +522,6 @@ map.on('popupclose', function(e) {
     .style('height', 'auto');
 
     let height_infobox = d3.select('.info.city.box.leaflet-control').node().getBoundingClientRect().height;
-
-    console.log(height_infobox)
 
     if (height_infobox >= 200){
 
