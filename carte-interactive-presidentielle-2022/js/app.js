@@ -328,7 +328,7 @@ var position_politique =
           'LibSubCom': this_obj_city['LibSubCom'],  'code_commune' : this_obj2['code_commune'] } })
 
         this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
-        this_dep_scores = _.slice(this_dep_scores, 0, 7)
+        // this_dep_scores = _.slice(this_dep_scores, 0, 11)
 
         console.log(this_obj2)
 
