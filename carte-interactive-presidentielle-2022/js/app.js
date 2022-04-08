@@ -405,34 +405,6 @@ adaptInfobox()
 }
 
 
-// function drawGraph(range){
-
-// var this_html = '<div style="margin-top:10px">';
-
-// for (i in range){
-//   var d = range[i]
-//   var html_chunk = '<div style="margin-top:5px">'
-
-//   html_chunk += `<div >${d.NomPsn}</div>
-//                 <div><div style="height:25px;width:${d.score}%;background-color:${colors_candidats[d.NomPsn]};display:inline-block"></div>
-//                 <div style="display:inline-block;height:25px;font-size: 18px;position: relative;top: -5px;margin-left: 4px;">  ${d.score != 100 ? d.score + ' %' : '' }</div></div>`
-
-//                 if (d.score == 100){
-//                   html_chunk += '<p style="font-size: 18px;margin-top:-20px">Élu au 1<sup>er</sup> tour<p>'
-//                 }
-
-
-//   html_chunk += '</div>'
-
-// this_html += html_chunk
-// }
-
-// this_html += '</div>'
-
-// return this_html
-
-// }
-
 function drawGraph(range){
 
 var this_html = '<div style="margin-top:10px">';
@@ -441,7 +413,7 @@ for (i in range){
   var d = range[i]
   var html_chunk = '<div style="margin-top:5px">'
   // html_chunk += `<div >${d.tete_liste}</div>
-  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.NomPsn)}</div>
+  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.NomPsn).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
       <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score}%;background-color:${colors_candidats[d.NomPsn]};"></div>
       </div>`
 
