@@ -278,7 +278,7 @@ elements_selection
 .enter()
 .append('div')
 .attr('class', 'display_element')
-.text(d=> _.capitalize(d).replace('Le pen', 'Le Pen'))
+.text(d=> _.capitalize(d).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan'))
 .on('click', function(event, d){
 
 selected_element = d
@@ -1185,7 +1185,7 @@ for (i in range){
   var d = range[i]
   var html_chunk = '<div style="margin-top:5px">'
   // html_chunk += `<div >${d.tete_liste}</div>
-  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.name)}</div>
+  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
       <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score}%;background-color:${selected_element == 'abstention' ? 'grey' : colors_candidats[d.name]};"></div>
       </div>`
 
