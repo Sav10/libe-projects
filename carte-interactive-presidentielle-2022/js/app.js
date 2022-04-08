@@ -528,10 +528,12 @@ map.on('popupclose', function(e) {
 
     let height_infobox = d3.select('.info.city.box.leaflet-control').node().getBoundingClientRect().height;
 
+    console.log(height_infobox)
+
     if (height_infobox >= 200){
 
       d3.select('.info.city.box.leaflet-control').style('height', (height_infobox + 5) + 'px')
-      let newHeightMap = (height_infobox + baseMapHeight*0.8) >= baseMapHeight ? (height_infobox + baseMapHeight*0.8) : baseMapHeight;
+      let newHeightMap = (height_infobox*1.1) >= baseMapHeight ? (height_infobox*1.1) : baseMapHeight;
 
       d3.select('#map')
       .style('height', newHeightMap + 'px');
