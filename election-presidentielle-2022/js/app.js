@@ -1151,7 +1151,6 @@ for (i in geo_objects){
 
 
     if (this_data){
-  console.log(this_data)
 
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
