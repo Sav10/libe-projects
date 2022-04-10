@@ -113,18 +113,18 @@ colorNames['y2022'] = {
 }
 
 candidats_panneaux['y2022'] = {
-    '1': {'score': 0,  'name': 'ARTHAUD',  'parti': ''},
- '2': {'score': 0, 'name': 'ROUSSEL', 'parti': ''},
- '3': {'score': 0,  'name': "MACRON",  'parti': ""},
- '4': {'score': 0,  'name': "LASSALLE",  'parti': ""},
- '5': {'score': 0,  'name': "LE PEN",  'parti': ""},
- '6': {'score': 0,  'name': "ZEMMOUR",  'parti': ""},
- '7': {'score': 0,  'name': "MÉLENCHON",  'parti': ""},
- '8': {'score': 0,  'name': "HIDALGO",  'parti': ""},
-'9': {'score': 0,  'name': "JADOT",  'parti': ""},
- '10': {'score': 0,  'name': "PÉCRESSE",  'parti': ""},
- '11': {'score': 0,  'name': 'POUTOU',  'parti': ''},
-'12': {'score': 0,  'name': 'DUPONT-AIGNAN',  'parti': ''}
+    '1': {'score': 0,  'name': 'ARTHAUD',  'parti': 'Lutte ouvière'},
+ '2': {'score': 0, 'name': 'ROUSSEL', 'parti': 'Parti communiste'},
+ '3': {'score': 0,  'name': "MACRON",  'parti': "En marche !"},
+ '4': {'score': 0,  'name': "LASSALLE",  'parti': "Résistons"},
+ '5': {'score': 0,  'name': "LE PEN",  'parti': "Rassemblement National"},
+ '6': {'score': 0,  'name': "ZEMMOUR",  'parti': "Reconquête"},
+ '7': {'score': 0,  'name': "MÉLENCHON",  'parti': "La France insoumise"},
+ '8': {'score': 0,  'name': "HIDALGO",  'parti': "Parti socialiste"},
+'9': {'score': 0,  'name': "JADOT",  'parti': "Les Verts"},
+ '10': {'score': 0,  'name': "PÉCRESSE",  'parti': "Les Républicains"},
+ '11': {'score': 0,  'name': 'POUTOU',  'parti': 'Nouveau Parti anticapitaliste'},
+'12': {'score': 0,  'name': 'DUPONT-AIGNAN',  'parti': 'Debout la France'}
 }
 
 
