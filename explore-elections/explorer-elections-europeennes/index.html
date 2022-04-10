@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--================================================================================
+  Item Name: Materialize - Material Design Admin Template
+  Version: 3.1
+  Author: GeeksLabs
+  Author URL: http://www.themeforest.net/user/geekslabs
+  ================================================================================ -->
+
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Tout savoir sur les dernières actualités politiques, monde, société, sports, écologie avec le journal en ligne Libération.">
+    <meta name="keywords" content="actualités, news">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Explorer les votes aux européennes par rapport aux dernières présidentielles</title>
+
+    <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
+   
+    <link rel="canonical" href="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes">
+
+    <meta property="og:site_name" content="Libération.fr"/>
+    <meta property="og:url" content="https://www.liberation.fr/2019/05/explorer-elections-europeennes/" />
+    <meta property="og:title" content="Explorer les votes aux européennes par rapport aux dernières présidentielles" />
+    <meta property="og:description" content="Visualisez les résultats des élections en fonction de critères socio démographiques (CSP, démographie, sexe...). Exemple : comment ont voté les villes de moins de 10 000 habitants, les villes avec plus de 15% d'ouvriers" />
+        <meta property="og:image" content="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes/social.jpg" />
+        
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@libe" />
+    <meta name="twitter:creator" content="@libe" />
+    <meta name="twitter:url" content="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes/" />
+    <meta name="twitter:title" content="Explorer les votes aux européennes par rapport aux dernières présidentielles" />
+    <meta name="twitter:description" content="Visualisez les résultats des élections en fonction de critères socio démographiques (CSP, démographie, sexe...). Exemple : comment ont voté les villes de moins de 10 000 habitants, les villes avec plus de 15% d'ouvriers" />
+    <meta name="twitter:image" content="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes/social.jpg">
+
+
+    <!-- CORE CSS-->
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+        <style>
+        html,body {
+            margin: 0;
+            padding: 0;
+            height:100%;
+            width:100%;
+        }
+        #libe-menu {
+            height: auto !important;
+        }
+        </style>
+
+  </head>
+
+  <body>
+    <!-- Start Page Loading -->
+    <div id="loader-wrapper">
+      <div id="loader"></div>        
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+    <!-- End Page Loading -->
+
+    <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+
+  <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- START MAIN -->
+  <div id="main">
+    <!-- START WRAPPER -->
+    <div class="wrapper">
+
+      <!-- START LEFT SIDEBAR NAV-->
+      <aside id="left-sidebar-nav">
+        <ul id="slide-out" class="side-nav fixed leftside-navigation">
+            <li class="li-hover"><div class="divider"></div></li>
+            <!--             <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li> -->
+            <li><div class="row"><div class="col s8 m8 l8">FILTRER</div></div></li>
+            <li id='data_sliders'></li>
+
+            <li class="li-hover"><div class="divider"></div></li>
+          </ul>
+          <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
+        </aside>
+        <!-- END LEFT SIDEBAR NAV-->
+
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+        <!-- START CONTENT -->
+        <section id="content">
+
+          <!--breadcrumbs start-->
+          <div id="breadcrumbs-wrapper">
+            <!-- Search for small screen -->
+<!--             <div class="header-search-wrapper grey hide-on-large-only">
+              <i class="mdi-action-search active"></i>
+              <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Rechercher">
+            </div> -->
+            <div class="container">
+              <div class="row">
+                <div class="col s12 m12 l12">
+                  <h5 class="breadcrumbs-title">Explorer les votes aux européennes par rapport aux dernières présidentielles</h5>
+                  <p>Cette application permet de visualiser les résultats des élections en fonction de critères socio démographiques (CSP, démographie, sexe...). Exemple : comment ont voté les villes de moins de 10 000 habitants, les villes avec plus de 15% d'ouvriers...<br />
+                    <p class="hide-on-large-only"> <strong>Sélectionner des critères dans le menu de gauche </strong></p>
+<!--                 <ol class="breadcrumbs">
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="#">Pages</a></li>
+                    <li class="active">Blank Page</li>
+                  </ol> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--breadcrumbs end-->
+
+
+          <!--start container-->
+          <div class="container">
+            <div class="col s12 selectYears">
+              <ul class="tabs">
+                <li class="tab col s4" id="y2019"><a href="#tab1"><span class="hide-on-small-only">Résultats Européennes </span>2019</a></li>
+                <li class="tab col s4" id="y2017"><a href="#tab1"><span class="hide-on-small-only">Résultats Présidentielle </span>2017</a></li>
+                <li class="tab col s4" id="y2012"><a href="#tab1"><span class="hide-on-small-only">Résultats Présidentielle </span>2012</a></li>
+              </ul>
+            </div>
+            <div class="section" id="tab1">
+
+              <p class="caption" id="title_dashboard">Résultats pour <span class="cities_count">35 392</span> villes, soit <span class="pop_number">64 846 445</span> électeurs inscrits *</p>
+              <div class="divider"></div>
+              <div class="row">
+              <div class="chart col s12 l8"></div>
+              <!-- <div id="map" class=" col s8 l6"><svg class="map"></svg></div> -->
+
+              </div>
+              </div>
+              <div class="divider"></div>
+              <div id="recapitulatif">
+                <table class="highlight bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Nombre</th>
+                      <th>% Inscrits</th>
+                      <th>% Votants</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <div class="divider"></div>
+              <div class="footnote">* Hors Mayotte et français de l'étranger </div>
+              <div class="footnote">Données sociodémographiques : Insee, recensement 2013 données détaillées par commune</div>
+              <div class="footnote">Données électorales : Ministère de l'intérieur données détaillées par commune</div>
+                                                    <p class="social ">
+          <i class="shareTwitter fa fa-twitter fa-2x"></i>
+          <i class="shareFacebook fa fa-facebook-square fa-2x"></i>
+        </p>
+            </div>
+      </div>
+      <!--end container-->
+    </section>
+    <!-- END CONTENT -->
+
+
+  </div>
+  <!-- END WRAPPER -->
+
+</div>
+<!-- END MAIN -->
+
+
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+<!-- START FOOTER -->
+<footer class="page-footer">
+  <div class="footer-copyright">
+    <div class="container">
+      <span>Liberation</span> - 
+      <span> Réalisation : Savinien de Rivet</span>
+    </div>
+  </div>
+</footer>
+<!-- END FOOTER -->
+
+
+
+    <!-- ================================================
+    Scripts
+    ================================================ -->
+    
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>    
+    <!--materialize js-->
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <!--prism
+    <script type="text/javascript" src="js/prism/prism.js"></script>-->
+    <!--scrollbar-->
+    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- chartist -->
+    <!--     <script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>  -->  
+    
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="js/custom-script.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
+<script type="text/javascript" src="https://www.liberation.fr/menu/script.js"></script>
+
+        <!-- Chartbeat -->
+        <script type='text/javascript'>
+            var _sf_async_config={};
+            _sf_async_config.uid = 43601;
+            _sf_async_config.domain = 'liberation.fr';
+            _sf_async_config.useCanonical = true;
+            _sf_async_config.sections = "Static";
+            _sf_async_config.authors = "Static";
+            (function(){
+                function loadChartbeat() {
+                    window._sf_endpt=(new Date()).getTime();
+                    var e = document.createElement('script');
+                    e.setAttribute('language', 'javascript');
+                    e.setAttribute('type', 'text/javascript');
+                    e.setAttribute('src', 'https://static.chartbeat.com/' + 'js/chartbeat.js');
+                    document.body.appendChild(e);
+                }
+                var oldonload = window.onload;
+                window.onload = (typeof window.onload != 'function') ?
+                loadChartbeat : function() { oldonload(); loadChartbeat(); };
+            })();
+        </script>
+        <!-- // Chartbeat -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+         ga('create', 'UA-41822557-1', 'auto');
+         ga('send', 'pageview');
+        </script>
+        <!-- // Google Analytics -->
+
+        <!-- Xiti -->
+        <script type="text/javascript">
+            xtnv = document;
+            xtsd = "http://logliberation";
+            xtsite = "381060";
+            xtn2 = "48";
+            xtpage = "Static::Data::2019-05-explorer-elections-europeennes";
+            xtdi = "";
+            xt_pagetype = "";
+            xt_multc = "&x1=0&x2=43&x3=&x4=&x5=&x6=7&x7=";
+            xt_an = "";
+            xt_ac = "";
+            if (window.xtparam==null) { window.xtparam = ''; }
+            window.xtparam += "&ptype="+xt_pagetype+"&ac="+xt_ac+"&an="+xt_an+xt_multc;
+        </script>
+        <noscript>
+            <img width="1" height="1" src="http://logliberation.xiti.com/hit.xiti?s=381060&amp;s2=56&amp;p=Static::Data::&amp;di=&amp;" >
+        </noscript>
+        <script type="text/javascript" src="https://statics.liberation.fr/bloom/theme/js/xtcore.js"></script>
+
+    <script type="text/javascript" src="js/app_nomap.js"></script>
+
+    
+  </body>
+
+  </html>

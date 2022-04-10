@@ -1,0 +1,361 @@
+/*================================================================================
+	Item Name: Materialize - Material Design Admin Template
+	Version: 3.1
+	Author: GeeksLabs
+	Author URL: http://www.themeforest.net/user/geekslabs
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN CSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+g.gbar rect{
+	/*fill: steelblue;*/
+}
+
+#data_sliders .overlay{
+	fill: #ccc;
+}
+
+
+.side-nav{
+  width: 350px !important;
+}
+
+/*#slide-out{
+  width: 350px;
+}*/
+
+
+#main{
+
+padding-left: 350px;
+}
+
+
+#data_sliders .selection {
+    fill-opacity: 0.9;
+    fill: #3c3c3c;
+
+  }
+
+rect.handle--e, rect.handle--w{
+  fill: #444;
+  fill-opacity: 0;
+}
+
+#filter_text .inline_input{
+  width: 50px;
+  display: inline;
+}
+
+
+#filter_text .inline_select{
+  width: 50px;
+  display: inline-block;
+}
+
+#filter_text .inline_select.parti_name{
+  width: 80px;
+}
+
+
+#filter_text #moreLessPeople, #filter_text #moreLessRate{
+  width: 30px;
+}
+
+#filter_text #parti_name{
+  width: 80px;
+}
+
+#filter_text .inline_select select{
+  display: none;
+}
+
+#preloaderTab2{
+  display: none;
+}
+
+#mapid{
+
+  width: 800px;
+  height: 600px;
+}
+
+
+#tab1{
+  display: block;
+}
+
+
+.gslider .left_range tspan{
+  font-weight: bold;
+}
+
+.gslider .textSlider{
+font-size: 17px;
+}
+
+.gslider .handle_cursor{
+stroke:black;
+ stroke-width:3px;
+fill:white;
+pointer-events: none;
+}
+
+
+/*libe100
+
+fond : f4 partout
+
+
+syntheselibeweb*/
+
+/*libe100-regular : titre*/
+
+
+
+#e61e49
+
+
+html{
+
+	font-family: "syntheselibeweb" ,"Roboto", sans-serif !important;
+}
+
+
+body{
+
+	font-family: "syntheselibeweb" , sans-serif !important;
+}
+
+
+.tabs .tab a {
+    color: #7c7c7b;
+}
+
+.tabs .tab a.active {
+    color: #e61e49;
+}
+
+.tabs .tab a:hover {
+    color: #c00021;
+}
+
+.tabs .indicator {
+color: #e61e49;
+background-color: #e61e49;
+	}
+
+
+#breadcrumbs-wrapper{
+	background: inherit;
+}
+
+ul.tabs{
+
+	border-bottom: #7c7c7b;
+}
+
+
+div.selectYears{
+
+	border-bottom: #7c7c7b;
+}
+
+
+@media (min-width:992px) and (max-width:1250px){
+
+
+#main {
+        padding-left: 240px;
+
+}
+
+.side-nav {
+    width: 250px !important;
+}
+
+
+}
+
+
+@media (max-width:992px){
+
+
+#main {
+        padding-left: 40px;
+
+}
+
+#slide-out{
+left: -302px;
+
+}
+
+
+.sidebar-collapse {
+left: -175px;
+ top: 15px;
+ z-index: 1000;
+}
+
+
+}
+
+@media (max-width:500px){
+
+#data_sliders {
+ width: 300px;
+}
+
+
+}
+
+
+@media (max-width:309px){
+
+.sidebar-collapse {
+ top: -10px;
+}
+
+
+}
+
+
+
+.material-tooltip{
+
+	max-width: 300px;
+}
+
+path.tooltipped{
+
+	display: pointer;
+}
+
+
+h5.breadcrumbs-title{
+font-family: 'libesansweb-semicondensed';
+letter-spacing: 0.05em;
+
+}
+
+.material-tooltip{
+	pointer-events: none;
+}
+
+
+
+svg.map path.onmouseover{
+stroke: white;
+stroke-width: 2px;
+}
+
+
+/*#left-sidebar-nav {
+    position: relative;
+
+}*/
+
+
+ul.side-nav.leftside-navigation {
+    top: 67px;
+
+}
+
+
+
+.title-nav-container{
+	display: none !important;
+}
+
+
+
+footer.page-footer {
+    background-color: #e61e49;
+
+}
+
+
+.footer-copyright {
+    margin-left: 100px;
+}
+
+
+g.y2017 g.pictochart, g.y2012 g.pictochart, g.y2019 g.pictochart{
+
+display: none;
+}
+
+
+div.section.T22017 g.pictochart{
+
+display: block;
+}
+
+
+            .iconPlain  {
+                fill:#888;   
+            }
+            
+            .iconSelected  {
+                fill:orange;   
+            }
+            
+            g.pictochart rect    {
+                fill:#ccc;   
+            }
+
+ .color_Macron  {
+fill:#ffb400;   
+}
+
+
+ .color_LP  {
+fill:#2e2b5a;   
+}
+
+ .color_blanc  {
+fill:white;   
+}
+
+
+li.tab sup{
+
+	text-transform: lowercase;
+}
+
+
+/*#tab1{*/
+
+	/*display: none;*/
+/*}*/
+
+
+g.y2017T2 .gbar.k_3, g.y2017T2 .gbar.k_4, g.y2017T2 .gbar.k_5, g.y2017T2 .gbar.k_6, 
+g.y2017T2 .gbar.k_7, g.y2017T2 .gbar.k_8, g.y2017T2 .gbar.k_9, g.y2017T2 .gbar.k_10, g.y2017T2 .gbar.k_11{
+	display: none;
+}
+
+g text.graphtitle{
+
+	font-size: 20px;
+}
+
+.chart svg.y2017 .graphtitle.progression,
+.chart svg.y2017 .progressionCandidates,
+.chart svg.y2012 .progressionCandidates,
+.chart svg.y2012 .graphtitle.progression,
+.chart svg.y2019 .progressionCandidates,
+.chart svg.y2019 .graphtitle.progression
+{
+
+display: none;
+}
+
+g.y2019 text.bartext{
+/*font-size: 15px;*/
+
+}
