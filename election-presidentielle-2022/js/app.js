@@ -361,7 +361,6 @@ else if (location_variable == 'code_region'){
 this_loc_name = this_d['lib_region']
   if (this_d['url_libe']){
 
-    console.log(this_d)
     this_loc_name = `<a target="_blank" href="${this_d.url_libe}" style="display:inline-block"> ${this_loc_name}<img src="img/Voir-Plus.svg" style="width:1em;display:inline-block;margin-left:1em"></a>`
 }
 
@@ -711,26 +710,26 @@ loadMapFromSvgGeneric(data_dep, svg_container, circle_range, location_variable, 
 });
 
 
-d3.xml("img/carte-circonscriptions.svg")
-.then(data => {
-  d3.select("#svg-container-circ").node().append(data.documentElement)
+// d3.xml("img/carte-circonscriptions.svg")
+// .then(data => {
+//   d3.select("#svg-container-circ").node().append(data.documentElement)
 
 
-let svg_container = 'svg-container-circ'
-let circle_range = [3, 4]
-let location_variable = 'id_circo'
-let location_prefix = 'M_'
-let location_type = 'circonscription'
+// let svg_container = 'svg-container-circ'
+// let circle_range = [3, 4]
+// let location_variable = 'id_circo'
+// let location_prefix = 'M_'
+// let location_type = 'circonscription'
 
-geo_objects['circonscription']['data'] = circosData;
+// geo_objects['circonscription']['data'] = circosData;
 
-loadMapFromSvgGeneric(circos_data, svg_container, circle_range, location_variable, location_prefix, location_type)
+// loadMapFromSvgGeneric(circos_data, svg_container, circle_range, location_variable, location_prefix, location_type)
 
-  d3.select("#svg-container-circ")
-  .style('height', 0)
-  .style('display', 'none')
+//   d3.select("#svg-container-circ")
+//   .style('height', 0)
+//   .style('display', 'none')
 
-});
+// });
 
 
 d3.xml("img/carte-regions.svg")
