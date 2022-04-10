@@ -1,16 +1,19 @@
 LibSubCom,code_commune,longitude,latitude,Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,entete,nb_voix,url_libe
-Paris 16eme arrondissement,75056AR16,2.2620995594,48.8603987604,99344,20872,78472,587,241,77644,MACRON,36301,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
+Nice,06088,7.2651,43.7123,220899,65792,155107,1771,865,152471,MACRON,38313,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/alpes-maritimes/nice-06088/
+Paris 16eme arrondissement,75056AR16,2.2620995594,48.8603987604,99344,20871,78473,592,237,77644,MACRON,36301,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Nantes,44109,-1.5492,47.2397,196999,48261,148738,1796,548,146394,MÉLENCHON,48478,https://www.liberation.fr/resultats-elections/pays-de-la-loire/loire-atlantique/nantes-44109/
 Montpellier,34172,3.8592,43.6183,162676,44817,117859,1384,582,115893,MÉLENCHON,47207,https://www.liberation.fr/resultats-elections/occitanie/herault/montpellier-34172/
 Lille,59350,3.0476,50.6344,127228,37474,89754,977,450,88327,MÉLENCHON,35799,https://www.liberation.fr/resultats-elections/hauts-de-france/nord/lille-59350/
-Paris 17eme arrondissement,75056AR17,2.30748555949,48.8873371665,103032,20690,82342,817,288,81237,MACRON,34405,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
+Paris 17eme arrondissement,75056AR17,2.30748555949,48.8873371665,103032,20690,82342,827,278,81237,MACRON,34405,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Boulogne-Billancourt,92012,2.2371,48.8346,72832,13702,59130,1017,0,58113,MACRON,26514,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/boulogne-billancourt-92012/
+Toulon,83137,5.9306,43.1249,104963,31087,73876,1009,319,72548,LE PEN,18338,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/var/toulon-83137/
+Bordeaux,33063,-0.5874,44.8572,161852,38026,123826,1474,488,121864,MACRON,40832,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/gironde/bordeaux-33063/
 Versailles,78646,2.1325,48.8032,58169,11508,46661,534,164,45963,MACRON,15191,https://www.liberation.fr/resultats-elections/ile-de-france/yvelines/versailles-78646/
 Aix-en-Provence,13001,5.3967,43.5097,94443,23877,70566,861,319,69386,MACRON,21447,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/bouches-du-rhone/aix-en-provence-13001/
 Rennes,35238,-1.6815,48.1105,123698,30005,93693,1101,406,92186,MÉLENCHON,33469,https://www.liberation.fr/resultats-elections/bretagne/ille-et-vilaine/rennes-35238/
 Strasbourg,67482,7.7553,48.5673,140550,36149,104401,1030,450,102921,MÉLENCHON,36512,https://www.liberation.fr/resultats-elections/grand-est/bas-rhin/strasbourg-67482/
 Paris 14eme arrondissement,75056AR14,2.32710088326,48.8289932116,85742,18165,67577,713,241,66623,MACRON,23352,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
-Paris 13eme arrondissement,75056AR13,2.36246822852,48.8287176845,112061,24765,87296,1071,461,85764,MÉLENCHON,30984,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
+Paris 13eme arrondissement,75056AR13,2.36246822852,48.8287176845,112061,24765,87296,1089,443,85764,MÉLENCHON,30984,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Neuilly-sur-Seine,92051,2.2642,48.887,37469,6111,31358,217,60,31081,MACRON,15224,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/neuilly-sur-seine-92051/
 Reims,51454,4.0438,49.2484,100055,32853,67202,776,399,66027,MACRON,19289,https://www.liberation.fr/resultats-elections/grand-est/marne/reims-51454/
 Nîmes,30189,4.346,43.8425,90232,27557,62675,705,331,61639,MÉLENCHON,17677,https://www.liberation.fr/resultats-elections/occitanie/gard/nimes-30189/
@@ -24,11 +27,13 @@ Rueil-Malmaison,92063,2.175,48.8679,55143,11575,43568,516,175,42877,MACRON,17796
 Levallois-Perret,92044,2.2836,48.8959,43331,8484,34847,374,104,34369,MACRON,14421,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/levallois-perret-92044/
 Le Mans,72181,0.2016,47.9908,90475,27068,63407,1880,0,61527,MACRON,18596,https://www.liberation.fr/resultats-elections/pays-de-la-loire/sarthe/le-mans-72181/
 Courbevoie,92026,2.2596,48.9005,52492,11714,40778,826,0,39952,MACRON,15810,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/courbevoie-92026/
+Paris 18eme arrondissement,75056AR18,2.34871193387,48.8927350746,109842,26377,83465,898,348,82219,MÉLENCHON,34288,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Saint-Etienne,42218,4.3807,45.4283,88099,24945,63154,775,316,62063,MÉLENCHON,20659,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/loire/saint-etienne-42218/
 Saint-Maur-des-Fossés,94068,2.4926,48.8018,50466,9713,40753,520,150,40083,MACRON,15588,https://www.liberation.fr/resultats-elections/ile-de-france/val-de-marne/saint-maur-des-fosses-94068/
 Perpignan,66136,2.8972,42.7018,68277,21002,47275,486,375,46414,LE PEN,12712,https://www.liberation.fr/resultats-elections/occitanie/pyrenees-orientales/perpignan-66136/
 Ajaccio,2A004,8.6694,41.932,36641,14050,22591,322,290,21979,LE PEN,6717,https://www.liberation.fr/resultats-elections/corse/corse-du-sud/ajaccio-2A004/
 Paris 19eme arrondissement,75056AR19,2.38469432787,48.886868623,108745,29422,79323,757,377,78189,MÉLENCHON,36368,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
+Paris 7eme arrondissement,75056AR07,2.31243868773,48.8560825982,33194,6111,27083,209,70,26804,MACRON,12991,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Amiens,80021,2.2924,49.8935,74433,24946,49487,595,402,48490,MÉLENCHON,15249,https://www.liberation.fr/resultats-elections/hauts-de-france/somme/amiens-80021/
 Le Havre,76351,0.1284,49.5069,104058,33063,70995,1719,0,69276,MÉLENCHON,20900,https://www.liberation.fr/resultats-elections/normandie/seine-maritime/le-havre-76351/
 Clermont-Ferrand,63113,3.1074,45.7825,73343,20069,53274,810,324,52140,MÉLENCHON,16243,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/puy-de-dome/clermont-ferrand-63113/
@@ -74,7 +79,7 @@ Saint-Raphaël,83118,6.8646,43.4421,31336,7651,23685,279,126,23280,MACRON,6525,h
 Les Sables-d'Olonne,85194,-1.7633,46.5317,41812,10620,31192,408,198,30586,MACRON,11205,https://www.liberation.fr/resultats-elections/pays-de-la-loire/vendee/les-sables-d-olonne-85194/
 Albi,81004,2.1448,43.9173,33291,8560,24731,313,186,24232,MACRON,6896,https://www.liberation.fr/resultats-elections/occitanie/tarn/albi-81004/
 Cherbourg-en-Cotentin,50129,-1.6439,49.6387,56221,16795,39426,577,224,38625,MACRON,11352,https://www.liberation.fr/resultats-elections/normandie/manche/cherbourg-en-cotentin-50129/
-Paris 8eme arrondissement,75056AR08,2.31258256042,48.8725272666,25070,5027,20043,153,68,19822,MACRON,9268,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
+Paris 8eme arrondissement,75056AR08,2.31258256042,48.8725272666,25070,5033,20037,150,65,19822,MACRON,9268,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Valence,26362,4.9151,44.926,40439,11206,29233,396,176,28661,MÉLENCHON,8398,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/drome/valence-26362/
 Cagnes-sur-Mer,06027,7.1533,43.67,34547,8937,25610,280,121,25209,LE PEN,7281,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/alpes-maritimes/cagnes-sur-mer-06027/
 Paris 6eme arrondissement,75056AR06,2.33267089859,48.8489680919,26799,4988,21811,162,58,21591,MACRON,10282,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
@@ -160,6 +165,8 @@ Troyes,10387,4.082,48.2981,30515,9903,20612,285,141,20186,MACRON,5466,https://ww
 Lyon 8eme arrondissement,69123AR08,4.86935722305,45.7342034691,41439,9431,32008,396,131,31481,MÉLENCHON,10961,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/rhone/lyon-69123/
 Maisons-Laffitte,78358,2.148,48.9509,17058,3317,13741,130,40,13571,MACRON,5725,https://www.liberation.fr/resultats-elections/ile-de-france/yvelines/maisons-laffitte-78358/
 Chambéry,73065,5.9117,45.5793,33591,8241,25350,325,128,24897,MÉLENCHON,8116,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/savoie/chambery-73065/
+Châtillon,92020,2.2847,48.8021,22251,4193,18058,254,84,17720,MACRON,6454,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/chatillon-92020/
+Bois-Colombes,92009,2.2659,48.9142,18207,3381,14826,194,75,14557,MACRON,5918,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/bois-colombes-92009/
 Cambrai,59122,3.2356,50.1733,22756,8000,14756,184,107,14465,LE PEN,4759,https://www.liberation.fr/resultats-elections/hauts-de-france/nord/cambrai-59122/
 Saint-Denis,93066,2.3694,48.9355,47382,16047,31335,395,214,30726,MÉLENCHON,18784,https://www.liberation.fr/resultats-elections/ile-de-france/seine-st-denis/saint-denis-93066/
 Agde,34003,3.4882,43.2956,25371,6813,18558,220,125,18213,LE PEN,6581,https://www.liberation.fr/resultats-elections/occitanie/herault/agde-34003/
@@ -507,6 +514,7 @@ Sallanches,74256,6.6104,45.9355,12312,2959,9353,151,40,9162,MACRON,2797,
 Illkirch-Graffenstaden,67218,7.7295,48.5205,17966,4651,13315,173,52,13090,MACRON,4570,https://www.liberation.fr/resultats-elections/grand-est/bas-rhin/illkirch-graffenstaden-67218/
 Saint-Cyr-sur-Loire,37214,0.6518,47.4195,12772,2555,10217,137,40,10040,MACRON,3847,
 Pertuis,84089,5.5193,43.6985,15584,4500,11084,149,49,10886,MACRON,2808,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/vaucluse/pertuis-84089/
+Sevran,93071,2.5266,48.9368,22838,7362,15476,202,114,15160,MÉLENCHON,8319,https://www.liberation.fr/resultats-elections/ile-de-france/seine-st-denis/sevran-93071/
 Saint-Paul lès Dax,40279,-1.0707,43.7315,9713,2025,7688,88,59,7541,MACRON,2231,
 Saint-Martin-de-Crau,13097,4.8675,43.6498,10503,2481,8022,110,51,7861,LE PEN,2557,
 Saran,45302,1.8767,47.9466,11097,3092,8005,167,46,7792,MACRON,2080,
@@ -600,6 +608,7 @@ Les Pavillons-sous-Bois,93057,2.5026,48.9069,11695,3615,8080,115,51,7914,MÉLENC
 Bernay,27056,0.5962,49.0892,7073,2196,4877,70,40,4767,MACRON,1464,
 Bruges,33075,-0.6057,44.8875,13334,2658,10676,142,53,10481,MACRON,3658,
 Villeneuve-sur-Lot,47323,0.7424,44.4323,16554,4950,11604,177,114,11313,LE PEN,2837,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/lot-et-garonne/villeneuve-sur-lot-47323/
+Marseille 2eme arrondissement,13055AR02,5.36364983265,43.3126964178,12676,4399,8277,94,31,8152,MÉLENCHON,3793,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/bouches-du-rhone/marseille-13055/
 Dreux,28134,1.3579,48.7493,17540,6536,11004,102,70,10832,MÉLENCHON,4904,https://www.liberation.fr/resultats-elections/centre-val-de-loire/eure-et-loir/dreux-28134/
 Pornichet,44132,-2.3263,47.2535,11054,2389,8665,197,0,8468,MACRON,3242,
 Valréas,84138,4.9987,44.3737,6115,1358,4757,56,33,4668,LE PEN,1415,
@@ -1053,6 +1062,7 @@ Saint-Just-Malmont,43205,4.3094,45.3487,3242,604,2638,67,26,2545,LE PEN,814,
 Bouchemaine,49035,-0.6279,47.4347,5507,1009,4498,71,18,4409,MACRON,1727,
 Thouaré-sur-Loire,44204,-1.4331,47.2774,7785,1519,6266,97,33,6136,MACRON,2273,
 Fontaine-lès-Dijon,21278,5.0225,47.3472,6805,1185,5620,83,21,5516,MACRON,2136,
+Trappes,78621,1.9906,48.7725,14343,4051,10292,125,95,10072,MÉLENCHON,6105,https://www.liberation.fr/resultats-elections/ile-de-france/yvelines/trappes-78621/
 Tinchebray Bocage,61486,-0.721,48.7244,3604,964,2640,62,27,2551,MACRON,793,
 Achicourt,62004,2.7571,50.2738,6013,1493,4520,42,55,4423,MACRON,1259,
 Lys-Haut-Layon,49373,-0.4894,47.1332,5649,1160,4489,70,44,4375,MACRON,1753,
@@ -1141,6 +1151,7 @@ Le Pré-Saint-Gervais,93061,2.4076,48.8845,9422,2205,7217,78,35,7104,MÉLENCHON,
 Rungis,94065,2.3453,48.7488,4133,844,3289,44,27,3218,MACRON,1122,
 Gauchy,02340,3.2841,49.8252,4120,1166,2954,33,27,2894,LE PEN,1132,
 Parempuyre,33312,-0.5945,44.9564,7123,1340,5783,90,31,5662,MACRON,1544,
+Villeneuve-Saint-Georges,94078,2.4503,48.7351,11557,3362,8195,85,60,8050,MÉLENCHON,3718,https://www.liberation.fr/resultats-elections/ile-de-france/val-de-marne/villeneuve-saint-georges-94078/
 Andrézieux-Bouthéon,42005,4.2755,45.5337,6525,1681,4844,73,35,4736,MACRON,1469,
 Condom,32107,0.3739,43.9692,4757,1141,3616,51,25,3540,MACRON,941,
 Gien,45155,2.6716,47.7095,8172,2554,5618,93,51,5474,LE PEN,1491,
@@ -3492,7 +3503,7 @@ Plouguernével,22220,-3.2418,48.2398,1284,267,1017,18,14,985,MACRON,306,
 Lansargues,34127,4.0831,43.6303,2428,426,2002,36,16,1950,LE PEN,548,
 Saubens,31533,1.3584,43.4763,1584,188,1396,23,8,1365,MACRON,390,
 Quiévrechain,59484,3.6666,50.3955,3791,1354,2437,22,14,2401,LE PEN,920,
-Campagne-lès-Hesdin,62204,1.8733,50.4012,1193,207,986,8,16,962,LE PEN,330,
+Campagne-lès-Hesdin,62204,1.8733,50.4012,1193,207,986,8,14,964,LE PEN,330,
 Burlats,81042,2.3395,43.633,1693,306,1387,17,9,1361,LE PEN,418,
 Génissieux,26139,5.0873,45.0849,1957,330,1627,36,5,1586,MACRON,500,
 Sathonay-Village,69293,4.8838,45.839,1931,292,1639,25,4,1610,MACRON,590,
@@ -5092,7 +5103,7 @@ Veyrac,87202,1.0913,45.9056,1694,302,1392,34,19,1339,LE PEN,321,
 Réding,57566,7.0953,48.749,1882,437,1445,17,11,1417,LE PEN,507,
 Lorry-lès-Metz,57415,6.1071,49.1459,1500,329,1171,34,4,1133,MACRON,421,
 Moidieu-Détourbe,38238,5.024,45.5183,1551,274,1277,24,5,1248,LE PEN,382,
-Martigné-sur-Mayenne,53146,-0.6602,48.1991,1328,301,1027,28,13,986,MACRON,427,
+Martigné-sur-Mayenne,53146,-0.6602,48.1991,1328,301,1027,33,8,986,MACRON,427,
 Blanzac,43030,3.8515,45.1116,349,36,313,1,8,304,LE PEN,86,
 Châtillon-sur-Thouet,79080,-0.2608,46.6776,2192,526,1666,27,22,1617,MACRON,576,
 Mens,38226,5.7391,44.8067,1225,215,1010,14,7,989,MÉLENCHON,335,
@@ -10414,7 +10425,7 @@ Peyrilhac,87118,1.1245,45.9643,984,177,807,15,11,781,LE PEN,240,
 Vallègue,31566,1.7556,43.428,432,73,359,5,1,353,MACRON,95,
 Noyant-d'Allier,03202,3.1244,46.4817,475,93,382,0,5,377,MACRON,99,
 Rampillon,77383,3.0723,48.5371,551,117,434,4,3,427,LE PEN,144,
-Savigné,86255,0.3286,46.1662,992,229,763,0,27,736,MACRON,238,
+Savigné,86255,0.3286,46.1662,992,229,763,17,10,736,MACRON,238,
 Gresse-en-Vercors,38186,5.5593,44.8848,388,64,324,5,2,317,MÉLENCHON,87,
 Caurel,51101,4.146,49.3027,548,104,444,3,1,440,MACRON,158,
 Savignac,12263,1.9601,44.3572,556,93,463,19,5,439,MACRON,114,
@@ -13763,7 +13774,7 @@ Bannost-Villegagnon,77020,3.1917,48.6757,428,89,339,6,2,331,LE PEN,102,
 Droiturier,03105,3.7083,46.2305,277,48,229,4,6,219,LE PEN,87,
 Foissac,30111,4.2989,44.0346,311,55,256,3,1,252,LE PEN,87,
 Saint-Hilaire-de-Voust,85229,-0.6497,46.5928,457,101,356,6,3,347,MACRON,136,
-Antran,86007,0.5188,46.8739,902,179,723,1,18,704,MACRON,207,
+Antran,86007,0.5188,46.8739,902,179,723,5,14,704,MACRON,207,
 Mittainvilliers-Vérigny,28254,1.3244,48.51,612,120,492,10,0,482,LE PEN,163,
 Naussac-Fontanes,48105,3.7964,44.7638,321,56,265,4,1,260,LE PEN,79,
 Saint-Martial-de-Nabirat,24450,1.2443,44.7436,513,104,409,7,3,399,LE PEN,109,
@@ -22530,7 +22541,7 @@ Montaigut-le-Blanc,23132,1.7359,46.1178,306,72,234,7,3,224,LE PEN,58,
 Sainte-Léocadie,66181,2.0037,42.4353,116,23,93,1,1,91,MACRON,22,
 Voncq,08489,4.688,49.4729,184,44,140,1,1,138,LE PEN,47,
 Thoraise,25561,5.9086,47.1698,234,41,193,6,1,186,MACRON,49,
-Orches,86182,0.3348,46.8781,303,62,241,0,7,234,LE PEN,77,
+Orches,86182,0.3348,46.8781,303,62,241,6,1,234,LE PEN,77,
 Noalhat,63253,3.4579,45.9184,181,36,145,3,3,139,LE PEN,58,
 Le Mesnil-sur-Bulles,60400,2.3486,49.4841,212,57,155,3,0,152,LE PEN,65,
 Altrippe,57014,6.8182,49.0252,331,66,265,8,2,255,LE PEN,91,
@@ -25211,7 +25222,7 @@ Pandrignes,19158,1.86,45.2207,152,35,117,1,0,116,MÉLENCHON,33,
 Mélisey,89247,4.0757,47.9189,208,53,155,2,2,151,MACRON,55,
 Palazinges,19156,1.689,45.1652,122,32,90,3,1,86,LE PEN,22,
 Maxilly-sur-Saône,21398,5.4192,47.3266,273,54,219,7,2,210,LE PEN,75,
-Saulges,53257,-0.4162,47.9855,210,43,167,0,5,162,MACRON,45,
+Saulges,53257,-0.4162,47.9855,210,43,167,3,2,162,MACRON,45,
 Saint-Pé-de-Léren,64494,-1.0397,43.4903,217,43,174,2,0,172,MACRON,46,
 Montigny-Montfort,21429,4.339,47.5837,234,37,197,2,5,190,LE PEN,58,
 Singleyrac,24536,0.46,44.7394,183,21,162,4,0,158,LE PEN,43,
@@ -32426,7 +32437,7 @@ Méménil,88297,6.6101,48.2112,134,19,115,0,0,115,LE PEN,49,
 Saint-Germain-du-Pert,14586,-1.044,49.3248,130,34,96,1,3,92,LE PEN,43,
 Berbérust-Lias,65082,-0.0317,43.04,35,7,28,0,0,28,MACRON,8,
 Vincly,62862,2.1759,50.5575,99,20,79,2,1,76,LE PEN,27,
-Saint-Silvain-sous-Toulx,23243,2.1866,46.2635,117,33,84,1,1,82,MACRON,22,
+Saint-Silvain-sous-Toulx,23243,2.1866,46.2635,117,33,84,2,0,82,MACRON,22,
 Araux,64033,-0.8215,43.3384,105,20,85,0,2,83,LASSALLE,25,
 Vaux-lès-Palameix,55540,5.5441,49.0243,65,10,55,0,0,55,LE PEN,19,
 Caubous,65136,0.4625,43.2412,33,5,28,0,1,27,MÉLENCHON,7,
