@@ -466,7 +466,7 @@ function configMap(data){
 for (i in data) { // 100k points
 
   d = data[i];
-    console.log(d)
+  
   // console.log(d)
   let this_marker = L.circleMarker([+d.latitude, +d.longitude], {
     renderer: myRenderer,
