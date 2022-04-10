@@ -312,8 +312,6 @@ draw_affichage()
 
 function showTip(data, d, location_variable){
 
-  console.log(d)
-
 
 let this_code = d.id;
 /*let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);*/
@@ -792,14 +790,17 @@ d3.scaleSqrt()
 .range(circle_range);
 
 
-thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
+// thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
+thisCircleScale.domain(d3.extent(_.values(inscrits_location[location_type])));
+
 
   let allSvgNodes = all_those_paths.nodes();
 
   for (i in allSvgNodes){
  let this_id = d3.select(allSvgNodes[i]).attr('id')
  this_id = this_id.substring(2)
-  let this_pop = data.filter(d=> d[location_variable] == this_id)[0] ? +data.filter(d=> d[location_variable] == this_id)[0].Inscrits : inscrits_location[location_type][this_id];
+ let this_pop = inscrits_location[location_type][this_id];
+  // let this_pop = data.filter(d=> d[location_variable] == this_id)[0] ? +data.filter(d=> d[location_variable] == this_id)[0].Inscrits : inscrits_location[location_type][this_id];
 /* let this_pop = +circosData.filter(d=> d.id_circo == this_id)[0].votants;*/
  let this_radius = Math.round(thisCircleScale(this_pop));
  let this_path_d = d3.select(allSvgNodes[i]).attr('d');
@@ -1634,10 +1635,9 @@ departement :
 'ZA': 316706, '40': 319740, '66': 354186, '21': 358331, '25': 362951, '02': 372492, '26': 374564, '51': 376909, '50': 379988, '71': 392945, 
 '80': 406149, '84': 407719, '72': 408317, '01': 424429, '27': 429634, '37': 434120, '45': 450508, '63': 458330, '22': 462227, '54': 490288, 
 '14': 501016, '17': 502959, '42': 504706, '64': 506181, '68': 527406, '85': 536891, '30': 543687, '74': 544158, '60': 563158, '49': 586274, 
-'56': 594019, 'ZD': 670335, '29': 692779, '57': 741415, '35': 753800, '06': 757582, '67': 768420, 
- '83': 799018, '34': 829692, '38': 866662, '76': 871473, '77': 895326, '31': 915354, '44': 1039892, 
-'62': 1088443, '33': 1115375, '69': 1127223, 'ZZ': 200000, '13': 1385344, '59': 1800399, '91': 100000,'75': 100000, '94': 100000, '93': 100000, '92': 100000,
- '95': 100000, '78': 100000},
+'56': 594019, 'ZD': 670335, '29': 692779, '95': 730820, '57': 741415, '35': 753800, '06': 757582, '67': 768420, '94': 786434, '93': 788339, 
+'91': 798178, '83': 799018, '34': 829692, '38': 866662, '76': 871473, '77': 895326, '31': 915354, '78': 956120, '92': 985997, '44': 1039892, 
+'62': 1088443, '33': 1115375, '69': 1127223, '75': 1328571, 'ZZ': 1335453, '13': 1385344, '59': 1800399},
 
 region :
 
