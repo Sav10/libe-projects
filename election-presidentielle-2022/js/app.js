@@ -314,12 +314,16 @@ function showTip(data, d, location_variable){
 
 
 let this_code = d.id;
+
+
 /*let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);*/
 let this_d = _.find(data, d => d[location_variable] == this_code);
 
 if (!this_d){
 
-let this_html = `Résultats non parvenus`
+let thisdepname = (this_code == '75') ? 'Paris' : (this_code == '93' ? 'Seine-Saint-Denis' : 'Val-de-Marne');
+
+let this_html = `${thisdepname}<br> Résultats non parvenus`
 
 d3.select('#tooltip')
 .style('display', 'flex')
