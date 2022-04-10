@@ -321,7 +321,7 @@ let this_d = _.find(data, d => d[location_variable] == this_code);
 
 if (!this_d){
 
-let thisdepname = (this_code == '75') ? 'Paris' : (this_code == '93' ? 'Seine-Saint-Denis' : 'Val-de-Marne');
+let thisdepname = (this_code == '75') ? 'Paris' : (this_code == '93' ? 'Seine-Saint-Denis' : this_code == '94' ? 'Val-de-Marne' : 'Français de l\'étranger');
 
 let this_html = `${thisdepname}<br> Résultats non parvenus`
 
