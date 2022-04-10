@@ -10,9 +10,9 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 27864,6475,21389,281,106,21002,083,83,Var,84,608,181,762,795,6193,4835,3130,157,985,461,2811,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/var/
 33319,12586,20733,402,344,19987,02A,2A,Corse-du-Sud,50,333,198,653,2651,5433,3661,2502,203,1109,630,2564,https://www.liberation.fr/resultats-elections/corse/corse-du-sud/
 35390,6762,28628,396,209,28023,084,84,Vaucluse,117,720,375,1272,1253,7536,6899,4748,234,1355,611,2903,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/vaucluse/
-38397,7070,31327,490,187,30650,005,05,Hautes-Alpes,169,802,479,1663,1737,7143,7024,6843,287,1612,715,2176,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/hautes-alpes/
 42371,26101,16270,381,564,15325,976,ZM,Mayotte,214,222,141,144,172,6457,2625,3678,144,1218,96,214,https://www.liberation.fr/resultats-elections/mayotte/mayotte/
 43632,8939,34693,633,292,33768,090,90,Territoire de Belfort,259,987,542,1389,1117,10359,8160,5456,300,1658,699,2842,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/territoire-de-belfort/
+45900,8519,37381,591,224,36566,005,05,Hautes-Alpes,200,994,548,1962,2049,8586,8328,8194,337,1923,827,2618,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/hautes-alpes/
 53170,10131,43039,783,421,41835,043,43,Haute-Loire,307,1121,636,1571,3110,11873,8892,7026,391,3117,1071,2720,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/haute-loire/
 54940,9709,45231,695,313,44223,082,82,Tarn-et-Garonne,185,1107,878,1336,3790,13463,8922,7741,321,1888,1151,3441,https://www.liberation.fr/resultats-elections/occitanie/tarn-et-garonne/
 55581,11663,43918,770,350,42798,037,37,Indre-et-Loire,358,1222,614,1497,1607,12776,11885,6838,475,1986,1009,2531,https://www.liberation.fr/resultats-elections/centre-val-de-loire/indre-et-loire/
@@ -48,11 +48,11 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 93298,16421,76877,1385,764,74728,019,19,Corrèze,472,1450,1904,2497,6190,16752,16253,14286,639,6537,3659,4089,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/correze/
 93641,20900,72741,1539,730,70472,053,53,Mayenne,544,1877,1202,2927,2324,18130,24594,9579,609,4021,1356,3309,https://www.liberation.fr/resultats-elections/pays-de-la-loire/mayenne/
 94143,17641,76502,1121,525,74856,011,11,Aude,378,1670,2531,2283,5423,21486,14301,15324,700,2608,2026,6126,https://www.liberation.fr/resultats-elections/occitanie/aude/
-94574,23561,71013,1309,527,69177,058,58,Nièvre,487,1548,1274,2201,2741,19969,17393,12416,631,3422,2355,4740,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/nievre/
 94824,19003,75821,1610,723,73488,003,03,Allier,564,1837,1105,2056,3882,21850,17856,11265,653,4060,3631,4729,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/allier/
 95900,19401,76499,1419,673,74407,085,85,Vendée,503,1802,1244,2900,2932,19714,25103,10203,748,3761,1372,4125,https://www.liberation.fr/resultats-elections/pays-de-la-loire/vendee/
 97469,21673,75796,1264,475,74057,061,61,Orne,543,2116,959,2484,2686,22315,21535,9926,662,4560,1526,4745,https://www.liberation.fr/resultats-elections/normandie/orne/
 98004,23125,74879,1120,540,73219,008,08,Ardennes,589,1837,847,1823,2650,28177,17353,9499,560,3325,1563,4996,https://www.liberation.fr/resultats-elections/grand-est/ardennes/
+100760,25121,75639,1367,567,73705,058,58,Nièvre,536,1676,1357,2325,2887,21483,18481,13077,662,3645,2526,5050,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/nievre/
 101600,22077,79523,1276,516,77731,045,45,Loiret,492,2165,954,2443,2435,25884,20605,10379,564,4559,1544,5707,https://www.liberation.fr/resultats-elections/centre-val-de-loire/loiret/
 102308,17735,84573,1251,647,82675,031,31,Haute-Garonne,420,1693,2492,3512,7748,20005,18442,17313,595,2720,2009,5726,https://www.liberation.fr/resultats-elections/occitanie/haute-garonne/
 102993,65754,37239,825,553,35861,973,ZC,Guyane,297,717,535,940,516,6334,5101,18143,462,997,246,1573,https://www.liberation.fr/resultats-elections/guyane/guyane/
