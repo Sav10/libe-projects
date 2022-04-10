@@ -97,6 +97,37 @@ colorNames['y2021']  =
 'b': 'b'}
 
 
+colorNames['y2022'] = {
+"MACRON":'#F7BA00',
+"DUPONT-AIGNAN":'#19325D',
+"LE PEN":'#1D2245',
+'POUTOU': "#911D16",
+'MÉLENCHON': "#EB404C",
+'LASSALLE': "#534384",
+'PÉCRESSE': "#2458A5",
+'ZEMMOUR': "#654235",
+'JADOT': "#00A85C",
+'ARTHAUD': '#751F17',
+'HIDALGO': '#EC4C6B',
+'ROUSSEL': '#D80000'
+}
+
+candidats_panneaux['y2022'] = {
+    '1': {'score': 0,  'name': 'ARTHAUD',  'parti': ''},
+ '2': {'score': 0, 'name': 'ROUSSEL', 'parti': ''},
+ '3': {'score': 0,  'name': "MACRON",  'parti': ""},
+ '4': {'score': 0,  'name': "LASSALLE",  'parti': ""},
+ '5': {'score': 0,  'name': "LE PEN",  'parti': ""},
+ '6': {'score': 0,  'name': "ZEMMOUR",  'parti': ""},
+ '7': {'score': 0,  'name': "MÉLENCHON",  'parti': ""},
+ '8': {'score': 0,  'name': "HIDALGO",  'parti': ""},
+'9': {'score': 0,  'name': "JADOT",  'parti': ""},
+ '10': {'score': 0,  'name': "PÉCRESSE",  'parti': ""},
+ '11': {'score': 0,  'name': 'POUTOU',  'parti': ''},
+'12': {'score': 0,  'name': 'DUPONT-AIGNAN',  'parti': ''}
+}
+
+
 candidats_panneaux['y2021'] = {
     '1': {'score': 0,  'name': 'Extrême droite',  'parti': 'Extrême droite'},
  '2': {'score': 0, 'name': 'Ecologistes', 'parti': 'Ecologistes'},

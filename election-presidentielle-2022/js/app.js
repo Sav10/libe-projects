@@ -29,16 +29,12 @@ moment.locale('fr')
 
 
 const colors_candidats = {
-"HAMON":'#e6476b',
-"FILLON":'#35559e',
 "MACRON":'#F7BA00',
 "DUPONT-AIGNAN":'#19325D',
 "LE PEN":'#1D2245',
 'POUTOU': "#911D16",
 'MÉLENCHON': "#EB404C",
 'LASSALLE': "#534384",
-'ASSELINEAU': "#cfb096",
-'CHEMINADE': "#cfb096",
 'PÉCRESSE': "#2458A5",
 'ZEMMOUR': "#654235",
 'JADOT': "#00A85C",
