@@ -9,14 +9,14 @@ transition_duration = 300,
 gbar,
 data_chart,
 data_full = {},
-active_year = 'y2021',
+active_year = 'y2022',
 colorNames = {},
 candidats_panneaux = {},
 percentageCalculated = 0,
 mymap,
 markerGroup,
 chart_made = 0,
-data_loaded = {y2017:0, y2012:0, y2017T2:1, y2021:0},
+data_loaded = {y2017:0, y2012:0, y2017T2:1, y2022:0},
 automatic_chart_update = 0,
 update_source_event = 0,
 competitors_pannels = {},
@@ -479,7 +479,7 @@ function brushEnd() {
 }
 
 d3.queue()
-    .defer(d3.csv, 'data/data2021_regionales.csv')
+    .defer(d3.csv, 'data/data2022_presidentielle.csv')
     .await(LoadData);
 
 svg.attr('class', active_year);
@@ -516,16 +516,16 @@ d3.select("#y2012")
     })
 
 
-d3.select("#y2021")
+d3.select("#y2022")
     .on('click', function() {
 
-        active_year = 'y2021';
+        active_year = 'y2022';
         automatic_chart_update = 0;
 
 
         if (data_loaded[active_year] == 0) {
             d3.queue()
-                .defer(d3.csv, 'data/data2021_regionales.csv')
+                .defer(d3.csv, 'data/data2022_presidentielle.csv')
                 .await(LoadData);
         } else {
 
@@ -544,7 +544,7 @@ d3.select("#y2021")
         d3.select('.chart').select('svg').attr('class', active_year);
 
 
-        d3.selectAll('g.y2021 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
+        d3.selectAll('g.y2022 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
 
     })
 
@@ -625,7 +625,7 @@ function LoadData(error, data, json_data) {
 
     } 
 
-    else if (active_year == 'y2021') {
+    else if (active_year == 'y2022') {
 
         data.forEach(function(d) {
             d['1'] = +d['1'];
@@ -634,11 +634,13 @@ function LoadData(error, data, json_data) {
             d['4'] = +d['4'];
             d['5'] = +d['5'];
             d['6'] = +d['6'];
+            d['7'] = +d['7'];
+            d['8'] = +d['8'];
+            d['9'] = +d['9'];
             d['8'] = +d['8'];
             d['10'] = +d['10'];
-            d['15'] = +d['15'];
-            d['100'] = +d['100'];
-            d['101'] = +d['101'];
+            d['11'] = +d['11'];
+            d['12'] = +d['12'];
             d.departement = d.code_insee[0] + d.code_insee[1];
             d.popTotale = +d.popTotale;
             d.taux65Plus = +d.taux65Plus;
@@ -823,7 +825,7 @@ function updateChart(r0, r1, subject, maxdomain) {
 
         var data = data_full[active_year];
 
-        if (active_year != 'y2021') {
+        if (active_year != 'y2022') {
 
             slider_variables.forEach(function(d, i) {
                 d.left_range = i >= 7 ? 0 : d.left_range;
@@ -1025,7 +1027,7 @@ function updateChart(r0, r1, subject, maxdomain) {
 
     // }
 
-    d3.selectAll('g.y2021 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
+    d3.selectAll('g.y2022 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
 
 }
 
