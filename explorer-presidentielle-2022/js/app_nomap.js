@@ -113,7 +113,7 @@ colorNames['y2022'] = {
 }
 
 candidats_panneaux['y2022'] = {
-    '1': {'score': 0,  'name': 'ARTHAUD',  'parti': 'Lutte ouvière'},
+    '1': {'score': 0,  'name': 'ARTHAUD',  'parti': 'Lutte ouvrière'},
  '2': {'score': 0, 'name': 'ROUSSEL', 'parti': 'Parti communiste'},
  '3': {'score': 0,  'name': "MACRON",  'parti': "En marche !"},
  '4': {'score': 0,  'name': "LASSALLE",  'parti': "Résistons"},
