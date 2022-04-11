@@ -246,7 +246,7 @@ legendots
 d3.select('div#legendots').selectAll('span.legende_dot')
 .append('span')
 .attr('class', 'text_legend')
-.text(d=>_.capitalize(d[0]))
+.text(d=>_.capitalize(d[0]).replace('Le pen', 'Le Pen'))
 
 d3.select('div#legendots').selectAll('span.legende_dot')
 .append('span')
