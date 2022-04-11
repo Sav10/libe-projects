@@ -266,6 +266,8 @@ var position_politique =
 
     function populateResults(data_){
 
+      console.log(data_)
+
       var this_selection = d3.select('#all_results').selectAll('li.entry')
       .data(data_);
 
@@ -273,14 +275,14 @@ var position_politique =
 
       this_selection
       .select('li a')
-      .html(function(d){return d['LibSubCom']})
+      .html(function(d){return d['LibSubCom'] + ' (' + d.code_commune.substring(0, 2) + ')'})
 
       this_selection
       .enter()
       .append('li')
       .attr('class', 'entry')
       .append('a')
-      .html(function(d){return d['LibSubCom']})
+      .html(function(d){return d['LibSubCom'] + ' (' + d.code_commune.substring(0, 2) + ')'})
 
       d3.selectAll('#all_results li.entry a')
       .on('click', function(d){
