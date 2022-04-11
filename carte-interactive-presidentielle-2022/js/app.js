@@ -1,4 +1,4 @@
-    
+
 var mainWidth = parseInt(d3.select('#mainContent').style("width"));
 
     // var mainWidth = 800;
@@ -592,7 +592,7 @@ map.on('popupclose', function(e) {
   }
 
    function testMobile (){
-    if (parseInt(d3.select('#mainContent').style("width")) >= 768){
+    if (parseInt(d3.select('#mainContent').style("width")) >= 600){
       return true
     }
 
