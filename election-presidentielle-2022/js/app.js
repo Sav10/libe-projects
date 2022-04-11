@@ -605,8 +605,8 @@ Promise.all([
     d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/election_data_reg2.csv'),
     // d3.csv('data/election_data_dep2.csv'),
     d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/election_data_dep2.csv'),
-    // d3.csv('data/data_circos2.csv')
-    d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/data_circos2.csv')
+    d3.csv('data/data_circos3.csv')
+    // d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/data_circos3.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2])
 }).catch(function(err) {
@@ -708,26 +708,26 @@ loadMapFromSvgGeneric(data_dep, svg_container, circle_range, location_variable, 
 });
 
 
-// d3.xml("img/carte-circonscriptions.svg")
-// .then(data => {
-//   d3.select("#svg-container-circ").node().append(data.documentElement)
+d3.xml("img/carte-circonscriptions.svg")
+.then(data => {
+  d3.select("#svg-container-circ").node().append(data.documentElement)
 
 
-// let svg_container = 'svg-container-circ'
-// let circle_range = [3, 4]
-// let location_variable = 'id_circo'
-// let location_prefix = 'M_'
-// let location_type = 'circonscription'
+let svg_container = 'svg-container-circ'
+let circle_range = [3, 4]
+let location_variable = 'id_circo'
+let location_prefix = 'M_'
+let location_type = 'circonscription'
 
-// geo_objects['circonscription']['data'] = circosData;
+geo_objects['circonscription']['data'] = circosData;
 
-// loadMapFromSvgGeneric(circos_data, svg_container, circle_range, location_variable, location_prefix, location_type)
+loadMapFromSvgGeneric(circos_data, svg_container, circle_range, location_variable, location_prefix, location_type)
 
-//   d3.select("#svg-container-circ")
-//   .style('height', 0)
-//   .style('display', 'none')
+  d3.select("#svg-container-circ")
+  .style('height', 0)
+  .style('display', 'none')
 
-// });
+});
 
 
 d3.xml("img/carte-regions.svg")
