@@ -1048,7 +1048,7 @@ for (i in geo_objects){
   all_those_paths
   .style('stroke-width', 0)
   .style('fill', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id}) !== 'undefined') {
+    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
 
  return colors_candidats[this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner]
     }
