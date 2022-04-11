@@ -605,8 +605,8 @@ Promise.all([
     d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/election_data_reg2.csv'),
     // d3.csv('data/election_data_dep2.csv'),
     d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/election_data_dep2.csv'),
-    d3.csv('data/data_circos3.csv')
-    // d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/data_circos3.csv')
+    // d3.csv('data/data_circos3.csv')
+    d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/data_circos3.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2])
 }).catch(function(err) {
