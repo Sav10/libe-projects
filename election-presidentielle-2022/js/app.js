@@ -47,17 +47,17 @@ const colors_candidats = {
 
 const candidate_names = [
 'MACRON',
- 'MÉLENCHON',
  'LE PEN',
- 'PÉCRESSE',
+ 'MÉLENCHON',
   'ZEMMOUR',
+ 'PÉCRESSE',
  'JADOT',
+ 'LASSALLE',
  'ROUSSEL',
+ 'DUPONT-AIGNAN',
  'HIDALGO',
  'POUTOU',
- 'ARTHAUD',
- 'DUPONT-AIGNAN',
- 'LASSALLE']
+ 'ARTHAUD']
 
 const selected_candidates = [
 'MACRON',
