@@ -493,7 +493,7 @@ d3.select("#y2012")
 
         if (data_loaded[active_year] == 0) {
             d3.queue()
-                .defer(d3.csv, 'https://raw.githubusercontent.com/libe-sixplus/data-election-presidentielle-2017/master/data2012T1.csv')
+                .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2012T1.csv')
                 .await(LoadData);
         } else {
 
@@ -557,7 +557,7 @@ d3.select("#y2017")
 
         if (data_loaded[active_year] == 0) {
             d3.queue()
-                .defer(d3.csv, 'https://raw.githubusercontent.com/libe-sixplus/data-election-presidentielle-2017/master/data_2017T1.csv')
+                .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data_2017T1.csv')
                 .await(LoadData);
         } else {
 
