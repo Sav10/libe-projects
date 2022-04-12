@@ -42,6 +42,7 @@
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->    
     <link href="css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
 
     <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
     <link href="js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -57,9 +58,94 @@
             height:100%;
             width:100%;
         }
-        #libe-menu {
-            height: auto !important;
-        }
+
+body{
+
+      font-family: "syntheselibeweb";
+}
+
+    .gslider .handle_cursor {
+    stroke: red;
+    stroke-width: 7px;
+    fill: white;
+    pointer-events: none;
+}
+
+.gslider .left_range tspan {
+    font-weight: bold;
+    fill: red;
+}
+
+.gslider .right_range tspan {
+    font-weight: bold;
+    fill: red;
+}
+
+
+g.gbar text.barnumbers{
+font-weight: bold;
+
+}
+
+.selectYears .tab a span{
+color: #000;
+font-weight: bold;
+
+}
+
+.selectYears .tab a{
+color: #000;
+font-weight: bold;
+font-size: 1.4em;
+background-color: #f9f9f9;
+/*font-family: 'libesansweb-semicondensed';
+letter-spacing: .12em;*/
+}
+
+.selectYears .tab a.active{
+color: #000;
+background-color: #fff;
+
+}
+
+ul.side-nav.leftside-navigation li {
+     line-height: 2em;
+}
+
+#left-sidebar-nav {
+    margin-top: 95px;
+}
+
+
+#left-sidebar-nav .side-nav{
+margin-top: 43px;
+}
+
+#burger-menu i{
+  color: white;
+  background-color: black;
+}
+
+#explain_filters{
+margin-bottom: 0;
+margin-top: 0;
+font-size: .8em;
+}
+
+#title_dashboard{
+margin-top: 0;
+/*font-family: TiemposText, Georgia, serif;*/
+font-size: 1.1em;
+}
+
+@media (min-width: 990px){ 
+
+#left-sidebar-nav .side-nav {
+    margin-top: 0;
+}
+
+}
+
         </style>
 
   </head>
@@ -88,7 +174,7 @@
         <ul id="slide-out" class="side-nav fixed leftside-navigation">
             <li class="li-hover"><div class="divider"></div></li>
             <!--             <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li> -->
-            <li><div class="row"><div class="col s8 m8 l8">FILTRER</div></div></li>
+            <li><div class="row"><div class="col s8 m8 l8" style="text-align: center;">FILTRER</div></div></li>
             <li id='data_sliders'></li>
 
             <li class="li-hover"><div class="divider"></div></li>
@@ -112,9 +198,9 @@
             <div class="container">
               <div class="row">
                 <div class="col s12 m12 l12">
-                  <h5 class="breadcrumbs-title">Explorer les votes aux élections régionales par rapport aux dernières présidentielles</h5>
-                  <p>Cette application permet de visualiser les résultats des élections en fonction de critères socio démographiques (CSP, démographie, sexe...). Exemple : comment ont voté les villes de moins de 10 000 habitants, les villes avec plus de 15% d'ouvriers...<br />
-                    <p class="hide-on-large-only"> <strong>Sélectionner des critères dans le menu de gauche </strong></p>
+   <!--                <h5 class="breadcrumbs-title">Explorer les votes aux élections régionales par rapport aux dernières présidentielles</h5>
+                  <p>Cette application permet de visualiser les résultats des élections en fonction de critères socio démographiques (CSP, démographie, sexe...). Exemple : comment ont voté les villes de moins de 10 000 habitants, les villes avec plus de 15% d'ouvriers...<br /> -->
+                    <p class="hide-on-large-only"> <strong>Choisir une élection présidentielle </strong></p>
 <!--                 <ol class="breadcrumbs">
                     <li><a href="index.html">Dashboard</a></li>
                     <li><a href="#">Pages</a></li>
@@ -131,12 +217,14 @@
           <div class="container">
             <div class="col s12 selectYears">
               <ul class="tabs">
-                <li class="tab col s4" id="y2022"><a href="#tab1"><span class="hide-on-small-only">Présidentielle </span>2022</a></li>
-                <li class="tab col s4" id="y2017"><a href="#tab1"><span class="hide-on-small-only">Présidentielle </span>2017</a></li>
-                <li class="tab col s4" id="y2012"><a href="#tab1"><span class="hide-on-small-only">Présidentielle </span>2012</a></li>
+                <li class="tab col s4" id="y2022"><a href="#tab1"><span class="hide-on-small-only"></span>2022</a></li>
+                <li class="tab col s4" id="y2017"><a href="#tab1"><span class="hide-on-small-only"></span>2017</a></li>
+                <li class="tab col s4" id="y2012"><a href="#tab1"><span class="hide-on-small-only"></span>2012</a></li>
               </ul>
             </div>
             <div class="section" id="tab1">
+
+              <p id="explain_filters">Sélectionner les critères dans le menu de gauche pour filtrer les résultats</p>
 
               <p class="caption" id="title_dashboard">Résultats pour <span class="cities_count">35 392</span> villes, soit <span class="pop_number">64 846 445</span> électeurs inscrits *</p>
               <div class="divider"></div>
@@ -188,14 +276,14 @@
 <!-- //////////////////////////////////////////////////////////////////////////// -->
 
 <!-- START FOOTER -->
-<footer class="page-footer" style="background-color: #bcbcbc;">
-  <div class="footer-copyright" style="background-color: #bcbcbc;">
-    <div class="container">
+<!-- <footer class="page-footer" style="background-color: #bcbcbc;">
+  <div class="footer-copyright" style="background-color: #bcbcbc;"> -->
+<!--     <div class="container">
       <span><a style="color:white" href="https://www.liberation.fr/dossier/data-matin/" target="_blank">Liberation data</a></span> - 
       <span> Réalisation : Savinien de Rivet</span>
-    </div>
-  </div>
-</footer>
+    </div> -->
+<!--   </div>
+</footer> -->
 <!-- END FOOTER -->
 
 

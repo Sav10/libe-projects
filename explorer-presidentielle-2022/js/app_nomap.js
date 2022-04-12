@@ -2,7 +2,7 @@ var margin = { top: 50, right: 70, bottom: 130, left: 220 },
 width = 600 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom,
 widthHandle = 10,
-radiusHandle = 15,
+radiusHandle = 12,
 handleHeight = 10,
 bandwidth = 6,
 transition_duration = 300,
@@ -29,7 +29,7 @@ height_progress = 100 - margin_progress.top - margin_progress.bottom;
 var marginSlider = { top: -40, right: 18, bottom: 40, left: 20 },
     widthSlider = 300,
     heightSlider = 900,
-    bandwidthSlider = 20,
+    bandwidthSlider = 10,
     textPaddingSlider = 25,
     paddingSlider = 1.1;
 
@@ -479,7 +479,7 @@ function brushEnd() {
 }
 
 d3.queue()
-    .defer(d3.csv, 'data/data2022_presidentielle.csv')
+    .defer(d3.csv, 'data/data2022_presidentielle_2.csv')
     .await(LoadData);
 
 svg.attr('class', active_year);
@@ -525,7 +525,7 @@ d3.select("#y2022")
 
         if (data_loaded[active_year] == 0) {
             d3.queue()
-                .defer(d3.csv, 'data/data2022_presidentielle.csv')
+                .defer(d3.csv, 'data/data2022_presidentielle_2.csv')
                 .await(LoadData);
         } else {
 
@@ -949,13 +949,13 @@ function updateChart(r0, r1, subject, maxdomain) {
                 return (xScale(d.value.score) + 7)
             })
             .text(function(d) {
-                return _.round(100 * d.value.score / total_exprimes, 2) + ' %'
+                return String(_.round(100 * d.value.score / total_exprimes, 1)).replace('.', ',') + '%'
             });
 
         gbar.select('text.bartext')
             .transition()
             .text(function(d) {
-                return d.value.name
+                return _.capitalize(d.value.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')
             });
 
         gbar_ = gbar
@@ -969,7 +969,7 @@ function updateChart(r0, r1, subject, maxdomain) {
             .attr('class', 'bartext')
             .attr('y', function(d) { return yScale.bandwidth() / 2 + 4 })
             .attr('x', '-20px')
-            .text(function(d) { return d.value.name })
+            .text(function(d) { return _.capitalize(d.value.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan') })
             .attr('text-anchor', 'end');
 
         gbar_
@@ -977,7 +977,7 @@ function updateChart(r0, r1, subject, maxdomain) {
             .attr('class', 'barnumbers')
             .attr('y', function(d) { return yScale.bandwidth() / 2 + 4 })
             .attr('x', function(d) { return (xScale(d.value.score) + 7) })
-            .text(function(d) { return _.round(100 * d.value.score / total_exprimes, 2) + ' %' })
+            .text(function(d) { return String(_.round(100 * d.value.score / total_exprimes, 1)).replace('.', ',') + '%' })
             .attr('text-anchor', 'start');
 
         gbar_
