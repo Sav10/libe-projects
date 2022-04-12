@@ -16,7 +16,7 @@ percentageCalculated = 0,
 mymap,
 markerGroup,
 chart_made = 0,
-data_loaded = {y2017:0, y2012:0, y2017T2:1, y2022:0},
+data_loaded = {y2017:0, y2012:0, y2022:1},
 automatic_chart_update = 0,
 update_source_event = 0,
 competitors_pannels = {},
@@ -479,7 +479,7 @@ function brushEnd() {
 }
 
 d3.queue()
-    .defer(d3.csv, 'data/data2022_presidentielle_2.csv')
+    .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2022_presidentielle_2.csv')
     .await(LoadData);
 
 svg.attr('class', active_year);
@@ -525,7 +525,7 @@ d3.select("#y2022")
 
         if (data_loaded[active_year] == 0) {
             d3.queue()
-                .defer(d3.csv, 'data/data2022_presidentielle_2.csv')
+                .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2022_presidentielle_2.csv')
                 .await(LoadData);
         } else {
 
