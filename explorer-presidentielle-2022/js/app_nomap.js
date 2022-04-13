@@ -34,7 +34,6 @@ var marginSlider = { top: -40, right: 18, bottom: 40, left: 20 },
     paddingSlider = 1.1;
 
 
-
 colorNames['y2017']  = {
   "Dupont-Aignan":"#75398a",
   "Le Pen":"#2e2b5a",
@@ -46,22 +45,8 @@ colorNames['y2017']  = {
   "Poutou":"#961e1e",
   "Arthaud": "#781f1c",
   "Cheminade": "#75398a",
-  "Asselineau": "#75398a"
-};
-
-
-colorNames['y2017']  = {
-  "Dupont-Aignan":"#75398a",
-  "Le Pen":"#2e2b5a",
-  "Macron":"#ffb400",
-  "Hamon":"#d82c5d",
-  "Lassalle":"#e85d21",
-  "Fillon":"#0058a2",
-  "Mélenchon":"#e10f21",
-  "Poutou":"#961e1e",
-  "Arthaud": "#781f1c",
-  "Cheminade": "#75398a",
-  "Asselineau": "#75398a"
+  "Asselineau": "#75398a",
+  'a': 'a'
 };
 
 colorNames['y2017T2']  = {
@@ -79,7 +64,9 @@ colorNames['y2012']  = {
   "MÉLENCHON":"#e10f21",
   "POUTOU":"#961e1e",
   "ARTHAUD": "#781f1c",
-  "CHEMINADE": "#75398a"
+  "CHEMINADE": "#75398a",
+  'a': 'a',
+  'b': 'b'
 };
 
 
@@ -102,7 +89,7 @@ colorNames['y2022'] = {
 "DUPONT-AIGNAN":'#19325D',
 "LE PEN":'#1D2245',
 'POUTOU': "#911D16",
-'MÉLENCHON': "#EB404C",
+'MÉLENCHON': "#e10f21",
 'LASSALLE': "#534384",
 'PÉCRESSE': "#2458A5",
 'ZEMMOUR': "#654235",
