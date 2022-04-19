@@ -492,8 +492,8 @@ g.select("g.axis.axis--y")
     this_height = manualReusableParameters.chart_height.value,
     this_aspect = this_width / this_height;
 
-      let targetWidth = parseInt(this_container.style("width"));
-      let targetHeight = Math.round(targetWidth / this_aspect);
+let targetWidth = parseInt(this_container.style("width")) - margin.left - margin.right;
+let targetHeight = Math.round(targetWidth / this_aspect) - margin.top -  - margin.bottom;
 
 
 const container = d3.select('#chart_container')
@@ -509,23 +509,25 @@ const context = canvasChart.node().getContext('2d');
 
 const pointColor = '#3585ff'
 
-data.forEach( point => {
-   drawPoint(point);
+data.forEach(function(d, i) {
+if (i % 100 == 0){console.log(d)}
+
+   drawPoint(d, i);
 });
 
 
-function drawPoint(point) {
+function drawPoint(d, i) {
    context.beginPath();
-   context.fillStyle = point[thisColorVar];
-   const px = xScale(point[thisXvar]);
-   const py = yScale(point[thisYvar]);
+   context.fillStyle = d[thisColorVar];
+   const px = xScale(d[thisXvar]);
+   const py = yScale(d[thisYvar]);
 
    context.arc(px, py, 1.2, 0, 2 * Math.PI,true);
    context.fill();
 }
 
 
-/*    var circles = g_inner
+    var circles = g_inner
     .selectAll('.ball')
     .data(_.slice(data, 0, 1000));
 
@@ -567,7 +569,7 @@ function drawPoint(point) {
     .style('text-anchor', 'middle')
     .style('fill', 'black')
     .attr('y', 4)
-    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});*/
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
 
 g_inner
 .call(xAxisLabel, graphParameters.selected_xRows[0]);
