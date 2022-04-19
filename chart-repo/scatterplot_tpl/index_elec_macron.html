@@ -517,6 +517,15 @@ const context = canvasChart.node().getContext('2d');
 
 const pointColor = '#3585ff'
 
+
+    var xScale_canvas = xScaleType()
+    .domain([min_x_value,max_x_value])
+    .range([0, targetWidth]);
+
+    var yScale_canvas = d3.scaleLinear()
+    .domain([min_y_value,max_y_value])
+    .range([targetHeight, 0]);
+
 data.forEach(function(d, i) {
 if (i % 100 == 0){console.log(d)}
 
@@ -524,11 +533,13 @@ if (i % 100 == 0){console.log(d)}
 });
 
 
+
+
 function drawPoint(d, i) {
    context.beginPath();
    context.fillStyle = d[thisColorVar];
-   const px = xScale(d[thisXvar])*x_factor + 50;
-   const py = yScale(d[thisYvar])*y_factor +10;
+   const px = xScale_canvas(d[thisXvar]) + 50;
+   const py = yScale_canvas(d[thisYvar]) +10;
 
    context.arc(px, py, 1.2, 0, 2 * Math.PI,true);
    context.fill();
