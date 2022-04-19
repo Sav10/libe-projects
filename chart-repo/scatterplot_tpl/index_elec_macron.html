@@ -490,10 +490,10 @@ g.select("g.axis.axis--y")
     let this_container = d3.select('#chart_container'),
     this_width = manualReusableParameters.chart_width.value,
     this_height = manualReusableParameters.chart_height.value,
-    this_aspect = width / height;
+    this_aspect = this_width / this_height;
 
-      let targetWidth = parseInt(container.style("width"));
-      let targetHeight = Math.round(targetWidth / aspect);
+      let targetWidth = parseInt(this_container.style("width"));
+      let targetHeight = Math.round(targetWidth / this_aspect);
 
 
 const container = d3.select('#chart_container')
