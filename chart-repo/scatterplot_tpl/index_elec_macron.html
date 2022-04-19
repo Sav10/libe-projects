@@ -486,11 +486,21 @@ g.select("g.axis.axis--y")
 .attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
 .call(axis_left);
 
+
+    let this_container = d3.select('#chart_container'),
+    this_width = manualReusableParameters.chart_width.value,
+    this_height = manualReusableParameters.chart_height.value,
+    this_aspect = width / height;
+
+      let targetWidth = parseInt(container.style("width"));
+      let targetHeight = Math.round(targetWidth / aspect);
+
+
 const container = d3.select('#chart_container')
 
 const canvasChart = container.append('canvas')
-.attr('width', width)
-.attr('height', height)
+.attr('width', targetWidth)
+.attr('height', targetHeight)
 .style('margin-left', margin.left + 'px')
 .style('margin-top', margin.top + 'px')
 .attr('class', 'canvas-plot');
