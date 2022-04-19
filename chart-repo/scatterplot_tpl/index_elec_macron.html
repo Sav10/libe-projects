@@ -523,8 +523,8 @@ if (i % 100 == 0){console.log(d)}
 function drawPoint(d, i) {
    context.beginPath();
    context.fillStyle = d[thisColorVar];
-   const px = xScale(d[thisXvar])*x_factor + 10;
-   const py = yScale(d[thisYvar])*y_factor;
+   const px = xScale(d[thisXvar])*x_factor + 50;
+   const py = yScale(d[thisYvar])*y_factor +10;
 
    context.arc(px, py, 1.2, 0, 2 * Math.PI,true);
    context.fill();
