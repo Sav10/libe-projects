@@ -76,6 +76,14 @@ stroke:#888;
 }
 
 
+#chart_container{
+  position: relative;
+}
+
+#chart_container svg, #chart_container canvas{
+  position: absolute;
+}
+
   </style>
 
 
@@ -489,7 +497,25 @@ const canvasChart = container.append('canvas')
 
 const context = canvasChart.node().getContext('2d');
 
-    var circles = g_inner
+const pointColor = '#3585ff'
+
+data.forEach( point => {
+   drawPoint(point);
+});
+
+
+function drawPoint(point) {
+   context.beginPath();
+   context.fillStyle = point[thisColorVar];
+   const px = xScale(point[thisXvar]);
+   const py = yScale(point[thisYvar]);
+
+   context.arc(px, py, 1.2, 0, 2 * Math.PI,true);
+   context.fill();
+}
+
+
+/*    var circles = g_inner
     .selectAll('.ball')
     .data(_.slice(data, 0, 1000));
 
@@ -531,7 +557,7 @@ const context = canvasChart.node().getContext('2d');
     .style('text-anchor', 'middle')
     .style('fill', 'black')
     .attr('y', 4)
-    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});*/
 
 g_inner
 .call(xAxisLabel, graphParameters.selected_xRows[0]);
