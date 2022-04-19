@@ -496,6 +496,10 @@ let targetWidth = parseInt(this_container.style("width")) - margin.left - margin
 let targetHeight = Math.round(targetWidth / this_aspect) - margin.top -  - margin.bottom;
 
 
+let x_factor = targetWidth / this_width 
+
+let y_factor = targetHeight / this_height 
+
 const container = d3.select('#chart_container')
 
 const canvasChart = container.append('canvas')
@@ -519,8 +523,8 @@ if (i % 100 == 0){console.log(d)}
 function drawPoint(d, i) {
    context.beginPath();
    context.fillStyle = d[thisColorVar];
-   const px = xScale(d[thisXvar]);
-   const py = yScale(d[thisYvar]);
+   const px = xScale(d[thisXvar])*x_factor + 10;
+   const py = yScale(d[thisYvar])*y_factor;
 
    context.arc(px, py, 1.2, 0, 2 * Math.PI,true);
    context.fill();
