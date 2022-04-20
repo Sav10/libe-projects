@@ -413,13 +413,11 @@ function makeCirclechart(data0) {
     updateParameters();
 
     var xScale = xScaleType()
-    .domain([d3.min(data, function(d) { return d[thisXvar] }),
-        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .domain([min_x_value,max_x_value])
     .range([0, width]);
 
     var yScale = d3.scaleLinear()
-    .domain([d3.min(data, function(d) { return d[thisYvar] }),
-        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .domain([min_y_value,max_y_value])
     .range([height, 0]);
 
     var rScale = d3.scaleSqrt()
@@ -519,7 +517,6 @@ let x_factor = targetTotalWidth / +svg.attr("width")
 
 let y_factor = targetTotalHeight / this_height
 
-y_factor = 1.61
 
 
 console.log(x_factor)
@@ -549,7 +546,7 @@ const pointColor = '#3585ff'
 
     var yScale_canvas = d3.scaleLinear()
     .domain([min_y_value,max_y_value])
-    .range([height*y_factor, 0]);
+    .range([540, 0]);
 
 _.slice(data, 0, 1000).forEach(function(d, i) {
 if (i % 100 == 0){console.log(d)}
