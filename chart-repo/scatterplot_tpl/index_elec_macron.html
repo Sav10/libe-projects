@@ -549,7 +549,14 @@ const pointColor = '#3585ff'
     .range([height*y_factor, 0]);
 
 data.forEach(function(d, i) {
-if (i % 100 == 0){console.log(d)}
+if (i % 100 == 0){
+
+	console.log(d)
+	console.log(thisSizeVar)
+	let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
+	console.log(this_radius)
+
+}
 
    drawPoint(d, i);
 });
@@ -564,7 +571,7 @@ function drawPoint(d, i) {
    context.fillStyle = d[thisColorVar];
    const px = xScale_canvas(d[thisXvar]);
    const py = yScale_canvas(d[thisYvar]);
-   const this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
+   let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
 
    context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
    context.fill();
