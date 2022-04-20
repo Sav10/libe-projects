@@ -546,7 +546,7 @@ const pointColor = '#3585ff'
 
     var yScale_canvas = d3.scaleLinear()
     .domain([min_y_value,max_y_value])
-    .range([540, 0]);
+    .range([550, 0]);
 
 _.slice(data, 0, 1000).forEach(function(d, i) {
 if (i % 100 == 0){console.log(d)}
@@ -555,7 +555,7 @@ if (i % 100 == 0){console.log(d)}
 });
 
 
-
+console.log(yScale_canvas)
 
 function drawPoint(d, i) {
    context.beginPath();
