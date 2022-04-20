@@ -247,8 +247,8 @@ const max_y_value = 50
   "CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},
   "automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},
   "ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},
-  "caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
-  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[libelle_epci]] ([[dep]])<br>\n[[taux_vaccination_adultes]]% <strong>des adultes sont vaccinés</strong><br>\n<strong>Revenu médian : </strong>[[niveau_vie_median|number_separator]] euros<br>\n Interdécile : [[interdecile]] \n<br> [[tx_chomage]]% <strong>de chômage</strong><br>[[vote_fn]]% <strong>de vote FN</strong><br>[[population_carto]] habitants"},
+  "caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
+  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[libelle_epci]] ([[dep]])<br>\n[[taux_vaccination_adultes]]% <strong>des adultes sont vaccinés</strong><br>\n<strong>Revenu médian : </strong>[[" + x_var + "|number_separator]] euros<br>\n Interdécile : [[interdecile]] \n<br> [[" + x_var + "]]% <strong>de chômage</strong><br>[[vote_fn]]% <strong>de vote FN</strong><br>[[population_carto]] habitants"},
   "moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},
   "selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},
   "selectedElement":{"type":"none","activated":0,"category":"none"},
@@ -260,7 +260,7 @@ const max_y_value = 50
   "miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},
   "alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
 
-  var graphParameters = {"selected_xRows":[x_var],"selected_yRows":[y_var],"selected_size":["population_carto"],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune","taux_vaccination_adultes","tx_chomage","departement","aglomeration"],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
+  var graphParameters = {"selected_xRows":[x_var],"selected_yRows":[y_var],"selected_size":["population_carto"],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune",x_var, y_var],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
   "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Plus le revenu médian d'une commune est élevé, plus ses habitants sont vaccinés","chartSubTitle":"Comparaison entre le revenu médian et le taux de vaccination des adultes dans les grandes agglomérations","chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
 
   var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
@@ -491,6 +491,16 @@ g.select("g.axis.axis--y")
 .call(axis_left);
 
 
+
+//Canvas doc
+// Here https://medium.com/@xoor/implementing-charts-that-scale-with-d3-and-canvas-3e14bbe70f37
+
+// And here https://bl.ocks.org/ejb/e2da5a23e9a09d494bd532803d8db61c
+
+// And here https://d3-graph-gallery.com/graph/canvas.html
+
+// And here https://www.freecodecamp.org/news/d3-and-canvas-in-3-steps-8505c8b27444/
+
     let this_container = d3.select('#chart_container'),
     this_width = manualReusableParameters.chart_width.value,
     this_height = manualReusableParameters.chart_height.value,
@@ -500,17 +510,32 @@ let targetWidth = parseInt(this_container.style("width")) - margin.left - margin
 let targetHeight = Math.round(targetWidth / this_aspect) - margin.top -  - margin.bottom;
 
 
-let x_factor = targetWidth / this_width 
+let targetTotalWidth = parseFloat(this_container.style("width"));
 
-let y_factor = targetHeight / this_height 
+let targetTotalHeight = Math.round(targetTotalWidth / this_aspect);
+
+
+let x_factor = targetTotalWidth / +svg.attr("width")
+
+let y_factor = targetTotalHeight / this_height
+
+y_factor = 1.61
+
+
+console.log(x_factor)
+console.log(y_factor)
 
 const container = d3.select('#chart_container')
 
+const this_margin_left = parseInt((margin.left + manualReusableParameters.padding_left.value)*x_factor)
+
+console.log(this_margin_left)
+
 const canvasChart = container.append('canvas')
-.attr('width', targetWidth)
-.attr('height', targetHeight)
-.style('margin-left', margin.left + 'px')
-.style('margin-top', margin.top + 'px')
+.attr('width', (width)*x_factor)
+.attr('height', height*y_factor)
+.style('margin-left', this_margin_left + 'px')
+.style('margin-top', margin.top*y_factor + 'px')
 .attr('class', 'canvas-plot');
 
 const context = canvasChart.node().getContext('2d');
@@ -520,13 +545,13 @@ const pointColor = '#3585ff'
 
     var xScale_canvas = xScaleType()
     .domain([min_x_value,max_x_value])
-    .range([0, targetWidth]);
+    .range([0, width*x_factor]);
 
     var yScale_canvas = d3.scaleLinear()
     .domain([min_y_value,max_y_value])
-    .range([targetHeight, 0]);
+    .range([height*y_factor, 0]);
 
-data.forEach(function(d, i) {
+_.slice(data, 0, 1000).forEach(function(d, i) {
 if (i % 100 == 0){console.log(d)}
 
    drawPoint(d, i);
@@ -538,10 +563,11 @@ if (i % 100 == 0){console.log(d)}
 function drawPoint(d, i) {
    context.beginPath();
    context.fillStyle = d[thisColorVar];
-   const px = xScale_canvas(d[thisXvar]) + 50;
-   const py = yScale_canvas(d[thisYvar]) +10;
+   const px = xScale_canvas(d[thisXvar]);
+   const py = yScale_canvas(d[thisYvar]);
+   const this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
 
-   context.arc(px, py, 1.2, 0, 2 * Math.PI,true);
+   context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
    context.fill();
 }
 
