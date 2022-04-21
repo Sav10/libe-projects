@@ -49,10 +49,6 @@ colorNames['y2017']  = {
   'a': 'a'
 };
 
-colorNames['y2017T2']  = {
-  "Le Pen":"#2e2b5a",
-  "Macron":"#ffb400"
-};
 
 colorNames['y2012']  = {
   "DUPONT-AIGNAN":"#75398a",
@@ -102,7 +98,17 @@ colorNames['y2022'] = {
 
 colorNames['y2022T2'] = {
 "MACRON":'#F7BA00',
-"LE PEN":'#1D2245'
+"LE PEN":'#1D2245',
+  'a': 'a',
+  'b': 'b',
+  'c': 'c',
+  'd': 'd',
+  'e': 'e',
+  'f': 'f',
+  'g': 'g',
+  'h': 'h',
+  'i': 'i',
+  'j': 'j'
 }
 
 candidats_panneaux['y2022'] = {
@@ -122,7 +128,17 @@ candidats_panneaux['y2022'] = {
 
 candidats_panneaux['y2022T2'] = {
  '3': {'score': 0,  'name': "MACRON",  'parti': "En marche !"},
- '5': {'score': 0,  'name': "LE PEN",  'parti': "Rassemblement National"}
+ '5': {'score': 0,  'name': "LE PEN",  'parti': "Rassemblement National"},
+'100': {'score': 0,  'name': 'a',  'parti': 'a'},
+'101': {'score': 0,  'name': 'b',  'parti': 'b'},
+'102': {'score': 0,  'name': 'c',  'parti': 'c'},
+'103': {'score': 0,  'name': 'd',  'parti': 'd'},
+'104': {'score': 0,  'name': 'e',  'parti': 'e'},
+'105': {'score': 0,  'name': 'f',  'parti': 'f'},
+'106': {'score': 0,  'name': 'g',  'parti': 'g'},
+'107': {'score': 0,  'name': 'h',  'parti': 'h'},
+'108': {'score': 0,  'name': 'i',  'parti': 'i'},
+'109': {'score': 0,  'name': 'j',  'parti': 'j'}
 }
 
 
@@ -137,7 +153,8 @@ candidats_panneaux['y2021'] = {
  '10': {'score': 0,  'name': "Union du centre et de la droite",  'parti': "Union du centre et de la droite"},
  '15': {'score': 0,  'name': 'Régionalistes',  'parti': 'Régionalistes'},
 '100': {'score': 0,  'name': 'a',  'parti': 'a'},
-'101': {'score': 0,  'name': 'b',  'parti': 'b'}}
+'101': {'score': 0,  'name': 'b',  'parti': 'b'},
+'102': {'score': 0,  'name': 'c',  'parti': 'c'}}
 
 candidats_panneaux['y2017'] = {
   "1":{"score": 0, "name": "Dupont-Aignan", "parti": "Debout la France"},
