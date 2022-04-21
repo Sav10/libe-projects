@@ -477,7 +477,7 @@ function brushEnd() {
 }
 
 d3.queue()
-    .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2022_presidentielle_T2.csv')
+    .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022-T2/data/data2022_presidentielle_T2.csv')
     .await(LoadData);
 
 svg.attr('class', active_year);
@@ -523,7 +523,7 @@ d3.select("#y2022T2")
 
         if (data_loaded[active_year] == 0) {
             d3.queue()
-                .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2022_presidentielle_T2.csv')
+                .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022-T2/data/data2022_presidentielle_T2.csv')
                 .await(LoadData);
         } else {
 
