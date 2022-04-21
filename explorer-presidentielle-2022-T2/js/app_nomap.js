@@ -142,20 +142,6 @@ candidats_panneaux['y2022T2'] = {
 }
 
 
-candidats_panneaux['y2021'] = {
-    '1': {'score': 0,  'name': 'Extrême droite',  'parti': 'Extrême droite'},
- '2': {'score': 0, 'name': 'Ecologistes', 'parti': 'Ecologistes'},
- '3': {'score': 0,  'name': "Union de la gauche",  'parti': "Union de la gauche"},
- '4': {'score': 0,  'name': "Union de la droite",  'parti': "Union de la droite"},
- '5': {'score': 0,  'name': "Union du centre",  'parti': "Union du centre"},
- '6': {'score': 0,  'name': "Extrême gauche",  'parti': "Extrême gauche"},
- '8': {'score': 0,  'name': "Union de la gauche et des écologistes",  'parti': "Union de la gauche et des écologistes"},
- '10': {'score': 0,  'name': "Union du centre et de la droite",  'parti': "Union du centre et de la droite"},
- '15': {'score': 0,  'name': 'Régionalistes',  'parti': 'Régionalistes'},
-'100': {'score': 0,  'name': 'a',  'parti': 'a'},
-'101': {'score': 0,  'name': 'b',  'parti': 'b'},
-'102': {'score': 0,  'name': 'c',  'parti': 'c'}}
-
 candidats_panneaux['y2017'] = {
   "1":{"score": 0, "name": "Dupont-Aignan", "parti": "Debout la France"},
   "2":{"score": 0, "name": "Le Pen", "parti": "Front National"},
@@ -167,22 +153,10 @@ candidats_panneaux['y2017'] = {
   "8":{"score": 0, "name": "Lassalle", "parti": "Résistons"},
   "9":{"score": 0, "name": "Mélenchon", "parti": "La France insoumise"},
   "10":{"score": 0, "name": "Asselineau", "parti": "Union Populaire Républicaine"},
-  "11":{"score": 0, "name": "Fillon", "parti": "Les Républicains"}
+  "11":{"score": 0, "name": "Fillon", "parti": "Les Républicains"},
+'100': {'score': 0,  'name': 'a',  'parti': 'a'}
 }
 
-candidats_panneaux['y2017T2'] = {
-  "1":{"score": 0, "name": "Macron", "parti": "En marche !"},
-  "2":{"score": 0, "name": "Le Pen", "parti": "Front National"},
-  "3":{"score": 0, "name": "Fillon", "parti": "Les Républicains"},
-  "4":{"score": 0, "name": "Hamon", "parti": "Parti socialiste"},
-  "5":{"score": 0, "name": "Mélenchon", "parti": "La France insoumise"},
-  "6":{"score": 0, "name": "Poutou", "parti": "Nouveau Parti anticapitaliste"},
-  "7":{"score": 0, "name": "Cheminade", "parti": "Solidarité et progrès"},
-  "8":{"score": 0, "name": "Lassalle", "parti": "Résistons"},
-  "9":{"score": 0, "name": "Dupont-Aignan", "parti": "Debout la France"},
-  "10":{"score": 0, "name": "Asselineau", "parti": "Union Populaire Républicaine"},
-  "11":{"score": 0, "name": "Arthaud", "parti": "Lutte ouvière"}
-}
 
 candidats_panneaux['y2012'] = {
   "9":{"score": 0, "name": "DUPONT-AIGNAN", "parti": "Debout la France"},
@@ -194,7 +168,9 @@ candidats_panneaux['y2012'] = {
   "7":{"score": 0, "name": "CHEMINADE", "parti": "Solidarité et progrès"},
   "8":{"score": 0, "name": "BAYROU", "parti": "Modem"},
   "4":{"score": 0, "name": "MÉLENCHON", "parti": "La France insoumise"},
-  "3":{"score": 0, "name": "SARKOZY", "parti": "UMP"}}
+  "3":{"score": 0, "name": "SARKOZY", "parti": "UMP"},
+'100': {'score': 0,  'name': 'a',  'parti': 'a'},
+'101': {'score': 0,  'name': 'b',  'parti': 'b'}}
 
 competitors_pannels['y2017'] = ['2', '3', '4', '9', '11'];
 
