@@ -477,7 +477,7 @@ function brushEnd() {
 }
 
 d3.queue()
-    .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2022_presidentielle_2.csv')
+    .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2022_presidentielle_T2.csv')
     .await(LoadData);
 
 svg.attr('class', active_year);
@@ -513,6 +513,38 @@ d3.select("#y2012")
 
     })
 
+
+d3.select("#y2022T2")
+    .on('click', function() {
+
+        active_year = 'y2022T2';
+        automatic_chart_update = 0;
+
+
+        if (data_loaded[active_year] == 0) {
+            d3.queue()
+                .defer(d3.csv, 'https://sav10.github.io/libe-projects/explorer-presidentielle-2022/data/data2022_presidentielle_T2.csv')
+                .await(LoadData);
+        } else {
+
+            d3.select('#data_sliders').select('svg').select('g.gslider').select('.brush').call(brush.move, function(d) {
+                return [d.left_range, (d.right_range)].map(xScale_slider)
+            });
+        }
+
+        d3.select("div.section#tab1")
+            .classed('2019', false);
+
+        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1")
+            .style('display', 'block');
+
+        svg.attr('class', active_year);
+        d3.select('.chart').select('svg').attr('class', active_year);
+
+
+        d3.selectAll('g.y2022T2 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
+
+    })
 
 d3.select("#y2022")
     .on('click', function() {
@@ -639,6 +671,38 @@ function LoadData(error, data, json_data) {
             d['10'] = +d['10'];
             d['11'] = +d['11'];
             d['12'] = +d['12'];
+            d.departement = d.code_insee[0] + d.code_insee[1];
+            d.popTotale = +d.popTotale;
+            d.taux65Plus = +d.taux65Plus;
+            d.TauxAgricuteurs = +d.TauxAgricuteurs;
+            d.TauxCadres = +d.TauxCadres;
+            d.TauxChomage = +d.TauxChomage;
+            d.TauxOuvriers = +d.TauxOuvriers;
+            d.TauxRetraites = +d.TauxRetraites;
+            d.exprimes = +d.exprimes;
+            d.inscrits = +d.inscrits;
+            d.votants = +d.votants;
+            d.blancs = d.votants - d.exprimes;
+            d.TauxAbstention = _.round(100 * (d.inscrits - d.exprimes) / d.exprimes, 1);
+            d.ScoreFillonT1 = +d.ScoreFillonT1;
+            d.ScoreMelenchonT1 = +d.ScoreMelenchonT1;
+            d.ScoreMacronT1 = +d.ScoreMacronT1;
+            d.ScoreLepenT1 = +d.ScoreLepenT1;
+            // d.ScoreHamonT1 = +d.ScoreHamonT1;
+            // d.VoixLepenT1 = +d.VoixLepenT1;
+            // d.VoixMacronT1 = +d.VoixMacronT1;
+            // d.ExprimesT1 = +d.ExprimesT1;
+        });
+
+        // console.log(data)
+
+    }
+
+    else if (active_year == 'y2022T2') {
+
+        data.forEach(function(d) {
+            d['3'] = +d['3'];
+            d['5'] = +d['5'];
             d.departement = d.code_insee[0] + d.code_insee[1];
             d.popTotale = +d.popTotale;
             d.taux65Plus = +d.taux65Plus;
