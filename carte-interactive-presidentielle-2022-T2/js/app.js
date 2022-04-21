@@ -181,9 +181,9 @@ var position_politique =
 
     d3.queue()
     // .defer(d3.csv, 'data/communes_presidentielle_2022.csv')
-    .defer(d3.csv, 'https://sav10.github.io/libe-projects/carte-interactive-presidentielle-2022/data/communes_presidentielle_2022.csv')
+    .defer(d3.csv, 'https://sav10.github.io/libe-projects/carte-interactive-presidentielle-2022-T2/data/communes_presidentielle_2022T2.csv')
     // .defer(d3.csv, 'data/communes_presidentielle_votes.csv')
-    .defer(d3.csv, 'https://sav10.github.io/libe-projects/carte-interactive-presidentielle-2022/data/communes_presidentielle_votes.csv')
+    .defer(d3.csv, 'https://sav10.github.io/libe-projects/carte-interactive-presidentielle-2022-T2/data/communes_presidentielle_votesT2.csv')
     .await(load_Data);
 
     function load_Data(error, geoloc_data, data2){

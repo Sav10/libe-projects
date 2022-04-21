@@ -115,7 +115,7 @@ var color_progressive_scale = d3.scaleLinear()
   .domain([0, 70]);
 
 
-var data_legend = [0,5,10, 15 ,20, 25 ,30, 35];
+var data_legend = [0,10,20, 30, 40, 50, 60, 70, 80];
 
 const parentWidth = d3
 .select('body')
@@ -1118,7 +1118,7 @@ let this_color = colors_candidats[name];
 
 let this_color_range = d3.scaleLinear()
   .range(['white', this_color])
-  .domain([-5, 35]);
+  .domain([10, 80]);
 
 for (i in geo_objects){
 
