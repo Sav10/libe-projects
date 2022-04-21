@@ -86,6 +86,7 @@ stroke:#888;
 
 #chart_container canvas{
   pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
   </style>
@@ -97,8 +98,8 @@ stroke:#888;
   <section>
     <div id="chart" style="max-width:1000px">
       <img src="Libe-Losange.png" class="libeLosange">
-      <h1 id="chartTitle">Vaccination et inégalités</h1>
-      <h4 id="chartSubTitle">Taux de vaccination des adultes et indice d'inégalités dans les intercommunalités de moins de 50 000 habitants</h4>
+      <h1 id="chartTitle">Vote Macron et revenu médian</h1>
+      <h4 id="chartSubTitle"></h4>
       <div id="varSwitch" class='tags'></div>
       <div id="chart_container">
       <svg></svg>
@@ -141,14 +142,25 @@ stroke:#888;
   };
 
 
+const chartTitle = "Vote Macron et revenu médian"
+
+const chartSubTitle = ""
+
 const data_file = "data_elec_macron.csv"
 const x_var = 'revenu_median'
 const y_var = 'score'
+
+const x_axis_title = "Part de vote Macron"
+const y_axis_title = "Revenu médian"
+
+const circle_size = 'inscrits'
 
 const min_x_value = 0
 const max_x_value = 50000
 const min_y_value = 0
 const max_y_value = 50
+
+const this_circle_radius = 2
 
 
   var initTotalWidth = 600;
@@ -195,7 +207,7 @@ const max_y_value = 50
   "chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},
   "padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
   "padding_left":{"value":24,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
-  "padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
+  "padding_right":{"value":5,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
   "padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
   "sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},
   "invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},
@@ -224,8 +236,8 @@ const max_y_value = 50
   "xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},
   "yAxisLabelPadding":{"value":-24,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},
   "xAxisLabelPadding":{"value":13,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},
-  "yAxisLabelText":{"value":"Taux de chômage","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
-  "xAxisLabelText":{"value":"Taux de vaccination des adultes","type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},
+  "yAxisLabelText":{"value":y_axis_title,"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
+  "xAxisLabelText":{"value":x_axis_title,"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},
   "trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},
   "hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},
   "dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
@@ -236,9 +248,11 @@ const max_y_value = 50
   "beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},
   "beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},
   "verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},
-  "circleRadius":{"value":.2,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},
+  "circleRadius":{"value":this_circle_radius,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},
   "circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},
-  "customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return d+'%'});\nd3.selectAll('.axis--y .tick text').text(function(d){return numbers_separators(d)});\nd3.selectAll('g.legendCells .cell rect').filter(d=> d == 'Agglomération lyonnaise').style('fill', '#95DEAB');\nd3.selectAll('g.legendCells .cell rect').filter(d=> d == 'Agglomération parisienne').style('fill', '#95DED7');\nd3.selectAll('g.legendCells .cell rect').filter(d=> d == 'Agglomération marseillaise').style('fill', '#FF0000');\nd3.selectAll('g.ball circle').filter(d=> d.aglomeration == 'Agglomération lyonnaise').style('fill', '#95DEAB');\nd3.selectAll('g.ball circle').filter(d=> d.aglomeration == 'Agglomération parisienne').style('fill', '#95DED7');\nd3.selectAll('g.ball circle').filter(d=> d.aglomeration == 'Agglomération marseillaise').style('fill', '#FF0000');\nd3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');"},
+  "customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--y .tick text').text(function(d){return d+'%'});" + 
+  "d3.selectAll('.axis--x .tick text').text(function(d){return numbers_separators(d)});" + 
+  "d3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');"},
   "colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},
   "colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},
   "colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"taux_vaccination_adultes","value":"taux_vaccination_adultes"},{"label":"niveau_vie_median","value":"niveau_vie_median"},{"label":"effectif","value":"effectif"},{"label":"aglomeration","value":"aglomeration"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},
@@ -260,8 +274,8 @@ const max_y_value = 50
   "miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},
   "alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
 
-  var graphParameters = {"selected_xRows":[x_var],"selected_yRows":[y_var],"selected_size":["population_carto"],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune",x_var, y_var],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
-  "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Plus le revenu médian d'une commune est élevé, plus ses habitants sont vaccinés","chartSubTitle":"Comparaison entre le revenu médian et le taux de vaccination des adultes dans les grandes agglomérations","chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
+  var graphParameters = {"selected_xRows":[x_var],"selected_yRows":[y_var],"selected_size":[circle_size],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune",x_var, y_var],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
+  "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":chartTitle,"chartSubTitle":chartSubTitle,"chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
 
   var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
 
@@ -518,15 +532,9 @@ let x_factor = targetTotalWidth / +svg.attr("width")
 let y_factor = targetTotalHeight / this_height
 
 
-
-console.log(x_factor)
-console.log(y_factor)
-
 const container = d3.select('#chart_container')
 
 const this_margin_left = parseInt((margin.left + manualReusableParameters.padding_left.value)*x_factor)
-
-console.log(this_margin_left)
 
 const canvasChart = container.append('canvas')
 .attr('width', (width)*x_factor)
@@ -551,24 +559,18 @@ const pointColor = '#3585ff'
 data.forEach(function(d, i) {
 if (i % 100 == 0){
 
-	console.log(d)
-	console.log(thisSizeVar)
-	let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
-	console.log(this_radius)
-
 }
 
    drawPoint(d, i);
 });
 
 
-console.log(yScale_canvas)
-
-console.log(yScale)
-
 function drawPoint(d, i) {
    context.beginPath();
-   context.fillStyle = d[thisColorVar];
+   context.globalCompositeOperation = "multiply";
+   context.globalAlpha = 0.7
+   // context.fillStyle = d[thisColorVar];
+   context.fillStyle = 'red';
    const px = xScale_canvas(d[thisXvar]);
    const py = yScale_canvas(d[thisYvar]);
    let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value

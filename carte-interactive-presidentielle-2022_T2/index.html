@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+  <title>Libération.fr – La carte de France des votes à l'élection présidentielle ville par ville</title>
+  <meta name="description" content="La carte de France des votes à l'élection présidentielle par commune.">
+  <meta name="keywords" content="actualités, news">
+
+  <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
+
+
+  <link rel="canonical" href="https://www.liberation.fr/apps/2021/06/carte-interactive-premier-tour-regionales/">
+
+  <meta property="og:site_name" content="Libération.fr"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.liberation.fr/apps/2021/06/carte-interactive-premier-tour-regionales/" />
+  <meta property="og:title" content="Libération – Le premier tour des élections présidentielles a eu lieu dimanche. Découvrez les résultats détaillés de toutes les villes de France métropolitaine grâce à notre carte interactive." />
+  <meta property="og:description" content="Le premier tour de l'élection présidentielle a eu lieu dimanche. Découvrez les résultats détaillés de toutes les villes de France métropolitaine grâce à notre carte interactive. https://www.liberation.fr/apps/2021/06/carte-interactive-premier-tour-regionales/ via @libe " />
+  <meta property="og:image" content="https://www.liberation.fr/apps/2021/06/carte-interactive-premier-tour-regionales/social.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@libe" />
+  <meta name="twitter:creator" content="@libe" />
+  <meta name="twitter:url" content="https://www.liberation.fr/apps/2021/06/carte-interactive-premier-tour-regionales/" />
+  <meta name="twitter:title" content="Libération – La carte de France des votes à l'élection présidentielle ville par ville" />
+
+  <style>
+    html,body {
+      margin: 0;
+      padding: 0;
+      height:100%;
+      width:100%;
+    }
+    #libe-menu {
+      height: auto !important;
+    }
+  </style>
+
+  <!-- Styles -->
+<!--   <link type="text/css" rel="stylesheet" href="https://unpkg.com/ionicons@4.5.0/dist/css/ionicons.min.css"> -->
+<!--   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" /> -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+  <link type="text/css" rel="stylesheet" href="static/generated/styles/six-plus.css">
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <!-- Vendor -->
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+  <script src="js/d3.v4.min.js"></script>
+<!--   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+  <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+  <script type="text/javascript" src="js/flexsearch.light.js"></script>
+
+
+
+
+
+  <style type="text/css">
+
+    .intro-section {
+      background-color: #e3234a;
+    }
+
+    #intro_text a {
+      color: #faae31;
+    }
+
+    #conclusion {
+      background-color: #e3234a;
+    }
+
+    .link .libePink {
+      color: #e3234a;
+    }
+
+    .description_detail a{
+      color:#e3234a;
+    }
+
+    .credits_top.credits_suite{
+      margin-top: -10px;
+      padding-top: 0;
+    }
+
+    #all_results .entry a{
+      color: black;
+    }
+
+    input#find_school{
+      max-width: 500px;
+      width: 100%;
+      height: 2em;
+      display: none;
+      font-family: 'syntheselibeweb';
+    }
+
+    ul#all_results{
+      background-color: #fff;
+      max-height: 500px;
+      max-width: 500px;
+      overflow: auto;
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+    }
+
+    li.entry{
+      border-bottom: 1px solid #a7a7a7;
+      font-size: 1em;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      margin-left: 4px;
+      font-family: 'syntheselibeweb';
+      /*max-width: 500px;*/
+    }
+
+    #content-searchbox{
+      max-width: 500px;
+    }
+
+    #img_spinner{
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    #map{
+      z-index: 80;
+      margin-top: 36px;
+    }
+
+
+    .intro-section {
+      background-color: #e3234a;
+    }
+
+    .headline-big.title{
+    color: #fff;
+    font-family: "libesansweb-semicondensed";
+    /*font-weight: 800;*/
+    letter-spacing: 0.03em;
+    font-size: 2.5em;
+    margin-bottom: 4px;
+
+    }
+
+    .mainContent {
+      background-color: #fff;
+    }
+
+    .is-centered.intro-text{
+      max-width: 500px;
+      font-size: 1.1em;
+      text-align: left;
+      margin: 8px;
+      font-family: georgia;
+    }
+
+    .leaflet-bottom.leaflet-left{
+      bottom: 8px; 
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      background: transparent;
+    }
+
+
+    div.info.city.box {
+      font-family: 'syntheselibeweb';
+      margin: 0;
+    }
+
+    #has_arberstos{
+      background-color: #e3234a;
+      color: #fff;
+      padding: 5px;
+      display: inline-block;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    #has_arberstos strong {
+      color: #fff;
+    }
+
+    div.info.city.box {
+      font-size: 1.2em;
+      letter-spacing: 0;
+      padding-bottom: 24px;
+
+    }
+
+.leaflet-popup-content-wrapper {
+    padding: 1px;
+    text-align: left;
+     border-radius: 0; 
+    border: 1px solid black;
+    color: #000;
+    box-shadow: none;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+    color: #000;
+    display: none;
+}
+
+.leaflet-popup-content {
+    margin: 12px;
+    font-family: libesansweb;
+    font-weight: bold;
+    display: none;
+
+}
+
+
+.leaflet-bottom {
+    bottom: -4px;
+    background-color: #fff;
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    box-shadow: none;
+    border: 1px solid black;
+}
+
+.leaflet-popup-tip-container {
+overflow: visible;
+margin-top: 1px;
+display: none;
+}
+
+.leaflet-popup-tip {
+    border-left: 0;
+    border-top: 0;
+}
+
+
+#content-searchbox #type_box, #content-searchbox #all_results{
+  margin-left: 24px;
+}
+
+
+div.info.city.box{
+  display: none;
+  filter: opacity(0.85);
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+@media (max-width: 450px) {
+
+
+div.info.city.box{
+font-size: 13px;
+line-height: 1.3em;
+}
+
+}
+
+@media (min-width: 768px) {
+
+    .is-centered.intro-text{
+      margin: 0 auto;
+       max-width: 800px;
+    }
+
+#content-searchbox {
+    max-width: 800px;
+}
+
+    div.info.city.box {
+    padding-left: 36px;
+/*    position: relative;
+    left: 50%;
+    transform: translateX(-50%);*/
+    min-width: 400px;
+  }
+
+}
+
+@media (max-width: 768px) {
+.headline-big.title {
+    font-size: 2em;
+}
+
+}
+
+p.conclusion-prose.sources {
+    font-size: 15px;
+    margin: 24px;
+}
+
+.is-centered.intro-text a{
+  color: #e3234a;
+}
+
+
+hr {
+    height: 1px;
+    margin: 0.7rem 0;
+}
+
+  </style>
+</head>
+<body>
+
+
+<section class='section mainContent' id="mainContent">
+
+  <section id="tabs" class='columns is-centered is-hidden-mobile'>
+    <div class="container tabs sectionParametres" id="parametersTabs">
+    </div>
+  </section>
+<!-- <p class="is-centered" style="margin: 0 auto;max-width: 780px;font-size: 0.9em;margin-bottom: 18px;"> Ne sont affichées que les communes de plus de 3 500 habitants où étaient candidates des listes affichant une nuance politique.</p> -->
+  <div class="container" class="is-centered" id="content-searchbox">
+    <p class="is-centered" id="type_box">
+      <img src="img/Spinner.gif" id='img_spinner'>
+      <input type="text" name="find_school" id='find_school' placeholder="Rechercher une ville">
+    </p>
+    <ul id='all_results'>
+
+    </ul>
+    <p id='resultat_diagnostic'></p>
+    <p class="is-centered">
+      <div id='map' style="width: 800px; height: 600px"></div>
+    </p>
+  </div>
+</section>
+
+<!-- Scripts -->
+</script>
+<script type="text/javascript" src='js/app.js'></script>
+
+
+
+
+
+
+</body>
+</html>

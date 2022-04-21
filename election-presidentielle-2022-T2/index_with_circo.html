@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- Header -->
+  <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=3">
+  <title>Libération.fr Présidentielle : La carte des élections</title>
+  <meta name="description" content="Présidentielle, La carte des élections.">
+  <meta name="keywords" content="actualités, news">
+  <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
+  <link rel="canonical" href="https://sav10.github.io/libe-projects/election-presidentielle-2022/">
+  <meta property="og:site_name" content="Libération.fr"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://sav10.github.io/libe-projects/election-presidentielle-2022/" />
+  <meta property="og:title" content="Présidentielle, La carte des élections" />
+  <meta property="og:description" content="Présidentielle, La carte des élections" />
+  <meta property="og:image" content="https://sav10.github.io/libe-projects/election-presidentielle-2022/social.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@libe" />
+  <meta name="twitter:creator" content="@libe" />
+  <meta name="twitter:url" content="https://sav10.github.io/libe-projects/election-presidentielle-2022/" />
+  <meta name="twitter:title" content="Présidentielle, La carte des élections" />
+  <meta name="twitter:description" content="Présidentielle, La carte des élections." />
+  <meta name="twitter:image" content="https://sav10.github.io/libe-projects/election-presidentielle-2022//social.png">
+    <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+<!--     <link type="text/css" rel="stylesheet" href="css/fonts.css"> -->
+<!--   <link type="text/css" rel="stylesheet" href="styles/six-plus.css"> -->
+  <link type="text/css" rel="stylesheet" href="styles/styles.css">
+  <style type="text/css">
+
+body{
+  background-color: #f8f8f8;
+}
+
+.container{
+  background-color: #f8f8f8;
+}
+
+#morphocarte.carte{
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+    #map_info {
+    position: absolute;
+    display: none;
+    width: 97%;
+    max-width: 700px;
+    padding: 10px;
+    /*margin-top: 10px;*/
+    margin-bottom: 10px;
+    font-family: "syntheselibeweb";
+    font-size: .8em;
+    background-color: #f4f4f4;
+    /*pointer-events: none;*/
+    z-index: 10;
+      display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border: 0;
+  margin-left: .5%;
+}
+    .intro-section {
+    background-color: #E3234A;
+    }
+    #intro_text a {
+    color: #E3234A;
+    }
+    #conclusion {
+    background-color: #E3234A;
+    }
+    .link .libePink {
+    color: #E3234A;
+    }
+    .description_detail a{
+    color:#E3234A;
+    }
+    svg.leaflet-zoom-animated.sightline-svg path.leaflet-interactive{
+    stroke-width: 0.5px;
+    }
+    .names {
+    fill: none;
+    stroke: #000;
+    stroke-linejoin: round;
+    }
+      .details{
+    color: black;
+    }
+    svg g.countries path{
+    stroke: grey;
+    }
+    .headline-section .headline-big.headline-big.title {
+    color: #fff;
+    }
+    @media screen and (max-width: 800px) {
+    .column.is-three-quarters.map_container{
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    }
+    section.section.mainConten#mainContent{
+    padding: 0;
+    }
+    }
+    #legend_img{
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: 0 21px;
+    }
+    a#play_button {
+    margin-top: 6px;
+    margin-right: 12px;
+    }
+
+    a#play_button img {
+    width: 45px;
+    }
+
+    @media (min-width: 1200px) {
+a#play_button img {
+    margin-left: 40px;
+}
+}
+
+#map_slider{
+  max-width: 930px;
+}
+
+
+    path {
+      stroke: #000000;
+      stroke-width: 1px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-opacity: .25;
+      fill: #f4f4f4;
+    }
+
+.actionButton {
+    background-color: #fff;
+    color: red;
+    display: inline-block;
+    /*font-size: .9em;*/
+    line-height: 1em;
+    padding: 5px 8px 5px;
+    /*font-family: "syntheselibeweb", sans-serif;*/
+    /*margin-right: 3px;*/
+    border: 1px solid #ddd;
+    opacity: 1;
+}
+
+
+#button_box{
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: -18px;
+
+}
+
+.actionButton:hover{
+color:  red;
+opacity: 0.8;
+
+}
+
+#display_geo_paths{
+
+}
+
+.d3-tip{
+  max-width: 80vW;
+}
+
+@media (max-width: 768px)
+{
+.section.mainContent {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#display_proportional_circles_ecart{
+font-size: 1.1em;
+
+  }
+
+.d3-tip{
+font-size: 0.9em;
+
+}
+
+h1#graph_title {
+    line-height: 1.2em;
+    font-size: 1.6em;
+}
+
+}
+
+h1#graph_title{
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.03em;
+    /*display: flex;*/
+    justify-content: left;
+    line-height: 1.2em;
+    margin-bottom: .8em;
+}
+
+    @media (max-width: 768px) {
+    a#play_button {
+    margin-top: 12px;
+    }
+.actionButton {
+    font-size: .9em;
+}
+
+    }
+
+
+#representation_carto{
+
+}
+
+
+#representation_carto a.actionButton{
+
+margin-right: 0;
+
+
+}
+
+a.actionButton{
+
+font-family: 'libesansweb-semicondensed';
+letter-spacing: .12em;
+text-transform: uppercase;
+cursor: pointer;
+}
+
+#display_proportional_circles{
+  margin-left: -5px;
+}
+
+.headline-big {
+    font-family: 'libesansweb-semicondensed';
+    font-weight: 400;
+     font-size: 36px; 
+    text-transform: uppercase;
+    padding-top: 1rem;
+    color: #f4f4f4;
+    margin-bottom: 0;
+    letter-spacing: 0.05em;
+    text-align: center;
+}
+
+.section.mainContent {
+    padding-top: 0;
+    background-color: #fff;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+
+.headline-big {
+    font-size: 24px; 
+}
+
+
+#articles.explanation_block{
+
+    margin-bottom: -20px;
+    font-size: .8em;
+
+}
+
+
+#tooltip_content li{
+    list-style-position: inside;
+    list-style-type: disc;
+    font-size: 35px;
+    line-height: 18px;
+}
+
+#tooltip_content li span.list_element{
+      color: black;
+    font-size: 16px;
+    padding-top: 0px;
+    display: inline-block;
+    position: relative;
+    top: -10px;
+    margin-left: -12px;
+}
+
+#tooltip .date_tooltip{
+font-size: 20px;
+}
+
+
+@media (min-width: 550px)
+{
+
+#tooltip .date_tooltip{
+font-size: 20px;
+}
+
+}
+
+@media (min-width: 700px)
+{
+
+#tooltip .date_tooltip{
+font-size: 20px;
+}
+
+}
+
+@media (max-width: 768px)
+{
+
+
+#tooltip_content li {
+    line-height: 12px;
+}
+
+
+#tooltip_content li span.list_element {
+    font-size: 12px;
+    top: -11px;
+    margin-left: -15px;
+}
+
+}
+
+
+.dot {
+  height: 12px;
+  width: 12px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid #ddd;
+}
+
+#articles {
+    padding-bottom: 4px;
+}
+
+.legende_dot{
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.track-inset {
+    stroke-width: 14px;
+}
+
+.track {
+    stroke-width: 14px;
+}
+
+a#play_button img {
+    width: 25px;
+}
+
+a#play_button img {
+        width: 20px;
+        /*margin-top: 1.2em;*/
+        margin-left: 10px;
+}
+
+a#play_button {
+    margin-right: 2px;
+   margin-left: 15px;
+  margin-top: 23px;
+}
+
+#tooltip{
+position: relative;
+border: 0;
+ align-self: center;
+ margin: 0;
+ padding: 0
+font-family: 'syntheselibeweb';
+}
+
+
+#tooltip a{
+pointer-events: all;
+}
+
+#slider_container {
+    margin: 0 auto;
+    position: relative;
+    pointer-events: all;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-left: -22px;
+}
+
+#slider_container svg{
+  flex-shrink: 3;
+}
+
+
+#minigraph_container{
+display: none;
+
+}
+
+
+#minigraph g.axis--y .tick line{
+stroke: #c1c1c1;
+}
+
+#articles p{
+padding-left:3px;   
+}
+
+
+#information{
+font-size: .8em;
+padding: 8px;
+}
+
+#information .explanation_text, #information p {
+margin-left: 8px; 
+font-family: 'syntheselibeweb';
+  }
+
+#morphocarte.carte{
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#information{
+     max-width: 500px;
+    /*margin: 0 auto;*/
+    margin: 0;
+}
+
+#map_info{
+     max-width: 500px;
+    margin: 0 auto;
+}
+
+#map_info2{
+    min-height: 5rem;
+    position: absolute;
+    top: 50px;
+    left: -25px;
+    opacity: 1; 
+    display: flex;
+
+}
+
+@media screen and (max-width: 700px){
+
+#map_info2{
+left: 2px;
+}
+}
+
+
+#sources{
+
+ font-size: .8em;
+ margin-left: 8px;
+}
+
+
+#legend {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+     margin-bottom: -11px; 
+    padding: 0;
+    margin-top: 6px;
+}
+
+#map_info2{
+
+    min-width: 200px;
+}
+
+#tooltip{
+
+    min-width: 200px;
+    padding: 0;
+    padding: 10px;
+    border: 1px solid rgb(221, 221, 221);
+    filter: opacity(0.85);
+}
+
+#tooltip hr{
+
+    margin-top: 16px;
+    margin-bottom: 10px;
+    border-top: 1px solid rgb(221, 221, 221);
+
+}
+
+#legendots {
+    max-width: 750px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    padding: 0 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    flex-wrap:wrap;
+}
+
+#legendots .dot{
+    float: left;
+    margin-top: 0.05em;
+    margin-right: 4px;
+    height: 1em;
+    width: 1em;
+    border: 0;
+}
+
+#legendots .text_legend{
+display: inline-block;
+}
+
+}
+
+
+#legend{
+    display: none;
+}
+
+
+#affichage_outer {
+    height: 3em;
+    max-width: 700px;
+    overflow-x: hidden;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+}
+
+#affichage{
+width: 1800px;
+margin-left: 7px;
+}
+
+#affichage .display_element{
+display: inline-block;
+margin-left: 0.5em;
+padding: 9px;
+border-radius: 16px;
+border: 0;
+background-color: rgb(238, 238, 238);
+cursor: pointer;
+font-size: 14px;
+color: #6E6E6E;
+}
+
+#affichage .display_element:hover{
+background-color: #ddd;
+
+}
+
+#display_circonscriptions, #display_departements{
+margin-left: -5px;
+}
+
+.actionButton{
+    margin: 0;
+}
+
+
+#morphocarte svg path{
+    cursor: pointer;
+    mix-blend-mode: multiply;
+}
+
+body{
+font-family: SFProText, Arial, sans-serif;
+
+}
+
+.text_affichage{
+display: inline-block;
+font-size: 14px;
+width: 70px;
+}
+
+.triangle{
+    position: absolute;
+    width: 0.7em;
+    cursor: pointer;
+    margin-top: 0.4em;
+
+}
+
+#triangle_gauche{
+    left: 0;
+}
+
+#triangle_droite{
+    right: 0;
+    
+}
+
+#legend .legendCells text{
+font-size: 13px;
+
+
+}
+
+
+#legend .empty_circle{
+    font-size: 12px;
+}
+
+   @media screen and (max-width: 380px) {
+.legende_dot{
+font-size: 12px;
+
+}
+
+
+}
+
+#taille_proportionnelle {
+    font-size: 13px;
+    margin-top: 1em;
+}
+
+   @media screen and (max-width: 420px) {
+.actionButton{
+font-size: 13px;
+
+}
+   }
+
+
+   @media screen and (max-width: 370px) {
+.actionButton{
+font-size: 12px;
+
+}
+   }
+
+
+   @media screen and (max-width: 340px) {
+.actionButton{
+font-size: 11px;
+
+}
+   }
+
+#representations{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 5px;
+}
+
+#map_information{
+  display: none;
+  background-color: black;
+  color:white;
+  position: absolute;
+  right:20px; 
+  clear: both;
+  z-index: 1000;
+  margin-top: 0em;
+  padding: 1em;
+  max-width: 300px;
+  min-width: 220px;
+  pointer-events: none;
+  bottom: 5px;
+
+
+}
+
+
+   @media screen and (max-width: 450px) {
+
+#map_information{
+  max-width: 200px;
+  font-size: 13px;
+  min-width: 150px;
+}
+
+
+#legend .empty_circle{
+font-size: 14px;
+transform: translate(460px,30px);
+
+}
+
+#legend .empty_circle circle{
+transform: translate(-21px,0px);
+
+}
+
+
+
+#tooltip{
+
+    min-width: 200px;
+    padding: 4px;
+    width: 210px;
+}
+
+
+#map_info2 {
+    top: 20px;
+}
+
+
+
+.actionButton {
+    padding: 3px 3px 3px;
+
+
+  }
+
+    }
+
+
+   @media screen and (max-width: 450px) {
+
+
+#legendots {
+    margin-top: 0;
+    margin-top: 0;
+    height: 40px;
+}
+
+
+#legend {
+    margin-bottom: 0;
+    margin-bottom: 0;
+    height: 40px;
+    margin-top: 0
+}
+
+
+#tooltip{
+  font-size: 13px;
+}
+
+   }
+
+   @media screen and (min-width: 630px) {
+
+#legendots {
+    margin-bottom: 12px;
+}
+
+#legend {
+    margin-bottom: -20px;
+    padding: 0;
+    margin-top: 6px;
+}
+
+}
+
+#informations_bottom{
+  height: 50px;
+}
+
+  </style>
+
+</head>
+<body>
+  <section class='section mainContent' id="mainContent">
+    <div class="container">
+      <div class='columns is-centered mainMap'>
+        <div class="column is-three-quarters map_container" style="z-index: 90;">
+          <div id="articles" class='explanation_block'>
+         </div>
+          <div id="affichage_outer">
+<img id="triangle_gauche" class="triangle" src="img/triangle-gauche.png"><img id="triangle_droite" class="triangle" src="img/triangle-droite.png">
+          <div id="affichage"></div>
+          </div>
+                    <div id="legendots"></div>
+
+
+          <svg  id="legend" viewbox="-10 0 500 40" preserveAspectRatio="xMinYMin meet" style="display: none;">
+<!--             <g transform="translate(45,15)"><text style="fill: black;" id="intitule_legend">Répartition de la participation</text></g> -->
+
+<g class="mapLegend" transform="translate(0,0)">
+                <g class="legendCells"></g></g>
+                <g class="empty_circle" transform="translate(480,30)"><circle cx="-130" cy="-4" r="6" stroke="black" stroke-width="1.5" fill="white" /><text text-anchor="end">Candidat arrivé en tête</text></g></svg>
+
+          <div class="carte" id='morphocarte'>
+            <div id="map_info2" >
+              <div id="tooltip"></div>
+              <!-- <div id="sparkline"></div> -->
+            </div>
+         <!-- <div id="map_geo"><svg class="map"></svg></div> -->
+    <div id="svg-container-dep" class='svg_map'></div>
+    <div id="svg-container-reg" class='svg_map' style="visibility: hidden;"></div>
+      <div id="svg-container-circ" class='svg_map' style="visibility: hidden;"></div>
+
+      <div id="representations" style="display: none;">
+                  <div id="information_button" style="max-width: 700px; margin:0 auto; position: absolute; cursor: pointer;right: 50px"><img src="img/I-info.svg" style="display:inline-block;float: right; width: 1.5em"> 
+            <div id="map_information">
+             <p><b>Réalisation</b> Alice Clair, Savinien de Rivet, Julien Guillot</p>
+            <p><b>Source</b> Ministère de l'intérieur</p>
+            <p>Les cercles sont proportionnels à la taille de la population pour les régions et départements, et proportionnels au nombre d'inscrits pour les circonscriptions législatives. </p>
+              <p>Les territoires d'Outre-mer ne sont pas à l'échelle de la France métropolitaine</p>
+            </div>
+          </div>
+      
+          <div id="representation_carto"><span class='text_affichage'>Affichage</span>
+            <a class="actionButton affichage"  id="display_geo_paths">TERRITOIRE</a>
+            <a class="actionButton affichage" id="display_proportional_circles" style="border-color: red">POPULATION</a>
+          </div>
+
+          <div id="representation_territoriale"><span class='text_affichage'>Découpage</span>
+            <a class="actionButton decoupage"  id="display_regions" data-value="svg-container-reg">regions</a>
+            <a class="actionButton decoupage" id="display_departements" data-value="svg-container-dep" style="color: #fff; background-color: red; border-color: red">départements</a>
+            <a class="actionButton decoupage" id="display_circonscriptions" data-value="svg-container-circ">circonscriptions</a>
+          </div>
+          </div>
+          <div id="informations_bottom"></div>
+
+
+    </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript" src="js/lodash.min.js"></script>
+  <script type="text/javascript" src="js/moment-with-locales.js"></script>
+  <!-- <script src="js/d3.v4.min.js"></script> -->
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+<!--     <script src="js/d3.v6.min.js"></script> -->
+  <script src="js/queue.v1.min.js"></script>
+  <script src="js/flubber.min.js"></script>
+  <script src='js/app.js' type='text/javascript'></script>
+
+</body>
+</html>
