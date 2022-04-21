@@ -535,8 +535,6 @@ d3.select("#y2022T2")
         d3.select('.chart').select('svg').attr('class', active_year);
 
 
-        d3.selectAll('g.y2022T2 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
-
     })
 
 d3.select("#y2022")
@@ -566,8 +564,6 @@ d3.select("#y2022")
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
 
-
-        d3.selectAll('g.y2022 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
 
     })
 
@@ -1082,7 +1078,6 @@ function updateChart(r0, r1, subject, maxdomain) {
 
     // }
 
-    d3.selectAll('g.y2022 g.gbar').filter(d=> ['100', '101'].includes(d.key)).style('display', 'none')
 
 }
 
