@@ -9,7 +9,7 @@ transition_duration = 300,
 gbar,
 data_chart,
 data_full = {},
-active_year = 'y2022',
+active_year = 'y2022T2',
 colorNames = {},
 candidats_panneaux = {},
 percentageCalculated = 0,
@@ -99,6 +99,12 @@ colorNames['y2022'] = {
 'ROUSSEL': '#D80000'
 }
 
+
+colorNames['y2022T2'] = {
+"MACRON":'#F7BA00',
+"LE PEN":'#1D2245'
+}
+
 candidats_panneaux['y2022'] = {
     '1': {'score': 0,  'name': 'ARTHAUD',  'parti': 'Lutte ouvrière'},
  '2': {'score': 0, 'name': 'ROUSSEL', 'parti': 'Parti communiste'},
@@ -112,6 +118,11 @@ candidats_panneaux['y2022'] = {
  '10': {'score': 0,  'name': "PÉCRESSE",  'parti': "Les Républicains"},
  '11': {'score': 0,  'name': 'POUTOU',  'parti': 'Nouveau Parti anticapitaliste'},
 '12': {'score': 0,  'name': 'DUPONT-AIGNAN',  'parti': 'Debout la France'}
+}
+
+candidats_panneaux['y2022T2'] = {
+ '3': {'score': 0,  'name': "MACRON",  'parti': "En marche !"},
+ '5': {'score': 0,  'name': "LE PEN",  'parti': "Rassemblement National"}
 }
 
 
