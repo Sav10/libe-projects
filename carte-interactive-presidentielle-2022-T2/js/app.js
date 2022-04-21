@@ -42,121 +42,14 @@ d3.scaleSqrt()
 
 
 const colors_candidats = {
-"HAMON":'#e6476b',
-"FILLON":'#35559e',
 "MACRON":'#F7BA00',
-"DUPONT-AIGNAN":'#19325D',
-"LE PEN":'#1D2245',
-'POUTOU': "#911D16",
-'MÉLENCHON': "#EB404C",
-'LASSALLE': "#534384",
-'ASSELINEAU': "#cfb096",
-'CHEMINADE': "#cfb096",
-'PÉCRESSE': "#2458A5",
-'ZEMMOUR': "#654235",
-'JADOT': "#00A85C",
-'ARTHAUD': '#751F17',
-'HIDALGO': '#EC4C6B',
-'ROUSSEL': '#D80000'
+"LE PEN":'#1D2245'
 }
 
 
 const candidate_names = [
 'MACRON',
- 'MÉLENCHON',
- 'LE PEN',
- 'PÉCRESSE',
-  'ZEMMOUR',
- 'JADOT',
- 'ROUSSEL',
- 'HIDALGO',
- 'POUTOU',
- 'ARTHAUD',
- 'DUPONT-AIGNAN',
- 'LASSALLE']
-
-
-var colors_nuances = {
-"LSOC":'#e6476b',
-"LLR":'#35559e',
- "LEXD":'#1e2045',
- "LDVG":'#eb6184',
- "LUG":'#e6476f',
- "LUDI":'#a064a1',
- "LREM":'#f3af28',
- "LDLF":'#25335c',
- "LCOM":'#af1920',
- "LDVD":'#3d6ab0',
- "LUD":'#026db5',
- "LRDG":'#f781b6',
-  "LECO":'#42b38e',
-  "LRN":'#14152d',
-  "LMDM":'#ec9528',
-  "LDVC":'#e77928',
-  "LUC":'#ec9528',
-    'LDIV': "#bdbcbc",
-    'LEXG': "#761519",
-'LFI': "#cc1422",
-'LREG': "#cfb096",
-'LGJ': "#666",
-'LVEC': '#52ae56',
-'LUGE': '#BD6277',
-'LUCD': '#7993ca'}
-
-var nuance_intitule = {
-  'LEXG': 'Extrême gauche',
-  'LCOM': 'PCF',
-  'LFI': 'France insoumise',
-  'LSOC': 'PS',
-  'LRDG': 'PRG',
-  'LDVG': 'Divers gauche',
-  'LUG': 'Union de la gauche',
-  'LVEC': 'EELV',
-  'LECO': 'Ecologiste',
-  'LDIV': 'Divers',
-  'LREG': 'Régionaliste',
-  'LGJ': 'Gilets jaunes',
-  'LREM': 'LREM',
-  'LMDM': 'Modem',
-  'LUDI': 'UDI',
-  'LUC': 'Union du centre',
-  'LDVC': 'Divers centre',
-  'LLR': 'Les Républicains',
-  'LUD': 'Union de la droite',
-  'LDVD': 'Divers droite',
-  'LDLF': 'Debout la France',
-  'LRN': 'Rassemblement National',
-  'LEXD': 'Extrême droite'}
-
-
-var positionnement_parti = {
-  'LEXG': 'Gauche radicale',
-  'LCOM': 'Gauche radicale',
-  'LFI': 'Gauche radicale',
-  'LSOC': 'Gauche',
-  'LRDG': 'Gauche',
-  'LDVG': 'Gauche',
-  'LUG': 'Gauche',
-  'LVEC': 'Ecologiste',
-  'LECO': 'Ecologiste',
-  'LDIV': 'Divers',
-  'LREG': 'Divers',
-  'LGJ': 'Divers',
-  'LREM': 'Centre droit',
-  'LMDM': 'Centre droit',
-  'LUDI': 'Centre droit',
-  'LUC': 'Centre droit',
-  'LDVC': 'Centre droit',
-  'LLR': 'Droite',
-  'LUD': 'Droite',
-  'LDVD': 'Droite',
-  'LDLF': 'Droite',
-  'LRN': 'Extrême droite',
-  'LEXD': 'Extrême droite'
-}
-
-var position_politique =
-['Gauche radicale', 'Gauche', 'Ecologiste', 'Divers', 'Centre droit', 'Droite', 'Extrême droite'];
+ 'LE PEN']
 
 
     if (mainWidth < 800){
@@ -265,8 +158,6 @@ var position_politique =
     }
 
     function populateResults(data_){
-
-      console.log(data_)
 
       var this_selection = d3.select('#all_results').selectAll('li.entry')
       .data(data_);
