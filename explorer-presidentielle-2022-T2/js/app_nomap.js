@@ -502,6 +502,9 @@ d3.select("#y2012")
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
 
+        d3.selectAll('svg g.gbar').style('display', 'block')
+        d3.selectAll('svg g.gbar').filter(function(d){+d.key >= 100}).style('display', 'none')
+
 
 
     })
@@ -534,6 +537,8 @@ d3.select("#y2022T2")
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
 
+        d3.selectAll('svg g.gbar').filter(function(d){+d.key >= 100}).style('display', 'none')
+
 
     })
 
@@ -564,6 +569,8 @@ d3.select("#y2022")
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
 
+        d3.selectAll('svg g.gbar').style('display', 'block')
+        d3.selectAll('svg g.gbar').filter(function(d){+d.key >= 100}).style('display', 'none')
 
     })
 
@@ -592,6 +599,9 @@ d3.select("#y2017")
             .style('display', 'none');
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
+
+        d3.selectAll('svg g.gbar').style('display', 'block')
+        d3.selectAll('svg g.gbar').filter(function(d){+d.key >= 100}).style('display', 'none')
 
     })
 
