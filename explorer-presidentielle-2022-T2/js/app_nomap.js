@@ -535,7 +535,8 @@ let this_margin_left = 30
 
 const this_margin_top = -Math.round(d3.select('.chart svg').node().getBoundingClientRect().bottom - d3.select('.gbar.k_5').node().getBoundingClientRect().bottom -25)
 
-let this_width =  Math.round(parseInt(d3.select(".chart svg").style("width"))*.5)
+let this_width =  Math.round(parseInt(d3.select(".chart svg").style("width"))*.6)
+
 
 if (parseInt(d3.select('body').style('width')) < 1000){
 this_width =  Math.round(parseInt(d3.select(".chart svg").style("width"))*.7)
@@ -566,10 +567,17 @@ const context = canvasChart.node().getContext('2d');
 
 const pointColor = '#3585ff'
 
+    var xScale_factor = d3.scaleLinear()
+    .domain([250,700])
+    .range([0.2, 0.6]);
+
+    var yScale_factor = d3.scaleLinear()
+    .domain([250,700])
+    .range([12, 25]);
 
     var rScale_canvas = d3.scaleSqrt()
     .domain([7, 1328054])
-    .range([0.3, 20]);
+    .range([xScale_factor(this_width), yScale_factor(this_width)]);
 
     xScale_canvas = d3.scaleLinear()
     .domain([-5.2,8.5])
