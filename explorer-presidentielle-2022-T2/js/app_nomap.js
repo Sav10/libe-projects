@@ -518,23 +518,48 @@ d3.select("#y2012")
 
 function makeCanvasMap(this_data){
 
-/*let this_data = data_full['y2022T2']*/
+
+d3.select('.chart #map').remove()
+
+d3.select('.chart')
+.append('div')
+.attr('id', 'map')
 
 const container = d3.select('#map')
+/*
+container
+.append('p')
+.text('Localisation des villes sélectionnées')*/
 
-container.select('canvas').remove()
+let this_margin_left = 30
 
-const this_margin_left = 30
+const this_margin_top = -Math.round(d3.select('.chart svg').node().getBoundingClientRect().bottom - d3.select('.gbar.k_5').node().getBoundingClientRect().bottom -25)
 
-const this_margin_top = Math.round(d3.select('.gbar.k_5').node().getBoundingClientRect().bottom -  d3.select('.chart svg').node().getBoundingClientRect().top +20)
+let this_width =  Math.round(parseInt(d3.select(".chart svg").style("width"))*.5)
 
-const this_width =  Math.round(parseInt(d3.select(".chart svg").style("width"))*.5)
+if (parseInt(d3.select('body').style('width')) < 1000){
+this_width =  Math.round(parseInt(d3.select(".chart svg").style("width"))*.7)
+
+}
+
+if (this_width < 250){
+this_width = 250
+this_margin_left = 0
+
+}
+
+if (this_width < 250){
+this_width = 250
+this_margin_left = 0
+
+}
+
 
 const canvasChart = container.append('canvas')
 .attr('width', this_width)
 .attr('height', this_width)
 .style('margin-left', this_margin_left + 'px')
-.style('top', this_margin_top + 'px')
+.style('margin-top', this_margin_top + 'px')
 .attr('class', 'canvas-plot');
 
 const context = canvasChart.node().getContext('2d');
@@ -544,20 +569,18 @@ const pointColor = '#3585ff'
 
     var rScale_canvas = d3.scaleSqrt()
     .domain([7, 1328054])
-    .range([1, 30]);
+    .range([1, 20]);
 
     xScale_canvas = d3.scaleLinear()
-    .domain([-5,8.3])
+    .domain([-5.2,8.5])
     .range([0, this_width]);
 
     yScale_canvas = d3.scaleLinear()
-    .domain([42.2,51.1])
+    .domain([42,51.5])
     .range([this_width, 0]);
 
 this_data.forEach(function(d, i) {
 if (i % 100 == 0){
-    console.log(d)
-    console.log(xScale_canvas(d.latitude), yScale_canvas(d.longitude))
 
 }
 
@@ -894,11 +917,11 @@ function LoadData(error, data, json_data) {
         d3.selectAll('svg g.gbar').filter(function(d){return +d.key >= 100}).style('display', 'none')
 
         if (active_year == 'y2022T2'){
-            let this_margin_top = Math.round(d3.select('.gbar.k_5').node().getBoundingClientRect().bottom -  d3.select('.chart svg').node().getBoundingClientRect().top +20)
-            d3.select('#map canvas').style('top', this_margin_top + 'px')
+            let this_margin_top = -Math.round(d3.select('.chart svg').node().getBoundingClientRect().bottom - d3.select('.gbar.k_5').node().getBoundingClientRect().bottom -25)
+            d3.select('#map canvas').style('margin-top', this_margin_top + 'px')
         }
         else{
-            d3.select('#map').select('canvas').remove()
+            d3.select('.chart #map').remove()
         }
 
 }
@@ -1185,7 +1208,7 @@ else{
             makeCanvasMap(data)
         }
         else{
-            d3.select('#map').select('canvas').remove()
+            d3.select('.chart #map').remove()
         }
 
     }
