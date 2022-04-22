@@ -205,7 +205,10 @@ var slider_variables = [
 {'name':'TauxAbstention', 'label':'Taux Abstention', 'maxDomain': 100, 'suffix':'%', 'postsuffix':' ou plus'},
 {'name':'ScoreFillonT1', 'label':'Score de Fillon en 2017', 'maxDomain': 50, 'suffix':'%', 'postsuffix':' ou plus'},
 {'name':'ScoreMelenchonT1', 'label':'Score de Mélenchon en 2017', 'maxDomain': 50, 'suffix':'%', 'postsuffix':' ou plus'},
-{'name':'ScoreMacronT1', 'label':'Score de Macron en 2017', 'maxDomain': 50, 'suffix':'%', 'postsuffix':' ou plus'}
+{'name':'ScoreMacronT1', 'label':'Score de Macron en 2017', 'maxDomain': 50, 'suffix':'%', 'postsuffix':' ou plus'},
+{'name':'ScoreMacronT12022', 'label':'Score de Macron au 1er tour', 'maxDomain': 50, 'suffix':'%', 'postsuffix':' ou plus'},
+{'name':'ScoreLepenT12022', 'label':'Score de Le Pen au 1er tour', 'maxDomain': 50, 'suffix':'%', 'postsuffix':' ou plus'},
+{'name':'ScoreMelenchonT12022', 'label':'Score de Mélenchon au 1er tour', 'maxDomain': 50, 'suffix':'%', 'postsuffix':' ou plus'}
 ];
 
 
@@ -313,6 +316,12 @@ var data_sliders = d3.select('#data_sliders')
     .append('g')
     .attr('transform', 'translate(' + marginSlider.left + ', ' + marginSlider.top + ')');
 
+
+
+
+
+
+
 data_sliders = data_sliders
     .selectAll('g.gslider')
     .data(slider_variables)
@@ -322,7 +331,13 @@ data_sliders = data_sliders
         return 'gslider ' + d.name
     })
     .attr('transform', function(d) {
-        return 'translate(0,' + yScale_sliders(d.name) + ')'
+        // Horrible hook
+        let this_new_name
+        if (d.name == 'ScoreMacronT12022'){this_new_name = 'ScoreFillonT1'}
+        else if (d.name == 'ScoreLepenT12022'){this_new_name = 'ScoreMelenchonT1'}
+        else if (d.name == 'ScoreMelenchonT12022'){this_new_name = 'ScoreMacronT1'}
+        else {this_new_name = d.name}
+        return 'translate(0,' + yScale_sliders(this_new_name) + ')'
     });
 
 data_sliders
@@ -466,7 +481,10 @@ function brushEnd() {
 
     var s = d3.event.selection;
 
+
     d = d3.select(this).datum();
+
+
 
     var range = s.map(xScale_slider.invert);
 
@@ -501,7 +519,8 @@ d3.select("#y2012")
         d3.select("div.section#tab1")
             .classed('T22017', false);
 
-        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1")
+
+        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1, .gslider.ScoreMacronT12022, .gslider.ScoreLepenT12022, .gslider.ScoreMelenchonT12022")
             .style('display', 'none');
 
         svg.attr('class', active_year);
@@ -635,13 +654,17 @@ d3.select("#y2022T2")
         d3.select("div.section#tab1")
             .classed('2019', false);
 
-        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1")
+        d3.selectAll(".gslider.ScoreMacronT12022, .gslider.ScoreLepenT12022, .gslider.ScoreMelenchonT12022")
             .style('display', 'block');
 
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
 
         d3.selectAll('svg g.gbar').filter(function(d){return +d.key >= 100}).style('display', 'none')
+
+
+        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1")
+            .style('display', 'none');
 
 
     })
@@ -669,6 +692,10 @@ d3.select("#y2022")
 
         d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1")
             .style('display', 'block');
+
+        d3.selectAll(".gslider.ScoreMacronT12022, .gslider.ScoreLepenT12022, .gslider.ScoreMelenchonT12022")
+            .style('display', 'none');
+
 
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
@@ -699,7 +726,7 @@ d3.select("#y2017")
         d3.select("div.section#tab1")
             .classed('T22017', false);
 
-        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1")
+        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1, .gslider.ScoreMacronT12022, .gslider.ScoreLepenT12022, .gslider.ScoreMelenchonT12022")
             .style('display', 'none');
         svg.attr('class', active_year);
         d3.select('.chart').select('svg').attr('class', active_year);
@@ -828,13 +855,18 @@ function LoadData(error, data, json_data) {
             d.longitude = +d.longitude;
             d.latitude = +d.latitude;
             d.entete = d['3'] >= d['5'] ? "MACRON" : "LE PEN";
+            d.ScoreMacronT12022 = +d.MacronT1;
+            d.ScoreLepenT12022 = +d.LepenT1;
+            d.ScoreMelenchonT12022 = +d.MelenchonT1;
             // d.ScoreHamonT1 = +d.ScoreHamonT1;
             // d.VoixLepenT1 = +d.VoixLepenT1;
             // d.VoixMacronT1 = +d.VoixMacronT1;
             // d.ExprimesT1 = +d.ExprimesT1;
         });
 
-        console.log(data)
+
+        d3.selectAll(".gslider.ScoreFillonT1, .gslider.ScoreMelenchonT1, .gslider.ScoreHamonT1, .gslider.ScoreMacronT1")
+            .style('display', 'none');
 
     }
 
@@ -1010,7 +1042,8 @@ function updateChart(r0, r1, subject, maxdomain) {
 
         var data = data_full[active_year];
 
-        if (active_year != 'y2022') {
+
+        if (active_year != 'y2022T2') {
 
             slider_variables.forEach(function(d, i) {
                 d.left_range = i >= 7 ? 0 : d.left_range;
