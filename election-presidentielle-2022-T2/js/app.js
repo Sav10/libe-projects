@@ -583,6 +583,7 @@ Promise.all([
     // d3.csv('data/election_data_depT2.csv'),
     d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022-T2/data/election_data_depT2.csv'),
     d3.csv('data/data_circos3.csv')
+/*    d3.csv('data/circos_data.csv')*/
     // d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/data_circos3.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2])
