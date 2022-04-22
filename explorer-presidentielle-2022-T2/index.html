@@ -173,6 +173,15 @@ font-size: .9em
 
 }
 
+#map canvas{
+  position: absolute;
+  z-index: 30;
+}
+
+.chart{
+    position: relative;
+}
+
         </style>
 
   </head>
@@ -257,8 +266,10 @@ font-size: .9em
               <p class="caption" id="title_dashboard">Résultats pour <span class="cities_count">35 392</span> villes, soit <span class="pop_number">64 846 445</span> électeurs inscrits *</p>
               <div class="divider"></div>
               <div class="row">
-              <div class="chart col s12 l8"></div>
-              <div id="map" class=" col s8 l6"></div>
+              <div class="chart col s12 l8">
+                  <div id="map"></div>
+              </div>
+              <!-- <div id="map" class=" col s8 l6"></div> -->
               <!-- <div id="map" class=" col s8 l6"><svg class="map"></svg></div> -->
 
               </div>

@@ -20,7 +20,9 @@ data_loaded = {y2017:0, y2012:0, y2022:0, y2022T2:1},
 automatic_chart_update = 0,
 update_source_event = 0,
 competitors_pannels = {},
-T2_clicked = 0;
+T2_clicked = 0,
+xScale_canvas,
+yScale_canvas;
 
 var margin_progress = { top: 10, right: 70, bottom: 10, left: 180 },
 width_progress = 600 - margin_progress.left - margin_progress.right,
@@ -514,23 +516,25 @@ d3.select("#y2012")
 
 
 
-function makeCanvasMap(){
+function makeCanvasMap(this_data){
 
-let this_data = data_full['y2022T2']
+/*let this_data = data_full['y2022T2']*/
 
 const container = d3.select('#map')
 
-const this_margin_left = 0
+container.select('canvas').remove()
 
-const this_margin_top = 10
+const this_margin_left = 30
 
-const this_width =  parseInt(d3.select(".chart svg").style("width"))*.8
+const this_margin_top = Math.round(d3.select('.gbar.k_5').node().getBoundingClientRect().bottom -  d3.select('.chart svg').node().getBoundingClientRect().top +20)
+
+const this_width =  Math.round(parseInt(d3.select(".chart svg").style("width"))*.5)
 
 const canvasChart = container.append('canvas')
 .attr('width', this_width)
 .attr('height', this_width)
 .style('margin-left', this_margin_left + 'px')
-.style('margin-top', margin.top + 'px')
+.style('top', this_margin_top + 'px')
 .attr('class', 'canvas-plot');
 
 const context = canvasChart.node().getContext('2d');
@@ -538,16 +542,22 @@ const context = canvasChart.node().getContext('2d');
 const pointColor = '#3585ff'
 
 
-    var xScale_canvas = xScaleType()
-    .domain([min_x_value,max_x_value])
-    .range([0, width*x_factor]);
+    var rScale_canvas = d3.scaleSqrt()
+    .domain([7, 1328054])
+    .range([1, 30]);
 
-    var yScale_canvas = d3.scaleLinear()
-    .domain([min_y_value,max_y_value])
-    .range([height*y_factor, 0]);
+    xScale_canvas = d3.scaleLinear()
+    .domain([-5,8.3])
+    .range([0, this_width]);
 
-data.forEach(function(d, i) {
+    yScale_canvas = d3.scaleLinear()
+    .domain([42.2,51.1])
+    .range([this_width, 0]);
+
+this_data.forEach(function(d, i) {
 if (i % 100 == 0){
+    console.log(d)
+    console.log(xScale_canvas(d.latitude), yScale_canvas(d.longitude))
 
 }
 
@@ -555,15 +565,16 @@ if (i % 100 == 0){
 });
 
 
-function drawPoint(d, i) {
+function drawPoint(d) {
    context.beginPath();
    context.globalCompositeOperation = "multiply";
    context.globalAlpha = 0.7
-   // context.fillStyle = d[thisColorVar];
-   context.fillStyle = 'red';
-   const px = xScale_canvas(d[thisXvar]);
-   const py = yScale_canvas(d[thisYvar]);
-   let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
+   context.fillStyle = colorNames['y2022T2'][d['entete']]
+
+   const px = xScale_canvas(d.longitude);
+   const py = yScale_canvas(d.latitude);
+   let this_radius = rScale_canvas(d.inscrits)
+
 
    context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
    context.fill();
@@ -785,6 +796,7 @@ function LoadData(error, data, json_data) {
             d.ScoreLepenT1 = +d.ScoreLepenT1;
             d.longitude = +d.longitude;
             d.latitude = +d.latitude;
+            d.entete = d['3'] >= d['5'] ? "MACRON" : "LE PEN";
             // d.ScoreHamonT1 = +d.ScoreHamonT1;
             // d.VoixLepenT1 = +d.VoixLepenT1;
             // d.VoixMacronT1 = +d.VoixMacronT1;
@@ -880,6 +892,14 @@ function LoadData(error, data, json_data) {
 
         d3.selectAll('svg g.gbar').style('display', 'block')
         d3.selectAll('svg g.gbar').filter(function(d){return +d.key >= 100}).style('display', 'none')
+
+        if (active_year == 'y2022T2'){
+            let this_margin_top = Math.round(d3.select('.gbar.k_5').node().getBoundingClientRect().bottom -  d3.select('.chart svg').node().getBoundingClientRect().top +20)
+            d3.select('#map canvas').style('top', this_margin_top + 'px')
+        }
+        else{
+            d3.select('#map').select('canvas').remove()
+        }
 
 }
 
@@ -1161,6 +1181,12 @@ else{
             });
 
         // updateMap(data);
+        if (active_year == 'y2022T2'){
+            makeCanvasMap(data)
+        }
+        else{
+            d3.select('#map').select('canvas').remove()
+        }
 
     }
 
