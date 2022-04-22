@@ -1,6 +1,6 @@
-var margin = { top: 50, right: 90, bottom: 130, left: 100 },
+var margin = { top: 50, right: 90, bottom: 130, left: 70 },
 width = 600 - margin.left - margin.right,
-height = 500 - margin.top - margin.bottom,
+height = 450 - margin.top - margin.bottom,
 widthHandle = 10,
 radiusHandle = 12,
 handleHeight = 10,
@@ -273,11 +273,14 @@ var svg = d3.select('.chart')
 .text('Progression');*/
 
 var xScale = d3.scaleLinear()
-    .range([0, width]);
+    .range([0, width-100]);
+
+var xScaleT2 = d3.scaleLinear()
+    .range([0, width-200]);
 
 var yScale = d3.scaleBand()
     .padding(0.2)
-    .paddingInner(0.2);
+    .paddingInner(0.3);
 
 var yScale_progress = d3.scaleBand()
     .padding(0.2)
@@ -652,6 +655,8 @@ function LoadData(error, data, json_data) {
             d.ExprimesT1 = +d.ExprimesT1;
         });
 
+
+
     } 
 
     else if (active_year == 'y2022') {
@@ -710,9 +715,9 @@ function LoadData(error, data, json_data) {
             d.TauxChomage = +d.TauxChomage;
             d.TauxOuvriers = +d.TauxOuvriers;
             d.TauxRetraites = +d.TauxRetraites;
-            d.exprimes = +d.exprimes;
-            d.inscrits = +d.inscrits;
-            d.votants = +d.votants;
+            d.exprimes = +d.Exprimes;
+            d.inscrits = +d.Inscrits;
+            d.votants = +d.Votants;
             d.blancs = d.votants - d.exprimes;
             d.TauxAbstention = _.round(100 * (d.inscrits - d.exprimes) / d.exprimes, 1);
             d.ScoreFillonT1 = +d.ScoreFillonT1;
@@ -725,7 +730,7 @@ function LoadData(error, data, json_data) {
             // d.ExprimesT1 = +d.ExprimesT1;
         });
 
-        // console.log(data)
+        console.log(data)
 
     }
 
@@ -830,6 +835,9 @@ function makeChart(data, total_pop) {
         .text(numbers_separators(total_pop));
 
     xScale
+        .domain([0, max_score]);
+
+    xScaleT2
         .domain([0, max_score]);
 
     yScale
@@ -976,6 +984,9 @@ function updateChart(r0, r1, subject, maxdomain) {
         xScale
             .domain([0, max_score]);
 
+        xScaleT2
+            .domain([0, max_score]);
+
 
         //Ugly Hook
 
@@ -987,7 +998,6 @@ function updateChart(r0, r1, subject, maxdomain) {
             .data(data_entries);
 
         gbar
-            // .attr('abc', function(d){console.log(d); return 'abc'})
             .attr('class', function(d) {
                 return 'gbar ' + 'k_' + d.key
             });
@@ -998,11 +1008,18 @@ function updateChart(r0, r1, subject, maxdomain) {
         title_dashboard.select('span.pop_number')
             .text(numbers_separators(total_inscrits));
 
+if (active_year == 'y2022T2'){
+    var this_x_scale = xScaleT2
+}
+else{
+    var this_x_scale = xScale
+}
+
         gbar
             .select('rect')
             .transition()
             .attr('width', function(d) {
-                return xScale(d.value.score)
+                return this_x_scale(d.value.score)
             })
             .style('fill', function(d) {
                 return colorNames[active_year][d.value.name]
@@ -1011,7 +1028,7 @@ function updateChart(r0, r1, subject, maxdomain) {
         gbar.select('text.barnumbers')
             .transition()
             .attr('x', function(d) {
-                return (xScale(d.value.score) + 7)
+                return (this_x_scale(d.value.score) + 7)
             })
             .text(function(d) {
                 return String(_.round(100 * d.value.score / total_exprimes, 1)).replace('.', ',') + '%'
@@ -1041,7 +1058,7 @@ function updateChart(r0, r1, subject, maxdomain) {
             .append('text')
             .attr('class', 'barnumbers')
             .attr('y', function(d) { return yScale.bandwidth() / 2 + 4 })
-            .attr('x', function(d) { return (xScale(d.value.score) + 7) })
+            .attr('x', function(d) { return (this_x_scale(d.value.score) + 7) })
             .text(function(d) { return String(_.round(100 * d.value.score / total_exprimes, 1)).replace('.', ',') + '%' })
             .attr('text-anchor', 'start');
 
@@ -1050,7 +1067,7 @@ function updateChart(r0, r1, subject, maxdomain) {
             .attr('y', 0)
             .attr('x', 0)
             .attr('height', function(d) { return yScale.bandwidth() })
-            .attr('width', function(d) { return xScale(d.value.score) })
+            .attr('width', function(d) { return this_x_scale(d.value.score) })
             .style('fill', function(d) { return colorNames[active_year][d.value.name] });
 
         gbar.exit().remove();
