@@ -513,6 +513,65 @@ d3.select("#y2012")
     })
 
 
+
+function makeCanvasMap(){
+
+let this_data = data_full['y2022T2']
+
+const container = d3.select('#map')
+
+const this_margin_left = 0
+
+const this_margin_top = 10
+
+const this_width =  parseInt(d3.select(".chart svg").style("width"))*.8
+
+const canvasChart = container.append('canvas')
+.attr('width', this_width)
+.attr('height', this_width)
+.style('margin-left', this_margin_left + 'px')
+.style('margin-top', margin.top + 'px')
+.attr('class', 'canvas-plot');
+
+const context = canvasChart.node().getContext('2d');
+
+const pointColor = '#3585ff'
+
+
+    var xScale_canvas = xScaleType()
+    .domain([min_x_value,max_x_value])
+    .range([0, width*x_factor]);
+
+    var yScale_canvas = d3.scaleLinear()
+    .domain([min_y_value,max_y_value])
+    .range([height*y_factor, 0]);
+
+data.forEach(function(d, i) {
+if (i % 100 == 0){
+
+}
+
+   drawPoint(d, i);
+});
+
+
+function drawPoint(d, i) {
+   context.beginPath();
+   context.globalCompositeOperation = "multiply";
+   context.globalAlpha = 0.7
+   // context.fillStyle = d[thisColorVar];
+   context.fillStyle = 'red';
+   const px = xScale_canvas(d[thisXvar]);
+   const py = yScale_canvas(d[thisYvar]);
+   let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
+
+   context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
+   context.fill();
+}
+
+}
+
+
 d3.select("#y2022T2")
     .on('click', function() {
 
@@ -724,6 +783,8 @@ function LoadData(error, data, json_data) {
             d.ScoreMelenchonT1 = +d.ScoreMelenchonT1;
             d.ScoreMacronT1 = +d.ScoreMacronT1;
             d.ScoreLepenT1 = +d.ScoreLepenT1;
+            d.longitude = +d.longitude;
+            d.latitude = +d.latitude;
             // d.ScoreHamonT1 = +d.ScoreHamonT1;
             // d.VoixLepenT1 = +d.VoixLepenT1;
             // d.VoixMacronT1 = +d.VoixMacronT1;
