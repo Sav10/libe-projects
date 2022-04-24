@@ -8,6 +8,10 @@ var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 let selected_element = 'candidat en tête'
 
+let xScale,
+    yScale,
+    rScale;
+
 /*   var margin = {},
    width,
    height;*/
@@ -233,15 +237,15 @@ function makeCirclechart(data0) {
 
     updateParameters();
 
-    var xScale = xScaleType()
+   xScale = xScaleType()
     .domain([min_x_value,max_x_value])
     .range([0, width]);
 
-    var yScale = d3.scaleLinear()
+    yScale = d3.scaleLinear()
     .domain([min_y_value,max_y_value])
     .range([height, 0]);
 
-    var rScale = d3.scaleSqrt()
+    rScale = d3.scaleSqrt()
     .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
     .range([0, (manualReusableParameters.circleRadius.value*13)]);
 
@@ -1074,237 +1078,9 @@ makeCirclechart(data_explore);
 //// load SVG map
 
 
-function loadMapFromSvgGeneric(data, svg_container, circle_range, location_variable, location_prefix, location_type) {
-
-  let this_svg_map = d3.select('#'+ svg_container + ' svg');
-  var all_those_paths = this_svg_map.selectAll('path');
-
-let thisCircleScale = 
-d3.scaleSqrt()
-.range(circle_range);
-
-
-// thisCircleScale.domain(d3.extent(data, d=>+d.Inscrits));
-thisCircleScale.domain(d3.extent(_.values(inscrits_location[location_type])));
-
-
-  let allSvgNodes = all_those_paths.nodes();
-
-  for (i in allSvgNodes){
- let this_id = d3.select(allSvgNodes[i]).attr('id')
- this_id = this_id.substring(2)
- let this_pop = inscrits_location[location_type][this_id];
-  // let this_pop = data.filter(d=> d[location_variable] == this_id)[0] ? +data.filter(d=> d[location_variable] == this_id)[0].Inscrits : inscrits_location[location_type][this_id];
-/* let this_pop = +circosData.filter(d=> d.id_circo == this_id)[0].votants;*/
- let this_radius = Math.round(thisCircleScale(this_pop));
- let this_path_d = d3.select(allSvgNodes[i]).attr('d');
- let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
- let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
- let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
-
- d3.select(allSvgNodes[i]).datum({'id': this_id, 'path': this_path_d, 'centroid': this_centroid, 
-   'to_circle_function': this_to_circle_function,
-   'from_circle_function': this_from_circle_function,
-   'population':this_pop,
-   'radius': this_radius
- });
-  }
-
-
-/*all_those_paths.style('fill', 'black')*/
-
-
-
-  all_those_paths
-  .style('fill', d => {
-
-    if (typeof data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
- return colors_candidats[data.filter(function(e){return e[location_variable]  == d.id})[0].loc_winner]
-    }
-    return 'rgb(221, 221, 221)'
-  })
-  .style('fill-opacity', 1)
-  .style('stroke', '#aaa')
-  .style('stroke-width', 0)
-  .on('mouseover', function(event, d) {
-   /* showTip(data, d)*/
-    all_those_paths
-    .style('fill-opacity', .5)
-    d3.select(this)
-    .style('fill-opacity', 1)
-
-  })
-  .on('mouseout', function(event, d) {
-
-
-    if (selected_dep.length > 0){
-
-     /*showTip(data, selected_dep[1])*/
-    all_those_paths
-    .style('fill-opacity', .5)
-
-    d3.select(selected_dep[0])
-    .style('fill-opacity', 1)
-
-    }
-    else{
-    /*reset_tooltip()*/
-
-    all_those_paths
-    .style('fill-opacity', 1)
-
-    d3.select(this)
-    .style('fill-opacity', 1)
-    }
-
-  })
-
-
-/// Click function for shape
-
-d3.select('body').on("click",function(event, d){
-
-
-    var outside = d3.selectAll('svg path').filter(equalToEventTarget).empty();
-    // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
-    if (outside) {
-    reset_tooltip()
-selected_dep = [];
-
-
-    all_those_paths
-    .style('fill-opacity', 1)
-
-    d3.selectAll('path')
-    .style('fill-opacity', 1)
-
-    }
-else{
-}
-
-
-
-});
-
-
-  all_those_paths
-  .on('click', function(event, d) {
-    selected_dep = [this, d];
-    showTip(data, d, location_variable)
-    all_those_paths
-    .style('fill-opacity', .5)
-    d3.select(this)
-    .style('fill-opacity', 1)
-  })
-
-
-
-//// Transformation to circle when starting 
-setTimeout(() => {
-
-  transform_all_paths_to_circle_generic(all_those_paths, position_circles[location_type], location_prefix)
-mapstate = 1;
-
-
-},
-   500);
-
-
-
-}
-
-
-
 /// End map from svgn
 
-/// Transform functions for map
 
-function force_separate_circles_generic(those_paths){
-
-
-
-
-  var features = those_paths.data();
-
-  simulation = d3.forceSimulation(features)
-  .force("y", d3.forceY(function(d) { return d.centroid[1] }).strength(5))
-  .force("x", d3.forceX(function(d) { return d.centroid[0] }).strength(5))
-  .force("collide", d3.forceCollide(7).radius(d=> d.radius))
-  .stop();
-
-  for (var i = 0; i < 300; ++i) simulation.tick();
-
-    those_paths
-  .transition().duration(3000).attr('transform', function(d) { return 'translate(' +Math.round(d.x -d.centroid[0])+ ',' +Math.round(d.y - d.centroid[1]) + ')'});
-
-}
-
-
-function registered_separate_circles_generic(those_paths, those_positions, this_prefix){
-
-  those_paths
-  .transition()
-  .duration(1000)
-  .attr('transform', function(d) { 
-    return 'translate(' +those_positions[this_prefix +  d.id][0]+ ',' +those_positions[this_prefix +  d.id][1] + ')'});
-}
-
-
-function redraw_paths_generic(those_paths, circos_corrections){
-
-  let pathsize = those_paths.size();
-  let pathsCount = 0;
-
- 
-  those_paths
-  .transition()
-  .duration(700)
-  .attrTween("d", function(d){ return d.from_circle_function})
-  .on('end', function(){
-    pathsCount++;
-    if (pathsCount >= pathsize){
- those_paths.filter(function(d){return circos_corrections.includes(d.id) }).attr("d", function(d){ return d.path})
-
- those_paths
- .transition()
- .attr('transform', 'translate(0,0)')
-    }
-  })
-  ;
-
-}
-
-
-
-
-function transform_all_paths_to_circle_generic(those_paths, those_positions, this_prefix){
-
-
-d3.select('#display_proportional_circles')
-.style('color', '#fff')
-.style('background-color', 'red')
-.style('border-color', 'red')
-
-d3.select('#display_geo_paths')
-.style('color', 'red')
-.style('background-color', '#fff')
-.style('border-color', '#ddd')
-
-
-  let pathsize = those_paths.size();
-  let pathsCount = 0;
-
-those_paths.transition()
-.duration(1000)
-.attrTween("d", function(d){ return d.to_circle_function})
-.on('end', function(){
-  pathsCount++;
-  if (pathsCount >= pathsize){
-    registered_separate_circles_generic(those_paths, those_positions, this_prefix)
-  }
-})
-
-}
 
 
 function reset_tooltip(){
@@ -1651,25 +1427,6 @@ function responsivefy(svg) {
    }
  }
 
- d3.selectAll(".shareTwitter")
- .on('click', function(event, d){ shareTwitter()});
-
- d3.selectAll(".shareFacebook")
- .on('click', function(event, d){ shareFacebook()});
-
- function shareFacebook () {
-   var url = encodeURIComponent(window.location.origin + window.location.pathname),
-   link = 'http://www.facebook.com/sharer/sharer.php?u=' + url ;
-   window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
- };
-
- function shareTwitter () {
-   var url = encodeURIComponent(window.location.origin + window.location.pathname),
-   text = "La carte de quatre indicateurs pour suivre l'évolution de la circulation du Coronavirus, mise à jour quotidiennement https://www.liberation.fr/apps/2020/09/covid-19-la-carte-de-vigilance/ via @libe",
-   link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
-   window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
-
- }
 
  function roundAndFormatPct(x){
   return Math.abs(_.round(x,1)).toString().replace(".", ",")
