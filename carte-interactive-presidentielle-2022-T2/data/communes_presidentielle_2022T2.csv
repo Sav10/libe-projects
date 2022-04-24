@@ -6,7 +6,7 @@ Paris 16eme arrondissement,75056AR16,2.2620995594,48.8603987604,99402,24121,7528
 Nantes,44109,-1.5492,47.2397,196896,56787,140109,9571,2379,128159,MACRON,103996,https://www.liberation.fr/resultats-elections/pays-de-la-loire/loire-atlantique/nantes-44109/
 Montpellier,34172,3.8592,43.6183,162748,56152,106596,7386,2231,96979,MACRON,69992,https://www.liberation.fr/resultats-elections/occitanie/herault/montpellier-34172/
 Lille,59350,3.0476,50.6344,127360,42366,84994,4937,1794,78263,MACRON,59921,https://www.liberation.fr/resultats-elections/hauts-de-france/nord/lille-59350/
-Paris 17eme arrondissement,75056AR17,2.30748555949,48.8873371665,103076,24582,78494,3307,911,74276,MACRON,63151,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
+Paris 17eme arrondissement,75056AR17,2.30748555949,48.8873371665,103076,24582,78494,3306,912,74276,MACRON,63151,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Boulogne-Billancourt,92012,2.2371,48.8346,72858,16331,56527,3622,0,52905,MACRON,44061,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/boulogne-billancourt-92012/
 Toulon,83137,5.9306,43.1249,105023,32515,72508,4414,1169,66925,MACRON,33751,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/var/toulon-83137/
 Bordeaux,33063,-0.5874,44.8572,161569,46626,114943,7140,1846,105957,MACRON,84829,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/gironde/bordeaux-33063/
@@ -31,7 +31,7 @@ Marseille 8eme arrondissement,13055AR08,5.37464436293,43.2417271832,56873,16108,
 Levallois-Perret,92044,2.2836,48.8959,43351,10539,32812,1619,434,30759,MACRON,24865,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/levallois-perret-92044/
 Le Mans,72181,0.2016,47.9908,90375,28199,62176,6720,0,55456,MACRON,38370,https://www.liberation.fr/resultats-elections/pays-de-la-loire/sarthe/le-mans-72181/
 Courbevoie,92026,2.2596,48.9005,52516,13804,38712,2802,0,35910,MACRON,28671,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/courbevoie-92026/
-Paris 20eme arrondissement,75056AR20,2.40081982673,48.8631867774,117065,35525,81540,4749,1466,75325,MACRON,64684,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
+Paris 20eme arrondissement,75056AR20,2.40081982673,48.8631867774,117065,35524,81541,4783,1433,75325,MACRON,64684,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Paris 18eme arrondissement,75056AR18,2.34871193387,48.8927350746,109887,31626,78261,4070,1089,73102,MACRON,63721,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Saint-Etienne,42218,4.3807,45.4283,88156,30381,57775,3611,1203,52961,MACRON,36084,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/loire/saint-etienne-42218/
 Saint-Maur-des-Fossés,94068,2.4926,48.8018,50567,11805,38762,2042,525,36195,MACRON,27777,https://www.liberation.fr/resultats-elections/ile-de-france/val-de-marne/saint-maur-des-fosses-94068/
@@ -78,7 +78,7 @@ Le Chesnay-Rocquencourt,78158,2.1206,48.8309,22779,5163,17616,933,232,16451,MACR
 Marseille 12eme arrondissement,13055AR12,5.43991567678,43.3077683678,43553,12186,31367,1582,458,29327,MACRON,15534,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/bouches-du-rhone/marseille-13055/
 Paris 9eme arrondissement,75056AR09,2.33746024139,48.8768961624,40276,8340,31936,1145,323,30468,MACRON,27133,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
 Paris 5eme arrondissement,75056AR05,2.34985938556,48.8445086596,37732,8276,29456,1277,425,27754,MACRON,24025,https://www.liberation.fr/resultats-elections/ile-de-france/paris/paris-75056/
-Laval,53130,-0.767,48.0662,30922,8241,22681,1427,578,20676,MACRON,15335,https://www.liberation.fr/resultats-elections/pays-de-la-loire/mayenne/laval-53130/
+Laval,53130,-0.767,48.0662,30922,8241,22681,1429,576,20676,MACRON,15335,https://www.liberation.fr/resultats-elections/pays-de-la-loire/mayenne/laval-53130/
 Villeurbanne,69266,4.8902,45.7707,88520,30848,57672,3611,923,53138,MACRON,40375,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/rhone/villeurbanne-69266/
 Meudon,92048,2.2293,48.8085,30143,7025,23118,1274,350,21494,MACRON,17013,https://www.liberation.fr/resultats-elections/ile-de-france/hauts-de-seine/meudon-92048/
 Nancy,54395,6.1709,48.6889,53464,15335,38129,2455,676,34998,MACRON,26661,https://www.liberation.fr/resultats-elections/grand-est/meurthe-et-moselle/nancy-54395/
@@ -199,7 +199,7 @@ Bron,69029,4.9076,45.7351,23355,7515,15840,956,317,14567,MACRON,10351,https://ww
 Marignane,13054,5.2189,43.4216,22935,6802,16133,1021,0,15112,LE PEN,9738,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/bouches-du-rhone/marignane-13054/
 Sucy-en-Brie,94071,2.5307,48.771,17113,4237,12876,804,209,11863,MACRON,8536,https://www.liberation.fr/resultats-elections/ile-de-france/val-de-marne/sucy-en-brie-94071/
 Montluçon,03185,2.603,46.3422,21437,6685,14752,1114,521,13117,MACRON,7305,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/allier/montlucon-03185/
-La Londe-les-Maures,83071,6.2614,43.1651,9511,1730,7781,382,216,7183,LE PEN,3792,
+La Londe-les-Maures,83071,6.2614,43.1651,9511,1720,7791,382,217,7192,LE PEN,3803,
 Meaux,77284,2.8943,48.9563,28624,11053,17571,1311,326,15934,MACRON,9691,https://www.liberation.fr/resultats-elections/ile-de-france/seine-et-marne/meaux-77284/
 Gif-sur-Yvette,91272,2.1321,48.6978,16004,3273,12731,645,169,11917,MACRON,9834,https://www.liberation.fr/resultats-elections/ile-de-france/essonne/gif-sur-yvette-91272/
 Tarbes,65440,0.0653,43.2337,26469,9197,17272,1275,589,15408,MACRON,8820,https://www.liberation.fr/resultats-elections/occitanie/hautes-pyrenees/tarbes-65440/
@@ -321,7 +321,7 @@ Elancourt,78208,1.9568,48.7771,16411,4497,11914,787,249,10878,MACRON,7946,https:
 Miramas,13063,5.0329,43.5701,16743,5233,11510,768,314,10428,LE PEN,6268,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/bouches-du-rhone/miramas-13063/
 La Madeleine,59368,3.0693,50.6528,15736,4364,11372,624,194,10554,MACRON,7927,https://www.liberation.fr/resultats-elections/hauts-de-france/nord/la-madeleine-59368/
 Vire-Normandie,14762,-0.8795,48.8156,12996,3414,9582,570,182,8830,MACRON,5235,
-Vierzon,18279,2.0737,47.2205,17581,6138,11443,834,458,10151,MACRON,5278,https://www.liberation.fr/resultats-elections/centre-val-de-loire/cher/vierzon-18279/
+Vierzon,18279,2.0737,47.2205,17581,6138,11443,835,457,10151,MACRON,5278,https://www.liberation.fr/resultats-elections/centre-val-de-loire/cher/vierzon-18279/
 Marly-le-Roi,78372,2.0916,48.8709,12091,2792,9299,479,101,8719,MACRON,6710,
 Coudekerque-Branche,59155,2.3932,51.0138,16018,4458,11560,669,314,10577,LE PEN,6053,https://www.liberation.fr/resultats-elections/hauts-de-france/nord/coudekerque-branche-59155/
 Riom,63300,3.12,45.8938,12373,3379,8994,732,244,8018,MACRON,5249,
@@ -666,7 +666,7 @@ Longuenesse,62525,2.2491,50.7376,6931,1675,5256,220,117,4919,LE PEN,2492,
 Lannion,22113,-3.4634,48.7427,14393,3843,10550,784,337,9429,MACRON,6804,https://www.liberation.fr/resultats-elections/bretagne/cotes-d-armor/lannion-22113/
 Marly,57447,6.155,49.0632,8488,2109,6379,372,88,5919,MACRON,3759,
 Lons,64348,-0.4069,43.3163,9442,2013,7429,609,225,6595,MACRON,4273,
-Mayenne,53147,-0.6115,48.31,9626,2616,7010,460,221,6329,MACRON,4273,
+Mayenne,53147,-0.6115,48.31,9626,2616,7010,459,222,6329,MACRON,4273,
 Saint-Maurice,94069,2.4393,48.8181,8249,2336,5913,343,145,5425,MACRON,4173,
 Saint-Martin-Lez-Tatinghem,62757,2.2238,50.7524,4996,1181,3815,168,124,3523,MACRON,1882,
 Saint-Jean-de-Védas,34270,3.829,43.5701,9208,1966,7242,500,141,6601,MACRON,3767,
@@ -7708,7 +7708,7 @@ Carbuccia,2A062,8.9343,42.0297,325,173,152,14,6,132,LE PEN,104,
 Hermonville,51291,3.9146,49.3323,1165,232,933,50,8,875,MACRON,528,
 Le Gua,38187,5.628,45.0094,1523,352,1171,109,20,1042,MACRON,610,
 Saint-Jean-d'Assé,72290,0.1221,48.1576,1254,337,917,57,20,840,MACRON,439,
-Neuvy-sur-Barangeon,18165,2.27,47.3186,970,229,741,51,23,667,LE PEN,381,
+Neuvy-sur-Barangeon,18165,2.27,47.3186,970,229,741,50,24,667,LE PEN,381,
 Goyrans,31227,1.4277,43.4802,803,125,678,53,10,615,MACRON,467,
 Glandon,87071,1.2179,45.4711,657,119,538,52,23,463,LE PEN,237,
 Servins,62793,2.637,50.4045,836,148,688,26,14,648,LE PEN,353,
@@ -10652,7 +10652,7 @@ Plounévez-Moëdec,22228,-3.4472,48.5519,1163,272,891,63,41,787,LE PEN,415,
 Folkling,57222,6.9024,49.1528,1110,279,831,40,7,784,LE PEN,421,
 La Marne,44090,-1.7303,46.9927,1126,296,830,45,22,763,MACRON,402,
 Puyvert,84095,5.3396,43.7512,673,134,539,30,8,501,LE PEN,264,
-Léré,18125,2.8715,47.4591,886,223,663,48,26,589,LE PEN,323,
+Léré,18125,2.8715,47.4591,886,223,663,47,27,589,LE PEN,323,
 Neufgrange,57499,7.0611,49.076,1074,259,815,60,11,744,LE PEN,383,
 Boullay-les-Troux,91093,2.0525,48.6766,507,83,424,28,8,388,MACRON,296,
 Trébons-sur-la-Grasse,31560,1.7214,43.4492,378,58,320,27,7,286,MACRON,186,
@@ -11204,7 +11204,7 @@ La Chapelle-Saint-Laurent,79076,-0.468,46.7341,1452,315,1137,48,33,1056,MACRON,7
 Woelfling-lès-Sarreguemines,57750,7.1771,49.0877,598,97,501,24,11,466,LE PEN,249,
 Saint-Eustache-la-Forêt,76576,0.4518,49.5577,838,164,674,46,15,613,LE PEN,373,
 Sadroc,19178,1.5465,45.2732,743,127,616,49,37,530,LE PEN,293,
-Saint-Satur,18233,2.8488,47.349,1133,292,841,17,44,780,MACRON,391,
+Saint-Satur,18233,2.8488,47.349,1133,292,841,43,18,780,MACRON,391,
 Selles,27620,0.4914,49.3035,368,72,296,18,5,273,MACRON,137,
 Messy,77292,2.6852,48.9674,705,145,560,35,16,509,MACRON,266,
 Caumont,02145,3.1715,49.6385,455,85,370,24,5,341,LE PEN,229,
@@ -14749,7 +14749,7 @@ Ile-Tudy,29085,-4.1646,47.8484,743,161,582,44,9,529,MACRON,410,
 Thennes,80751,2.4755,49.8053,406,55,351,22,7,322,MACRON,167,
 Brétigny,60105,3.1155,49.5605,291,57,234,7,4,223,LE PEN,138,
 La Berthenoux,36017,2.0678,46.7071,319,92,227,25,10,192,LE PEN,111,
-Nançay,18159,2.171,47.352,677,145,532,4,39,489,MACRON,266,
+Nançay,18159,2.171,47.352,677,145,532,30,13,489,MACRON,266,
 Saint-Avit,40250,-0.4592,43.9493,560,117,443,28,8,407,MACRON,211,
 Saint-Juéry,12233,2.6984,43.9253,230,39,191,13,9,169,MACRON,96,
 Bry,59116,3.6901,50.3152,311,62,249,26,0,223,MACRON,133,
@@ -18382,7 +18382,7 @@ Géraudot,10165,4.326,48.3034,308,60,248,20,5,223,LE PEN,125,
 Cures,72111,0.0247,48.0814,390,76,314,25,4,285,MACRON,152,
 Fréniches,60255,3.0054,49.6771,285,85,200,12,0,188,LE PEN,119,
 Corbeil-Cerf,60162,2.1113,49.2782,255,49,206,14,7,185,LE PEN,100,
-Sury-en-Vaux,18258,2.7998,47.3742,512,108,404,17,11,376,MACRON,205,
+Sury-en-Vaux,18258,2.7998,47.3742,512,108,404,21,7,376,MACRON,205,
 Saint-Pierre-de-Curtille,73273,5.8177,45.7712,296,63,233,19,10,204,LE PEN,112,
 Remauville,77387,2.8254,48.2214,341,88,253,17,8,228,LE PEN,121,
 Saulnières,28369,1.271,48.6603,507,135,372,25,6,341,LE PEN,194,
@@ -22458,7 +22458,7 @@ Verneuil-sur-Indre,37269,1.0494,47.0455,414,82,332,18,12,302,LE PEN,156,
 Rancy,71365,5.0859,46.5973,408,100,308,15,17,276,LE PEN,170,
 Moreilles,85149,-1.099,46.4226,313,72,241,11,3,227,LE PEN,152,
 Mauléon-Barousse,65305,0.5756,42.9464,113,24,89,7,2,80,MACRON,52,
-Liézey,88269,6.7998,48.0952,270,56,214,23,11,180,MACRON,112,
+Liézey,88269,6.7998,48.0952,270,56,214,26,8,180,MACRON,112,
 Saint-Barthélemy-le-Meil,07215,4.4778,44.8834,196,59,137,11,5,121,MACRON,63,
 L'Isle-en-Rigault,55296,5.0438,48.7152,380,97,283,15,9,259,LE PEN,167,
 Chirols,07065,4.2941,44.6877,245,76,169,23,5,141,MACRON,72,
@@ -24602,7 +24602,7 @@ Erbajolo,2B105,9.266,42.2532,111,37,74,10,7,57,MACRON,29,
 Chamagne,88084,6.3008,48.4103,369,69,300,16,4,280,LE PEN,151,
 Cuis,51200,3.9661,48.9975,323,65,258,12,5,241,LE PEN,130,
 Cuchery,51199,3.8261,49.1298,314,82,232,9,1,222,LE PEN,151,
-Rezay,18193,2.1617,46.6735,173,25,148,15,9,124,MACRON,69,
+Rezay,18193,2.1617,46.6735,173,25,148,14,10,124,MACRON,69,
 Saint-Roman-de-Codières,30296,3.7692,44.0149,207,70,137,16,10,111,MACRON,83,
 Noyen-sur-Seine,77341,3.3378,48.4536,271,71,200,11,3,186,MACRON,99,
 Touffréville,14698,-0.2246,49.1993,284,53,231,17,4,210,MACRON,114,
@@ -28396,7 +28396,7 @@ Hauterive-la-Fresse,25303,6.4551,46.9659,179,36,143,9,5,129,LE PEN,74,
 Cuvier,39187,6.0645,46.8386,210,42,168,5,6,157,MACRON,89,
 Sainte-Florence,33401,-0.0897,44.8149,118,25,93,8,2,83,LE PEN,43,
 Ebaty,21236,4.7819,46.9258,211,43,168,15,5,148,LE PEN,87,
-Saint-Dizier-la-Tour,23187,2.1496,46.1409,173,42,131,7,12,112,LE PEN,60,
+Saint-Dizier-la-Tour,23187,2.1496,46.1409,173,42,131,14,5,112,LE PEN,60,
 La Chapelle-Taillefert,23052,1.8289,46.1138,294,74,220,25,7,188,MACRON,106,
 Saint-Jean-de-Rebervilliers,28341,1.266,48.6225,185,38,147,9,7,131,LE PEN,74,
 MONTLAINSIA,39273,5.4802,46.3772,197,37,160,15,4,141,LE PEN,72,
@@ -29361,7 +29361,7 @@ Chalais,36036,1.2155,46.5327,151,40,111,4,1,106,LE PEN,55,
 Beaulieu,15020,2.5213,45.4661,83,15,68,7,6,55,MACRON,30,
 Gestas,64242,-0.8814,43.3537,64,9,55,3,2,50,MACRON,32,
 Saint-Paul-de-Baïse,32402,0.3763,43.7804,93,12,81,3,5,73,MACRON,49,
-La Celle-sous-Gouzon,23040,2.2177,46.2239,118,27,91,6,4,81,LE PEN,49,
+La Celle-sous-Gouzon,23040,2.2177,46.2239,118,27,91,7,3,81,LE PEN,49,
 Bazoques,27046,0.5483,49.172,112,17,95,6,1,88,LE PEN,57,
 Génat,09133,1.5651,42.8264,43,9,34,1,5,28,MACRON,15,
 Ilhat,09142,1.7838,42.9505,108,33,75,8,6,61,LE PEN,33,
