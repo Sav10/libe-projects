@@ -231,7 +231,7 @@ function makeCirclechart(data0) {
     var g = svg.select('g.graphContainer');
     var g_inner = g.select('g.innerGraph');
 
-    // updateParameters();
+    updateParameters();
 
     var xScale = xScaleType()
     .domain([min_x_value,max_x_value])
@@ -1594,6 +1594,28 @@ d3.select("#map_information")
 })
 
 ////////////////////////// Utilities functions
+
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
 
 function responsivefy(svg) {
 
