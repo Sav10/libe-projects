@@ -231,7 +231,7 @@ function makeCirclechart(data0) {
         d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
     })
 
-    var svg = d3.select("svg");
+    var svg = d3.select("#chart_container svg");
     var g = svg.select('g.graphContainer');
     var g_inner = g.select('g.innerGraph');
 
@@ -282,10 +282,7 @@ function makeCirclechart(data0) {
 // yScale.domain([thisYMin, thisYMax])
 
 
-    // changeAxis(xScale, yScale)
-
-    let axis_bottom = d3.axisBottom(xScale).ticks(10).tickFormat(numbers_separators);
-    let axis_left = d3.axisLeft(yScale).ticks(10);
+    changeAxis(xScale, yScale)
 
 
   g.select('g.innerGraph')
@@ -444,7 +441,7 @@ g_inner
 g_inner
 .call(yAxisLabel, graphParameters.selected_yRows[0]);
 
-    // customizeAxis()
+    customizeAxis()
     drawLegend()
     addCustomCode()
 
