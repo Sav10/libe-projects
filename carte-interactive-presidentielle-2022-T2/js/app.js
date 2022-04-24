@@ -428,13 +428,13 @@ map.on('popupclose', function(e) {
       d3.select('.info.city.box.leaflet-control').style('height', (height_infobox + 5) + 'px')
       let newHeightMap = (height_infobox*1.1) >= baseMapHeight ? (height_infobox*1.1) : baseMapHeight;
 
-      d3.select('#map')
-      .style('height', newHeightMap + 'px');
+      // d3.select('#map')
+      // .style('height', newHeightMap + 'px');
     }
 
     else{
-      d3.select('#map')
-      .style('height', baseMapHeight + 'px');
+      // d3.select('#map')
+      // .style('height', baseMapHeight + 'px');
 
     }
 
