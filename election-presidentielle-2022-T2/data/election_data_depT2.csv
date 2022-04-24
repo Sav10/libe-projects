@@ -17,6 +17,8 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 134802,32475,102327,5623,2244,94460,055,55,Meuse,52527,41933,https://www.liberation.fr/resultats-elections/grand-est/meuse/
 139238,31406,107832,10037,4634,93161,046,46,Lot,38031,55130,https://www.liberation.fr/resultats-elections/occitanie/lot/
 147268,30993,116275,9667,4003,102605,032,32,Gers,45490,57115,https://www.liberation.fr/resultats-elections/occitanie/gers/
+154240,41090,113150,8093,3436,101621,058,58,Nièvre,50923,50698,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/nievre/
+166057,41207,124850,8704,4162,111984,036,36,Indre,54410,57574,https://www.liberation.fr/resultats-elections/centre-val-de-loire/indre/
 177444,43423,134021,11590,5164,117267,065,65,Hautes-Pyrénées,52182,65085,https://www.liberation.fr/resultats-elections/occitanie/hautes-pyrenees/
 177724,40529,137195,8333,4574,124288,070,70,Haute-Saône,70720,53568,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/haute-saone/
 180716,41139,139577,10846,4380,124351,043,43,Haute-Loire,61979,62372,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/haute-loire/
@@ -38,6 +40,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 255931,62164,193767,15797,5715,172255,007,07,Ardèche,82001,90254,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/ardeche/
 257508,64403,193105,13364,6002,173739,016,16,Charente,78085,95654,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/charente/
 263777,64447,199330,15870,8868,174592,087,87,Haute-Vienne,71263,103329,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/haute-vienne/
+273264,64481,208783,13581,5606,189596,079,79,Deux-Sèvres,71791,117805,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/deux-sevres/
 277925,67786,210139,12512,5233,192394,088,88,Vosges,100839,91555,https://www.liberation.fr/resultats-elections/grand-est/vosges/
 279960,68620,211340,15152,6686,189502,011,11,Aude,104038,85464,https://www.liberation.fr/resultats-elections/occitanie/aude/
 298180,71489,226691,17176,8306,201209,081,81,Tarn,94441,106768,https://www.liberation.fr/resultats-elections/occitanie/tarn/
