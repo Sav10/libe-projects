@@ -28,7 +28,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 190643,45868,144775,10903,4147,129725,039,39,Jura,60882,68843,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/jura/
 205554,48759,156795,9520,3449,143826,061,61,Orne,64559,79267,https://www.liberation.fr/resultats-elections/normandie/orne/
 205599,51298,154301,8693,3148,142460,010,10,Aube,73630,68830,https://www.liberation.fr/resultats-elections/grand-est/aube/
-205673,118753,86920,2394,1723,82803,987,ZP,Polynésie française,39913,42890,
+205673,118753,86920,2395,1722,82803,987,ZP,Polynésie française,39913,42890,
 218713,142592,76121,3037,1332,71752,988,ZN,Nouvelle-Calédonie,27958,43794,
 219481,49491,169990,13860,6388,149742,012,12,Aveyron,59789,89953,https://www.liberation.fr/resultats-elections/occitanie/aveyron/
 224457,60255,164202,12406,3897,147899,018,18,Cher,70160,77739,https://www.liberation.fr/resultats-elections/centre-val-de-loire/cher/
@@ -71,6 +71,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 551209,120713,430496,25046,10184,395266,085,85,Vendée,150772,244494,https://www.liberation.fr/resultats-elections/pays-de-la-loire/vendee/
 555276,146846,408430,27371,9738,371321,030,30,Gard,193659,177662,https://www.liberation.fr/resultats-elections/occitanie/gard/
 564284,145230,419054,23903,8495,386656,060,60,Oise,203865,182791,https://www.liberation.fr/resultats-elections/hauts-de-france/oise/
+565838,147184,418654,26087,7367,385200,074,74,Haute-Savoie,147694,237506,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/haute-savoie/
 589468,138502,450966,28361,9536,413069,049,49,Maine-et-Loire,138259,274810,https://www.liberation.fr/resultats-elections/pays-de-la-loire/maine-et-loire/
 609316,135060,474256,33469,11315,429472,056,56,Morbihan,159717,269755,https://www.liberation.fr/resultats-elections/bretagne/morbihan/
 676058,274522,401536,20485,16760,364291,974,ZD,La Réunion,217021,147270,https://www.liberation.fr/resultats-elections/la-reunion/la-reunion/
