@@ -210,7 +210,10 @@ function makeCirclechart(data0) {
 
     var data = _.cloneDeep(data0);
 
-    // data = recalculateAndTransformDate(data);
+
+    data = recalculateAndTransformDate(data);
+
+    console.log(data)
 
     var thisXvar = graphParameters['selected_xRows'][0];
     var thisYvar = graphParameters['selected_yRows'][0];
@@ -228,7 +231,7 @@ function makeCirclechart(data0) {
     var g = svg.select('g.graphContainer');
     var g_inner = g.select('g.innerGraph');
 
-    updateParameters();
+    // updateParameters();
 
     var xScale = xScaleType()
     .domain([min_x_value,max_x_value])
