@@ -302,7 +302,17 @@ if (!this_d){
 
   console.log(dep_code_names[this_code])
 
-let this_html = `${dep_code_names[this_code]}<br> Résultats non parvenus`
+let this_html 
+
+if (representation_territoriale == 'departement'){
+  this_html = `${dep_code_names[this_code]}<br> Résultats non parvenus`
+}
+else if(representation_territoriale == 'region'){
+  this_html = `${reg_code_names[this_code]}<br> Résultats non parvenus`
+}
+else{
+  this_html = `Résultats non parvenus`
+}
 
 d3.select('#tooltip')
 .style('display', 'flex')
@@ -1650,3 +1660,7 @@ const dep_code_names = {"01": "Ain", "02": "Aisne", "03": "Allier", "04": "Alpes
  "ZB": "Martinique", "ZC": "Guyane", "ZD": "La Réunion", "ZS": "Saint-Pierre-et-Miquelon", "ZM": "Mayotte", 
  "ZX": "Saint-Martin/Saint-Barthélemy", "ZW": "Wallis et Futuna", "ZP": "Polynésie française", 
  "ZN": "Nouvelle-Calédonie", "ZZ": "Français établis hors de France", "75": "Paris"}
+
+
+
+ const reg_code_names = {'11': 'Ile-de-France', '75' : 'Nouvelle-Aquitaine', '93' : 'Provence-Alpes-Côte d\'Azur '}
