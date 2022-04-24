@@ -282,7 +282,10 @@ function makeCirclechart(data0) {
 // yScale.domain([thisYMin, thisYMax])
 
 
-    changeAxis(xScale, yScale)
+    // changeAxis(xScale, yScale)
+
+    let axis_bottom = d3.axisBottom(xScale).ticks(10).tickFormat(numbers_separators);
+    let axis_left = d3.axisLeft(yScale).ticks(10);
 
 
   g.select('g.innerGraph')
@@ -441,7 +444,7 @@ g_inner
 g_inner
 .call(yAxisLabel, graphParameters.selected_yRows[0]);
 
-    customizeAxis()
+    // customizeAxis()
     drawLegend()
     addCustomCode()
 
