@@ -3,7 +3,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 9514,3674,5840,82,79,5679,986,ZW,Wallis et Futuna,1849,3830,
 24435,15107,9328,471,220,8637,977,ZX,Saint-Martin/Saint-Barthélemy,4787,3850,
 59800,13098,46702,3950,2044,40708,048,48,Lozère,18644,22064,https://www.liberation.fr/resultats-elections/occitanie/lozere/
-90957,23480,67477,5788,2985,58704,023,23,Creuse,28152,30552,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/creuse/
+90958,23481,67477,5788,2985,58704,023,23,Creuse,28152,30552,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/creuse/
 92421,50380,42041,1595,2045,38401,976,ZM,Mayotte,22694,15707,https://www.liberation.fr/resultats-elections/mayotte/mayotte/
 93748,25021,68727,4542,1996,62189,090,90,Territoire de Belfort,30202,31987,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/territoire-de-belfort/
 103058,62970,40088,3064,1217,35807,973,ZC,Guyane,21734,14073,https://www.liberation.fr/resultats-elections/guyane/guyane/
@@ -64,6 +64,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 457763,115793,341970,20639,7118,314213,045,45,Loiret,133331,180882,https://www.liberation.fr/resultats-elections/centre-val-de-loire/loiret/
 468146,116494,351652,27453,10906,313293,063,63,Puy-de-Dôme,124825,188468,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/puy-de-dome/
 471760,100204,371556,26939,10963,333654,022,22,Côtes-d'Armor,123798,209856,https://www.liberation.fr/resultats-elections/bretagne/cotes-d-armor/
+518929,126022,392907,26035,9693,357179,017,17,Charente-Maritime,156020,201159,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/charente-maritime/
 519954,124853,395101,34380,12176,348545,064,64,Pyrénées-Atlantiques,128779,219766,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/pyrenees-atlantiques/
 531918,141261,390657,22170,5896,362591,068,68,Haut-Rhin,170777,191814,https://www.liberation.fr/resultats-elections/grand-est/haut-rhin/
 551209,120713,430496,25046,10184,395266,085,85,Vendée,150772,244494,https://www.liberation.fr/resultats-elections/pays-de-la-loire/vendee/
