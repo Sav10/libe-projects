@@ -298,6 +298,8 @@ let this_d = _.find(data, d => d[location_variable] == this_code);
 
 if (!this_d){
 
+  console.log(this_code)
+
 let this_html = `Français de l'étranger<br> Résultats non parvenus`
 
 d3.select('#tooltip')
