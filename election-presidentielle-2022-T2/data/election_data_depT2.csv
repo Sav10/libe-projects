@@ -3,7 +3,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 9514,3674,5840,82,79,5679,986,ZW,Wallis et Futuna,1849,3830,
 24435,15107,9328,471,220,8637,977,ZX,Saint-Martin/Saint-Barthélemy,4787,3850,
 59800,13098,46702,3950,2044,40708,048,48,Lozère,18644,22064,https://www.liberation.fr/resultats-elections/occitanie/lozere/
-90958,23481,67477,5858,2913,58706,023,23,Creuse,28153,30553,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/creuse/
+90958,23481,67477,5866,2905,58706,023,23,Creuse,28153,30553,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/creuse/
 92421,50380,42041,1595,2045,38401,976,ZM,Mayotte,22694,15707,https://www.liberation.fr/resultats-elections/mayotte/mayotte/
 93748,25021,68727,4542,1996,62189,090,90,Territoire de Belfort,30202,31987,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/territoire-de-belfort/
 103058,62970,40088,3064,1217,35807,973,ZC,Guyane,21734,14073,https://www.liberation.fr/resultats-elections/guyane/guyane/
@@ -31,8 +31,8 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 205673,118753,86920,2407,1710,82803,987,ZP,Polynésie française,39913,42890,
 218713,142592,76121,3037,1332,71752,988,ZN,Nouvelle-Calédonie,27958,43794,
 219481,49491,169990,13860,6388,149742,012,12,Aveyron,59789,89953,https://www.liberation.fr/resultats-elections/occitanie/aveyron/
-224457,60255,164202,12428,3875,147899,018,18,Cher,70160,77739,https://www.liberation.fr/resultats-elections/centre-val-de-loire/cher/
-224818,51034,173784,10312,4203,159269,053,53,Mayenne,57006,102263,https://www.liberation.fr/resultats-elections/pays-de-la-loire/mayenne/
+224457,60255,164202,12431,3872,147899,018,18,Cher,70160,77739,https://www.liberation.fr/resultats-elections/centre-val-de-loire/cher/
+224818,51034,173784,10321,4194,159269,053,53,Mayenne,57006,102263,https://www.liberation.fr/resultats-elections/pays-de-la-loire/mayenne/
 237969,61725,176244,11099,3938,161207,089,89,Yonne,83169,78038,https://www.liberation.fr/resultats-elections/bourgogne-franche-comte/yonne/
 241312,58106,183206,12902,6085,164219,047,47,Lot-et-Garonne,82874,81345,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/lot-et-garonne/
 244640,58413,186227,11879,4556,169792,041,41,Loir-et-Cher,78433,91359,https://www.liberation.fr/resultats-elections/centre-val-de-loire/loir-et-cher/
@@ -41,12 +41,12 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 257508,64403,193105,13364,6002,173739,016,16,Charente,78085,95654,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/charente/
 263777,64447,199330,15870,8868,174592,087,87,Haute-Vienne,71263,103329,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/haute-vienne/
 273264,64481,208783,13581,5606,189596,079,79,Deux-Sèvres,71791,117805,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/deux-sevres/
-277925,67786,210139,12537,5208,192394,088,88,Vosges,100852,91542,https://www.liberation.fr/resultats-elections/grand-est/vosges/
+277925,67786,210139,12541,5204,192394,088,88,Vosges,100852,91542,https://www.liberation.fr/resultats-elections/grand-est/vosges/
 279960,68620,211340,15152,6686,189502,011,11,Aude,104038,85464,https://www.liberation.fr/resultats-elections/occitanie/aude/
 298180,71489,226691,17176,8306,201209,081,81,Tarn,94441,106768,https://www.liberation.fr/resultats-elections/occitanie/tarn/
 304007,79605,224402,13588,4885,205929,028,28,Eure-et-Loir,96185,109744,https://www.liberation.fr/resultats-elections/centre-val-de-loire/eure-et-loir/
 304670,166201,138469,11198,7353,119918,972,ZB,Martinique,73000,46918,https://www.liberation.fr/resultats-elections/martinique/martinique/
-306076,76152,229924,15458,6242,208224,086,86,Vienne,83050,125174,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/vienne/
+306076,76152,229924,15475,6225,208224,086,86,Vienne,83050,125174,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/vienne/
 315941,166884,149057,8511,8211,132335,971,ZA,Guadeloupe,92106,40229,https://www.liberation.fr/resultats-elections/guadeloupe/guadeloupe/
 318129,72608,245521,18962,10185,216374,024,24,Dordogne,104894,111480,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/dordogne/
 320730,79968,240762,17239,5266,218257,073,73,Savoie,92487,125770,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/savoie/
@@ -86,11 +86,13 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 771870,169029,602841,39489,13090,550262,035,35,Ille-et-Vilaine,159930,390332,https://www.liberation.fr/resultats-elections/bretagne/ille-et-vilaine/
 778702,217147,561555,30328,8613,522614,006,06,Alpes-Maritimes,260627,261987,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/alpes-maritimes/
 796782,245450,551332,36140,10115,505077,094,94,Val-de-Marne,128873,376204,https://www.liberation.fr/resultats-elections/ile-de-france/val-de-marne/
+799860,234021,565839,37015,11351,517473,091,91,Essonne,178906,338567,https://www.liberation.fr/resultats-elections/ile-de-france/essonne/
 821141,214229,606912,33345,10718,562849,083,83,Var,310126,252723,https://www.liberation.fr/resultats-elections/provence-alpes-cote-d-azur/var/
 879653,222737,656916,43994,12095,600827,076,76,Seine-Maritime,268688,332139,https://www.liberation.fr/resultats-elections/normandie/seine-maritime/
 885888,229614,656274,43485,11355,601434,038,38,Isère,241749,359685,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/isere/
 899809,266516,633293,42889,11619,578785,077,77,Seine-et-Marne,249014,329771,https://www.liberation.fr/resultats-elections/ile-de-france/seine-et-marne/
 961628,254934,706694,40932,11378,654384,078,78,Yvelines,189474,464910,https://www.liberation.fr/resultats-elections/ile-de-france/yvelines/
 1056923,255113,801810,57816,16876,727118,044,44,Loire-Atlantique,221938,505180,https://www.liberation.fr/resultats-elections/pays-de-la-loire/loire-atlantique/
-1093839,273598,820241,38147,19560,762534,062,62,Pas-de-Calais,438390,324144,https://www.liberation.fr/resultats-elections/hauts-de-france/pas-de-calais/
+1093839,273598,820241,38154,19553,762534,062,62,Pas-de-Calais,438390,324144,https://www.liberation.fr/resultats-elections/hauts-de-france/pas-de-calais/
+1181791,315218,866573,49312,13997,803264,069,69,Rhône,251720,551544,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/rhone/
 1814746,521131,1293615,67258,26557,1199800,059,59,Nord,565762,634038,https://www.liberation.fr/resultats-elections/hauts-de-france/nord/
