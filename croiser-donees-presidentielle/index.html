@@ -771,14 +771,6 @@ transform: translate(-21px,0px);
   height: 50px;
 }
 
-
-   @media screen and (min-width: 450px) {
-
-.triangle{
-display: none;
-}
-}
-
   </style>
 
 </head>
@@ -809,9 +801,10 @@ display: none;
               <!-- <div id="sparkline"></div> -->
             </div>
          <!-- <div id="map_geo"><svg class="map"></svg></div> -->
-    <div id="svg-container-dep" class='svg_map'></div>
-    <div id="svg-container-reg" class='svg_map' style="visibility: hidden;"></div>
-      <div id="svg-container-circ" class='svg_map' style="visibility: hidden;"></div>
+    <div id="svg-container-dep" class='svg_map'>
+        <div id="chart_container"><svg></svg>
+        </div>
+    </div>
 
       <div id="representations" style="display: none;">
                   <div id="information_button" style="max-width: 700px; margin:0 auto; position: absolute; cursor: pointer;right: 50px"><img src="img/I-info.svg" style="display:inline-block;float: right; width: 1.5em"> 
