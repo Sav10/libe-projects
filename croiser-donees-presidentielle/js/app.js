@@ -167,7 +167,7 @@ const this_circle_radius = 2
     function initChart() {
 
       var svg = d3.select("#chart_container svg")
-/*      .call(responsivefy);*/
+      .call(responsivefy);
 
 console.log(svg.node())
 
