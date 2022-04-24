@@ -26,7 +26,7 @@ const chartSubTitle = ""
 
 const data_file = "data_elec_macron.csv"
 const x_var = 'revenu_median'
-const y_var = 'score'
+const y_var = 'scoreMacron'
 
 const x_axis_title = "Part de vote Macron"
 const y_axis_title = "Revenu médian"
@@ -210,7 +210,7 @@ function makeCirclechart(data0) {
 
     var data = _.cloneDeep(data0);
 
-    data = recalculateAndTransformDate(data);
+    // data = recalculateAndTransformDate(data);
 
     var thisXvar = graphParameters['selected_xRows'][0];
     var thisYvar = graphParameters['selected_yRows'][0];
@@ -1057,7 +1057,7 @@ d[e] = +d[e]
 
 initChart();
 
-/*makeCirclechart(data);*/
+makeCirclechart(data_explore);
 
 
 
