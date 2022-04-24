@@ -38,7 +38,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 255931,62164,193767,15797,5715,172255,007,07,Ardèche,82001,90254,https://www.liberation.fr/resultats-elections/auvergne-rhone-alpes/ardeche/
 257508,64403,193105,13364,6002,173739,016,16,Charente,78085,95654,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/charente/
 263777,64447,199330,15870,8868,174592,087,87,Haute-Vienne,71263,103329,https://www.liberation.fr/resultats-elections/nouvelle-aquitaine/haute-vienne/
-277925,67786,210139,12514,5231,192394,088,88,Vosges,100839,91555,https://www.liberation.fr/resultats-elections/grand-est/vosges/
+277925,67786,210139,12512,5233,192394,088,88,Vosges,100839,91555,https://www.liberation.fr/resultats-elections/grand-est/vosges/
 279960,68620,211340,15152,6686,189502,011,11,Aude,104038,85464,https://www.liberation.fr/resultats-elections/occitanie/aude/
 298180,71489,226691,17176,8306,201209,081,81,Tarn,94441,106768,https://www.liberation.fr/resultats-elections/occitanie/tarn/
 304007,79605,224402,13588,4885,205929,028,28,Eure-et-Loir,96185,109744,https://www.liberation.fr/resultats-elections/centre-val-de-loire/eure-et-loir/
@@ -69,6 +69,7 @@ Inscrits,Abstentions,Votants,Blancs,Nuls,Exprimes,codeDepartement3d,code_departe
 609316,135060,474256,33469,11315,429472,056,56,Morbihan,159717,269755,https://www.liberation.fr/resultats-elections/bretagne/morbihan/
 676058,274522,401536,20485,16760,364291,974,ZD,La Réunion,217021,147270,https://www.liberation.fr/resultats-elections/la-reunion/la-reunion/
 709818,161974,547844,42852,12523,492469,029,29,Finistère,160073,332396,https://www.liberation.fr/resultats-elections/bretagne/finistere/
+746147,212882,533265,30071,8545,494649,057,57,Moselle,245060,249589,https://www.liberation.fr/resultats-elections/grand-est/moselle/
 771870,169029,602841,39489,13090,550262,035,35,Ille-et-Vilaine,159930,390332,https://www.liberation.fr/resultats-elections/bretagne/ille-et-vilaine/
 879718,222802,656916,43994,12095,600827,076,76,Seine-Maritime,268688,332139,https://www.liberation.fr/resultats-elections/normandie/seine-maritime/
 1093839,273598,820241,38147,19560,762534,062,62,Pas-de-Calais,438390,324144,https://www.liberation.fr/resultats-elections/hauts-de-france/pas-de-calais/
