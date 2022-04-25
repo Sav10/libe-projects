@@ -23,6 +23,10 @@ let xScale,
     left: 40
   };
 
+  const padding_left = 0
+
+  const padding_top = 0
+
 
 const chartTitle = "Vote Macron et revenu médian"
 
@@ -193,46 +197,13 @@ function makeCirclechart(data0) {
     .range([0, (manualReusableParameters.circleRadius.value*13)]);
 
 
-   manualReusableParameters.rangeX.calculated_left_value =  0;
-
-
-   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
-
-    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
-
-    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
-
-    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
-
-
-    var thisNewMin = this_Min.subtract(this_Diff, 'days')
-
-    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
-   }
-
-    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
-
-   manualReusableParameters.rangeY.calculated_left_value =  0;
-    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
-
-//     var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
-//     var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
-//     var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
-//     var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
-
-
-// xScale.domain([thisXMin, thisXMax])
-// yScale.domain([thisYMin, thisYMax])
-
-
-    changeAxis(xScale, yScale)
 
 
   g.select('g.innerGraph')
-  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+  .attr("transform", "translate(" + padding_left + "," + padding_top + ")");
 
   g.select("g.axis.axis--x")
-  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .attr("transform", "translate(" + padding_left + "," + (height + padding_top) +")")
   .call(axis_bottom)
   .selectAll("text")
   .style("text-anchor", "middle")
@@ -240,20 +211,8 @@ function makeCirclechart(data0) {
   .attr("dy", "0.7em")
   .attr("transform", "rotate(0)");
 
-  if (manualReusableParameters.rotateXRow.value == true){
-
-    g.select("g.axis.axis--x")
-    .selectAll("g.tick")
-    .select("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", ".15em")
-    .attr("transform", "rotate(-40)");
-
-}
-
 g.select("g.axis.axis--y")
-.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.attr('transform', 'translate(' + padding_left + ',' + padding_top + ')')
 .call(axis_left);
 
 
@@ -268,8 +227,8 @@ g.select("g.axis.axis--y")
 // And here https://www.freecodecamp.org/news/d3-and-canvas-in-3-steps-8505c8b27444/
 
     let this_container = d3.select('#chart_container'),
-    this_width = manualReusableParameters.chart_width.value,
-    this_height = manualReusableParameters.chart_height.value,
+    this_width = svg_width,
+    this_height = svg_height
     this_aspect = this_width / this_height;
 
 let targetWidth = parseInt(this_container.style("width")) - margin.left - margin.right;
@@ -417,73 +376,6 @@ const colors_candidats = {
 }
 
 
-
-const candidate_names = [
-'MACRON',
- 'LE PEN']
-
-const selected_candidates = [
-'MACRON',
-'LE PEN'];
-
-
-const vote_variables = ['Inscrits', 
-'Abstentions', 
-'Votants', 
-'Blancs', 'Nuls',
-'Exprimes']
-
-
-var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
-width2 = 1000 - margin2.left - margin2.right,
-height2 = 450 - margin2.top - margin2.bottom,
-padding = 0.3,
-max_width = 1000,
-width_slider = (width2 < (mainWidth -70) ? width2 : (mainWidth -70)),
-width_slider_g = 960,
-width2 = width2 < mainWidth ? width2 : mainWidth,
-map,
-app_data = {},
-minMaxRectWidth = [12,30],
-scaleWidth,
-thisMinZoom = 2,
-mapstate = 0,
-fulldata,
-daterange = {},
-timer_duration = 5000,
-this_date_pretty,
-currentDate,
-maxvalues = {},
-tMax,
-t0,
-selected_dep = [],
-last_week_day;
-
-var circleScale = 
-d3.scaleSqrt()
-.range([5, 40]);
-
-
-d3.select('#information')
-.style('min-height', 50 + 'px')
-
-var tooltip_initial_content = '';
-
-const svg = d3.select(".carte svg#geo_map");
-
-const allPaths = svg.selectAll('path');
-svg.style('max-height', $(window).height()*0.9 + 'px')
-
-
-if($(window).width() >= 1000){
-
-  this_zoom_level = 6;
-}
-
-var mainColor = '#E3234A';
-var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
-reset_tooltip()
 
 /////////////////////////
 //////////////////////////////////////// configuration
