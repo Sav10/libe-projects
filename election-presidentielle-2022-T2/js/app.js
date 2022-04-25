@@ -641,6 +641,9 @@ Promise.all([
 
  d['loc_winner'] = this_winner['name']
  d['loc_winner_score'] = this_winner['score']
+
+ d['Progression_depuis2017'] = d.LEPEN_score - d.Score_Lepen_2017
+
     })
 
 
