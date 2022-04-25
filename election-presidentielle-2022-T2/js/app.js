@@ -242,7 +242,11 @@ function draw_affichage(){
 d3.selectAll('#affichage .display_element')
 
 let all_displayed_elements = _.cloneDeep(candidate_names)
-all_displayed_elements.unshift('candidat en tête', 'abstention');
+all_displayed_elements.unshift('candidat en tête');
+
+all_displayed_elements.push('abstention')
+
+all_displayed_elements.push('blanc ou nul')
 
 const elements_selection = d3.select('div#affichage').selectAll('div.display_element')
 .data(all_displayed_elements)
@@ -263,7 +267,7 @@ d3.selectAll('#affichage .display_element')
 
 let this_background_color = ''
 
-if(d == 'candidat en tête' || d == 'abstention'){
+if(d == 'candidat en tête' || d == 'abstention' || 'blanc ou nul'){
 
 this_background_color = 'black'
 }
@@ -371,6 +375,15 @@ if (selected_element == 'candidat en tête'){
 else if (selected_element == 'abstention'){
 
 let this_selected_candidate = [{'name':'Abstention', 'score': _.round(100*this_d['Abstentions'] / this_d['Inscrits'], 1)}]
+    this_html +=  `<span class='details'>
+    ${drawGraph(this_selected_candidate)}</span>`
+
+
+}
+else if (selected_element == 'blanc ou nul'){
+ 
+let this_selected_candidate = [{'name':'Blancs ou nuls', 'score': _.round(100*(this_d['Blancs'] + this_d['Nuls']) / this_d['Inscrits'], 1)}]
+console.log(this_selected_candidate)
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
 
@@ -628,8 +641,11 @@ Promise.all([
 
  d['loc_winner'] = this_winner['name']
  d['loc_winner_score'] = this_winner['score']
-
     })
+
+
+
+console.log(data_dep)
 
     data_reg.forEach(d =>{
 
@@ -1071,7 +1087,7 @@ d3.select("#legend .empty_circle")
 
 let this_color_range = d3.scaleLinear()
   .range(['white', 'black'])
-  .domain([0, 50]);
+  .domain([15, 50]);
 
 for (i in geo_objects){
 
@@ -1101,7 +1117,66 @@ for (i in geo_objects){
 
 color_progressive_scale
 .range(['white', 'black'])
-.domain([0, 50]);
+.domain([15, 50]);
+legend_cells.select('.swatch')
+.style('fill', function(d){ return color_progressive_scale(d)})
+
+
+d3.select('#legendots')
+.style('display', 'none')
+
+
+d3.select('#legend')
+.style('display', 'block')
+
+
+/*d3.select('#legend #intitule_legend')
+.text('Répartition de la abstention')*/
+
+}
+
+else if (name == 'blanc ou nul'){
+
+
+d3.select("#legend .empty_circle")
+.style('display', 'none')
+
+
+let this_color_range = d3.scaleLinear()
+  .range(['white', 'black'])
+  .domain([0, 15]);
+
+for (i in geo_objects){
+
+  let this_data = geo_objects[i].data
+    if (this_data){
+  let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
+
+  all_those_paths
+  .style('stroke-width', 0)
+  .style('fill', d => {
+    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
+      let this_dep_data = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]
+
+ let this_dep_blanc_nul = _.round(100*(this_dep_data['Blancs'] + this_dep_data['Nuls']) / this_dep_data['Inscrits'], 1)
+console.log(this_dep_blanc_nul)
+
+ return this_color_range(this_dep_blanc_nul)
+    }
+    return 'rgb(221, 221, 221)'
+
+  })
+
+
+}
+
+
+
+}
+
+color_progressive_scale
+.range(['white', 'black'])
+.domain([0, 15]);
 legend_cells.select('.swatch')
 .style('fill', function(d){ return color_progressive_scale(d)})
 
