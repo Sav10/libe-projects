@@ -340,6 +340,7 @@ this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score
 this_dep_scores = _.slice(this_dep_scores, 0, 7)
 
 let this_loc_name
+let rajout_extreme_droite
 
 if(location_variable == 'code_departement'){
   this_loc_name = this_d['lib_departement'] + ' (' + this_d['code_departement'] + ')'
@@ -392,10 +393,14 @@ console.log(this_selected_candidate)
 }
 else if (selected_element == 'progression de l\'extrême droite'){
  
-let this_selected_candidate = [{'name':'Progression de l\'extrême droite', 'score': this_d['Progression_depuis2017']}]
+let this_selected_candidate = [{'name':'Progression de l\'extrême droite', 'score': this_d['Progression_depuis2017'],
+'score_lepen_2017' :this_d['Score_Lepen_2017'],  'score_lepen_2022' :this_d['LE PEN_score']}]
 console.log(this_selected_candidate)
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
+
+    rajout_extreme_droite = `<br>Score de Le Pen en 2017 : <b>${String(this_d['Score_Lepen_2017']).replace('.', ',')}%</b>
+    <br>Score de Le Pen en 2022 : <b>${String(this_d['LE PEN_score']).replace('.', ',')}%</b>`
 
 
 }
@@ -419,6 +424,9 @@ let this_selected_candidate = [{'name':selected_element, 'score': this_d[selecte
 
 this_html += `<hr>Nombre de votes exprimés : ${this_d['Exprimes']}<br>
 Taux d'abstention : ${String(_.round(100*this_d['Abstentions'] / +this_d['Inscrits'], 1)).replace('.', ',')}%`
+
+
+this_html += rajout_extreme_droite
 
 d3.select('#tooltip')
 .style('display', 'flex')
