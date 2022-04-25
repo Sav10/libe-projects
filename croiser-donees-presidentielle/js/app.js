@@ -88,36 +88,7 @@ const this_circle_radius = 2
   var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
 
 
-  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},
-  "chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},
-  "chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},
-  "padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
-  "padding_left":{"value":24,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
-  "padding_right":{"value":5,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
-  "padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
-  "sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},
-  "invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},
-  "differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},
-  "rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":92.8,"manual_left_value":min_x_value,"manual_right_value":max_x_value,"activated":1,"category":"general"},
-  "rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":46280,"manual_left_value":min_y_value,"manual_right_value":max_y_value,"activated":1,"category":"general"},
-  "color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},
-  "persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},
-  "indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},
-  "displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},
-  "startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},
-  "caseLegend":{"value":false,"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":"topLeft","activated":1,"category":"legend"},
-  "padding_left_legend":{"value":25,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},
-  "padding_top_legend":{"value":-35,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},
-  "legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"activated":true,"category":"legend","dependOn":"caseLegend"},
-  "inner_padding_legend":{"value":-1,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"activated":true,"category":"legend","dependOn":"caseLegend"},
-  "textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","activated":true,"category":"legend","dependOn":"caseLegend"},
-  "leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},
-  "bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},
-  "leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},
-  "bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},
-  "ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},
-  "leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},
-  "bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},
+  var manualReusableParameters = {
   "yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},
   "xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},
   "yAxisLabelPadding":{"value":-24,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},
@@ -126,39 +97,12 @@ const this_circle_radius = 2
   "xAxisLabelText":{"value":x_axis_title,"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},
   "trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},
   "hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},
-  "dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
-  "dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},
-  "previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},
-  "groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},
-  "logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},
-  "beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},
-  "beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},
-  "verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},
   "circleRadius":{"value":this_circle_radius,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},
   "circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},
   "customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--y .tick text').text(function(d){return d+'%'});" + 
   "d3.selectAll('.axis--x .tick text').text(function(d){return numbers_separators(d)});" + 
-  "d3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');"},
-  "colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},
-  "colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},
-  "colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"taux_vaccination_adultes","value":"taux_vaccination_adultes"},{"label":"niveau_vie_median","value":"niveau_vie_median"},{"label":"effectif","value":"effectif"},{"label":"aglomeration","value":"aglomeration"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},
-  "stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},
-  "stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},
-  "CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},
-  "automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},
-  "ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},
-  "caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
-  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[libelle_epci]] ([[dep]])<br>\n[[taux_vaccination_adultes]]% <strong>des adultes sont vaccinés</strong><br>\n<strong>Revenu médian : </strong>[[" + x_var + "|number_separator]] euros<br>\n Interdécile : [[interdecile]] \n<br> [[" + x_var + "]]% <strong>de chômage</strong><br>[[vote_fn]]% <strong>de vote FN</strong><br>[[population_carto]] habitants"},
-  "moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},
-  "selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},
-  "selectedElement":{"type":"none","activated":0,"category":"none"},
-  "selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},
-  "elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},
-  "barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},
-  "numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},
-  "miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},
-  "miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},
-  "alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+  "d3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');"}
+}
 
   var graphParameters = {"selected_xRows":[x_var],"selected_yRows":[y_var],"selected_size":[circle_size],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune",x_var, y_var],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
   "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":chartTitle,"chartSubTitle":chartSubTitle,"chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
@@ -215,8 +159,7 @@ function makeCirclechart(data0) {
     var data = _.cloneDeep(data0);
 
 
-    data = recalculateAndTransformDate(data);
-
+ 
     console.log(data)
 
     var thisXvar = graphParameters['selected_xRows'][0];
@@ -237,7 +180,7 @@ function makeCirclechart(data0) {
 
     updateParameters();
 
-   xScale = xScaleType()
+   xScale = d3.scaleLinear()
     .domain([min_x_value,max_x_value])
     .range([0, width]);
 
@@ -1019,7 +962,7 @@ else{
 
 Promise.all([
     // d3.csv('data/election_data_regT2.csv'),
-    d3.csv('https://sav10.github.io/libe-projects/explorer-presidentielle-2022-T2/data/data2022_presidentielle_T2.csv')
+    d3.csv('data/data2022_presidentielle_T2.csv')
     // d3.csv('data/election_data_depT2.csv'),
 /*    d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022-T2/data/election_data_depT2.csv'),
     d3.csv('data/data_circos3.csv')*/
@@ -1029,10 +972,11 @@ Promise.all([
   ready(files[0]
 /*    , files[1], files[2]*/
     )
-}).catch(function(err) {
+})
+/*.catch(function(err) {
   console.log('erreur' + ' ' + err)
 })
-
+*/
 //// Ready function (to load data)
 
   function ready(data_explore) {
@@ -1376,20 +1320,21 @@ function updateParameters(){
 
   var svg = d3.select("svg");
 
+
+
+
   svg
-  .attr('width', manualReusableParameters.chart_width.value);
+  .attr('width', svg_width);
 
       // d3.select('div#chart')
       // .style('width', manualReusableParameters.chart_width.value);
 
-      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg.attr("width", svg_width);
       svg
-      .attr('height', manualReusableParameters.chart_height.value);
+      .attr('height', svg_height);
 
-      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
-      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
-      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
-      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+      width = svg_width - initMargin.left - initMargin.right;
+      height = svg_height - initMargin.top - initMargin.bottom;
 
     }
 

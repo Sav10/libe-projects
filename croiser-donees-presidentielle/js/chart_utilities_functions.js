@@ -715,9 +715,6 @@ function getPivotArrayOfObj(dataArray, rowIndex, colIndex, dataIndex) {
 
 function formatNumbers(n){
 
-  if (manualReusableParameters.dateField.value && manualReusableParameters.dateField.manual_range_value && typeof(n) == "object"){
-return n
-  }
 
   var new_n = /^(\d+,\d+)$/.test(n) ? n.replace(',', '.') : n;
   new_n = +new_n;
