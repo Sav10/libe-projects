@@ -194,7 +194,7 @@ function makeCirclechart(data0) {
 
     rScale = d3.scaleSqrt()
     .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
-    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+    .range([0, (manualReusableParameters.circleRadius.value)]);
 
 let axis_bottom = d3.axisBottom(xScale).ticks(10).tickFormat(numbers_separators);
 let axis_left = d3.axisLeft(yScale).ticks(10);
@@ -320,8 +320,8 @@ function drawPoint(d, i) {
     .append('g')
     .attr('class', 'ball')
     .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
-    .on('mouseover', function(d, i){ show_tooltip(d)})
-    .on('mouseout', function(d){ hide_tooltip()});
+/*    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});*/
 
     new_circles
     .append('circle')
@@ -344,9 +344,9 @@ g_inner
 g_inner
 .call(yAxisLabel, graphParameters.selected_yRows[0]);
 
-    customizeAxis()
+/*    customizeAxis()
     drawLegend()
-    addCustomCode()
+    addCustomCode()*/
 
 }
 
