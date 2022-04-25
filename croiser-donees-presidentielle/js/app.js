@@ -963,7 +963,7 @@ d[e] = +d[e]
 
 initChart();
 
-makeCirclechart(data_explore);
+/*makeCirclechart(data_explore);*/
 
 
 
