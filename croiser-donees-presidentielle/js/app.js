@@ -196,7 +196,8 @@ function makeCirclechart(data0) {
     .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
     .range([0, (manualReusableParameters.circleRadius.value*13)]);
 
-
+let axis_bottom = d3.axisBottom(xScale).ticks(10).tickFormat(numbers_separators);
+let axis_left = d3.axisLeft(yScale).ticks(10);
 
 
   g.select('g.innerGraph')
@@ -247,7 +248,7 @@ let y_factor = targetTotalHeight / this_height
 
 const container = d3.select('#chart_container')
 
-const this_margin_left = parseInt((margin.left + manualReusableParameters.padding_left.value)*x_factor)
+const this_margin_left = parseInt((margin.left + padding_left)*x_factor)
 
 const canvasChart = container.append('canvas')
 .attr('width', (width)*x_factor)
@@ -261,7 +262,7 @@ const context = canvasChart.node().getContext('2d');
 const pointColor = '#3585ff'
 
 
-    var xScale_canvas = xScaleType()
+    var xScale_canvas = d3.scaleLinear()
     .domain([min_x_value,max_x_value])
     .range([0, width*x_factor]);
 
@@ -376,6 +377,68 @@ const colors_candidats = {
 }
 
 
+
+const candidate_names = [
+'MACRON',
+ 'LE PEN']
+
+const selected_candidates = [
+'MACRON',
+'LE PEN'];
+
+
+
+
+var margin2 = {top: 80, right: 30, bottom: 60, left: 40},
+width2 = 1000 - margin2.left - margin2.right,
+height2 = 450 - margin2.top - margin2.bottom,
+padding = 0.3,
+max_width = 1000,
+width_slider = (width2 < (mainWidth -70) ? width2 : (mainWidth -70)),
+width_slider_g = 960,
+width2 = width2 < mainWidth ? width2 : mainWidth,
+map,
+app_data = {},
+minMaxRectWidth = [12,30],
+scaleWidth,
+thisMinZoom = 2,
+mapstate = 0,
+fulldata,
+daterange = {},
+timer_duration = 5000,
+this_date_pretty,
+currentDate,
+maxvalues = {},
+tMax,
+t0,
+selected_dep = [],
+last_week_day;
+
+var circleScale = 
+d3.scaleSqrt()
+.range([5, 40]);
+
+
+d3.select('#information')
+.style('min-height', 50 + 'px')
+
+var tooltip_initial_content = '';
+
+const svg = d3.select(".carte svg#geo_map");
+
+const allPaths = svg.selectAll('path');
+svg.style('max-height', $(window).height()*0.9 + 'px')
+
+
+if($(window).width() >= 1000){
+
+  this_zoom_level = 6;
+}
+
+var mainColor = '#E3234A';
+var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
+reset_tooltip()
 
 /////////////////////////
 //////////////////////////////////////// configuration
