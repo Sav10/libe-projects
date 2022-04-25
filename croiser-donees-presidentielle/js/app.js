@@ -115,7 +115,7 @@ const this_circle_radius = 2
     function initChart() {
 
       var svg = d3.select("#chart_container svg")
-      .call(responsivefy);
+/*      .call(responsivefy);*/
 
 console.log(svg.node())
 
@@ -293,7 +293,7 @@ function drawPoint(d, i) {
 }
 
 
-    var circles = g_inner
+/*    var circles = g_inner
     .selectAll('.ball')
     .data(_.slice(data, 0, 1000));
 
@@ -319,10 +319,9 @@ function drawPoint(d, i) {
     .append('g')
     .attr('class', 'ball')
     .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
-/*    .on('mouseover', function(d, i){ show_tooltip(d)})
     .on('mouseout', function(d){ hide_tooltip()});*/
 
-    new_circles
+ /*   new_circles
     .append('circle')
     .attr('cx', 0)
     .attr('cy', 0)
@@ -335,7 +334,7 @@ function drawPoint(d, i) {
     .style('text-anchor', 'middle')
     .style('fill', 'black')
     .attr('y', 4)
-    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});*/
 
 g_inner
 .call(xAxisLabel, graphParameters.selected_xRows[0]);
