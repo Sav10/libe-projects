@@ -690,8 +690,13 @@ console.log(data_dep)
  d['loc_winner'] = this_winner['name']
  d['loc_winner_score'] = this_winner['score']
 
+ d.Score_Lepen_2017 = +d.Score_Lepen_2017
+ d['Progression_depuis2017'] = _.round(d['LE PEN_score'] - d.Score_Lepen_2017, 1)
+
     })
 
+
+console.log(data_reg)
 
     circos_data.forEach(d =>{
 
