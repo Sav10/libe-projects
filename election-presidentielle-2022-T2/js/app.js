@@ -247,6 +247,7 @@ all_displayed_elements.unshift('candidat en tête');
 all_displayed_elements.push('abstention')
 
 all_displayed_elements.push('blanc ou nul')
+all_displayed_elements.push('progression de l\'extrême droite')
 
 const elements_selection = d3.select('div#affichage').selectAll('div.display_element')
 .data(all_displayed_elements)
@@ -267,7 +268,7 @@ d3.selectAll('#affichage .display_element')
 
 let this_background_color = ''
 
-if(d == 'candidat en tête' || d == 'abstention' || 'blanc ou nul'){
+if(d == 'candidat en tête' || d == 'abstention' || d == 'blanc ou nul' || d == 'progression de l\'extrême droite'){
 
 this_background_color = 'black'
 }
@@ -383,6 +384,15 @@ let this_selected_candidate = [{'name':'Abstention', 'score': _.round(100*this_d
 else if (selected_element == 'blanc ou nul'){
  
 let this_selected_candidate = [{'name':'Blancs ou nuls', 'score': _.round(100*(this_d['Blancs'] + this_d['Nuls']) / this_d['Inscrits'], 1)}]
+console.log(this_selected_candidate)
+    this_html +=  `<span class='details'>
+    ${drawGraph(this_selected_candidate)}</span>`
+
+
+}
+else if (selected_element == 'progression de l\'extrême droite'){
+ 
+let this_selected_candidate = [{'name':'Progression de l\'extrême droite', 'score': this_d['Progression_depuis2017']}]
 console.log(this_selected_candidate)
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
@@ -642,7 +652,9 @@ Promise.all([
  d['loc_winner'] = this_winner['name']
  d['loc_winner_score'] = this_winner['score']
 
- d['Progression_depuis2017'] = d.LEPEN_score - d.Score_Lepen_2017
+ d.Score_Lepen_2017 = +d.Score_Lepen_2017
+
+ d['Progression_depuis2017'] = _.round(d['LE PEN_score'] - d.Score_Lepen_2017, 1)
 
     })
 
@@ -1136,6 +1148,9 @@ d3.select('#legend')
 /*d3.select('#legend #intitule_legend')
 .text('Répartition de la abstention')*/
 
+d3.selectAll('#legend .mapLegend .legendCells .cell').filter(d=>d> 50).style('display', "none")
+d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d + '%')
+
 }
 
 else if (name == 'blanc ou nul'){
@@ -1162,7 +1177,6 @@ for (i in geo_objects){
       let this_dep_data = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]
 
  let this_dep_blanc_nul = _.round(100*(this_dep_data['Blancs'] + this_dep_data['Nuls']) / this_dep_data['Inscrits'], 1)
-console.log(this_dep_blanc_nul)
 
  return this_color_range(this_dep_blanc_nul)
     }
@@ -1194,8 +1208,71 @@ d3.select('#legend')
 
 /*d3.select('#legend #intitule_legend')
 .text('Répartition de la abstention')*/
+d3.selectAll('#legend .mapLegend .legendCells .cell').filter(d=>d> 50).style('display', "none")
+d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d + '%')
 
 }
+else if (name == 'progression de l\'extrême droite'){
+
+
+d3.select("#legend .empty_circle")
+.style('display', 'none')
+
+
+let this_color_range = d3.scaleLinear()
+  .range(['white', '#462100'])
+  .domain([0, 40]);
+
+for (i in geo_objects){
+
+  let this_data = geo_objects[i].data
+    if (this_data){
+  let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
+
+  all_those_paths
+  .style('stroke-width', 0)
+  .style('fill', d => {
+    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
+      let this_dep_data = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]
+
+ let this_dep_progression = this_dep_data['Progression_depuis2017']
+
+ return this_color_range(this_dep_progression)
+    }
+    return 'rgb(221, 221, 221)'
+
+  })
+
+
+}
+
+
+
+}
+
+color_progressive_scale
+.range(['white', '#462100'])
+.domain([0, 20]);
+legend_cells.select('.swatch')
+.style('fill', function(d){ return color_progressive_scale(d)})
+
+
+d3.select('#legendots')
+.style('display', 'none')
+
+
+d3.select('#legend')
+.style('display', 'block')
+
+
+/*d3.select('#legend #intitule_legend')
+.text('Répartition de la abstention')*/
+
+d3.selectAll('#legend .mapLegend .legendCells .cell').filter(d=>d> 50).style('display', "none")
+d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d)
+
+}
+
 
 else{
 
@@ -1261,6 +1338,8 @@ d3.select('#legend')
 /*d3.select('#legend #intitule_legend')
 .text('Répartition du vote ' + _.capitalize(name))*/
 
+d3.selectAll('#legend .mapLegend .legendCells .cell').style('display', "block")
+d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d + '%')
 }
   }
 
@@ -1271,9 +1350,30 @@ var this_html = '<div style="margin-top:10px">';
 for (i in range){
   var d = range[i]
   var html_chunk = '<div style="margin-top:5px">'
+  console.log(d)
+  if (d.name == 'Blancs ou nuls'){
+    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = 'grey'
+  }
+  else if (d.name == 'Progression de l\'extrême droite'){
+    d['score_text'] = d.score != 100 ? d.score + ' points' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = '#462100'
+  }
+  else if (d.name == 'Abstention'){
+    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = 'grey'
+  }
+  else{
+    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = colors_candidats[d.name]
+  }
   // html_chunk += `<div >${d.tete_liste}</div>
-  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score != 100 ? d.score + ' %' : '' }</div><div style="margin-top:5px">${_.capitalize(d.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
-      <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score}%;background-color:${selected_element == 'abstention' ? 'grey' : colors_candidats[d.name]};"></div>
+  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div style="margin-top:5px">${_.capitalize(d.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
+      <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score_bar}%;background-color:${d.color_item};"></div>
       </div>`
 
       if (d.score == 100){
