@@ -33,20 +33,20 @@ const chartTitle = "Vote Macron et revenu médian"
 const chartSubTitle = ""
 
 const data_file = "data_elec_macron.csv"
-const x_var = 'revenu_median'
+const x_var = 'TauxCadres'
 const y_var = 'scoreMacron'
 
-const x_axis_title = "Part de vote Macron"
-const y_axis_title = "Revenu médian"
+const x_axis_title = "Taux de chômage"
+const y_axis_title = "Part de vote Macron"
 
-const circle_size = 'inscrits'
+const circle_size = 'Inscrits'
 
 const min_x_value = 0
-const max_x_value = 50000
+const max_x_value = 50
 const min_y_value = 0
-const max_y_value = 50
+const max_y_value = 100
 
-const this_circle_radius = 2
+const this_circle_radius = 15
 
 
   var initTotalWidth = 600;
@@ -163,8 +163,9 @@ function makeCirclechart(data0) {
     var data = _.cloneDeep(data0);
 
 
+
  
-    console.log(data)
+
 
     var thisXvar = graphParameters['selected_xRows'][0];
     var thisYvar = graphParameters['selected_yRows'][0];
@@ -172,11 +173,18 @@ function makeCirclechart(data0) {
     var thisColorVar = graphParameters['selected_color'][0];
     var thisLabelVar = graphParameters['selected_label'][0];
 
+
+
     data.forEach(function(d) {
         d[thisXvar] = formatNumbers(d[thisXvar]);
         d[thisYvar] = formatNumbers(d[thisYvar]);
         d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
     })
+
+        data = data.filter(d=> d[thisXvar] != 0)
+console.log(data)
+
+
 
     var svg = d3.select("#chart_container svg");
     var g = svg.select('g.graphContainer');
@@ -271,6 +279,7 @@ const pointColor = '#3585ff'
 
 data.forEach(function(d, i) {
 if (i % 100 == 0){
+/*  console.log(d)*/
 
 }
 
@@ -634,8 +643,6 @@ d[e] = +d[e]
 
 })
 
-
-  console.log(data_explore)
 
 
 initChart();
