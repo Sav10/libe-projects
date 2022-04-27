@@ -23,6 +23,19 @@ let xScale,
     left: 40
   };
 
+
+const y_variables = ['scoreMacron', 'scoreLepen']
+
+
+const x_variables = [
+{'name' : 'revenu_median', 'label': 'Revenu médian'},
+{'name' : 'taux65Plus', 'label': 'Nombre d\'habitannts de plus de 65 ans'},
+{'name' : 'ScoreMelenchonT1', 'label': 'Score de Mélenchon au 1er tour'},
+{'name' : 'TauxAgricuteurs', 'label': 'Proportion d\'agriculteurs'},
+{'name' : 'TauxCadres', 'label': 'Proportion de cadres'},
+{'name' : 'TauxChomage', 'label': 'Proportion de ch'}
+]
+
   const padding_left = 0
 
   const padding_top = 0
