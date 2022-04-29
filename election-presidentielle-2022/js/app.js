@@ -338,10 +338,12 @@ d3.select('#tooltip')
 return  
 }
 
+
 let this_dep_scores = candidate_names.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })
 
 this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
 this_dep_scores = _.slice(this_dep_scores, 0, 7)
+
 
 let this_loc_name
 
@@ -392,10 +394,6 @@ let this_selected_candidate = [{'name':selected_element, 'score': this_d[selecte
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
 
-
-
-    console.log(selected_element)
-    console.log(this_dep_scores[0].name)
 
     if (selected_element == this_dep_scores[0].name){
       this_html +=  'Arrivé en tête<br>'
@@ -606,7 +604,7 @@ Promise.all([
     // d3.csv('data/election_data_dep2.csv'),
     d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/election_data_dep2.csv'),
     // d3.csv('data/data_circos3.csv')
-    d3.csv('https://sav10.github.io/libe-projects/election-presidentielle-2022/data/data_circos3.csv')
+    d3.csv('data/data_circos3.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2])
 }).catch(function(err) {
@@ -685,6 +683,7 @@ Promise.all([
     })
 
     circosData = circos_data;
+
 
 d3.xml("img/carte-departements.svg")
 .then(data => {
@@ -1195,6 +1194,7 @@ d3.select('#legend')
   }
 
 function drawGraph(range){
+
 
 var this_html = '<div style="margin-top:10px">';
 
