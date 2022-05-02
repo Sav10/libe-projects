@@ -6,7 +6,7 @@ var datapol;
 var circosData;
 var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
-let selected_element = 'candidat en tête'
+let selected_element = {'name' : 'revenu_median', 'label': 'Revenu médian', 'max_val' : 50000}
 let chart_data
 
 let xScale,
@@ -31,13 +31,18 @@ const y_variables = [
 ]
 
 
+// popTotale,
+
+// ScoreLepenT1,ScoreFillonT1,ScoreMelenchonT1,ScoreMacronT1,Departement,MacronT1,LepenT1,MelenchonT1,revenu_median
+
 const x_variables = [
-{'name' : 'revenu_median', 'label': 'Revenu médian'},
-{'name' : 'taux65Plus', 'label': 'Nombre d\'habitannts de plus de 65 ans'},
-{'name' : 'ScoreMelenchonT1', 'label': 'Score de Mélenchon au 1er tour'},
-{'name' : 'TauxAgricuteurs', 'label': 'Proportion d\'agriculteurs'},
-{'name' : 'TauxCadres', 'label': 'Proportion de cadres'},
-{'name' : 'TauxChomage', 'label': 'Proportion de chômeurs'}
+{'name' : 'revenu_median', 'label': 'Revenu médian', 'max_val' : 50000},
+{'name' : 'taux65Plus', 'label': 'Nombre d\'habitannts de plus de 65 ans', 'max_val' : 50},
+{'name' : 'ScoreMelenchonT1', 'label': 'Score de Mélenchon au 1er tour', 'max_val' : 50},
+{'name' : 'TauxCadres', 'label': 'Proportion de cadres', 'max_val' : 50},
+{'name' : 'TauxOuvriers', 'label': 'Proportion d\'ouvriers', 'max_val' : 50},
+{'name' : 'TauxAgricuteurs', 'label': 'Proportion d\'agriculteurs', 'max_val' : 50},
+{'name' : 'TauxChomage', 'label': 'Proportion de chômeurs', 'max_val' : 50}
 ]
 
   const padding_left = 20
@@ -261,6 +266,8 @@ let y_factor = targetTotalHeight / this_height
 const container = d3.select('#chart_container')
 
 const this_margin_left = parseInt((margin.left + padding_left)*x_factor)
+
+container.select('canvas').remove()
 
 const canvasChart = container.append('canvas')
 .attr('width', (width)*x_factor)
