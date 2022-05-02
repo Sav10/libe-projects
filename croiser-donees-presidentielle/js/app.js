@@ -7,6 +7,7 @@ var circosData;
 var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 let selected_element = 'candidat en tête'
+let chart_data
 
 let xScale,
     yScale,
@@ -157,12 +158,12 @@ console.log(svg.node())
 
 
 
-function makeCirclechart(data0) {
+function makeCirclechart() {
 
     // var kValue = 'graphParameters['selected_xRows][0];
     // var dValues = graphParameters[selected_yRows];
 
-    var data = _.cloneDeep(data0);
+    var data = _.cloneDeep(chart_data);
 
 
 
@@ -562,7 +563,14 @@ d3.select(this)
 .style('background-color', this_background_color)
 .style('color', '#fff')
 
-fillOnClick(d)
+/*fillOnClick(d)*/
+
+graphParameters['selected_xRows'][0] = d.name;
+
+makeCirclechart();
+
+// graphParameters['selected_yRows'][0];
+
 })
 
 d3.select('#affichage .display_element')
@@ -617,11 +625,11 @@ d[e] = +d[e]
 
 })
 
-
+chart_data = data_explore
 
 initChart();
 
-makeCirclechart(data_explore);
+makeCirclechart();
 
 
 
