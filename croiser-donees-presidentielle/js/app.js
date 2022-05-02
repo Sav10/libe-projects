@@ -528,8 +528,7 @@ function draw_affichage(){
 
 d3.selectAll('#affichage .display_element')
 
-let all_displayed_elements = _.cloneDeep(candidate_names)
-all_displayed_elements.unshift('candidat en tête', 'abstention');
+let all_displayed_elements = _.cloneDeep(x_variables)
 
 const elements_selection = d3.select('div#affichage').selectAll('div.display_element')
 .data(all_displayed_elements)
@@ -538,7 +537,7 @@ elements_selection
 .enter()
 .append('div')
 .attr('class', 'display_element')
-.text(d=> _.capitalize(d).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan'))
+.text(d=> d.label)
 .on('click', function(event, d){
 
 selected_element = d
@@ -548,15 +547,15 @@ d3.selectAll('#affichage .display_element')
 .style('background-color', '#eee')
 .style('color', '#6E6E6E')
 
-let this_background_color = ''
+let this_background_color = 'black'
 
-if(d == 'candidat en tête' || d == 'abstention'){
+/*if(d == 'candidat en tête' || d == 'abstention'){
 
 this_background_color = 'black'
 }
 else {
   this_background_color = colors_candidats[d]
-}
+}*/
 
 
 d3.select(this)
