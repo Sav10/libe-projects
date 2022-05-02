@@ -36,7 +36,7 @@ const x_variables = [
 {'name' : 'TauxChomage', 'label': 'Proportion de ch'}
 ]
 
-  const padding_left = 0
+  const padding_left = 20
 
   const padding_top = 0
 
@@ -105,21 +105,7 @@ const this_circle_radius = 15
   var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
 
 
-  var manualReusableParameters = {
-  "yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},
-  "xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},
-  "yAxisLabelPadding":{"value":-24,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},
-  "xAxisLabelPadding":{"value":13,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},
-  "yAxisLabelText":{"value":y_axis_title,"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
-  "xAxisLabelText":{"value":x_axis_title,"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},
-  "trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},
-  "hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},
-  "circleRadius":{"value":this_circle_radius,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},
-  "circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},
-  "customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--y .tick text').text(function(d){return d+'%'});" + 
-  "d3.selectAll('.axis--x .tick text').text(function(d){return numbers_separators(d)});" + 
-  "d3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');"}
-}
+  var manualReusableParameters = {}
 
   var graphParameters = {"selected_xRows":[x_var],"selected_yRows":[y_var],"selected_size":[circle_size],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune",x_var, y_var],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
   "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":chartTitle,"chartSubTitle":chartSubTitle,"chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
@@ -214,7 +200,7 @@ console.log(data)
 
     rScale = d3.scaleSqrt()
     .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
-    .range([0, (manualReusableParameters.circleRadius.value)]);
+    .range([0, (this_circle_radius)]);
 
 let axis_bottom = d3.axisBottom(xScale).ticks(10).tickFormat(numbers_separators);
 let axis_left = d3.axisLeft(yScale).ticks(10);
@@ -308,85 +294,56 @@ function drawPoint(d, i) {
    context.fillStyle = 'red';
    const px = xScale_canvas(d[thisXvar]);
    const py = yScale_canvas(d[thisYvar]);
-   let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
+   let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : this_circle_radius
 
    context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
    context.fill();
 }
 
 
-/*    var circles = g_inner
-    .selectAll('.ball')
-    .data(_.slice(data, 0, 1000));
+/*g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);*/
 
-    circles.exit().transition().duration(200).remove();
-
-    circles
-    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
-    .select('circle')
-    .transition()
-    .duration(200)
-    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
-    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
-    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
-
-    circles
-    .select('text')
-    .transition()
-    .duration(200)
-    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
-
-    var new_circles = circles
-    .enter()
-    .append('g')
-    .attr('class', 'ball')
-    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
-    .on('mouseout', function(d){ hide_tooltip()});*/
-
- /*   new_circles
-    .append('circle')
-    .attr('cx', 0)
-    .attr('cy', 0)
-    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
-    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
-    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
-
-    new_circles
-    .append('text')
-    .style('text-anchor', 'middle')
-    .style('fill', 'black')
-    .attr('y', 4)
-    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});*/
+  g_inner
+  .select('text.xAxisLabel').remove()
 
 g_inner
-.call(xAxisLabel, graphParameters.selected_xRows[0]);
+  .append('text')
+  .attr('class', 'xAxisLabel')
+  .text(x_axis_title)
+  .attr("transform", "translate(" + (width/2) + " ," + (+ height + margin.top + 20) + ")")
+  .style("text-anchor", "middle")
+
+
+/*g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);*/
+
+
+  g_inner
+  .select('text.yAxisLabel').remove()
 
 g_inner
-.call(yAxisLabel, graphParameters.selected_yRows[0]);
+  .append('text')
+  .attr('class', 'yAxisLabel')
+  .text(y_axis_title)
+  .attr("transform", "rotate(-90)")
+  .style("text-anchor", "middle")
+  .attr("y", (-margin.left))
+  .attr("x",0 - (height / 2))
 
 /*    customizeAxis()
     drawLegend()
     addCustomCode()*/
 
+/// Custom code
+
+d3.selectAll('.axis--y .tick text').text(function(d){return d+'%'});
+d3.selectAll('.axis--x .tick text').text(function(d){return numbers_separators(d)}); 
+d3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');
+
+
 }
 
-
-
-var geo_objects = {
-departement : 
-{'container' : 'svg-container-dep',
-'location_variable' : 'code_departement',
-location_prefix : 'D_'},
-region : 
-{'container' : 'svg-container-reg',
-'location_variable' : 'code_region',
-location_prefix : 'R_'}
-,
-circonscription : 
-{'container' : 'svg-container-circ',
-'location_variable' : 'id_circo',
-location_prefix : 'M_'}
-}
 
 moment.locale('fr')
 
