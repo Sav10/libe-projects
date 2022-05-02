@@ -504,7 +504,6 @@ d3.selectAll('div#legendots .legende_dot').remove();
 
 let data_for_legendots = Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0]))
 
-data_for_legendots.push(['Résultats non parvenus', '#ddd'])
 
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
 .data(data_for_legendots)
@@ -527,8 +526,10 @@ d3.select('div#legendots').selectAll('span.legende_dot')
 .attr('class', 'dot')
 .style('background-color', d=>d[1])
 
-
-
+d3.select('div#legendots')
+.on('click', function(event, d){
+console.log(d)
+    makeCirclechart()})
 
 }
 
