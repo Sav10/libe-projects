@@ -6,7 +6,7 @@ var datapol;
 var circosData;
 var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
-let selected_element = {'name' : 'revenu_median', 'label': 'Revenu médian', 'max_val' : 50000}
+let selected_element
 let chart_data
 
 let xScale,
@@ -36,14 +36,16 @@ const y_variables = [
 // ScoreLepenT1,ScoreFillonT1,ScoreMelenchonT1,ScoreMacronT1,Departement,MacronT1,LepenT1,MelenchonT1,revenu_median
 
 const x_variables = [
-{'name' : 'revenu_median', 'label': 'Revenu médian', 'max_val' : 50000},
-{'name' : 'taux65Plus', 'label': 'Nombre d\'habitannts de plus de 65 ans', 'max_val' : 50},
-{'name' : 'ScoreMelenchonT1', 'label': 'Score de Mélenchon au 1er tour', 'max_val' : 50},
-{'name' : 'TauxCadres', 'label': 'Proportion de cadres', 'max_val' : 50},
-{'name' : 'TauxOuvriers', 'label': 'Proportion d\'ouvriers', 'max_val' : 50},
-{'name' : 'TauxAgricuteurs', 'label': 'Proportion d\'agriculteurs', 'max_val' : 50},
-{'name' : 'TauxChomage', 'label': 'Proportion de chômeurs', 'max_val' : 50}
+{'name' : 'revenu_median', 'label': 'Revenu médian', 'min_val' : 15000,  'max_val' : 50000},
+{'name' : 'taux65Plus', 'label': 'Nombre d\'habitants de plus de 65 ans', 'min_val' : 0, 'max_val' : 50},
+{'name' : 'ScoreMelenchonT1', 'label': 'Score de Mélenchon au 1er tour', 'min_val' : 0, 'max_val' : 50},
+{'name' : 'TauxCadres', 'label': 'Proportion de cadres', 'min_val' : 0, 'max_val' : 50},
+{'name' : 'TauxOuvriers', 'label': 'Proportion d\'ouvriers', 'min_val' : 0, 'max_val' : 50},
+{'name' : 'TauxAgricuteurs', 'label': 'Proportion d\'agriculteurs', 'min_val' : 0, 'max_val' : 50},
+{'name' : 'TauxChomage', 'label': 'Proportion de chômeurs', 'min_val' : 0, 'max_val' : 50}
 ]
+
+selected_element = x_variables[0]
 
   const padding_left = 20
 
@@ -55,7 +57,7 @@ const chartTitle = "Vote Macron et revenu médian"
 const chartSubTitle = ""
 
 const data_file = "data_elec_macron.csv"
-const x_var = 'TauxCadres'
+const x_var = selected_element.name
 const y_var = 'scoreMacron'
 
 const x_axis_title = "Taux de chômage"
@@ -175,7 +177,7 @@ function makeCirclechart() {
  
 
 
-    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisXvar = selected_element.name;
     var thisYvar = graphParameters['selected_yRows'][0];
     var thisSizeVar = graphParameters['selected_size'][0];
     var thisColorVar = graphParameters['selected_color'][0];
@@ -200,7 +202,7 @@ console.log(data)
 
 
    xScale = d3.scaleLinear()
-    .domain([min_x_value,selected_element.max_val])
+    .domain([selected_element.min_val,selected_element.max_val])
     .range([0, width]);
 
     yScale = d3.scaleLinear()
@@ -282,7 +284,7 @@ const pointColor = '#3585ff'
 
 
     var xScale_canvas = d3.scaleLinear()
-    .domain([min_x_value,selected_element.max_val])
+    .domain([selected_element.min_val,selected_element.max_val])
     .range([0, width*x_factor]);
 
     var yScale_canvas = d3.scaleLinear()
@@ -323,7 +325,7 @@ function drawPoint(d, i) {
 g_inner
   .append('text')
   .attr('class', 'xAxisLabel')
-  .text(x_axis_title)
+  .text(selected_element.label)
   .attr("transform", "translate(" + (width/2) + " ," + (+ height + margin.top + 20) + ")")
   .style("text-anchor", "middle")
 
