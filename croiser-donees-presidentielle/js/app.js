@@ -282,7 +282,7 @@ const pointColor = '#3585ff'
 
 
     var xScale_canvas = d3.scaleLinear()
-    .domain([min_x_value,max_x_value])
+    .domain([min_x_value,selected_element.max_val])
     .range([0, width*x_factor]);
 
     var yScale_canvas = d3.scaleLinear()
