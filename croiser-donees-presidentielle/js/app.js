@@ -24,7 +24,10 @@ let xScale,
   };
 
 
-const y_variables = ['scoreMacron', 'scoreLepen']
+const y_variables = [
+{'name' : 'scoreMacron', 'label': 'Score de Macron'},
+{'name' : 'scoreLepen', 'label': 'Score de Le Pen'}
+]
 
 
 const x_variables = [
@@ -33,7 +36,7 @@ const x_variables = [
 {'name' : 'ScoreMelenchonT1', 'label': 'Score de Mélenchon au 1er tour'},
 {'name' : 'TauxAgricuteurs', 'label': 'Proportion d\'agriculteurs'},
 {'name' : 'TauxCadres', 'label': 'Proportion de cadres'},
-{'name' : 'TauxChomage', 'label': 'Proportion de ch'}
+{'name' : 'TauxChomage', 'label': 'Proportion de chômeurs'}
 ]
 
   const padding_left = 20
