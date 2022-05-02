@@ -200,7 +200,7 @@ console.log(data)
 
 
    xScale = d3.scaleLinear()
-    .domain([min_x_value,max_x_value])
+    .domain([min_x_value,selected_element.max_val])
     .range([0, width]);
 
     yScale = d3.scaleLinear()
