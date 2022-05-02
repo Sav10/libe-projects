@@ -236,6 +236,8 @@ g.select("g.axis.axis--y")
 
 // And here https://www.freecodecamp.org/news/d3-and-canvas-in-3-steps-8505c8b27444/
 
+//Objectif : rendre interactif avec Delaunay (successeur de Vorinoi) https://github.com/d3/d3-delaunay
+
     let this_container = d3.select('#chart_container'),
     this_width = svg_width,
     this_height = svg_height
