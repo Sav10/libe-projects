@@ -28,9 +28,11 @@ let xScale,
 
 const y_variables = [
 {'name' : 'scoreMacron', 'label': 'Score de Macron'},
-{'name' : 'scoreLepen', 'label': 'Score de Le Pen'}
+{'name' : 'scoreLepen', 'label': 'Score de Le Pen'},
+{'name' : 'MACRON_scoreT1', 'label': 'Score de Macron au 1er tour'},
+{'name' : 'MÉLENCHON_scoreT1', 'label': 'Score de Mélenchon au 1er tour'},
+{'name' : 'LE PEN_scoreT1', 'label': 'Score de Le Pen au 1er tour'}
 ]
-
 
 // popTotale,
 
@@ -222,7 +224,6 @@ const this_circle_radius = 10
       var svg = d3.select("#chart_container svg")
 /*      .call(responsivefy);*/
 
-console.log(svg.node())
 
 
       svg
@@ -359,9 +360,6 @@ const pointColor = '#3585ff'
     .attr('class', 'ball')
     .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
     .on('mouseover', function(event, d, i){ 
-        console.log(d)
-        console.log(event)
-        console.log(i)
 
         show_tooltip(event, d)})
     .on('mouseout', function(){ hide_tooltip()});
@@ -730,6 +728,10 @@ d.Macron = +d['MACRON']
 d.Lepen = +d['LE PEN']
 d.scoreMacron = _.round(100*d.Macron / (d.Macron + d.Lepen), 1)
 d.scoreLepen = _.round(100*d.Lepen / (d.Macron + d.Lepen), 1)
+d['LE PEN_scoreT1'] = +d['LE PEN_scoreT1']
+d['MACRON_scoreT1'] = +d['MACRON_scoreT1']
+d['MÉLENCHON_scoreT1'] = +d['MÉLENCHON_scoreT1']
+
 
 let numeric_val = ['Inscrit_22', 'pop_légal_19', 'pop_légal_13', 'tvar_pop', 'pop_pole_aav', 'pop_cour_aav', 'pop_horsaav', 'pop_urb', 
 'pop_rur_periu', 'pop_rur_non_periu', 'age_moyen', 'dec90', 'dec75', 'dec50', 'dec25', 'dec10', 'actemp', 'actcho', 'inactret', 'inactetu', 
