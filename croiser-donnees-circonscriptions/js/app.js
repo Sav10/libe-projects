@@ -8,6 +8,7 @@ var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 let selected_element
 let chart_data
+const max_width = 800
 
 
 let xScale,
@@ -230,7 +231,8 @@ const this_circle_radius = 10
 
       svg
       .attr("width", svg_width)
-      .attr('height', svg_height);
+      .attr('height', svg_height)
+      // .call(responsivefy);
 
       margin = {
         top: 20,
@@ -313,6 +315,13 @@ console.log(data)
 
 let axis_bottom = d3.axisBottom(xScale).ticks(10).tickFormat(numbers_separators);
 let axis_left = d3.axisLeft(yScale).ticks(10);
+
+/*let linearRegression = d3.regressionLinear()
+  .x(d => d[thisXvar])
+  .y(d => d[thisYvar])
+  .domain([selected_element.min_val, selected_element.max_val]);
+
+linearRegression = ƒ(data)*/
 
 
   g.select('g.innerGraph')
