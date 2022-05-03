@@ -8,6 +8,7 @@ var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 let selected_element
 let chart_data
+let selected_Yelement = ['MACRON', '#F7BA00']
 
 let xScale,
     yScale,
@@ -178,7 +179,7 @@ function makeCirclechart() {
 
 
     var thisXvar = selected_element.name;
-    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisYvar = 'score' + _.capitalize(selected_Yelement[0]).replace(' ', '');
     var thisSizeVar = graphParameters['selected_size'][0];
     var thisColorVar = graphParameters['selected_color'][0];
     var thisLabelVar = graphParameters['selected_label'][0];
@@ -306,7 +307,7 @@ function drawPoint(d, i) {
    context.globalCompositeOperation = "multiply";
    context.globalAlpha = 0.7
    // context.fillStyle = d[thisColorVar];
-   context.fillStyle = 'red';
+   context.fillStyle = selected_Yelement[1];
    const px = xScale_canvas(d[thisXvar]);
    const py = yScale_canvas(d[thisYvar]);
    let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : this_circle_radius
@@ -340,7 +341,7 @@ g_inner
 g_inner
   .append('text')
   .attr('class', 'yAxisLabel')
-  .text(y_axis_title)
+  .text('Part de vote ' + _.capitalize(selected_Yelement[0]).replace('Le pen', 'Le Pen'))
   .attr("transform", "rotate(-90)")
   .style("text-anchor", "middle")
   .attr("y", (-margin.left))
@@ -526,9 +527,11 @@ d3.select('div#legendots').selectAll('span.legende_dot')
 .attr('class', 'dot')
 .style('background-color', d=>d[1])
 
-d3.select('div#legendots')
+d3.selectAll('span.legende_dot')
 .on('click', function(event, d){
-console.log(d)
+
+selected_Yelement = d
+
     makeCirclechart()})
 
 }
