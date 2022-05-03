@@ -300,9 +300,11 @@ console.log(data)
     var g = svg.select('g.graphContainer');
     var g_inner = g.select('g.innerGraph');
 
+    d3
+
 
    xScale = d3.scaleLinear()
-    .domain([selected_element.min_val,selected_element.max_val])
+    .domain(d3.extent(data, d=>d[selected_element.name]))
     .range([0, width]);
 
     yScale = d3.scaleLinear()
