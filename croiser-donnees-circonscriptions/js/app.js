@@ -8,7 +8,7 @@ var representation_territoriale = 'departement';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 let selected_element
 let chart_data
-let selected_Yelement = ['MACRON', '#F7BA00']
+
 
 let xScale,
     yScale,
@@ -27,12 +27,14 @@ let xScale,
 
 
 const y_variables = [
-{'name' : 'scoreMacron', 'label': 'Score de Macron'},
-{'name' : 'scoreLepen', 'label': 'Score de Le Pen'},
-{'name' : 'MACRON_scoreT1', 'label': 'Score de Macron au 1er tour'},
-{'name' : 'MÉLENCHON_scoreT1', 'label': 'Score de Mélenchon au 1er tour'},
-{'name' : 'LE PEN_scoreT1', 'label': 'Score de Le Pen au 1er tour'}
+{'name' : 'scoreMacron', 'label': 'Macron', 'color' : '#F7BA00'},
+{'name' : 'scoreLepen', 'label': 'Le Pen', 'color' : '#1D2245'},
+{'name' : 'MACRON_scoreT1', 'label': 'Macron - 1er tour', 'color' : '#F7BA00'},
+{'name' : 'MÉLENCHON_scoreT1', 'label': 'Mélenchon - 1er tour', 'color' : '#EB404C'},
+{'name' : 'LE PEN_scoreT1', 'label': 'Le Pen - 1er tour', 'color' : '#1D2245'}
 ]
+
+let selected_Yelement = y_variables[0]
 
 // popTotale,
 
@@ -274,7 +276,7 @@ function makeCirclechart() {
 
 
     var thisXvar = selected_element.name;
-    var thisYvar = 'score' + _.capitalize(selected_Yelement[0]).replace(' ', '');
+    var thisYvar = selected_Yelement.name;
     var thisSizeVar = circle_size;
     var thisColorVar = graphParameters['selected_color'][0];
     var thisLabelVar = graphParameters['selected_label'][0];
@@ -345,7 +347,7 @@ const pointColor = '#3585ff'
     .transition()
     .duration(200)
     .attr('r', function(d){return rScale(d[thisSizeVar])})
-    .style('fill', selected_Yelement[1])
+    .style('fill', selected_Yelement.color)
     .style('fill-opacity', .8);
 
     circles
@@ -370,7 +372,7 @@ const pointColor = '#3585ff'
     .attr('cy', 0)
     .attr('r', function(d){return rScale(d[thisSizeVar])})
     .style('fill-opacity', .8)
-    .style('fill', selected_Yelement[1]);
+    .style('fill', selected_Yelement.color);
 
     new_circles
     .append('text')
@@ -403,7 +405,7 @@ g_inner
 g_inner
   .append('text')
   .attr('class', 'yAxisLabel')
-  .text('Part de vote ' + _.capitalize(selected_Yelement[0]).replace('Le pen', 'Le Pen'))
+  .text('Part de vote ' + selected_Yelement.label)
   .attr("transform", "rotate(-90)")
   .style("text-anchor", "middle")
   .attr("y", (-margin.left))
@@ -607,7 +609,7 @@ function draw_legendots(){
 d3.selectAll('div#legendots .legende_dot').remove();
 
 
-let data_for_legendots = Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0]))
+let data_for_legendots = y_variables
 
 
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
@@ -624,12 +626,12 @@ legendots
 d3.select('div#legendots').selectAll('span.legende_dot')
 .append('span')
 .attr('class', 'text_legend')
-.text(d=>_.capitalize(d[0]).replace('Le pen', 'Le Pen'))
+.text(d=>d.label)
 
 d3.select('div#legendots').selectAll('span.legende_dot')
 .append('span')
 .attr('class', 'dot')
-.style('background-color', d=>d[1])
+.style('background-color', d=>d.color)
 
 d3.selectAll('span.legende_dot')
 .on('click', function(event, d){
