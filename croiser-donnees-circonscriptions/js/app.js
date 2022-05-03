@@ -165,7 +165,7 @@ const max_x_value = 50
 const min_y_value = 0
 const max_y_value = 100
 
-const this_circle_radius = 15
+const this_circle_radius = 10
 
 
   var initTotalWidth = 600;
