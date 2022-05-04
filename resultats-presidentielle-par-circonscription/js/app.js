@@ -897,9 +897,12 @@ let this_data = data_tours[tour].data
 d3.select('body').on("click",function(event, d){
 
 
-    var outside = d3.selectAll('svg path').filter(equalToEventTarget).empty();
+
+    var outside = d3.selectAll('svg path, #autocomplete_container').filter(equalToEventTarget).empty();
     // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
-    if (outside) {
+    if (outside && d3.select(event.path[2]).attr('class') != 'autoComplete_wrapper') {
+
+      console.log('outside')
     reset_tooltip()
 selected_dep = [];
 
