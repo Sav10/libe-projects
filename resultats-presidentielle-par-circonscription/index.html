@@ -780,6 +780,17 @@ display: none;
 }
 }
 
+
+#autocomplete_container{
+
+max-width: 700px;
+margin: 0 auto;
+}
+
+.autoComplete_wrapper{
+  float: right;
+}
+
   </style>
 
 </head>
@@ -803,7 +814,7 @@ display: none;
 <g class="mapLegend" transform="translate(0,0)">
                 <g class="legendCells"></g></g>
                 <g class="empty_circle" transform="translate(480,30)"><circle cx="-130" cy="-4" r="6" stroke="black" stroke-width="1.5" fill="white" /><text text-anchor="end">Candidat arrivé en tête</text></g></svg>
-                <input id="autoComplete">
+                <div id="autocomplete_container"> <input id="autoComplete"></div>
 
           <div class="carte" id='morphocarte'>
             <div id="map_info2" >
