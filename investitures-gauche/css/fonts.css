@@ -1,0 +1,230 @@
+/* @group FONT-FACES */
+
+	/*
+	 * fonts:
+	 *  - synthese 400,600
+	 *  - libesans condensed 400,200
+	 *  - libesans semicondensed 400,800
+	 *  - libetypewriter 400
+	 *  - libetypewriter underline 400
+	*/
+
+	@font-face {
+		font-family: 'syntheselibeweb';
+		src: url('fonts/syntheselibeweb-regular.woff') format('woff'),
+			 url('fonts/syntheselibeweb-regular.ttf') format('truetype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'syntheselibeweb';
+		src: url('fonts/syntheselibeweb-bold.woff') format('woff'),
+			 url('fonts/syntheselibeweb-bold.ttf') format('truetype');
+				 
+		font-style: normal;
+		font-weight: 600;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-condensed';
+		src: url('fonts/libesansweb-condensed-regular.woff') format('woff'),
+			 url('fonts/libesansweb-condensed-regular.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-condensed';
+		src: url('fonts/libesansweb-condensed-light.woff') format('woff'),
+			 url('fonts/libesansweb-condensed-light.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 200;
+	}
+	
+	@font-face {
+		font-family: 'libesansweb-semicondensed';
+		src: url('fonts/libesansweb-semicondensed-regular.woff') format('woff'),
+			 url('fonts/libesansweb-semicondensed-regular.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-semicondensed';
+		src: url('fonts/libesansweb-semicondensed-black.woff') format('woff'),
+			 url('fonts/libesansweb-semicondensed-black.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 800;
+	}
+	
+	@font-face {
+		font-family: 'libetypewriter-regular';
+		src: url('fonts/libetypewriter-regular.woff') format('woff'),
+			 url('fonts/libetypewriter-regular.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libetypewriter-regular-underline';
+		src: url('fonts/libetypewriterweb-regularunderline.woff') format('woff'),
+			 url('fonts/libetypewriterweb-regularunderline.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-black';
+		src: url('fonts/libesansweb-black.woff') format('woff'),
+			 url('fonts/libesansweb-black.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+    @font-face {
+      font-family: 'LibeSans-Ultra';
+		src: url('fonts/LibeSans-Ultra.woff') format('woff'),
+			 url('fonts/LibeSans-Ultra.otf') format('opentype');
+      font-weight: bold;
+    }
+
+	@font-face {
+		font-family: 'Oswald';
+		font-style: normal;
+		font-weight: 400;
+		src: url('fonts/Oswald-Regular.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Oswald';
+		font-style: normal;
+		font-weight: 500;
+		src: url('fonts/Oswald-Medium.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Oswald';
+		font-style: normal;
+		font-weight: 600;
+		src: url('fonts/Oswald-SemiBold.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Roboto';
+		font-style: italic;
+		font-weight: 400;
+		src: url('fonts/Roboto-Italic.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Roboto';
+		font-style: italic;
+		font-weight: 400;
+		src: url('fonts/Roboto-Regular.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Roboto';
+		font-style: italic;
+		font-weight: 500;
+		src: url('fonts/Roboto-Medium.woff') format('woff');
+	}
+
+/* Light */
+@font-face {
+  font-family: 'Libe-Sans-light';
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-light.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-light.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-light.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-light.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+
+
+/* Regular */
+@font-face {
+  font-family: 'Libe-Sans';
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-regular.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-regular.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-regular.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: 'Libe-Sans';
+  font-weight: 400;
+  font-style: italic;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-italic.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-italic.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-italic.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-italic.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+
+/* Bold */
+@font-face {
+  font-family: 'Libe-Sans';
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-bold.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-bold.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-bold.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-bold.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'Libe-Sans';
+  font-weight: 600;
+  font-style: italic;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-bolditalic.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-bolditalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-bolditalic.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-bolditalic.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-bolditalic.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+
+/* Black */
+@font-face {
+  font-family: 'Libe-Sans';
+  font-weight: 800;
+  font-style: normal;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-black.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-black.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-black.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-black.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'Libe-Sans';
+  font-weight: 800;
+  font-style: italic;
+  font-stretch: normal;
+  src: url('fonts/libe-sans/libesansweb-blackitalic.eot'); /* IE9+ Compat Modes */
+  src: url('fonts/libe-sans/libesansweb-blackitalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/libe-sans/libesansweb-blackitalic.woff2') format('woff2'), /* Super modern browsers */
+       url('fonts/libe-sans/libesansweb-blackitalic.woff') format('woff'), /* Modern browsers */
+       url('fonts/libe-sans/libesansweb-blackitalic.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+
+
+/* @end FONT-FACES */
