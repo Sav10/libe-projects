@@ -275,6 +275,8 @@ d3.selectAll('#affichage .display_element')
 let all_displayed_elements = _.cloneDeep(candidate_names_T2)
 all_displayed_elements.unshift('candidat en tête');
 
+all_displayed_elements.push('MÉLENCHON (1er tour)')
+
 all_displayed_elements.push('abstention')
 
 // all_displayed_elements.push('blanc ou nul')
@@ -302,6 +304,9 @@ let this_background_color = ''
 if(d == 'candidat en tête' || d == 'abstention' || d == 'blanc ou nul' || d == 'progression du vote Le Pen'){
 
 this_background_color = 'black'
+}
+else if (d == 'MÉLENCHON (1er tour)'){
+  this_background_color = colors_candidats['MÉLENCHON']
 }
 else {
   this_background_color = colors_candidats[d]
@@ -442,6 +447,10 @@ let this_selected_candidate = [{'name':'Progression du vote Le Pen', 'score': th
 }
 
 else{
+
+  if (selected_element == 'MÉLENCHON (1er tour)'){
+    selected_element = 'MÉLENCHON'
+  }
 
 let this_selected_candidate = [{'name':selected_element, 'score': this_d[selected_element+'_score']}]
     this_html +=  `<span class='details'>
@@ -1115,47 +1124,72 @@ d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d + '%')
 
 }
 
-else if (name == 'blanc ou nul'){
 
+else if (name == 'MÉLENCHON (1er tour)'){
+
+  name = 'MÉLENCHON'
+
+
+d3.selectAll('#representation_territoriale .actionButton')
+.style('color', 'red')
+.style('background-color', '#fff')
+.style('border-color', '#ddd')
+
+d3.select('#display_tour1')
+.style('color', '#fff')
+.style('background-color', 'red')
+.style('border-color', 'red')
+
+tour = 'tour1'
+
+
+d3.selectAll ('#morphocarte svg path')
+.style('stroke', 'black')
+.style('stroke-opacity', 1)
 
 d3.select("#legend .empty_circle")
-.style('display', 'none')
+.style('display', 'block')
+
+let this_color = colors_candidats[name];
 
 
 let this_color_range = d3.scaleLinear()
-  .range(['white', 'black'])
-  .domain([0, 15]);
+  .range(['white', this_color])
+  .domain([10, 80]);
 
 for (i in geo_objects){
 
   let this_data = data_tours[tour].data
+
+
     if (this_data){
+
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
   all_those_paths
-  .style('stroke-width', 0)
   .style('fill', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
-      let this_dep_data = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]
-
- let this_dep_blanc_nul = _.round(100*(this_dep_data['Blancs'] + this_dep_data['Nuls']) / this_dep_data['Inscrits'], 1)
-
- return this_color_range(this_dep_blanc_nul)
+ let this_dep_candidate_score = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0][name + '_score']
+ return this_color_range(this_dep_candidate_score)
     }
     return 'rgb(221, 221, 221)'
-
   })
-
-
+  .style('stroke-width', d => {
+    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
+ let this_dep_winner = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner
+ return this_dep_winner == name ? 1 : 0;
+    }
+    return 0
+  })
 }
-
 
 
 }
 
 color_progressive_scale
-.range(['white', 'black'])
-.domain([0, 15]);
+.range(['white', this_color])
+.domain([-5, 35]);
+
 legend_cells.select('.swatch')
 .style('fill', function(d){ return color_progressive_scale(d)})
 
@@ -1169,70 +1203,10 @@ d3.select('#legend')
 
 
 /*d3.select('#legend #intitule_legend')
-.text('Répartition de la abstention')*/
-d3.selectAll('#legend .mapLegend .legendCells .cell').filter(d=>d> 50).style('display', "none")
+.text('Répartition du vote ' + _.capitalize(name))*/
+
+d3.selectAll('#legend .mapLegend .legendCells .cell').style('display', "block")
 d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d + '%')
-
-}
-else if (name == 'progression du vote Le Pen'){
-
-
-d3.select("#legend .empty_circle")
-.style('display', 'none')
-
-
-let this_color_range = d3.scaleLinear()
-  .range(['white', '#462100'])
-  .domain([0, 25]);
-
-for (i in geo_objects){
-
-  let this_data = geo_objects[i].data
-    if (this_data){
-  let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
-
-  all_those_paths
-  .style('stroke-width', 0)
-  .style('fill', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
-      let this_dep_data = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]
-
- let this_dep_progression = this_dep_data['Progression_depuis2017']
-
- return this_color_range(this_dep_progression)
-    }
-    return 'rgb(221, 221, 221)'
-
-  })
-
-
-}
-
-
-
-}
-
-color_progressive_scale
-.range(['white', '#462100'])
-.domain([0, 25]);
-legend_cells.select('.swatch')
-.style('fill', function(d){ return color_progressive_scale(d)})
-
-
-d3.select('#legendots')
-.style('display', 'none')
-
-
-d3.select('#legend')
-.style('display', 'block')
-
-
-/*d3.select('#legend #intitule_legend')
-.text('Répartition de la abstention')*/
-
-d3.selectAll('#legend .mapLegend .legendCells .cell').filter(d=>d> 50).style('display', "none")
-d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d)
-
 }
 
 
