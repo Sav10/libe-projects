@@ -338,7 +338,6 @@ let this_code = d.id;
 /*let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);*/
 let this_d = _.find(this_data, d => d[location_variable] == this_code);
 
-console.log(this_d)
 
 if (!this_d){
 
@@ -728,10 +727,13 @@ const list_circo_id = circos_data_T1.map(d=>[d['nom_circo'] + ' (' + d.num_deptm
 
 const obj_circo_id = Object.fromEntries(list_circo_id);
 
-console.log(obj_circo_id)
+
+// doc ici https://tarekraafat.github.io/autoComplete.js/#/usage
 
 const autoCompleteJS = new autoComplete({
             placeHolder: "Chercher une circonscription..",
+            diacritics: true,
+            maxResults: 10,
             data: {
                 src: Object.keys(obj_circo_id),
                 cache: true,
@@ -900,9 +902,11 @@ d3.select('body').on("click",function(event, d){
 
     var outside = d3.selectAll('svg path, #autocomplete_container').filter(equalToEventTarget).empty();
     // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
-    if (outside && d3.select(event.path[2]).attr('class') != 'autoComplete_wrapper') {
+    if (outside &&
+     d3.select(event.path[2]).attr('class') != 'autoComplete_wrapper' && 
+      d3.select(event.path[1]).attr('class') != 'autoComplete_wrapper' && 
+      d3.select(event.path[3]).attr('class') != 'autoComplete_wrapper') {
 
-      console.log('outside')
     reset_tooltip()
 selected_dep = [];
 
