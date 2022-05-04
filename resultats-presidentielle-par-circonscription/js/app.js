@@ -330,15 +330,15 @@ draw_affichage()
 
 function showTip(data, d, location_variable){
 
-  console.log(d)
 
 let this_data = data_tours[tour].data
 
 let this_code = d.id;
 
-
 /*let this_d = _.find(app_data.tx_incidence, d => d.dep == this_code);*/
 let this_d = _.find(this_data, d => d[location_variable] == this_code);
+
+console.log(this_d)
 
 if (!this_d){
 
@@ -724,7 +724,7 @@ Promise.all([
     })
 
 
-const list_circo_id = circos_data_T1.map(d=>[d['nom_circo']  + ' - ' + d['Libellé de la circonscription'], d.id_circo])
+const list_circo_id = circos_data_T1.map(d=>[d['nom_circo'] + ' (' + d.num_deptmt + ') - ' + d['Libellé de la circonscription'], d.id_circo])
 
 const obj_circo_id = Object.fromEntries(list_circo_id);
 
@@ -733,7 +733,7 @@ console.log(obj_circo_id)
 const autoCompleteJS = new autoComplete({
             placeHolder: "Chercher une circonscription..",
             data: {
-                src: circos_data_T1.map(d=>d['nom_circo']  + ' - ' + d['Libellé de la circonscription']),
+                src: Object.keys(obj_circo_id),
                 cache: true,
             },
             resultItem: {
