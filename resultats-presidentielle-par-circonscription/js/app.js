@@ -733,7 +733,9 @@ const obj_circo_id = Object.fromEntries(list_circo_id);
 const autoCompleteJS = new autoComplete({
             placeHolder: "Chercher une circonscription..",
             diacritics: true,
-            maxResults: 10,
+            resultsList: {
+            maxResults: 15,
+          },
             data: {
                 src: Object.keys(obj_circo_id),
                 cache: true,
