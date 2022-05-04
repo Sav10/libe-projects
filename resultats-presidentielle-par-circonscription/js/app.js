@@ -330,6 +330,8 @@ draw_affichage()
 
 function showTip(data, d, location_variable){
 
+  console.log(d)
+
 let this_data = data_tours[tour].data
 
 let this_code = d.id;
@@ -720,6 +722,34 @@ Promise.all([
  d['Progression_depuis2017'] = _.round(d['LE PEN_score'] - d.Score_Lepen_2017, 1)
 
     })
+
+
+const list_circo_id = circos_data_T1.map(d=>[d['nom_circo']  + ' - ' + d['Libellé de la circonscription'], d.id_circo])
+
+const obj_circo_id = Object.fromEntries(list_circo_id);
+
+console.log(obj_circo_id)
+
+const autoCompleteJS = new autoComplete({
+            placeHolder: "Chercher une circonscription..",
+            data: {
+                src: circos_data_T1.map(d=>d['nom_circo']  + ' - ' + d['Libellé de la circonscription']),
+                cache: true,
+            },
+            resultItem: {
+                highlight: true
+            },
+            events: {
+                input: {
+                    selection: (event) => {
+                        const selection = event.detail.selection.value;
+                        autoCompleteJS.input.value = selection;
+                        console.log(selection)
+                        showTip('a', {'id':obj_circo_id[selection]}, 'id_circo')
+                    }
+                }
+            }
+        });
 
 
 d3.xml("img/carte-circonscriptions.svg")
@@ -1664,3 +1694,5 @@ const dep_code_names = {"01": "Ain", "02": "Aisne", "03": "Allier", "04": "Alpes
 
 
  const reg_code_names = {'11': 'Ile-de-France', '75' : 'Nouvelle-Aquitaine', '93' : 'Provence-Alpes-Côte d\'Azur '}
+
+
