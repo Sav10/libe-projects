@@ -57,7 +57,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 13,Bouches-du-Rhône,13,13ème circonscription,94195,27353,66842,4619,1940,60283,24959,35324,13013,13013,30199,50.81,Parti socialiste,COM,M. DHARRÉVILLE Pierre,Communistes
 13,Bouches-du-Rhône,14,14ème circonscription,98763,24438,74325,4459,1390,68476,41924,26552,13014,13014,21239,32.11,Non attribué,REM,Mme PETEL Anne-Laurence,La République en marche
 13,Bouches-du-Rhône,15,15ème circonscription,109079,24455,84624,5145,1780,77699,35688,42011,13015,13015,34864,48.45,Non attribué,LR,M. REYNÈS Bernard,Les républicains
-13,Bouches-du-Rhône,16,16ème circonscription,91369,24515,66854,4176,1747,60931,27204,33727,13016,13016,29611,49.3,Non attribué,REM,Mme MICHEL Monica,La République en marche
+13,Bouches-du-Rhône,16,16ème circonscription,91369,24515,66854,4176,1747,60931,27204,33727,13016,13016,29611,49.3,Parti socialiste,REM,Mme MICHEL Monica,La République en marche
 14,Calvados,1,1ère circonscription,72004,16346,55658,3640,1261,50757,36903,13854,14001,14001,10261,20.89,Non attribué,REM,M. LE VIGOUREUX Fabrice,La République en marche
 14,Calvados,2,2ème circonscription,68046,17325,50721,3101,1582,46038,30254,15784,14002,14002,12343,26.94,Parti socialiste,SOC,Mme DUMONT Laurence,Socialistes
 14,Calvados,3,3ème circonscription,79616,18906,60710,3522,1540,55648,27811,27837,14003,14003,22803,42.32,Non attribué,LR,M. LECLERC Sébastien,Les républicains
@@ -89,7 +89,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 21,Côte-d'Or,4,4ème circonscription,68361,15324,53037,3906,1280,47851,22929,24922,21004,21004,20390,43.26,Non attribué,REM,Mme DE COURSON Yolaine,La République en marche
 21,Côte-d'Or,5,5ème circonscription,85499,19935,65564,4341,1252,59971,31634,28337,21005,21005,24037,41.35,Non attribué,REM,M. PARIS Didier,La République en marche
 22,Côtes-d'Armor,1,1ère circonscription,91485,20708,70777,5216,1888,63673,43620,20053,22001,22001,14065,22.32,Non attribué,MDM,M. JONCOUR Bruno,Modem
-22,Côtes-d'Armor,2,2ème circonscription,103130,20409,82721,5659,2195,74867,46146,28721,22002,22002,19842,28.55,Non attribué,REM,M. BERVILLE Hervé,La République en marche
+22,Côtes-d'Armor,2,2ème circonscription,103130,20409,82721,5659,2195,74867,46146,28721,22002,22002,19842,28.55,Parti socialiste,REM,M. BERVILLE Hervé,La République en marche
 22,Côtes-d'Armor,3,3ème circonscription,88722,17429,71293,4612,2050,64631,38386,26245,22003,22003,18481,29.4,Non attribué,LR,M. LE FUR Marc,Les républicains
 22,Côtes-d'Armor,4,4ème circonscription,80863,17829,63034,5116,2536,55382,32056,23326,22004,22004,15597,28.64,Non attribué,REM,M. KERLOGOT Yannick,La République en marche
 22,Côtes-d'Armor,5,5ème circonscription,107560,23829,83731,6336,2294,75101,49648,25453,22005,22005,17569,24.17,Non attribué,REM,M. BOTHOREL Eric,La République en marche
@@ -534,7 +534,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 95,Val-d'Oise,4,4ème circonscription,75244,22643,52601,3524,901,48176,33676,14500,95004,95004,12132,24.43,Non attribué,REM,Mme MOUTCHOU Naïma,La République en marche
 95,Val-d'Oise,5,5ème circonscription,68696,26078,42618,2735,831,39052,28410,10642,95005,95005,9876,23.09,Non attribué,REM,Mme LAZAAR Fiona,La République en marche
 95,Val-d'Oise,6,6ème circonscription,75030,23998,51032,3260,792,46980,33943,13037,95006,95006,10800,21.89,Non attribué,MDM,Mme ELIMAS Nathalie,Modem
-95,Val-d'Oise,7,7ème circonscription,68940,23013,45927,2936,823,42168,27839,14329,95007,95007,11482,25.55,Non attribué,REM,M. DA SILVA Dominique,La République en marche
+95,Val-d'Oise,7,7ème circonscription,68940,23013,45927,2936,823,42168,27839,14329,95007,95007,11482,25.55,Parti socialiste,REM,M. DA SILVA Dominique,La République en marche
 95,Val-d'Oise,8,8ème circonscription,54159,22791,31368,1949,637,28782,19288,9494,95008,95008,8104,24.98,Non attribué,SOC,M. PUPPONI François,Socialistes
 95,Val-d'Oise,9,9ème circonscription,70184,25012,45172,2958,984,41230,23789,17441,95009,95009,15340,35.48,Non attribué,REM,Mme PARK Zivka,La République en marche
 95,Val-d'Oise,10,10ème circonscription,67586,22490,45096,3234,694,41168,28941,12227,95010,95010,10021,23.32,Non attribué,REM,M. TACHE Aurelien,La République en marche
