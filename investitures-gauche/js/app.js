@@ -784,7 +784,7 @@ const autoCompleteJS = new autoComplete({
             placeHolder: "Chercher une circonscription..",
             diacritics: true,
             resultsList: {
-            maxResults: 15,
+            maxResults: 18,
           },
             data: {
                 src: Object.keys(obj_circo_id),
