@@ -54,7 +54,7 @@ const colors_circo_gauche = {
 'Ecologistes': "#00A85C",
 'Parti socialiste': '#EC4C6B',
 'Parti communiste': '#D80000',
-'Non attribué' : 'grey'
+'Non attribué' : '#E5E5E5'
 }
 
 
@@ -422,7 +422,7 @@ if (selected_element == 'candidat en tête'){
     // ${drawGraph(this_dep_scores)}</span>`
 
     this_html +=  `<br><span class='details'>
-    Parti investi : <b>${this_d.investiture}</b></span>`
+    Parti investi : <b style="color:${this_d.investiture != 'Non attribué' ?  colors_circo_gauche[this_d.investiture] : "grey"}">${this_d.investiture}</b></span>`
 
 }
 
