@@ -12,7 +12,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 03,Allier,1,1ère circonscription,89176,21776,67400,5000,2444,59956,31443,28513,03001,03001,21789,36.23,Parti communiste,COM,M. DUFRÈGNE Jean-Paul,Communistes,Parti communiste
 03,Allier,2,2ème circonscription,80749,20777,59972,4581,2382,53009,27000,26009,03002,03002,19051,35.56,Non attribué,REM,Mme VANCEUNEBROCK-MIALON Laurence,La République en marche,Non attribué
 03,Allier,3,3ème circonscription,80029,19753,60276,4226,1609,54441,29202,25239,03003,03003,19367,36.49,Parti socialiste,REM,Mme PEYROL Bénédicte,La République en marche,Parti socialiste
-04,Alpes-de-Haute-Provence,1,1ère circonscription,61687,14903,46784,3798,1390,41596,19262,22334,04001,04001,17817,43.46,Non attribué,REM,Mme BAGARRY Delphine,La République en marche,Ecologistes
+04,Alpes-de-Haute-Provence,1,1ère circonscription,61687,14903,46784,3798,1390,41596,19262,22334,04001,04001,17817,43.46,Ecologistes,REM,Mme BAGARRY Delphine,La République en marche,Ecologistes
 04,Alpes-de-Haute-Provence,2,2ème circonscription,66390,17004,49386,3850,1336,44200,22395,21805,04002,04002,17000,39.71,Non attribué,REM,M. CASTANER Christophe,La République en marche,Non attribué
 05,Hautes-Alpes,1,1ère circonscription,59505,14361,45144,3636,1215,40293,21467,18826,05001,05001,14341,36.92,Non attribué,REM,Mme BOYER Pascale,La République en marche,Non attribué
 05,Hautes-Alpes,2,2ème circonscription,54035,12934,41101,3723,1016,36362,20742,15620,05002,05002,12076,34.72,Non attribué,REM,M. GIRAUD Joël,La République en marche,Non attribué
@@ -84,13 +84,13 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 2B,Haute-Corse,1,1ère circonscription,61277,23183,38094,2446,1069,34579,14862,19717,2B001,2B001,16261,50.28,Non attribué,REG,M. CASTELLANI Michel,Régionalistes,Non attribué
 2B,Haute-Corse,2,2ème circonscription,67828,27186,40642,2837,1296,36509,15089,21420,2B002,2B002,16306,45.41,Non attribué,REG,M. ACQUAVIVA Jean-Félix,Régionalistes,Non attribué
 21,Côte-d'Or,1,1ère circonscription,70013,17640,52373,3651,975,47747,33003,14744,21001,21001,11627,24.37,Non attribué,REM,M. MARTIN Didier,La République en marche,Non attribué
-21,Côte-d'Or,2,2ème circonscription,70985,18206,52779,3660,1057,48062,28373,19689,21002,21002,16138,34.29,Non attribué,LR,M. DELATTE Rémi,Les républicains,Ecologistes
+21,Côte-d'Or,2,2ème circonscription,70985,18206,52779,3660,1057,48062,28373,19689,21002,21002,16138,34.29,Ecologistes,LR,M. DELATTE Rémi,Les républicains,Ecologistes
 21,Côte-d'Or,3,3ème circonscription,72063,18540,53523,3673,1067,48783,28609,20174,21003,21003,16929,34.75,Non attribué,REM,Mme KHATTABI Fadila,La République en marche,Non attribué
 21,Côte-d'Or,4,4ème circonscription,68361,15324,53037,3906,1280,47851,22929,24922,21004,21004,20390,43.26,Non attribué,REM,Mme DE COURSON Yolaine,La République en marche,Non attribué
-21,Côte-d'Or,5,5ème circonscription,85499,19935,65564,4341,1252,59971,31634,28337,21005,21005,24037,41.35,Non attribué,REM,M. PARIS Didier,La République en marche,Parti communiste
+21,Côte-d'Or,5,5ème circonscription,85499,19935,65564,4341,1252,59971,31634,28337,21005,21005,24037,41.35,Parti communiste,REM,M. PARIS Didier,La République en marche,Parti communiste
 22,Côtes-d'Armor,1,1ère circonscription,91485,20708,70777,5216,1888,63673,43620,20053,22001,22001,14065,22.32,Non attribué,MDM,M. JONCOUR Bruno,Modem,Non attribué
 22,Côtes-d'Armor,2,2ème circonscription,103130,20409,82721,5659,2195,74867,46146,28721,22002,22002,19842,28.55,Parti socialiste,REM,M. BERVILLE Hervé,La République en marche,Parti socialiste
-22,Côtes-d'Armor,3,3ème circonscription,88722,17429,71293,4612,2050,64631,38386,26245,22003,22003,18481,29.4,Non attribué,LR,M. LE FUR Marc,Les républicains,Ecologistes
+22,Côtes-d'Armor,3,3ème circonscription,88722,17429,71293,4612,2050,64631,38386,26245,22003,22003,18481,29.4,Ecologistes,LR,M. LE FUR Marc,Les républicains,Ecologistes
 22,Côtes-d'Armor,4,4ème circonscription,80863,17829,63034,5116,2536,55382,32056,23326,22004,22004,15597,28.64,Non attribué,REM,M. KERLOGOT Yannick,La République en marche,Non attribué
 22,Côtes-d'Armor,5,5ème circonscription,107560,23829,83731,6336,2294,75101,49648,25453,22005,22005,17569,24.17,Non attribué,REM,M. BOTHOREL Eric,La République en marche,Non attribué
 23,Creuse,1,1ère circonscription,90958,23481,67477,5915,2856,58706,30553,28153,23001,23001,20428,34.24,Non attribué,REM,M. MOREAU Jean-Baptiste,La République en marche,Non attribué
@@ -105,7 +105,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 25,Doubs,5,5ème circonscription,84419,19688,64731,3961,1573,59197,34261,24936,25005,25005,19983,35.22,Non attribué,LR,Mme GENEVARD Annie,Les républicains,Non attribué
 26,Drôme,1,1ère circonscription,77457,21958,55499,3587,1195,50717,31454,19263,26001,26001,15812,31.23,Non attribué,REM,Mme CLAPOT Mireille,La République en marche,Non attribué
 26,Drôme,2,2ème circonscription,95601,25003,70598,4526,1711,64361,32485,31876,26002,26002,26737,42.49,Non attribué,REM,Mme THOUROT Alice,La République en marche,Non attribué
-26,Drôme,3,3ème circonscription,110433,25171,85262,7835,2269,75158,43821,31337,26003,26003,25439,34.54,Non attribué,REM,Mme DE LAVERGNE Célia,La République en marche,Ecologistes
+26,Drôme,3,3ème circonscription,110433,25171,85262,7835,2269,75158,43821,31337,26003,26003,25439,34.54,Ecologistes,REM,Mme DE LAVERGNE Célia,La République en marche,Ecologistes
 26,Drôme,4,4ème circonscription,98789,24452,74337,5154,1507,67676,35936,31740,26004,26004,26324,40.43,Parti socialiste,LR,Mme ANTHOINE Emmanuelle,Les républicains,Parti socialiste
 27,Eure,1,1ère circonscription,86369,22233,64136,3564,1253,59319,28981,30338,27001,27001,26610,45.44,Non attribué,REM,M. LE MAIRE Bruno,La République en marche,Non attribué
 27,Eure,2,2ème circonscription,78710,18095,60615,3602,1155,55858,27575,28283,27002,27002,24042,44.33,Non attribué,REM,M. GOUTTEFARDE Fabien,La République en marche,Non attribué
@@ -197,9 +197,9 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 41,Loir-et-Cher,1,1ère circonscription,82551,21432,61119,4116,1486,55517,33008,22509,41001,41001,18779,34.09,Non attribué,MDM,M. FESNEAU Marc,Modem,Non attribué
 41,Loir-et-Cher,2,2ème circonscription,80291,18933,61358,3639,1516,56203,27584,28619,41002,41002,24148,44.09,Parti communiste,LR,M. PELTIER Guillaume,Les républicains,Parti communiste
 41,Loir-et-Cher,3,3ème circonscription,81798,18048,63750,4124,1554,58072,30767,27305,41003,41003,22969,40.43,Ecologistes,UDI,M. LEROY Maurice,UDI,Ecologistes
-42,Loire,1,1ère circonscription,64109,19962,44147,2754,933,40460,25781,14679,42001,42001,12711,29.87,Non attribué,SOC,M. JUANICO Régis,Socialistes,Ecologistes
+42,Loire,1,1ère circonscription,64109,19962,44147,2754,933,40460,25781,14679,42001,42001,12711,29.87,Ecologistes,SOC,M. JUANICO Régis,Socialistes,Ecologistes
 42,Loire,2,2ème circonscription,50629,17471,33158,2146,690,30322,20748,9574,42002,42002,8589,25.6,Non attribué,REM,M. MIS Jean-Michel,La République en marche,Non attribué
-42,Loire,3,3ème circonscription,83126,23153,59973,4276,771,54926,30648,24278,42003,42003,19972,36.8,Non attribué,REM,Mme FAURE-MUNTIAN Valéria,La République en marche,Parti communiste
+42,Loire,3,3ème circonscription,83126,23153,59973,4276,771,54926,30648,24278,42003,42003,19972,36.8,Parti communiste,REM,Mme FAURE-MUNTIAN Valéria,La République en marche,Parti communiste
 42,Loire,4,4ème circonscription,103516,26965,76551,5342,1647,69562,36837,32725,42004,42004,27227,39.75,Non attribué,LR,M. CINIERI Dino,Les républicains,Non attribué
 42,Loire,5,5ème circonscription,101890,24007,77883,5328,1845,70710,38344,32366,42005,42005,26566,38.2,Non attribué,MDM,Mme SARLES Nathalie,Modem,Non attribué
 42,Loire,6,6ème circonscription,110692,25312,85380,5536,1772,78072,42520,35552,42006,42006,28649,38.77,Non attribué,REM,M. BOROWCZYK Julien,La République en marche,Non attribué
@@ -234,13 +234,13 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 49,Maine-et-Loire,5,5ème circonscription,79313,19020,60293,3475,1294,55524,38901,16623,49005,49005,12236,22.76,Non attribué,REM,M. MASSEGLIA Denis,La République en marche,Non attribué
 49,Maine-et-Loire,6,6ème circonscription,98755,22282,76473,4827,1662,69984,47892,22092,49006,49006,17317,25.8,Non attribué,REM,Mme DUBRE-CHIRAT Nicole,La République en marche,Non attribué
 49,Maine-et-Loire,7,7ème circonscription,81646,18462,63184,3992,1245,57947,39547,18400,49007,49007,14136,25.68,Parti socialiste,MDM,M. BOLO Philippe,Modem,Parti socialiste
-50,Manche,1,1ère circonscription,87713,20061,67652,4084,1345,62223,36197,26026,50001,50001,20621,33.73,Non attribué,LR,M. GOSSELIN Philippe,Les républicains,Ecologistes
+50,Manche,1,1ère circonscription,87713,20061,67652,4084,1345,62223,36197,26026,50001,50001,20621,33.73,Ecologistes,LR,M. GOSSELIN Philippe,Les républicains,Ecologistes
 50,Manche,2,2ème circonscription,96984,21961,75023,4389,1749,68885,42715,26170,50002,50002,20812,31.01,Non attribué,REM,M. SORRE Bertrand,La République en marche,Non attribué
-50,Manche,3,3ème circonscription,110685,24903,85782,5558,1813,78411,45381,33030,50003,50003,26445,35.01,Non attribué,REM,M. TRAVERT Stéphane,La République en marche,Parti communiste
+50,Manche,3,3ème circonscription,110685,24903,85782,5558,1813,78411,45381,33030,50003,50003,26445,35.01,Parti communiste,REM,M. TRAVERT Stéphane,La République en marche,Parti communiste
 50,Manche,4,4ème circonscription,89280,24121,65159,5026,1543,58590,35522,23068,50004,50004,18248,30.93,Parti socialiste,DIV,Mme KRIMI Sonia,Divers,Parti socialiste
-51,Marne,1,1ère circonscription,73961,21064,52897,2762,996,49139,28658,20481,51001,51001,17300,36.58,Non attribué,LR,Mme BEAUVAIS Valérie,Les républicains,Ecologistes
+51,Marne,1,1ère circonscription,73961,21064,52897,2762,996,49139,28658,20481,51001,51001,17300,36.58,Ecologistes,LR,Mme BEAUVAIS Valérie,Les républicains,Ecologistes
 51,Marne,2,2ème circonscription,74372,19984,54388,2789,1007,50592,30097,20495,51002,51002,17079,35.45,Non attribué,REM,Mme KURIC Aina,La République en marche,Non attribué
-51,Marne,3,3ème circonscription,79971,21528,58443,3254,1003,54186,27093,27093,51003,51003,24416,45.97,Non attribué,REM,M. GIRARDIN Éric,La République en marche,Parti communiste
+51,Marne,3,3ème circonscription,79971,21528,58443,3254,1003,54186,27093,27093,51003,51003,24416,45.97,Parti communiste,REM,M. GIRARDIN Éric,La République en marche,Parti communiste
 51,Marne,4,4ème circonscription,76627,20114,56513,3008,1246,52259,26677,25582,51004,51004,22366,42.79,Non attribué,LR,Mme MAGNIER Lise,Les républicains,Non attribué
 51,Marne,5,5ème circonscription,75837,16686,59151,3068,1133,54950,23528,31422,51005,51005,28066,52.75,Non attribué,UDI,M. DE COURSON Charles,UDI,Non attribué
 52,Haute-Marne,1,1ère circonscription,69935,17188,52747,3252,1501,47994,22619,25375,52001,52001,21281,43.99,Non attribué,REM,Mme ABBA Bérangère,La République en marche,Non attribué
@@ -255,7 +255,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 54,Meurthe-et-Moselle,5,5ème circonscription,78192,17816,60376,3469,1320,55587,27236,28351,54005,54005,25347,46.71,Parti socialiste,SOC,M. POTIER Dominique,Socialistes,Parti socialiste
 54,Meurthe-et-Moselle,6,6ème circonscription,87066,24237,62829,4180,1311,57338,27086,30252,54006,54006,25874,45.71,Non attribué,FI,Mme FIAT Caroline,La France insoumise,Non attribué
 55,Meuse,1,1ère circonscription,75384,17592,57792,3241,1280,53271,23739,29532,55001,55001,25739,48.51,Parti socialiste,UDI,M. PANCHER Bertrand,UDI,Parti socialiste
-55,Meuse,2,2ème circonscription,59418,14883,44535,2382,964,41189,18194,22995,55002,55002,19528,48.21,Non attribué,REM,Mme CARIOU Emilie,La République en marche,Ecologistes
+55,Meuse,2,2ème circonscription,59418,14883,44535,2382,964,41189,18194,22995,55002,55002,19528,48.21,Ecologistes,REM,Mme CARIOU Emilie,La République en marche,Ecologistes
 56,Morbihan,1,1ère circonscription,114550,24852,89698,6195,1707,81796,57346,24450,56001,56001,16903,22.37,Parti socialiste,REM,M. PELLOIS Hervé,La République en marche,Parti socialiste
 56,Morbihan,2,2ème circonscription,112055,23499,88556,6554,2131,79871,51229,28642,56002,56002,20321,27.87,Non attribué,DIV,M. PAHUN Jimmy,Divers,Non attribué
 56,Morbihan,3,3ème circonscription,96312,20113,76199,4737,2152,69310,40053,29257,56003,56003,21249,32.67,Non attribué,REM,Mme LE PEIH Nicole,La République en marche,Non attribué
@@ -441,7 +441,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 80,Somme,1,1ère circonscription,83865,23621,60244,3305,1522,55417,28744,26673,80001,80001,23783,42.46,Non attribué,FI,M. RUFFIN François,La France insoumise,Non attribué
 80,Somme,2,2ème circonscription,77409,20994,56415,3294,1158,51963,34678,17285,80002,80002,14639,28.56,Non attribué,REM,Mme POMPILI Barbara,La République en marche,Non attribué
 80,Somme,3,3ème circonscription,82565,17256,65309,3560,1626,60123,26056,34067,80003,80003,30498,51.67,Non attribué,LR,M. MAQUET Emmanuel,Les républicains,Non attribué
-80,Somme,4,4ème circonscription,84906,17932,66974,3805,1398,61771,28756,33015,80004,80004,29351,49.08,Non attribué,REM,M. LECLABART Jean-Claude,La République en marche,Ecologistes
+80,Somme,4,4ème circonscription,84906,17932,66974,3805,1398,61771,28756,33015,80004,80004,29351,49.08,Ecologistes,REM,M. LECLABART Jean-Claude,La République en marche,Ecologistes
 80,Somme,5,5ème circonscription,81201,18684,62517,3030,1226,58261,22632,35629,80005,80005,31194,55.02,Non attribué,UDI,M. DEMILLY Stéphane,UDI,Non attribué
 81,Tarn,1,1ère circonscription,84943,20784,64159,4666,2367,57126,31159,25967,81001,81001,20009,35.07,Non attribué,DVD,M. FOLLIOT Philippe,Divers droite,Non attribué
 81,Tarn,2,2ème circonscription,109399,26907,82492,6621,3304,72567,38582,33985,81002,81002,25319,35.48,Ecologistes,REM,Mme VERDIER-JOUCLAS Marie-Christine,La République en marche,Ecologistes
@@ -466,7 +466,7 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 85,Vendée,3,3ème circonscription,134914,31241,103673,5863,2411,95399,56978,38421,85003,85003,28096,33.85,Non attribué,REM,M. BUCHOU Stéphane,La République en marche,Non attribué
 85,Vendée,4,4ème circonscription,102358,20189,82169,4738,1694,75737,52269,23468,85004,85004,16936,23.65,Parti communiste,REM,Mme LEGUILLE-BALLOY Martine,La République en marche,Parti communiste
 85,Vendée,5,5ème circonscription,83909,18880,65029,4067,1679,59283,32781,26502,85005,85005,19700,34.51,Non attribué,REM,M. HENRIET Pierre,La République en marche,Non attribué
-86,Vienne,1,1ère circonscription,80230,20238,59992,4330,1560,54102,35413,18689,86001,86001,14404,26.54,Non attribué,REM,M. SAVATIER Jacques,La République en marche,Ecologistes
+86,Vienne,1,1ère circonscription,80230,20238,59992,4330,1560,54102,35413,18689,86001,86001,14404,26.54,Ecologistes,REM,M. SAVATIER Jacques,La République en marche,Ecologistes
 86,Vienne,2,2ème circonscription,79070,19261,59809,4303,1447,54059,37602,16457,86002,86002,12096,22.44,Non attribué,REM,M. HOULIÉ Sacha,La République en marche,Non attribué
 86,Vienne,3,3ème circonscription,72874,16966,55908,3773,1670,50465,26965,23500,86003,86003,18370,36.17,Non attribué,REM,M. CLÉMENT Jean-Michel,La République en marche,Non attribué
 86,Vienne,4,4ème circonscription,73902,19687,54215,3232,1385,49598,25194,24404,86004,86004,20385,40.77,Parti socialiste,MDM,M. TURQUOIS Nicolas,Modem,Parti socialiste
@@ -530,14 +530,14 @@ num_deptmt,nom_circo,num_circo,Libellé de la circonscription,Inscrits,Abstentio
 94,Val-de-Marne,11,11ème circonscription,64481,21383,43098,3109,704,39285,30672,8613,94011,94011,6737,16.95,Ecologistes,REM,Mme GAILLOT Albane,La République en marche,Ecologistes
 95,Val-d'Oise,1,1ère circonscription,82149,22525,59624,4006,1142,54476,31937,22539,95001,95001,19358,35.28,Non attribué,REM,Mme MULLER-QUOY Isabelle,La République en marche,Non attribué
 95,Val-d'Oise,2,2ème circonscription,77882,22904,54978,3570,1114,50294,31745,18549,95002,95002,15412,30.44,Non attribué,REM,M. VUILLETET Guillaume,La République en marche,Non attribué
-95,Val-d'Oise,3,3ème circonscription,94006,27524,66482,4313,1220,60949,40261,20688,95003,95003,16993,28.01,Non attribué,REM,Mme RILHAC Cecile,La République en marche,Ecologistes
+95,Val-d'Oise,3,3ème circonscription,94006,27524,66482,4313,1220,60949,40261,20688,95003,95003,16993,28.01,Ecologistes,REM,Mme RILHAC Cecile,La République en marche,Ecologistes
 95,Val-d'Oise,4,4ème circonscription,75244,22643,52601,3524,901,48176,33676,14500,95004,95004,12132,24.43,Non attribué,REM,Mme MOUTCHOU Naïma,La République en marche,Non attribué
 95,Val-d'Oise,5,5ème circonscription,68696,26078,42618,2735,831,39052,28410,10642,95005,95005,9876,23.09,Non attribué,REM,Mme LAZAAR Fiona,La République en marche,Non attribué
 95,Val-d'Oise,6,6ème circonscription,75030,23998,51032,3260,792,46980,33943,13037,95006,95006,10800,21.89,Non attribué,MDM,Mme ELIMAS Nathalie,Modem,Non attribué
 95,Val-d'Oise,7,7ème circonscription,68940,23013,45927,2936,823,42168,27839,14329,95007,95007,11482,25.55,Parti socialiste,REM,M. DA SILVA Dominique,La République en marche,Parti socialiste
 95,Val-d'Oise,8,8ème circonscription,54159,22791,31368,1949,637,28782,19288,9494,95008,95008,8104,24.98,Non attribué,SOC,M. PUPPONI François,Socialistes,Non attribué
 95,Val-d'Oise,9,9ème circonscription,70184,25012,45172,2958,984,41230,23789,17441,95009,95009,15340,35.48,Non attribué,REM,Mme PARK Zivka,La République en marche,Non attribué
-95,Val-d'Oise,10,10ème circonscription,67586,22490,45096,3234,694,41168,28941,12227,95010,95010,10021,23.32,Non attribué,REM,M. TACHE Aurelien,La République en marche,Ecologistes
+95,Val-d'Oise,10,10ème circonscription,67586,22490,45096,3234,694,41168,28941,12227,95010,95010,10021,23.32,Ecologistes,REM,M. TACHE Aurelien,La République en marche,Ecologistes
 ZA,Guadeloupe,1,1ère circonscription,75952,41915,34037,2025,2058,29954,8311,21643,ZA001,ZA001,7675,23.94,Non attribué,REM,M. SERVA Olivier,La République en marche,Non attribué
 ZA,Guadeloupe,2,2ème circonscription,87594,45855,41739,2273,2104,37362,11509,25853,ZA002,ZA002,9773,26.55,Non attribué,DVG,Mme BENIN Justine,Divers gauche,Non attribué
 ZA,Guadeloupe,3,3ème circonscription,84232,42833,41399,2549,2120,36730,11675,25055,ZA003,ZA003,8744,24.11,Non attribué,DVG,M. MATHIASIN Max,Divers gauche,Non attribué
