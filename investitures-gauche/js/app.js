@@ -50,6 +50,13 @@ const colors_candidats = {
 }
 
 
+const colors_circo_gauche = {
+'Ecologistes': "#00A85C",
+'Parti socialiste': '#EC4C6B',
+'Parti communiste': '#D80000',
+'Non attribué' : 'grey'
+}
+
 
 const candidate_names_T2 = [
 'MACRON',
@@ -236,9 +243,9 @@ function draw_legendots(){
 d3.selectAll('div#legendots .legende_dot').remove();
 
 
-let data_for_legendots = Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0]))
+let data_for_legendots = Object.entries(colors_circo_gauche)
 
-data_for_legendots.push(['Résultats non parvenus', '#ddd'])
+// data_for_legendots.push(['Résultats non parvenus', '#ddd'])
 
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
 .data(data_for_legendots)
@@ -411,8 +418,11 @@ let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semico
 
 if (selected_element == 'candidat en tête'){
 
-    this_html +=  `<span class='details'>
-    ${drawGraph(this_dep_scores)}</span>`
+    // this_html +=  `<span class='details'>
+    // ${drawGraph(this_dep_scores)}</span>`
+
+    this_html +=  `<br><span class='details'>
+    Parti investi : <b>${this_d.investiture}</b></span>`
 
 }
 
@@ -464,8 +474,8 @@ let this_selected_candidate = [{'name':selected_element, 'score': this_d[selecte
 
 }
 
-this_html += `<hr>Nombre de votes exprimés : ${this_d['Exprimes']}<br>
-Taux d'abstention : ${String(_.round(100*this_d['Abstentions'] / +this_d['Inscrits'], 1)).replace('.', ',')}%`
+// this_html += `<hr>Nombre de votes exprimés : ${this_d['Exprimes']}<br>
+// Taux d'abstention : ${String(_.round(100*this_d['Abstentions'] / +this_d['Inscrits'], 1)).replace('.', ',')}%`
 
 
 this_html += rajout_extreme_droite
@@ -722,6 +732,7 @@ Promise.all([
 
     })
 
+console.log(circos_data_T2)
 
 const list_circo_id = circos_data_T1.map(d=>[d['nom_circo'] + ' (' + d.num_deptmt + ') - ' + d['Libellé de la circonscription'], d.id_circo])
 
@@ -855,7 +866,7 @@ let this_data = data_tours[tour].data
   .style('fill', d => {
 
     if (typeof this_data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
- return colors_candidats[this_data.filter(function(e){return e[location_variable]  == d.id})[0].loc_winner]
+ return colors_circo_gauche[this_data.filter(function(e){return e[location_variable]  == d.id})[0].investiture]
     }
     return 'rgb(221, 221, 221)'
   })
