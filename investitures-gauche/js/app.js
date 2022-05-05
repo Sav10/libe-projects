@@ -50,12 +50,50 @@ const colors_candidats = {
 }
 
 
+const nuances_parti = {'LR' : 'Les républicains', 
+'REM' :  'La République en marche', 
+'SOC': 'Socialistes', 
+'COM' : 'Communistes', 
+'FI' : 'La France insoumise', 
+'MDM' : 'Modem', 
+'DVG' : 'Divers gauche', 
+'REG' : 'Régionalistes', 
+'ECO' : 'Ecologistes', 
+'UDI' : 'UDI',
+'FN' :  'Rassemblement national', 
+'DIV' : 'Divers', 
+'DVD' : 'Divers droite', 
+'RDG' : 'Radicaux de gauche', 
+'EXD' : 'Extrème droite', 
+'DLF' : 'Debout la France', 
+'NC' : 'NC'}
+
 const colors_circo_gauche = {
 'Ecologistes': "#00A85C",
 'Parti socialiste': '#EC4C6B',
 'Parti communiste': 'rgb(181, 0, 0)',
 'Non attribué' : '#E5E5E5'
 }
+
+
+const colors_nuances_parti = {
+'EXG': "#751719",
+'FI': "#cd0420",
+"SOC":'#EC4C6B',
+"LR":'#0058a2',
+ "EXD":'#03034f',
+ "DVG":'#f46099',
+ "UDI":'#9f64a2',
+ "REM":'#ffb400',
+ "DLF":'#003366',
+ "COM":'rgb(181, 0, 0)',
+ "DVD":'#026db5',
+ "RDG":'#f781b6',
+  "ECO":'#00A85C',
+  "FN":'#000032',
+  "MDM":'#e85d21',
+    'DIV': "#cccccc",
+'REG': "#666"}
 
 
 const candidate_names_T2 = [
@@ -421,8 +459,9 @@ if (selected_element == 'candidat en tête'){
     // this_html +=  `<span class='details'>
     // ${drawGraph(this_dep_scores)}</span>`
 
-    this_html +=  `<br><span class='details'>
-    Parti investi : <b style="color:${this_d.investiture != 'Non attribué' ?  colors_circo_gauche[this_d.investiture] : "grey"}">${this_d.investiture}</b></span>`
+    this_html +=  `<br><span class='details'><br>
+    Parti investi : <b style="color:${this_d.investiture != 'Non attribué' ?  colors_circo_gauche[this_d.investiture] : "grey"}">${this_d.investiture}</b></span><br>
+    <hr><br>Couleur du sortant : <b style="color:${colors_nuances_parti[this_d.Nuance]}">${this_d.parti_sortant}</b>`
 
 }
 
