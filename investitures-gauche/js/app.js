@@ -70,7 +70,7 @@ const nuances_parti = {'LR' : 'Les républicains',
 
 const colors_circo_gauche = {
 'Ecologistes': "#00A85C",
-'Parti Socialiste': '#EC4C6B',
+'Parti Socialiste': '#FF8FB1',
 'Parti Communiste': 'rgb(181, 0, 0)',
 'La France insoumise': "#EB404C",
 'Non attribué' : '#E5E5E5'
