@@ -53,7 +53,7 @@ const colors_candidats = {
 const colors_circo_gauche = {
 'Ecologistes': "#00A85C",
 'Parti socialiste': '#EC4C6B',
-'Parti communiste': '#B50000',
+'Parti communiste': 'rgb(181, 0, 0)',
 'Non attribué' : '#E5E5E5'
 }
 
