@@ -35,7 +35,18 @@ const autoCompleteJS = new autoComplete({
                         console.log(selection)
                         autoCompleteJS.input.value = selection.label;
                         console.log(selection.geometry.coordinates)
-                        console.log(selection.properties.postcode.substring(0,2))
+                        let this_dep = selection.properties.postcode.substring(0,2)
+                        console.log(this_dep)
+
+
+                        d3.json("assets/circo_dep/dep" + this_dep + ".json")
+                      .then(function(data) {
+                        console.log(data)
+    // Code from your callback goes here...
+                        })
+                        .catch(function(error) {
+    // Do some error handling.
+                        });
 
 
 
