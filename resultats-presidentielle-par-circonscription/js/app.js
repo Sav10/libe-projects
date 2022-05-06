@@ -238,7 +238,7 @@ d3.selectAll('div#legendots .legende_dot').remove();
 
 let data_for_legendots = Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0]))
 
-data_for_legendots.push(['Résultats non parvenus', '#ddd'])
+data_for_legendots.push(['Mélenchon', 'rgb(235, 64, 76)'])
 
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
 .data(data_for_legendots)
@@ -734,7 +734,7 @@ const autoCompleteJS = new autoComplete({
             placeHolder: "Chercher une circonscription..",
             diacritics: true,
             resultsList: {
-            maxResults: 15,
+            maxResults: 18,
           },
             data: {
                 src: Object.keys(obj_circo_id),
