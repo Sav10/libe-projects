@@ -11,7 +11,12 @@ const autoCompleteJS = new autoComplete({
                 src: async (query) => {
       try {
         // Fetch Data from external Source
-        const source = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${query}&limit=5`);
+
+        if (query.length < 5){
+          return error
+        }
+
+        const source = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${query}&limit=10&autocomplete=0`);
         // Data is array of `Objects` | `Strings`
         const data = await source.json();
 
