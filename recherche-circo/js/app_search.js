@@ -46,17 +46,23 @@ if (!all_loaded_dep.hasOwnProperty(this_dep)) {
                         console.log(data)
 
                         all_loaded_dep[this_dep] = data
+                        show_circ(data)
 
                         })
                         .catch(function(error) {
     console.log(error)
                         });
 }
+else{
+  show_circ(all_loaded_dep[this_dep])
+}
+
+function show_circ(data){
 
 let point_geojson = selection.geometry.coordinates;
 
 
-let this_data =  _.cloneDeep(all_loaded_dep[this_dep])
+let this_data =  _.cloneDeep(data)
 
 let this_filtered_data = this_data.filter(function(d) {return d3.geoContains(d, point_geojson)});
 let this_circo = this_filtered_data[0].properties['id_circo']
@@ -64,6 +70,9 @@ let this_circo = this_filtered_data[0].properties['id_circo']
 console.log(circo_names[this_circo])
 
 d3.select('#result_circo').text(circo_names[this_circo])
+
+
+}
 
                         // d3.geoContains(object, point)
     // Code from your callback goes here...
