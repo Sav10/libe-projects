@@ -45,12 +45,16 @@ const autoCompleteJS = new autoComplete({
 
 let point_geojson = selection.geometry.coordinates;
 
+
                         for (i in data){
                           console.log(data[i])
 
                           console.log(d3.geoContains(data[i], point_geojson))
 
                         }
+
+let this_filtered_data = data.filter(function(d) {return d3.geoContains(d, point_geojson)});
+ console.log(this_filtered_data[0].properties['id_circo'])
 
                         // d3.geoContains(object, point)
     // Code from your callback goes here...
