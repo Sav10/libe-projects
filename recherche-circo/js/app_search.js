@@ -5,12 +5,12 @@ const autoCompleteJS = new autoComplete({
             placeHolder: "Chercher une circonscription..",
             diacritics: true,
             resultsList: {
-            maxResults: 18,
+            maxResults: 10,
           },
             data: {
                 src: async (query) => {
       try {
-        // Fetch Data from external Source
+
 
         if (query.length < 5){
           return error
@@ -20,7 +20,8 @@ const autoCompleteJS = new autoComplete({
         // Data is array of `Objects` | `Strings`
         const data = await source.json();
 
-        console.log(data.features)
+        console.log(data)
+
 
         return data.features.map(function(d) { return {'label':d.properties.label, 'properties':d.properties, 'geometry' : d.geometry } });
       } catch (error) {
@@ -37,25 +38,20 @@ const autoCompleteJS = new autoComplete({
                 input: {
                     selection: (event) => {
                         const selection = event.detail.selection.value;
-                        console.log(selection)
                         autoCompleteJS.input.value = selection.label;
-                        console.log(selection.geometry.coordinates)
                         let this_dep = selection.properties.postcode.substring(0,2)
-                        console.log(this_dep)
 
 if (!all_loaded_dep.hasOwnProperty(this_dep)) {
 
 
                         d3.json("assets/circo_dep/dep" + this_dep + ".json")
                       .then(function(data) {
-                        console.log(data)
 
                         all_loaded_dep[this_dep] = data
                         show_circ(data)
 
                         })
                         .catch(function(error) {
-    console.log(error)
                         });
 }
 else{
@@ -78,21 +74,6 @@ d3.select('#result_circo').text(circo_names[this_circo])
 
 
 }
-
-                        // d3.geoContains(object, point)
-    // Code from your callback goes here...
-
-
-
-
-//  fetch(`API_ADRESS?latitude=${selection.geometry.coordinates[0]}&longitude=${selection.geometry.coordinates[1]}`)
-// .then(function(response) {
-//   return response.json();
-// })
-// .then(function(resp) {
-//   console.log(resp.circonscription)
-//   d3.select('#result_circo').text(resp.circonscription)
-// });
 
 
                     }
