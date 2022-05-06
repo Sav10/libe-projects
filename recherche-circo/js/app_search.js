@@ -42,6 +42,17 @@ const autoCompleteJS = new autoComplete({
                         d3.json("assets/circo_dep/dep" + this_dep + ".json")
                       .then(function(data) {
                         console.log(data)
+
+let point_geojson = selection.geometry.coordinates;
+
+                        for (i in data){
+                          console.log(data[i])
+
+                          console.log(d3.geoContains(data[i], point_geojson))
+
+                        }
+
+                        // d3.geoContains(object, point)
     // Code from your callback goes here...
                         })
                         .catch(function(error) {
