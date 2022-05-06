@@ -904,10 +904,14 @@ d3.select('body').on("click",function(event, d){
 
     var outside = d3.selectAll('svg path, #autocomplete_container').filter(equalToEventTarget).empty();
     // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
+
+    var path = event.path || (event.composedPath && event.composedPath());
+
+    // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
     if (outside &&
-     d3.select(event.path[2]).attr('class') != 'autoComplete_wrapper' && 
-      d3.select(event.path[1]).attr('class') != 'autoComplete_wrapper' && 
-      d3.select(event.path[3]).attr('class') != 'autoComplete_wrapper') {
+     d3.select(path[2]).attr('class') != 'autoComplete_wrapper' && 
+      d3.select(path[1]).attr('class') != 'autoComplete_wrapper' && 
+      d3.select(path[3]).attr('class') != 'autoComplete_wrapper') {
 
     reset_tooltip()
 selected_dep = [];
