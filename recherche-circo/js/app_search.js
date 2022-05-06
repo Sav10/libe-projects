@@ -32,8 +32,22 @@ const autoCompleteJS = new autoComplete({
                 input: {
                     selection: (event) => {
                         const selection = event.detail.selection.value;
-                        autoCompleteJS.input.value = selection;
+                        console.log(selection)
+                        autoCompleteJS.input.value = selection.label;
                         console.log(selection.geometry.coordinates)
+                        console.log(selection.properties.postcode.substring(0,2))
+
+
+
+//  fetch(`API_ADRESS?latitude=${selection.geometry.coordinates[0]}&longitude=${selection.geometry.coordinates[1]}`)
+// .then(function(response) {
+//   return response.json();
+// })
+// .then(function(resp) {
+//   console.log(resp.circonscription)
+//   d3.select('#result_circo').text(resp.circonscription)
+// });
+
 
                     }
                 }
