@@ -26,7 +26,7 @@
         <meta name="twitter:title" content="Législatives : trouver votre circonscription<" />
         <meta name="twitter:description" content="Legislatives : qtrouver votre circonscription<" />
         <meta name="twitter:image" content="https://www.liberation.fr/apps/2017/06/resultats-par-circo-2nd-tour/social.jpg"> -->
-
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
         <style>
         html,body {
             margin: 0;
@@ -37,7 +37,7 @@
 
 #autocomplete_container{
 
-max-width: 700px;
+max-width: 800px;
 margin: 0 auto;
 }
 
@@ -62,16 +62,40 @@ color: grey;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 24px;
 }
+
+
+   @media screen and (min-width: 530px) {
+
+.autoComplete_wrapper input#autoComplete{
+width: 500px;
+}
+
+   }
+
+   @media screen and (max-width: 529px) {
+
+.autoComplete_wrapper input#autoComplete{
+width: 99%;
+}
+
+
+#autocomplete_container {
+    width: 90%;
+}
+
+.autoComplete_wrapper {
+    display: block;
+}
+
+   }
 
         </style>
         
-        <!-- Vendor -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
 
-         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
-        <!--
+
+    <!--
         <link type="text/css" rel="stylesheet" media="screen and (max-width: 768px)" href="styles/mobile.css">
         <link type="text/css" rel="stylesheet" media="screen and (min-width: 768px)" href="styles/styles.css"> -->
     
@@ -85,6 +109,10 @@ color: grey;
     </div>
 
   </div>
+        <!-- Vendor -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+  
         <!-- Scripts -->
           <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
