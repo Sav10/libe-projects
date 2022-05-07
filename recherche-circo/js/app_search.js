@@ -47,9 +47,9 @@ const autoCompleteJS = new autoComplete({
       selection: (event) => {
         const selection = event.detail.selection.value;
         autoCompleteJS.input.value = selection.label;
-        console.log(selection)
-        console.log(selection.properties.postcode)
-        let this_dep = selection.properties.context.substring(0,2)
+
+        let this_dep = selection.properties.context.split(',')[0]
+        this_dep = Object.keys(correspondance_departements_OTM).includes(this_dep) ? correspondance_departements_OTM[this_dep] : this_dep;
 
         if (!all_loaded_dep.hasOwnProperty(this_dep)) {
 
@@ -662,3 +662,14 @@ const circo_names = {'01001': '1ère circonscription, Ain',
 'ZZ010': '10ème circonscription, Français établis hors de France',
 'ZZ011': '11ème circonscription, Français établis hors de France'}
 
+const correspondance_departements_OTM = {'971': 'ZA',
+ '972': 'ZB',
+ '973': 'ZC',
+ '974': 'ZD',
+ '976': 'ZM',
+ '988': 'ZN',
+ '987': 'ZP',
+ '975': 'ZS',
+ '977': 'ZX',
+ '978': 'ZX',
+ '986': 'ZW'}
