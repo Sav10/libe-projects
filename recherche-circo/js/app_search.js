@@ -4,24 +4,34 @@ let all_loaded_dep = {}
 const autoCompleteJS = new autoComplete({
   placeHolder: "Chercher une circonscription..",
   diacritics: true,
+  searchEngine: "loose",
+  threshold: 5,
   resultsList: {
     maxResults: 10,
   },
+  query: (input) => {
+    return input.replace("'", " ");
+},
   data: {
     src: async (query) => {
       try {
 
-        if (query.length < 5){
-          return error
-        }
 
-        const source = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${query}&limit=10&autocomplete=0`);
+        let encoded_query = encodeURI(query)
+
+        const source = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encoded_query}&limit=10&autocomplete=0`);
         // Data is array of `Objects` | `Strings`
         const data = await source.json();
 
 
-        return data.features.map(function(d) { return {'label':d.properties.label, 'properties':d.properties, 'geometry' : d.geometry } });
+        const data_entries  = data.features.map(function(d) { 
+
+          return {'label':d.properties.label, 'properties':d.properties, 'geometry' : d.geometry } });
+
+
+        return data_entries
       } catch (error) {
+
         return error;
       }
     },
