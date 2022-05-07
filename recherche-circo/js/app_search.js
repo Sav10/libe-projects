@@ -47,7 +47,9 @@ const autoCompleteJS = new autoComplete({
       selection: (event) => {
         const selection = event.detail.selection.value;
         autoCompleteJS.input.value = selection.label;
-        let this_dep = selection.properties.postcode.substring(0,2)
+        console.log(selection)
+        console.log(selection.properties.postcode)
+        let this_dep = selection.properties.context.substring(0,2)
 
         if (!all_loaded_dep.hasOwnProperty(this_dep)) {
 
