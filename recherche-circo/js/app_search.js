@@ -5,7 +5,7 @@ const autoCompleteJS = new autoComplete({
   placeHolder: "Chercher une circonscription..",
   diacritics: true,
   searchEngine: "loose",
-  threshold: 5,
+  threshold: 4,
   resultsList: {
     maxResults: 10,
   },
