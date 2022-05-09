@@ -141,12 +141,18 @@ const autoCompleteJS = new autoComplete({
             d.score = _.round(100*d.voix / d.exprimes)
           })
 
+           selected_2017.sort(function(a,b) {  return b.score - a.score})
+
 
           let selected_2022 = data_T1_Presi.filter(d=>d.id_circo == this_circo)
+
+
 
           selected_2022.forEach(function(d){
             d.score = _.round(100*d.voix / d.exprimes)
           })
+
+          selected_2022.sort(function(a,b) {  return b.score - a.score})
 
 
           console.log(selected_2022)
@@ -154,7 +160,7 @@ const autoCompleteJS = new autoComplete({
 
           let g_2017 = drawGraph(selected_2017, 'legislatives')
 
-          let g_2022 = drawGraph(selected_2017, 'presidentielle')
+          let g_2022 = drawGraph(selected_2022, 'presidentielle')
 
 
           d3.select('#left_graph').html(g_2017)

@@ -94,7 +94,7 @@ width: 99%;
 #info{
     display: flex;
     column-gap: 3em;
-    row-gap: 10px;
+    justify-content: center;
 }
 
 
@@ -106,8 +106,16 @@ width: 99%;
 
 #graphs{
 display: flex;
-flex-direction: column;
+flex-direction: row;
+justify-content: center;
 }
+
+#graphs .graph{
+flex-grow: 4;
+
+}
+
+
         </style>
         
 
@@ -136,8 +144,8 @@ flex-direction: column;
         </div>
 
 <div id='graphs'>
-    <div id='left_graph'></div>
-    <div id='right_graph'></div>
+    <div id='left_graph' class='graph'></div>
+    <div id='right_graph' class='graph'></div>
 </div>
         <!-- Vendor -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
