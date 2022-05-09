@@ -736,3 +736,52 @@ data_T1_2017 = T1_2017
 
 
   }
+
+
+function drawGraph(range){
+
+var this_html = '<div style="margin-top:10px">';
+
+for (i in range){
+  var d = range[i]
+  var html_chunk = '<div style="margin-top:5px">'
+
+  if (d.name == 'Blancs ou nuls'){
+    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = 'grey'
+  }
+  else if (d.name == 'Progression du vote Le Pen'){
+    d['score_text'] = d.score != 100 ? d.score + ' points' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = '#462100'
+  }
+  else if (d.name == 'Abstention'){
+    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = 'grey'
+  }
+  else{
+    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
+    d['score_bar'] = d.score
+    d['color_item'] = colors_candidats[d.name]
+  }
+  // html_chunk += `<div >${d.tete_liste}</div>
+  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div style="margin-top:5px">${_.capitalize(d.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
+      <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score_bar}%;background-color:${d.color_item};"></div>
+      </div>`
+
+      if (d.score == 100){
+   html_chunk += '<p style="font-size: 18px;margin-top:-20px">Élu au 1<sup>er</sup> tour<p>'
+      }
+
+
+html_chunk += '</div>'
+
+this_html += html_chunk
+}
+
+this_html += '</div>'
+
+return this_html
+}
