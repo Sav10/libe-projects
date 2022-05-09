@@ -81,6 +81,14 @@ const autoCompleteJS = new autoComplete({
 
           d3.select('#result_circo').text(circo_names[this_circo])
 
+
+          d3.select('#nombre_inscrits').text(nombre_inscrits)
+          d3.select('#depute_sortant').text(depute_sortant)
+          d3.select('#couleur_2017').text(couleur_2017)
+          d3.select('#actuelle_couleur').text(actuelle_couleur)
+
+      
+
         }
 
       }

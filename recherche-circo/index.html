@@ -93,7 +93,8 @@ width: 99%;
 
 #info{
     display: flex;
-
+    column-gap: 3em;
+    row-gap: 10px;
 }
 
 
@@ -119,11 +120,11 @@ width: 99%;
         <h3 style="text-align: center;" id="adresse_circo"></h3>
         <h2 style="text-align: center;" id="result_circo"></h2>
         <div id="info" style="/*display: none;*/">
-            <div class="mini_row"><div class="mini_col"><span class="title_item"></span>INSCRITS<span>10</span></div>
-                <div class="mini_col"><span class="title_item">DEPUTE SORTANT</span><span>10</span></div>
+            <div class="mini_row"><div class="mini_col"><span class="title_item"></span>INSCRITS<span id='nombre_inscrits'>10</span></div>
+                <div class="mini_col"><span class="title_item" id='nom_sortant'>DEPUTE SORTANT</span><span id='depute_sortant'>10</span></div>
             </div>
-            <div class="mini_row"><div class="mini_col"><span class="title_item">COULEUR EN 2017</span><span>10</span></div>
-                <div class="mini_col"><span class="title_item">ACTUELLE COULEUR</span><span>10</span></div>
+            <div class="mini_row"><div class="mini_col"><span class="title_item">COULEUR EN 2017</span><span id='couleur_2017'>10</span></div>
+                <div class="mini_col"><span class="title_item">ACTUELLE COULEUR</span><span id='actuelle_couleur'>10</span></div>
             </div>
         </div>
 
