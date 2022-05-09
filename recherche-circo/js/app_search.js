@@ -131,6 +131,8 @@ const autoCompleteJS = new autoComplete({
 
 
           d3.select('#info').style('display', 'flex')
+          d3.select('#resultats_precedents').style('display', 'block')
+          d3.select('#graphs').style('display', 'flex')
 
 
           d3.select('#nombre_inscrits').text(nombre_inscrits)
