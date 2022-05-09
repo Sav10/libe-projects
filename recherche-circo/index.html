@@ -104,6 +104,10 @@ width: 99%;
 
 }
 
+#graphs{
+display: flex;
+flex-direction: column;
+}
         </style>
         
 
@@ -119,6 +123,9 @@ width: 99%;
         <div id="autocomplete_container"> <input id="autoComplete"></div>
         <h3 style="text-align: center;" id="adresse_circo"></h3>
         <h2 style="text-align: center;" id="result_circo"></h2>
+
+    </div>
+
         <div id="info" style="/*display: none;*/">
             <div class="mini_row"><div class="mini_col"><span class="title_item"></span>INSCRITS<span id='nombre_inscrits'>10</span></div>
                 <div class="mini_col"><span class="title_item" id='nom_sortant'>DEPUTE SORTANT</span><span id='depute_sortant'>10</span></div>
@@ -128,9 +135,10 @@ width: 99%;
             </div>
         </div>
 
-    </div>
-
-  </div>
+<div id='graphs'>
+    <div id='left_graph'></div>
+    <div id='right_graph'></div>
+</div>
         <!-- Vendor -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
