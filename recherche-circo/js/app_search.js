@@ -1,5 +1,10 @@
 
 let all_loaded_dep = {}
+let data_sortants
+let data_T1_Presidentielle
+let data_elu_2017
+let data_T1_2017
+
 
 const autoCompleteJS = new autoComplete({
   placeHolder: "Chercher une circonscription..",
@@ -689,12 +694,23 @@ Promise.all([
 
 function ready(sortants, T1_Presidentielle, elu_2017, T1_2017) {
 
-console.log(sortants)
+data_sortants = sortants
+data_elu_2017 = elu_2017
 
-console.log(T1_Presidentielle)
+T1_Presidentielle.forEach(d =>{
+d.exprimes = +d.Exprimes
+d.voix = +d.voix
+})
 
-console.log(elu_2017)
+data_T1_Presi = T1_Presidentielle
 
-console.log(T1_2017)
+
+T1_2017.forEach(d =>{
+d.exprimes = +d.exprimes
+d.voix = +d.voix
+})
+
+data_T1_2017 = T1_2017
+
 
   }
