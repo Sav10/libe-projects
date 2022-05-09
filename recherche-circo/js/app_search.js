@@ -22,6 +22,25 @@ const colors_candidats = {
 'ROUSSEL': '#D80000'
 }
 
+
+const nuances_pol = {'MDM': '#e85d21',
+ 'SOC': '#EC4C6B',
+ 'EXG': '#911D16',
+ 'FI': '#EB404C', 
+ 'LR': '#2458A5',
+ 'DIV': '#cccccc',
+ 'ECO': '#00A85C',
+ 'COM': '#D80000',
+ 'FN': '#1D2245',
+ 'DLF': '#19325D',
+'REM': '#F7BA00',
+'DVG': '#f46099',
+'RDG': '#f781b6',
+'UDI': '#9f64a2',
+'EXD': '#03034f',
+'DVD': '#026db5',
+'REG': '#666'}
+
 const autoCompleteJS = new autoComplete({
   placeHolder: "Chercher une circonscription..",
   diacritics: true,
@@ -131,6 +150,11 @@ const autoCompleteJS = new autoComplete({
 
 
           console.log(selected_2022)
+
+
+          let g_2017 = drawGraph(selected_2017, 'legislatives')
+
+          let g_2022 = drawGraph(selected_2017, 'presidentielle')
 
       
 
@@ -769,34 +793,29 @@ data_T1_2017 = T1_2017
   }
 
 
-function drawGraph(range){
+function drawGraph(range, type_scrutin){
 
 var this_html = '<div style="margin-top:10px">';
+
+let color_range, type_var
+
+if (type_scrutin == 'presidentielle'){
+  color_range = colors_candidats
+  type_var = 'nom'
+}
+else{
+ color_range = nuances_pol
+ type_var = 'nuance'
+}
+
 
 for (i in range){
   var d = range[i]
   var html_chunk = '<div style="margin-top:5px">'
 
-  if (d.name == 'Blancs ou nuls'){
     d['score_text'] = d.score != 100 ? d.score + ' %' : ''
     d['score_bar'] = d.score
-    d['color_item'] = 'grey'
-  }
-  else if (d.name == 'Progression du vote Le Pen'){
-    d['score_text'] = d.score != 100 ? d.score + ' points' : ''
-    d['score_bar'] = d.score
-    d['color_item'] = '#462100'
-  }
-  else if (d.name == 'Abstention'){
-    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
-    d['score_bar'] = d.score
-    d['color_item'] = 'grey'
-  }
-  else{
-    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
-    d['score_bar'] = d.score
-    d['color_item'] = colors_candidats[d.name]
-  }
+    d['color_item'] = color_range[d.name]
   // html_chunk += `<div >${d.tete_liste}</div>
   html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div style="margin-top:5px">${_.capitalize(d.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
       <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score_bar}%;background-color:${d.color_item};"></div>
