@@ -7,6 +7,21 @@ let data_T1_2017
 let this_selection
 
 
+const colors_candidats = {
+"MACRON":'#F7BA00',
+"DUPONT-AIGNAN":'#19325D',
+"LE PEN":'#1D2245',
+'POUTOU': "#911D16",
+'MÉLENCHON': "#EB404C",
+'LASSALLE': "#534384",
+'PÉCRESSE': "#2458A5",
+'ZEMMOUR': "#654235",
+'JADOT': "#00A85C",
+'ARTHAUD': '#751F17',
+'HIDALGO': '#EC4C6B',
+'ROUSSEL': '#D80000'
+}
+
 const autoCompleteJS = new autoComplete({
   placeHolder: "Chercher une circonscription..",
   diacritics: true,
@@ -100,6 +115,22 @@ const autoCompleteJS = new autoComplete({
           d3.select('#depute_sortant').text(depute_sortant)
           d3.select('#couleur_2017').text(couleur_2017)
           d3.select('#actuelle_couleur').text(actuelle_couleur)
+
+
+          let selected_2017 = data_T1_2017.filter(d=>d.id_circo == this_circo)
+          selected_2017.forEach(function(d){
+            d.score = _.round(100*d.voix / d.exprimes)
+          })
+
+
+          let selected_2022 = data_T1_Presi.filter(d=>d.id_circo == this_circo)
+
+          selected_2022.forEach(function(d){
+            d.score = _.round(100*d.voix / d.exprimes)
+          })
+
+
+          console.log(selected_2022)
 
       
 
