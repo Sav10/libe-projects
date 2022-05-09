@@ -130,6 +130,9 @@ const autoCompleteJS = new autoComplete({
           let nombre_inscrits = data_elu_2017.filter(d=>d.id_circo == this_circo)[0].inscrits_2022
 
 
+          d3.select('#info').style('display', 'flex')
+
+
           d3.select('#nombre_inscrits').text(nombre_inscrits)
           d3.select('#depute_sortant').text(depute_sortant)
           d3.select('#couleur_2017').text(couleur_2017)
@@ -138,10 +141,12 @@ const autoCompleteJS = new autoComplete({
 
           let selected_2017 = data_T1_2017.filter(d=>d.id_circo == this_circo)
           selected_2017.forEach(function(d){
-            d.score = _.round(100*d.voix / d.exprimes)
+            d.score = _.round(100*d.voix / d.exprimes, 1)
           })
 
            selected_2017.sort(function(a,b) {  return b.score - a.score})
+
+           selected_2017 = _.slice(selected_2017, 0, 12)
 
 
           let selected_2022 = data_T1_Presi.filter(d=>d.id_circo == this_circo)
@@ -149,7 +154,7 @@ const autoCompleteJS = new autoComplete({
 
 
           selected_2022.forEach(function(d){
-            d.score = _.round(100*d.voix / d.exprimes)
+            d.score = _.round(100*d.voix / d.exprimes, 1)
           })
 
           selected_2022.sort(function(a,b) {  return b.score - a.score})

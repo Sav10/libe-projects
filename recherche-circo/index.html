@@ -110,6 +110,7 @@ flex-direction: row;
 justify-content: center;
 margin: 0 auto;
 max-width: 800px;
+column-gap: 24px;
 }
 
 #graphs .graph{
@@ -136,18 +137,24 @@ flex-grow: 4;
 
     </div>
 
-        <div id="info" style="/*display: none;*/">
-            <div class="mini_row"><div class="mini_col"><span class="title_item"></span>INSCRITS<span id='nombre_inscrits'>10</span></div>
-                <div class="mini_col"><span class="title_item" id='nom_sortant'>DEPUTE SORTANT</span><span id='depute_sortant'>10</span></div>
+        <div id="info" style="display: none;">
+            <div class="mini_row"><div class="mini_col"><span class="title_item"></span>INSCRITS<span id='nombre_inscrits'></span></div>
+                <div class="mini_col"><span class="title_item" id='nom_sortant'>DEPUTE SORTANT</span><span id='depute_sortant'></span></div>
             </div>
-            <div class="mini_row"><div class="mini_col"><span class="title_item">COULEUR EN 2017</span><span id='couleur_2017'>10</span></div>
-                <div class="mini_col"><span class="title_item">ACTUELLE COULEUR</span><span id='actuelle_couleur'>10</span></div>
+            <div class="mini_row"><div class="mini_col"><span class="title_item">COULEUR EN 2017</span><span id='couleur_2017'></span></div>
+                <div class="mini_col"><span class="title_item">ACTUELLE COULEUR</span><span id='actuelle_couleur'></span></div>
             </div>
         </div>
-
+<h2 style="text-align: center;" >Résultats aux précédentes élections</h2>
 <div id='graphs'>
-    <div id='left_graph' class='graph'></div>
-    <div id='right_graph' class='graph'></div>
+    <div id='left_graph_container' class='graph'>
+    <p>Législatives 2017 premier tour</p>
+    <div id='left_graph' ></div>
+</div>
+<div id='right_graph_container' class='graph'>
+        <p>Présidentielle 2022 premier tour</p>
+    <div id='right_graph'></div>
+</div>
 </div>
 
 
