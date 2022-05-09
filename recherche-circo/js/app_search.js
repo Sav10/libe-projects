@@ -673,3 +673,28 @@ const correspondance_departements_OTM = {'971': 'ZA',
  '977': 'ZX',
  '978': 'ZX',
  '986': 'ZW'}
+
+ ///Loading data
+
+Promise.all([
+    d3.csv('data/deputes_sortants.csv'),
+    d3.csv('data/election_pres_T1.csv'),
+    d3.csv('data/elu_2017.csv'),
+    d3.csv('data/T1_2017.csv')
+]).then(function(files) {
+  ready(files[0], files[1], files[2], files[3])
+}).catch(function(err) {
+  console.log('erreur' + ' ' + err)
+})
+
+function ready(sortants, T1_Presidentielle, elu_2017, T1_2017) {
+
+console.log(sortants)
+
+console.log(T1_Presidentielle)
+
+console.log(elu_2017)
+
+console.log(T1_2017)
+
+  }
