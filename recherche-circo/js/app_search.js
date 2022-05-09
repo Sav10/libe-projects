@@ -148,6 +148,8 @@ const autoCompleteJS = new autoComplete({
 
            selected_2017 = _.slice(selected_2017, 0, 12)
 
+           console.log(selected_2017)
+
 
           let selected_2022 = data_T1_Presi.filter(d=>d.id_circo == this_circo)
 
