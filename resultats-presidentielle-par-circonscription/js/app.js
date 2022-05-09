@@ -187,14 +187,6 @@ var effectLayer = g_map.append('g')
 var mapLayer = g_map.append('g')
     .classed('map-layer', true);
 
-var projection = d3.geoMercator()
-    .scale(1400)
-    .center([3, 45.5])
-    .translate([width_map / 2, height_map / 2]);
-
-var path = d3.geoPath()
-    .projection(projection);
-
 
 /////////// Legends and tags
 
@@ -762,7 +754,7 @@ d3.xml("img/carte-circonscriptions.svg")
 
 
 let svg_container = 'svg-container-circ'
-let circle_range = [3, 4]
+let circle_range = [2, 5]
 let location_variable = 'id_circo'
 let location_prefix = 'M_'
 let location_type = 'circonscription'
