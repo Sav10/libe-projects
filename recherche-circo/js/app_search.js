@@ -31,7 +31,10 @@ const autoCompleteJS = new autoComplete({
 
         const data_entries  = data.features.map(function(d) { 
 
-          return {'label':d.properties.label, 'properties':d.properties, 'geometry' : d.geometry } });
+          return {'label':d.properties.label, 'properties':d.properties, 'geometry' : d.geometry } 
+        });
+
+        console.log(data_entries)
 
 
         return data_entries
@@ -52,6 +55,7 @@ const autoCompleteJS = new autoComplete({
       selection: (event) => {
         const selection = event.detail.selection.value;
         autoCompleteJS.input.value = selection.label;
+        console.log(selection)
 
         let this_dep = selection.properties.context.split(',')[0]
         this_dep = Object.keys(correspondance_departements_OTM).includes(this_dep) ? correspondance_departements_OTM[this_dep] : this_dep;
@@ -75,6 +79,7 @@ const autoCompleteJS = new autoComplete({
           let point_geojson = selection.geometry.coordinates;
           let this_data =  _.cloneDeep(data)
           let this_filtered_data = this_data.filter(function(d) {return d3.geoContains(d, point_geojson)});
+          console.log(this_filtered_data)
           let this_circo = this_filtered_data[0].properties['id_circo']
 
           console.log(circo_names[this_circo])
