@@ -82,6 +82,13 @@ const autoCompleteJS = new autoComplete({
           d3.select('#result_circo').text(circo_names[this_circo])
 
 
+          let depute_sortant = data_sortants.filter(d=>d.id_circo == this_circo)[0].nom
+          let actuelle_couleur = data_sortants.filter(d=>d.id_circo == this_circo)[0].groupe_sigle
+
+          let couleur_2017 = data_elu_2017.filter(d=>d.id_circo == this_circo)[0]['Nuance vainqueur']
+          let nombre_inscrits = data_elu_2017.filter(d=>d.id_circo == this_circo)[0].inscrits_2022
+
+
           d3.select('#nombre_inscrits').text(nombre_inscrits)
           d3.select('#depute_sortant').text(depute_sortant)
           d3.select('#couleur_2017').text(couleur_2017)
