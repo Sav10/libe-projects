@@ -847,7 +847,7 @@ for (i in range){
     d['score_bar'] = d.score*1.5
     d['color_item'] = color_range[d[type_var]]
   // html_chunk += `<div >${d.tete_liste}</div>
-  html_chunk += `<div class="score" style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div class="name" style="margin-top:5px">${_.capitalize(d['nom']).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
+  html_chunk += `<div class="score" style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div class="name" style="margin-top:5px">${d['nom']}</div>
       <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score_bar}%;background-color:${d.color_item};"></div>
       </div>`
 
