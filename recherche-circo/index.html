@@ -37,6 +37,10 @@
             font-family: sans-serif;
         }
 
+body {
+    background-color: #f8f8f8;
+}
+
 #autocomplete_container{
 
 max-width: 800px;
@@ -96,7 +100,9 @@ width: 99%;
 #info{
     display: flex;
     column-gap: 3em;
+        row-gap: 1em;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 
@@ -104,6 +110,7 @@ width: 99%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+    min-width: 6em;
 
 }
 
@@ -147,6 +154,8 @@ h2#resultats_precedents{
     letter-spacing: 0.04em;
     font-size: 1.2em;
     text-transform: uppercase;
+    margin-top: 1.2em;
+    margin-bottom: 0;
 }
 
 #left_graph_container p, #right_graph_container p{
@@ -169,14 +178,64 @@ h2#resultats_precedents{
 
 #couleur_2017, #actuelle_couleur{
     margin-left: 0.5em;
-    padding: 9px;
+    padding: 8px;
     border-radius: 16px;
     border: 0;
     background-color: rgb(238, 238, 238);
-    font-size: 14px;
+    font-size: 12px;
     color: white;
 }
 
+#left_graph_container div.cell, #right_graph_container div.cell{
+
+}
+
+
+@media screen and (max-width: 450px) {
+
+.cell .name, .cell .score{
+font-size: 12px;
+}
+
+
+}
+
+#adresse_circo{
+    line-height: 1em;
+    margin: 0.5em;
+}
+
+
+#result_circo{
+    font-size: 1.15em;
+    text-transform: uppercase;
+    margin: 0.8em;
+}
+
+#recherche_circo{
+    font-weight: bold;
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.04em;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    margin: 1em;
+}
+
+
+#info_container{
+    border: 0.5px solid #ccc;
+    padding: 10px;
+    background-color: white;
+    margin: 0 10px;
+    margin-bottom: 12px;
+}
+
+#resultats{
+    border: 0.5px solid #ccc;
+    padding: 10px;
+    background-color: white;
+    margin: 0 10px;
+}
 
         </style>
         
@@ -189,22 +248,20 @@ h2#resultats_precedents{
 </head>
     <body>
   <div id="header">
-
+<div id="recherche_circo">Recherchez votre circonscription</div>
         <div id="autocomplete_container"> <input id="autoComplete"></div>
         <h3 style="text-align: center;" id="adresse_circo"></h3>
-        <h2 style="text-align: center;" id="result_circo"></h2>
-
     </div>
-
+    <div id="info_container">
+      <h2 style="text-align: center;" id="result_circo"></h2>
         <div id="info" style="display: none;">
-            <div class="mini_row"><div class="mini_col"><span class="title_item">INSCRITS</span><span id='nombre_inscrits'></span></div>
+            <div class="mini_col"><span class="title_item">INSCRITS</span><span id='nombre_inscrits'></span></div>
                 <div class="mini_col"><span class="title_item" id='nom_sortant'>DEPUTE SORTANT</span><span id='depute_sortant'></span></div>
-            </div>
-            <div class="mini_row"><div class="mini_col"><span class="title_item">COULEUR EN 2017</span><span id='couleur_2017'></span></div>
+            <div class="mini_col"><span class="title_item">COULEUR EN 2017</span><span id='couleur_2017'></span></div>
                 <div class="mini_col"><span class="title_item">ACTUELLE COULEUR</span><span id='actuelle_couleur'></span></div>
-            </div>
         </div>
-<div id="resulats" style="display: none;">
+        </div>
+<div id="resultats" style="display: none;">
 <h2 id="resultats_precedents" style="text-align: center;" >Résultats aux précédentes élections</h2>
 <div id="graphs">
     <div id='left_graph_container' class='graph'>
