@@ -39,7 +39,14 @@ const nuances_pol = {'MDM': '#e85d21',
 'UDI': '#9f64a2',
 'EXD': '#03034f',
 'DVD': '#026db5',
-'REG': '#666'}
+'REG': '#666',
+'LT': '#666',
+'GDR': '#D80000',
+'NI': '#bbb',
+'AE': '#9f64a2'}
+
+
+const rattachement_financier = {}
 
 const autoCompleteJS = new autoComplete({
   placeHolder: "Tapez une adresse postale",
@@ -141,7 +148,7 @@ const autoCompleteJS = new autoComplete({
           .text(couleur_2017)
           .style('background-color', nuances_pol[couleur_2017])
           d3.select('#actuelle_couleur')
-          .text(actuelle_couleur.substring(1))
+          .text(actuelle_couleur.replace('LREM', 'REM').replace('LFI', 'FI'))
            .style('background-color', nuances_pol[actuelle_couleur.substring(1)])
 
 
