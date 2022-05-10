@@ -23,7 +23,9 @@ const colors_candidats = {
 }
 
 
-const nuances_pol = {'MDM': '#e85d21',
+const nuances_pol = {
+  'MDM': '#e85d21',
+  'MODEM': '#e85d21',
  'SOC': '#EC4C6B',
  'EXG': '#911D16',
  'FI': '#EB404C', 
