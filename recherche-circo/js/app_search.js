@@ -149,7 +149,7 @@ const autoCompleteJS = new autoComplete({
           .style('background-color', nuances_pol[couleur_2017])
           d3.select('#actuelle_couleur')
           .text(actuelle_couleur.replace('LREM', 'REM').replace('LFI', 'FI'))
-           .style('background-color', nuances_pol[actuelle_couleur.substring(1)])
+           .style('background-color', nuances_pol[actuelle_couleur.replace('LREM', 'REM').replace('LFI', 'FI')])
 
 
           let selected_2017 = data_T1_2017.filter(d=>d.id_circo == this_circo)
