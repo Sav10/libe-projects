@@ -27,12 +27,14 @@
         <meta name="twitter:description" content="Legislatives : qtrouver votre circonscription<" />
         <meta name="twitter:image" content="https://www.liberation.fr/apps/2017/06/resultats-par-circo-2nd-tour/social.jpg"> -->
          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
+         <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
         <style>
         html,body {
             margin: 0;
             padding: 0;
             height:100%;
             width:100%;
+            font-family: sans-serif;
         }
 
 #autocomplete_container{
@@ -101,6 +103,15 @@ width: 99%;
 .mini_col{
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+
+}
+
+.mini_row{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    flex-grow: 1;
 
 }
 
@@ -122,6 +133,51 @@ flex-grow: 4;
     
 }
 
+h2#result_circo{
+    font-weight: bold;
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.04em;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+h2#resultats_precedents{
+    font-weight: bold;
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.04em;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+#left_graph_container p, #right_graph_container p{
+    font-weight: bold;
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.04em;
+    font-size: .9em;
+    text-transform: uppercase;
+}
+
+.mini_col .title_item{
+    font-weight: bold;
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.04em;
+    font-size: .9em;
+    text-transform: uppercase;
+    color: grey;
+}
+
+
+#couleur_2017, #actuelle_couleur{
+    margin-left: 0.5em;
+    padding: 9px;
+    border-radius: 16px;
+    border: 0;
+    background-color: rgb(238, 238, 238);
+    font-size: 14px;
+    color: white;
+}
+
+
         </style>
         
 
@@ -141,15 +197,16 @@ flex-grow: 4;
     </div>
 
         <div id="info" style="display: none;">
-            <div class="mini_row"><div class="mini_col"><span class="title_item"></span>INSCRITS<span id='nombre_inscrits'></span></div>
+            <div class="mini_row"><div class="mini_col"><span class="title_item">INSCRITS</span><span id='nombre_inscrits'></span></div>
                 <div class="mini_col"><span class="title_item" id='nom_sortant'>DEPUTE SORTANT</span><span id='depute_sortant'></span></div>
             </div>
             <div class="mini_row"><div class="mini_col"><span class="title_item">COULEUR EN 2017</span><span id='couleur_2017'></span></div>
                 <div class="mini_col"><span class="title_item">ACTUELLE COULEUR</span><span id='actuelle_couleur'></span></div>
             </div>
         </div>
-<h2 id="resultats_precedents" style="text-align: center;display: none;" >Résultats aux précédentes élections</h2>
-<div id='graphs' style="display: none;">
+<div id="resulats" style="display: none;">
+<h2 id="resultats_precedents" style="text-align: center;" >Résultats aux précédentes élections</h2>
+<div id="graphs">
     <div id='left_graph_container' class='graph'>
     <p>Législatives 2017 premier tour</p>
     <div id='left_graph' ></div>
@@ -157,6 +214,7 @@ flex-grow: 4;
 <div id='right_graph_container' class='graph'>
         <p>Présidentielle 2022 premier tour</p>
     <div id='right_graph'></div>
+</div>
 </div>
 </div>
 

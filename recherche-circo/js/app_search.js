@@ -127,18 +127,22 @@ const autoCompleteJS = new autoComplete({
           let actuelle_couleur = data_sortants.filter(d=>d.id_circo == this_circo)[0].groupe_sigle
 
           let couleur_2017 = data_elu_2017.filter(d=>d.id_circo == this_circo)[0]['Nuance vainqueur']
-          let nombre_inscrits = data_elu_2017.filter(d=>d.id_circo == this_circo)[0].inscrits_2022
+          let nombre_inscrits = number_separator(data_elu_2017.filter(d=>d.id_circo == this_circo)[0].inscrits_2022)
 
 
           d3.select('#info').style('display', 'flex')
-          d3.select('#resultats_precedents').style('display', 'block')
-          d3.select('#graphs').style('display', 'flex')
+          d3.select('#resulats').style('display', 'block')
+        
 
 
           d3.select('#nombre_inscrits').text(nombre_inscrits)
           d3.select('#depute_sortant').text(depute_sortant)
-          d3.select('#couleur_2017').text(couleur_2017)
-          d3.select('#actuelle_couleur').text(actuelle_couleur)
+          d3.select('#couleur_2017')
+          .text(couleur_2017)
+          .style('background-color', nuances_pol[couleur_2017])
+          d3.select('#actuelle_couleur')
+          .text(actuelle_couleur.substring(1))
+           .style('background-color', nuances_pol[actuelle_couleur.substring(1)])
 
 
           let selected_2017 = data_T1_2017.filter(d=>d.id_circo == this_circo)
@@ -832,8 +836,8 @@ for (i in range){
   var d = range[i]
   var html_chunk = '<div style="margin-top:5px">'
 
-    d['score_text'] = d.score != 100 ? d.score + ' %' : ''
-    d['score_bar'] = d.score
+    d['score_text'] = d.score != 100 ? number_separator(d.score) + ' %' : ''
+    d['score_bar'] = d.score*1.5
     d['color_item'] = color_range[d[type_var]]
   // html_chunk += `<div >${d.tete_liste}</div>
   html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div style="margin-top:5px">${_.capitalize(d['nom']).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
@@ -853,4 +857,11 @@ this_html += html_chunk
 this_html += '</div>'
 
 return this_html
+}
+
+
+
+function number_separator(x) {
+  let y = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return y.replace(',', ' ').replace(',', ' ').replace('.', ',')
 }
