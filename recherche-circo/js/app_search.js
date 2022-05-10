@@ -42,7 +42,7 @@ const nuances_pol = {'MDM': '#e85d21',
 'REG': '#666'}
 
 const autoCompleteJS = new autoComplete({
-  placeHolder: "Tapez une adresse..",
+  placeHolder: "Tapez une adresse postale",
   diacritics: true,
   searchEngine: "loose",
   threshold: 4,
