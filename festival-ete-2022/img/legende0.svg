@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 629.9 28.3" style="enable-background:new 0 0 629.9 28.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#706F6F;}
+	.st1{clip-path:url(#SVGID_2_);}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#FCE9ED;}
+	.st4{fill:#EB6581;}
+	.st5{fill:#F4A7B7;}
+	.st6{fill:#E3234A;}
+	.st7{fill:#DADADA;}
+	.st8{fill:none;stroke:#C6C6C6;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;}
+	.st9{fill:none;stroke:#C6C6C6;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.0915,1.0915;}
+	.st10{fill:#DADADA;stroke:#1D1D1B;stroke-width:0.5;stroke-miterlimit:10;}
+	.st11{font-family:'LibeSansSemiCondensed-Light';}
+	.st12{font-size:13px;}
+	.st13{fill:#FFFFFF;stroke:#1D1D1B;stroke-width:0.5;stroke-miterlimit:10;}
+	.st14{fill:#FCE9ED;stroke:#1D1D1B;stroke-width:0.5;stroke-miterlimit:10;}
+	.st15{fill:#F4A7B7;stroke:#1D1D1B;stroke-width:0.5;stroke-miterlimit:10;}
+	.st16{fill:#EB6581;stroke:#1D1D1B;stroke-width:0.5;stroke-miterlimit:10;}
+	.st17{fill:#E3234A;stroke:#1D1D1B;stroke-width:0.5;stroke-miterlimit:10;}
+</style>
+<g id="repères">
+	<g id="_x36__cols">
+	</g>
+	<g id="_x35__cols">
+	</g>
+	<g id="_x34__cols">
+	</g>
+</g>
+<g id="Carte">
+	<defs>
+		<rect id="SVGID_1_" x="-124.4" y="-674.5" width="750.7" height="629.4"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g id="Fond_politique" class="st1">
+	</g>
+	<g id="frontières_1_" class="st1">
+	</g>
+	<g id="hydro_1_" class="st1">
+	</g>
+	<g id="Noms_pays" class="st1">
+	</g>
+</g>
+<g id="Calque_10">
+	<g>
+		<rect x="1.4" y="6.1" class="st10" width="13.9" height="13.9"/>
+		<g>
+			<text transform="matrix(1 0 0 1 20.3104 18.3142)" class="st11 st12">Pas de données</text>
+		</g>
+	</g>
+	<g>
+		<rect x="106.9" y="6.1" class="st13" width="13.9" height="13.9"/>
+		<g>
+			<text transform="matrix(1 0 0 1 123.5562 18.3146)" class="st11 st12">Aucun cas</text>
+		</g>
+	</g>
+	<g>
+		<rect x="183" y="6.1" class="st14" width="13.9" height="13.9"/>
+		<g>
+			<text transform="matrix(1 0 0 1 199.6961 18.314)" class="st11 st12">Au moins un cas</text>
+		</g>
+	</g>
+	<g>
+		<rect x="287.8" y="6.1" class="st15" width="13.9" height="13.9"/>
+		<g>
+			<text transform="matrix(1 0 0 1 304.4875 18.3145)" class="st11 st12">Au moins un mort</text>
+		</g>
+	</g>
+	<g>
+		<rect x="399.1" y="6.1" class="st16" width="13.9" height="13.9"/>
+		<g>
+			<text transform="matrix(1 0 0 1 415.8054 18.314)" class="st11 st12">Confinement partiel</text>
+		</g>
+	</g>
+	<g>
+		<rect x="522" y="6.1" class="st17" width="13.9" height="13.9"/>
+		<g>
+			<text transform="matrix(1 0 0 1 538.6937 18.3144)" class="st11 st12">Confinement total</text>
+		</g>
+	</g>
+</g>
+</svg>
