@@ -1,0 +1,603 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cryptomonnaies : le «stablecoin» Terra perd 90% de sa valorisation</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"datetime": "2021-05-17", "close": 1.0089663113570424, "volume": 2387738.7210069955}, {"datetime": "2021-05-18", "close": 1.0023962936924742, "volume": 449931.8473410779}, {"datetime": "2021-05-19", "close": 0.9783311985838984, "volume": 4077419.7783811833}, {"datetime": "2021-05-20", "close": 0.992075219705912, "volume": 1711845.1620584142}, {"datetime": "2021-05-21", "close": 0.9758487918741052, "volume": 2249287.570287315}, {"datetime": "2021-05-22", "close": 0.9899224361543971, "volume": 1954566.2676939468}, {"datetime": "2021-05-23", "close": 0.949817289795417, "volume": 1731761.000128479}, {"datetime": "2021-05-24", "close": 0.9795717353634025, "volume": 1259105.8071232347}, {"datetime": "2021-05-25", "close": 0.9870739708878091, "volume": 2905195.3289698297}, {"datetime": "2021-05-26", "close": 0.9951797742571792, "volume": 2135824.602643961}, {"datetime": "2021-05-27", "close": 0.9950969454561713, "volume": 2441462.1255794056}, {"datetime": "2021-05-28", "close": 0.9940533147795105, "volume": 6565189.745462656}, {"datetime": "2021-05-29", "close": 0.999703516545555, "volume": 1443443.0098541891}, {"datetime": "2021-05-30", "close": 0.9986530833669618, "volume": 98920.938813302}, {"datetime": "2021-05-31", "close": 1.000188818612733, "volume": 202992.2509088847}, {"datetime": "2021-06-01", "close": 1.0014135134829594, "volume": 785365.2306511917}, {"datetime": "2021-06-02", "close": 1.0007967615868898, "volume": 265256.3441459532}, {"datetime": "2021-06-03", "close": 1.0140315987814439, "volume": 630370.926312355}, {"datetime": "2021-06-04", "close": 0.9965060921815612, "volume": 2825418.02838214}, {"datetime": "2021-06-05", "close": 0.9982435098382301, "volume": 1096649.6813852668}, {"datetime": "2021-06-06", "close": 1.0016748985319006, "volume": 313019.59491412045}, {"datetime": "2021-06-07", "close": 0.9996670146694027, "volume": 1372242.069954808}, {"datetime": "2021-06-08", "close": 1.003353956526316, "volume": 671763.1596765444}, {"datetime": "2021-06-09", "close": 1.0010097558983495, "volume": 934722.6419458679}, {"datetime": "2021-06-10", "close": 0.997718084035813, "volume": 419075.61722971627}, {"datetime": "2021-06-11", "close": 0.9999407964263785, "volume": 2034855.2820677422}, {"datetime": "2021-06-12", "close": 1.0033152710150601, "volume": 339427.210828909}, {"datetime": "2021-06-13", "close": 0.9977758949101058, "volume": 584059.747141671}, {"datetime": "2021-06-14", "close": 1.0020743994457633, "volume": 417661.0632452567}, {"datetime": "2021-06-15", "close": 0.9971627881388754, "volume": 269847.3932294755}, {"datetime": "2021-06-16", "close": 1.0016558709065244, "volume": 380683.7395989078}, {"datetime": "2021-06-17", "close": 0.9990500151727355, "volume": 1103510.468954406}, {"datetime": "2021-06-18", "close": 0.9906527456175053, "volume": 3744168.977751492}, {"datetime": "2021-06-19", "close": 0.9979249193314448, "volume": 398131.3991767381}, {"datetime": "2021-06-20", "close": 0.9999931161831319, "volume": 535735.6898612722}, {"datetime": "2021-06-21", "close": 0.9952127318846767, "volume": 1713703.1105816108}, {"datetime": "2021-06-22", "close": 1.0010779791044087, "volume": 1371099.5904646784}, {"datetime": "2021-06-23", "close": 1.0029101928055169, "volume": 1527753.685271394}, {"datetime": "2021-06-24", "close": 1.0025066076993465, "volume": 376841.9769928637}, {"datetime": "2021-06-25", "close": 1.0017174003131584, "volume": 294899.5014801455}, {"datetime": "2021-06-26", "close": 1.0023310055412993, "volume": 1337451.7080291961}, {"datetime": "2021-06-27", "close": 1.0023120740283247, "volume": 1990634.4165409112}, {"datetime": "2021-06-28", "close": 0.999831058638455, "volume": 1130059.6842621795}, {"datetime": "2021-06-29", "close": 1.0024576724350778, "volume": 1630915.9008455619}, {"datetime": "2021-06-30", "close": 1.0003359198597486, "volume": 228731.69988268137}, {"datetime": "2021-07-01", "close": 0.9975611659294734, "volume": 470940.6112048066}, {"datetime": "2021-07-02", "close": 1.005364981164653, "volume": 669032.9919686633}, {"datetime": "2021-07-03", "close": 1.0002313730936403, "volume": 432644.60187157296}, {"datetime": "2021-07-04", "close": 1.0017414946881522, "volume": 1837185.2609741231}, {"datetime": "2021-07-05", "close": 1.0075343219708865, "volume": 1698607.5968561585}, {"datetime": "2021-07-06", "close": 1.0077879390303996, "volume": 1874857.5890843542}, {"datetime": "2021-07-07", "close": 0.9974904515629245, "volume": 11238872.637727905}, {"datetime": "2021-07-08", "close": 1.0017968302406504, "volume": 6396963.97648176}, {"datetime": "2021-07-09", "close": 1.0028841376761757, "volume": 7960416.078006537}, {"datetime": "2021-07-10", "close": 1.0012411131954273, "volume": 10344341.181560302}, {"datetime": "2021-07-11", "close": 1.0011224626472472, "volume": 7252385.8368995385}, {"datetime": "2021-07-12", "close": 0.9989629914785106, "volume": 6663323.150099537}, {"datetime": "2021-07-13", "close": 1.0010888282523687, "volume": 5966932.032114753}, {"datetime": "2021-07-14", "close": 0.9998206051759231, "volume": 7073020.076733559}, {"datetime": "2021-07-15", "close": 0.9939782125825982, "volume": 9255221.205392364}, {"datetime": "2021-07-16", "close": 1.0007602663089221, "volume": 8673934.446297906}, {"datetime": "2021-07-17", "close": 1.0019897362300196, "volume": 14550120.573066367}, {"datetime": "2021-07-18", "close": 1.0014814899674511, "volume": 5233727.731426148}, {"datetime": "2021-07-19", "close": 1.0017993637187994, "volume": 18187657.458855588}, {"datetime": "2021-07-20", "close": 1.0009281918419375, "volume": 15893688.748444926}, {"datetime": "2021-07-21", "close": 1.0004696215962312, "volume": 8508764.777652016}, {"datetime": "2021-07-22", "close": 1.0024067206964205, "volume": 4064642.7285771617}, {"datetime": "2021-07-23", "close": 1.0012010605901542, "volume": 10661857.935482893}, {"datetime": "2021-07-24", "close": 1.0018903238029517, "volume": 7040647.083990027}, {"datetime": "2021-07-25", "close": 1.002577828640939, "volume": 5897369.001005295}, {"datetime": "2021-07-26", "close": 0.9997757502372296, "volume": 11692738.264819248}, {"datetime": "2021-07-27", "close": 1.001284803890992, "volume": 6594956.264269072}, {"datetime": "2021-07-28", "close": 1.001120371656277, "volume": 7479155.056062753}, {"datetime": "2021-07-29", "close": 1.0014086357481988, "volume": 3347884.0161240012}, {"datetime": "2021-07-30", "close": 1.0032309447232053, "volume": 12719063.520270469}, {"datetime": "2021-07-31", "close": 1.001426144513403, "volume": 13806740.884464158}, {"datetime": "2021-08-01", "close": 1.0006666206362027, "volume": 15114884.885743601}, {"datetime": "2021-08-02", "close": 0.999080577083879, "volume": 7592396.017672614}, {"datetime": "2021-08-03", "close": 1.0013771016490867, "volume": 13856880.542709436}, {"datetime": "2021-08-04", "close": 1.001676252729118, "volume": 11754500.468141932}, {"datetime": "2021-08-05", "close": 1.0023638698405153, "volume": 12612463.946946064}, {"datetime": "2021-08-06", "close": 1.00102635472864, "volume": 7620935.814894591}, {"datetime": "2021-08-07", "close": 1.0063338876347956, "volume": 6601487.645619276}, {"datetime": "2021-08-08", "close": 1.003318004148065, "volume": 15186233.158589818}, {"datetime": "2021-08-09", "close": 1.0051681810004622, "volume": 6958721.9036913235}, {"datetime": "2021-08-10", "close": 1.0035649757175915, "volume": 15495669.959094161}, {"datetime": "2021-08-11", "close": 1.0022298062072283, "volume": 16505148.167402795}, {"datetime": "2021-08-12", "close": 1.0051577832104324, "volume": 9234034.752956964}, {"datetime": "2021-08-13", "close": 1.0055947777501282, "volume": 12755894.566606658}, {"datetime": "2021-08-14", "close": 1.0038459010793668, "volume": 8176902.076238435}, {"datetime": "2021-08-15", "close": 1.004022326609767, "volume": 6328662.785762888}, {"datetime": "2021-08-16", "close": 1.0019497585543218, "volume": 19547686.131160524}, {"datetime": "2021-08-17", "close": 1.0045135352895957, "volume": 23294941.944368806}, {"datetime": "2021-08-18", "close": 1.0041645678791389, "volume": 32727459.069962494}, {"datetime": "2021-08-19", "close": 1.0026955372080832, "volume": 20964801.569634892}, {"datetime": "2021-08-20", "close": 1.0034797443984784, "volume": 11740004.263571363}, {"datetime": "2021-08-21", "close": 1.0027113296224048, "volume": 13144145.043420132}, {"datetime": "2021-08-22", "close": 1.0057496484993542, "volume": 19621085.008726772}, {"datetime": "2021-08-23", "close": 1.0004966755104105, "volume": 14502363.04704445}, {"datetime": "2021-08-24", "close": 0.9973626050045651, "volume": 35045864.818523295}, {"datetime": "2021-08-25", "close": 0.9984776611015156, "volume": 15746704.441654144}, {"datetime": "2021-08-26", "close": 0.9996454978336551, "volume": 11940914.634200376}, {"datetime": "2021-08-27", "close": 1.0085241820725195, "volume": 26847806.864401106}, {"datetime": "2021-08-28", "close": 1.000266448274646, "volume": 14972931.69830402}, {"datetime": "2021-08-29", "close": 0.9985948075852555, "volume": 14353846.83461475}, {"datetime": "2021-08-30", "close": 0.9963554926673771, "volume": 14466373.718880367}, {"datetime": "2021-08-31", "close": 1.0018619219358793, "volume": 26724827.837926622}, {"datetime": "2021-09-01", "close": 1.0013290711016714, "volume": 16375328.240958426}, {"datetime": "2021-09-02", "close": 1.0008827578329547, "volume": 11256623.724977052}, {"datetime": "2021-09-03", "close": 0.9987916599507811, "volume": 15676666.219175303}, {"datetime": "2021-09-04", "close": 1.0016406233754998, "volume": 3757315.259793093}, {"datetime": "2021-09-05", "close": 1.0011068647153074, "volume": 11571496.453951316}, {"datetime": "2021-09-06", "close": 1.0011918964320108, "volume": 21749906.971637998}, {"datetime": "2021-09-07", "close": 1.0001209431281108, "volume": 26339656.095859542}, {"datetime": "2021-09-08", "close": 0.9961343844652004, "volume": 16109890.215873692}, {"datetime": "2021-09-09", "close": 1.0045714301197488, "volume": 16222097.403094152}, {"datetime": "2021-09-10", "close": 1.0085695918652284, "volume": 16342589.997909553}, {"datetime": "2021-09-11", "close": 1.0093889244313687, "volume": 12589573.548798164}, {"datetime": "2021-09-12", "close": 1.0040597375475069, "volume": 7750867.512702322}, {"datetime": "2021-09-13", "close": 1.0068323823589658, "volume": 11957340.545886295}, {"datetime": "2021-09-14", "close": 1.0062395942746114, "volume": 15949902.575405372}, {"datetime": "2021-09-15", "close": 1.007493780342032, "volume": 11562483.194672592}, {"datetime": "2021-09-16", "close": 1.0032656126664885, "volume": 24429260.892280042}, {"datetime": "2021-09-17", "close": 1.003888662291096, "volume": 7428061.952079745}, {"datetime": "2021-09-18", "close": 1.0033336113578821, "volume": 13517235.939124472}, {"datetime": "2021-09-19", "close": 1.0059517584712072, "volume": 11074593.793995453}, {"datetime": "2021-09-20", "close": 1.0038787078122955, "volume": 16333737.100858083}, {"datetime": "2021-09-21", "close": 1.0040554502250447, "volume": 12445036.363226077}, {"datetime": "2021-09-22", "close": 1.0015887115268685, "volume": 11966339.127958989}, {"datetime": "2021-09-23", "close": 1.0024981127270298, "volume": 9980629.924755525}, {"datetime": "2021-09-24", "close": 0.99949205137722, "volume": 18938046.57855167}, {"datetime": "2021-09-25", "close": 1.0008695921671296, "volume": 12911591.124497138}, {"datetime": "2021-09-26", "close": 0.9988440532096862, "volume": 2404230.0233152946}, {"datetime": "2021-09-27", "close": 0.999936994251331, "volume": 3659830.421021985}, {"datetime": "2021-09-28", "close": 0.9771080441989096, "volume": 9677737.585249921}, {"datetime": "2021-09-29", "close": 1.001241820711436, "volume": 2939298.651165069}, {"datetime": "2021-09-30", "close": 1.0002782434636208, "volume": 7656610.519559429}, {"datetime": "2021-10-01", "close": 1.0018790130860042, "volume": 22920467.04972239}, {"datetime": "2021-10-02", "close": 0.9946102461917898, "volume": 7725879.3456462165}, {"datetime": "2021-10-03", "close": 1.0022879140374832, "volume": 6063596.820923177}, {"datetime": "2021-10-04", "close": 1.0014837764397813, "volume": 13785877.385969378}, {"datetime": "2021-10-05", "close": 1.0013250335883095, "volume": 23271995.45334026}, {"datetime": "2021-10-06", "close": 1.000775207127288, "volume": 18379442.36026721}, {"datetime": "2021-10-07", "close": 1.0006308856327217, "volume": 33662579.623425156}, {"datetime": "2021-10-08", "close": 0.9992049968035145, "volume": 33725107.92102738}, {"datetime": "2021-10-09", "close": 1.0004855417513525, "volume": 12075707.903643813}, {"datetime": "2021-10-10", "close": 0.9998202530475431, "volume": 21824268.110086877}, {"datetime": "2021-10-11", "close": 1.0009613689052825, "volume": 22971291.49329343}, {"datetime": "2021-10-12", "close": 1.0000526907238643, "volume": 15858858.684937373}, {"datetime": "2021-10-13", "close": 1.0000137941336873, "volume": 9387590.988162454}, {"datetime": "2021-10-14", "close": 1.0000353620843276, "volume": 10266277.158220463}, {"datetime": "2021-10-15", "close": 1.0018386507654873, "volume": 16227834.752501238}, {"datetime": "2021-10-16", "close": 1.0009688830527603, "volume": 30516487.49146785}, {"datetime": "2021-10-17", "close": 0.9995320657355329, "volume": 11177415.597389957}, {"datetime": "2021-10-18", "close": 1.0010738421092482, "volume": 11309714.903643753}, {"datetime": "2021-10-19", "close": 1.001253103373815, "volume": 15634188.924838578}, {"datetime": "2021-10-20", "close": 1.0033774364418304, "volume": 15925210.735881716}, {"datetime": "2021-10-21", "close": 1.003355011433709, "volume": 17089147.61216411}, {"datetime": "2021-10-22", "close": 1.0014508494882197, "volume": 12534420.070099838}, {"datetime": "2021-10-23", "close": 1.002772451385714, "volume": 5732856.7677918775}, {"datetime": "2021-10-24", "close": 1.004992715226296, "volume": 6105011.772745475}, {"datetime": "2021-10-25", "close": 1.0022261487739998, "volume": 10643053.956634918}, {"datetime": "2021-10-26", "close": 1.0027105646347103, "volume": 12096778.750162046}, {"datetime": "2021-10-27", "close": 1.0031246369740505, "volume": 16409271.714494836}, {"datetime": "2021-10-28", "close": 1.0035923667309852, "volume": 10511370.079095058}, {"datetime": "2021-10-29", "close": 1.0003226248482768, "volume": 11182230.992466077}, {"datetime": "2021-10-30", "close": 1.0042866044739822, "volume": 10967710.169090554}, {"datetime": "2021-10-31", "close": 1.001836181387646, "volume": 8197183.271309778}, {"datetime": "2021-11-01", "close": 1.0001054818170545, "volume": 7353114.25478709}, {"datetime": "2021-11-02", "close": 1.0027380202896723, "volume": 19335611.624690972}, {"datetime": "2021-11-03", "close": 1.0053552966440091, "volume": 60469058.902635105}, {"datetime": "2021-11-04", "close": 1.005864126078261, "volume": 28284861.732661437}, {"datetime": "2021-11-05", "close": 1.0030040978690191, "volume": 10328911.314600164}, {"datetime": "2021-11-06", "close": 1.0004797554077844, "volume": 11364063.797026465}, {"datetime": "2021-11-07", "close": 1.0054087524210522, "volume": 6587701.730000431}, {"datetime": "2021-11-08", "close": 1.0044870495813183, "volume": 13458802.785396365}, {"datetime": "2021-11-09", "close": 1.0034362740711902, "volume": 7227507.651958835}, {"datetime": "2021-11-10", "close": 1.0078100197286497, "volume": 15681250.776098065}, {"datetime": "2021-11-11", "close": 1.002356455072988, "volume": 9975602.183427935}, {"datetime": "2021-11-12", "close": 1.005796767678119, "volume": 14381655.664716305}, {"datetime": "2021-11-13", "close": 1.0062154689487073, "volume": 1581542.0626790035}, {"datetime": "2021-11-14", "close": 1.0086197440186206, "volume": 3551899.526099102}, {"datetime": "2021-11-15", "close": 1.0032548370514391, "volume": 6275812.8030705415}, {"datetime": "2021-11-16", "close": 1.0023408732963226, "volume": 19024448.212077577}, {"datetime": "2021-11-17", "close": 1.004541216090542, "volume": 12619574.44601927}, {"datetime": "2021-11-18", "close": 1.001873482539046, "volume": 23378932.61495401}, {"datetime": "2021-11-19", "close": 1.0026152485855895, "volume": 18461505.626336057}, {"datetime": "2021-11-20", "close": 1.002321272314124, "volume": 18497420.488560833}, {"datetime": "2021-11-21", "close": 0.9996582021808061, "volume": 13259187.098319832}, {"datetime": "2021-11-22", "close": 1.0040181096112133, "volume": 21679627.984551582}, {"datetime": "2021-11-23", "close": 1.000150919971977, "volume": 20629810.64461118}, {"datetime": "2021-11-24", "close": 1.0040145945205416, "volume": 21755513.55547728}, {"datetime": "2021-11-25", "close": 1.0026437280699791, "volume": 14068139.953163711}, {"datetime": "2021-11-26", "close": 1.0008706949962076, "volume": 15590106.196754152}, {"datetime": "2021-11-27", "close": 1.0030991240440128, "volume": 12743933.494622963}, {"datetime": "2021-11-28", "close": 1.0019678407008723, "volume": 23397832.882200327}, {"datetime": "2021-11-29", "close": 1.0010365989342895, "volume": 30206911.013834994}, {"datetime": "2021-11-30", "close": 1.0060645838398288, "volume": 29094561.46757349}, {"datetime": "2021-12-01", "close": 1.0027553561094726, "volume": 35124096.25011477}, {"datetime": "2021-12-02", "close": 1.0014801448824895, "volume": 43285702.78995402}, {"datetime": "2021-12-03", "close": 1.0015318233351185, "volume": 81172408.74113233}, {"datetime": "2021-12-04", "close": 0.989701444901883, "volume": 58726614.47638638}, {"datetime": "2021-12-05", "close": 1.0010035523428873, "volume": 30326502.20145538}, {"datetime": "2021-12-06", "close": 1.0002866469430196, "volume": 69921022.33623782}, {"datetime": "2021-12-07", "close": 1.000825019705435, "volume": 41279289.33000644}, {"datetime": "2021-12-08", "close": 1.00034322416703, "volume": 8877852.48527028}, {"datetime": "2021-12-09", "close": 1.0022209920170146, "volume": 29663809.438233558}, {"datetime": "2021-12-10", "close": 0.9991420261756547, "volume": 98713636.67051695}, {"datetime": "2021-12-11", "close": 1.0011119225354752, "volume": 58036945.1523843}, {"datetime": "2021-12-12", "close": 1.0015797699280347, "volume": 10212996.965507643}, {"datetime": "2021-12-13", "close": 1.0010447740247963, "volume": 69417983.91825666}, {"datetime": "2021-12-14", "close": 1.0005743683904549, "volume": 30204846.955776688}, {"datetime": "2021-12-15", "close": 1.000654770872018, "volume": 37693666.37134741}, {"datetime": "2021-12-16", "close": 1.0017488323223962, "volume": 33983403.64892985}, {"datetime": "2021-12-17", "close": 1.0021527930586822, "volume": 49902642.04406944}, {"datetime": "2021-12-18", "close": 1.0016957992998436, "volume": 113953857.93662733}, {"datetime": "2021-12-19", "close": 1.0005984055436712, "volume": 55848885.74554115}, {"datetime": "2021-12-20", "close": 1.001661000122678, "volume": 43759751.82366136}, {"datetime": "2021-12-21", "close": 1.003693957685861, "volume": 59023077.59009699}, {"datetime": "2021-12-22", "close": 1.0014699171381432, "volume": 45082738.2466994}, {"datetime": "2021-12-23", "close": 1.0016973236069002, "volume": 33037178.476449434}, {"datetime": "2021-12-24", "close": 1.0002408837393622, "volume": 42984832.38563597}, {"datetime": "2021-12-25", "close": 1.0095348466853074, "volume": 39179388.230133176}, {"datetime": "2021-12-26", "close": 1.0008647582226395, "volume": 40015809.95991184}, {"datetime": "2021-12-27", "close": 1.0005400736837171, "volume": 38500554.21729676}, {"datetime": "2021-12-28", "close": 1.0015949993218696, "volume": 41459053.16427792}, {"datetime": "2021-12-29", "close": 1.00056066551861, "volume": 50844781.04792484}, {"datetime": "2021-12-30", "close": 1.001160391746257, "volume": 34510605.08052769}, {"datetime": "2021-12-31", "close": 1.0002402627642746, "volume": 51001464.76075074}, {"datetime": "2022-01-01", "close": 1.0013042187850059, "volume": 60093613.77047409}, {"datetime": "2022-01-02", "close": 1.0012686328827052, "volume": 55356701.45486763}, {"datetime": "2022-01-03", "close": 1.0008769713940964, "volume": 58386900.49166061}, {"datetime": "2022-01-07", "close": 1.000211592471358, "volume": 84416298.91313924}, {"datetime": "2022-01-14", "close": 1.0008, "volume": 3251765.018820821}, {"datetime": "2022-01-15", "close": 1.0007, "volume": 767741.4581405128}, {"datetime": "2022-01-16", "close": 1.004767246855769, "volume": 8.709800691667018}, {"datetime": "2022-01-17", "close": 1.0047698391439832, "volume": 12.522531441419337}, {"datetime": "2022-01-18", "close": 1.0008650678101914, "volume": 36.23656428139539}, {"datetime": "2022-01-19", "close": 1.0011084385384665, "volume": 0.8489486254796973}, {"datetime": "2022-01-20", "close": 1.0011713558486628, "volume": 14798771.703080906}, {"datetime": "2022-01-21", "close": 1.0003048999337343, "volume": 181359459.7837156}, {"datetime": "2022-01-22", "close": 1.0007819261685038, "volume": 191083962.6581231}, {"datetime": "2022-01-23", "close": 1.0004258008699929, "volume": 80737541.96422379}, {"datetime": "2022-01-24", "close": 1.0006925857278421, "volume": 155648810.32451802}, {"datetime": "2022-01-25", "close": 1.0008754499616273, "volume": 73913115.99229811}, {"datetime": "2022-01-26", "close": 1.000981148694532, "volume": 114213293.06456847}, {"datetime": "2022-01-27", "close": 0.9973740553105468, "volume": 205931323.8079377}, {"datetime": "2022-01-28", "close": 0.9978886661228084, "volume": 1257969039.899625}, {"datetime": "2022-01-29", "close": 1.0001083667546193, "volume": 213461226.27412206}, {"datetime": "2022-01-30", "close": 1.0000221265526836, "volume": 58289293.8950927}, {"datetime": "2022-01-31", "close": 0.9996095242041312, "volume": 96584460.61469117}, {"datetime": "2022-02-01", "close": 1.0003781156558575, "volume": 95443149.12581807}, {"datetime": "2022-02-02", "close": 0.9997803429467556, "volume": 59961019.54481361}, {"datetime": "2022-02-03", "close": 1.000812132475296, "volume": 83381958.72660457}, {"datetime": "2022-02-04", "close": 1.0008624927632201, "volume": 101131952.17284232}, {"datetime": "2022-02-05", "close": 1.000669360039534, "volume": 82265344.54457268}, {"datetime": "2022-02-06", "close": 1.000235127467132, "volume": 64412713.42622322}, {"datetime": "2022-02-07", "close": 1.0004896689061535, "volume": 113508995.00740206}, {"datetime": "2022-02-08", "close": 1.000868804926015, "volume": 90595081.97642913}, {"datetime": "2022-02-09", "close": 1.00055673733831, "volume": 93018996.25783244}, {"datetime": "2022-02-10", "close": 1.0006639410702616, "volume": 110123216.9955397}, {"datetime": "2022-02-11", "close": 1.0005681505748079, "volume": 96057971.02031149}, {"datetime": "2022-02-12", "close": 1.000341165550833, "volume": 60874602.42457255}, {"datetime": "2022-02-13", "close": 1.0005717320040484, "volume": 57812400.05418428}, {"datetime": "2022-02-14", "close": 1.0006139667958807, "volume": 95948192.57825746}, {"datetime": "2022-02-15", "close": 1.000960202370314, "volume": 128445062.16409373}, {"datetime": "2022-02-16", "close": 1.0007496408975718, "volume": 127596696.48242147}, {"datetime": "2022-02-17", "close": 1.001103776843542, "volume": 85089756.80295128}, {"datetime": "2022-02-18", "close": 1.0019267048332114, "volume": 110481186.46279559}, {"datetime": "2022-02-21", "close": 1.0033487950691817, "volume": 162447782.19270632}, {"datetime": "2022-02-22", "close": 1.0050141808135056, "volume": 139638584.52572533}, {"datetime": "2022-02-23", "close": 1.0037657543506182, "volume": 184629076.45821837}, {"datetime": "2022-02-24", "close": 1.0037995913681883, "volume": 208297641.3582547}, {"datetime": "2022-02-25", "close": 1.003398751040069, "volume": 191911224.3235894}, {"datetime": "2022-02-26", "close": 1.0036129339497073, "volume": 162695040.90621057}, {"datetime": "2022-02-27", "close": 1.0034685514614505, "volume": 111295445.97104405}, {"datetime": "2022-02-28", "close": 1.0039334974848977, "volume": 224644030.7600598}, {"datetime": "2022-03-01", "close": 1.0042252813538903, "volume": 234961088.58349022}, {"datetime": "2022-03-02", "close": 1.0062480750704954, "volume": 223833086.12647858}, {"datetime": "2022-03-03", "close": 1.0043587433130998, "volume": 247215636.57917243}, {"datetime": "2022-03-04", "close": 1.0055710149846007, "volume": 236904101.19403338}, {"datetime": "2022-03-05", "close": 1.0042326994745225, "volume": 156073531.06793606}, {"datetime": "2022-03-06", "close": 1.003689194301166, "volume": 118773459.99858458}, {"datetime": "2022-03-07", "close": 1.0049158164779375, "volume": 166917735.57694036}, {"datetime": "2022-03-08", "close": 1.004450645658851, "volume": 173875161.49246436}, {"datetime": "2022-03-09", "close": 1.0048177252974844, "volume": 304601692.4377556}, {"datetime": "2022-03-10", "close": 1.00581653760246, "volume": 209776451.21333304}, {"datetime": "2022-03-11", "close": 1.0043922757269745, "volume": 173306259.7834131}, {"datetime": "2022-03-12", "close": 1.0038565642872241, "volume": 98333745.15566154}, {"datetime": "2022-03-13", "close": 1.0038799211390979, "volume": 104573044.61973745}, {"datetime": "2022-03-14", "close": 1.0042524236673618, "volume": 171195074.17233816}, {"datetime": "2022-03-15", "close": 1.004426905546794, "volume": 276299473.13298124}, {"datetime": "2022-03-16", "close": 1.0038335096009638, "volume": 246110536.0863095}, {"datetime": "2022-03-17", "close": 1.003855322333182, "volume": 137389789.9241863}, {"datetime": "2022-03-18", "close": 1.0037003860987925, "volume": 171036826.9537664}, {"datetime": "2022-03-19", "close": 1.0034138476675052, "volume": 107857027.7960836}, {"datetime": "2022-03-20", "close": 1.003062217551869, "volume": 105445534.1095483}, {"datetime": "2022-03-21", "close": 1.0032937723056317, "volume": 174513169.53345743}, {"datetime": "2022-03-22", "close": 1.0035844, "volume": 162892773.91444156}, {"datetime": "2022-03-23", "close": 1.003, "volume": 4480558.077777881}, {"datetime": "2022-03-24", "close": 1.001, "volume": 33011651.08136837}, {"datetime": "2022-03-25", "close": 1.001211312609982, "volume": 37921918.14770681}, {"datetime": "2022-03-26", "close": 1.001, "volume": 3703839.083291576}, {"datetime": "2022-03-27", "close": 0.9999988095910728, "volume": 18595689.76975582}, {"datetime": "2022-03-28", "close": 1.0003421074713867, "volume": 44722854.13689573}, {"datetime": "2022-03-29", "close": 1.0003353548834963, "volume": 45926920.57948773}, {"datetime": "2022-03-30", "close": 1.000254330771855, "volume": 73079652.5127427}, {"datetime": "2022-03-31", "close": 1.0001104049331697, "volume": 84151168.48856625}, {"datetime": "2022-04-01", "close": 1.000614301481687, "volume": 83347760.1175515}, {"datetime": "2022-04-02", "close": 1.001, "volume": 152626017.7297835}, {"datetime": "2022-04-03", "close": 1.0002470121529379, "volume": 22994527.06739979}, {"datetime": "2022-04-04", "close": 1.0002769705731167, "volume": 113975592.06685318}, {"datetime": "2022-04-05", "close": 1.0002327071600572, "volume": 149759881.02860922}, {"datetime": "2022-04-06", "close": 1.0000463370191424, "volume": 166777399.64857748}, {"datetime": "2022-04-07", "close": 1.0001270029710851, "volume": 120964348.61432551}, {"datetime": "2022-04-08", "close": 1.0004620259274646, "volume": 128952476.41255532}, {"datetime": "2022-04-09", "close": 1.000475931607578, "volume": 122458349.77425966}, {"datetime": "2022-04-10", "close": 1.000420728242355, "volume": 53705681.08323396}, {"datetime": "2022-04-11", "close": 1.0002771199800322, "volume": 83519016.06532113}, {"datetime": "2022-04-12", "close": 1.0007074248806422, "volume": 72921504.21587665}, {"datetime": "2022-04-13", "close": 1.0008213578579512, "volume": 110041954.89835563}, {"datetime": "2022-04-14", "close": 1.001607555490902, "volume": 56108730.032761864}, {"datetime": "2022-04-15", "close": 1.0025111615033002, "volume": 66652966.50528805}, {"datetime": "2022-04-16", "close": 1.0029934296249392, "volume": 46038125.29967198}, {"datetime": "2022-04-17", "close": 1.0028587672912819, "volume": 55484698.59955039}, {"datetime": "2022-04-18", "close": 1.0030730082971022, "volume": 130429103.5975188}, {"datetime": "2022-04-19", "close": 1.0035192509298252, "volume": 140898200.9613666}, {"datetime": "2022-04-20", "close": 1.004377576185118, "volume": 185998991.53094035}, {"datetime": "2022-04-21", "close": 1.0034474540523353, "volume": 249308623.09165886}, {"datetime": "2022-04-22", "close": 1.002213663816636, "volume": 218499110.16018265}, {"datetime": "2022-04-23", "close": 1.0016687247806486, "volume": 76198693.4845525}, {"datetime": "2022-04-24", "close": 1.0012260223385308, "volume": 87800041.55255283}, {"datetime": "2022-04-25", "close": 1.0008280143606187, "volume": 134911257.96888992}, {"datetime": "2022-04-26", "close": 1.000550453778765, "volume": 170360548.57129607}, {"datetime": "2022-04-27", "close": 1.0004841482847342, "volume": 202312957.89944822}, {"datetime": "2022-04-28", "close": 0.9998668241202046, "volume": 97454351.27005814}, {"datetime": "2022-04-29", "close": 1.0, "volume": 33906946.78795992}, {"datetime": "2022-04-30", "close": 1.0001956292080583, "volume": 71372622.14443931}, {"datetime": "2022-05-01", "close": 0.9999997398488542, "volume": 104962028.10965903}, {"datetime": "2022-05-02", "close": 1.000160091007274, "volume": 107038217.96776256}, {"datetime": "2022-05-03", "close": 1.0000229810159, "volume": 78711258.95506717}, {"datetime": "2022-05-04", "close": 0.9997202158637671, "volume": 114785460.92398198}, {"datetime": "2022-05-05", "close": 0.9995278369387559, "volume": 128128577.30642155}, {"datetime": "2022-05-06", "close": 0.9993976778524347, "volume": 99322805.29064348}, {"datetime": "2022-05-07", "close": 0.9937271847048272, "volume": 361247034.2563998}, {"datetime": "2022-05-08", "close": 0.995136351228457, "volume": 639076177.8252535}, {"datetime": "2022-05-09", "close": 0.7561197157348656, "volume": 1391582296.3432977}, {"datetime": "2022-05-10", "close": 0.7993489672206815, "volume": 1611511897.313719}, {"datetime": "2022-05-11", "close": 0.7668980300184033, "volume": 2385972326.6131783}, {"datetime": "2022-05-12", "close": 0.36855693868179057, "volume": 1368759322.94129}, {"datetime": "2022-05-13", "close": 0.12888598063940607, "volume": 198581568.97004598}, {"datetime": "2022-05-14", "close": 0.18389866989388914, "volume": 211227315.63162735}, {"datetime": "2022-05-15", "close": 0.14776000271275563, "volume": 259228239.39148632}, {"datetime": "2022-05-16", "close": 0.1405159739285791, "volume": 38953672.752574585}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0.057052822378543665,"calculated_right_value":1.010571833322414,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":10,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"datetime","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD h:mm:ss","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')});\nd3.selectAll('.axis--y .tick text').text(function(d){return d + '$'});"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"datetime","value":"datetime"},{"label":"close","value":"close"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n[[datetime]]<br>\n<strong>Cours : </strong>[[close|round|2]]$<br>\n<strong>Volume échangé : </strong>[[volume|number_separator]]"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["datetime"],"selected_yRows":["close"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"areaChart","chartTitle":"Cryptomonnaies : le «stablecoin» Terra perd 90% de sa valorisation","chartSubTitle":"Evolution de la cotation en dollars sur une semaine","chartSource":"messari","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeAreachart(data_) {
+
+    var kValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_yRows'];
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+    // width = +svg.attr("width") - margin.left - margin.right;
+
+    updateParameters();
+
+    var data = _.cloneDeep(data_);
+    var initial_data = _.cloneDeep(data);
+
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var yScale = d3.scaleLinear()
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale)
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var area = d3.area()
+    .x(function(d) { return xScale(d.x_value) })
+    .y0(yScale(yScale.domain()[0]))
+    .y1(function(d) { return yScale(d.y_value)})
+    .curve(d3.curveLinear);
+
+    // .curve(d3.curveCatmullRom.alpha(0.5));
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+    var allArea = g_inner
+    .selectAll('.area')
+    .data(data);
+
+    allArea
+    .transition()
+    .duration(200)
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+    allArea.exit().transition().duration(200).remove();
+
+    allArea
+    .enter()
+    .append('path')
+    .attr('class', 'area')
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) })
+    .style('fill', function(d) { return colorUpdated(d[0].name) })
+    .style('stroke-width', 2)
+    .style('fill-opacity', 0.9);
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+        // AllDotPoints = g_inner
+        // .selectAll('circle.dotPoint')
+        // .data(_.flatten(data));
+
+        // AllDotPoints
+        // // .transition()
+        // // .duration(200)
+        // .attr('cx', function(d) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .style('fill-opacity', 0 );
+
+        // AllDotPoints.exit().transition().duration(200).remove();
+
+        // AllDotPoints
+        // .enter()
+        // .append('circle')
+        // .attr('class', 'dotPoint')
+        // .attr('cx', function(d, i) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .attr('r', 3)
+        // .style('stroke-width', 5)
+        // .style('stroke', 'white')
+        // .style('stroke-opacity', 0)
+        // .style('fill-opacity', 0 )
+        // // .style('fill', 'black')
+        // .on('mouseover', function(d, i){ show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        // ;
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+
+customizeAxis()
+
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeAreachart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
