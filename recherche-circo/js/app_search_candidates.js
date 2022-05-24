@@ -205,7 +205,7 @@ const autoCompleteJS = new autoComplete({
           selected_2022.sort(function(a,b) {  return b.score - a.score})
 
 
-          d3.select('#candidats').selectAll('*').remove()
+          d3.select('#candidate_list').selectAll('*').remove()
 
           let candidates_items =  d3.select('#candidats').selectAll('p')
           .data(this_data_candidates)

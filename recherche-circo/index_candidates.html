@@ -148,7 +148,7 @@ h2#result_circo{
     text-transform: uppercase;
 }
 
-h2#resultats_precedents{
+h2#resultats_precedents, #candidats_title{
     font-weight: bold;
     font-family: 'libesansweb-semicondensed';
     letter-spacing: 0.04em;
@@ -277,7 +277,7 @@ h2#result_circo {
     width: 6em;
 }
 
-h2#resultats_precedents {
+h2#resultats_precedents, #candidats_title {
     font-size: 1em;
     margin-top: 0.7em;
 }
@@ -325,6 +325,10 @@ h2#resultats_precedents {
                 <div class="mini_col"><span class="title_item">COULEUR ACTUELLE</span><span id='actuelle_couleur'></span></div>
         </div>
         </div>
+<div id="candidats" style="display: none;">
+    <h2 id="candidats_title" style="text-align: center;" >Candidats</h2>
+    <div id="candidate_list"></div>
+    </div>
 <div id="resultats" style="display: none;">
 <h2 id="resultats_precedents" style="text-align: center;" >Résultats aux élections précédentes</h2>
 <div id="graphs">
@@ -338,8 +342,6 @@ h2#resultats_precedents {
 </div>
 </div>
 </div>
-<div id="candidats" style="display: none;">
-    </div>
 
 
         <!-- Vendor -->
