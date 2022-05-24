@@ -207,7 +207,7 @@ const autoCompleteJS = new autoComplete({
 
           d3.select('#candidate_list').selectAll('*').remove()
 
-          let candidates_items =  d3.select('#candidats').selectAll('p')
+          let candidates_items =  d3.select('#candidate_list').selectAll('p')
           .data(this_data_candidates)
 
           candidates_items
@@ -916,4 +916,19 @@ return this_html
 function number_separator(x) {
   let y = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return y.replace(',', ' ').replace(',', ' ').replace('.', ',')
+}
+
+function clean_name(s){
+  let splitted = s.split(' ')
+
+  let splitted_ = splitted.forEach(d =>{
+
+    d = _.capitalize(d)
+
+    console.log(d)
+
+})
+
+return splitted_.join(' ')
+
 }
