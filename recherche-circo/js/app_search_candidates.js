@@ -213,7 +213,7 @@ const autoCompleteJS = new autoComplete({
           candidates_items
           .enter()
           .append('p')
-          .html(d=>`${d.prenom} ${d.nom} -  <b>${d.libelleNuance}</b>`)
+          .html(d=>`${d.prenom} ${d.names_ok} -  <b>${d.libelleNuance}</b>${d.sortant == 'oui' ? " - SORTANT" : ""}`)
 
 
 
@@ -833,7 +833,7 @@ Promise.all([
     d3.csv('data/election_pres_T1.csv'),
     d3.csv('data/elu_2017.csv'),
     d3.csv('data/T1_2017.csv'),
-    d3.csv('https://www.data.gouv.fr/fr/datasets/r/62e62dc0-7640-4f97-a385-4eecda6c2790')
+    d3.csv('data/candidats_leg.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2], files[3], files[4])
 }).catch(function(err) {
