@@ -28,9 +28,9 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 27,001-03,9,KOUASSI,Fulgence,M.,DIV,Divers,Kouassi,non
 28,001-03,10,MAISONNETTE,Cécile,Mme,DXG,Divers extrême gauche,Maisonnette,non
 29,001-03,11,MORVAN LEMBERT,Marine,Mme,ECO,Ecologistes,Morvan Lembert,non
-30,001-03,12,BISETTI,Frank,M.,DVC,Divers centre,Bisetti,non
+30,001-03,12,BISETTI,Frank,M.,DVC,Parti Pirate,Bisetti,non
 31,001-04,1,REIHANIAN,Aurane,M.,LR,Les Républicains,Reihanian,non
-32,001-04,2,DEFRASNE,Alban,M.,DVG,Divers gauche,Defrasne,non
+32,001-04,2,DEFRASNE,Alban,M.,DVG,Parti Pirate,Defrasne,non
 33,001-04,3,FAVRE,Nicolas,M.,ECO,Ecologistes,Favre,non
 34,001-04,4,BUISSON,Jérôme,M.,RN,Rassemblement National,Buisson,non
 35,001-04,5,COUSSON,Sylvain,M.,DXG,Divers extrême gauche,Cousson,non
@@ -107,7 +107,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 106,003-02,7,CHATEL,Philippe,M.,REG,Régionaliste,Chatel,non
 107,003-02,8,LÉGUILLON,Marie-Claude,Mme,RDG,Parti radical de gauche,Léguillon,non
 108,003-02,9,BOVET,Jorys,M.,RN,Rassemblement National,Bovet,non
-109,003-02,10,THOMAS,Luc,M.,REG,Régionaliste,Thomas,non
+109,003-02,10,THOMAS,Luc,M.,REG,Parti Pirate,Thomas,non
 110,003-02,11,VANCEUNEBROCK,Laurence,Mme,ENS,Ensemble ! (Majorité présidentielle),Vanceunebrock,oui
 111,003-02,12,POZZOLI,Bernard,M.,DVG,Divers gauche,Pozzoli,non
 112,003-02,13,HERITIER,Louise,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Heritier,non
@@ -246,7 +246,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 245,006-07,10,PARGAUD,Megane,Mme,ECO,Ecologistes,Pargaud,non
 246,006-07,11,CORNEC,Tanguy,M.,RN,Rassemblement National,Cornec,non
 247,006-07,12,HUMBERT,Bérengère,Mme,DVD,Divers droite,Humbert,non
-248,006-07,13,MARECHAL,Stanislas,M.,DIV,Divers,Marechal,non
+248,006-07,13,MARECHAL,Stanislas,M.,DIV,Parti Pirate,Marechal,non
 249,006-07,14,PETARD,Christian,M.,DXG,Divers extrême gauche,Petard,non
 250,006-08,1,MARTINS,Adelia,Mme,DSV,Droite souverainiste,Martins,non
 251,006-08,2,DESENS,Jean-Valéry,M.,ENS,Ensemble ! (Majorité présidentielle),Desens,non
@@ -264,7 +264,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 263,006-09,2,TABAROT,Michèle,Mme,LR,Les Républicains,Tabarot,oui
 264,006-09,3,NGUYEN,Xuan Truong,M.,REC,Reconquête !,Nguyen,non
 265,006-09,4,CAMERANO,Jean-Paul,M.,DVC,Divers centre,Camerano,non
-266,006-09,5,BOULAY,Nicolas,M.,DIV,Divers,Boulay,non
+266,006-09,5,BOULAY,Nicolas,M.,DIV,Parti Pirate,Boulay,non
 267,006-09,6,CHASSERIAUD,Chantal,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Chasseriaud,non
 268,006-09,7,BARROERO,Evelyne,Mme,ECO,Ecologistes,Barroero,non
 269,006-09,8,TUDIESCHE,Mayaa,Mme,ENS,Ensemble ! (Majorité présidentielle),Tudiesche,non
@@ -429,7 +429,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 428,012-02,8,CANTOURNET,Eric,M.,RDG,Parti radical de gauche,Cantournet,non
 429,012-02,9,VIDAL,Jean-Luc,M.,DSV,Droite souverainiste,Vidal,non
 430,012-02,10,CASSARINI,Myriam,Mme,ECO,Ecologistes,Cassarini,non
-431,012-02,11,CLERGUE,Dominique,M.,DVG,Divers gauche,Clergue,non
+431,012-02,11,CLERGUE,Dominique,M.,DVG,Parti Pirate,Clergue,non
 432,012-03,1,COMBES,Bernard,M.,DXG,Divers extrême gauche,Combes,non
 433,012-03,2,ROUSSET,Jean-François,M.,ENS,Ensemble ! (Majorité présidentielle),Rousset,non
 434,012-03,3,TENDIL,Lysiane,Mme,REC,Reconquête !,Tendil,non
@@ -445,7 +445,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 444,013-01,4,CECONE,Marc,M.,DXG,Divers extrême gauche,Cecone,non
 445,013-01,5,CARAVELLAZI,Céline,Mme,DSV,Droite souverainiste,Caravellazi,non
 446,013-01,6,GIOIA,Victor,M.,DVD,Divers droite,Gioia,non
-447,013-01,7,AVRIL,Julien,M.,DIV,Divers,Avril,non
+447,013-01,7,AVRIL,Julien,M.,DIV,Parti Pirate,Avril,non
 448,013-01,8,JABES,Flora,Mme,ECO,Ecologistes,Jabes,non
 449,013-01,9,ROSIQUE,Thibaud,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Rosique,non
 450,013-01,10,LANZALAVI,Marie,Mme,REG,Régionaliste,Lanzalavi,non
@@ -648,7 +648,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 647,014-01,6,LIBAN,Josseline,Mme,RN,Rassemblement National,Liban,non
 648,014-01,7,BLOUIN,Marlène,Mme,DSV,Droite souverainiste,Blouin,non
 649,014-01,8,LE VIGOUREUX,Fabrice,M.,ENS,Ensemble ! (Majorité présidentielle),Le Vigoureux,oui
-650,014-01,9,GALLOIS,Jérémy,M.,DVG,Divers gauche,Gallois,non
+650,014-01,9,GALLOIS,Jérémy,M.,DVG,Parti Pirate,Gallois,non
 651,014-01,10,FOURREAU,Emma,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Fourreau,non
 652,014-02,1,BROU,Camille,Mme,LR,Les Républicains,Brou,non
 653,014-02,2,GARCIA,Christophe,M.,DXG,Divers extrême gauche,Garcia,non
@@ -660,7 +660,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 659,014-02,8,AMBOURG,Philippe,M.,DSV,Droite souverainiste,Ambourg,non
 660,014-02,9,LERENDU,Julien,M.,ECO,Ecologistes,Lerendu,non
 661,014-02,10,DELAPORTE,Arthur,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Delaporte,non
-662,014-02,11,SÉNÉTAIRE,Vincent,M.,DXG,Divers extrême gauche,Sénétaire,non
+662,014-02,11,SÉNÉTAIRE,Vincent,M.,DXG,Parti Pirate,Sénétaire,non
 663,014-03,1,LECONTE,Elisabeth,Mme,DXG,Divers extrême gauche,Leconte,non
 664,014-03,2,MAFIODO,Steven,M.,DSV,Droite souverainiste,Mafiodo,non
 665,014-03,3,PATRIER-LEITUS,Jérémie,M.,ENS,Ensemble ! (Majorité présidentielle),Patrier-Leitus,non
@@ -871,7 +871,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 870,021-02,8,SALINAS,Amélia,Mme,DSV,Droite souverainiste,Salinas,non
 871,021-03,1,RICHARD,Xavier,M.,DVG,Divers gauche,Richard,non
 872,021-03,2,LACROIX-SAMPER,Solène,Mme,REC,Reconquête !,Lacroix-Samper,non
-873,021-03,3,FAUVET,Tarja,Mme,DVG,Divers gauche,Fauvet,non
+873,021-03,3,FAUVET,Tarja,Mme,DVG,Parti Pirate,Fauvet,non
 874,021-03,4,MARC,Patricia,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Marc,non
 875,021-03,5,LOUIS,Bruno,M.,ECO,Ecologistes,Louis,non
 876,021-03,6,GRANDET,Valérie,Mme,LR,Les Républicains,Grandet,non
@@ -1019,7 +1019,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1018,024-04,10,TEILLAC,Christian,M.,DVG,Divers gauche,Teillac,non
 1019,024-04,11,FANIER,Basile,M.,LR,Les Républicains,Fanier,non
 1020,025-01,1,LUTZ,Thomas,M.,RN,Rassemblement National,Lutz,non
-1021,025-01,2,TOURNIER,Pauline,Mme,DIV,Divers,Tournier,non
+1021,025-01,2,TOURNIER,Pauline,Mme,DIV,Parti Pirate,Tournier,non
 1022,025-01,3,COURBARON,Doïna,Mme,DXG,Divers extrême gauche,Courbaron,non
 1023,025-01,4,MALLOL,Candice,Mme,ECO,Ecologistes,Mallol,non
 1024,025-01,5,PERNIN,Marielle,Mme,ECO,Ecologistes,Pernin,non
@@ -1035,7 +1035,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1034,025-02,3,ALAUZET,Eric,M.,ENS,Ensemble ! (Majorité présidentielle),Alauzet,oui
 1035,025-02,4,MEYER,Claudine,Mme,REG,Régionaliste,Meyer,non
 1036,025-02,5,CARRAU,Barbara,Mme,REC,Reconquête !,Carrau,non
-1037,025-02,6,THOMASSIN,Geoffrey,M.,DIV,Divers,Thomassin,non
+1037,025-02,6,THOMASSIN,Geoffrey,M.,DIV,Parti Pirate,Thomassin,non
 1038,025-02,7,PRENEL,Jim,M.,DSV,Droite souverainiste,Prenel,non
 1039,025-02,8,VUITTON,Brigitte,Mme,DXG,Divers extrême gauche,Vuitton,non
 1040,025-02,9,FUSIS,Eric,M.,RN,Rassemblement National,Fusis,non
@@ -1074,7 +1074,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1073,026-01,7,PUGEAT,Véronique,Mme,LR,Les Républicains,Pugeat,non
 1074,026-01,8,KOPFF,Adèle,Mme,DXG,Divers extrême gauche,Kopff,non
 1075,026-01,9,BRÉBANT,Pierrick,M.,DSV,Droite souverainiste,Brébant,non
-1076,026-01,10,BARJONET,Charles,M.,DIV,Divers,Barjonet,non
+1076,026-01,10,BARJONET,Charles,M.,DIV,Parti Pirate,Barjonet,non
 1077,026-01,11,TOSELLO-PACE,Philippe,M.,RN,Rassemblement National,Tosello-Pace,non
 1078,026-01,12,PIGA,Tifanie,Mme,ECO,Ecologistes,Piga,non
 1079,026-02,1,POLLET,Lisette,Mme,RN,Rassemblement National,Pollet,non
@@ -1218,7 +1218,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1217,029-02,6,GÉLÉBART,Anne,Mme,UDI,Union des Démocrates et des Indépendants,Gélébart,non
 1218,029-02,7,HEBERT,Gérald,M.,DSV,Droite souverainiste,Hebert,non
 1219,029-02,8,HITA,Melvyn,M.,DXG,Divers extrême gauche,Hita,non
-1220,029-02,9,VASSEUR,Alice,Mme,DVG,Divers gauche,Vasseur,non
+1220,029-02,9,VASSEUR,Alice,Mme,DVG,Parti Pirate,Vasseur,non
 1221,029-02,10,PELLICANO,Fortuné,M.,RDG,Parti radical de gauche,Pellicano,non
 1222,029-02,11,CADALEN,Pierre-Yves,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Cadalen,non
 1223,029-02,12,CABON,Mikaël,M.,DVC,Divers centre,Cabon,non
@@ -1239,7 +1239,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1238,029-04,2,VULPIANI,Sylvaine,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Vulpiani,non
 1239,029-04,3,HÉNAFF,Marie-Claire,Mme,LR,Les Républicains,Hénaff,non
 1240,029-04,4,BERGAMI,Jérôme,M.,REC,Reconquête !,Bergami,non
-1241,029-04,5,ENFROY,Guillaume,M.,DIV,Divers,Enfroy,non
+1241,029-04,5,ENFROY,Guillaume,M.,DIV,Parti Pirate,Enfroy,non
 1242,029-04,6,LEMÉNICIER,Jean-François,M.,ECO,Ecologistes,Leménicier,non
 1243,029-04,7,PAYRAUD,Michel,M.,DVC,Divers centre,Payraud,non
 1244,029-04,8,RENOU,Monique,Mme,DSV,Droite souverainiste,Renou,non
@@ -1255,7 +1255,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1254,029-05,7,THOMAÏDIS,Renée,Mme,RN,Rassemblement National,Thomaïdis,non
 1255,029-05,8,MELCHIOR,Graziella,Mme,ENS,Ensemble ! (Majorité présidentielle),Melchior,oui
 1256,029-05,9,LE NY,Brigitte,Mme,REG,Régionaliste,Le Ny,non
-1257,029-06,1,FABRE,Valérie,Mme,DIV,Divers,Fabre,non
+1257,029-06,1,FABRE,Valérie,Mme,DIV,Parti Pirate,Fabre,non
 1258,029-06,2,LE FUR,Patrick,M.,RN,Rassemblement National,Le Fur,non
 1259,029-06,3,BROUSTAUT,Sophie,Mme,REC,Reconquête !,Broustaut,non
 1260,029-06,4,THOMIN,Mélanie,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Thomin,non
@@ -1328,7 +1328,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1327,02B-02,2,CECCOLI,François-Xavier,M.,DVD,Divers droite,Ceccoli,non
 1328,02B-02,3,SALDUCCI,Marie Dominique,Mme,DSV,Droite souverainiste,Salducci,non
 1329,02B-02,4,RAFFAELLI - FRANCESCHI,Amélie,Mme,COM,Parti communiste français,Raffaelli - Franceschi,non
-1330,02B-02,5,BARONNE ML MARIANI,.,Mme,DIV,Divers,Baronne Ml Mariani,non
+1330,02B-02,5,BARONNE ML MARIANI,.,Mme,DIV,Parti Pirate,Baronne Ml Mariani,non
 1331,02B-02,6,MORTINI,Lionel,M.,REG,Régionaliste,Mortini,non
 1332,02B-02,7,RONGIONE,Viviane,Mme,DXG,Divers extrême gauche,Rongione,non
 1333,02B-02,8,CARDI,Jean,M.,RN,Rassemblement National,Cardi,non
@@ -1349,7 +1349,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1348,030-02,3,BOURRELY,Geneviève,Mme,DSV,Droite souverainiste,Bourrely,non
 1349,030-02,4,MANSON,Stéphane,M.,DXG,Divers extrême gauche,Manson,non
 1350,030-02,5,TOUZELLIER,Frédéric,M.,LR,Les Républicains,Touzellier,non
-1351,030-02,6,VOIRON,Julien,M.,DIV,Divers,Voiron,non
+1351,030-02,6,VOIRON,Julien,M.,DIV,Parti Pirate,Voiron,non
 1352,030-02,7,MEIZONNET,Nicolas,M.,RN,Rassemblement National,Meizonnet,oui
 1353,030-02,8,MOUKITE,Zakaria,M.,ECO,Ecologistes,Moukite,non
 1354,030-02,9,LEROY,Anthony,M.,REC,Reconquête !,Leroy,non
@@ -1419,7 +1419,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1418,031-02,6,DE TOURNADRE,Estelle,Mme,DIV,Divers,De Tournadre,non
 1419,031-02,7,GENNARO-SAINT,Christine,Mme,LR,Les Républicains,Gennaro-Saint,non
 1420,031-02,8,CATHALA,Catherine,Mme,ECO,Ecologistes,Cathala,non
-1421,031-02,9,MARTIN,Pierre,M.,DIV,Divers,Martin,non
+1421,031-02,9,MARTIN,Pierre,M.,DIV,Parti Pirate,Martin,non
 1422,031-02,10,TEYCHENE,Sonia,Mme,RN,Rassemblement National,Teychene,non
 1423,031-02,11,BALES,Laurent,M.,REG,Régionaliste,Bales,non
 1424,031-02,12,KARASIAK,Nicolas,M.,ECO,Ecologistes,Karasiak,non
@@ -1461,7 +1461,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1460,031-05,8,PORTARRIEU,Jean-François,M.,ENS,Ensemble ! (Majorité présidentielle),Portarrieu,oui
 1461,031-05,9,VELO,Johanna,Mme,ECO,Ecologistes,Velo,non
 1462,031-05,10,MOSDIER,Alizée,Mme,RDG,Parti radical de gauche,Mosdier,non
-1463,031-05,11,GRIEU,Anne,Mme,DIV,Divers,Grieu,non
+1463,031-05,11,GRIEU,Anne,Mme,DIV,Parti Pirate,Grieu,non
 1464,031-05,12,GOMBERT,Laurence,Mme,DVG,Divers gauche,Gombert,non
 1465,031-06,1,HELMAN,Christelle,Mme,DVG,Divers gauche,Helman,non
 1466,031-06,2,PUEL,Michele,Mme,DXG,Divers extrême gauche,Puel,non
@@ -1471,7 +1471,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1470,031-06,6,MARTIN,Tristan,M.,DVG,Divers gauche,Martin,non
 1471,031-06,7,IBORRA,Monique,Mme,ENS,Ensemble ! (Majorité présidentielle),Iborra,oui
 1472,031-06,8,LAPORTE,Sandra,Mme,ECO,Ecologistes,Laporte,non
-1473,031-06,9,QUINTON,Marc,M.,DIV,Divers,Quinton,non
+1473,031-06,9,QUINTON,Marc,M.,DIV,Parti Pirate,Quinton,non
 1474,031-06,10,AIELLO,Lydia,Mme,RN,Rassemblement National,Aiello,non
 1475,031-06,11,BONNEMAISON,Sylvie,Mme,DVD,Divers droite,Bonnemaison,non
 1476,031-06,12,ALVES,Christophe,M.,LR,Les Républicains,Alves,non
@@ -1486,7 +1486,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1485,031-07,7,THUARD,Florent,M.,DSV,Droite souverainiste,Thuard,non
 1486,031-07,8,PINATEL,Emmanuelle,Mme,RN,Rassemblement National,Pinatel,non
 1487,031-07,9,MIDALI,Julien,M.,DVG,Divers gauche,Midali,non
-1488,031-07,10,ETCHEVERRY,Sophie,Mme,DIV,Divers,Etcheverry,non
+1488,031-07,10,ETCHEVERRY,Sophie,Mme,DIV,Parti Pirate,Etcheverry,non
 1489,031-07,11,EYMOND,Angelique,Mme,DVD,Divers droite,Eymond,non
 1490,031-07,12,BANCHERIT,Christophe,M.,LR,Les Républicains,Bancherit,non
 1491,031-08,1,AVIRAGNET,Joël,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Aviragnet,oui
@@ -1509,7 +1509,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1508,031-09,7,BARKATS,Thomas,M.,RN,Rassemblement National,Barkats,non
 1509,031-09,8,BAUD,Robert,M.,ECO,Ecologistes,Baud,non
 1510,031-09,9,DUFRAISSE,Cecile,Mme,LR,Les Républicains,Dufraisse,non
-1511,031-09,10,BENSLIMANE,Younès,M.,DIV,Divers,Benslimane,non
+1511,031-09,10,BENSLIMANE,Younès,M.,DIV,Parti Pirate,Benslimane,non
 1512,031-09,11,SIRUGUE,Chantal,Mme,DXG,Divers extrême gauche,Sirugue,non
 1513,031-09,12,RÜMLER,Paul,M.,DVG,Divers gauche,Rümler,non
 1514,031-10,1,ASSIER,Alice,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Assier,non
@@ -1580,7 +1580,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1579,033-03,3,SAVINO,Flora,Mme,DIV,Divers,Savino,non
 1580,033-03,4,MARHADOUR,Éric,M.,DXG,Divers extrême gauche,Marhadour,non
 1581,033-03,5,PRUD'HOMME,Loïc,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Prud'homme,oui
-1582,033-03,6,MATHO,Morgan,Mme,DIV,Divers,Matho,non
+1582,033-03,6,MATHO,Morgan,Mme,DIV,Parti Pirate,Matho,non
 1583,033-03,7,ROBERT,Fabien,M.,ENS,Ensemble ! (Majorité présidentielle),Robert,non
 1584,033-03,8,MARC,Laurent,M.,DIV,Divers,Marc,non
 1585,033-03,9,DOUMENGE,Cyrille,M.,REC,Reconquête !,Doumenge,non
@@ -1714,7 +1714,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1713,034-02,6,BELLAREDJ,Fatima,Mme,RDG,Parti radical de gauche,Bellaredj,non
 1714,034-02,7,RESSIGUIER,Muriel,Mme,DVG,Divers gauche,Ressiguier,oui
 1715,034-02,8,DALMAU,Flavio,M.,DVC,Divers centre,Dalmau,non
-1716,034-02,9,OLHASQUE,William,M.,DIV,Divers,Olhasque,non
+1716,034-02,9,OLHASQUE,William,M.,DIV,Parti Pirate,Olhasque,non
 1717,034-02,10,BRIOT,Valérie,Mme,UDI,Union des Démocrates et des Indépendants,Briot,non
 1718,034-02,11,MANGANO,Flavia,Mme,RN,Rassemblement National,Mangano,non
 1719,034-02,12,ASSIÉ,Frédéric,M.,DVG,Divers gauche,Assié,non
@@ -1768,7 +1768,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1767,034-06,6,CROZIER-DANIEL,Magali,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Crozier-Daniel,non
 1768,034-06,7,BRUTUS,Florence,Mme,RDG,Parti radical de gauche,Brutus,non
 1769,034-06,8,GILHODES,Laurent,M.,DXG,Divers extrême gauche,Gilhodes,non
-1770,034-06,9,KARGES,Stéphane,M.,DIV,Divers,Karges,non
+1770,034-06,9,KARGES,Stéphane,M.,DIV,Parti Pirate,Karges,non
 1771,034-06,10,FABRE-LUCE,Henri,M.,REC,Reconquête !,Fabre-Luce,non
 1772,034-06,11,ESSOMBA,Oscar,M.,LR,Les Républicains,Essomba,non
 1773,034-06,12,ROSSARD,Solène,Mme,ECO,Ecologistes,Rossard,non
@@ -1830,7 +1830,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1829,035-02,8,EGRON,Maël,M.,REG,Régionaliste,Egron,non
 1830,035-02,9,LAHAIS,Tristan,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Lahais,non
 1831,035-02,10,BEN LAHCEN,Sofia,Mme,DIV,Divers,Ben Lahcen,non
-1832,035-03,1,PLOQUIN,Matthieu,M.,DIV,Divers,Ploquin,non
+1832,035-03,1,PLOQUIN,Matthieu,M.,DIV,Parti Pirate,Ploquin,non
 1833,035-03,2,PRUNIER,Astrid,Mme,RN,Rassemblement National,Prunier,non
 1834,035-03,3,MERLIERE,David,M.,REC,Reconquête !,Merliere,non
 1835,035-03,4,PARMENTIER,Mélina,Mme,LR,Les Républicains,Parmentier,non
@@ -1851,7 +1851,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1850,035-04,9,BLEIVAS,Mireille,Mme,REC,Reconquête !,Bleivas,non
 1851,035-04,10,DESMOULIN,Gil,M.,DVG,Divers gauche,Desmoulin,non
 1852,035-04,11,BLATERON,Céline,Mme,REG,Régionaliste,Blateron,non
-1853,035-04,12,HAUTIER,Ludovic,M.,DIV,Divers,Hautier,non
+1853,035-04,12,HAUTIER,Ludovic,M.,DIV,Parti Pirate,Hautier,non
 1854,035-04,13,FRANÇOIS,Jacques,M.,LR,Les Républicains,François,non
 1855,035-05,1,RENAULT,Gilles,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Renault,non
 1856,035-05,2,DELINE,Pamela,Mme,DIV,Divers,Deline,non
@@ -1864,7 +1864,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1863,035-05,9,STUBERT,Marion,Mme,ECO,Ecologistes,Stubert,non
 1864,035-05,10,BEAURAIN,Denis,M.,DSV,Droite souverainiste,Beaurain,non
 1865,035-06,1,MOCQUARD,Hélène,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Mocquard,non
-1866,035-06,2,FLOCH,Nolwenn,Mme,DIV,Divers,Floch,non
+1866,035-06,2,FLOCH,Nolwenn,Mme,DIV,Parti Pirate,Floch,non
 1867,035-06,3,BENOIT,Thierry,M.,ENS,Ensemble ! (Majorité présidentielle),Benoit,oui
 1868,035-06,4,AUBRÉE,Adrien,M.,ECO,Ecologistes,Aubrée,non
 1869,035-06,5,MURGEANU,Maricela,Mme,REG,Régionaliste,Murgeanu,non
@@ -1877,7 +1877,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1876,035-07,2,ROSENSTECH,Leïla,Mme,REC,Reconquête !,Rosenstech,non
 1877,035-07,3,BOURGEAUX,Jean-Luc,M.,LR,Les Républicains,Bourgeaux,oui
 1878,035-07,4,PÉAN,Stéphane,M.,DIV,Divers,Péan,non
-1879,035-07,5,DELCOURT,Julien,M.,DIV,Divers,Delcourt,non
+1879,035-07,5,DELCOURT,Julien,M.,DIV,Parti Pirate,Delcourt,non
 1880,035-07,6,FICHET,Christophe,M.,DVC,Divers centre,Fichet,non
 1881,035-07,7,KUCZYK,Raoul,M.,DIV,Divers,Kuczyk,non
 1882,035-07,8,GRUENAIS,Étienne,M.,REG,Régionaliste,Gruenais,non
@@ -1946,7 +1946,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1945,037-03,6,PATTE,Sylvie,Mme,REC,Reconquête !,Patte,non
 1946,037-03,7,SIRVEN,Roxane,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Sirven,non
 1947,037-03,8,ALFANDARI,Henri,M.,ENS,Ensemble ! (Majorité présidentielle),Alfandari,non
-1948,037-03,9,LECHEVALIER,Morgane,Mme,DIV,Divers,Lechevalier,non
+1948,037-03,9,LECHEVALIER,Morgane,Mme,DIV,Parti Pirate,Lechevalier,non
 1949,037-03,10,DELORE,Claire,Mme,DXG,Divers extrême gauche,Delore,non
 1950,037-04,1,DEFORGE,Caroline,Mme,ECO,Ecologistes,Deforge,non
 1951,037-04,2,CHAMBERS,Francis,M.,DIV,Divers,Chambers,non
@@ -1979,7 +1979,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 1978,038-02,1,CHATELAIN,Cyrielle,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Chatelain,non
 1979,038-02,2,MANOUKIAN,Grégory,M.,ECO,Ecologistes,Manoukian,non
 1980,038-02,3,BURGAZ,Muriel,Mme,REC,Reconquête !,Burgaz,non
-1981,038-02,4,MORAND,Maxence,M.,REG,Régionaliste,Morand,non
+1981,038-02,4,MORAND,Maxence,M.,REG,Parti Pirate,Morand,non
 1982,038-02,5,CONDAT,Carole,Mme,DVG,Divers gauche,Condat,non
 1983,038-02,6,GAFSI,Mohamed,M.,ECO,Ecologistes,Gafsi,non
 1984,038-02,7,RUBES,Jérôme,M.,COM,Parti communiste français,Rubes,non
@@ -2052,7 +2052,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2051,038-09,6,ROSEMBERG,Odile,Mme,DSV,Droite souverainiste,Rosemberg,non
 2052,038-09,7,TADDEI,Anaëlle,Mme,ECO,Ecologistes,Taddei,non
 2053,038-09,8,DETROYAT,Claude,Mme,DXG,Divers extrême gauche,Detroyat,non
-2054,038-09,9,ROURE,Guillaume,M.,DIV,Divers,Roure,non
+2054,038-09,9,ROURE,Guillaume,M.,DIV,Parti Pirate,Roure,non
 2055,038-10,1,BRUNON,Allan,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Brunon,non
 2056,038-10,2,JAMMOT SCHWANDER,Elodie,Mme,DVG,Divers gauche,Jammot Schwander,non
 2057,038-10,3,MERINO,Estelle,Mme,ECO,Ecologistes,Merino,non
@@ -2062,7 +2062,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2061,038-10,7,BLANCHON,Stéphane,M.,REC,Reconquête !,Blanchon,non
 2062,038-10,8,MEYNIER-MILLEFERT,Marjolaine,Mme,ENS,Ensemble ! (Majorité présidentielle),Meynier-Millefert,oui
 2063,038-10,9,DUPONT,Ariane,Mme,ECO,Ecologistes,Dupont,non
-2064,038-10,10,HULARD,Amélie,Mme,REG,Régionaliste,Hulard,non
+2064,038-10,10,HULARD,Amélie,Mme,REG,Parti Pirate,Hulard,non
 2065,038-10,11,GERMAIN,Nathalie,Mme,RN,Rassemblement National,Germain,non
 2066,038-10,12,COMPAGNON,Serge,M.,DSV,Droite souverainiste,Compagnon,non
 2067,038-10,13,BORDES,Clément,M.,DXG,Divers extrême gauche,Bordes,non
@@ -2240,7 +2240,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2239,044-01,4,BENBRAHIM,Karim,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Benbrahim,non
 2240,044-01,5,BELHAMITI,Mounir,M.,ENS,Ensemble ! (Majorité présidentielle),Belhamiti,non
 2241,044-01,6,PECQUEUR,Bryan,M.,RN,Rassemblement National,Pecqueur,non
-2242,044-01,7,MENANT,Vincent,M.,REG,Régionaliste,Menant,non
+2242,044-01,7,MENANT,Vincent,M.,REG,Parti Pirate,Menant,non
 2243,044-01,8,PATARD,Nicolas,M.,ECO,Ecologistes,Patard,non
 2244,044-01,9,BÉRAUD,Anthony,M.,LR,Les Républicains,Béraud,non
 2245,044-01,10,DEFRANCE,Hélène,Mme,DXG,Divers extrême gauche,Defrance,non
@@ -2254,7 +2254,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2253,044-02,5,BAZILLE,Nicolas,M.,DXG,Divers extrême gauche,Bazille,non
 2254,044-02,6,GARDENT,Olivier,M.,DXG,Divers extrême gauche,Gardent,non
 2255,044-02,7,LAMBART,Christine,Mme,REG,Régionaliste,Lambart,non
-2256,044-02,8,PRIOLLAUD,Elisa,Mme,REG,Régionaliste,Priollaud,non
+2256,044-02,8,PRIOLLAUD,Elisa,Mme,REG,Parti Pirate,Priollaud,non
 2257,044-02,9,DALICHOUX,Ludivine,Mme,DSV,Droite souverainiste,Dalichoux,non
 2258,044-02,10,MILBEO,Sébastien,M.,ECO,Ecologistes,Milbeo,non
 2259,044-02,11,SCHEFFEN,Cecile,Mme,REC,Reconquête !,Scheffen,non
@@ -2279,7 +2279,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2278,044-04,8,PINEAU,Gaëlle,Mme,RN,Rassemblement National,Pineau,non
 2279,044-04,9,PROD'HOMME,Matthias,M.,DVG,Divers gauche,Prod'homme,non
 2280,044-04,10,BUTEAU,Yohan,M.,REC,Reconquête !,Buteau,non
-2281,044-04,11,BASQUE,Alexandre,M.,REG,Régionaliste,Basque,non
+2281,044-04,11,BASQUE,Alexandre,M.,REG,Parti Pirate,Basque,non
 2282,044-04,12,AMADOU,Aude,Mme,ENS,Ensemble ! (Majorité présidentielle),Amadou,oui
 2283,044-05,1,LALANDE,Sabine,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Lalande,non
 2284,044-05,2,VINCENT,Romain,M.,DVD,Divers droite,Vincent,non
@@ -2315,7 +2315,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2314,044-07,10,BOURDEAU,Gaël,M.,DSV,Droite souverainiste,Bourdeau,non
 2315,044-07,11,JOSSO,Sandrine,Mme,ENS,Ensemble ! (Majorité présidentielle),Josso,oui
 2316,044-07,12,MAHÉ,Veronique,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Mahé,non
-2317,044-08,1,BOSSARD,Cécilia,Mme,REG,Régionaliste,Bossard,non
+2317,044-08,1,BOSSARD,Cécilia,Mme,REG,Parti Pirate,Bossard,non
 2318,044-08,2,CARRO,Hervé,M.,REG,Régionaliste,Carro,non
 2319,044-08,3,PORCHER,Andréa,Mme,LR,Les Républicains,Porcher,non
 2320,044-08,4,LE BELLER,Eddy,M.,DXG,Divers extrême gauche,Le Beller,non
@@ -2336,7 +2336,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2335,044-09,6,CHOMARD,Laurent,M.,REC,Reconquête !,Chomard,non
 2336,044-09,7,RENAUDIN,Maryse,Mme,REG,Régionaliste,Renaudin,non
 2337,044-09,8,MACON,Hélène,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Macon,non
-2338,044-09,9,MOUTOT,Alexandre,M.,REG,Régionaliste,Moutot,non
+2338,044-09,9,MOUTOT,Alexandre,M.,REG,Parti Pirate,Moutot,non
 2339,044-09,10,HERVO,Annie,Mme,DXG,Divers extrême gauche,Hervo,non
 2340,044-09,11,AVELLO,Alain,M.,DSV,Droite souverainiste,Avello,non
 2341,044-09,12,BROUNAIS,Paul,M.,ENS,Ensemble ! (Majorité présidentielle),Brounais,non
@@ -2681,7 +2681,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2680,054-02,8,BOUSSUGE,Anselme,M.,REC,Reconquête !,Boussuge,non
 2681,054-02,9,FLAUS,Florian,M.,ECO,Ecologistes,Flaus,non
 2682,054-02,10,MANFREDI,Vincent,M.,UDI,Union des Démocrates et des Indépendants,Manfredi,non
-2683,054-03,1,BEAUDOUIN,Xavier,M.,REG,Régionaliste,Beaudouin,non
+2683,054-03,1,BEAUDOUIN,Xavier,M.,REG,Parti Pirate,Beaudouin,non
 2684,054-03,2,BOURY,Xavier,M.,DXG,Divers extrême gauche,Boury,non
 2685,054-03,3,ROSSKOPF,Nicolas,M.,REC,Reconquête !,Rosskopf,non
 2686,054-03,4,SERVAGI,Mathieu,M.,LR,Les Républicains,Servagi,non
@@ -2763,7 +2763,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2762,056-02,1,LUNEAU,Pierre-Léon,M.,DVC,Divers centre,Luneau,non
 2763,056-02,2,VALLEIN,Franck Jean Marie,M.,DVD,Divers droite,Vallein,non
 2764,056-02,3,VELLUTINI,Alexandre,M.,DSV,Droite souverainiste,Vellutini,non
-2765,056-02,4,LE BIHAN,Rachel,Mme,DIV,Divers,Le Bihan,non
+2765,056-02,4,LE BIHAN,Rachel,Mme,DIV,Parti Pirate,Le Bihan,non
 2766,056-02,5,KIRCHNER,Karol,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Kirchner,non
 2767,056-02,6,MALARDÉ,Alain,M.,REG,Régionaliste,Malardé,non
 2768,056-02,7,KAPPELER,Florence,Mme,REC,Reconquête !,Kappeler,non
@@ -2940,7 +2940,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2939,059-01,7,GODEST,Constance,Mme,ECO,Ecologistes,Godest,non
 2940,059-01,8,CHAOUAT,Frédéric,M.,DIV,Divers,Chaouat,non
 2941,059-01,9,FABRE,Thomas,M.,UDI,Union des Démocrates et des Indépendants,Fabre,non
-2942,059-01,10,DESMARCHELIER,Hugo,M.,DIV,Divers,Desmarchelier,non
+2942,059-01,10,DESMARCHELIER,Hugo,M.,DIV,Parti Pirate,Desmarchelier,non
 2943,059-01,11,QUATENNENS,Adrien,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Quatennens,oui
 2944,059-02,1,BOISARD-VANNIER,Caroline,Mme,LR,Les Républicains,Boisard-Vannier,non
 2945,059-02,2,DELEVALLET,Monique,Mme,REC,Reconquête !,Delevallet,non
@@ -2961,16 +2961,16 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 2960,059-03,7,DI POMPEO,Christophe,M.,ENS,Ensemble ! (Majorité présidentielle),Di Pompeo,oui
 2961,059-03,8,DELANNOY,Sandra,Mme,RN,Rassemblement National,Delannoy,non
 2962,059-03,9,SAFAI,Irène,Mme,DSV,Droite souverainiste,Safai,non
-2963,059-04,1,ABDELLAOUI,Fatima,Mme,DXG,Divers extrême gauche,Abdellaoui,non
+2963,059-04,1,ABDELLAOUI,Fatima,Mme,DXG,Lutte ouvrière,Abdellaoui,non
 2964,059-04,2,MONTEUX,Frédéric,M.,DSV,Droite souverainiste,Monteux,non
 2965,059-04,3,PLANCKE,Patricia,Mme,RN,Rassemblement National,Plancke,non
-2966,059-04,4,BOULLET,Gauthier,M.,ECO,Ecologistes,Boullet,non
+2966,059-04,4,BOULLET,Gauthier,M.,ECO,Parti Animaliste,Boullet,non
 2967,059-04,5,GAMBIRASIO,Georgia,Mme,DVC,Divers centre,Gambirasio,non
 2968,059-04,6,HOUSSIN,Jacques,M.,DVD,Divers droite,Houssin,non
-2969,059-04,7,DESBOIS,Claire,Mme,DIV,Divers,Desbois,non
+2969,059-04,7,DESBOIS,Claire,Mme,DIV,Volt,Desbois,non
 2970,059-04,8,JARDIN,Patrick,M.,REC,Reconquête !,Jardin,non
 2971,059-04,9,LEBLANC,Sébastien,M.,LR,Les Républicains,Leblanc,non
-2972,059-04,10,GAVARD,Ewann,M.,DIV,Divers,Gavard,non
+2972,059-04,10,GAVARD,Ewann,M.,DIV,Parti Pirate,Gavard,non
 2973,059-04,11,DELEPIERE,Octave,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Delepiere,non
 2974,059-04,12,LISO,Brigitte,Mme,ENS,Ensemble ! (Majorité présidentielle),Liso,oui
 2975,059-05,1,CATTEAU,Victor,M.,RN,Rassemblement National,Catteau,non
@@ -3005,7 +3005,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3004,059-08,3,GUIRAUD,David,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Guiraud,non
 3005,059-08,4,VERMEERSCH,Christian,M.,ECO,Ecologistes,Vermeersch,non
 3006,059-08,5,ELBAHI,Amine,M.,LR,Les Républicains,Elbahi,non
-3007,059-08,6,TANDONNET,Samuel,M.,DIV,Divers,Tandonnet,non
+3007,059-08,6,TANDONNET,Samuel,M.,DIV,Parti Pirate,Tandonnet,non
 3008,059-08,7,VERLANDE,Lisa,Mme,REC,Reconquête !,Verlande,non
 3009,059-08,8,PACO,Aymeric,M.,DVC,Divers centre,Paco,non
 3010,059-08,9,OSSON,Catherine,Mme,ENS,Ensemble ! (Majorité présidentielle),Osson,oui
@@ -3247,7 +3247,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3246,062-02,4,BOUFFART,Béatrice,Mme,DXG,Divers extrême gauche,Bouffart,non
 3247,062-02,5,LOIR,Véronique,Mme,DSV,Droite souverainiste,Loir,non
 3248,062-02,6,GEORGET,Isabelle,Mme,REC,Reconquête !,Georget,non
-3249,062-02,7,PEUGNET,Sébastien,M.,DIV,Divers,Peugnet,non
+3249,062-02,7,PEUGNET,Sébastien,M.,DIV,Parti Pirate,Peugnet,non
 3250,062-02,8,ZAYONNET,Nathalie,Mme,ECO,Ecologistes,Zayonnet,non
 3251,062-02,9,LADSOUS,Bruno,M.,ECO,Ecologistes,Ladsous,non
 3252,062-02,10,LA GRANGE,Philippe,M.,RDG,Parti radical de gauche,La Grange,non
@@ -3319,7 +3319,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3318,062-09,3,MATTON,Charlotte,Mme,DSV,Droite souverainiste,Matton,non
 3319,062-09,4,BAÏK,Abdellah,M.,ECO,Ecologistes,Baïk,non
 3320,062-09,5,DEFLANDRE,Anne-Marie,Mme,DXG,Divers extrême gauche,Deflandre,non
-3321,062-09,6,BRASSEUR,Valentin,M.,DIV,Divers,Brasseur,non
+3321,062-09,6,BRASSEUR,Valentin,M.,DIV,Parti Pirate,Brasseur,non
 3322,062-09,7,BONIFACIO,Amandine,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Bonifacio,non
 3323,062-09,8,PINCHON,Matthieu,M.,DVD,Divers droite,Pinchon,non
 3324,062-09,9,DEPREZ-AUDEBERT,Marguerite,Mme,ENS,Ensemble ! (Majorité présidentielle),Deprez-Audebert,oui
@@ -3374,7 +3374,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3373,063-02,2,MONNET,Karina,Mme,ENS,Ensemble ! (Majorité présidentielle),Monnet,non
 3374,063-02,3,LACOMBE,Marie-Paule,Mme,DVD,Divers droite,Lacombe,non
 3375,063-02,4,DUPRÉ,Isabelle,Mme,RN,Rassemblement National,Dupré,non
-3376,063-02,5,BERTHON,Kenny,M.,DVG,Divers gauche,Berthon,non
+3376,063-02,5,BERTHON,Kenny,M.,DVG,Parti Pirate,Berthon,non
 3377,063-02,6,DURIN,Sylvain,M.,LR,Les Républicains,Durin,non
 3378,063-02,7,FREZOULS-LE PONT,Nicole,Mme,ECO,Ecologistes,Frezouls-Le Pont,non
 3379,063-02,8,FÉLIX,Jean-Pierre,M.,DSV,Droite souverainiste,Félix,non
@@ -3521,7 +3521,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3520,066-02,9,GOISET,Philippe,M.,DXG,Divers extrême gauche,Goiset,non
 3521,066-03,1,SGARD,Marlène,Mme,DIV,Divers,Sgard,non
 3522,066-03,2,MANDAR,Charles,M.,REC,Reconquête !,Mandar,non
-3523,066-03,3,MADELINE,Blaise,M.,DIV,Divers,Madeline,non
+3523,066-03,3,MADELINE,Blaise,M.,DIV,Parti Pirate,Madeline,non
 3524,066-03,4,MARTIN,Laurence,Mme,LR,Les Républicains,Martin,non
 3525,066-03,5,LE FLOCH,Morgane,Mme,REG,Régionaliste,Le Floch,non
 3526,066-03,6,GUITART,Henri,M.,DIV,Divers,Guitart,non
@@ -3572,8 +3572,8 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3571,067-02,11,BENNES,Armèle,Mme,DIV,Divers,Bennes,non
 3572,067-02,12,DU PARC,Hombeline,Mme,RN,Rassemblement National,Du Parc,non
 3573,067-02,13,CAMINADE,Nelly,Mme,REC,Reconquête !,Caminade,non
-3574,067-02,14,GRANDJEAN,Alexandre,M.,DIV,Divers,Grandjean,non
-3575,067-03,1,PLICHON,Valentin,M.,DIV,Divers,Plichon,non
+3574,067-02,14,GRANDJEAN,Alexandre,M.,DIV,Parti Pirate,Grandjean,non
+3575,067-03,1,PLICHON,Valentin,M.,DIV,Parti Pirate,Plichon,non
 3576,067-03,2,SFAXI,Imene,Mme,LR,Les Républicains,Sfaxi,non
 3577,067-03,3,WETZEL,Virginie,Mme,DSV,Droite souverainiste,Wetzel,non
 3578,067-03,4,MAS,Sébastien,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Mas,non
@@ -3597,7 +3597,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3596,067-04,9,CHIROLLET,Jean-Claude,M.,DSV,Droite souverainiste,Chirollet,non
 3597,067-04,10,WONNER,Martine,Mme,DIV,Divers,Wonner,oui
 3598,067-04,11,MATZ,Bénédicte,Mme,REG,Régionaliste,Matz,non
-3599,067-04,12,NORTH,Alain,M.,DIV,Divers,North,non
+3599,067-04,12,NORTH,Alain,M.,DIV,Parti Pirate,North,non
 3600,067-05,1,SITZENSTUHL,Charles,M.,ENS,Ensemble ! (Majorité présidentielle),Sitzenstuhl,non
 3601,067-05,2,WEISS MOESSMER,Sarah,Mme,REG,Régionaliste,Weiss Moessmer,non
 3602,067-05,3,MERTZ,Quentin,M.,DXD,Divers extrême droite,Mertz,non
@@ -3632,7 +3632,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3631,067-07,10,MEYER,Jean,M.,DXG,Divers extrême gauche,Meyer,non
 3632,067-07,11,ESCHENMANN,Valérie,Mme,RN,Rassemblement National,Eschenmann,non
 3633,067-07,12,WOJTKOWIAK,Florine,Mme,DSV,Droite souverainiste,Wojtkowiak,non
-3634,067-07,13,SOHM,Philippe,M.,DIV,Divers,Sohm,non
+3634,067-07,13,SOHM,Philippe,M.,DIV,Parti Pirate,Sohm,non
 3635,067-08,1,KOCHERT,Stéphanie,Mme,ENS,Ensemble ! (Majorité présidentielle),Kochert,non
 3636,067-08,2,KRILOFF,Sébastien,M.,REC,Reconquête !,Kriloff,non
 3637,067-08,3,AHMED-YAHIA,Samy,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Ahmed-Yahia,non
@@ -3667,7 +3667,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3666,068-02,4,BECKER,Fabien,M.,DVG,Divers gauche,Becker,non
 3667,068-02,5,AUBERT,Nathalie,Mme,RN,Rassemblement National,Aubert,non
 3668,068-02,6,OTT,Hubert,M.,ENS,Ensemble ! (Majorité présidentielle),Ott,non
-3669,068-02,7,MOREAU,Abel,M.,REG,Régionaliste,Moreau,non
+3669,068-02,7,MOREAU,Abel,M.,REG,Parti Pirate,Moreau,non
 3670,068-02,8,CATTIN,Jacques,M.,LR,Les Républicains,Cattin,oui
 3671,068-02,9,GRAVIER,Emily,Mme,REC,Reconquête !,Gravier,non
 3672,068-02,10,SCHERMANN,Gabriel,M.,ECO,Ecologistes,Schermann,non
@@ -3727,7 +3727,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3726,068-06,13,GERHART,Anne,Mme,DVC,Divers centre,Gerhart,non
 3727,068-06,14,RITZ,Christelle,Mme,RN,Rassemblement National,Ritz,non
 3728,068-06,15,FUCHS,Bruno,M.,ENS,Ensemble ! (Majorité présidentielle),Fuchs,oui
-3729,068-06,16,BREINER,Dimitri,M.,DIV,Divers,Breiner,non
+3729,068-06,16,BREINER,Dimitri,M.,DIV,Parti Pirate,Breiner,non
 3730,069-01,1,PROST,Anne,Mme,LR,Les Républicains,Prost,non
 3731,069-01,2,DAYME,Grégory,M.,RDG,Parti radical de gauche,Dayme,non
 3732,069-01,3,RUDIGOZ,Thomas,M.,ENS,Ensemble ! (Majorité présidentielle),Rudigoz,oui
@@ -3855,7 +3855,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3854,069-11,10,FUGIT,Jean-Luc,M.,ENS,Ensemble ! (Majorité présidentielle),Fugit,oui
 3855,069-11,11,ROSSOLINI,Aude,Mme,DVD,Divers droite,Rossolini,non
 3856,069-11,12,COMMUNAL,Pierre-Henri,M.,DSV,Droite souverainiste,Communal,non
-3857,069-12,1,HEURTEL,Antoine,M.,DIV,Divers,Heurtel,non
+3857,069-12,1,HEURTEL,Antoine,M.,DIV,Parti Pirate,Heurtel,non
 3858,069-12,2,PIRRA,Olivier,M.,REC,Reconquête !,Pirra,non
 3859,069-12,3,CARRON,Lucie,Mme,ECO,Ecologistes,Carron,non
 3860,069-12,4,SPENNATO,Samantha,Mme,ECO,Ecologistes,Spennato,non
@@ -3918,7 +3918,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 3917,071-02,3,ALBERT,Laurence,Mme,REC,Reconquête !,Albert,non
 3918,071-02,4,VARÉLA,Chantal,Mme,DSV,Droite souverainiste,Varéla,non
 3919,071-02,5,VINAUGER,Céline,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Vinauger,non
-3920,071-02,6,SICARD,Maud,Mme,DIV,Divers,Sicard,non
+3920,071-02,6,SICARD,Maud,Mme,DIV,Parti Pirate,Sicard,non
 3921,071-02,7,GAUTHIER,Laurence,Mme,ENS,Ensemble ! (Majorité présidentielle),Gauthier,non
 3922,071-02,8,DUSSAUGE,Pascal,M.,DXG,Divers extrême gauche,Dussauge,non
 3923,071-03,1,REBEYROTTE,Rémy,M.,ENS,Ensemble ! (Majorité présidentielle),Rebeyrotte,oui
@@ -4067,7 +4067,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4066,074-02,14,SCIABBARRASI,Pascal,M.,ECO,Ecologistes,Sciabbarrasi,non
 4067,074-02,15,CURDY,Christian,M.,ECO,Ecologistes,Curdy,non
 4068,074-03,1,BOUVIER,Véronique,Mme,REG,Régionaliste,Bouvier,non
-4069,074-03,2,COHEN,Albert,M.,DIV,Divers,Cohen,non
+4069,074-03,2,COHEN,Albert,M.,DIV,Parti Pirate,Cohen,non
 4070,074-03,3,DAGHRIR,Anis,M.,RN,Rassemblement National,Daghrir,non
 4071,074-03,4,POINSENET,Yann,M.,DSV,Droite souverainiste,Poinsenet,non
 4072,074-03,5,FERRARINI,Valérie,Mme,ENS,Ensemble ! (Majorité présidentielle),Ferrarini,non
@@ -4128,7 +4128,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4127,075-01,12,PARIS,Annie,Mme,DVG,Divers gauche,Paris,non
 4128,075-02,1,ROSSET,Marine,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Rosset,non
 4129,075-02,2,LECOQ,Jean-Pierre,M.,LR,Les Républicains,Lecoq,non
-4130,075-02,3,ASSAYAG,Daniel,M.,DIV,Divers,Assayag,non
+4130,075-02,3,ASSAYAG,Daniel,M.,DIV,Parti Pirate,Assayag,non
 4131,075-02,4,GILBERT,Isabelle,Mme,REC,Reconquête !,Gilbert,non
 4132,075-02,5,DE VILLEPIN,Quitterie,Mme,DVC,Divers centre,De Villepin,non
 4133,075-02,6,JOLIVEAU,Charline,Mme,DXG,Divers extrême gauche,Joliveau,non
@@ -4156,7 +4156,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4155,075-04,7,LAVENIER,Annie Marcelle Mauricette,Mme,RN,Rassemblement National,Lavenier,non
 4156,075-04,8,SHNORHOKIAN,Garen,M.,REC,Reconquête !,Shnorhokian,non
 4157,075-04,9,FREUDBERG,Francine,Mme,DVC,Divers centre,Freudberg,non
-4158,075-04,10,TOUATI,Adrien,M.,DIV,Divers,Touati,non
+4158,075-04,10,TOUATI,Adrien,M.,DIV,Parti Pirate,Touati,non
 4159,075-04,11,LÉVENARD,Pierre,M.,DXG,Divers extrême gauche,Lévenard,non
 4160,075-04,12,GUILLAS-CAVAN,Kevin,M.,DVG,Divers gauche,Guillas-Cavan,non
 4161,075-04,13,KUSTER,Brigitte,Mme,LR,Les Républicains,Kuster,oui
@@ -4170,7 +4170,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4169,075-05,8,DABAT,Monique,Mme,DXG,Divers extrême gauche,Dabat,non
 4170,075-05,9,BALLON,Jean,M.,ECO,Ecologistes,Ballon,non
 4171,075-05,10,BAYOU,Julien,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Bayou,non
-4172,075-05,11,JOUVEAU,Marie-Jeanne,Mme,DIV,Divers,Jouveau,non
+4172,075-05,11,JOUVEAU,Marie-Jeanne,Mme,DIV,Parti Pirate,Jouveau,non
 4173,075-06,1,HUYNH THI BOZZI,Marie Rosette,Mme,RN,Rassemblement National,Huynh Thi Bozzi,non
 4174,075-06,2,BONZANI,Laurence,Mme,ECO,Ecologistes,Bonzani,non
 4175,075-06,3,BARGETON,Julien,M.,ENS,Ensemble ! (Majorité présidentielle),Bargeton,non
@@ -4179,7 +4179,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4178,075-06,6,BERROUBA,Yasmin,Mme,DVC,Divers centre,Berrouba,non
 4179,075-06,7,GODDE,Anne-Catherine,Mme,DXG,Divers extrême gauche,Godde,non
 4180,075-06,8,MARTIN,Jean-Christophe,M.,LR,Les Républicains,Martin,non
-4181,075-06,9,BORSELLINO,Jennifer,Mme,DIV,Divers,Borsellino,non
+4181,075-06,9,BORSELLINO,Jennifer,Mme,DIV,Parti Pirate,Borsellino,non
 4182,075-06,10,FREMION,Yves,M.,ECO,Ecologistes,Fremion,non
 4183,075-06,11,DUPUY,Charles,M.,DXG,Divers extrême gauche,Dupuy,non
 4184,075-06,12,VAN DEN BROUCKE,Romain,M.,ECO,Ecologistes,Van Den Broucke,non
@@ -4197,7 +4197,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4196,075-07,12,MOGHIR,Naïma,Mme,ECO,Ecologistes,Moghir,non
 4197,075-07,13,DAGUENEL (NGUYEN CONG DUC),Anne Hélène Janine Marie,Mme,RN,Rassemblement National,Daguenel (nguyen Cong Duc),non
 4198,075-08,1,BLONDEL,Marie-Noelle,Mme,DVC,Divers centre,Blondel,non
-4199,075-08,2,RITROVATO,Grégory,M.,DIV,Divers,Ritrovato,non
+4199,075-08,2,RITROVATO,Grégory,M.,DIV,Parti Pirate,Ritrovato,non
 4200,075-08,3,VOLBART,Laurence,Mme,ECO,Ecologistes,Volbart,non
 4201,075-08,4,DUPONCEL,Crystal,Mme,DSV,Droite souverainiste,Duponcel,non
 4202,075-08,5,LANCELOT,Vanessa,Mme,RN,Rassemblement National,Lancelot,non
@@ -4213,7 +4213,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4212,075-09,2,OLIVIER,Jean-Baptiste,M.,LR,Les Républicains,Olivier,non
 4213,075-09,3,BEDAGUE,Florence,Mme,DXG,Divers extrême gauche,Bedague,non
 4214,075-09,4,NECHADI,Farid,M.,DVG,Divers gauche,Nechadi,non
-4215,075-09,5,BEYSSAC,Pierre,M.,DIV,Divers,Beyssac,non
+4215,075-09,5,BEYSSAC,Pierre,M.,DIV,Parti Pirate,Beyssac,non
 4216,075-09,6,MEYER,David,M.,REC,Reconquête !,Meyer,non
 4217,075-09,7,GLOESS,Éric,M.,DXG,Divers extrême gauche,Gloess,non
 4218,075-09,8,ROUSSEAU,Sandrine,Mme,DVD,Divers droite,Rousseau,non
@@ -4239,7 +4239,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4238,075-10,15,SHOUKRY,Habib,M.,LR,Les Républicains,Shoukry,non
 4239,075-10,16,NGUEMBOCK,Deza,Mme,DVG,Divers gauche,Nguembock,non
 4240,075-10,17,MOORADUN RUMJAUN,Hania,Mme,ECO,Ecologistes,Mooradun Rumjaun,non
-4241,075-10,18,SELLIER,Thomas,M.,DIV,Divers,Sellier,non
+4241,075-10,18,SELLIER,Thomas,M.,DIV,Parti Pirate,Sellier,non
 4242,075-11,1,SIMEÉON ÉP EYCHART,Marie-Thérèse-Jeanne,Mme,DVG,Divers gauche,Simeéon Ép Eychart,non
 4243,075-11,2,LABOURDETTE,Valentine,Mme,ECO,Ecologistes,Labourdette,non
 4244,075-11,3,GATEL,Maud,Mme,ENS,Ensemble ! (Majorité présidentielle),Gatel,oui
@@ -4248,7 +4248,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4247,075-11,6,POLSKI,Olivia,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Polski,non
 4248,075-11,7,CARRERE-GEE,Marie-Claire,Mme,LR,Les Républicains,Carrere-Gee,non
 4249,075-11,8,LAYRÉ-CASSOU,Franck,M.,REC,Reconquête !,Layré-Cassou,non
-4250,075-11,9,LE GAC,Nolwenn,Mme,DIV,Divers,Le Gac,non
+4250,075-11,9,LE GAC,Nolwenn,Mme,DIV,Parti Pirate,Le Gac,non
 4251,075-11,10,VINCIGUERRA,Laurent,M.,DXG,Divers extrême gauche,Vinciguerra,non
 4252,075-12,1,DE CLINCHAMP-BELLEGARDE,Benoît,M.,REC,Reconquête !,De Clinchamp-Bellegarde,non
 4253,075-12,2,BOULEY,Chloé,Mme,UDI,Union des Démocrates et des Indépendants,Bouley,non
@@ -4293,7 +4293,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4292,075-15,7,GASSAMA,Mohamad,M.,ENS,Ensemble ! (Majorité présidentielle),Gassama,non
 4293,075-15,8,EL AARAJE,Lamia,Mme,SOC,Parti socialiste,El Aaraje,non
 4294,075-15,9,ZEKA LEMA,Pauline,Mme,DXG,Divers extrême gauche,Zeka Lema,non
-4295,075-15,10,ADOBATI,Sandrine,Mme,DIV,Divers,Adobati,non
+4295,075-15,10,ADOBATI,Sandrine,Mme,DIV,Parti Pirate,Adobati,non
 4296,075-15,11,ARAGON,Philippe,M.,DVC,Divers centre,Aragon,non
 4297,075-15,12,NOBIN,Thierry Jean Pierre,M.,DXG,Divers extrême gauche,Nobin,non
 4298,075-15,13,CHARVILLAT,Arnaud,M.,DXG,Divers extrême gauche,Charvillat,non
@@ -4316,7 +4316,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4315,075-17,5,TÉCHER,Marianna,Mme,RN,Rassemblement National,Técher,non
 4316,075-17,6,FALICON,Marie,Mme,REC,Reconquête !,Falicon,non
 4317,075-17,7,HADBI,Youcef,M.,DIV,Divers,Hadbi,non
-4318,075-17,8,FIQUET,Clement,M.,DIV,Divers,Fiquet,non
+4318,075-17,8,FIQUET,Clement,M.,DIV,Parti Pirate,Fiquet,non
 4319,075-17,9,SIGLER,Pierre,M.,ECO,Ecologistes,Sigler,non
 4320,075-17,10,MICHEL,Angélique,Mme,LR,Les Républicains,Michel,non
 4321,075-17,11,BACHIR,Fatah,M.,DIV,Divers,Bachir,non
@@ -4400,7 +4400,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4399,076-07,5,COUFOURIER,Lauriane,Mme,DVG,Divers gauche,Coufourier,non
 4400,076-07,6,FORESTIER,Jacques,M.,LR,Les Républicains,Forestier,non
 4401,076-07,7,DENIS,Camille,Mme,DXG,Divers extrême gauche,Denis,non
-4402,076-07,8,PRUNIER,Virginie,Mme,DIV,Divers,Prunier,non
+4402,076-07,8,PRUNIER,Virginie,Mme,DIV,Parti Pirate,Prunier,non
 4403,076-07,9,MOUHANNA,Marc,M.,DXG,Divers extrême gauche,Mouhanna,non
 4404,076-07,10,DELESTRE,Lucie,Mme,RN,Rassemblement National,Delestre,non
 4405,076-07,11,FIRMIN LE BODO,Agnès,Mme,ENS,Ensemble ! (Majorité présidentielle),Firmin Le Bodo,oui
@@ -4572,7 +4572,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4571,078-02,7,THÉVENOT,Pascal,M.,LR,Les Républicains,Thévenot,non
 4572,078-02,8,WAWSZCZYK,Isabelle,Mme,DSV,Droite souverainiste,Wawszczyk,non
 4573,078-02,9,CARRIVE-BEDOUANI,Maïté,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Carrive-Bedouani,non
-4574,078-02,10,BOROCCO,Matthieu,M.,DIV,Divers,Borocco,non
+4574,078-02,10,BOROCCO,Matthieu,M.,DIV,Parti Pirate,Borocco,non
 4575,078-02,11,BARROT,Jean-Noël,M.,ENS,Ensemble ! (Majorité présidentielle),Barrot,oui
 4576,078-03,1,COQUARD,Bertrand,M.,UDI,Union des Démocrates et des Indépendants,Coquard,non
 4577,078-03,2,DESCHAMPS,Lionel,M.,ECO,Ecologistes,Deschamps,non
@@ -4604,7 +4604,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4603,078-05,9,DENÉ,Jean-Luc,M.,ECO,Ecologistes,Dené,non
 4604,078-05,10,VOISIN,Katia,Mme,DSV,Droite souverainiste,Voisin,non
 4605,078-06,1,SAUGER,Mélinda,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Sauger,non
-4606,078-06,2,VERILHAC,Julian,M.,DIV,Divers,Verilhac,non
+4606,078-06,2,VERILHAC,Julian,M.,DIV,Parti Pirate,Verilhac,non
 4607,078-06,3,DE MONTBRIAL,Thibault,M.,LR,Les Républicains,De Montbrial,non
 4608,078-06,4,PERRAUDIN,Cécile,Mme,DXG,Divers extrême gauche,Perraudin,non
 4609,078-06,5,LEMIERE,Bénédicte,Mme,DIV,Divers,Lemiere,non
@@ -4624,7 +4624,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4623,078-07,9,BROSSE,Laurent,M.,DVD,Divers droite,Brosse,non
 4624,078-07,10,KAYA,Ali,M.,DXG,Divers extrême gauche,Kaya,non
 4625,078-07,11,PLANCOULAINE,Pierre,M.,ECO,Ecologistes,Plancoulaine,non
-4626,078-07,12,VINCENT,Rémi,M.,DIV,Divers,Vincent,non
+4626,078-07,12,VINCENT,Rémi,M.,DIV,Parti Pirate,Vincent,non
 4627,078-07,13,JANVIER,Frédéric,M.,DIV,Divers,Janvier,non
 4628,078-08,1,BEKONO,Mélanie,Mme,DSV,Droite souverainiste,Bekono,non
 4629,078-08,2,PRÉAU,Jean-Marwaan,M.,DIV,Divers,Préau,non
@@ -4668,7 +4668,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4667,078-11,5,MARTINET,William,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Martinet,non
 4668,078-11,6,PLANQUE,Patrick,M.,DXG,Divers extrême gauche,Planque,non
 4669,078-11,7,CHABANET,Sophie,Mme,RN,Rassemblement National,Chabanet,non
-4670,078-11,8,DELEFOSSE,Aymeric,M.,DIV,Divers,Delefosse,non
+4670,078-11,8,DELEFOSSE,Aymeric,M.,DIV,Parti Pirate,Delefosse,non
 4671,078-11,9,TRAMONI,Jean-Luc,M.,ECO,Ecologistes,Tramoni,non
 4672,078-11,10,BENASSAYA,Philippe,M.,LR,Les Républicains,Benassaya,oui
 4673,078-11,11,ARNAUD,Alexandre,M.,REC,Reconquête !,Arnaud,non
@@ -4783,7 +4783,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4782,081-03,3,CALLEJON,Virginie,Mme,RN,Rassemblement National,Callejon,non
 4783,081-03,4,CABANIS,Christelle,Mme,RDG,Parti radical de gauche,Cabanis,non
 4784,081-03,5,TERLIER,Jean,M.,ENS,Ensemble ! (Majorité présidentielle),Terlier,oui
-4785,081-03,6,REY,Sandra,Mme,DIV,Divers,Rey,non
+4785,081-03,6,REY,Sandra,Mme,DIV,Parti Pirate,Rey,non
 4786,081-03,7,TRESSENS,Chantal,Mme,DXG,Divers extrême gauche,Tressens,non
 4787,081-03,8,CARAYON,Guilhem,M.,LR,Les Républicains,Carayon,non
 4788,081-03,9,LAPORTE,Pierre,M.,DVD,Divers droite,Laporte,non
@@ -4806,7 +4806,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4805,082-02,4,CASES,Frédéric,M.,REC,Reconquête !,Cases,non
 4806,082-02,5,RATSIMBA,Françoise,Mme,DXG,Divers extrême gauche,Ratsimba,non
 4807,082-02,6,JOUGLAR,Jean-Yves,M.,DIV,Divers,Jouglar,non
-4808,082-02,7,LEVIEUX,Cédric,M.,DIV,Divers,Levieux,non
+4808,082-02,7,LEVIEUX,Cédric,M.,DIV,Parti Pirate,Levieux,non
 4809,082-02,8,MANCHADO,Nathalie,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Manchado,non
 4810,082-02,9,PINEL,Sylvia,Mme,RDG,Parti radical de gauche,Pinel,oui
 4811,083-01,1,BENOIT-LIZON,Françoise,Mme,ECO,Ecologistes,Benoit-Lizon,non
@@ -4977,7 +4977,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 4976,085-02,3,LOISEAU,Patrick,M.,DVC,Divers centre,Loiseau,oui
 4977,085-02,4,GRÉAU,Ninon,Mme,ECO,Ecologistes,Gréau,non
 4978,085-02,5,BARILLOT,Sophie,Mme,DXG,Divers extrême gauche,Barillot,non
-4979,085-02,6,GHOUALI,Célia,Mme,DIV,Divers,Ghouali,non
+4979,085-02,6,GHOUALI,Célia,Mme,DIV,Parti Pirate,Ghouali,non
 4980,085-02,7,DE RUGY,Maxence,M.,LR,Les Républicains,De Rugy,non
 4981,085-02,8,NEVEUX,Brigitte,Mme,REC,Reconquête !,Neveux,non
 4982,085-02,9,BELLAMY,Béatrice,Mme,ENS,Ensemble ! (Majorité présidentielle),Bellamy,non
@@ -5049,7 +5049,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5048,086-03,12,BOUTAYEB,Fatiha,Mme,DIV,Divers,Boutayeb,non
 5049,086-04,1,TURQUOIS,Nicolas,M.,ENS,Ensemble ! (Majorité présidentielle),Turquois,oui
 5050,086-04,2,AUGER,Fabrice,M.,DIV,Divers,Auger,non
-5051,086-04,3,LIEUTET,Gerard,M.,REG,Régionaliste,Lieutet,non
+5051,086-04,3,LIEUTET,Gerard,M.,REG,Parti Pirate,Lieutet,non
 5052,086-04,4,PIMOT,Sylvie,Mme,ECO,Ecologistes,Pimot,non
 5053,086-04,5,GUICHARD,Patrick,M.,DSV,Droite souverainiste,Guichard,non
 5054,086-04,6,VILLERET,Patrice,M.,DXG,Divers extrême gauche,Villeret,non
@@ -5092,7 +5092,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5091,088-01,7,AIT AHMED,Mohamed,M.,ECO,Ecologistes,Ait Ahmed,non
 5092,088-01,8,VIRY,Stéphane,M.,LR,Les Républicains,Viry,oui
 5093,088-01,9,DUPARCQ,Eric,M.,DSV,Droite souverainiste,Duparcq,non
-5094,088-01,10,ROSSATO,Elisabetta,Mme,DIV,Divers,Rossato,non
+5094,088-01,10,ROSSATO,Elisabetta,Mme,DIV,Parti Pirate,Rossato,non
 5095,088-01,11,PERRY,Stéphane,M.,REC,Reconquête !,Perry,non
 5096,088-02,1,THIEBAUT,Emmanuel,M.,ECO,Ecologistes,Thiebaut,non
 5097,088-02,2,VALENCE,David,M.,ENS,Ensemble ! (Majorité présidentielle),Valence,non
@@ -5182,7 +5182,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5181,091-01,9,RICOIS,Jean-François,M.,DIV,Divers,Ricois,non
 5182,091-01,10,GARNIT,Rafik,M.,DVG,Divers gauche,Garnit,non
 5183,091-01,11,SAIKALY,Joseph,M.,REC,Reconquête !,Saikaly,non
-5184,091-01,12,BAILLEUL,Géraldine,Mme,DIV,Divers,Bailleul,non
+5184,091-01,12,BAILLEUL,Géraldine,Mme,DIV,Parti Pirate,Bailleul,non
 5185,091-02,1,BRYON,Eveline,Mme,REC,Reconquête !,Bryon,non
 5186,091-02,2,SY,Mama,Mme,DVD,Divers droite,Sy,non
 5187,091-02,3,SIFER,Naïma,Mme,ENS,Ensemble ! (Majorité présidentielle),Sifer,non
@@ -5230,7 +5230,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5229,091-06,2,LONCHAMPT,Wendy,Mme,REC,Reconquête !,Lonchampt,non
 5230,091-06,3,LACARRIERE,Chantal,Mme,LR,Les Républicains,Lacarriere,non
 5231,091-06,4,SAHARI,Mokrane,M.,DVD,Divers droite,Sahari,non
-5232,091-06,5,PIOTELAT,Elisabeth,Mme,DVG,Divers gauche,Piotelat,non
+5232,091-06,5,PIOTELAT,Elisabeth,Mme,DVG,Parti Pirate,Piotelat,non
 5233,091-06,6,HADDAD,Lisa,Mme,RN,Rassemblement National,Haddad,non
 5234,091-06,7,ROHAULT DE FLEURY,Jules,M.,ECO,Ecologistes,Rohault De Fleury,non
 5235,091-06,8,CHEN,Franck,M.,DVD,Divers droite,Chen,non
@@ -5239,7 +5239,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5238,091-06,11,VAYSSIÈRE,Bastien,M.,DXG,Divers extrême gauche,Vayssière,non
 5239,091-06,12,GUEDJ,Jérôme,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Guedj,non
 5240,091-06,13,BOMMELAER,Esther,Mme,ECO,Ecologistes,Bommelaer,non
-5241,091-07,1,MARIE,Florie,Mme,DVG,Divers gauche,Marie,non
+5241,091-07,1,MARIE,Florie,Mme,DVG,Parti Pirate,Marie,non
 5242,091-07,2,CARDOSO,Antony,M.,REC,Reconquête !,Cardoso,non
 5243,091-07,3,DAAS,Rabia,Mme,DVC,Divers centre,Daas,non
 5244,091-07,4,REDA,Robin,M.,ENS,Ensemble ! (Majorité présidentielle),Reda,oui
@@ -5280,7 +5280,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5279,091-10,11,GODIER,Marie,Mme,RN,Rassemblement National,Godier,non
 5280,091-10,12,LÉAUMENT,Antoine,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Léaument,non
 5281,092-01,1,BENTAJ,Abdelaziz,M.,LR,Les Républicains,Bentaj,non
-5282,092-01,2,DANGAS,Corinne,Mme,DIV,Divers,Dangas,non
+5282,092-01,2,DANGAS,Corinne,Mme,DIV,Parti Pirate,Dangas,non
 5283,092-01,3,QUIRANTE,Gaël,M.,DXG,Divers extrême gauche,Quirante,non
 5284,092-01,4,BOUMEDIENNE,Samir,Mme,DIV,Divers,Boumedienne,non
 5285,092-01,5,LE GAL,Anna,Mme,ECO,Ecologistes,Le Gal,non
@@ -5361,7 +5361,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5360,092-07,3,BROCHOT,Anne Denis Mercedes,Mme,DXG,Divers extrême gauche,Brochot,non
 5361,092-07,4,RATO,Sandro,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Rato,non
 5362,092-07,5,HALARY,Pascal,M.,DIV,Divers,Halary,non
-5363,092-07,6,HLAVACEK,Guillaume,M.,DIV,Divers,Hlavacek,non
+5363,092-07,6,HLAVACEK,Guillaume,M.,DIV,Parti Pirate,Hlavacek,non
 5364,092-07,7,ABAD,Cécile,Mme,DXG,Divers extrême gauche,Abad,non
 5365,092-07,8,CAZENEUVE,Pierre,M.,ENS,Ensemble ! (Majorité présidentielle),Cazeneuve,non
 5366,092-07,9,VERSINI,Christophe,M.,RN,Rassemblement National,Versini,non
@@ -5369,7 +5369,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5368,092-07,11,ELIZAGOYEN,Xabi,Mme,LR,Les Républicains,Elizagoyen,non
 5369,092-07,12,ATTAF,Mokhtar,M.,DIV,Divers,Attaf,non
 5370,092-07,13,MANDEREAU,Christophe,M.,ECO,Ecologistes,Mandereau,non
-5371,092-08,1,SCHNEIDER,Frédéric,M.,DIV,Divers,Schneider,non
+5371,092-08,1,SCHNEIDER,Frédéric,M.,DIV,Parti Pirate,Schneider,non
 5372,092-08,2,LARROQUE-COMOY,Annie,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Larroque-Comoy,non
 5373,092-08,3,LABBÉ,Laurence,Mme,ECO,Ecologistes,Labbé,non
 5374,092-08,4,TARANNE,Chantal,Mme,REC,Reconquête !,Taranne,non
@@ -5422,7 +5422,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5421,092-12,9,PREVEL,Guillaume,M.,ECO,Ecologistes,Prevel,non
 5422,092-12,10,BAKHTI,Hayat,Mme,ECO,Ecologistes,Bakhti,non
 5423,092-12,11,BOURLANGES,Jean-Louis,M.,ENS,Ensemble ! (Majorité présidentielle),Bourlanges,oui
-5424,092-12,12,SAMIEZ,Florian,M.,DIV,Divers,Samiez,non
+5424,092-12,12,SAMIEZ,Florian,M.,DIV,Parti Pirate,Samiez,non
 5425,092-13,1,BENOIST,David,M.,ECO,Ecologistes,Benoist,non
 5426,092-13,2,MARTIN,Agathe,Mme,DXG,Divers extrême gauche,Martin,non
 5427,092-13,3,BREGEON,Maud,Mme,ENS,Ensemble ! (Majorité présidentielle),Bregeon,non
@@ -5432,7 +5432,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5431,092-13,7,LAURENT,Philippe,M.,UDI,Union des Démocrates et des Indépendants,Laurent,non
 5432,092-13,8,YVARS,Patrick,M.,RN,Rassemblement National,Yvars,non
 5433,092-13,9,GAILLARD,Brice,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Gaillard,non
-5434,092-13,10,TOYANE,Alexis,M.,DIV,Divers,Toyane,non
+5434,092-13,10,TOYANE,Alexis,M.,DIV,Parti Pirate,Toyane,non
 5435,092-13,11,SIMONIN,Thibault,M.,REC,Reconquête !,Simonin,non
 5436,093-01,1,AÏDARA DIABY,Madioula,Mme,DVG,Divers gauche,Aïdara Diaby,non
 5437,093-01,2,ZEKRI,Fouzia,Mme,DVG,Divers gauche,Zekri,non
@@ -5498,7 +5498,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5497,093-05,10,HORMI,Amel,Mme,DVG,Divers gauche,Hormi,non
 5498,093-05,11,LAGARDE,Jean-Christophe,M.,UDI,Union des Démocrates et des Indépendants,Lagarde,oui
 5499,093-05,12,FEGER,Rodolphe,M.,DXG,Divers extrême gauche,Feger,non
-5500,093-05,13,ARGOUSE,Nao,Mme,DIV,Divers,Argouse,non
+5500,093-05,13,ARGOUSE,Nao,Mme,DIV,Parti Pirate,Argouse,non
 5501,093-06,1,SACKHO,Kourtoum,Mme,UDI,Union des Démocrates et des Indépendants,Sackho,non
 5502,093-06,2,TROVA,Françoise,Mme,RN,Rassemblement National,Trova,non
 5503,093-06,3,ZEROUALI,Ali,M.,DIV,Divers,Zerouali,non
@@ -5510,7 +5510,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5509,093-06,9,BOURAK,Aïcha,Mme,DIV,Divers,Bourak,non
 5510,093-06,10,BAZIZ,Yasmina,Mme,ENS,Ensemble ! (Majorité présidentielle),Baziz,non
 5511,093-06,11,BEUGRÉ,Noélie,Mme,REC,Reconquête !,Beugré,non
-5512,093-06,12,MABIALA,Aymane,M.,DIV,Divers,Mabiala,non
+5512,093-06,12,MABIALA,Aymane,M.,DIV,Parti Pirate,Mabiala,non
 5513,093-07,1,CHAIR,Hamid,M.,RDG,Parti radical de gauche,Chair,non
 5514,093-07,2,DEHAY,Catherine,Mme,ECO,Ecologistes,Dehay,non
 5515,093-07,3,BROSSIER,Marie-Laure,Mme,ENS,Ensemble ! (Majorité présidentielle),Brossier,non
@@ -5633,14 +5633,14 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5632,094-05,3,THENIN,Matthieu,M.,DIV,Divers,Thenin,non
 5633,094-05,4,REUTHER,Guillaume,M.,DSV,Droite souverainiste,Reuther,non
 5634,094-05,5,JOSLIN,François,M.,DXG,Divers extrême gauche,Joslin,non
-5635,094-05,6,HENRY,Maxime,M.,DIV,Divers,Henry,non
+5635,094-05,6,HENRY,Maxime,M.,DIV,Parti Pirate,Henry,non
 5636,094-05,7,CHICHE,Bruno,M.,DXG,Divers extrême gauche,Chiche,non
 5637,094-05,8,BAZIN,Paul,M.,LR,Les Républicains,Bazin,non
 5638,094-05,9,MAHAUD,Alain,M.,COM,Parti communiste français,Mahaud,non
 5639,094-05,10,LEFEVRE,Mathieu,M.,ENS,Ensemble ! (Majorité présidentielle),Lefevre,non
 5640,094-05,11,LEGER,Julien,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Leger,non
 5641,094-05,12,HUGUENIN-RICHARD,Isabelle,Mme,RN,Rassemblement National,Huguenin-Richard,non
-5642,094-06,1,MASSOT,François,M.,REG,Régionaliste,Massot,non
+5642,094-06,1,MASSOT,François,M.,REG,Parti Pirate,Massot,non
 5643,094-06,2,GOUFFIER-CHA,Guillaume,M.,ENS,Ensemble ! (Majorité présidentielle),Gouffier-Cha,oui
 5644,094-06,3,HERZOG,Alexandre,M.,DXG,Divers extrême gauche,Herzog,non
 5645,094-06,4,HUNAUT,Véronique,Mme,DXG,Divers extrême gauche,Hunaut,non
@@ -5658,7 +5658,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5657,094-07,1,NADAL,Noël,M.,REC,Reconquête !,Nadal,non
 5658,094-07,2,KEKE,Rachel,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Keke,non
 5659,094-07,3,MAURY,Claire,Mme,DXG,Divers extrême gauche,Maury,non
-5660,094-07,4,DEBBACHE,Gaëlle,Mme,REG,Régionaliste,Debbache,non
+5660,094-07,4,DEBBACHE,Gaëlle,Mme,REG,Parti Pirate,Debbache,non
 5661,094-07,5,CORBIN,Pascale,Mme,ECO,Ecologistes,Corbin,non
 5662,094-07,6,IANNUZZI,Ugo,M.,RN,Rassemblement National,Iannuzzi,non
 5663,094-07,7,JEANBRUN,Vincent,M.,LR,Les Républicains,Jeanbrun,non
@@ -5723,7 +5723,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5722,095-02,2,OUBAIROUK,Brahim,M.,ECO,Ecologistes,Oubairouk,non
 5723,095-02,3,CHIKHANE,Lydie,Mme,DSV,Droite souverainiste,Chikhane,non
 5724,095-02,4,PAIN,Frédéric,M.,LR,Les Républicains,Pain,non
-5725,095-02,5,NICOLLE,Jérôme,M.,DIV,Divers,Nicolle,non
+5725,095-02,5,NICOLLE,Jérôme,M.,DIV,Parti Pirate,Nicolle,non
 5726,095-02,6,GEOFFROY-MARTIN,Sylvie,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Geoffroy-Martin,non
 5727,095-02,7,DOMBROWSKI,Mireille,Mme,DXG,Divers extrême gauche,Dombrowski,non
 5728,095-02,8,CASSAN,Éric,M.,DXG,Divers extrême gauche,Cassan,non
@@ -5809,7 +5809,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5808,095-09,10,HAKKOU,Mohammed,M.,DVG,Divers gauche,Hakkou,non
 5809,095-09,11,HANRYON,Danièle,Mme,DXG,Divers extrême gauche,Hanryon,non
 5810,095-09,12,HITACHE,Abdelsalem,M.,DVC,Divers centre,Hitache,non
-5811,095-09,13,JAOUADI,Nathan,M.,DIV,Divers,Jaouadi,non
+5811,095-09,13,JAOUADI,Nathan,M.,DIV,Parti Pirate,Jaouadi,non
 5812,095-10,1,LOULENDOT,Joseline Sylvie,Mme,RDG,Parti radical de gauche,Loulendot,non
 5813,095-10,2,JOSÉ,Patricia,Mme,LR,Les Républicains,José,non
 5814,095-10,3,RIGOUSTE,Sabine,Mme,DSV,Droite souverainiste,Rigouste,non
@@ -5843,7 +5843,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5842,099-02,2,SAUSSAY,Vanessa,Mme,REG,Régionaliste,Saussay,non
 5843,099-02,3,COLLARD,Jeoffrey,M.,DIV,Divers,Collard,non
 5844,099-02,4,DUPONT,Bertrand,M.,LR,Les Républicains,Dupont,non
-5845,099-02,5,VANIER,Pierre,M.,DIV,Divers,Vanier,non
+5845,099-02,5,VANIER,Pierre,M.,DIV,Parti Pirate,Vanier,non
 5846,099-02,6,MARIANNE PEPIN,Thérèse,Mme,RDG,Parti radical de gauche,Marianne Pepin,non
 5847,099-02,7,RODRIGUEZ,Christian,M.,NUPES,Nouvelle Union Populaire Écologique et Sociale,Rodriguez,non
 5848,099-02,8,CAROIT,Eléonore,Mme,ENS,Ensemble ! (Majorité présidentielle),Caroit,non
@@ -5867,7 +5867,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5866,099-04,1,CUIGNET,Emmanuelle,Mme,RN,Rassemblement National,Cuignet,non
 5867,099-04,2,MACHICOTE,Genevieve,Mme,LR,Les Républicains,Machicote,non
 5868,099-04,3,THEVENOT,Valentin,M.,DIV,Divers,Thevenot,non
-5869,099-04,4,CRONEL,Gaëlle,Mme,DIV,Divers,Cronel,non
+5869,099-04,4,CRONEL,Gaëlle,Mme,DIV,Parti Pirate,Cronel,non
 5870,099-04,5,GONDARD,Cécilia,Mme,NUPES,Nouvelle Union Populaire Écologique et Sociale,Gondard,non
 5871,099-04,6,DEVERCHERE,Cédric,M.,DIV,Divers,Deverchere,non
 5872,099-04,7,COUTARD,Catherine,Mme,DVG,Divers gauche,Coutard,non
@@ -5901,7 +5901,7 @@ id,circonscription,numPanneau,nom,prenom,civilite,codeNuance,libelleNuance,names
 5900,099-06,13,FERRACCI,Marc,M.,ENS,Ensemble ! (Majorité présidentielle),Ferracci,non
 5901,099-06,14,SON-FORGET,Joachim,M.,DVD,Divers droite,Son-Forget,non
 5902,099-06,15,DORTHE,Arnaud,M.,REG,Régionaliste,Dorthe,non
-5903,099-07,1,DROUET,Félix,M.,DIV,Divers,Drouet,non
+5903,099-07,1,DROUET,Félix,M.,DIV,Parti Pirate,Drouet,non
 5904,099-07,2,PETIT,Frédéric,M.,ENS,Ensemble ! (Majorité présidentielle),Petit,non
 5905,099-07,3,DUMAS,Mathilde,Mme,RN,Rassemblement National,Dumas,non
 5906,099-07,4,DESWEL,Philippe,M.,LR,Les Républicains,Deswel,non
