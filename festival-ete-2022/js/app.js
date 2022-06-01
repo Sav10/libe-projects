@@ -51,7 +51,7 @@ let this_color = color_genres_icons[d.Genre]
 let this_class = class_genres[d.Genre]
 
 let this_icon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-' + this_color +'.png',
+  iconUrl: 'pictos/' + this_color +'.png',
   // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -102,14 +102,14 @@ const colors_candidats = {
 
 
 const color_genres = {
-  'Autres':'#F7BA00',
- 'Musique':'#19325D',
- 'Cinéma':'#1D2245',
- 'Théâtre / Arts de la rue / Cirque': "#911D16",
- 'Littérature': "#534384",
- 'Photo / Art contemporain': "#00A85C",
- 'Danse': '#EC4C6B',
-  'BD': "#2458A5"
+  'Autres':'#8C8C8C',
+ 'Musique':'#FF6666',
+ 'Cinéma':'#67B57F',
+ 'Théâtre / Arts de la rue / Cirque': "#6AB9B5",
+ 'Littérature': "#6E8AEF",
+ 'Photo / Art contemporain': "#927AD9",
+ 'Danse': '#FFA578',
+  'BD': "#F5BD78"
 }
 
 const class_genres = {
@@ -124,14 +124,14 @@ const class_genres = {
 }
 
 const color_genres_icons = {
-  'Autres':'grey',
- 'Musique':'gold',
- 'Cinéma':'red',
- 'Théâtre / Arts de la rue / Cirque': "green",
- 'Littérature': "orange",
- 'Photo / Art contemporain': "yellow",
- 'Danse': 'violet',
-  'BD': "blue"
+  'Autres':'Autres-Gris',
+ 'Musique':'Musique-Rouge',
+ 'Cinéma':'Cinéma-vert',
+ 'Théâtre / Arts de la rue / Cirque': "Theatre-Aqua",
+ 'Littérature': "Litterature-bleu",
+ 'Photo / Art contemporain': "Photo-Violet",
+ 'Danse': 'Danse-orange',
+  'BD': "BD-Jaune"
 }
 
 
