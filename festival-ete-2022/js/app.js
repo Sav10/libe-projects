@@ -120,14 +120,14 @@ const class_genres = {
 }
 
 const color_genres_icons = {
-  'Autres':'Autres-Gris',
+  'Autres':'Autre-Gris2',
  'Musique':'Musique-Rouge2',
- 'Cinéma':'Cinéma-vert',
- 'Théâtre / Arts de la rue / Cirque': "Theatre-Aqua",
- 'Littérature': "Litterature-bleu",
- 'Photo / Art contemporain': "Photo-Violet",
- 'Danse': 'Danse-orange',
-  'BD': "BD-Jaune"
+ 'Cinéma':'Cinema-Vert2',
+ 'Théâtre / Arts de la rue / Cirque': "Theatre2",
+ 'Littérature': "Litterature-Bleu2",
+ 'Photo / Art contemporain': "Photo-Violet2",
+ 'Danse': 'Danse-Orange2',
+  'BD': "BD-Jaune2"
 }
 
 
