@@ -121,7 +121,7 @@ const class_genres = {
 
 const color_genres_icons = {
   'Autres':'Autres-Gris',
- 'Musique':'Musique-Rouge',
+ 'Musique':'Musique-Rouge2',
  'Cinéma':'Cinéma-vert',
  'Théâtre / Arts de la rue / Cirque': "Theatre-Aqua",
  'Littérature': "Litterature-bleu",
