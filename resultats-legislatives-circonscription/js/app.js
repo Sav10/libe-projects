@@ -376,7 +376,8 @@ draw_affichage()
 function showTip(data, d, location_variable){
 
 
-let this_data = data_tours[tour].data
+/*let this_data = data_tours[tour].data*/
+let this_data = circos_data_unflat
 
 let this_code = d.id;
 
@@ -420,10 +421,12 @@ if (tour == 'tour2'){
 this_dep_scores = candidate_names_T2.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })
 }
 else{
-  this_dep_scores = candidate_names_T1.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })
+  /*this_dep_scores = candidate_names_T1.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })*/
+  this_dep_scores = this_d.votes
 }
 
-this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
+/*this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
+this_dep_scores = _.slice(this_dep_scores, 0, 7)*/
 this_dep_scores = _.slice(this_dep_scores, 0, 7)
 
 let this_loc_name
@@ -455,6 +458,8 @@ this_loc_name = `${this_d['nom_circo']}  ${this_d['num_circo']}<sup>e</sup> circ
 let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 16px;">${this_loc_name}</span>`
 
 if (selected_element == 'candidat en tête'){
+
+  console.log(this_dep_scores)
 
     this_html +=  `<span class='details'>
     ${drawGraph(this_dep_scores)}</span>`
