@@ -456,7 +456,7 @@ else{
 
 console.log(this_d)
 
-this_loc_name = `${dep_code_names[this_d['code_dep']]}  ${this_d['CodCirLg']}<sup>e</sup> circonscription `
+this_loc_name = `${dep_code_names[this_d['code_dep']]}  ${+this_d['CodCirLg']}<sup>e</sup> circonscription `
 }
 
 let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 16px;">${this_loc_name}</span>`
