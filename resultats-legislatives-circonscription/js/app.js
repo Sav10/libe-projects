@@ -93,17 +93,18 @@ const nuances_2022 = {
 'RDG' : "#F3A2BD"
 }
 
-const partis_nuances =  ['NUP', 
+const partis_nuances =  [
+'NUP', 
 'ENS',
 'RN',
 'LR',
+'DVD',
+'DVG',
+'DVC',
 'UDI',
 'SOC',
 'FI',
 'REC',
-'DVD',
-'DVG',
-'DVC',
 'DSV',
 'ECO',
 'DIV',
