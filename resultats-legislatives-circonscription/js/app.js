@@ -456,7 +456,7 @@ this_loc_name = this_d['lib_region']
 }
 else{
 
-console.log(this_d)
+
 
 this_loc_name = `${dep_code_names[this_d['code_dep']]}  ${+this_d['CodCirLg']}<sup>e</sup> circonscription `
 }
@@ -465,9 +465,6 @@ let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semico
 
 if (selected_element == 'candidat en tête'){
 
-  console.log(this_dep_scores)
-
-  console.log(this_d)
 
     this_html +=  `<span class='details'>
     ${drawGraph(this_dep_scores)}</span>`
@@ -1167,11 +1164,14 @@ d3.select("#legend .empty_circle")
 
 let this_color_range = d3.scaleLinear()
   .range(['white', 'black'])
-  .domain([15, 50]);
+  .domain([15, 60]);
 
 for (i in geo_objects){
 
-  let this_data = data_tours[tour].data
+/*  let this_data = data_tours[tour].data
+*/
+let this_data = circos_data_unflat
+
     if (this_data){
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
@@ -1313,7 +1313,8 @@ d3.selectAll ('#morphocarte svg path')
 d3.select("#legend .empty_circle")
 .style('display', 'block')
 
-let this_color = colors_candidats[name];
+
+let this_color = nuances_2022[name];
 
 
 let this_color_range = d3.scaleLinear()
@@ -1322,7 +1323,9 @@ let this_color_range = d3.scaleLinear()
 
 for (i in geo_objects){
 
-  let this_data = data_tours[tour].data
+/*  let this_data = data_tours[tour].data*/
+
+  let this_data = circos_data_unflat
 
 
     if (this_data){
@@ -1332,14 +1335,15 @@ for (i in geo_objects){
   all_those_paths
   .style('fill', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
- let this_dep_candidate_score = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0][name + '_score']
+      let this_dep_votes = this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0].votes
+ let this_dep_candidate_score = this_dep_votes.filter(d=>d.CodNua == name)[0]['score']
  return this_color_range(this_dep_candidate_score)
     }
     return 'rgb(221, 221, 221)'
   })
   .style('stroke-width', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
- let this_dep_winner = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner
+ let this_dep_winner = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].entete
  return this_dep_winner == name ? 1 : 0;
     }
     return 0
