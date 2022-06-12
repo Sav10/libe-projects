@@ -130,8 +130,10 @@ const candidate_names_T1 = [
 
 
 const selected_candidates = [
-'MACRON',
-'LE PEN'];
+'NUP',
+'ENS',
+'RN',
+'LR'];
 
 
 const vote_variables = ['Inscrits', 
@@ -287,9 +289,7 @@ function draw_legendots(){
 d3.selectAll('div#legendots .legende_dot').remove();
 
 
-let data_for_legendots = Object.entries(colors_candidats).filter(d=> selected_candidates.includes(d[0]))
-
-data_for_legendots.push(['Mélenchon', 'rgb(235, 64, 76)'])
+let data_for_legendots = Object.entries(nuances_2022).filter(d=> selected_candidates.includes(d[0]))
 
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
 .data(data_for_legendots)
@@ -305,7 +305,7 @@ legendots
 d3.select('div#legendots').selectAll('span.legende_dot')
 .append('span')
 .attr('class', 'text_legend')
-.text(d=>_.capitalize(d[0]).replace('Le pen', 'Le Pen'))
+.text(d=> d[0].replace('NUP', 'NUPES'))
 
 d3.select('div#legendots').selectAll('span.legende_dot')
 .append('span')
@@ -736,10 +736,6 @@ circos_data_leg_unflat.forEach(d=>{
 })
 
 circos_data_unflat = circos_data_leg_unflat
-
-let circos_entete = circos_data_leg.map(function(d) {return {'id_circo':d.id_circo, 'entete':d.entete, 'Inscrits': d.Inscrits}})
-
-circos_entete =  _.uniqBy(circos_entete, 'id_circo')
 
     circos_data_T2.forEach(d =>{
 
