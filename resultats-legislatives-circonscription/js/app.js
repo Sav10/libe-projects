@@ -651,16 +651,17 @@ fillOnClick(selected_element)
 Promise.all([
     d3.csv('data/circos_data_T1.csv'),
     d3.csv('data/circos_data_T2.csv'),
-    d3.csv('data/resultats_leg.csv')
+    d3.csv('data/resultats_leg.csv'),
+    d3.csv('data/resultats_leg_unflat.csv')
 ]).then(function(files) {
-  ready(files[0], files[1], files[2])
+  ready(files[0], files[1], files[2], files[3])
 }).catch(function(err) {
   console.log('erreur' + ' ' + err)
 })
 
 //// Ready function (to load data)
 
-  function ready(circos_data_T1, circos_data_T2, circos_data_leg) {
+  function ready(circos_data_T1, circos_data_T2, circos_data_leg, circos_data_leg_unflat) {
 
 
 
@@ -670,7 +671,16 @@ circos_data_leg.forEach(d=>{
   }
 })
 
+circos_data_leg_unflat.forEach(d=>{
+  for (i in vote_variables){
+    d[vote_variables[i]] = +d[vote_variables[i]]
+  }
+  d['votes'] = eval(d['votes'])
+})
+
 console.log(circos_data_leg)
+
+console.log(circos_data_leg_unflat)
 
 let circos_entete = circos_data_leg.map(function(d) {return {'id_circo':d.id_circo, 'entete':d.entete, 'Inscrits': d.Inscrits}})
 
