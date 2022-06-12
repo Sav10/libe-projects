@@ -1336,8 +1336,16 @@ for (i in geo_objects){
   .style('fill', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
       let this_dep_votes = this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0].votes
+      console.log(this_dep_votes)
+if (typeof this_dep_votes.filter(d=>d.CodNua == name)[0] !== 'undefined') {
+
  let this_dep_candidate_score = this_dep_votes.filter(d=>d.CodNua == name)[0]['score']
  return this_color_range(this_dep_candidate_score)
+
+}
+
+return 'rgb(221, 221, 221)'
+
     }
     return 'rgb(221, 221, 221)'
   })
