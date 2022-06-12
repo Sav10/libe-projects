@@ -291,6 +291,8 @@ d3.selectAll('div#legendots .legende_dot').remove();
 
 let data_for_legendots = Object.entries(nuances_2022).filter(d=> selected_candidates.includes(d[0]))
 
+data_for_legendots.push(['Résultats non parvenus', 'rgb(221, 221, 221)'])
+
 var legendots = d3.select('div#legendots').selectAll('span.legende_dot')
 .data(data_for_legendots)
 
@@ -718,7 +720,7 @@ fillOnClick(selected_element)
 Promise.all([
     d3.csv('data/circos_data_T1.csv'),
     d3.csv('data/circos_data_T2.csv'),
-    d3.csv('data/resultats_leg_unflat.csv')
+    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription/data/resultats_leg_unflat.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2])
 }).catch(function(err) {
