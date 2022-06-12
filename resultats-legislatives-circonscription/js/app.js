@@ -508,7 +508,11 @@ else{
     selected_element = 'MÉLENCHON'
   }
 
-let this_selected_candidate = [{'name':selected_element, 'score': this_d[selected_element+'_score']}]
+/*let this_selected_candidate = [{'name':selected_element, 'score': this_d[selected_element+'_score']}]*/
+
+let this_selected_candidate = [this_d.votes.filter(d=>d.CodNua == selected_element)[0]]
+
+
     this_html +=  `<span class='details'>
     ${drawGraph(this_selected_candidate)}</span>`
 
@@ -1164,7 +1168,7 @@ d3.select("#legend .empty_circle")
 
 let this_color_range = d3.scaleLinear()
   .range(['white', 'black'])
-  .domain([15, 60]);
+  .domain([15, 80]);
 
 for (i in geo_objects){
 
@@ -1249,7 +1253,7 @@ let this_color = colors_candidats[name];
 
 let this_color_range = d3.scaleLinear()
   .range(['white', this_color])
-  .domain([10, 80]);
+  .domain([10, 50]);
 
 for (i in geo_objects){
 
@@ -1319,7 +1323,7 @@ let this_color = nuances_2022[name];
 
 let this_color_range = d3.scaleLinear()
   .range(['white', this_color])
-  .domain([10, 80]);
+  .domain([10, 50]);
 
 for (i in geo_objects){
 
