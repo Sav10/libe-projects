@@ -432,7 +432,7 @@ this_dep_scores
 
 /*this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
 this_dep_scores = _.slice(this_dep_scores, 0, 7)*/
-this_dep_scores = _.slice(this_dep_scores, 0, 7)
+this_dep_scores = _.slice(this_dep_scores, 0, 8)
 
 let this_loc_name
 let rajout_extreme_droite = ''
