@@ -426,6 +426,8 @@ else{
   this_dep_scores = this_d.votes
 }
 
+this_dep_scores
+
 /*this_dep_scores = this_dep_scores.sort(function(a,b) {  return b.score - a.score})
 this_dep_scores = _.slice(this_dep_scores, 0, 7)*/
 this_dep_scores = _.slice(this_dep_scores, 0, 7)
@@ -1144,16 +1146,18 @@ if (name == 'candidat en tête') {
 for (i in geo_objects){
 
 
-  let this_data = data_tours[tour].data
+/*  let this_data = data_tours[tour].data*/
+
+let this_data = circos_data_unflat
+
   if (this_data){
   let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
 
   all_those_paths
   .style('stroke-width', 0)
   .style('fill', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
-
- return colors_candidats[this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner]
+    if (typeof this_data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
+  return new_colors_nuances[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
     }
     return 'rgb(221, 221, 221)'
   })
@@ -1414,10 +1418,10 @@ for (i in range){
   else{
     d['score_text'] = d.score != 100 ? d.score + ' %' : ''
     d['score_bar'] = d.score
-    d['color_item'] = colors_candidats[d.name]
+    d['color_item'] = new_colors_nuances[d.CodNua]
   }
   // html_chunk += `<div >${d.tete_liste}</div>
-  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div style="margin-top:5px">${_.capitalize(d.name).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan')}</div>
+  html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div style="margin-top:5px">${_.capitalize(d.PrenomPsn) + ' ' + _.capitalize(d.NomPsn)}</div>
       <div style="height:9px;background-color: #ddd"><div style="height:8px;width:${d.score_bar}%;background-color:${d.color_item};"></div>
       </div>`
 
