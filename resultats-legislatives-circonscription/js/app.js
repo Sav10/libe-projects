@@ -71,6 +71,28 @@ const new_colors_nuances = {
 'REG': "#666"}
 
 
+const nuances_2022 = {
+'DXG' : "#8F1F1B",
+'COM' : "#CC0917",
+'FI' : "#E8182C",
+'ECO' : "#42B38E",
+'SOC' : "#EA4E6D",
+'NUP' : "#951C80",
+'ENS' : "#F6B923",
+'DVC' : "#ED9627",
+'UDI' : "#5F4D96",
+'LR' : "#275AA3",
+'DVD' : "#3D6AB2",
+'DSV' : "#2C3F7C",
+'RN' : "#1D2344",
+'REC' : "#644236",
+'DXD' : "#1B335B",
+'REG' : "#D0B197",
+'DIV' : "#BBBABA",
+'DVG' : "#EF7B92",
+'RDG' : "#F3A2BD"
+}
+
 const candidate_names_T2 = [
 'MACRON',
  'LE PEN']
@@ -286,8 +308,6 @@ d3.selectAll('#affichage .display_element')
 
 let all_displayed_elements = _.cloneDeep(candidate_names_T2)
 all_displayed_elements.unshift('candidat en tête');
-
-all_displayed_elements.push('MÉLENCHON (1er tour)')
 
 all_displayed_elements.push('abstention')
 
@@ -875,11 +895,9 @@ console.log(this_data)
 
   all_those_paths
   .style('fill', d => {
-    console.log(d.id)
 
     if (typeof this_data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
-      console.log(this_data.filter(function(e){return e[location_variable] == d.id})[0].entete)
- return new_colors_nuances[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
+  return new_colors_nuances[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
     }
     return 'rgb(221, 221, 221)'
   })
