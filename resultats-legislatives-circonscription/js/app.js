@@ -8,6 +8,7 @@ var representation_territoriale = 'circonscription';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 let selected_element = 'candidat en tête'
 let tour = 'tour2'
+let circos_data_unflat
 
 
 var geo_objects = {
@@ -682,6 +683,8 @@ console.log(circos_data_leg)
 
 console.log(circos_data_leg_unflat)
 
+circos_data_unflat = circos_data_leg_unflat
+
 let circos_entete = circos_data_leg.map(function(d) {return {'id_circo':d.id_circo, 'entete':d.entete, 'Inscrits': d.Inscrits}})
 
 circos_entete =  _.uniqBy(circos_entete, 'id_circo')
@@ -703,32 +706,6 @@ console.log(circos_entete)
  })
 
  let this_dep_score = candidate_names_T2.map(function(e){ return {'name': e, 'score': d[e]} })
- let this_winner = this_dep_score.sort(function(a,b) {  return b.score - a.score})[0]
-
- d['loc_winner'] = this_winner['name']
- d['loc_winner_score'] = this_winner['score']
-
- d.Score_Lepen_2017 = +d.Score_Lepen_2017
- d['Progression_depuis2017'] = _.round(d['LE PEN_score'] - d.Score_Lepen_2017, 1)
-
-    })
-
-
-    circos_data_T1.forEach(d =>{
-
- candidate_names_T1.forEach(e =>{
-   d[e] = +d[e]
- })
-
- vote_variables.forEach(e =>{
-   d[e] = +d[e]
- })
-
- candidate_names_T1.forEach(e =>{
-   d[e + '_score'] = _.round(+ 100*d[e] / d['Exprimes'], 1)
- })
-
- let this_dep_score = candidate_names_T1.map(function(e){ return {'name': e, 'score': d[e]} })
  let this_winner = this_dep_score.sort(function(a,b) {  return b.score - a.score})[0]
 
  d['loc_winner'] = this_winner['name']
@@ -794,7 +771,7 @@ data_tours['tour1']['data'] = circos_data_T1;
 data_tours['tour2']['data'] = circos_data_T2;
 
 
-loadMapFromSvgGeneric(circos_data_T2, svg_container, circle_range, location_variable, location_prefix, location_type)
+loadMapFromSvgGeneric(circos_data_unflat, svg_container, circle_range, location_variable, location_prefix, location_type)
 
   d3.select("#svg-container-circ")
   .style('height', 0)
@@ -831,6 +808,9 @@ setTimeout(() => {
 
 
 function loadMapFromSvgGeneric(data, svg_container, circle_range, location_variable, location_prefix, location_type) {
+
+
+  console.log(location_variable)
 
   let this_svg_map = d3.select('#'+ svg_container + ' svg');
   var all_those_paths = this_svg_map.selectAll('path');
@@ -869,13 +849,17 @@ thisCircleScale.domain(d3.extent(_.values(inscrits_location[location_type])));
 
 /*all_those_paths.style('fill', 'black')*/
 
-let this_data = data_tours[tour].data
+/*let this_data = data_tours[tour].data*/
+let this_data = data
+
+console.log(this_data)
 
   all_those_paths
   .style('fill', d => {
+    console.log(d.id)
 
     if (typeof this_data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
- return colors_candidats[this_data.filter(function(e){return e[location_variable]  == d.id})[0].loc_winner]
+ return colors_candidats[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
     }
     return 'rgb(221, 221, 221)'
   })
