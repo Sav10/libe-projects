@@ -769,8 +769,6 @@ circos_data_unflat = circos_data_leg_unflat
 const list_circo_id = circos_data_T1.map(d=>[d['nom_circo'] + ' (' + d.num_deptmt + ') - ' + d['Libellé de la circonscription'], d.id_circo])
 
 
-console.log(list_circo_id)
-
 const obj_circo_id = Object.fromEntries(list_circo_id);
 
 
@@ -859,7 +857,6 @@ setTimeout(() => {
 function loadMapFromSvgGeneric(data, svg_container, circle_range, location_variable, location_prefix, location_type) {
 
 
-  console.log(location_variable)
 
   let this_svg_map = d3.select('#'+ svg_container + ' svg');
   var all_those_paths = this_svg_map.selectAll('path');
@@ -901,7 +898,6 @@ thisCircleScale.domain(d3.extent(_.values(inscrits_location[location_type])));
 /*let this_data = data_tours[tour].data*/
 let this_data = data
 
-console.log(this_data)
 
   all_those_paths
   .style('fill', d => {
