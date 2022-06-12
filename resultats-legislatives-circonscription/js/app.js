@@ -51,6 +51,25 @@ const colors_candidats = {
 }
 
 
+const new_colors_nuances = {
+"SOC":'#e6467e',
+"LR":'#0058a2',
+ "EXD":'#03034f',
+ "DVG":'#f46099',
+ "UDI":'#9f64a2',
+ "REM":'#ffb400',
+ "DLF":'#003366',
+ "COM":'#af0e1d',
+ "DVD":'#026db5',
+ "RDG":'#f781b6',
+  "ECO":'#52ae56',
+  "FN":'#000032',
+  "MDM":'#ff8800',
+    'DIV': "#cccccc",
+    'EXG': "#751719",
+'FI': "#cd0420",
+'REG': "#666"}
+
 
 const candidate_names_T2 = [
 'MACRON',
@@ -859,7 +878,8 @@ console.log(this_data)
     console.log(d.id)
 
     if (typeof this_data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
- return colors_candidats[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
+      console.log(this_data.filter(function(e){return e[location_variable] == d.id})[0].entete)
+ return new_colors_nuances[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
     }
     return 'rgb(221, 221, 221)'
   })
