@@ -93,6 +93,23 @@ const nuances_2022 = {
 'RDG' : "#F3A2BD"
 }
 
+const partis_nuances =  ['NUP', 
+'ENS',
+'RN',
+'LR',
+'UDI',
+'SOC',
+'FI',
+'REC',
+'DVD',
+'DVG',
+'DVC',
+'DSV',
+'ECO',
+'DIV',
+'DSV',
+'DXV']
+
 const candidate_names_T2 = [
 'MACRON',
  'LE PEN']
@@ -306,10 +323,9 @@ function draw_affichage(){
 
 d3.selectAll('#affichage .display_element')
 
-let all_displayed_elements = _.cloneDeep(candidate_names_T2)
+let all_displayed_elements = _.cloneDeep(partis_nuances)
+all_displayed_elements.unshift('abstention');
 all_displayed_elements.unshift('candidat en tête');
-
-all_displayed_elements.push('abstention')
 
 // all_displayed_elements.push('blanc ou nul')
 // all_displayed_elements.push('progression du vote Le Pen')
@@ -321,7 +337,7 @@ elements_selection
 .enter()
 .append('div')
 .attr('class', 'display_element')
-.text(d=> _.capitalize(d).replace('Le pen', 'Le Pen').replace('Dupont-aignan', 'Dupont-Aignan'))
+.text(d=> d.replace('NUP', 'NUPES'))
 .on('click', function(event, d){
 
 selected_element = d
@@ -337,11 +353,8 @@ if(d == 'candidat en tête' || d == 'abstention' || d == 'blanc ou nul' || d == 
 
 this_background_color = 'black'
 }
-else if (d == 'MÉLENCHON (1er tour)'){
-  this_background_color = colors_candidats['MÉLENCHON']
-}
 else {
-  this_background_color = colors_candidats[d]
+  this_background_color = nuances_2022[d]
 }
 
 
