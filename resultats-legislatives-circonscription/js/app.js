@@ -418,7 +418,8 @@ return
 let this_dep_scores
 
 if (tour == 'tour2'){
-this_dep_scores = candidate_names_T2.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })
+/*this_dep_scores = candidate_names_T2.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })*/
+this_dep_scores = this_d.votes
 }
 else{
   /*this_dep_scores = candidate_names_T1.map(function(e){ return {'name': e, 'score': this_d[e+'_score']} })*/
@@ -452,7 +453,10 @@ this_loc_name = this_d['lib_region']
 
 }
 else{
-this_loc_name = `${this_d['nom_circo']}  ${this_d['num_circo']}<sup>e</sup> circonscription `
+
+console.log(this_d)
+
+this_loc_name = `${dep_code_names[this_d['code_dep']]}  ${this_d['CodCirLg']}<sup>e</sup> circonscription `
 }
 
 let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 16px;">${this_loc_name}</span>`
@@ -460,6 +464,8 @@ let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semico
 if (selected_element == 'candidat en tête'){
 
   console.log(this_dep_scores)
+
+  console.log(this_d)
 
     this_html +=  `<span class='details'>
     ${drawGraph(this_dep_scores)}</span>`
