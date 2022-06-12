@@ -207,7 +207,7 @@ var color_progressive_scale = d3.scaleLinear()
   .domain([0, 70]);
 
 
-var data_legend = [0,10,20, 30, 40, 50, 60, 70, 80];
+var data_legend = [0,10,20, 30, 40, 50];
 
 const parentWidth = d3
 .select('body')
