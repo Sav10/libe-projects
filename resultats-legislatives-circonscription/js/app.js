@@ -650,18 +650,33 @@ fillOnClick(selected_element)
 
 Promise.all([
     d3.csv('data/circos_data_T1.csv'),
-    d3.csv('data/circos_data_T2.csv')
+    d3.csv('data/circos_data_T2.csv'),
+    d3.csv('data/resultats_leg.csv')
 ]).then(function(files) {
-  ready(files[0], files[1])
+  ready(files[0], files[1], files[2])
 }).catch(function(err) {
   console.log('erreur' + ' ' + err)
 })
 
 //// Ready function (to load data)
 
-  function ready(circos_data_T1, circos_data_T2) {
+  function ready(circos_data_T1, circos_data_T2, circos_data_leg) {
 
-/*console.log(data_reg)*/
+
+
+circos_data_leg.forEach(d=>{
+  for (i in vote_variables){
+    d[vote_variables[i]] = +d[vote_variables[i]]
+  }
+})
+
+console.log(circos_data_leg)
+
+let circos_entete = circos_data_leg.map(function(d) {return {'id_circo':d.id_circo, 'entete':d.entete, 'Inscrits': d.Inscrits}})
+
+circos_entete =  _.uniqBy(circos_entete, 'id_circo')
+
+console.log(circos_entete)
 
     circos_data_T2.forEach(d =>{
 
@@ -716,6 +731,9 @@ Promise.all([
 
 
 const list_circo_id = circos_data_T1.map(d=>[d['nom_circo'] + ' (' + d.num_deptmt + ') - ' + d['Libellé de la circonscription'], d.id_circo])
+
+
+console.log(list_circo_id)
 
 const obj_circo_id = Object.fromEntries(list_circo_id);
 
