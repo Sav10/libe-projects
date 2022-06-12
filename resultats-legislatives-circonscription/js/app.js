@@ -9,7 +9,7 @@ const arr_representation_territoriale = ['region' ,'departement', 'circonscripti
 let selected_element = 'candidat en tête'
 let tour = 'tour2'
 let circos_data_unflat
-
+const location_variable = 'id_circo'
 
 var geo_objects = {
 departement : 
@@ -717,25 +717,16 @@ fillOnClick(selected_element)
 Promise.all([
     d3.csv('data/circos_data_T1.csv'),
     d3.csv('data/circos_data_T2.csv'),
-    d3.csv('data/resultats_leg.csv'),
     d3.csv('data/resultats_leg_unflat.csv')
 ]).then(function(files) {
-  ready(files[0], files[1], files[2], files[3])
+  ready(files[0], files[1], files[2])
 }).catch(function(err) {
   console.log('erreur' + ' ' + err)
 })
 
 //// Ready function (to load data)
 
-  function ready(circos_data_T1, circos_data_T2, circos_data_leg, circos_data_leg_unflat) {
-
-
-
-circos_data_leg.forEach(d=>{
-  for (i in vote_variables){
-    d[vote_variables[i]] = +d[vote_variables[i]]
-  }
-})
+  function ready(circos_data_T1, circos_data_T2, circos_data_leg_unflat) {
 
 circos_data_leg_unflat.forEach(d=>{
   for (i in vote_variables){
@@ -744,17 +735,11 @@ circos_data_leg_unflat.forEach(d=>{
   d['votes'] = eval(d['votes'])
 })
 
-console.log(circos_data_leg)
-
-console.log(circos_data_leg_unflat)
-
 circos_data_unflat = circos_data_leg_unflat
 
 let circos_entete = circos_data_leg.map(function(d) {return {'id_circo':d.id_circo, 'entete':d.entete, 'Inscrits': d.Inscrits}})
 
 circos_entete =  _.uniqBy(circos_entete, 'id_circo')
-
-console.log(circos_entete)
 
     circos_data_T2.forEach(d =>{
 
@@ -923,7 +908,7 @@ console.log(this_data)
   .style('fill', d => {
 
     if (typeof this_data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
-  return new_colors_nuances[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
+  return nuances_2022[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
     }
     return 'rgb(221, 221, 221)'
   })
@@ -1157,7 +1142,7 @@ let this_data = circos_data_unflat
   .style('stroke-width', 0)
   .style('fill', d => {
     if (typeof this_data.filter(function(e){return e[location_variable] == d.id})[0] !== 'undefined') {
-  return new_colors_nuances[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
+  return nuances_2022[this_data.filter(function(e){return e[location_variable]  == d.id})[0].entete]
     }
     return 'rgb(221, 221, 221)'
   })
@@ -1418,7 +1403,7 @@ for (i in range){
   else{
     d['score_text'] = d.score != 100 ? d.score + ' %' : ''
     d['score_bar'] = d.score
-    d['color_item'] = new_colors_nuances[d.CodNua]
+    d['color_item'] = nuances_2022[d.CodNua]
   }
   // html_chunk += `<div >${d.tete_liste}</div>
   html_chunk += `<div style="float:right;margin-right: 4px;font-weight:bold">  ${d.score_text}</div><div style="margin-top:5px">${_.capitalize(d.PrenomPsn) + ' ' + _.capitalize(d.NomPsn)}</div>
