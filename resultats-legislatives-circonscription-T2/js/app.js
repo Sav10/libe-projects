@@ -716,8 +716,6 @@ circos_data_leg_unflat_T2.forEach(d=>{
   d['votes'] = eval(d['votes'])
 })
 
-console.log(circos_data_leg_unflat_T2)
-
 
 circos_data_unflat = circos_data_leg_unflat
 
