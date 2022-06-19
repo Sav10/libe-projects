@@ -687,10 +687,10 @@ fillOnClick(selected_element)
 
 Promise.all([
     d3.csv('data/circos_data_T1.csv'),
-    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_unflat.csv'),
-    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_T2_unflat.csv')
-/*    d3.csv('data/resultats_leg_unflat.csv'),
-    d3.csv('data/resultats_leg_T2_unflat.csv')*/
+/*    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_unflat.csv'),
+    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_T2_unflat.csv')*/
+    d3.csv('data/resultats_leg_unflat.csv'),
+    d3.csv('data/resultats_leg_T2_unflat.csv')
 ]).then(function(files) {
   ready(files[0], files[1], files[2])
 }).catch(function(err) {
