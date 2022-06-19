@@ -383,8 +383,6 @@ let this_code = d.id;
 let this_d = _.find(this_data, d => d[location_variable] == this_code);
 
 
-console.log(this_d)
-
 if (!this_d){
 
 
@@ -443,10 +441,9 @@ let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semico
 
 if (selected_element == 'candidat en tête'){
 
-console.log(this_d)
-
     if (this_d.elu_T1 == "1"){
-          this_html +=  `<br><br><span class='details' style="font-weight:bold">
+          this_html +=  `<br><br>
+          ${_.capitalize(this_d.votes[0].PrenomPsn) + ' ' + _.capitalize(this_d.votes[0].NomPsn)} (${this_d.entete.replace('NUP', 'NUPES')})<br><br><span class='details' style="font-weight:bold">
     Elu au premier tour</span>`
     }
     else {
@@ -690,10 +687,10 @@ fillOnClick(selected_element)
 
 Promise.all([
     d3.csv('data/circos_data_T1.csv'),
-/*    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_unflat.csv'),
-    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_T2_unflat.csv')*/
-    d3.csv('data/resultats_leg_unflat.csv'),
-    d3.csv('data/resultats_leg_T2_unflat.csv')
+    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_unflat.csv'),
+    d3.csv('https://sav10.github.io/libe-projects/resultats-legislatives-circonscription-T2/data/resultats_leg_T2_unflat.csv')
+/*    d3.csv('data/resultats_leg_unflat.csv'),
+    d3.csv('data/resultats_leg_T2_unflat.csv')*/
 ]).then(function(files) {
   ready(files[0], files[1], files[2])
 }).catch(function(err) {
