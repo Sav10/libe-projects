@@ -443,6 +443,7 @@ let this_html = `<span style="font-weight:bold; font-family: 'libesansweb-semico
 
 if (selected_element == 'candidat en tête'){
 
+console.log(this_d)
 
     if (this_d.elu_T1 == "1"){
           this_html +=  `<br><br><span class='details' style="font-weight:bold">
