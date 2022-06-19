@@ -7,7 +7,7 @@ var circosData;
 var representation_territoriale = 'circonscription';
 const arr_representation_territoriale = ['region' ,'departement', 'circonscription']
 let selected_element = 'candidat en tête'
-let tour = 'tour2'
+let tour = 'tour1'
 let circos_data_unflat
 const location_variable = 'id_circo'
 
