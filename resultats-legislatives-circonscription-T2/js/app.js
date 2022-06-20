@@ -11,7 +11,9 @@ let tour = 'tour2'
 let circos_data_unflat
 const location_variable = 'id_circo'
 
-const nupes_partis = ['FI', 'SOC', 'COM', 'ECO', 'RDG']
+/*const nupes_partis = ['FI', 'SOC', 'COM', 'ECO', 'RDG']*/
+
+const nupes_partis = []
 
 var geo_objects = {
 departement : 
@@ -1206,11 +1208,11 @@ for (i in geo_objects){
 
 /*  let this_data = data_tours[tour].data*/
 
-let this_name = name
 
-if (nupes_partis.includes(name)){
+/*if (nupes_partis.includes(name)){
+if (this_sel.nuance_pre_nupes == 'name')
 this_name = 'NUP'
-}
+}*/
 
   let this_data = data_tours[tour]['data']
 
@@ -1226,7 +1228,7 @@ this_name = 'NUP'
 
 if (typeof this_dep_votes.filter(d=>d.CodNua == name)[0] !== 'undefined') {
 
- let this_dep_candidate_score = this_dep_votes.filter(d=>d.CodNua == this_name)[0]['score']
+ let this_dep_candidate_score = this_dep_votes.filter(d=>d.CodNua == name)[0]['score']
  return this_color_range(this_dep_candidate_score)
 
 }
@@ -1239,7 +1241,7 @@ return 'rgb(221, 221, 221)'
   .style('stroke-width', d => {
     if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
  let this_dep_winner = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].entete
- return this_dep_winner == this_name ? 1 : 0;
+ return this_dep_winner == name ? 1 : 0;
     }
     return 0
   })
