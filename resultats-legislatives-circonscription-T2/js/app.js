@@ -11,6 +11,8 @@ let tour = 'tour2'
 let circos_data_unflat
 const location_variable = 'id_circo'
 
+const nupes_partis = ['FI', 'SOC', 'COM', 'ECO', 'RDG']
+
 var geo_objects = {
 departement : 
 {'container' : 'svg-container-dep',
@@ -327,6 +329,14 @@ all_displayed_elements.unshift('candidat en tête');
 
 // all_displayed_elements.push('blanc ou nul')
 // all_displayed_elements.push('progression du vote Le Pen')
+
+
+for (i in nupes_partis){
+all_displayed_elements.push(nupes_partis[i])
+}
+
+
+
 
 const elements_selection = d3.select('div#affichage').selectAll('div.display_element')
 .data(all_displayed_elements)
@@ -1174,90 +1184,6 @@ d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d + '%')
 
 }
 
-
-else if (name == 'MÉLENCHON (1er tour)'){
-
-  name = 'MÉLENCHON'
-
-
-d3.selectAll('#representation_territoriale .actionButton')
-.style('color', 'red')
-.style('background-color', '#fff')
-.style('border-color', '#ddd')
-
-d3.select('#display_tour1')
-.style('color', '#fff')
-.style('background-color', 'red')
-.style('border-color', 'red')
-
-tour = 'tour1'
-
-
-d3.selectAll ('#morphocarte svg path')
-.style('stroke', 'black')
-.style('stroke-opacity', 1)
-
-d3.select("#legend .empty_circle")
-.style('display', 'block')
-
-let this_color = colors_candidats[name];
-
-
-let this_color_range = d3.scaleLinear()
-  .range(['white', this_color])
-  .domain([10, 50]);
-
-for (i in geo_objects){
-
-  let this_data = data_tours[tour].data
-
-
-    if (this_data){
-
-  let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
-
-  all_those_paths
-  .style('fill', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
- let this_dep_candidate_score = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0][name + '_score']
- return this_color_range(this_dep_candidate_score)
-    }
-    return 'rgb(221, 221, 221)'
-  })
-  .style('stroke-width', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
- let this_dep_winner = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner
- return this_dep_winner == name ? 1 : 0;
-    }
-    return 0
-  })
-}
-
-
-}
-
-color_progressive_scale
-.range(['white', this_color])
-.domain([-5, 35]);
-
-legend_cells.select('.swatch')
-.style('fill', function(d){ return color_progressive_scale(d)})
-
-
-d3.select('#legendots')
-.style('display', 'none')
-
-
-d3.select('#legend')
-.style('display', 'block')
-
-
-/*d3.select('#legend #intitule_legend')
-.text('Répartition du vote ' + _.capitalize(name))*/
-
-d3.selectAll('#legend .mapLegend .legendCells .cell').style('display', "block")
-d3.selectAll('#legend .mapLegend .legendCells .cell text').text(d=>d + '%')
-}
 
 
 else{
