@@ -1,0 +1,553 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'espérance de vie à la naissance aux Etats-Unis est largement inférieure à celle des autres pays riches</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"pays":"China","expectancy":"77.1","gdp":"10408","population":"1411100000"},{"pays":"India","expectancy":"69.9","gdp":"1933","population":"1380004385"},{"pays":"United States","expectancy":"77.3","gdp":"63027","population":"331501080"},{"pays":"Indonesia","expectancy":"71.9","gdp":"3870","population":"273523621"},{"pays":"Pakistan","expectancy":"67.4","gdp":"1359","population":"220892331"},{"pays":"Brazil","expectancy":"76.1","gdp":"6814","population":"212559409"},{"pays":"Nigeria","expectancy":"55.0","gdp":"2097","population":"206139587"},{"pays":"Bangladesh","expectancy":"72.9","gdp":"2270","population":"164689383"},{"pays":"Russian Federation","expectancy":"71.3","gdp":"10161","population":"144073139"},{"pays":"Mexico","expectancy":"75.1","gdp":"8431","population":"128932753"},{"pays":"Japan","expectancy":"84.6","gdp":"39918","population":"126261000"},{"pays":"Ethiopia","expectancy":"67.0","gdp":"936","population":"114963583"},{"pays":"Philippines","expectancy":"71.4","gdp":"3301","population":"109581085"},{"pays":"Egypt, Arab Rep.","expectancy":"72.2","gdp":"3569","population":"102334403"},{"pays":"Vietnam","expectancy":"75.5","gdp":"3526","population":"97338583"},{"pays":"Congo, Dem. Rep.","expectancy":"61.0","gdp":"543","population":"89561404"},{"pays":"Turkiye","expectancy":"77.9","gdp":"8536","population":"84339067"},{"pays":"Iran, Islamic Rep.","expectancy":"76.9","gdp":"2756","population":"83992953"},{"pays":"Germany","expectancy":"80.9","gdp":"46252","population":"83160871"},{"pays":"Thailand","expectancy":"77.3","gdp":"7158","population":"69799978"},{"pays":"France","expectancy":"82.2","gdp":"39037","population":"67379908"},{"pays":"United Kingdom","expectancy":"80.9","gdp":"41098","population":"67081000"},{"pays":"Tanzania","expectancy":"65.8","gdp":"1076","population":"59734213"},{"pays":"Italy","expectancy":"82.3","gdp":"31834","population":"59449527"},{"pays":"South Africa","expectancy":"64.4","gdp":"5655","population":"59308690"},{"pays":"Myanmar","expectancy":"67.4","gdp":"1450","population":"54409794"},{"pays":"Kenya","expectancy":"67.0","gdp":"1872","population":"53771300"},{"pays":"Korea, Rep.","expectancy":"83.4","gdp":"31597","population":"51836239"},{"pays":"Colombia","expectancy":"77.5","gdp":"5312","population":"50882884"},{"pays":"Spain","expectancy":"82.3","gdp":"27056","population":"47363419"},{"pays":"Uganda","expectancy":"63.7","gdp":"822","population":"45741000"},{"pays":"Argentina","expectancy":"76.8","gdp":"8585","population":"45376763"},{"pays":"Ukraine","expectancy":"71.2","gdp":"3751","population":"44132049"},{"pays":"Algeria","expectancy":"77.1","gdp":"3306","population":"43851043"},{"pays":"Sudan","expectancy":"65.5","gdp":"615","population":"43849269"},{"pays":"Iraq","expectancy":"70.7","gdp":"4583","population":"40222503"},{"pays":"Afghanistan","expectancy":"65.2","gdp":"516","population":"38928341"},{"pays":"Canada","expectancy":"81.7","gdp":"43258","population":"38037204"},{"pays":"Poland","expectancy":"76.6","gdp":"15742","population":"37899070"},{"pays":"Morocco","expectancy":"76.9","gdp":"3058","population":"36910558"},{"pays":"Saudi Arabia","expectancy":"75.3","gdp":"20203","population":"34813867"},{"pays":"Uzbekistan","expectancy":"71.8","gdp":"1749","population":"34232050"},{"pays":"Peru","expectancy":"76.9","gdp":"6117","population":"32971846"},{"pays":"Angola","expectancy":"61.5","gdp":"1631","population":"32866268"},{"pays":"Malaysia","expectancy":"76.3","gdp":"10412","population":"32365998"},{"pays":"Mozambique","expectancy":"61.4","gdp":"448","population":"31255435"},{"pays":"Ghana","expectancy":"64.3","gdp":"2254","population":"31072945"},{"pays":"Yemen, Rep.","expectancy":"66.2","gdp":"631","population":"29825968"},{"pays":"Nepal","expectancy":"71.1","gdp":"1147","population":"29136808"},{"pays":"Madagascar","expectancy":"67.4","gdp":"477","population":"27691019"},{"pays":"Cameroon","expectancy":"59.6","gdp":"1537","population":"26545864"},{"pays":"Cote d'Ivoire","expectancy":"58.1","gdp":"2325","population":"26378275"},{"pays":"Australia","expectancy":"83.2","gdp":"51680","population":"25693267"},{"pays":"Niger","expectancy":"62.8","gdp":"567","population":"24206636"},{"pays":"Sri Lanka","expectancy":"77.1","gdp":"3694","population":"21919000"},{"pays":"Burkina Faso","expectancy":"62.0","gdp":"857","population":"20903278"},{"pays":"Mali","expectancy":"59.7","gdp":"862","population":"20250834"},{"pays":"Romania","expectancy":"74.4","gdp":"12956","population":"19257520"},{"pays":"Malawi","expectancy":"64.7","gdp":"636","population":"19129955"},{"pays":"Chile","expectancy":"80.3","gdp":"13220","population":"19116209"},{"pays":"Kazakhstan","expectancy":"71.4","gdp":"9121","population":"18755666"},{"pays":"Zambia","expectancy":"64.2","gdp":"985","population":"18383956"},{"pays":"Ecuador","expectancy":"77.2","gdp":"5627","population":"17643060"},{"pays":"Netherlands","expectancy":"81.4","gdp":"52396","population":"17441500"},{"pays":"Guatemala","expectancy":"74.5","gdp":"4603","population":"16858333"},{"pays":"Senegal","expectancy":"68.2","gdp":"1462","population":"16743930"},{"pays":"Cambodia","expectancy":"70.1","gdp":"1547","population":"16718971"},{"pays":"Chad","expectancy":"54.5","gdp":"652","population":"16425859"},{"pays":"Somalia","expectancy":"57.7","gdp":"438","population":"15893219"},{"pays":"Zimbabwe","expectancy":"61.7","gdp":"1214","population":"14862927"},{"pays":"Guinea","expectancy":"62.0","gdp":"1078","population":"13132792"},{"pays":"Rwanda","expectancy":"69.3","gdp":"786","population":"12952209"},{"pays":"Benin","expectancy":"62.1","gdp":"1291","population":"12123198"},{"pays":"Burundi","expectancy":"61.9","gdp":"233","population":"11890781"},{"pays":"Tunisia","expectancy":"76.9","gdp":"3597","population":"11818618"},{"pays":"Bolivia","expectancy":"71.8","gdp":"3137","population":"11673029"},{"pays":"Belgium","expectancy":"80.8","gdp":"45189","population":"11544241"},{"pays":"Haiti","expectancy":"64.3","gdp":"1272","population":"11402533"},{"pays":"Cuba","expectancy":"78.9","gdp":"9477","population":"11326616"},{"pays":"Dominican Republic","expectancy":"74.3","gdp":"7268","population":"10847904"},{"pays":"Greece","expectancy":"81.1","gdp":"17647","population":"10700556"},{"pays":"Czech Republic","expectancy":"78.2","gdp":"22933","population":"10697858"},{"pays":"Sweden","expectancy":"82.4","gdp":"52300","population":"10353442"},{"pays":"Portugal","expectancy":"81.0","gdp":"22194","population":"10297081"},{"pays":"Jordan","expectancy":"74.7","gdp":"4282","population":"10203140"},{"pays":"Azerbaijan","expectancy":"73.1","gdp":"4229","population":"10093121"},{"pays":"Honduras","expectancy":"75.4","gdp":"2405","population":"9904608"},{"pays":"United Arab Emirates","expectancy":"78.1","gdp":"36284","population":"9890400"},{"pays":"Hungary","expectancy":"75.6","gdp":"16075","population":"9750149"},{"pays":"Tajikistan","expectancy":"71.3","gdp":"852","population":"9537642"},{"pays":"Belarus","expectancy":"74.2","gdp":"6555","population":"9379952"},{"pays":"Israel","expectancy":"82.7","gdp":"44177","population":"9215100"},{"pays":"Papua New Guinea","expectancy":"64.7","gdp":"2757","population":"8947027"},{"pays":"Austria","expectancy":"81.2","gdp":"48588","population":"8916864"},{"pays":"Switzerland","expectancy":"83.1","gdp":"87100","population":"8636561"},{"pays":"Togo","expectancy":"61.3","gdp":"914","population":"8278737"},{"pays":"Sierra Leone","expectancy":"55.1","gdp":"509","population":"7976985"},{"pays":"Hong Kong SAR, China","expectancy":"85.4","gdp":"46100","population":"7481000"},{"pays":"Lao PDR","expectancy":"68.2","gdp":"2608","population":"7275556"},{"pays":"Paraguay","expectancy":"74.4","gdp":"4967","population":"7132530"},{"pays":"Bulgaria","expectancy":"73.6","gdp":"10079","population":"6934015"},{"pays":"Serbia","expectancy":"74.2","gdp":"7730","population":"6899126"},{"pays":"Libya","expectancy":"73.1","gdp":"7614","population":"6871287"},{"pays":"Lebanon","expectancy":"79.0","gdp":"3801","population":"6825442"},{"pays":"Nicaragua","expectancy":"74.7","gdp":"1900","population":"6624554"},{"pays":"Kyrgyz Republic","expectancy":"71.8","gdp":"1182","population":"6579900"},{"pays":"El Salvador","expectancy":"73.5","gdp":"3798","population":"6486201"},{"pays":"Denmark","expectancy":"81.6","gdp":"61063","population":"5831404"},{"pays":"Singapore","expectancy":"83.7","gdp":"60729","population":"5685807"},{"pays":"Finland","expectancy":"82.1","gdp":"49160","population":"5529543"},{"pays":"Congo, Rep.","expectancy":"64.8","gdp":"1899","population":"5518092"},{"pays":"Slovak Republic","expectancy":"76.9","gdp":"19266","population":"5458827"},{"pays":"Norway","expectancy":"83.2","gdp":"67329","population":"5379475"},{"pays":"Oman","expectancy":"78.1","gdp":"14485","population":"5106622"},{"pays":"Costa Rica","expectancy":"80.5","gdp":"12201","population":"5094114"},{"pays":"New Zealand","expectancy":"82.1","gdp":"41596","population":"5090200"},{"pays":"Liberia","expectancy":"64.4","gdp":"601","population":"5057677"},{"pays":"Ireland","expectancy":"82.2","gdp":"85422","population":"4985674"},{"pays":"Central African Republic","expectancy":"53.7","gdp":"481","population":"4829764"},{"pays":"West Bank and Gaza","expectancy":"74.2","gdp":"3233","population":"4803269"},{"pays":"Mauritania","expectancy":"65.1","gdp":"1702","population":"4649660"},{"pays":"Panama","expectancy":"78.7","gdp":"12509","population":"4314768"},{"pays":"Kuwait","expectancy":"75.6","gdp":"24811","population":"4270563"},{"pays":"Croatia","expectancy":"77.7","gdp":"14132","population":"4047680"},{"pays":"Georgia","expectancy":"73.9","gdp":"4255","population":"3722716"},{"pays":"Uruguay","expectancy":"78.1","gdp":"15418","population":"3473727"},{"pays":"Puerto Rico","expectancy":"80.1","gdp":"31429","population":"3281538"},{"pays":"Bosnia and Herzegovina","expectancy":"77.5","gdp":"6082","population":"3280815"},{"pays":"Mongolia","expectancy":"70.1","gdp":"4060","population":"3278292"},{"pays":"Armenia","expectancy":"75.2","gdp":"4266","population":"2963234"},{"pays":"Jamaica","expectancy":"74.6","gdp":"4664","population":"2961161"},{"pays":"Qatar","expectancy":"80.4","gdp":"50124","population":"2881060"},{"pays":"Albania","expectancy":"78.7","gdp":"5332","population":"2837849"},{"pays":"Lithuania","expectancy":"74.9","gdp":"20232","population":"2794885"},{"pays":"Moldova","expectancy":"72.0","gdp":"4525","population":"2620495"},{"pays":"Namibia","expectancy":"64.0","gdp":"4157","population":"2540916"},{"pays":"Gambia, The","expectancy":"62.4","gdp":"757","population":"2416664"},{"pays":"Botswana","expectancy":"69.8","gdp":"6348","population":"2351625"},{"pays":"Gabon","expectancy":"66.7","gdp":"6881","population":"2225728"},{"pays":"Lesotho","expectancy":"54.8","gdp":"1050","population":"2142252"},{"pays":"Slovenia","expectancy":"80.5","gdp":"25489","population":"2102419"},{"pays":"North Macedonia","expectancy":"75.7","gdp":"5846","population":"2072531"},{"pays":"Guinea-Bissau","expectancy":"58.6","gdp":"727","population":"1967998"},{"pays":"Latvia","expectancy":"75.4","gdp":"17703","population":"1900449"},{"pays":"Kosovo","expectancy":"71.1","gdp":"4310","population":"1790133"},{"pays":"Bahrain","expectancy":"77.4","gdp":"20406","population":"1701583"},{"pays":"Equatorial Guinea","expectancy":"59.1","gdp":"7198","population":"1402985"},{"pays":"Trinidad and Tobago","expectancy":"73.6","gdp":"15285","population":"1399491"},{"pays":"Estonia","expectancy":"78.3","gdp":"23054","population":"1329479"},{"pays":"Timor-Leste","expectancy":"69.7","gdp":"1442","population":"1318442"},{"pays":"Mauritius","expectancy":"74.2","gdp":"8632","population":"1265740"},{"pays":"Cyprus","expectancy":"81.1","gdp":"27681","population":"1207361"},{"pays":"Eswatini","expectancy":"60.7","gdp":"3434","population":"1160164"},{"pays":"Djibouti","expectancy":"67.5","gdp":"3219","population":"988002"},{"pays":"Fiji","expectancy":"67.6","gdp":"5102","population":"896444"},{"pays":"Comoros","expectancy":"64.5","gdp":"1407","population":"869595"},{"pays":"Guyana","expectancy":"70.0","gdp":"6955","population":"786559"},{"pays":"Bhutan","expectancy":"72.1","gdp":"3000","population":"771612"},{"pays":"Solomon Islands","expectancy":"73.1","gdp":"2250","population":"686878"},{"pays":"Macao SAR, China","expectancy":"84.4","gdp":"39403","population":"649342"},{"pays":"Luxembourg","expectancy":"81.7","gdp":"116356","population":"630419"},{"pays":"Montenegro","expectancy":"75.9","gdp":"7694","population":"621306"},{"pays":"Suriname","expectancy":"71.8","gdp":"4916","population":"586634"},{"pays":"Cabo Verde","expectancy":"73.2","gdp":"3064","population":"555988"},{"pays":"Maldives","expectancy":"79.2","gdp":"6924","population":"540542"},{"pays":"Malta","expectancy":"82.7","gdp":"28946","population":"515332"},{"pays":"Brunei Darussalam","expectancy":"76.0","gdp":"27442","population":"437483"},{"pays":"Belize","expectancy":"74.8","gdp":"3987","population":"397621"},{"pays":"Bahamas, The","expectancy":"74.1","gdp":"24665","population":"393248"},{"pays":"Iceland","expectancy":"83.1","gdp":"59264","population":"366463"},{"pays":"Vanuatu","expectancy":"70.6","gdp":"2919","population":"307150"},{"pays":"Barbados","expectancy":"79.3","gdp":"16318","population":"287371"},{"pays":"New Caledonia","expectancy":"77.8","gdp":"34694","population":"271960"},{"pays":"Sao Tome and Principe","expectancy":"70.6","gdp":"2157","population":"219161"},{"pays":"Samoa","expectancy":"73.4","gdp":"4068","population":"198410"},{"pays":"St. Lucia","expectancy":"76.3","gdp":"8804","population":"183629"},{"pays":"Guam","expectancy":"80.3","gdp":"34624","population":"168783"},{"pays":"Kiribati","expectancy":"68.6","gdp":"1514","population":"119446"},{"pays":"Micronesia, Fed. Sts.","expectancy":"68.0","gdp":"3542","population":"115021"},{"pays":"Grenada","expectancy":"72.4","gdp":"9273","population":"112519"},{"pays":"St. Vincent and the Grenadines","expectancy":"72.7","gdp":"7860","population":"110947"},{"pays":"Aruba","expectancy":"76.4","gdp":"23384","population":"106766"},{"pays":"Virgin Islands (U.S.)","expectancy":"79.8","gdp":"39552","population":"106290"},{"pays":"Tonga","expectancy":"71.0","gdp":"4624","population":"105697"},{"pays":"Seychelles","expectancy":"77.2","gdp":"12193","population":"98462"},{"pays":"Antigua and Barbuda","expectancy":"77.1","gdp":"13992","population":"97928"},{"pays":"Bermuda","expectancy":"82.1","gdp":"107706","population":"63893"},{"pays":"Greenland","expectancy":"71.4","gdp":"54570","population":"56367"},{"pays":"Faroe Islands","expectancy":"83.1","gdp":"66320","population":"48865"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":116356,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":85.4,"manual_left_value":50,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"value":false,"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":10,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.7,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('circle').style('fill', 'grey');\nd3.selectAll('circle').filter(d=>d.pays == 'France').style('fill', 'red');\nd3.selectAll('circle').filter(d=>d.pays == 'China').style('fill', 'red');\nd3.selectAll('circle').filter(d=>d.pays == 'United States').style('fill', 'red');"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"gdp","value":"gdp"},{"label":"expectancy","value":"expectancy"},{"label":"population","value":"population"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":false,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["gdp"],"selected_yRows":["expectancy"],"selected_size":["population"],"selected_color":[],"selected_label":[],"selected_tooltip":["pays"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"circleChart","annotations":[],"chartSource":"Banque mondiale","chartSubTitle":"Espérance de vie à la naissance et PIB par habitant","chartTitle":"L'espérance de vie à la naissance aux Etats-Unis est largement inférieure à celle des autres pays riches"};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
