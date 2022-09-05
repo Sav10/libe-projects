@@ -1,0 +1,553 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Effet canicule : plus il fait chaud, plus la mortalité est élevée en été</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"date":"2019-07-01","temperature":"23.14","datetime":"2019-07-01","morts_jour":"1696.0","3_days":"25.03","morts_france":"","year":"2019"},{"date":"2019-07-02","temperature":"22.22","datetime":"2019-07-02","morts_jour":"1653.0","3_days":"23.473333333333333","morts_france":"","year":"2019"},{"date":"2019-07-03","temperature":"23.21","datetime":"2019-07-03","morts_jour":"1526.0","3_days":"22.856666666666666","morts_france":"","year":"2019"},{"date":"2019-07-04","temperature":"23.79","datetime":"2019-07-04","morts_jour":"1537.0","3_days":"23.073333333333334","morts_france":"","year":"2019"},{"date":"2019-07-05","temperature":"24.67","datetime":"2019-07-05","morts_jour":"1538.0","3_days":"23.89","morts_france":"","year":"2019"},{"date":"2019-07-06","temperature":"24.8","datetime":"2019-07-06","morts_jour":"1570.0","3_days":"24.42","morts_france":"","year":"2019"},{"date":"2019-07-07","temperature":"23.53","datetime":"2019-07-07","morts_jour":"1643.0","3_days":"24.333333333333332","morts_france":"","year":"2019"},{"date":"2019-07-08","temperature":"22.56","datetime":"2019-07-08","morts_jour":"1536.0","3_days":"23.63","morts_france":"","year":"2019"},{"date":"2019-07-09","temperature":"20.99","datetime":"2019-07-09","morts_jour":"1447.0","3_days":"22.36","morts_france":"","year":"2019"},{"date":"2019-07-10","temperature":"21.78","datetime":"2019-07-10","morts_jour":"1514.0","3_days":"21.776666666666667","morts_france":"","year":"2019"},{"date":"2019-07-11","temperature":"22.65","datetime":"2019-07-11","morts_jour":"1451.0","3_days":"21.80666666666667","morts_france":"","year":"2019"},{"date":"2019-07-12","temperature":"22.79","datetime":"2019-07-12","morts_jour":"1616.0","3_days":"22.406666666666666","morts_france":"","year":"2019"},{"date":"2019-07-13","temperature":"21.91","datetime":"2019-07-13","morts_jour":"1570.0","3_days":"22.45","morts_france":"","year":"2019"},{"date":"2019-07-14","temperature":"21.32","datetime":"2019-07-14","morts_jour":"1529.0","3_days":"22.006666666666664","morts_france":"","year":"2019"},{"date":"2019-07-15","temperature":"20.49","datetime":"2019-07-15","morts_jour":"1434.0","3_days":"21.24","morts_france":"","year":"2019"},{"date":"2019-07-16","temperature":"21.1","datetime":"2019-07-16","morts_jour":"1412.0","3_days":"20.97","morts_france":"","year":"2019"},{"date":"2019-07-17","temperature":"21.72","datetime":"2019-07-17","morts_jour":"1474.0","3_days":"21.103333333333335","morts_france":"","year":"2019"},{"date":"2019-07-18","temperature":"21.65","datetime":"2019-07-18","morts_jour":"1535.0","3_days":"21.49","morts_france":"","year":"2019"},{"date":"2019-07-19","temperature":"22.68","datetime":"2019-07-19","morts_jour":"1550.0","3_days":"22.016666666666666","morts_france":"","year":"2019"},{"date":"2019-07-20","temperature":"23.29","datetime":"2019-07-20","morts_jour":"1574.0","3_days":"22.539999999999996","morts_france":"","year":"2019"},{"date":"2019-07-21","temperature":"23.71","datetime":"2019-07-21","morts_jour":"1615.0","3_days":"23.22666666666667","morts_france":"","year":"2019"},{"date":"2019-07-22","temperature":"25.28","datetime":"2019-07-22","morts_jour":"1450.0","3_days":"24.093333333333334","morts_france":"","year":"2019"},{"date":"2019-07-23","temperature":"28.14","datetime":"2019-07-23","morts_jour":"1566.0","3_days":"25.710000000000004","morts_france":"","year":"2019"},{"date":"2019-07-24","temperature":"28.72","datetime":"2019-07-24","morts_jour":"1618.0","3_days":"27.38","morts_france":"","year":"2019"},{"date":"2019-07-25","temperature":"29.4","datetime":"2019-07-25","morts_jour":"1702.0","3_days":"28.75333333333333","morts_france":"","year":"2019"},{"date":"2019-07-26","temperature":"24.91","datetime":"2019-07-26","morts_jour":"1861.0","3_days":"27.676666666666666","morts_france":"","year":"2019"},{"date":"2019-07-27","temperature":"20.83","datetime":"2019-07-27","morts_jour":"1868.0","3_days":"25.046666666666663","morts_france":"","year":"2019"},{"date":"2019-07-28","temperature":"20.04","datetime":"2019-07-28","morts_jour":"1544.0","3_days":"21.926666666666666","morts_france":"","year":"2019"},{"date":"2019-07-29","temperature":"20.84","datetime":"2019-07-29","morts_jour":"1475.0","3_days":"20.569999999999997","morts_france":"","year":"2019"},{"date":"2019-07-30","temperature":"21.12","datetime":"2019-07-30","morts_jour":"1452.0","3_days":"20.666666666666668","morts_france":"","year":"2019"},{"date":"2019-07-31","temperature":"20.26","datetime":"2019-07-31","morts_jour":"1467.0","3_days":"20.74","morts_france":"","year":"2019"},{"date":"2019-08-01","temperature":"20.39","datetime":"2019-08-01","morts_jour":"1415.0","3_days":"20.59","morts_france":"","year":"2019"},{"date":"2019-08-02","temperature":"22.18","datetime":"2019-08-02","morts_jour":"1502.0","3_days":"20.94333333333333","morts_france":"","year":"2019"},{"date":"2019-08-03","temperature":"22.52","datetime":"2019-08-03","morts_jour":"1533.0","3_days":"21.69666666666667","morts_france":"","year":"2019"},{"date":"2019-08-04","temperature":"23.19","datetime":"2019-08-04","morts_jour":"1509.0","3_days":"22.63","morts_france":"","year":"2019"},{"date":"2019-08-05","temperature":"23.26","datetime":"2019-08-05","morts_jour":"1494.0","3_days":"22.99","morts_france":"","year":"2019"},{"date":"2019-08-06","temperature":"22.88","datetime":"2019-08-06","morts_jour":"1493.0","3_days":"23.11","morts_france":"","year":"2019"},{"date":"2019-08-07","temperature":"22.43","datetime":"2019-08-07","morts_jour":"1563.0","3_days":"22.85666666666667","morts_france":"","year":"2019"},{"date":"2019-08-08","temperature":"23.89","datetime":"2019-08-08","morts_jour":"1517.0","3_days":"23.066666666666666","morts_france":"","year":"2019"},{"date":"2019-08-09","temperature":"25.15","datetime":"2019-08-09","morts_jour":"1509.0","3_days":"23.823333333333334","morts_france":"","year":"2019"},{"date":"2019-08-10","temperature":"23.11","datetime":"2019-08-10","morts_jour":"1631.0","3_days":"24.049999999999997","morts_france":"","year":"2019"},{"date":"2019-08-11","temperature":"20.13","datetime":"2019-08-11","morts_jour":"1474.0","3_days":"22.796666666666663","morts_france":"","year":"2019"},{"date":"2019-08-12","temperature":"19.09","datetime":"2019-08-12","morts_jour":"1411.0","3_days":"20.776666666666667","morts_france":"","year":"2019"},{"date":"2019-08-13","temperature":"17.98","datetime":"2019-08-13","morts_jour":"1442.0","3_days":"19.066666666666666","morts_france":"","year":"2019"},{"date":"2019-08-14","temperature":"19.06","datetime":"2019-08-14","morts_jour":"1427.0","3_days":"18.709999999999997","morts_france":"","year":"2019"},{"date":"2019-08-15","temperature":"20.61","datetime":"2019-08-15","morts_jour":"1457.0","3_days":"19.216666666666665","morts_france":"","year":"2019"},{"date":"2019-08-16","temperature":"19.77","datetime":"2019-08-16","morts_jour":"1456.0","3_days":"19.813333333333333","morts_france":"","year":"2019"},{"date":"2019-08-17","temperature":"20.95","datetime":"2019-08-17","morts_jour":"1487.0","3_days":"20.44333333333333","morts_france":"","year":"2019"},{"date":"2019-08-18","temperature":"22.12","datetime":"2019-08-18","morts_jour":"1512.0","3_days":"20.946666666666665","morts_france":"","year":"2019"},{"date":"2019-08-19","temperature":"19.7","datetime":"2019-08-19","morts_jour":"1461.0","3_days":"20.923333333333332","morts_france":"","year":"2019"},{"date":"2019-08-20","temperature":"18.37","datetime":"2019-08-20","morts_jour":"1462.0","3_days":"20.063333333333333","morts_france":"","year":"2019"},{"date":"2019-08-21","temperature":"19.0","datetime":"2019-08-21","morts_jour":"1502.0","3_days":"19.023333333333333","morts_france":"","year":"2019"},{"date":"2019-08-22","temperature":"20.21","datetime":"2019-08-22","morts_jour":"1524.0","3_days":"19.193333333333335","morts_france":"","year":"2019"},{"date":"2019-08-23","temperature":"21.65","datetime":"2019-08-23","morts_jour":"1407.0","3_days":"20.286666666666665","morts_france":"","year":"2019"},{"date":"2019-08-24","temperature":"23.22","datetime":"2019-08-24","morts_jour":"1588.0","3_days":"21.69333333333333","morts_france":"","year":"2019"},{"date":"2019-08-25","temperature":"23.57","datetime":"2019-08-25","morts_jour":"1570.0","3_days":"22.813333333333333","morts_france":"","year":"2019"},{"date":"2019-08-26","temperature":"23.97","datetime":"2019-08-26","morts_jour":"1566.0","3_days":"23.586666666666662","morts_france":"","year":"2019"},{"date":"2019-08-27","temperature":"23.97","datetime":"2019-08-27","morts_jour":"1582.0","3_days":"23.836666666666662","morts_france":"","year":"2019"},{"date":"2019-08-28","temperature":"23.43","datetime":"2019-08-28","morts_jour":"1653.0","3_days":"23.790000000000003","morts_france":"","year":"2019"},{"date":"2019-08-29","temperature":"22.5","datetime":"2019-08-29","morts_jour":"1641.0","3_days":"23.3","morts_france":"","year":"2019"},{"date":"2019-08-30","temperature":"23.23","datetime":"2019-08-30","morts_jour":"1587.0","3_days":"23.05333333333333","morts_france":"","year":"2019"},{"date":"2019-08-31","temperature":"23.31","datetime":"2019-08-31","morts_jour":"1632.0","3_days":"23.013333333333332","morts_france":"","year":"2019"},{"date":"2019-09-01","temperature":"20.16","datetime":"2019-09-01","morts_jour":"1475.0","3_days":"22.233333333333334","morts_france":"","year":"2019"},{"date":"2020-07-01","temperature":"21.32","datetime":"2020-07-01","morts_jour":"1503.0","3_days":"20.486666666666668","morts_france":"","year":"2020"},{"date":"2020-07-02","temperature":"20.43","datetime":"2020-07-02","morts_jour":"1506.0","3_days":"20.580000000000002","morts_france":"","year":"2020"},{"date":"2020-07-03","temperature":"18.67","datetime":"2020-07-03","morts_jour":"1427.0","3_days":"20.14","morts_france":"","year":"2020"},{"date":"2020-07-04","temperature":"19.18","datetime":"2020-07-04","morts_jour":"1408.0","3_days":"19.426666666666666","morts_france":"","year":"2020"},{"date":"2020-07-05","temperature":"22.7","datetime":"2020-07-05","morts_jour":"1544.0","3_days":"20.183333333333334","morts_france":"","year":"2020"},{"date":"2020-07-06","temperature":"20.03","datetime":"2020-07-06","morts_jour":"1491.0","3_days":"20.636666666666667","morts_france":"","year":"2020"},{"date":"2020-07-07","temperature":"18.69","datetime":"2020-07-07","morts_jour":"1503.0","3_days":"20.473333333333333","morts_france":"","year":"2020"},{"date":"2020-07-08","temperature":"20.58","datetime":"2020-07-08","morts_jour":"1463.0","3_days":"19.766666666666666","morts_france":"","year":"2020"},{"date":"2020-07-09","temperature":"22.93","datetime":"2020-07-09","morts_jour":"1608.0","3_days":"20.73333333333333","morts_france":"","year":"2020"},{"date":"2020-07-10","temperature":"21.83","datetime":"2020-07-10","morts_jour":"1635.0","3_days":"21.78","morts_france":"","year":"2020"},{"date":"2020-07-11","temperature":"19.87","datetime":"2020-07-11","morts_jour":"1436.0","3_days":"21.543333333333333","morts_france":"","year":"2020"},{"date":"2020-07-12","temperature":"20.17","datetime":"2020-07-12","morts_jour":"1456.0","3_days":"20.623333333333335","morts_france":"","year":"2020"},{"date":"2020-07-13","temperature":"21.27","datetime":"2020-07-13","morts_jour":"1487.0","3_days":"20.436666666666667","morts_france":"","year":"2020"},{"date":"2020-07-14","temperature":"20.6","datetime":"2020-07-14","morts_jour":"1512.0","3_days":"20.68","morts_france":"","year":"2020"},{"date":"2020-07-15","temperature":"19.48","datetime":"2020-07-15","morts_jour":"1494.0","3_days":"20.450000000000003","morts_france":"","year":"2020"},{"date":"2020-07-16","temperature":"19.01","datetime":"2020-07-16","morts_jour":"1469.0","3_days":"19.69666666666667","morts_france":"","year":"2020"},{"date":"2020-07-17","temperature":"20.83","datetime":"2020-07-17","morts_jour":"1524.0","3_days":"19.773333333333333","morts_france":"","year":"2020"},{"date":"2020-07-18","temperature":"21.65","datetime":"2020-07-18","morts_jour":"1449.0","3_days":"20.496666666666666","morts_france":"","year":"2020"},{"date":"2020-07-19","temperature":"22.25","datetime":"2020-07-19","morts_jour":"1461.0","3_days":"21.576666666666664","morts_france":"","year":"2020"},{"date":"2020-07-20","temperature":"22.74","datetime":"2020-07-20","morts_jour":"1573.0","3_days":"22.213333333333335","morts_france":"","year":"2020"},{"date":"2020-07-21","temperature":"22.89","datetime":"2020-07-21","morts_jour":"1517.0","3_days":"22.626666666666665","morts_france":"","year":"2020"},{"date":"2020-07-22","temperature":"22.86","datetime":"2020-07-22","morts_jour":"1505.0","3_days":"22.83","morts_france":"","year":"2020"},{"date":"2020-07-23","temperature":"22.58","datetime":"2020-07-23","morts_jour":"1555.0","3_days":"22.776666666666667","morts_france":"","year":"2020"},{"date":"2020-07-24","temperature":"22.4","datetime":"2020-07-24","morts_jour":"1582.0","3_days":"22.613333333333333","morts_france":"","year":"2020"},{"date":"2020-07-25","temperature":"21.74","datetime":"2020-07-25","morts_jour":"1592.0","3_days":"22.24","morts_france":"","year":"2020"},{"date":"2020-07-26","temperature":"22.54","datetime":"2020-07-26","morts_jour":"1503.0","3_days":"22.22666666666667","morts_france":"","year":"2020"},{"date":"2020-07-27","temperature":"23.57","datetime":"2020-07-27","morts_jour":"1560.0","3_days":"22.616666666666664","morts_france":"","year":"2020"},{"date":"2020-07-28","temperature":"23.08","datetime":"2020-07-28","morts_jour":"1575.0","3_days":"23.063333333333333","morts_france":"","year":"2020"},{"date":"2020-07-29","temperature":"22.24","datetime":"2020-07-29","morts_jour":"1535.0","3_days":"22.963333333333335","morts_france":"","year":"2020"},{"date":"2020-07-30","temperature":"25.17","datetime":"2020-07-30","morts_jour":"1612.0","3_days":"23.496666666666666","morts_france":"","year":"2020"},{"date":"2020-07-31","temperature":"27.46","datetime":"2020-07-31","morts_jour":"1749.0","3_days":"24.956666666666667","morts_france":"","year":"2020"},{"date":"2020-08-01","temperature":"24.99","datetime":"2020-08-01","morts_jour":"1612.0","3_days":"25.873333333333335","morts_france":"","year":"2020"},{"date":"2020-08-02","temperature":"22.18","datetime":"2020-08-02","morts_jour":"1513.0","3_days":"24.876666666666665","morts_france":"","year":"2020"},{"date":"2020-08-03","temperature":"20.33","datetime":"2020-08-03","morts_jour":"1480.0","3_days":"22.5","morts_france":"","year":"2020"},{"date":"2020-08-04","temperature":"19.27","datetime":"2020-08-04","morts_jour":"1488.0","3_days":"20.593333333333334","morts_france":"","year":"2020"},{"date":"2020-08-05","temperature":"21.19","datetime":"2020-08-05","morts_jour":"1481.0","3_days":"20.263333333333332","morts_france":"","year":"2020"},{"date":"2020-08-06","temperature":"23.74","datetime":"2020-08-06","morts_jour":"1613.0","3_days":"21.400000000000002","morts_france":"","year":"2020"},{"date":"2020-08-07","temperature":"26.2","datetime":"2020-08-07","morts_jour":"1622.0","3_days":"23.709999999999997","morts_france":"","year":"2020"},{"date":"2020-08-08","temperature":"26.95","datetime":"2020-08-08","morts_jour":"1649.0","3_days":"25.63","morts_france":"","year":"2020"},{"date":"2020-08-09","temperature":"27.23","datetime":"2020-08-09","morts_jour":"1682.0","3_days":"26.793333333333333","morts_france":"","year":"2020"},{"date":"2020-08-10","temperature":"26.62","datetime":"2020-08-10","morts_jour":"1836.0","3_days":"26.933333333333334","morts_france":"","year":"2020"},{"date":"2020-08-11","temperature":"26.93","datetime":"2020-08-11","morts_jour":"1827.0","3_days":"26.926666666666666","morts_france":"","year":"2020"},{"date":"2020-08-12","temperature":"26.26","datetime":"2020-08-12","morts_jour":"1840.0","3_days":"26.603333333333335","morts_france":"","year":"2020"},{"date":"2020-08-13","temperature":"23.42","datetime":"2020-08-13","morts_jour":"1789.0","3_days":"25.536666666666665","morts_france":"","year":"2020"},{"date":"2020-08-14","temperature":"23.18","datetime":"2020-08-14","morts_jour":"1602.0","3_days":"24.286666666666672","morts_france":"","year":"2020"},{"date":"2020-08-15","temperature":"23.06","datetime":"2020-08-15","morts_jour":"1617.0","3_days":"23.22","morts_france":"","year":"2020"},{"date":"2020-08-16","temperature":"22.37","datetime":"2020-08-16","morts_jour":"1579.0","3_days":"22.87","morts_france":"","year":"2020"},{"date":"2020-08-17","temperature":"21.47","datetime":"2020-08-17","morts_jour":"1491.0","3_days":"22.3","morts_france":"","year":"2020"},{"date":"2020-08-18","temperature":"22.3","datetime":"2020-08-18","morts_jour":"1600.0","3_days":"22.046666666666667","morts_france":"","year":"2020"},{"date":"2020-08-19","temperature":"23.01","datetime":"2020-08-19","morts_jour":"1540.0","3_days":"22.26","morts_france":"","year":"2020"},{"date":"2020-08-20","temperature":"25.83","datetime":"2020-08-20","morts_jour":"1580.0","3_days":"23.713333333333335","morts_france":"","year":"2020"},{"date":"2020-08-21","temperature":"25.17","datetime":"2020-08-21","morts_jour":"1565.0","3_days":"24.67","morts_france":"","year":"2020"},{"date":"2020-08-22","temperature":"22.45","datetime":"2020-08-22","morts_jour":"1524.0","3_days":"24.483333333333334","morts_france":"","year":"2020"},{"date":"2020-08-23","temperature":"20.95","datetime":"2020-08-23","morts_jour":"1482.0","3_days":"22.856666666666666","morts_france":"","year":"2020"},{"date":"2020-08-24","temperature":"19.95","datetime":"2020-08-24","morts_jour":"1589.0","3_days":"21.116666666666664","morts_france":"","year":"2020"},{"date":"2020-08-25","temperature":"21.79","datetime":"2020-08-25","morts_jour":"1511.0","3_days":"20.896666666666665","morts_france":"","year":"2020"},{"date":"2020-08-26","temperature":"22.12","datetime":"2020-08-26","morts_jour":"1611.0","3_days":"21.286666666666665","morts_france":"","year":"2020"},{"date":"2020-08-27","temperature":"21.08","datetime":"2020-08-27","morts_jour":"1570.0","3_days":"21.66333333333333","morts_france":"","year":"2020"},{"date":"2020-08-28","temperature":"19.48","datetime":"2020-08-28","morts_jour":"1616.0","3_days":"20.893333333333334","morts_france":"","year":"2020"},{"date":"2020-08-29","temperature":"17.12","datetime":"2020-08-29","morts_jour":"1497.0","3_days":"19.226666666666667","morts_france":"","year":"2020"},{"date":"2020-08-30","temperature":"16.77","datetime":"2020-08-30","morts_jour":"1416.0","3_days":"17.790000000000003","morts_france":"","year":"2020"},{"date":"2020-08-31","temperature":"17.22","datetime":"2020-08-31","morts_jour":"1516.0","3_days":"17.036666666666665","morts_france":"","year":"2020"},{"date":"2022-07-01","temperature":"17.71","datetime":"2022-07-01","morts_jour":"1552.0","3_days":"18.77","morts_france":"337892.0","year":"2022"},{"date":"2022-07-02","temperature":"19.92","datetime":"2022-07-02","morts_jour":"1516.0","3_days":"18.67","morts_france":"339408.0","year":"2022"},{"date":"2022-07-03","temperature":"21.15","datetime":"2022-07-03","morts_jour":"1596.0","3_days":"19.59","morts_france":"341004.0","year":"2022"},{"date":"2022-07-04","temperature":"21.46","datetime":"2022-07-04","morts_jour":"1628.0","3_days":"20.84","morts_france":"342632.0","year":"2022"},{"date":"2022-07-05","temperature":"21.38","datetime":"2022-07-05","morts_jour":"1616.0","3_days":"21.33","morts_france":"344248.0","year":"2022"},{"date":"2022-07-06","temperature":"21.15","datetime":"2022-07-06","morts_jour":"1709.0","3_days":"21.33","morts_france":"345957.0","year":"2022"},{"date":"2022-07-07","temperature":"20.71","datetime":"2022-07-07","morts_jour":"1627.0","3_days":"21.08","morts_france":"347584.0","year":"2022"},{"date":"2022-07-08","temperature":"21.3","datetime":"2022-07-08","morts_jour":"1719.0","3_days":"21.05","morts_france":"349303.0","year":"2022"},{"date":"2022-07-09","temperature":"22.42","datetime":"2022-07-09","morts_jour":"1719.0","3_days":"21.48","morts_france":"351022.0","year":"2022"},{"date":"2022-07-10","temperature":"22.68","datetime":"2022-07-10","morts_jour":"1723.0","3_days":"22.13","morts_france":"352745.0","year":"2022"},{"date":"2022-07-11","temperature":"23.36","datetime":"2022-07-11","morts_jour":"1799.0","3_days":"22.82","morts_france":"354544.0","year":"2022"},{"date":"2022-07-12","temperature":"24.67","datetime":"2022-07-12","morts_jour":"1913.0","3_days":"23.57","morts_france":"356457.0","year":"2022"},{"date":"2022-07-13","temperature":"25.23","datetime":"2022-07-13","morts_jour":"1902.0","3_days":"24.42","morts_france":"358359.0","year":"2022"},{"date":"2022-07-14","temperature":"25.23","datetime":"2022-07-14","morts_jour":"1839.0","3_days":"25.04","morts_france":"360198.0","year":"2022"},{"date":"2022-07-15","temperature":"23.99","datetime":"2022-07-15","morts_jour":"1735.0","3_days":"24.82","morts_france":"361933.0","year":"2022"},{"date":"2022-07-16","temperature":"23.67","datetime":"2022-07-16","morts_jour":"1773.0","3_days":"24.3","morts_france":"363706.0","year":"2022"},{"date":"2022-07-17","temperature":"25.35","datetime":"2022-07-17","morts_jour":"1750.0","3_days":"24.34","morts_france":"365456.0","year":"2022"},{"date":"2022-07-18","temperature":"28.05","datetime":"2022-07-18","morts_jour":"1930.0","3_days":"25.69","morts_france":"367386.0","year":"2022"},{"date":"2022-07-19","temperature":"27.34","datetime":"2022-07-19","morts_jour":"2098.0","3_days":"26.91","morts_france":"369484.0","year":"2022"},{"date":"2022-07-20","temperature":"24.48","datetime":"2022-07-20","morts_jour":"1952.0","3_days":"26.62","morts_france":"371436.0","year":"2022"},{"date":"2022-07-21","temperature":"23.94","datetime":"2022-07-21","morts_jour":"1904.0","3_days":"25.25","morts_france":"373340.0","year":"2022"},{"date":"2022-07-22","temperature":"23.56","datetime":"2022-07-22","morts_jour":"1869.0","3_days":"23.99","morts_france":"375209.0","year":"2022"},{"date":"2022-07-23","temperature":"23.82","datetime":"2022-07-23","morts_jour":"1797.0","3_days":"23.77","morts_france":"377006.0","year":"2022"},{"date":"2022-07-24","temperature":"25.27","datetime":"2022-07-24","morts_jour":"1694.0","3_days":"24.22","morts_france":"378700.0","year":"2022"},{"date":"2022-07-25","temperature":"24.23","datetime":"2022-07-25","morts_jour":"1746.0","3_days":"24.44","morts_france":"380446.0","year":"2022"},{"date":"2022-07-26","temperature":"22.04","datetime":"2022-07-26","morts_jour":"1740.0","3_days":"23.85","morts_france":"382186.0","year":"2022"},{"date":"2022-07-27","temperature":"21.48","datetime":"2022-07-27","morts_jour":"1675.0","3_days":"22.58","morts_france":"383861.0","year":"2022"},{"date":"2022-07-28","temperature":"22.41","datetime":"2022-07-28","morts_jour":"1619.0","3_days":"21.98","morts_france":"385480.0","year":"2022"},{"date":"2022-07-29","temperature":"22.88","datetime":"2022-07-29","morts_jour":"1711.0","3_days":"22.26","morts_france":"387191.0","year":"2022"},{"date":"2022-07-30","temperature":"23.35","datetime":"2022-07-30","morts_jour":"1654.0","3_days":"22.88","morts_france":"388845.0","year":"2022"},{"date":"2022-07-31","temperature":"24.21","datetime":"2022-07-31","morts_jour":"1684.0","3_days":"23.48","morts_france":"390529.0","year":"2022"},{"date":"2022-08-01","temperature":"24.59","datetime":"2022-08-01","morts_jour":"1769.0","3_days":"24.05","morts_france":"392298.0","year":"2022"},{"date":"2022-08-02","temperature":"25.3","datetime":"2022-08-02","morts_jour":"1763.0","3_days":"24.7","morts_france":"394061.0","year":"2022"},{"date":"2022-08-03","temperature":"26.47","datetime":"2022-08-03","morts_jour":"1748.0","3_days":"25.45","morts_france":"395809.0","year":"2022"},{"date":"2022-08-04","temperature":"26.43","datetime":"2022-08-04","morts_jour":"1891.0","3_days":"26.07","morts_france":"397700.0","year":"2022"},{"date":"2022-08-05","temperature":"24.32","datetime":"2022-08-05","morts_jour":"1646.0","3_days":"25.74","morts_france":"399346.0","year":"2022"},{"date":"2022-08-06","temperature":"23.04","datetime":"2022-08-06","morts_jour":"1635.0","3_days":"24.6","morts_france":"400981.0","year":"2022"},{"date":"2022-08-07","temperature":"23.18","datetime":"2022-08-07","morts_jour":"1544.0","3_days":"23.51","morts_france":"402525.0","year":"2022"},{"date":"2022-08-08","temperature":"23.91","datetime":"2022-08-08","morts_jour":"1705.0","3_days":"23.38","morts_france":"404230.0","year":"2022"},{"date":"2022-08-09","temperature":"24.89","datetime":"2022-08-09","morts_jour":"1674.0","3_days":"23.99","morts_france":"405904.0","year":"2022"},{"date":"2022-08-10","temperature":"25.64","datetime":"2022-08-10","morts_jour":"1673.0","3_days":"24.81","morts_france":"407577.0","year":"2022"},{"date":"2022-08-11","temperature":"25.75","datetime":"2022-08-11","morts_jour":"1741.0","3_days":"25.43","morts_france":"409318.0","year":"2022"},{"date":"2022-08-12","temperature":"26.33","datetime":"2022-08-12","morts_jour":"1759.0","3_days":"25.91","morts_france":"411077.0","year":"2022"},{"date":"2022-08-13","temperature":"25.69","datetime":"2022-08-13","morts_jour":"1779.0","3_days":"25.92","morts_france":"412856.0","year":"2022"},{"date":"2022-08-14","temperature":"22.7","datetime":"2022-08-14","morts_jour":"1654.0","3_days":"24.91","morts_france":"414510.0","year":"2022"},{"date":"2022-08-15","temperature":"22.45","datetime":"2022-08-15","morts_jour":"1633.0","3_days":"23.61","morts_france":"416143.0","year":"2022"},{"date":"2022-08-16","temperature":"22.91","datetime":"2022-08-16","morts_jour":"1620.0","3_days":"22.69","morts_france":"417763.0","year":"2022"},{"date":"2022-08-17","temperature":"21.85","datetime":"2022-08-17","morts_jour":"1624.0","3_days":"22.4","morts_france":"419387.0","year":"2022"},{"date":"2022-08-18","temperature":"21.03","datetime":"2022-08-18","morts_jour":"1511.0","3_days":"21.93","morts_france":"420898.0","year":"2022"},{"date":"2022-08-19","temperature":"21.77","datetime":"2022-08-19","morts_jour":"1513.0","3_days":"21.55","morts_france":"422411.0","year":"2022"},{"date":"2022-08-20","temperature":"22.03","datetime":"2022-08-20","morts_jour":"1501.0","3_days":"21.61","morts_france":"423912.0","year":"2022"},{"date":"2022-08-21","temperature":"20.91","datetime":"2022-08-21","morts_jour":"1346.0","3_days":"21.57","morts_france":"425258.0","year":"2022"},{"date":"2022-08-22","temperature":"22.58","datetime":"2022-08-22","morts_jour":"1413.0","3_days":"21.84","morts_france":"426671.0","year":"2022"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":12,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":28.75333333333333,"manual_left_value":16,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":2098,"manual_left_value":1250,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":-15,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},"yAxisLabelText":{"value":"Nombre de morts par jour","type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},"xAxisLabelText":{"value":"Température moyenne","type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":4,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.7,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"3_days","value":"3_days"},{"label":"morts_jour","value":"morts_jour"},{"label":"year","value":"year"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":false,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["3_days"],"selected_yRows":["morts_jour"],"selected_size":[],"selected_color":["year"],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Effet canicule : plus il fait chaud, plus la mortalité est élevée en été","chartSource":"Insee, infoclimat","chartSubTitle":"Comparaison entre l'évolution des températures et de la mortalité","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
