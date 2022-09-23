@@ -1,0 +1,743 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaccination et inégalités</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+  
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+
+
+#chart_container{
+  position: relative;
+}
+
+#chart_container svg, #chart_container canvas{
+  position: absolute;
+}
+
+#chart_container canvas{
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle">Vote Macron et revenu médian</h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <div id="chart_container">
+      <svg></svg>
+      </div>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Sources: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+const chartTitle = "Vote Macron et revenu médian"
+
+const chartSubTitle = ""
+
+const data_file = "data_elec_macron.csv"
+const x_var = 'revenu_median'
+const y_var = 'score'
+
+const x_axis_title = "Part de vote Macron"
+const y_axis_title = "Revenu médian"
+
+const circle_size = 'inscrits'
+
+const min_x_value = 0
+const max_x_value = 50000
+const min_y_value = 0
+const max_y_value = 50
+
+const this_circle_radius = 2
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},
+  "chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},
+  "chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},
+  "padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
+  "padding_left":{"value":24,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
+  "padding_right":{"value":5,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
+  "padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},
+  "sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},
+  "invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},
+  "differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},
+  "rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":92.8,"manual_left_value":min_x_value,"manual_right_value":max_x_value,"activated":1,"category":"general"},
+  "rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":46280,"manual_left_value":min_y_value,"manual_right_value":max_y_value,"activated":1,"category":"general"},
+  "color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},
+  "persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},
+  "indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},
+  "displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},
+  "startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},
+  "caseLegend":{"value":false,"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":"topLeft","activated":1,"category":"legend"},
+  "padding_left_legend":{"value":25,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},
+  "padding_top_legend":{"value":-35,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","activated":true,"dependOn":"caseLegend"},
+  "legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"activated":true,"category":"legend","dependOn":"caseLegend"},
+  "inner_padding_legend":{"value":-1,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"activated":true,"category":"legend","dependOn":"caseLegend"},
+  "textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","activated":true,"category":"legend","dependOn":"caseLegend"},
+  "leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},
+  "bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},
+  "leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},
+  "bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},
+  "ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},
+  "leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},
+  "bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},
+  "yAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},
+  "xAxisLabel":{"value":true,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},
+  "yAxisLabelPadding":{"value":-24,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"yAxisLabel"},
+  "xAxisLabelPadding":{"value":13,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":true,"dependOn":"xAxisLabel"},
+  "yAxisLabelText":{"value":y_axis_title,"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":true,"dependOn":"yAxisLabel"},
+  "xAxisLabelText":{"value":x_axis_title,"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":true,"dependOn":"xAxisLabel"},
+  "trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},
+  "hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},
+  "dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
+  "dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},
+  "previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},
+  "groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},
+  "logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},
+  "beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},
+  "beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},
+  "verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},
+  "circleRadius":{"value":this_circle_radius,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},
+  "circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},
+  "customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--y .tick text').text(function(d){return d+'%'});" + 
+  "d3.selectAll('.axis--x .tick text').text(function(d){return numbers_separators(d)});" + 
+  "d3.selectAll('g.ball circle').style('mix-blend-mode', 'multiply');"},
+  "colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},
+  "colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},
+  "colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"taux_vaccination_adultes","value":"taux_vaccination_adultes"},{"label":"niveau_vie_median","value":"niveau_vie_median"},{"label":"effectif","value":"effectif"},{"label":"aglomeration","value":"aglomeration"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},
+  "stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},
+  "stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},
+  "CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},
+  "automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},
+  "ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},
+  "caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
+  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[libelle_epci]] ([[dep]])<br>\n[[taux_vaccination_adultes]]% <strong>des adultes sont vaccinés</strong><br>\n<strong>Revenu médian : </strong>[[" + x_var + "|number_separator]] euros<br>\n Interdécile : [[interdecile]] \n<br> [[" + x_var + "]]% <strong>de chômage</strong><br>[[vote_fn]]% <strong>de vote FN</strong><br>[[population_carto]] habitants"},
+  "moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},
+  "selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},
+  "selectedElement":{"type":"none","activated":0,"category":"none"},
+  "selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},
+  "elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},
+  "barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},
+  "numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},
+  "miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},
+  "miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},
+  "alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":[x_var],"selected_yRows":[y_var],"selected_size":[circle_size],"selected_color":[],"selected_label":[],"selected_tooltip":["libelle_commune",x_var, y_var],"personalizedColorsObject":{"Agglomération marseillaise":"#cd0420","Agglomération lyonnaise":"#cccccc","Agglomération parisienne":"#666"},
+  "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":chartTitle,"chartSubTitle":chartSubTitle,"chartSource":"Assurance maladie, Insee. La taille des ronds est proportionelle à la population des villes","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    // d3.select("#chartTitle")
+    // .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([min_x_value,max_x_value])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([min_y_value,max_y_value])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+//     var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+//     var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+//     var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+//     var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+// xScale.domain([thisXMin, thisXMax])
+// yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+
+
+//Canvas doc
+// Here https://medium.com/@xoor/implementing-charts-that-scale-with-d3-and-canvas-3e14bbe70f37
+
+// And here https://bl.ocks.org/ejb/e2da5a23e9a09d494bd532803d8db61c
+
+// And here https://d3-graph-gallery.com/graph/canvas.html
+
+// And here https://www.freecodecamp.org/news/d3-and-canvas-in-3-steps-8505c8b27444/
+
+    let this_container = d3.select('#chart_container'),
+    this_width = manualReusableParameters.chart_width.value,
+    this_height = manualReusableParameters.chart_height.value,
+    this_aspect = this_width / this_height;
+
+let targetWidth = parseInt(this_container.style("width")) - margin.left - margin.right;
+let targetHeight = Math.round(targetWidth / this_aspect) - margin.top -  - margin.bottom;
+
+
+let targetTotalWidth = parseFloat(this_container.style("width"));
+
+let targetTotalHeight = Math.round(targetTotalWidth / this_aspect);
+
+
+let x_factor = targetTotalWidth / +svg.attr("width")
+
+let y_factor = targetTotalHeight / this_height
+
+
+const container = d3.select('#chart_container')
+
+const this_margin_left = parseInt((margin.left + manualReusableParameters.padding_left.value)*x_factor)
+
+const canvasChart = container.append('canvas')
+.attr('width', (width)*x_factor)
+.attr('height', height*y_factor)
+.style('margin-left', this_margin_left + 'px')
+.style('margin-top', margin.top*y_factor + 'px')
+.attr('class', 'canvas-plot');
+
+const context = canvasChart.node().getContext('2d');
+
+const pointColor = '#3585ff'
+
+
+    var xScale_canvas = xScaleType()
+    .domain([min_x_value,max_x_value])
+    .range([0, width*x_factor]);
+
+    var yScale_canvas = d3.scaleLinear()
+    .domain([min_y_value,max_y_value])
+    .range([height*y_factor, 0]);
+
+data.forEach(function(d, i) {
+if (i % 100 == 0){
+
+}
+
+   drawPoint(d, i);
+});
+
+
+function drawPoint(d, i) {
+   context.beginPath();
+   context.globalCompositeOperation = "multiply";
+   context.globalAlpha = 0.7
+   // context.fillStyle = d[thisColorVar];
+   context.fillStyle = 'red';
+   const px = xScale_canvas(d[thisXvar]);
+   const py = yScale_canvas(d[thisYvar]);
+   let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
+
+   context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
+   context.fill();
+}
+
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(_.slice(data, 0, 1000));
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+
+d3.csv(data_file, function(data) {
+
+dataFromFile = _.cloneDeep(data);
+
+
+initChart();
+
+makeCirclechart(data);
+
+// d3.selectAll('circle').filter(d=>+d.vote_fn <= 20).style('fill', 'orange')
+
+// d3.selectAll('circle').filter(d=>+d.vote_fn >= 35).style('fill', 'purple')
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+
+
+
+});
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
