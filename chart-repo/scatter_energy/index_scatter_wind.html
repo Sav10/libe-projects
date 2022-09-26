@@ -544,6 +544,17 @@ const canvasChart = container.append('canvas')
 .style('margin-top', margin.top*y_factor + 'px')
 .attr('class', 'canvas-plot');
 
+
+////See Here
+
+var hiddenCanvas = 
+d3.select("#container")
+.append("canvas")
+.classed("hiddenCanvas", true)
+.attr("width", width)
+.attr("height", height)
+
+
 const context = canvasChart.node().getContext('2d');
 
 const pointColor = '#3585ff'
