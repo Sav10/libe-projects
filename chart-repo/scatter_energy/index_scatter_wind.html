@@ -537,6 +537,7 @@ const container = d3.select('#chart_container')
 const this_margin_left = parseInt((margin.left + manualReusableParameters.padding_left.value)*x_factor)
 
 const canvasChart = container.append('canvas')
+.attr('class', 'mainCanvas')
 .attr('width', (width)*x_factor)
 .attr('height', height*y_factor)
 .style('margin-left', this_margin_left + 'px')
@@ -577,6 +578,23 @@ function drawPoint(d, i) {
 
    context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
    context.fill();
+}
+
+
+var nextCol = 1;
+
+function genColor(){     var ret = [];
+if(nextCol < 16777215){         
+
+  ret.push(nextCol & 0xff); 
+
+   nextCol += 1;     }
+
+
+var col = "rgb(" + ret.join(',') + ")";
+
+return col;
+
 }
 
 
