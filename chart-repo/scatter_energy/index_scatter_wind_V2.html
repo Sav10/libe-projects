@@ -85,8 +85,13 @@ stroke:#888;
 }
 
 #chart_container canvas{
-  pointer-events: none;
-  mix-blend-mode: multiply;
+  pointer-events: all;
+}
+
+
+#chart_container canvas.hiddenCanvas{
+pointer-events: none;
+/*display: none;*/
 }
 
   </style>
@@ -131,6 +136,8 @@ stroke:#888;
 <script type="text/javascript" src="chart_utilities_functions.js"></script>
   <script type="text/javascript">
 
+    var log = console.log.bind(console);
+
    var margin = {},
    width,
    height;
@@ -146,7 +153,7 @@ const chartTitle = "Consommation d'électricité et production éolienne"
 
 const chartSubTitle = "Chaque point représente 2 h de production et de consommation électrique de 2015 à aujourd'hui"
 
-const data_file = "wind_conso_sept_2022.csv"
+const data_file = "wind_conso_sept_2022_2.csv"
 const x_var = 'quantite_conso'
 const y_var = 'quantite_eolien'
 
@@ -160,7 +167,7 @@ const max_x_value = 100000
 const min_y_value = 0
 const max_y_value = 20000
 
-const this_circle_radius = .1
+const this_circle_radius = .2
 
 
   var initTotalWidth = 600;
@@ -278,6 +285,8 @@ const this_circle_radius = .1
   "selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":chartTitle,"chartSubTitle":chartSubTitle,"chartSource":"RTE","annotations":[]};
 
   var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  var colourToNode = {};
 
   color = findColorsScheme(graphParameters.selectedColorScheme);
 
@@ -537,11 +546,29 @@ const container = d3.select('#chart_container')
 const this_margin_left = parseInt((margin.left + manualReusableParameters.padding_left.value)*x_factor)
 
 const canvasChart = container.append('canvas')
+.classed("mainCanvas", true)
 .attr('width', (width)*x_factor)
 .attr('height', height*y_factor)
 .style('margin-left', this_margin_left + 'px')
 .style('margin-top', margin.top*y_factor + 'px')
-.attr('class', 'canvas-plot');
+.classed("canvas-plot", true);
+
+
+////See Here
+
+var hiddenCanvas = 
+container.append("canvas")
+.classed("hiddenCanvas", true)
+.classed("canvas-plot", true)
+.attr('width', (width)*x_factor)
+.attr('height', height*y_factor)
+.style('margin-left', this_margin_left + 'px')
+.style('margin-top', margin.top*y_factor + 'px')
+
+
+    var customBase = document.createElement('custom');
+    var custom = d3.select(customBase); // this is our svg replacement
+
 
 const context = canvasChart.node().getContext('2d');
 
@@ -578,6 +605,166 @@ function drawPoint(d, i) {
    context.arc(px, py, this_radius, 0, 2 * Math.PI,true);
    context.fill();
 }
+
+
+    var nextCol = 1;
+
+
+    function genColor(){
+      var ret = [];
+      // via http://stackoverflow.com/a/15804183
+      if(nextCol < 16777215){
+        ret.push(nextCol & 0xff); // R
+        ret.push((nextCol & 0xff00) >> 8); // G 
+        ret.push((nextCol & 0xff0000) >> 16); // B
+
+        nextCol += 1; 
+      }
+      var col = "rgb(" + ret.join(',') + ")";
+      return col;
+    }
+
+
+    // === Bind and draw functions === //
+
+
+    var groupSpacing = 4;
+    var cellSpacing = 2;
+    var cellSize = Math.floor((width - 11 * groupSpacing) / 100) - cellSpacing;
+
+    function databind(data) {
+
+      colorScale = d3.scaleSequential(d3.interpolateSpectral).domain(d3.extent(data, function(d) { return d.value; }));
+      
+      var join = custom.selectAll('custom.rect')
+        .data(data);
+
+      var enterSel = join.enter()
+        .append('custom')
+        .attr('class', 'rect')
+        .attr('x', function(d, i) {
+          var x0 = Math.floor(i / 100) % 10, x1 = Math.floor(i % 10);
+          return groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
+        })
+        .attr('y', function(d, i) {
+          var y0 = Math.floor(i / 1000), y1 = Math.floor(i % 100 / 10);
+          return groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
+        })
+        .attr('width', 0)
+        .attr('height', 0);
+
+      join
+        .merge(enterSel)
+        .transition()
+        .attr('width', cellSize)
+        .attr('height', cellSize)
+        .attr('fillStyle', function(d) { return colorScale(d.value); })
+
+        // new -----------------------------------------------------
+
+        .attr('fillStyleHidden', function(d) { 
+          if (!d.hiddenCol) {
+
+            d.hiddenCol = genColor();
+            colourToNode[d.hiddenCol] = d;
+
+          } // here we (1) add a unique colour as property to each element and (2) map the colour to the node in the colourToNode-dictionary 
+          
+          return d.hiddenCol;
+
+        });
+
+        // new -----------------------------------------------------
+
+  
+
+
+      var exitSel = join.exit()
+        .transition()
+        .attr('width', 0)
+        .attr('height', 0)
+        .remove();
+
+    } 
+
+
+databind(data);
+
+
+    function draw(canvas, hidden) { // <---- new arguments
+
+      // build context
+      var context = canvas.node().getContext('2d');
+
+
+      // clear canvas
+      context.clearRect(0, 0, width, height);
+
+      
+      // draw each individual custom element with their properties
+      
+      var elements = custom.selectAll('custom.rect') // this is the same as the join variable, but used here to draw
+      
+      elements.each(function(d,i) { // for each virtual/custom element...
+
+        var node = d3.select(this);
+
+        context.fillStyle = hidden ? node.attr('fillStyleHidden') : node.attr('fillStyle'); // <--- new: node colour depends on the canvas we draw 
+        context.fillRect(node.attr('x'), node.attr('y'), node.attr('width'), node.attr('height'))
+
+      });
+
+
+  }
+
+var colourToNode = {};
+
+    d3.select('.mainCanvas').on('mousemove', function() {
+
+      console.log('moving')
+
+      // draw the hiddenCanvas
+      draw(hiddenCanvas, true); 
+
+      // get mousePositions from the main canvas
+      var mouseX = d3.event.layerX || d3.event.offsetX;
+      var mouseY = d3.event.layerY || d3.event.offsetY;
+      
+
+      // get the toolbox for the hidden canvas  
+      var hiddenCtx = hiddenCanvas.node().getContext('2d');
+
+      // Now to pick the colours from where our mouse is then stringify it in a way our map-object can read it
+      var col = hiddenCtx.getImageData(mouseX, mouseY, 1, 1).data;
+      var colKey = 'rgb(' + col[0] + ',' + col[1] + ',' + col[2] + ')';
+      
+      // get the data from our map !
+      var nodeData = colourToNode[colKey];
+      
+      log(colKey);
+
+
+      if (nodeData) {
+
+        // Show the tooltip only when there is nodeData found by the mouse
+
+        d3.select('#tooltip')
+          .style('opacity', 0.8)
+          .style('top', d3.event.pageY + 5 + 'px')
+          .style('left', d3.event.pageX + 5 + 'px')
+          .html(nodeData.value);
+
+      } else {
+
+        // Hide the tooltip when there our mouse doesn't find nodeData
+
+        d3.select('#tooltip')
+          .style('opacity', 0);
+
+      }
+
+    });
+
 
 
     // var circles = g_inner
