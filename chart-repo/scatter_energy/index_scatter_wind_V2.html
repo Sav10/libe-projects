@@ -634,6 +634,8 @@ function drawPoint(d, i) {
 
     function databind(data) {
 
+      console.log(data)
+
       colorScale = d3.scaleSequential(d3.interpolateSpectral).domain(d3.extent(data, function(d) { return d.value; }));
       
       var join = custom.selectAll('custom.rect')
@@ -658,15 +660,15 @@ function drawPoint(d, i) {
         .transition()
         .attr('width', cellSize)
         .attr('height', cellSize)
-        .attr('fillStyle', function(d) { return colorScale(d.value); })
+        .attr('fillStyle', function(d, i) { return colorScale(i); })
 
         // new -----------------------------------------------------
 
-        .attr('fillStyleHidden', function(d) { 
+        .attr('fillStyleHidden', function(d, i) { 
           if (!d.hiddenCol) {
 
             d.hiddenCol = genColor();
-            colourToNode[d.hiddenCol] = d;
+            colourToNode[d.hiddenCol] = i;
 
           } // here we (1) add a unique colour as property to each element and (2) map the colour to the node in the colourToNode-dictionary 
           
