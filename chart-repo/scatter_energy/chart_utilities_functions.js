@@ -126,7 +126,7 @@ if (manualReusableParameters.caseCustomTooltip.value && manualReusableParameters
     var TextTransformationFonctions = {'round':_.round,
 'frenchDate': dateToFrench,
 'number_separator':numbers_separators,
-'datetimeToFrench': datetimeToFrench}
+'frenchDatetime': datetimeToFrench}
 
     for (i in thoseValuesArray){
         var v = thoseValuesArray[i];
@@ -144,6 +144,10 @@ if (manualReusableParameters.caseCustomTooltip.value && manualReusableParameters
             // console.log(Math.round(+d[k0]));
         // }
         if (k[1] && k[1] == 'frenchDate'){
+            d0 = TextTransformationFonctions[k[1]](d0);
+            this_inner_html = this_inner_html.replace(v, d0);
+        }
+        else if (k[1] && k[1] == 'frenchDatetime'){
             d0 = TextTransformationFonctions[k[1]](d0);
             this_inner_html = this_inner_html.replace(v, d0);
         }

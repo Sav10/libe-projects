@@ -3,7 +3,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vaccination et inégalités</title>
+  <title>Consommation d'électricité et production éolienne</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
   <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
@@ -138,8 +138,6 @@ display: none;
 <script type="text/javascript" src="chart_utilities_functions.js"></script>
   <script type="text/javascript">
 
-    var log = console.log.bind(console);
-
    var margin = {},
    width,
    height;
@@ -271,7 +269,7 @@ const this_circle_radius = .2
   "automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},
   "ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},
   "caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},
-  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDate]]<br>\n<strong>Production éolienne :</strong> [[quantite_eolien]] <strong>kwH</strong><br>\n<strong>Consommation d'électricité : </strong>[[quantite_conso]] <strong>kwH</strong><br>"},
+  "customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[datetime|frenchDatetime]]<br>\n<strong>Production éolienne :</strong> [[quantite_eolien]] <strong>MwH</strong><br>\n<strong>Consommation d'électricité : </strong>[[quantite_conso]] <strong>MwH</strong><br>"},
   "moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},
   "selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},
   "selectedElement":{"type":"none","activated":0,"category":"none"},
@@ -678,7 +676,6 @@ function drawPoint_hidden(d, i) {
       var nodeData = colourToNode[colKey];
       
       if (nodeData) {
-      log(data[nodeData])
     }
 
 
