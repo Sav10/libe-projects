@@ -125,7 +125,8 @@ if (manualReusableParameters.caseCustomTooltip.value && manualReusableParameters
 
     var TextTransformationFonctions = {'round':_.round,
 'frenchDate': dateToFrench,
-'number_separator':numbers_separators}
+'number_separator':numbers_separators,
+'datetimeToFrench': datetimeToFrench}
 
     for (i in thoseValuesArray){
         var v = thoseValuesArray[i];
@@ -195,6 +196,13 @@ function dateToFrench(date){
 return moment(date).format('LL')
 
 }
+
+function datetimeToFrench(datetime){
+
+return moment(datetime).format('LL à HH:00')
+
+}
+
 
 function numbers_separators(num){
     return num.toLocaleString('fr-FR', {minimumFractionDigits: 0});
