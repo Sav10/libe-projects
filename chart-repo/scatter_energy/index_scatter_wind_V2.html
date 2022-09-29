@@ -91,8 +91,10 @@ stroke:#888;
 
 #chart_container canvas.hiddenCanvas{
 pointer-events: none;
-/*display: none;*/
+display: none;
 }
+
+
 
   </style>
 
@@ -286,8 +288,6 @@ const this_circle_radius = .2
 
   var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
 
-  var colourToNode = {};
-
   color = findColorsScheme(graphParameters.selectedColorScheme);
 
 
@@ -305,6 +305,14 @@ const this_circle_radius = .2
     {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
     {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
     ];
+
+
+    var colourToNode = {};
+
+var nodeToColor = {};
+var nextCol = 1;
+
+var hiddenCanvas
 
     var div = d3.select("body").append("div")
     .attr("id", "tooltip")
@@ -337,6 +345,7 @@ const this_circle_radius = .2
         bottom: 60,
         left: 50
       };
+
 
       width = +svg.attr("width") - margin.left - margin.right;
       height = +svg.attr("height") - margin.top - margin.bottom;
@@ -556,7 +565,7 @@ const canvasChart = container.append('canvas')
 
 ////See Here
 
-var hiddenCanvas = 
+hiddenCanvas = 
 container.append("canvas")
 .classed("hiddenCanvas", true)
 .classed("canvas-plot", true)
@@ -571,6 +580,7 @@ container.append("canvas")
 
 
 const context = canvasChart.node().getContext('2d');
+const context_2 = hiddenCanvas.node().getContext('2d');
 
 const pointColor = '#3585ff'
 
@@ -589,10 +599,20 @@ if (i % 100 == 0){
 }
 
    drawPoint(d, i);
+
+drawPoint_hidden(d, i)
+
 });
 
 
+
 function drawPoint(d, i) {
+
+  let this_col = genColor();
+
+  colourToNode[this_col] = i
+  nodeToColor[i] = this_col
+
    context.beginPath();
    context.globalCompositeOperation = "multiply";
    context.globalAlpha = 0.4
@@ -607,12 +627,22 @@ function drawPoint(d, i) {
 }
 
 
-    var nextCol = 1;
+function drawPoint_hidden(d, i) {
+   context_2.beginPath();
+   context_2.fillStyle = nodeToColor[i];
+   const px = xScale_canvas(d[thisXvar]);
+   const py = yScale_canvas(d[thisYvar]);
+   let this_radius = graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value
+   context_2.arc(px, py, this_radius, 0, 2 * Math.PI,true);
+   context_2.fill();
+}
+
+
+
 
 
     function genColor(){
       var ret = [];
-      // via http://stackoverflow.com/a/15804183
       if(nextCol < 16777215){
         ret.push(nextCol & 0xff); // R
         ret.push((nextCol & 0xff00) >> 8); // G 
@@ -625,108 +655,12 @@ function drawPoint(d, i) {
     }
 
 
-    // === Bind and draw functions === //
 
-
-    var groupSpacing = 4;
-    var cellSpacing = 2;
-    var cellSize = Math.floor((width - 11 * groupSpacing) / 100) - cellSpacing;
-
-    function databind(data) {
-
-      console.log(data)
-
-      colorScale = d3.scaleSequential(d3.interpolateSpectral).domain(d3.extent(data, function(d) { return d.value; }));
-      
-      var join = custom.selectAll('custom.rect')
-        .data(data);
-
-      var enterSel = join.enter()
-        .append('custom')
-        .attr('class', 'rect')
-        .attr('x', function(d, i) {
-          var x0 = Math.floor(i / 100) % 10, x1 = Math.floor(i % 10);
-          return groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
-        })
-        .attr('y', function(d, i) {
-          var y0 = Math.floor(i / 1000), y1 = Math.floor(i % 100 / 10);
-          return groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
-        })
-        .attr('width', 0)
-        .attr('height', 0);
-
-      join
-        .merge(enterSel)
-        .transition()
-        .attr('width', cellSize)
-        .attr('height', cellSize)
-        .attr('fillStyle', function(d, i) { return colorScale(i); })
-
-        // new -----------------------------------------------------
-
-        .attr('fillStyleHidden', function(d, i) { 
-          if (!d.hiddenCol) {
-
-            d.hiddenCol = genColor();
-            colourToNode[d.hiddenCol] = i;
-
-          } // here we (1) add a unique colour as property to each element and (2) map the colour to the node in the colourToNode-dictionary 
-          
-          return d.hiddenCol;
-
-        });
-
-        // new -----------------------------------------------------
-
-  
-
-
-      var exitSel = join.exit()
-        .transition()
-        .attr('width', 0)
-        .attr('height', 0)
-        .remove();
-
-    } 
-
-
-databind(data);
-
-
-    function draw(canvas, hidden) { // <---- new arguments
-
-      // build context
-      var context = canvas.node().getContext('2d');
-
-
-      // clear canvas
-      context.clearRect(0, 0, width, height);
-
-      
-      // draw each individual custom element with their properties
-      
-      var elements = custom.selectAll('custom.rect') // this is the same as the join variable, but used here to draw
-      
-      elements.each(function(d,i) { // for each virtual/custom element...
-
-        var node = d3.select(this);
-
-        context.fillStyle = hidden ? node.attr('fillStyleHidden') : node.attr('fillStyle'); // <--- new: node colour depends on the canvas we draw 
-        context.fillRect(node.attr('x'), node.attr('y'), node.attr('width'), node.attr('height'))
-
-      });
-
-
-  }
-
-var colourToNode = {};
 
     d3.select('.mainCanvas').on('mousemove', function() {
 
-      console.log('moving')
-
       // draw the hiddenCanvas
-      draw(hiddenCanvas, true); 
+/*      draw(hiddenCanvas, true); */
 
       // get mousePositions from the main canvas
       var mouseX = d3.event.layerX || d3.event.offsetX;
@@ -743,75 +677,28 @@ var colourToNode = {};
       // get the data from our map !
       var nodeData = colourToNode[colKey];
       
-      log(colKey);
+      if (nodeData) {
+      log(data[nodeData])
+    }
 
 
       if (nodeData) {
 
         // Show the tooltip only when there is nodeData found by the mouse
 
-        d3.select('#tooltip')
-          .style('opacity', 0.8)
-          .style('top', d3.event.pageY + 5 + 'px')
-          .style('left', d3.event.pageX + 5 + 'px')
-          .html(nodeData.value);
+        show_tooltip(data[nodeData])
+
 
       } else {
 
         // Hide the tooltip when there our mouse doesn't find nodeData
 
-        d3.select('#tooltip')
-          .style('opacity', 0);
+        hide_tooltip()
 
       }
 
     });
 
-
-
-    // var circles = g_inner
-    // .selectAll('.ball')
-    // .data(_.slice(data, 0, 1000));
-
-    // circles.exit().transition().duration(200).remove();
-
-    // circles
-    // .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
-    // .select('circle')
-    // .transition()
-    // .duration(200)
-    // .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
-    // .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
-    // .style('fill-opacity', manualReusableParameters.circleOpacity.value);
-
-    // circles
-    // .select('text')
-    // .transition()
-    // .duration(200)
-    // .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
-
-    // var new_circles = circles
-    // .enter()
-    // .append('g')
-    // .attr('class', 'ball')
-    // .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
-    // .on('mouseover', function(d, i){ show_tooltip(d)})
-    // .on('mouseout', function(d){ hide_tooltip()});
-
-    // new_circles
-    // .append('circle')
-    // .attr('cx', 0)
-    // .attr('cy', 0)
-    // .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
-    // .style('fill-opacity', manualReusableParameters.circleOpacity.value)
-    // .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
-
-    // new_circles
-    // .append('text')
-    // .style('text-anchor', 'middle')
-    // .style('fill', 'black')
-    // .attr('y', 4)
-    // .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
 
 g_inner
 .call(xAxisLabel, graphParameters.selected_xRows[0]);
@@ -835,9 +722,6 @@ initChart();
 
 makeCirclechart(data);
 
-// d3.selectAll('circle').filter(d=>+d.vote_fn <= 20).style('fill', 'orange')
-
-// d3.selectAll('circle').filter(d=>+d.vote_fn >= 35).style('fill', 'purple')
 
 makeAnnotation();
 
