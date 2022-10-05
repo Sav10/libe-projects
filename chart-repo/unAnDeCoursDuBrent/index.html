@@ -1,0 +1,603 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Un an de cours du Brent</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"date":"2021-10-07","x":"1633564800000","y":"78.3","percentChange":"1.1235955056179776","change":"0.87"},{"date":"2021-10-08","x":"1633651200000","y":"79.35","percentChange":"1.3409961685823755","change":"1.05"},{"date":"2021-10-11","x":"1633910400000","y":"80.52","percentChange":"1.4744801512287335","change":"1.17"},{"date":"2021-10-12","x":"1633996800000","y":"79.19","percentChange":"-1.6517635370094386","change":"-1.33"},{"date":"2021-10-13","x":"1634083200000","y":"79.12","percentChange":"-0.08839499936860715","change":"-0.07"},{"date":"2021-10-14","x":"1634169600000","y":"80.05","percentChange":"1.1754297269969667","change":"0.93"},{"date":"2021-10-15","x":"1634256000000","y":"80.88","percentChange":"1.0368519675202998","change":"0.83"},{"date":"2021-10-18","x":"1634515200000","y":"80.74","percentChange":"-0.17309594460929772","change":"-0.14"},{"date":"2021-10-19","x":"1634601600000","y":"81.5","percentChange":"0.9412930393856824","change":"0.76"},{"date":"2021-10-20","x":"1634688000000","y":"82.38","percentChange":"1.0797546012269938","change":"0.88"},{"date":"2021-10-21","x":"1634774400000","y":"81.36","percentChange":"-1.238164603058995","change":"-1.02"},{"date":"2021-10-22","x":"1634860800000","y":"82.5","percentChange":"1.40117994100295","change":"1.14"},{"date":"2021-10-25","x":"1635120000000","y":"82.61","percentChange":"0.13333333333333333","change":"0.11"},{"date":"2021-10-26","x":"1635206400000","y":"83.36","percentChange":"0.9078804018883913","change":"0.75"},{"date":"2021-10-27","x":"1635292800000","y":"81.48","percentChange":"-2.2552783109404992","change":"-1.88"},{"date":"2021-10-28","x":"1635379200000","y":"81.46","percentChange":"-0.024545900834560628","change":"-0.02"},{"date":"2021-10-29","x":"1635465600000","y":"81.78","percentChange":"0.3928308372207218","change":"0.32"},{"date":"2021-11-01","x":"1635724800000","y":"82.45","percentChange":"0.8192712154561017","change":"0.67"},{"date":"2021-11-02","x":"1635811200000","y":"82.44","percentChange":"-0.01212856276531231","change":"-0.01"},{"date":"2021-11-03","x":"1635897600000","y":"79.57","percentChange":"-3.4813197476952937","change":"-2.87"},{"date":"2021-11-04","x":"1635984000000","y":"77.7","percentChange":"-2.350131959281136","change":"-1.87"},{"date":"2021-11-05","x":"1636070400000","y":"80.13","percentChange":"3.1274131274131274","change":"2.43"},{"date":"2021-11-08","x":"1636329600000","y":"80.74","percentChange":"0.7612629477099713","change":"0.61"},{"date":"2021-11-09","x":"1636416000000","y":"82.56","percentChange":"2.254149120634134","change":"1.82"},{"date":"2021-11-10","x":"1636502400000","y":"80.06","percentChange":"-3.0281007751937983","change":"-2.5"},{"date":"2021-11-11","x":"1636588800000","y":"80.42","percentChange":"0.4496627529352985","change":"0.36"},{"date":"2021-11-12","x":"1636675200000","y":"79.69","percentChange":"-0.9077343944292464","change":"-0.73"},{"date":"2021-11-15","x":"1636934400000","y":"79.75","percentChange":"0.07529175555276697","change":"0.06"},{"date":"2021-11-16","x":"1637020800000","y":"79.74","percentChange":"-0.012539184952978056","change":"-0.01"},{"date":"2021-11-17","x":"1637107200000","y":"77.55","percentChange":"-2.746425884123401","change":"-2.19"},{"date":"2021-11-18","x":"1637193600000","y":"77.55","percentChange":"0.0","change":"0.0"},{"date":"2021-11-19","x":"1637280000000","y":"75.23","percentChange":"-2.991618310767247","change":"-2.32"},{"date":"2021-11-22","x":"1637539200000","y":"76.12","percentChange":"1.18303868137711","change":"0.89"},{"date":"2021-11-23","x":"1637625600000","y":"77.94","percentChange":"2.390961639516553","change":"1.82"},{"date":"2021-11-24","x":"1637712000000","y":"77.81","percentChange":"-0.1667949704901206","change":"-0.13"},{"date":"2021-11-25","x":"1637798400000","y":"78.08","percentChange":"0.34699910037270276","change":"0.27"},{"date":"2021-11-26","x":"1637884800000","y":"67.84","percentChange":"-13.114754098360656","change":"-10.24"},{"date":"2021-11-29","x":"1638144000000","y":"69.62","percentChange":"2.623820754716981","change":"1.78"},{"date":"2021-11-30","x":"1638230400000","y":"65.85","percentChange":"-5.415110600402183","change":"-3.77"},{"date":"2021-12-01","x":"1638316800000","y":"65.37","percentChange":"-0.7289293849658315","change":"-0.48"},{"date":"2021-12-02","x":"1638403200000","y":"66.27","percentChange":"1.3767783386874712","change":"0.9"},{"date":"2021-12-03","x":"1638489600000","y":"66.1","percentChange":"-0.25652633167345706","change":"-0.17"},{"date":"2021-12-06","x":"1638748800000","y":"69.3","percentChange":"4.841149773071105","change":"3.2"},{"date":"2021-12-07","x":"1638835200000","y":"71.84","percentChange":"3.665223665223665","change":"2.54"},{"date":"2021-12-08","x":"1638921600000","y":"71.9","percentChange":"0.08351893095768374","change":"0.06"},{"date":"2021-12-09","x":"1639008000000","y":"70.54","percentChange":"-1.8915159944367177","change":"-1.36"},{"date":"2021-12-10","x":"1639094400000","y":"71.22","percentChange":"0.9639920612418486","change":"0.68"},{"date":"2021-12-13","x":"1639353600000","y":"70.8","percentChange":"-0.5897219882055602","change":"-0.42"},{"date":"2021-12-14","x":"1639440000000","y":"70.26","percentChange":"-0.7627118644067796","change":"-0.54"},{"date":"2021-12-15","x":"1639526400000","y":"70.36","percentChange":"0.14232849416453175","change":"0.1"},{"date":"2021-12-16","x":"1639612800000","y":"71.75","percentChange":"1.9755542922114837","change":"1.39"},{"date":"2021-12-17","x":"1639699200000","y":"70.35","percentChange":"-1.951219512195122","change":"-1.4"},{"date":"2021-12-20","x":"1639958400000","y":"68.36","percentChange":"-2.8287135749822316","change":"-1.99"},{"date":"2021-12-21","x":"1640044800000","y":"70.82","percentChange":"3.598595669982446","change":"2.46"},{"date":"2021-12-22","x":"1640131200000","y":"72.33","percentChange":"2.1321660547867833","change":"1.51"},{"date":"2021-12-23","x":"1640217600000","y":"73.42","percentChange":"1.5069818885662933","change":"1.09"},{"date":"2021-12-27","x":"1640563200000","y":"75.18","percentChange":"2.3971669844728956","change":"1.76"},{"date":"2021-12-28","x":"1640649600000","y":"75.6","percentChange":"0.5586592178770949","change":"0.42"},{"date":"2021-12-29","x":"1640736000000","y":"76.18","percentChange":"0.7671957671957672","change":"0.58"},{"date":"2021-12-30","x":"1640822400000","y":"76.61","percentChange":"0.5644526122341822","change":"0.43"},{"date":"2021-12-31","x":"1640908800000","y":"74.88","percentChange":"-2.258190836705391","change":"-1.73"},{"date":"2022-01-03","x":"1641168000000","y":"75.85","percentChange":"1.295405982905983","change":"0.97"},{"date":"2022-01-04","x":"1641254400000","y":"76.74","percentChange":"1.1733684904416612","change":"0.89"},{"date":"2022-01-05","x":"1641340800000","y":"77.47","percentChange":"0.9512640083398488","change":"0.73"},{"date":"2022-01-06","x":"1641427200000","y":"78.88","percentChange":"1.8200593778236738","change":"1.41"},{"date":"2022-01-07","x":"1641513600000","y":"78.44","percentChange":"-0.5578093306288032","change":"-0.44"},{"date":"2022-01-10","x":"1641772800000","y":"77.1","percentChange":"-1.7083120856705762","change":"-1.34"},{"date":"2022-01-11","x":"1641859200000","y":"79.98","percentChange":"3.735408560311284","change":"2.88"},{"date":"2022-01-12","x":"1641945600000","y":"81.18","percentChange":"1.5003750937734435","change":"1.2"},{"date":"2022-01-13","x":"1642032000000","y":"80.86","percentChange":"-0.3941857600394186","change":"-0.32"},{"date":"2022-01-14","x":"1642118400000","y":"82.42","percentChange":"1.9292604501607717","change":"1.56"},{"date":"2022-01-17","x":"1642377600000","y":"84.27","percentChange":"2.2446008250424656","change":"1.85"},{"date":"2022-01-18","x":"1642464000000","y":"83.86","percentChange":"-0.4865313872077845","change":"-0.41"},{"date":"2022-01-19","x":"1642550400000","y":"84.79","percentChange":"1.108991175769139","change":"0.93"},{"date":"2022-01-20","x":"1642636800000","y":"84.65","percentChange":"-0.16511381059087157","change":"-0.14"},{"date":"2022-01-21","x":"1642723200000","y":"84.14","percentChange":"-0.6024808033077378","change":"-0.51"},{"date":"2022-01-24","x":"1642982400000","y":"82.41","percentChange":"-2.0560969812217733","change":"-1.73"},{"date":"2022-01-25","x":"1643068800000","y":"84.37","percentChange":"2.3783521417303723","change":"1.96"},{"date":"2022-01-26","x":"1643155200000","y":"85.96","percentChange":"1.8845561218442575","change":"1.59"},{"date":"2022-01-27","x":"1643241600000","y":"85.29","percentChange":"-0.7794322940902746","change":"-0.67"},{"date":"2022-01-28","x":"1643328000000","y":"85.43","percentChange":"0.16414585531715326","change":"0.14"},{"date":"2022-01-31","x":"1643587200000","y":"86.49","percentChange":"1.2407819267236333","change":"1.06"},{"date":"2022-02-01","x":"1643673600000","y":"86.46","percentChange":"-0.0346860908775581","change":"-0.03"},{"date":"2022-02-02","x":"1643760000000","y":"86.69","percentChange":"0.26601896830904465","change":"0.23"},{"date":"2022-02-03","x":"1643846400000","y":"88.45","percentChange":"2.0302226323682087","change":"1.76"},{"date":"2022-02-04","x":"1643932800000","y":"90.33","percentChange":"2.1254946297343134","change":"1.88"},{"date":"2022-02-07","x":"1644192000000","y":"89.77","percentChange":"-0.6199490756116461","change":"-0.56"},{"date":"2022-02-08","x":"1644278400000","y":"87.9","percentChange":"-2.0831012587724183","change":"-1.87"},{"date":"2022-02-09","x":"1644364800000","y":"88.53","percentChange":"0.7167235494880546","change":"0.63"},{"date":"2022-02-10","x":"1644451200000","y":"87.26","percentChange":"-1.4345419631763243","change":"-1.27"},{"date":"2022-02-11","x":"1644537600000","y":"89.7","percentChange":"2.7962411184964475","change":"2.44"},{"date":"2022-02-14","x":"1644796800000","y":"91.52","percentChange":"2.028985507246377","change":"1.82"},{"date":"2022-02-15","x":"1644883200000","y":"88.29","percentChange":"-3.5292832167832167","change":"-3.23"},{"date":"2022-02-16","x":"1644969600000","y":"89.81","percentChange":"1.7215992751160947","change":"1.52"},{"date":"2022-02-17","x":"1645056000000","y":"88.19","percentChange":"-1.8038080391938538","change":"-1.62"},{"date":"2022-02-18","x":"1645142400000","y":"88.6","percentChange":"0.46490531806327245","change":"0.41"},{"date":"2022-02-21","x":"1645401600000","y":"92.0","percentChange":"3.8374717832957113","change":"3.4"},{"date":"2022-02-22","x":"1645488000000","y":"90.39","percentChange":"-1.75","change":"-1.61"},{"date":"2022-02-23","x":"1645574400000","y":"90.69","percentChange":"0.3318951211417192","change":"0.3"},{"date":"2022-02-24","x":"1645660800000","y":"90.94","percentChange":"0.27566435108611753","change":"0.25"},{"date":"2022-02-25","x":"1645747200000","y":"89.89","percentChange":"-1.1546074334726193","change":"-1.05"},{"date":"2022-02-28","x":"1646006400000","y":"93.5","percentChange":"4.016019579486039","change":"3.61"},{"date":"2022-03-01","x":"1646092800000","y":"100.21","percentChange":"7.176470588235294","change":"6.71"},{"date":"2022-03-02","x":"1646179200000","y":"107.06","percentChange":"6.83564514519509","change":"6.85"},{"date":"2022-03-03","x":"1646265600000","y":"104.61","percentChange":"-2.2884363908088923","change":"-2.45"},{"date":"2022-03-04","x":"1646352000000","y":"112.11","percentChange":"7.169486664754803","change":"7.5"},{"date":"2022-03-07","x":"1646611200000","y":"115.8","percentChange":"3.2914102221032913","change":"3.69"},{"date":"2022-03-08","x":"1646697600000","y":"119.65","percentChange":"3.324697754749568","change":"3.85"},{"date":"2022-03-09","x":"1646784000000","y":"105.05","percentChange":"-12.202256581696615","change":"-14.6"},{"date":"2022-03-10","x":"1646870400000","y":"99.64","percentChange":"-5.149928605425988","change":"-5.41"},{"date":"2022-03-11","x":"1646956800000","y":"103.2","percentChange":"3.5728623042954637","change":"3.56"},{"date":"2022-03-14","x":"1647216000000","y":"98.44","percentChange":"-4.612403100775194","change":"-4.76"},{"date":"2022-03-15","x":"1647302400000","y":"92.83","percentChange":"-5.698902885006095","change":"-5.61"},{"date":"2022-03-16","x":"1647388800000","y":"91.59","percentChange":"-1.3357750727135624","change":"-1.24"},{"date":"2022-03-17","x":"1647475200000","y":"99.38","percentChange":"8.505295337918987","change":"7.79"},{"date":"2022-03-18","x":"1647561600000","y":"100.65","percentChange":"1.2779231233648622","change":"1.27"},{"date":"2022-03-21","x":"1647820800000","y":"107.06","percentChange":"6.368604073522106","change":"6.41"},{"date":"2022-03-22","x":"1647907200000","y":"106.55","percentChange":"-0.47636839155613675","change":"-0.51"},{"date":"2022-03-23","x":"1647993600000","y":"111.99","percentChange":"5.105584232754575","change":"5.44"},{"date":"2022-03-24","x":"1648080000000","y":"109.43","percentChange":"-2.2859183855701404","change":"-2.56"},{"date":"2022-03-25","x":"1648166400000","y":"111.06","percentChange":"1.4895366901215388","change":"1.63"},{"date":"2022-03-28","x":"1648425600000","y":"103.42","percentChange":"-6.87916441563119","change":"-7.64"},{"date":"2022-03-29","x":"1648512000000","y":"102.05","percentChange":"-1.3246954167472442","change":"-1.37"},{"date":"2022-03-30","x":"1648598400000","y":"105.68","percentChange":"3.557079862812347","change":"3.63"},{"date":"2022-03-31","x":"1648684800000","y":"98.52","percentChange":"-6.7751703255109765","change":"-7.16"},{"date":"2022-04-01","x":"1648771200000","y":"97.9","percentChange":"-0.6293138449045879","change":"-0.62"},{"date":"2022-04-04","x":"1649030400000","y":"101.84","percentChange":"4.024514811031665","change":"3.94"},{"date":"2022-04-05","x":"1649116800000","y":"100.68","percentChange":"-1.1390416339355853","change":"-1.16"},{"date":"2022-04-06","x":"1649203200000","y":"95.41","percentChange":"-5.234406038935241","change":"-5.27"},{"date":"2022-04-07","x":"1649289600000","y":"95.51","percentChange":"0.10481081647626035","change":"0.1"},{"date":"2022-04-08","x":"1649376000000","y":"97.01","percentChange":"1.570516176316616","change":"1.5"},{"date":"2022-04-11","x":"1649635200000","y":"93.46","percentChange":"-3.6594165549943303","change":"-3.55"},{"date":"2022-04-12","x":"1649721600000","y":"99.4","percentChange":"6.35566017547614","change":"5.94"},{"date":"2022-04-13","x":"1649808000000","y":"102.89","percentChange":"3.511066398390342","change":"3.49"},{"date":"2022-04-14","x":"1649894400000","y":"105.44","percentChange":"2.478374963553309","change":"2.55"},{"date":"2022-04-18","x":"1650240000000","y":"106.41","percentChange":"0.9199544764795144","change":"0.97"},{"date":"2022-04-19","x":"1650326400000","y":"101.16","percentChange":"-4.93374682830561","change":"-5.25"},{"date":"2022-04-20","x":"1650412800000","y":"101.36","percentChange":"0.19770660340055357","change":"0.2"},{"date":"2022-04-21","x":"1650499200000","y":"102.96","percentChange":"1.5785319652722967","change":"1.6"},{"date":"2022-04-22","x":"1650585600000","y":"101.05","percentChange":"-1.855089355089355","change":"-1.91"},{"date":"2022-04-25","x":"1650844800000","y":"97.67","percentChange":"-3.3448787728847105","change":"-3.38"},{"date":"2022-04-26","x":"1650931200000","y":"100.41","percentChange":"2.8053650046073515","change":"2.74"},{"date":"2022-04-27","x":"1651017600000","y":"100.68","percentChange":"0.268897520167314","change":"0.27"},{"date":"2022-04-28","x":"1651104000000","y":"103.47","percentChange":"2.7711561382598333","change":"2.79"},{"date":"2022-04-29","x":"1651190400000","y":"102.94","percentChange":"-0.5122257659224896","change":"-0.53"},{"date":"2022-05-02","x":"1651449600000","y":"103.42","percentChange":"0.46629104332620946","change":"0.48"},{"date":"2022-05-03","x":"1651536000000","y":"100.9","percentChange":"-2.436666022046026","change":"-2.52"},{"date":"2022-05-04","x":"1651622400000","y":"106.22","percentChange":"5.272547076313181","change":"5.32"},{"date":"2022-05-05","x":"1651708800000","y":"106.74","percentChange":"0.4895499905855771","change":"0.52"},{"date":"2022-05-06","x":"1651795200000","y":"108.33","percentChange":"1.4896008993816752","change":"1.59"},{"date":"2022-05-09","x":"1652054400000","y":"100.1","percentChange":"-7.597156835594942","change":"-8.23"},{"date":"2022-05-10","x":"1652140800000","y":"96.87","percentChange":"-3.226773226773227","change":"-3.23"},{"date":"2022-05-11","x":"1652227200000","y":"102.2","percentChange":"5.502219469391969","change":"5.33"},{"date":"2022-05-12","x":"1652313600000","y":"102.42","percentChange":"0.21526418786692758","change":"0.22"},{"date":"2022-05-13","x":"1652400000000","y":"106.27","percentChange":"3.7590314391720367","change":"3.85"},{"date":"2022-05-16","x":"1652659200000","y":"108.91","percentChange":"2.484238261033217","change":"2.64"},{"date":"2022-05-17","x":"1652745600000","y":"106.76","percentChange":"-1.9741070608759526","change":"-2.15"},{"date":"2022-05-18","x":"1652832000000","y":"104.07","percentChange":"-2.5196702884975646","change":"-2.69"},{"date":"2022-05-19","x":"1652918400000","y":"106.82","percentChange":"2.6424521956375515","change":"2.75"},{"date":"2022-05-20","x":"1653004800000","y":"107.17","percentChange":"0.32765399737876805","change":"0.35"},{"date":"2022-05-23","x":"1653264000000","y":"107.54","percentChange":"0.3452458710460017","change":"0.37"},{"date":"2022-05-24","x":"1653350400000","y":"107.2","percentChange":"-0.3161614283057467","change":"-0.34"},{"date":"2022-05-25","x":"1653436800000","y":"107.75","percentChange":"0.5130597014925373","change":"0.55"},{"date":"2022-05-26","x":"1653523200000","y":"111.25","percentChange":"3.2482598607888633","change":"3.5"},{"date":"2022-05-27","x":"1653609600000","y":"112.23","percentChange":"0.8808988764044944","change":"0.98"},{"date":"2022-05-30","x":"1653868800000","y":"117.24","percentChange":"4.464047046244319","change":"5.01"},{"date":"2022-05-31","x":"1653955200000","y":"111.91","percentChange":"-4.546229955646537","change":"-5.33"},{"date":"2022-06-01","x":"1654041600000","y":"112.72","percentChange":"0.7237959074256098","change":"0.81"},{"date":"2022-06-02","x":"1654128000000","y":"114.3","percentChange":"1.4017033356990773","change":"1.58"},{"date":"2022-06-03","x":"1654214400000","y":"116.23","percentChange":"1.6885389326334208","change":"1.93"},{"date":"2022-06-06","x":"1654473600000","y":"116.06","percentChange":"-0.14626172244687258","change":"-0.17"},{"date":"2022-06-07","x":"1654560000000","y":"114.54","percentChange":"-1.3096674134068584","change":"-1.52"},{"date":"2022-06-08","x":"1654646400000","y":"117.15","percentChange":"2.278679937139864","change":"2.61"},{"date":"2022-06-09","x":"1654732800000","y":"116.49","percentChange":"-0.5633802816901409","change":"-0.66"},{"date":"2022-06-10","x":"1654819200000","y":"115.34","percentChange":"-0.9872092025066529","change":"-1.15"},{"date":"2022-06-13","x":"1655078400000","y":"115.31","percentChange":"-0.02601005722212589","change":"-0.03"},{"date":"2022-06-14","x":"1655164800000","y":"113.48","percentChange":"-1.587026276992455","change":"-1.83"},{"date":"2022-06-15","x":"1655251200000","y":"110.75","percentChange":"-2.4057102573140643","change":"-2.73"},{"date":"2022-06-16","x":"1655337600000","y":"112.7","percentChange":"1.7607223476297968","change":"1.95"},{"date":"2022-06-17","x":"1655424000000","y":"105.78","percentChange":"-6.14019520851819","change":"-6.92"},{"date":"2022-06-20","x":"1655683200000","y":"110.18","percentChange":"4.159576479485725","change":"4.4"},{"date":"2022-06-21","x":"1655769600000","y":"107.34","percentChange":"-2.5776002904338355","change":"-2.84"},{"date":"2022-06-22","x":"1655856000000","y":"103.99","percentChange":"-3.120924166200857","change":"-3.35"},{"date":"2022-06-23","x":"1655942400000","y":"101.58","percentChange":"-2.317530531781902","change":"-2.41"},{"date":"2022-06-24","x":"1656028800000","y":"104.45","percentChange":"2.825359322701319","change":"2.87"},{"date":"2022-06-27","x":"1656288000000","y":"106.38","percentChange":"1.8477740545715653","change":"1.93"},{"date":"2022-06-28","x":"1656374400000","y":"108.89","percentChange":"2.3594660650498214","change":"2.51"},{"date":"2022-06-29","x":"1656460800000","y":"107.01","percentChange":"-1.7265129947653595","change":"-1.88"},{"date":"2022-06-30","x":"1656547200000","y":"103.1","percentChange":"-3.653864124848145","change":"-3.91"},{"date":"2022-07-01","x":"1656633600000","y":"105.39","percentChange":"2.221144519883608","change":"2.29"},{"date":"2022-07-05","x":"1656979200000","y":"96.52","percentChange":"-8.416358288262643","change":"-8.87"},{"date":"2022-07-06","x":"1657065600000","y":"94.98","percentChange":"-1.5955242436800663","change":"-1.54"},{"date":"2022-07-07","x":"1657152000000","y":"99.25","percentChange":"4.495683301747737","change":"4.27"},{"date":"2022-07-08","x":"1657238400000","y":"101.53","percentChange":"2.297229219143577","change":"2.28"},{"date":"2022-07-11","x":"1657497600000","y":"101.21","percentChange":"-0.31517777996651236","change":"-0.32"},{"date":"2022-07-12","x":"1657584000000","y":"93.31","percentChange":"-7.805552810987057","change":"-7.9"},{"date":"2022-07-13","x":"1657670400000","y":"91.36","percentChange":"-2.089808166327296","change":"-1.95"},{"date":"2022-07-14","x":"1657756800000","y":"90.15","percentChange":"-1.324430823117338","change":"-1.21"},{"date":"2022-07-15","x":"1657843200000","y":"91.74","percentChange":"1.7637271214642263","change":"1.59"},{"date":"2022-07-18","x":"1658102400000","y":"96.36","percentChange":"5.0359712230215825","change":"4.62"},{"date":"2022-07-19","x":"1658188800000","y":"97.45","percentChange":"1.1311747613117475","change":"1.09"},{"date":"2022-07-20","x":"1658275200000","y":"96.88","percentChange":"-0.5849153412006157","change":"-0.57"},{"date":"2022-07-21","x":"1658361600000","y":"93.78","percentChange":"-3.1998348472336913","change":"-3.1"},{"date":"2022-07-22","x":"1658448000000","y":"92.43","percentChange":"-1.4395393474088292","change":"-1.35"},{"date":"2022-07-25","x":"1658707200000","y":"94.42","percentChange":"2.1529806339932924","change":"1.99"},{"date":"2022-07-26","x":"1658793600000","y":"92.88","percentChange":"-1.6310103791569583","change":"-1.54"},{"date":"2022-07-27","x":"1658880000000","y":"95.29","percentChange":"2.594745908699397","change":"2.41"},{"date":"2022-07-28","x":"1658966400000","y":"94.65","percentChange":"-0.6716339594920768","change":"-0.64"},{"date":"2022-07-29","x":"1659052800000","y":"96.75","percentChange":"2.218700475435816","change":"2.1"},{"date":"2022-08-01","x":"1659312000000","y":"92.39","percentChange":"-4.506459948320414","change":"-4.36"},{"date":"2022-08-02","x":"1659398400000","y":"93.22","percentChange":"0.8983656239852797","change":"0.83"},{"date":"2022-08-03","x":"1659484800000","y":"89.74","percentChange":"-3.7331044840163057","change":"-3.48"},{"date":"2022-08-04","x":"1659571200000","y":"87.56","percentChange":"-2.4292400267439267","change":"-2.18"},{"date":"2022-08-05","x":"1659657600000","y":"88.08","percentChange":"0.5938784833257195","change":"0.52"},{"date":"2022-08-08","x":"1659916800000","y":"89.93","percentChange":"2.100363306085377","change":"1.85"},{"date":"2022-08-09","x":"1660003200000","y":"88.9","percentChange":"-1.1453352607583676","change":"-1.03"},{"date":"2022-08-10","x":"1660089600000","y":"90.47","percentChange":"1.7660292463442069","change":"1.57"},{"date":"2022-08-11","x":"1660176000000","y":"92.69","percentChange":"2.453852105670388","change":"2.22"},{"date":"2022-08-12","x":"1660262400000","y":"90.87","percentChange":"-1.9635343618513323","change":"-1.82"},{"date":"2022-08-15","x":"1660521600000","y":"88.41","percentChange":"-2.7071640805546386","change":"-2.46"},{"date":"2022-08-16","x":"1660608000000","y":"85.86","percentChange":"-2.8842891075670174","change":"-2.55"},{"date":"2022-08-17","x":"1660694400000","y":"87.3","percentChange":"1.6771488469601676","change":"1.44"},{"date":"2022-08-18","x":"1660780800000","y":"89.67","percentChange":"2.7147766323024056","change":"2.37"},{"date":"2022-08-19","x":"1660867200000","y":"90.11","percentChange":"0.49068807851009255","change":"0.44"},{"date":"2022-08-22","x":"1661126400000","y":"89.97","percentChange":"-0.1553656641882144","change":"-0.14"},{"date":"2022-08-23","x":"1661212800000","y":"93.25","percentChange":"3.6456596643325554","change":"3.28"},{"date":"2022-08-24","x":"1661299200000","y":"94.4","percentChange":"1.2332439678284182","change":"1.15"},{"date":"2022-08-25","x":"1661385600000","y":"92.19","percentChange":"-2.3411016949152543","change":"-2.21"},{"date":"2022-08-26","x":"1661472000000","y":"92.39","percentChange":"0.21694326933506888","change":"0.2"},{"date":"2022-08-29","x":"1661731200000","y":"96.19","percentChange":"4.112999242342245","change":"3.8"},{"date":"2022-08-30","x":"1661817600000","y":"91.17","percentChange":"-5.218837717018401","change":"-5.02"},{"date":"2022-08-31","x":"1661904000000","y":"89.03","percentChange":"-2.347263354173522","change":"-2.14"},{"date":"2022-09-01","x":"1661990400000","y":"86.22","percentChange":"-3.1562394698416263","change":"-2.81"},{"date":"2022-09-02","x":"1662076800000","y":"86.48","percentChange":"0.3015541637671074","change":"0.26"},{"date":"2022-09-05","x":"1662336000000","y":"88.789","percentChange":"2.6699814986123958","change":"2.309"},{"date":"2022-09-06","x":"1662422400000","y":"86.51","percentChange":"-2.5667593958711103","change":"-2.279"},{"date":"2022-09-07","x":"1662508800000","y":"81.63","percentChange":"-5.640966362270258","change":"-4.88"},{"date":"2022-09-08","x":"1662595200000","y":"83.07","percentChange":"1.7640573318632855","change":"1.44"},{"date":"2022-09-09","x":"1662681600000","y":"86.36","percentChange":"3.9605152281208618","change":"3.29"},{"date":"2022-09-12","x":"1662940800000","y":"87.41","percentChange":"1.2158406669754516","change":"1.05"},{"date":"2022-09-13","x":"1663027200000","y":"86.89","percentChange":"-0.5948976089692255","change":"-0.52"},{"date":"2022-09-14","x":"1663113600000","y":"88.05","percentChange":"1.3350212912878352","change":"1.16"},{"date":"2022-09-15","x":"1663200000000","y":"84.65","percentChange":"-3.861442362294151","change":"-3.4"},{"date":"2022-09-16","x":"1663286400000","y":"84.76","percentChange":"0.1299468399291199","change":"0.11"},{"date":"2022-09-19","x":"1663545600000","y":"85.36","percentChange":"0.7078810759792354","change":"0.6"},{"date":"2022-09-20","x":"1663632000000","y":"83.94","percentChange":"-1.6635426429240863","change":"-1.42"},{"date":"2022-09-21","x":"1663718400000","y":"82.94","percentChange":"-1.1913271384322135","change":"-1.0"},{"date":"2022-09-22","x":"1663804800000","y":"83.49","percentChange":"0.6631299734748011","change":"0.55"},{"date":"2022-09-23","x":"1663891200000","y":"78.74","percentChange":"-5.68930410827644","change":"-4.75"},{"date":"2022-09-26","x":"1664150400000","y":"76.71","percentChange":"-2.5781051562103126","change":"-2.03"},{"date":"2022-09-27","x":"1664236800000","y":"78.5","percentChange":"2.333463694433581","change":"1.79"},{"date":"2022-09-28","x":"1664323200000","y":"82.15","percentChange":"4.649681528662421","change":"3.65"},{"date":"2022-09-29","x":"1664409600000","y":"81.23","percentChange":"-1.119902617163725","change":"-0.92"},{"date":"2022-09-30","x":"1664496000000","y":"79.49","percentChange":"-2.1420657392588947","change":"-1.74"},{"date":"2022-10-03","x":"1664755200000","y":"83.63","percentChange":"5.2082022895961755","change":"4.14"},{"date":"2022-10-04","x":"1664841600000","y":"86.52","percentChange":"3.455697716130575","change":"2.89"},{"date":"2022-10-05","x":"1664928000000","y":"87.0137","percentChange":"0.5706195099398983","change":"0.4937"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"value":false,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":65.37,"calculated_right_value":119.65,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":6,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":7,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"date","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMM YY')});"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"date","value":"date"},{"label":"y","value":"y"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[date|frenchDate]]<br>\nCours du brent : [[y]] <strong>$</strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"}};
+
+  var graphParameters = {"selected_xRows":["date"],"selected_yRows":["y"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"areaChart","chartTitle":"Un an de cours du Brent","chartSource":"Tradingeconomics","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeAreachart(data_) {
+
+    var kValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_yRows'];
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+    // width = +svg.attr("width") - margin.left - margin.right;
+
+    updateParameters();
+
+    var data = _.cloneDeep(data_);
+    var initial_data = _.cloneDeep(data);
+
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var yScale = d3.scaleLinear()
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale)
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var area = d3.area()
+    .x(function(d) { return xScale(d.x_value) })
+    .y0(yScale(yScale.domain()[0]))
+    .y1(function(d) { return yScale(d.y_value)})
+    .curve(d3.curveLinear);
+
+    // .curve(d3.curveCatmullRom.alpha(0.5));
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+    var allArea = g_inner
+    .selectAll('.area')
+    .data(data);
+
+    allArea
+    .transition()
+    .duration(200)
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+    allArea.exit().transition().duration(200).remove();
+
+    allArea
+    .enter()
+    .append('path')
+    .attr('class', 'area')
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) })
+    .style('fill', function(d) { return colorUpdated(d[0].name) })
+    .style('stroke-width', 2)
+    .style('fill-opacity', 0.9);
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+        // AllDotPoints = g_inner
+        // .selectAll('circle.dotPoint')
+        // .data(_.flatten(data));
+
+        // AllDotPoints
+        // // .transition()
+        // // .duration(200)
+        // .attr('cx', function(d) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .style('fill-opacity', 0 );
+
+        // AllDotPoints.exit().transition().duration(200).remove();
+
+        // AllDotPoints
+        // .enter()
+        // .append('circle')
+        // .attr('class', 'dotPoint')
+        // .attr('cx', function(d, i) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .attr('r', 3)
+        // .style('stroke-width', 5)
+        // .style('stroke', 'white')
+        // .style('stroke-opacity', 0)
+        // .style('fill-opacity', 0 )
+        // // .style('fill', 'black')
+        // .on('mouseover', function(d, i){ show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        // ;
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+
+customizeAxis()
+
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeAreachart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
