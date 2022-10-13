@@ -353,8 +353,6 @@ function configMap(data){
   let allpoints = [];
 
 
-  data.filter
-
 
 for (i in data) { // 100k points
 
