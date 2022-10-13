@@ -52,7 +52,8 @@ var margin = {top: 80, right: 30, bottom: 60, left: 40},
     minMaxRectWidth = [12,18],
     scaleWidth,
     thisMinZoom = 2,
-    this_date = t0_txt;
+    this_date = t0_txt,
+    centermap = [46.2, 2];
 
 var this_win_width = $(window).width();
 
@@ -69,6 +70,7 @@ thisMinZoom = 5;
 
 
   this_zoom_level = 5.5;
+  centermap  = [46.37, 2.34]
  }   
 
     // var mainColor = '#f9be00';
@@ -231,7 +233,7 @@ ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
 
 
   map = L.map('map', {
-    dragging: testMobile(), center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom, minZoom: thisMinZoom, tap:testMobile()}).setView([46.2, 2], this_zoom_level)
+    dragging: testMobile(), center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom, minZoom: thisMinZoom, tap:testMobile()}).setView(centermap, this_zoom_level)
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
