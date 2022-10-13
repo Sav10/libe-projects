@@ -38,6 +38,24 @@
         #libe-menu {
             height: auto !important;
         }
+
+
+.dot {
+    height: 12px;
+    width: 12px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid #ddd;
+}
+
+     .legende_dot {
+    display: inline-block;
+    margin-left: 8px;
+}
+
+
+
         </style>
         
         <!-- Vendor -->
@@ -119,7 +137,10 @@ Chevaux mutilés.
   <svg id = "map_slider" height="70" width="600"></svg>
 
   </div>
-<div id='appenedCityTagContainer'></div>
+<div id='appenedCityTagContainer'>
+<span class="legende_dot"><span class="dot" style="background-color:red"></span> Rupture totale</span>
+<span class="legende_dot"><span class="dot" style="background-color:orange"></span> Rupture partielle</span>    
+</div>
 <div id="articles"></div>
 
   </div>
