@@ -46,7 +46,7 @@ var margin = {top: 80, right: 30, bottom: 60, left: 40},
     grouped_points,
     gmap,
     info_city,
-    this_zoom_level = 5.2,
+    this_zoom_level = 4.6,
     thismaxZoom = 12,
     rectWidth = 10,
     minMaxRectWidth = [12,18],
@@ -54,7 +54,7 @@ var margin = {top: 80, right: 30, bottom: 60, left: 40},
     thisMinZoom = 2,
     this_date = t0_txt;
 
-
+var this_win_width = $(window).width();
 
     if($(window).width() >= 1000){
 
@@ -63,6 +63,13 @@ this_zoom_level = 6;
 thisMinZoom = 5;
 
     }
+
+
+ if ((this_win_width > 620) && (this_win_width <= 750)){
+
+
+  this_zoom_level = 5.5;
+ }   
 
     // var mainColor = '#f9be00';
 
