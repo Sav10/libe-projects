@@ -277,21 +277,6 @@ function makeSlider (){
      moving_slider(x.invert(evt.x)); }));
 
 
-
-
-// slider.selectAll('rect.rectEvent')
-// .data(data)
-// .enter()
-// .append('rect')
-// .attr('class', 'rectEvent')
-// .attr('x', function(d){return x(d.datetime)})
-// .attr('y', -8)
-// .attr('width', '10px')
-// .attr('height', '15px')
-// .attr('fill', function(d){ return color_intentionnel(d.intentionnel)})
-// .style('pointer-events', 'none');
-
-
   var handle = slider.insert("g", ".track-overlay")
   .attr("class", "handle")
 ;
@@ -323,7 +308,7 @@ slider
 .append('g')
 .attr('transform', 'translate(' + width_slider + ', 30)')
 .append('text')
-.attr('class', 'dateSlider')
+.attr('class', 'dateSlider date2')
 .attr('text-anchor', 'end')
 .text(moment(tMax, 'YYYY-MM-DD').format('LL'))
 ;
@@ -445,7 +430,6 @@ d3.select('#play_button')
 }
 
 
-
 function moving_slider(h) {
   handle.attr("transform", "translate("+ x(h) +",0)");
 
@@ -517,18 +501,17 @@ grouped_points.addTo(map);
 
 function populate_map(date_value, city, category){
 
-  // select only cities of selected year or before
-
-  // console.log(date_value)
-
-  // console.log(data)
-
   if (date_value){
 
 // d3.select('text.dateSlider')
 // .text(moment(date_value).format('LL'))
 
 if (this_date != formatTime2(date_value)){
+
+
+d3.select('svg g text.dateSlider.date2')
+.text(moment(date_value, 'YYYY-MM-DD').format('LL'))
+
 
   var filtered_data = _.cloneDeep(data_evo.filter(function(d){ return d[formatTime2(date_value)]}));
 
@@ -655,8 +638,6 @@ this_date = date_txt
 
 
 
-
-
       }
 
 
@@ -736,34 +717,6 @@ d3.select('#appenedPictoContainer').selectAll('*')
 
 
 
-function appendImages(array_types){
-var this_html = ''
-
-for (i in array_types){
-var thisD = array_types[i]
-
-
-
-if (! images_cat[thisD]){
-
-
-}
-else{
-
-var thisImg = '<img src="static/generated/img/' + images_cat[thisD]+'" class="pictosArticles"/>'
-
-
-  this_html = this_html + thisImg
-
-
-}
-
-
-}
-
-return this_html
-
-}
 
 
 var removespecials = function (str){
@@ -804,28 +757,6 @@ serialize_for_url = function(obj) {
   return str.join("&");
 }
 
-
-d3.selectAll(".shareTwitter")
-.on('click', function(){ shareTwitter()});
-
-d3.selectAll(".shareFacebook")
-.on('click', function(){ shareFacebook()});
-
-
-
-function shareFacebook () {
-          var url = encodeURIComponent(window.location.origin + window.location.pathname),
-              link = 'http://www.facebook.com/sharer/sharer.php?u=' + url ;
-          window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
-        };
-
-function shareTwitter () {
-          var url = encodeURIComponent(window.location.origin + window.location.pathname),
-              text = "Chevaux mutilés https://www.liberation.fr/apps/2020/09/la-carte-des-chevaux-mutiles/ via @libe",
-              link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
-          window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
-
-      }
 
    function testMobile (){
     if (parseInt(d3.select('#mainContent').style("width")) >= 600){
