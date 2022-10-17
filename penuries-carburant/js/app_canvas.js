@@ -6,7 +6,7 @@ var formatTime2 = d3.timeFormat("%Y-%m-%d")
 
 var mainWidth = parseInt(d3.select('.mainContent .mainMap').style("width"));
 
-var sliderTime = 4000;
+var sliderTime = 5000;
 
 var maptype = 'standard';
 
@@ -40,7 +40,7 @@ var margin = {top: 80, right: 30, bottom: 60, left: 40},
     t0 = parseTime('2022-09-01'),
     t0_txt = '2022-09-27',
     tMax,
-    tMax_txt = '2022-10-12',
+    tMax_txt = '2022-10-16',
     ticks_slider,
     svgmap,
     grouped_points,
@@ -209,9 +209,9 @@ data_evo.forEach(function(d, i){
 
 })
 
-console.log(data_ids)
+// console.log(data_ids)
 
-console.log(data_evo)
+// console.log(data_evo)
 
 
 // data = data.filter(function(d){return d.datetime}).filter(function(d){return d.LatLng})
