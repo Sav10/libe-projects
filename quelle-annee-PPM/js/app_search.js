@@ -435,7 +435,26 @@ g_inner
   drawLegend()
   addCustomCode()
 
-d3.select('.graphContainer').append('text').attr('id', 'vous_etes_ici').text('Vous êtes ici').attr('text-anchor', 'middle').attr('x', xScale(-250000)).attr('y', yScale(357)).attr('fill', 'black').style('font-size', '13px')
+d3.selectAll('#vous_etes_ici_circle, #vous_etes_ici_texte').remove()
+
+d3.select('.graphContainer').append('circle')
+.attr('id', 'vous_etes_ici_circle')
+.attr('cx', xScale(moment(this_selection.datetime)))
+.attr('cy', yScale(this_selection.de_season_avg))
+.attr('stroke', 'black')
+.attr('r', 7)
+.attr('fill-opacity', 0);
+
+
+
+d3.select('.graphContainer').append('text')
+.attr('id', 'vous_etes_ici_texte').text('Vous êtes ici')
+.attr('text-anchor', 'end')
+.attr('x', xScale(moment(this_selection.datetime)))
+.attr('dx', '-1em')
+.attr('dy', '-0.7em')
+.attr('y', yScale(this_selection.de_season_avg))
+.attr('fill', 'black').style('font-size', '13px')
 
 
 }
