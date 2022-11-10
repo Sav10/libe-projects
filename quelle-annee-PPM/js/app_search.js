@@ -450,15 +450,16 @@ d3.select('.graphContainer').append('circle')
 .attr('cx', xScale(moment(this_selection.datetime)))
 .attr('cy', yScale(this_selection.de_season_avg))
 .attr('stroke', 'black')
-.attr('r', 7)
-.attr('fill-opacity', 0);
+.attr('r', 9)
+.attr('fill-opacity', 0)
+.attr('stroke-width', '4px');
 
 
 
 d3.select('.graphContainer').append('text')
 .attr('id', 'vous_etes_ici_texte').text('Vous êtes né.e ici')
 .attr('text-anchor', 'end')
-.attr('x', xScale(moment(this_selection.datetime)) > 70 ? xScale(moment(this_selection.datetime)) : 70)
+.attr('x', xScale(moment(this_selection.datetime)) > 74 ? xScale(moment(this_selection.datetime)) : 74)
 .attr('dx', '-1em')
 .attr('dy', '-0.7em')
 .attr('y', yScale(this_selection.de_season_avg))
