@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+/*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+/*html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%} body{margin:0} menu,article,aside,details,footer,header,nav,section{display:block} h1{font-size:2em;margin:.67em 0} figcaption,figure,main{display:block} figure{margin:1em 40px} hr{box-sizing:content-box;height:0} code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em} a{background-color:transparent;-webkit-text-decoration-skip:objects} a:active,a:hover{outline-width:0} abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted} b,strong{font-weight:bolder} dfn{font-style:italic} mark{background-color:#ff0;color:#000} small{font-size:80%} sub,sup{font-size:75%;line-height:0;position:relative} sub{bottom:-.25em} sup{top:-.5em} audio:not([controls]){display:none;height:0} img{border-style:none} svg:not(:root){overflow:hidden} button,hr,input{overflow:visible} audio,canvas,progress,video{display:inline-block} progress,sub,sup{vertical-align:baseline} button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0} button,input{} button,select{text-transform:none} [type=submit], [type=reset],button,html [type=button]{-webkit-appearance:button} [type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0} [type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px} fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .5em} legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal} progress{} textarea{overflow:auto} [type=checkbox],[type=radio]{box-sizing:border-box;padding:0} [type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto} [type=search]{-webkit-appearance:textfield;outline-offset:-2px} [type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none} ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit} summary{display:list-item} [hidden],template{display:none}*/
+
+/*! Reset */
+/** {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+*:before, *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+html, body {margin: 0;padding: 0;width: 100%;height: 100%;}
+body {position: relative; font-family:Arial, sans-serif;font-size:1em;color:#222;background:#ffffff;}
+h1, h2, h3, h4, h5, h6 {font-style: normal; font-weight: normal; margin: 0; padding: 0;}
+ul {margin: 0; padding: 0;}
+li {list-style-type:none;}
+button {border: none; background: transparent; cursor: pointer;}
+a{text-decoration:none; cursor:pointer; color: #222;}
+a:visited{text-decoration:none;cursor:pointer;}
+a:hover{text-decoration:none;cursor:pointer;}*/
+
+#search-wrap, #search-wrap-right {position: relative; width: 100%; height: 100%; margin: 0 auto; overflow: hidden;}
+
+#search-wrap-right {
+max-width: 400px;
+}
+
+
+.search-form {padding: .5em; background: #E9E8E8;}
+input {display: inline-block; width: 100%; margin: 0 auto; margin-top: .5em; padding: .5em; border: none;}
+.typeahead {background: #fff; border: 1px solid #1D4B70;}
+.typeahead li {padding: .5em;}
+.typeahead li.active {background: #E9E8E8;}
+.typeahead li a {color: #222;}
+.typeahead li a strong {font-weight: normal;}
+
+
+#search-circonscriptions {display: block; margin: .5em 0; overflow-y: auto; background: #fff;}
+ul.search-liste li {position: relative; padding: .65em; cursor: pointer; padding-left: 0; border-bottom: 1px solid #E9E8E8; overflow: hidden;}
+ul.search-liste li:first-child {border-top: 1px solid #E9E8E8;}
