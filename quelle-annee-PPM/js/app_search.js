@@ -448,13 +448,14 @@ d3.select('.graphContainer').append('circle')
 
 
 d3.select('.graphContainer').append('text')
-.attr('id', 'vous_etes_ici_texte').text('Vous êtes ici')
+.attr('id', 'vous_etes_ici_texte').text('Vous êtes né.e ici')
 .attr('text-anchor', 'end')
-.attr('x', xScale(moment(this_selection.datetime)))
+.attr('x', xScale(moment(this_selection.datetime)) > 70 ? xScale(moment(this_selection.datetime)) : 70)
 .attr('dx', '-1em')
 .attr('dy', '-0.7em')
 .attr('y', yScale(this_selection.de_season_avg))
 .attr('fill', 'black').style('font-size', '13px')
+.style('font-weight', 'bold')
 
 
 }
