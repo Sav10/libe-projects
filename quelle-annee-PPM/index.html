@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
 
-        <title>Libération - Législatives : trouver votre circonscription</title>
+        <title>Libération - A quelle concentration de CO2 êtes-vous né.e</title>
         <meta name="description" content="Tout savoir sur les dernières actualités politiques, monde, société, sports, écologie avec le journal en ligne Libération.">
         <meta name="keywords" content="actualités, news">
 
@@ -319,6 +319,9 @@ h2#resultats_precedents {
     </div>
     <div id="info_container">
       <h2 style="text-align: center;" id="result_circo"></h2>
+      <div id="chart" style="max-width:1000px">
+<svg></svg>
+ </div>
         <div id="info" style="display: none;">
             <div class="mini_col"><span class="title_item">INSCRITS</span><span id='nombre_inscrits'></span></div>
                 <div class="mini_col"><span class="title_item" id='nom_sortant'>DEPUTE SORTANT</span><span id='depute_sortant'></span></div>
@@ -348,6 +351,7 @@ h2#resultats_precedents {
         <!-- Scripts -->
           <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+            <script type="text/javascript" src="../chart-repo/utilities/js/moment-with-locales.min.js"></script>
         <script type="text/javascript" src="js/app_search.js"></script>
 
         <!-- // Xiti -->
