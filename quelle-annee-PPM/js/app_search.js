@@ -92,7 +92,7 @@ data: {
       selection: (event) => {
         const selection = event.detail.selection.value;
         autoCompleteJS.input.value = selection.mois_annee;
-        this_selection = selection.properties
+        this_selection = selection
 
         console.log(selection)
 
@@ -289,6 +289,8 @@ function makeLinechart(data_) {
     d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
   .range([0, width]);
 
+  console.log(data)
+
 
   var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
 
@@ -432,6 +434,9 @@ g_inner
 
   drawLegend()
   addCustomCode()
+
+d3.select('.graphContainer').append('text').attr('id', 'vous_etes_ici').text('Vous êtes ici').attr('text-anchor', 'middle').attr('x', xScale(-250000)).attr('y', yScale(357)).attr('fill', 'black').style('font-size', '13px')
+
 
 }
 
