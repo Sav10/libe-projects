@@ -141,7 +141,7 @@ data: {
 
      function write_PPM(concentration){
 
-      d3.select('#result_circo').text(String(concentration).replace('.', ','))
+      d3.select('#result_circo').text(String(_.round(concentration,1)).replace('.', ','))
 
 
      }
