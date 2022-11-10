@@ -106,7 +106,8 @@ data: {
 
      function write_PPM(concentration){
 
-      d3.select('#result_circo').text(String(_.round(concentration,1)).replace('.', ','))
+      d3.select('#result_naissance').html( "Le mois de votre naissance, la concentration dans l'atmosphère de CO2 était de <b>"+
+       String(_.round(concentration,1)).replace('.', ',') + '</b> PPM')
 
 
 
@@ -435,7 +436,14 @@ g_inner
   drawLegend()
   addCustomCode()
 
-d3.selectAll('#vous_etes_ici_circle, #vous_etes_ici_texte').remove()
+d3.selectAll('#vous_etes_ici_circle, #vous_etes_ici_texte, #text_bar_350').remove()
+
+d3.selectAll('g.axis--y .tick line').filter(d=>d == 350).style('stroke', 'black').style('stroke-dasharray', '2 2').style('stroke-width', '1px')
+
+d3.select('.graphContainer').append('text')
+.attr('id', 'text_bar_350').text('taux maximal acceptable de CO2 ')
+.attr('text-anchor', 'middle').attr('x', xScale(moment('1920-01-01')))
+.attr('y', yScale(357)).attr('fill', 'black').style('font-size', '13px')
 
 d3.select('.graphContainer').append('circle')
 .attr('id', 'vous_etes_ici_circle')
