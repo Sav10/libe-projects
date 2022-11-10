@@ -128,6 +128,9 @@ stroke:#888;
   };
 
 
+var xScale,
+  yScale;
+
   var initTotalWidth = 600;
   var initTotalHeight = 400;
 
@@ -345,7 +348,7 @@ function makeLinechart(data_) {
   var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
   var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
 
-  var xScale = xScaleType()
+  xScale = xScaleType()
   .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
     d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
   .range([0, width]);
@@ -353,7 +356,7 @@ function makeLinechart(data_) {
 
   var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
 
-  var yScale = thisScaleType
+  yScale = thisScaleType
   .domain([thisYMin,
     thisYMax
     ])
@@ -533,6 +536,10 @@ g_inner
 
   drawLegend()
   addCustomCode()
+
+  d3.selectAll('g.axis--y .tick line').filter(d=>d == 350).style('stroke', 'black').style('stroke-dasharray', '2 2').style('stroke-width', '2px')
+
+d3.select('.graphContainer').append('text').attr('id', 'text_bar_350').text('taux maximal acceptable de CO2 ').attr('text-anchor', 'middle').attr('x', xScale(-250000)).attr('y', yScale(357)).attr('fill', 'black').style('font-size', '13px')
 
 }
 
