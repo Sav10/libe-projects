@@ -33,7 +33,7 @@ d.de_season_avg = +d.de_season_avg;
 
 
 const autoCompleteJS = new autoComplete({
-  placeHolder: "Mois et année de naissance",
+  placeHolder: "Mois et année de naissance. Ex : janvier 1980",
   diacritics: true,
   searchEngine: "loose",
   threshold: 4,
