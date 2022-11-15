@@ -485,9 +485,13 @@ d3.select('g#axisLeft')
 let continent_labels = g.append('g').attr('id', 'continent_labels')
 
 
+let line_v_padding= [0, -25, -20, -120, -50, -10]
+
 continent_names.forEach(function(d,i){
 
-  let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 120 : 0;
+  let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 120 : (d3.keys(continents_position)[i] == 'OC' ? 10 : 0);
+
+
 
 continent_labels
 .append('text')
@@ -498,6 +502,20 @@ continent_labels
 .style('font-size', '32px')
 .style('fill', '#333')
 .style('font-weight', 'bold');
+
+if (i != 0){
+
+continent_labels
+.append('line')
+.attr('x1', 0)
+.attr('x2', 1980)
+.attr('y1', (scaleY(d3.values(continents_position)[i]) + line_v_padding[i]))
+.attr('y2', (scaleY(d3.values(continents_position)[i]) + line_v_padding[i]))
+.attr('stroke', '#777')
+.attr('stroke-dasharray', '4 4')
+
+}
+
 
 } )
 
