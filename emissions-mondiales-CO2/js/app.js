@@ -1028,3 +1028,12 @@ function hide_tooltip() {
     .style('display', 'none');
 
 }
+
+
+function drawLabel(country){
+
+let this_d = d3.selectAll('path').filter(d=>d && d.nom == country).data()[0]
+
+g.append('text').text(country).attr('x', this_d.x).attr('y', this_d.y)
+
+}
