@@ -476,10 +476,11 @@ changeYAxisScale([0,10])
 d3.select('g#continent_labels')
 .remove()
 
-d3.select('g#axisLeft')
-.remove()
 
 makeScatterPlot('CO2_capita', 'continent_num')
+
+d3.select('g#axisLeft')
+.remove()
 
 let continent_labels = g.append('g').attr('id', 'continent_labels')
 
