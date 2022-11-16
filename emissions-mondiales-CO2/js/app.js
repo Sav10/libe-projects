@@ -438,6 +438,7 @@ d3.selectAll('#title_x, #title_y')
 
 d3.select('g#continent_labels')
 .remove()
+d3.selectAll('.labels_pays').remove()
 
 makeScatterPlot('CO2_capita', 'gdp_capita')
 
@@ -475,7 +476,7 @@ changeYAxisScale([0,10])
 
 d3.select('g#continent_labels')
 .remove()
-
+d3.selectAll('.labels_pays').remove()
 
 makeScatterPlot('CO2_capita', 'continent_num')
 
@@ -489,7 +490,7 @@ let line_v_padding= [0, -25, -20, -120, -50, -10]
 
 continent_names.forEach(function(d,i){
 
-  let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 120 : (d3.keys(continents_position)[i] == 'OC' ? 10 : 0);
+  let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 140 : (d3.keys(continents_position)[i] == 'OC' ? 20 : 0);
 
 
 
@@ -501,7 +502,8 @@ continent_labels
 .attr('text-anchor', 'middle')
 .style('font-size', '32px')
 .style('fill', '#333')
-.style('font-weight', 'bold');
+.style('font-weight', 'bold')
+.style('text-transform', 'uppercase');
 
 if (i != 0){
 
@@ -519,7 +521,14 @@ continent_labels
 
 } )
 
+setTimeout(() => {  
 
+drawLabel('Qatar')
+drawLabel('Chine', -90)
+drawLabel('France', 120, 1)
+drawLabel('États-Unis', -30)
+
+}, 1500);
 
 
 
@@ -530,6 +539,7 @@ d3.select('#display_geo_paths')
 
 d3.select('g#continent_labels')
 .remove()
+d3.selectAll('.labels_pays').remove()
 
 d3.selectAll('#representation_carto .actionButton')
 .style('color', 'red')
@@ -1030,10 +1040,32 @@ function hide_tooltip() {
 }
 
 
-function drawLabel(country){
+function drawLabel(country, v_padding, label_bottom){
 
 let this_d = d3.selectAll('path').filter(d=>d && d.nom == country).data()[0]
 
-g.append('text').text(country).attr('x', this_d.x).attr('y', this_d.y)
+v_padding = v_padding ? v_padding : 0;
+
+label_bottom = label_bottom ? -55 : 0;
+
+g.append('text')
+.attr('class', 'labels_pays')
+.attr('text-anchor', 'middle')
+.text(country)
+.attr('x', this_d.x + 35)
+.attr('y', this_d.y - 20 + v_padding)
+.style('font-size', '24px')
+.style('fill', '#333')
+.style('font-weight', 'bold');
+
+g.append('line')
+.attr('class', 'labels_pays')
+.attr('x1', this_d.x + 40)
+.attr('x2', this_d.x + 40)
+.attr('y1', this_d.y - 10 + v_padding + label_bottom)
+.attr('y2', this_d.y + 15 + v_padding + label_bottom)
+.attr('stroke', '#333')
+
+
 
 }
