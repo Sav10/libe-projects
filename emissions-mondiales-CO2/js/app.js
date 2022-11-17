@@ -631,6 +631,7 @@ Promise.all([
       // let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
+      console.log(this_centroid)
       // let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
       // let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
       // let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
