@@ -633,9 +633,11 @@ Promise.all([
       // let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
-      // console.log(this_centroid)
+      console.log(this_centroid)
       if (d3.keys(centroid_padding).includes(this_id)){
         console.log('US')
+        this_centroid[0] = this_centroid[0] + d3.keys(centroid_padding).includes(this_id)[0]
+        this_centroid[1] = this_centroid[1] + d3.keys(centroid_padding).includes(this_id)[1]
       }
       // let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
       // let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
