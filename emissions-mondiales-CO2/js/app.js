@@ -435,7 +435,7 @@ let line_v_padding= [0, -70, -20, -120, -50, -10]
 
 continent_names.forEach(function(d,i){
 
-  let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 140 : (d3.keys(continents_position)[i] == 'OC' ? 20 : 0);
+  let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 160 : (d3.keys(continents_position)[i] == 'OC' ? 25 : 0);
 
 
 
@@ -470,8 +470,8 @@ setTimeout(() => {
 
 drawLabel('Qatar')
 drawLabel('Chine', -90)
-drawLabel('France', 120, 1)
-drawLabel('États-Unis', -30)
+drawLabel('France', -10)
+drawLabel('États-Unis', -50)
 
 }, 1500);
 
