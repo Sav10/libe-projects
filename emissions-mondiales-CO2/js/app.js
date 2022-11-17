@@ -612,6 +612,8 @@ Promise.all([
 
     // allPaths2.filter(d=> d && list_code_2d.includes(d.id ))
 
+    var centroid_padding = {'US': [0,0]}
+
     for (i in allSvgNodes){
       let this_id = d3.select(allSvgNodes[i]).attr('data-id')
       let this_nom = d3.select(allSvgNodes[i]).attr('data-nom')
@@ -631,7 +633,10 @@ Promise.all([
       // let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
-      console.log(this_centroid)
+      // console.log(this_centroid)
+      if (d3.keys(centroid_padding).includes(this_id)){
+        console.log('US')
+      }
       // let this_to_circle_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius);
       // let this_to_circle_ecart_function = flubber.toCircle(this_path_d, this_centroid[0], this_centroid[1], this_radius_ecart);
       // let this_from_circle_function = flubber.fromCircle(this_centroid[0], this_centroid[1], this_radius, this_path_d);
