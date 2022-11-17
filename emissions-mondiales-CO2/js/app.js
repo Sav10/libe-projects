@@ -922,6 +922,7 @@ function show_tooltip(d) {
 
 
 let this_code = d.id;
+
     let this_d = _.find(app_data, d => d[code_pays] == this_code);
     if(this_d){
     /*let this_deaths = this_d.deaths;*/
@@ -930,7 +931,7 @@ let this_code = d.id;
 
     d3.select("#tooltip").style('display', 'block');
 
-    var this_inner_html =  `<span class='details'>${d.nom}<br>
+    var this_inner_html =  `<span class='details'>${this_d.Pays}<br>
     <span style="font-weight:bold">${String(_.round(CO2_capita, 1)).replace('.', ',')}</span> tonnes de CO2 sont rejetées par an et par personne en moyenne soit 
     <span style="font-weight:bold">${String(_.round(CO2, 2)).replace('.', ',')}</span> millions de tonnes au total
     <br>Le PIB par habitant est de <span style="font-weight:bold">${this_d.gdp_capita}$</span></span></span>`
