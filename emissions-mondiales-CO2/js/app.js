@@ -22,7 +22,8 @@ continent_names = ['Afrique', 'Amérique du Nord', 'Amérique du Sud', 'Asie', '
 
 const code_pays = 'code2d';
 
-const radius_name = 'radius_pop';
+/*const radius_name = 'radius_pop';*/
+const radius_name = 'radius_co2';
 
 // const code_pays = 'geoId';
 
@@ -38,6 +39,10 @@ var circleScalePop =
 d3.scaleSqrt()
 .range([1, 100]);
 
+var circleScaleCO2 = 
+d3.scaleSqrt()
+.range([1, 100]);
+
 var circleScaleDeaths = 
 d3.scaleSqrt()
 .range([1, 100]);
@@ -45,9 +50,9 @@ d3.scaleSqrt()
 
 
 const continents_position = {
-'AF': 9,
+'AF': 9.2,
 'NA': 7.5,
-'SA': 6.5,
+'SA': 6.2,
 'AS': 4.2,
 'EU': 1.7,
 'OC': .5}
@@ -118,66 +123,6 @@ function getBoundingBoxCenter (selection) {
 //////////////////////////////////////// configuration
 const format = d3.format(',')
 
-const tip = d3
-.tip()
-.attr('class', 'd3-tip')
-.offset([-10, 0])
-.html(
-  d =>{
-    let this_code = d.id;
-    let this_d = _.find(app_data, d => d[code_pays] == this_code);
-    if(this_d){
-    /*let this_deaths = this_d.deaths;*/
-    let people_fully_vaccinated_per_hundred = this_d.people_fully_vaccinated_per_hundred;
-
-    return `<span class='details'>${
-      d.nom
-    }<br><span style="font-weight:bold">${people_fully_vaccinated_per_hundred}%</span> de la population est vaccinée (deux doses)
-    <br>Et le PIB par habitant est de <span style="font-weight:bold">${this_d.gdp_capita}$</span></span></span>`
-  }
-  else{
-    console.log(this_code + ' not found')
-  }
-  })
-
-tip.direction(function(d) {
- if (d.id === 'CN') return 'w'
- if (d.id === 'ID') return 'w'
- if (d.id === 'PG') return 'w'
- if (d.id === 'AU') return 'w'
- if (d.id === 'NZ') return 'w'
- if (d.id === '74') return 'w'
- if (d.id === '73') return 'w'
- if (d.id === '06') return 'w'
- if (d.id === '2B') return 'w'
- if (d.id === '2A') return 'w'
- if (d.id === 'CA') return 'e'
- if (d.id === 'US') return 'e'
- if (d.id === 'GL') return 's'
- if (d.id === 'NO') return 's'
- if (d.id === 'SE') return 's'
- if (d.id === 'FI') return 's'
- if (d.id === 'RU') return 's'
- if (d.id === 'IS') return 's'
- if (d.id === 'MX') return 'e'
- if (d.id === '972') return 'e'
-  if (d.id === '973') return 'e'
- if (d.id === '974') return 'e'
- if (d.id === '975') return 'e'
- if (d.id === '976') return 'e'
- if (d.id === '29') return 'e'
-if (d.id === '22') return 'e'
-if (d.id === '56') return 'e'
-
-  // otherwise if not specified
-return 'n'
-})
-
-// tip.offset(function(d) {
-//   return [-10, 0]
-// })
-
-// d3.select('body').style('overflow', 'hidden')
 
 const parentWidth = d3
 .select('body')
@@ -363,7 +308,7 @@ function force_separate_circles_for_scatter(column_x, column_y){
   .force("y", d3.forceY(function(d) {
     return column_y ? scaleY(d[column_y]) : 500}).strength(5))
   .force("x", d3.forceX(function(d) { return scaleX(d[column_x]) }).strength(8))
-  .force("collide", d3.forceCollide(7).radius(d=> d['radius_pop']))
+  .force("collide", d3.forceCollide(7).radius(d=> d[radius_name]))
   .stop();
 
   for (var i = 0; i < 200; ++i) simulation.tick();
@@ -414,7 +359,7 @@ d3.select('g#continent_labels')
 .remove()
 
 
-transform_all_paths_to_circle('radius_pop')
+transform_all_paths_to_circle(radius_name)
 
 
 })
@@ -486,7 +431,7 @@ d3.select('g#axisLeft')
 let continent_labels = g.append('g').attr('id', 'continent_labels')
 
 
-let line_v_padding= [0, -25, -20, -120, -50, -10]
+let line_v_padding= [0, -70, -20, -120, -50, -10]
 
 continent_names.forEach(function(d,i){
 
@@ -562,11 +507,11 @@ d3.selectAll('#title_x, #title_y')
 
 if (mapstate ==1){
 
-redraw_paths('radius_pop', 500)
+redraw_paths(radius_name, 500)
 }
 else if (mapstate == 2){
 
-redraw_paths('radius_pop', 500)
+redraw_paths(radius_name, 500)
 
 }
  
@@ -604,12 +549,6 @@ force_separate_circles_for_scatter(column_x, column_y)
 }
 
 
-// color2.domain([0, 1, 2, 4, 5]);
-
-// svg.call(tip)
-
-d3.select(".carte svg")
-.call(tip)
 
 
 Promise.all([
@@ -651,6 +590,8 @@ Promise.all([
 
     circleScalePop.domain(d3.extent(data, d=>d.population));
 
+    circleScaleCO2.domain(d3.extent(data, d=>d.CO2));
+
     let list_code_2d = data.map(d=>d.code2d)
 
 
@@ -686,6 +627,7 @@ Promise.all([
       let this_radius_random = Math.round(Math.random()*50);
       let this_radius_fixed = 10;
       let this_radius_pop = Math.round(circleScalePop(this_pop));
+      let this_radius_co2 = Math.round(circleScaleCO2(CO2));
       // let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
@@ -707,6 +649,7 @@ Promise.all([
         'continent':continent,
         'continent_num':continent_num,
         'radius_pop': this_radius_pop,
+        'radius_co2': this_radius_co2,
         // 'radius_deaths': this_radius_deaths,
         'radius_fixed': this_radius_fixed,
         'nom': this_nom,
