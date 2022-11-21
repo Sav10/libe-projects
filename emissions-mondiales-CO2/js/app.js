@@ -524,7 +524,7 @@ continent_labels
 .style('text-transform', 'uppercase');
 
 
-}, 1500);
+}, 1000);
 
 
 

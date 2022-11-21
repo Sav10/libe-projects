@@ -483,6 +483,12 @@ font-size: .7rem;
   font-family: 'syntheselibeweb', Arial, sans-serif;
 }
 
+
+.repr_cat{
+width: 100px;
+display: inline-block;
+}
+
   </style>
 </head>
 <body>
@@ -497,10 +503,15 @@ font-size: .7rem;
           <h1 id="graph_title"><span style="color:red; display: inline;"></span> Les émissions de CO<sub>2</sub> dans le monde</h1>
                     <p>
                     <div id="representation_carto">
-                    <a class="actionButton"  id="display_geo_paths" href="#" style="color:#fff;background-color:red">Par territoire</a>
-                    <a class="actionButton" id="display_proportional_circles_pop" href="#">Par émissions</a>
-                  <a class="actionButton" id="order_by_vax" href="#">Par PIB</a>
-                  <a class="actionButton" id="order_by_continent" href="#">Par continent</a>
+                    <p><span class="repr_cat">Représentation</span>
+                      <a class="actionButton"  id="display_geo_paths" href="#" style="color:#fff;background-color:red">Territoire</a>
+                    <a class="actionButton" id="display_proportional_circles_pop" href="#">Émissions</a>
+                  </p>
+                  <p style='margin-top: -1.1em;'>
+                    <br><span class="repr_cat">Classement</span>
+                  <a class="actionButton" id="order_by_vax" href="#">PIB</a>
+                  <a class="actionButton" id="order_by_continent" href="#">Continent</a>
+                </p>
 
           </div>
 
