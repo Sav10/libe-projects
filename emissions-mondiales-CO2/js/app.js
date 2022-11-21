@@ -357,7 +357,7 @@ d3.select('g#axisBottom')
 
 d3.select('g#continent_labels')
 .remove()
-
+d3.selectAll('.labels_pays').remove()
 
 transform_all_paths_to_circle(radius_name)
 
