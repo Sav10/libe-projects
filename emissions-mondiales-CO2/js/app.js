@@ -355,7 +355,7 @@ d3.select('g#axisLeft')
 d3.select('g#axisBottom')
 .remove()
 
-d3.select('g#continent_labels')
+d3.selectAll('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
@@ -381,7 +381,7 @@ changeYAxisScale([400,120000], 'log')
 d3.selectAll('#title_x, #title_y')
 .style('visibility', 'visible');
 
-d3.select('g#continent_labels')
+d3.selectAll('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
@@ -448,7 +448,7 @@ changeYAxisScale([0,10])
 
 
 
-d3.select('g#continent_labels')
+d3.selectAll('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
@@ -533,7 +533,7 @@ continent_labels
 d3.select('#display_geo_paths')
 .on('click', function(){
 
-d3.select('g#continent_labels')
+d3.selectAll('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
