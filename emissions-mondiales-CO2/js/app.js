@@ -385,8 +385,37 @@ d3.select('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
+
 makeScatterPlot('CO2_capita', 'gdp_capita')
 
+
+setTimeout(() => {  
+
+let continent_labels = g.append('g').attr('id', 'continent_labels')
+
+continent_labels
+.append('line')
+.attr('y1', 30)
+.attr('y2', 980)
+.attr('x1', (scaleX(2) + 45))
+.attr('x2', (scaleX(2) + 45))
+.attr('stroke', '#777')
+.attr('stroke-dasharray', '4 4')
+.style('stroke-width', '2.5px')
+
+continent_labels
+.append('text')
+.text('2 tonnes')
+.attr('x', (scaleX(2) + 45))
+.attr('y', 20)
+.attr('text-anchor', 'middle')
+.style('font-size', '20px')
+.style('fill', '#333')
+.style('font-weight', 'bold')
+.style('text-transform', 'uppercase');
+
+
+}, 1000);
 
 })
 
@@ -472,6 +501,28 @@ drawLabel('Qatar')
 drawLabel('Chine', -90)
 drawLabel('France', -10)
 drawLabel('États-Unis', -50)
+
+continent_labels
+.append('line')
+.attr('y1', 30)
+.attr('y2', 980)
+.attr('x1', (scaleX(2) + 45))
+.attr('x2', (scaleX(2) + 45))
+.attr('stroke', '#777')
+.attr('stroke-dasharray', '4 4')
+.style('stroke-width', '2.5px')
+
+continent_labels
+.append('text')
+.text('2 tonnes')
+.attr('x', (scaleX(2) + 45))
+.attr('y', 20)
+.attr('text-anchor', 'middle')
+.style('font-size', '20px')
+.style('fill', '#333')
+.style('font-weight', 'bold')
+.style('text-transform', 'uppercase');
+
 
 }, 1500);
 
