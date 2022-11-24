@@ -1,4 +1,4 @@
-country,CO2,code_country,iso_code,Pays,population,gdp_capita,Co2_capita,code2d,continent,continents_txt,gdp_capita0
+country,CO2,code_country,iso_code,Pays,population,gdp_capita2,Co2_capita,code2d,continent,continents_txt,gdp_capita
 Afghanistan,11.8742,AFG,AFG,Afghanistan,39835428,516.747870807558,0.2980813962887508,AF,AS,Asie,1803.0
 Albania,4.6191,ALB,ALB,Albanie,2872934,6494.38571288581,1.60779885650001,AL,EU,Europe,11803.0
 Algeria,176.2691,DZA,DZA,Algérie,44616626,3765.03462494702,3.950749211740036,DZ,AF,Afrique,13913.0
