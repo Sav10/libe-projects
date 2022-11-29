@@ -50,9 +50,9 @@ let this_class = pays_selections_classes[d.pays]
 
 let this_icon = new L.Icon({
 /*  iconUrl: 'pictos/' + this_color +'.png',*/
-  iconUrl: 'pictos/' + 'Autre-Gris2' +'.png',
+  iconUrl: 'pictos/' + 'epingle' +'.png',
   // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
+  iconSize: [12.5, 20.5],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
@@ -280,14 +280,15 @@ d3.selectAll('#affichage .display_element')
 
 let this_background_color = ''
 
-if(d == 'Tous'){
+/*if(d == 'Tous'){
 
 this_background_color = 'black'
 }
 else {
   this_background_color = color_genres[d]
-}
+}*/
 
+this_background_color = 'red'
 
 d3.select(this)
 .style('background-color', this_background_color)
@@ -310,7 +311,7 @@ d3.selectAll('.leaflet-marker-icon.' + pays_selections_classes[d]).style('displa
 })
 
 d3.select('#affichage .display_element')
-.style('background-color', 'black')
+.style('background-color', 'red')
 .style('color', '#fff')
 
 }
