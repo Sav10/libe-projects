@@ -7,7 +7,7 @@ let all_data_festivals
 
 let data_joueurs
 
-let this_zoom_level = 4.6
+let this_zoom_level = 1
 
 const thismaxZoom = 16
 
@@ -30,7 +30,7 @@ let grouped_points
 
       baseMapWidth = 800;
       baseMapHeight = 600;
-      this_zoom_level = 6;
+      this_zoom_level = 1;
 
     }
 
@@ -191,7 +191,7 @@ svg.style('max-height', $(window).height()*0.9 + 'px')
 
 if($(window).width() >= 1000){
 
-  this_zoom_level = 6;
+  this_zoom_level = 1;
 }
 
 var mainColor = '#E3234A';
@@ -357,7 +357,7 @@ function configMap(data){
 // console.log(data)
 
   map = L.map('map', {
-    dragging: testMobile(), center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom, minZoom: thisMinZoom, tap:testMobile()}).setView([46.2, 2], this_zoom_level)
+    dragging: testMobile(), center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom, minZoom: thisMinZoom, tap:testMobile()}).setView([0, 0], this_zoom_level)
 
   L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
     attribution: 'Map tiles by <a href="http://stamen.com"  target="_blank">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0"  target="_blank">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright"  target="_blank">OpenStreetMap</a>',
