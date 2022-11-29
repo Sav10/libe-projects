@@ -55,7 +55,7 @@ let this_icon = new L.Icon({
   iconUrl: 'pictos/' + 'epingle' +'.png',
   // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [12.5, 20.5],
-  iconAnchor: [12, 41],
+  iconAnchor: [6, 20.5],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
   className : this_class
