@@ -358,7 +358,11 @@ function configMap(data){
 // console.log(data)
 
   map = L.map('map', {
-    dragging: testMobile(), center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom, minZoom: thisMinZoom, tap:testMobile()}).setView([0, 0], this_zoom_level)
+/*    dragging: testMobile(),*/ 
+    center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom,
+/*      tap:testMobile(),*/
+    minZoom: thisMinZoom, 
+  }).setView([0, 0], this_zoom_level)
 
   L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
     attribution: 'Map tiles by <a href="http://stamen.com"  target="_blank">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0"  target="_blank">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright"  target="_blank">OpenStreetMap</a>',
