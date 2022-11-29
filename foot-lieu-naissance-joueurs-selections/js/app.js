@@ -7,7 +7,7 @@ let all_data_festivals
 
 let data_joueurs
 
-let this_zoom_level = 0
+let this_zoom_level = 1
 
 const thismaxZoom = 16
 
@@ -162,7 +162,7 @@ map,
 app_data = {},
 minMaxRectWidth = [12,30],
 scaleWidth,
-thisMinZoom = 2,
+thisMinZoom = 1,
 mapstate = 0,
 fulldata,
 daterange = {},
@@ -296,7 +296,7 @@ d3.select(this)
 .style('background-color', this_background_color)
 .style('color', '#fff')
 
-fillOnClick(d)
+
 
 if (d == 'Tous'){
 d3.selectAll('.leaflet-marker-icon').style('display', 'initial')
@@ -363,7 +363,8 @@ function configMap(data){
 /*    dragging: testMobile(),*/ 
     center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom,
 /*      tap:testMobile(),*/
-    minZoom: thisMinZoom, 
+    minZoom: thisMinZoom,
+    worldCopyJump: true, 
   }).setView(this_view, this_zoom_level)
 
   L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
@@ -373,6 +374,8 @@ function configMap(data){
     maxZoom: 20,
     ext: 'png'
   }).addTo(map);
+
+/*  map.fitWorld()*/
 
   info_city = L.control({position: 'topleft'});
 
@@ -560,127 +563,7 @@ d3.select('#sparkline').select('*').remove()
 
 ////// Fill map when clicking on tag
 
-  function fillOnClick(name){
-
-
-if (name == 'candidat en tête') {
-
-for (i in geo_objects){
-
-
-  let this_data = geo_objects[i].data
-  if (this_data){
-  let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
-
-  all_those_paths
-  .style('stroke-width', 0)
-  .style('fill', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
-
- return colors_candidats[this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner]
-    }
-    return 'rgb(221, 221, 221)'
-  })
-
-
-  }
-
-
-}
-
-
-}
-
-else if (name == 'abstention'){
-
-
-let this_color_range = d3.scaleLinear()
-  .range(['white', 'black'])
-  .domain([0, 50]);
-
-for (i in geo_objects){
-
-  let this_data = geo_objects[i].data
-    if (this_data){
-  let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
-
-  all_those_paths
-  .style('stroke-width', 0)
-  .style('fill', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
-      let this_dep_data = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0]
-
- let this_dep_abstention = _.round(100*this_dep_data['Abstentions'] / this_dep_data['Inscrits'], 1)
- return this_color_range(this_dep_abstention)
-    }
-    return 'rgb(221, 221, 221)'
-
-  })
-
-
-}
-
-
-
-}
-
-color_progressive_scale
-.range(['white', 'black'])
-.domain([0, 50]);
-
-
-}
-
-else{
-
-d3.selectAll ('#morphocarte svg path')
-.style('stroke', 'black')
-.style('stroke-opacity', 1)
-
-
-let this_color = colors_candidats[name];
-
-
-let this_color_range = d3.scaleLinear()
-  .range(['white', this_color])
-  .domain([-5, 35]);
-
-for (i in geo_objects){
-
-  let this_data = geo_objects[i].data
-
-
-    if (this_data){
-
-  let all_those_paths = d3.select('#'+ geo_objects[i].container + ' svg').selectAll('path');
-
-  all_those_paths
-  .style('fill', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
- let this_dep_candidate_score = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0][name + '_score']
- return this_color_range(this_dep_candidate_score)
-    }
-    return 'rgb(221, 221, 221)'
-  })
-  .style('stroke-width', d => {
-    if (typeof this_data.filter(function(e){return e[geo_objects[i].location_variable] == d.id})[0] !== 'undefined') {
- let this_dep_winner = this_data.filter(function(e){return e[geo_objects[i].location_variable]  == d.id})[0].loc_winner
- return this_dep_winner == name ? 1 : 0;
-    }
-    return 0
-  })
-}
-
-
-}
-
-color_progressive_scale
-.range(['white', this_color])
-.domain([-5, 35]);
-
-
-}
-  }
+ 
 
 ////////////////////////// Move candidate filters
 
