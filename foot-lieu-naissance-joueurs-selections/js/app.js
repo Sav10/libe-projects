@@ -439,6 +439,10 @@ map.on('popupclose', function(e) {
 
       this_obj = data_joueurs[o]
 
+      console.log(this_obj)
+
+      let lieu_naissance = this_obj['naissance_lieu_lequipe'] ? this_obj['naissance_lieu_lequipe'] : this_obj['lieu_naissance_transfermart'];
+
 
       let html_info
 
@@ -447,7 +451,7 @@ map.on('popupclose', function(e) {
 
         html_info = `
         <div id="nom_tooltip">${this_obj['nom']}</div>
-        <div id="localite_tooltip">Lieu de naissance : ${this_obj['naissance_lieu_lequipe']}</div>
+        <div id="localite_tooltip">Lieu de naissance : ${lieu_naissance}</div>
         `;
                 if (this_obj['Téléphone'])
           {html_info += `<div id="tel_tooltip">tel : ${this_obj['Téléphone']}</div>`}
