@@ -54,8 +54,8 @@ let this_icon = new L.Icon({
 /*  iconUrl: 'pictos/' + this_color +'.png',*/
   iconUrl: 'pictos/' + 'epingle' +'.png',
   // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [12.5, 20.5],
-  iconAnchor: [6, 20.5],
+  iconSize: [14, 20],
+  iconAnchor: [10, 20],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
   className : this_class
@@ -336,7 +336,7 @@ Promise.all([
 
   function ready(data_foot) {
 
-    console.log(data_foot)
+    // console.log(data_foot)
 
 
 
@@ -357,7 +357,6 @@ configMap(data_joueurs)
 
 function configMap(data){
 
-// console.log(data)
 
   map = L.map('map', {
 /*    dragging: testMobile(),*/ 
@@ -393,6 +392,7 @@ function configMap(data){
 for (i in data) { // 100k points
 
   d = data[i];
+
   
   // console.log(d)
 /*  let this_marker = L.marker([+d.latitude, +d.longitude], */
@@ -439,17 +439,15 @@ map.on('popupclose', function(e) {
 
       this_obj = data_joueurs[o]
 
-      console.log(this_obj)
 
       let html_info
 
 
       if (this_obj){
 
-        html_info = 
-        `<div id="genre_tooltip" style="color:black">${this_obj['nom']}</div>
-        <div id="nom_tooltip">${this_obj['pays']}</div>
-        <div id="localite_tooltip">Lieu de naissance : ${this_obj['lieu_naissance_transfermart']}</div>
+        html_info = `
+        <div id="nom_tooltip">${this_obj['nom']}</div>
+        <div id="localite_tooltip">Lieu de naissance : ${this_obj['naissance_lieu_lequipe']}</div>
         `;
                 if (this_obj['Téléphone'])
           {html_info += `<div id="tel_tooltip">tel : ${this_obj['Téléphone']}</div>`}
