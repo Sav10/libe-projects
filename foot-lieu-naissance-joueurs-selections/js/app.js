@@ -52,10 +52,10 @@ let this_class = pays_selections_classes[d.pays]
 
 let this_icon = new L.Icon({
 /*  iconUrl: 'pictos/' + this_color +'.png',*/
-  iconUrl: 'pictos/' + 'epingle' +'.png',
+  iconUrl: 'pictos/' + 'epingle-rouge' +'.png',
   // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [14, 20],
-  iconAnchor: [10, 20],
+  iconSize: [14, 18],
+  iconAnchor: [10, 18],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
   className : this_class
@@ -135,14 +135,14 @@ const color_genres_icons = {
   'BD': "BD-Jaune2"
 }
 
-const pays_selections = ['Allemagne', 'Angleterre', 'Arabie saoudite', 'Argentine', 'Australie', 'Belgique', 'Brésil', 'Cameroun', 'Canada',
+const pays_selections = ['Allemagne', 'Angleterre', 'Arabie Saoudite', 'Argentine', 'Australie', 'Belgique', 'Brésil', 'Cameroun', 'Canada',
  'Corée du Sud', 'Costa Rica', 'Croatie', 'Danemark', 'Equateur', 'Espagne', 'États-Unis', 'France', 'Ghana', 'Iran', 'Japon',
   'Maroc', 'Mexique', 'Pays de Galles', 'Pays-Bas', 'Pologne', 'Portugal', 'Qatar', 'Sénégal', 'Serbie', 'Suisse', 'Tunisie',
    'Uruguay']
 
 
 const pays_selections_classes = 
-{'Tous' : 'tous', 'Allemagne' : 'allemagne', 'Angleterre' : 'angleterre', 'Arabie saoudite' : 'arabie_saoudite', 'Argentine' : 'argentine',
+{'Tous' : 'tous', 'Allemagne' : 'allemagne', 'Angleterre' : 'angleterre', 'Arabie Saoudite' : 'arabie_saoudite', 'Argentine' : 'argentine',
 'Australie' : 'australie', 'Belgique' : 'belgique', 'Brésil' : 'bresil', 'Cameroun' : 'cameroun', 'Canada' : 'canada', 'Corée du Sud' : 'coree_du_sud',
 'Costa Rica' : 'costa_rica', 'Croatie' : 'croatie', 'Danemark' : 'danemark', 'Equateur' : 'equateur', 'Espagne' : 'espagne', 'États-Unis' : 'etats_unis',
 'France' : 'france', 'Ghana' : 'ghana', 'Iran' : 'iran', 'Japon' : 'japon', 'Maroc' : 'maroc', 'Mexique' : 'mexique', 'Pays de Galles' : 'pays_de_galles',
@@ -270,7 +270,7 @@ elements_selection
 .enter()
 .append('div')
 .attr('class', 'display_element')
-.text(d=> _.capitalize(d))
+.text(d=> d)
 .on('click', function(event, d){
 
 selected_element = d
