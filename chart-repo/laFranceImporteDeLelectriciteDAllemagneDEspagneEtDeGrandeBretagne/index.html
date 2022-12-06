@@ -1,0 +1,852 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La France importe de l'électricité d'Allemagne, d'Espagne et de Grande-Bretagne</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"code_pays":"CH","last_month_day":"2014-12-31","quantite":"1358","mois_annee":"12/2014"},{"code_pays":"IT","last_month_day":"2014-12-31","quantite":"1516","mois_annee":"12/2014"},{"code_pays":"DB","last_month_day":"2014-12-31","quantite":"670","mois_annee":"12/2014"},{"code_pays":"GB","last_month_day":"2014-12-31","quantite":"1461","mois_annee":"12/2014"},{"code_pays":"ES","last_month_day":"2014-12-31","quantite":"574","mois_annee":"12/2014"},{"code_pays":"CH","last_month_day":"2015-01-31","quantite":"3595","mois_annee":"01/2015"},{"code_pays":"IT","last_month_day":"2015-01-31","quantite":"3997","mois_annee":"01/2015"},{"code_pays":"DB","last_month_day":"2015-01-31","quantite":"-1150","mois_annee":"01/2015"},{"code_pays":"ES","last_month_day":"2015-01-31","quantite":"1225","mois_annee":"01/2015"},{"code_pays":"GB","last_month_day":"2015-01-31","quantite":"2163","mois_annee":"01/2015"},{"code_pays":"DB","last_month_day":"2015-02-28","quantite":"-2090","mois_annee":"02/2015"},{"code_pays":"IT","last_month_day":"2015-02-28","quantite":"3750","mois_annee":"02/2015"},{"code_pays":"ES","last_month_day":"2015-02-28","quantite":"-797","mois_annee":"02/2015"},{"code_pays":"CH","last_month_day":"2015-02-28","quantite":"2776","mois_annee":"02/2015"},{"code_pays":"GB","last_month_day":"2015-02-28","quantite":"2100","mois_annee":"02/2015"},{"code_pays":"GB","last_month_day":"2015-03-31","quantite":"2307","mois_annee":"03/2015"},{"code_pays":"ES","last_month_day":"2015-03-31","quantite":"157","mois_annee":"03/2015"},{"code_pays":"DB","last_month_day":"2015-03-31","quantite":"-503","mois_annee":"03/2015"},{"code_pays":"CH","last_month_day":"2015-03-31","quantite":"2807","mois_annee":"03/2015"},{"code_pays":"IT","last_month_day":"2015-03-31","quantite":"3569","mois_annee":"03/2015"},{"code_pays":"ES","last_month_day":"2015-04-30","quantite":"838","mois_annee":"04/2015"},{"code_pays":"IT","last_month_day":"2015-04-30","quantite":"2661","mois_annee":"04/2015"},{"code_pays":"DB","last_month_day":"2015-04-30","quantite":"212","mois_annee":"04/2015"},{"code_pays":"GB","last_month_day":"2015-04-30","quantite":"2708","mois_annee":"04/2015"},{"code_pays":"CH","last_month_day":"2015-04-30","quantite":"1549","mois_annee":"04/2015"},{"code_pays":"ES","last_month_day":"2015-05-31","quantite":"1641","mois_annee":"05/2015"},{"code_pays":"GB","last_month_day":"2015-05-31","quantite":"2803","mois_annee":"05/2015"},{"code_pays":"IT","last_month_day":"2015-05-31","quantite":"2782","mois_annee":"05/2015"},{"code_pays":"CH","last_month_day":"2015-05-31","quantite":"1318","mois_annee":"05/2015"},{"code_pays":"DB","last_month_day":"2015-05-31","quantite":"3041","mois_annee":"05/2015"},{"code_pays":"IT","last_month_day":"2015-06-30","quantite":"2924","mois_annee":"06/2015"},{"code_pays":"GB","last_month_day":"2015-06-30","quantite":"2753","mois_annee":"06/2015"},{"code_pays":"CH","last_month_day":"2015-06-30","quantite":"756","mois_annee":"06/2015"},{"code_pays":"ES","last_month_day":"2015-06-30","quantite":"1560","mois_annee":"06/2015"},{"code_pays":"DB","last_month_day":"2015-06-30","quantite":"3968","mois_annee":"06/2015"},{"code_pays":"DB","last_month_day":"2015-07-31","quantite":"4362","mois_annee":"07/2015"},{"code_pays":"IT","last_month_day":"2015-07-31","quantite":"3098","mois_annee":"07/2015"},{"code_pays":"GB","last_month_day":"2015-07-31","quantite":"2802","mois_annee":"07/2015"},{"code_pays":"CH","last_month_day":"2015-07-31","quantite":"955","mois_annee":"07/2015"},{"code_pays":"ES","last_month_day":"2015-07-31","quantite":"1381","mois_annee":"07/2015"},{"code_pays":"CH","last_month_day":"2015-08-31","quantite":"2288","mois_annee":"08/2015"},{"code_pays":"DB","last_month_day":"2015-08-31","quantite":"4999","mois_annee":"08/2015"},{"code_pays":"GB","last_month_day":"2015-08-31","quantite":"2675","mois_annee":"08/2015"},{"code_pays":"IT","last_month_day":"2015-08-31","quantite":"2015","mois_annee":"08/2015"},{"code_pays":"ES","last_month_day":"2015-08-31","quantite":"1381","mois_annee":"08/2015"},{"code_pays":"ES","last_month_day":"2015-09-30","quantite":"982","mois_annee":"09/2015"},{"code_pays":"DB","last_month_day":"2015-09-30","quantite":"2135","mois_annee":"09/2015"},{"code_pays":"CH","last_month_day":"2015-09-30","quantite":"951","mois_annee":"09/2015"},{"code_pays":"IT","last_month_day":"2015-09-30","quantite":"3466","mois_annee":"09/2015"},{"code_pays":"GB","last_month_day":"2015-09-30","quantite":"2775","mois_annee":"09/2015"},{"code_pays":"DB","last_month_day":"2015-10-31","quantite":"966","mois_annee":"10/2015"},{"code_pays":"CH","last_month_day":"2015-10-31","quantite":"2726","mois_annee":"10/2015"},{"code_pays":"ES","last_month_day":"2015-10-31","quantite":"966","mois_annee":"10/2015"},{"code_pays":"GB","last_month_day":"2015-10-31","quantite":"1651","mois_annee":"10/2015"},{"code_pays":"IT","last_month_day":"2015-10-31","quantite":"2991","mois_annee":"10/2015"},{"code_pays":"DB","last_month_day":"2015-11-30","quantite":"-647","mois_annee":"11/2015"},{"code_pays":"IT","last_month_day":"2015-11-30","quantite":"4340","mois_annee":"11/2015"},{"code_pays":"GB","last_month_day":"2015-11-30","quantite":"1708","mois_annee":"11/2015"},{"code_pays":"ES","last_month_day":"2015-11-30","quantite":"2264","mois_annee":"11/2015"},{"code_pays":"CH","last_month_day":"2015-11-30","quantite":"4160","mois_annee":"11/2015"},{"code_pays":"GB","last_month_day":"2015-12-31","quantite":"2094","mois_annee":"12/2015"},{"code_pays":"ES","last_month_day":"2015-12-31","quantite":"3327","mois_annee":"12/2015"},{"code_pays":"IT","last_month_day":"2015-12-31","quantite":"4175","mois_annee":"12/2015"},{"code_pays":"CH","last_month_day":"2015-12-31","quantite":"4458","mois_annee":"12/2015"},{"code_pays":"DB","last_month_day":"2015-12-31","quantite":"-1868","mois_annee":"12/2015"},{"code_pays":"GB","last_month_day":"2016-01-31","quantite":"2376","mois_annee":"01/2016"},{"code_pays":"ES","last_month_day":"2016-01-31","quantite":"730","mois_annee":"01/2016"},{"code_pays":"IT","last_month_day":"2016-01-31","quantite":"4351","mois_annee":"01/2016"},{"code_pays":"CH","last_month_day":"2016-01-31","quantite":"4565","mois_annee":"01/2016"},{"code_pays":"DB","last_month_day":"2016-01-31","quantite":"-1912","mois_annee":"01/2016"},{"code_pays":"ES","last_month_day":"2016-02-29","quantite":"770","mois_annee":"02/2016"},{"code_pays":"IT","last_month_day":"2016-02-29","quantite":"4108","mois_annee":"02/2016"},{"code_pays":"CH","last_month_day":"2016-02-29","quantite":"3971","mois_annee":"02/2016"},{"code_pays":"GB","last_month_day":"2016-02-29","quantite":"2684","mois_annee":"02/2016"},{"code_pays":"DB","last_month_day":"2016-02-29","quantite":"-2129","mois_annee":"02/2016"},{"code_pays":"DB","last_month_day":"2016-03-31","quantite":"-2403","mois_annee":"03/2016"},{"code_pays":"ES","last_month_day":"2016-03-31","quantite":"552","mois_annee":"03/2016"},{"code_pays":"GB","last_month_day":"2016-03-31","quantite":"2980","mois_annee":"03/2016"},{"code_pays":"IT","last_month_day":"2016-03-31","quantite":"3903","mois_annee":"03/2016"},{"code_pays":"CH","last_month_day":"2016-03-31","quantite":"3145","mois_annee":"03/2016"},{"code_pays":"IT","last_month_day":"2016-04-30","quantite":"3217","mois_annee":"04/2016"},{"code_pays":"DB","last_month_day":"2016-04-30","quantite":"396","mois_annee":"04/2016"},{"code_pays":"GB","last_month_day":"2016-04-30","quantite":"2249","mois_annee":"04/2016"},{"code_pays":"CH","last_month_day":"2016-04-30","quantite":"1853","mois_annee":"04/2016"},{"code_pays":"ES","last_month_day":"2016-04-30","quantite":"-743","mois_annee":"04/2016"},{"code_pays":"IT","last_month_day":"2016-05-31","quantite":"3080","mois_annee":"05/2016"},{"code_pays":"CH","last_month_day":"2016-05-31","quantite":"432","mois_annee":"05/2016"},{"code_pays":"DB","last_month_day":"2016-05-31","quantite":"2630","mois_annee":"05/2016"},{"code_pays":"GB","last_month_day":"2016-05-31","quantite":"2789","mois_annee":"05/2016"},{"code_pays":"ES","last_month_day":"2016-05-31","quantite":"1253","mois_annee":"05/2016"},{"code_pays":"CH","last_month_day":"2016-06-30","quantite":"1006","mois_annee":"06/2016"},{"code_pays":"DB","last_month_day":"2016-06-30","quantite":"4228","mois_annee":"06/2016"},{"code_pays":"GB","last_month_day":"2016-06-30","quantite":"2512","mois_annee":"06/2016"},{"code_pays":"ES","last_month_day":"2016-06-30","quantite":"2511","mois_annee":"06/2016"},{"code_pays":"IT","last_month_day":"2016-06-30","quantite":"2851","mois_annee":"06/2016"},{"code_pays":"ES","last_month_day":"2016-07-31","quantite":"2603","mois_annee":"07/2016"},{"code_pays":"GB","last_month_day":"2016-07-31","quantite":"2248","mois_annee":"07/2016"},{"code_pays":"IT","last_month_day":"2016-07-31","quantite":"3386","mois_annee":"07/2016"},{"code_pays":"CH","last_month_day":"2016-07-31","quantite":"-638","mois_annee":"07/2016"},{"code_pays":"DB","last_month_day":"2016-07-31","quantite":"420","mois_annee":"07/2016"},{"code_pays":"ES","last_month_day":"2016-08-31","quantite":"2893","mois_annee":"08/2016"},{"code_pays":"IT","last_month_day":"2016-08-31","quantite":"1851","mois_annee":"08/2016"},{"code_pays":"GB","last_month_day":"2016-08-31","quantite":"2237","mois_annee":"08/2016"},{"code_pays":"DB","last_month_day":"2016-08-31","quantite":"-1018","mois_annee":"08/2016"},{"code_pays":"CH","last_month_day":"2016-08-31","quantite":"632","mois_annee":"08/2016"},{"code_pays":"CH","last_month_day":"2016-09-30","quantite":"342","mois_annee":"09/2016"},{"code_pays":"ES","last_month_day":"2016-09-30","quantite":"2445","mois_annee":"09/2016"},{"code_pays":"GB","last_month_day":"2016-09-30","quantite":"994","mois_annee":"09/2016"},{"code_pays":"IT","last_month_day":"2016-09-30","quantite":"2821","mois_annee":"09/2016"},{"code_pays":"DB","last_month_day":"2016-09-30","quantite":"-1610","mois_annee":"09/2016"},{"code_pays":"GB","last_month_day":"2016-10-31","quantite":"-262","mois_annee":"10/2016"},{"code_pays":"IT","last_month_day":"2016-10-31","quantite":"1670","mois_annee":"10/2016"},{"code_pays":"ES","last_month_day":"2016-10-31","quantite":"73","mois_annee":"10/2016"},{"code_pays":"CH","last_month_day":"2016-10-31","quantite":"2123","mois_annee":"10/2016"},{"code_pays":"DB","last_month_day":"2016-10-31","quantite":"-2618","mois_annee":"10/2016"},{"code_pays":"GB","last_month_day":"2016-11-30","quantite":"-106","mois_annee":"11/2016"},{"code_pays":"ES","last_month_day":"2016-11-30","quantite":"760","mois_annee":"11/2016"},{"code_pays":"DB","last_month_day":"2016-11-30","quantite":"-3346","mois_annee":"11/2016"},{"code_pays":"CH","last_month_day":"2016-11-30","quantite":"1946","mois_annee":"11/2016"},{"code_pays":"IT","last_month_day":"2016-11-30","quantite":"1585","mois_annee":"11/2016"},{"code_pays":"IT","last_month_day":"2016-12-31","quantite":"675","mois_annee":"12/2016"},{"code_pays":"DB","last_month_day":"2016-12-31","quantite":"-3841","mois_annee":"12/2016"},{"code_pays":"ES","last_month_day":"2016-12-31","quantite":"1925","mois_annee":"12/2016"},{"code_pays":"GB","last_month_day":"2016-12-31","quantite":"-344","mois_annee":"12/2016"},{"code_pays":"CH","last_month_day":"2016-12-31","quantite":"1168","mois_annee":"12/2016"},{"code_pays":"IT","last_month_day":"2017-01-31","quantite":"1489","mois_annee":"01/2017"},{"code_pays":"ES","last_month_day":"2017-01-31","quantite":"-696","mois_annee":"01/2017"},{"code_pays":"DB","last_month_day":"2017-01-31","quantite":"-2994","mois_annee":"01/2017"},{"code_pays":"GB","last_month_day":"2017-01-31","quantite":"-895","mois_annee":"01/2017"},{"code_pays":"CH","last_month_day":"2017-01-31","quantite":"1151","mois_annee":"01/2017"},{"code_pays":"GB","last_month_day":"2017-02-28","quantite":"824","mois_annee":"02/2017"},{"code_pays":"ES","last_month_day":"2017-02-28","quantite":"654","mois_annee":"02/2017"},{"code_pays":"IT","last_month_day":"2017-02-28","quantite":"3774","mois_annee":"02/2017"},{"code_pays":"DB","last_month_day":"2017-02-28","quantite":"-2169","mois_annee":"02/2017"},{"code_pays":"CH","last_month_day":"2017-02-28","quantite":"3883","mois_annee":"02/2017"},{"code_pays":"GB","last_month_day":"2017-03-31","quantite":"2629","mois_annee":"03/2017"},{"code_pays":"IT","last_month_day":"2017-03-31","quantite":"4066","mois_annee":"03/2017"},{"code_pays":"ES","last_month_day":"2017-03-31","quantite":"3434","mois_annee":"03/2017"},{"code_pays":"CH","last_month_day":"2017-03-31","quantite":"3590","mois_annee":"03/2017"},{"code_pays":"DB","last_month_day":"2017-03-31","quantite":"-1211","mois_annee":"03/2017"},{"code_pays":"ES","last_month_day":"2017-04-30","quantite":"3075","mois_annee":"04/2017"},{"code_pays":"GB","last_month_day":"2017-04-30","quantite":"2709","mois_annee":"04/2017"},{"code_pays":"IT","last_month_day":"2017-04-30","quantite":"3030","mois_annee":"04/2017"},{"code_pays":"DB","last_month_day":"2017-04-30","quantite":"862","mois_annee":"04/2017"},{"code_pays":"CH","last_month_day":"2017-04-30","quantite":"1079","mois_annee":"04/2017"},{"code_pays":"ES","last_month_day":"2017-05-31","quantite":"3818","mois_annee":"05/2017"},{"code_pays":"GB","last_month_day":"2017-05-31","quantite":"2497","mois_annee":"05/2017"},{"code_pays":"DB","last_month_day":"2017-05-31","quantite":"1689","mois_annee":"05/2017"},{"code_pays":"CH","last_month_day":"2017-05-31","quantite":"495","mois_annee":"05/2017"},{"code_pays":"IT","last_month_day":"2017-05-31","quantite":"3131","mois_annee":"05/2017"},{"code_pays":"CH","last_month_day":"2017-06-30","quantite":"-442","mois_annee":"06/2017"},{"code_pays":"DB","last_month_day":"2017-06-30","quantite":"-634","mois_annee":"06/2017"},{"code_pays":"IT","last_month_day":"2017-06-30","quantite":"2913","mois_annee":"06/2017"},{"code_pays":"ES","last_month_day":"2017-06-30","quantite":"2845","mois_annee":"06/2017"},{"code_pays":"GB","last_month_day":"2017-06-30","quantite":"1769","mois_annee":"06/2017"},{"code_pays":"GB","last_month_day":"2017-07-31","quantite":"2467","mois_annee":"07/2017"},{"code_pays":"CH","last_month_day":"2017-07-31","quantite":"586","mois_annee":"07/2017"},{"code_pays":"DB","last_month_day":"2017-07-31","quantite":"-588","mois_annee":"07/2017"},{"code_pays":"ES","last_month_day":"2017-07-31","quantite":"2916","mois_annee":"07/2017"},{"code_pays":"IT","last_month_day":"2017-07-31","quantite":"3701","mois_annee":"07/2017"},{"code_pays":"GB","last_month_day":"2017-08-31","quantite":"2363","mois_annee":"08/2017"},{"code_pays":"IT","last_month_day":"2017-08-31","quantite":"2356","mois_annee":"08/2017"},{"code_pays":"DB","last_month_day":"2017-08-31","quantite":"-233","mois_annee":"08/2017"},{"code_pays":"CH","last_month_day":"2017-08-31","quantite":"876","mois_annee":"08/2017"},{"code_pays":"ES","last_month_day":"2017-08-31","quantite":"3412","mois_annee":"08/2017"},{"code_pays":"IT","last_month_day":"2017-09-30","quantite":"3753","mois_annee":"09/2017"},{"code_pays":"CH","last_month_day":"2017-09-30","quantite":"1237","mois_annee":"09/2017"},{"code_pays":"DB","last_month_day":"2017-09-30","quantite":"-1243","mois_annee":"09/2017"},{"code_pays":"ES","last_month_day":"2017-09-30","quantite":"3359","mois_annee":"09/2017"},{"code_pays":"GB","last_month_day":"2017-09-30","quantite":"1681","mois_annee":"09/2017"},{"code_pays":"GB","last_month_day":"2017-10-31","quantite":"373","mois_annee":"10/2017"},{"code_pays":"CH","last_month_day":"2017-10-31","quantite":"2863","mois_annee":"10/2017"},{"code_pays":"DB","last_month_day":"2017-10-31","quantite":"-4412","mois_annee":"10/2017"},{"code_pays":"ES","last_month_day":"2017-10-31","quantite":"2187","mois_annee":"10/2017"},{"code_pays":"IT","last_month_day":"2017-10-31","quantite":"3371","mois_annee":"10/2017"},{"code_pays":"CH","last_month_day":"2017-11-30","quantite":"2280","mois_annee":"11/2017"},{"code_pays":"ES","last_month_day":"2017-11-30","quantite":"-141","mois_annee":"11/2017"},{"code_pays":"IT","last_month_day":"2017-11-30","quantite":"2558","mois_annee":"11/2017"},{"code_pays":"GB","last_month_day":"2017-11-30","quantite":"-812","mois_annee":"11/2017"},{"code_pays":"DB","last_month_day":"2017-11-30","quantite":"-5614","mois_annee":"11/2017"},{"code_pays":"GB","last_month_day":"2017-12-31","quantite":"604","mois_annee":"12/2017"},{"code_pays":"CH","last_month_day":"2017-12-31","quantite":"3352","mois_annee":"12/2017"},{"code_pays":"ES","last_month_day":"2017-12-31","quantite":"363","mois_annee":"12/2017"},{"code_pays":"DB","last_month_day":"2017-12-31","quantite":"-5860","mois_annee":"12/2017"},{"code_pays":"IT","last_month_day":"2017-12-31","quantite":"2895","mois_annee":"12/2017"},{"code_pays":"GB","last_month_day":"2018-01-31","quantite":"2940","mois_annee":"01/2018"},{"code_pays":"CH","last_month_day":"2018-01-31","quantite":"4073","mois_annee":"01/2018"},{"code_pays":"ES","last_month_day":"2018-01-31","quantite":"3768","mois_annee":"01/2018"},{"code_pays":"IT","last_month_day":"2018-01-31","quantite":"4131","mois_annee":"01/2018"},{"code_pays":"DB","last_month_day":"2018-01-31","quantite":"-604","mois_annee":"01/2018"},{"code_pays":"IT","last_month_day":"2018-02-28","quantite":"3570","mois_annee":"02/2018"},{"code_pays":"GB","last_month_day":"2018-02-28","quantite":"2147","mois_annee":"02/2018"},{"code_pays":"DB","last_month_day":"2018-02-28","quantite":"-5420","mois_annee":"02/2018"},{"code_pays":"ES","last_month_day":"2018-02-28","quantite":"2619","mois_annee":"02/2018"},{"code_pays":"CH","last_month_day":"2018-02-28","quantite":"2514","mois_annee":"02/2018"},{"code_pays":"IT","last_month_day":"2018-03-31","quantite":"3955","mois_annee":"03/2018"},{"code_pays":"DB","last_month_day":"2018-03-31","quantite":"-1840","mois_annee":"03/2018"},{"code_pays":"GB","last_month_day":"2018-03-31","quantite":"2290","mois_annee":"03/2018"},{"code_pays":"ES","last_month_day":"2018-03-31","quantite":"-1479","mois_annee":"03/2018"},{"code_pays":"CH","last_month_day":"2018-03-31","quantite":"3451","mois_annee":"03/2018"},{"code_pays":"GB","last_month_day":"2018-04-30","quantite":"2134","mois_annee":"04/2018"},{"code_pays":"IT","last_month_day":"2018-04-30","quantite":"2970","mois_annee":"04/2018"},{"code_pays":"DB","last_month_day":"2018-04-30","quantite":"1921","mois_annee":"04/2018"},{"code_pays":"ES","last_month_day":"2018-04-30","quantite":"2229","mois_annee":"04/2018"},{"code_pays":"CH","last_month_day":"2018-04-30","quantite":"2250","mois_annee":"04/2018"},{"code_pays":"CH","last_month_day":"2018-05-31","quantite":"939","mois_annee":"05/2018"},{"code_pays":"DB","last_month_day":"2018-05-31","quantite":"5256","mois_annee":"05/2018"},{"code_pays":"ES","last_month_day":"2018-05-31","quantite":"3751","mois_annee":"05/2018"},{"code_pays":"GB","last_month_day":"2018-05-31","quantite":"2592","mois_annee":"05/2018"},{"code_pays":"IT","last_month_day":"2018-05-31","quantite":"3148","mois_annee":"05/2018"},{"code_pays":"ES","last_month_day":"2018-06-30","quantite":"3262","mois_annee":"06/2018"},{"code_pays":"DB","last_month_day":"2018-06-30","quantite":"5345","mois_annee":"06/2018"},{"code_pays":"GB","last_month_day":"2018-06-30","quantite":"2162","mois_annee":"06/2018"},{"code_pays":"IT","last_month_day":"2018-06-30","quantite":"3587","mois_annee":"06/2018"},{"code_pays":"CH","last_month_day":"2018-06-30","quantite":"860","mois_annee":"06/2018"},{"code_pays":"GB","last_month_day":"2018-07-31","quantite":"2604","mois_annee":"07/2018"},{"code_pays":"CH","last_month_day":"2018-07-31","quantite":"-257","mois_annee":"07/2018"},{"code_pays":"ES","last_month_day":"2018-07-31","quantite":"3497","mois_annee":"07/2018"},{"code_pays":"IT","last_month_day":"2018-07-31","quantite":"3416","mois_annee":"07/2018"},{"code_pays":"DB","last_month_day":"2018-07-31","quantite":"2730","mois_annee":"07/2018"},{"code_pays":"CH","last_month_day":"2018-08-31","quantite":"294","mois_annee":"08/2018"},{"code_pays":"GB","last_month_day":"2018-08-31","quantite":"2369","mois_annee":"08/2018"},{"code_pays":"ES","last_month_day":"2018-08-31","quantite":"2252","mois_annee":"08/2018"},{"code_pays":"DB","last_month_day":"2018-08-31","quantite":"1674","mois_annee":"08/2018"},{"code_pays":"IT","last_month_day":"2018-08-31","quantite":"1885","mois_annee":"08/2018"},{"code_pays":"IT","last_month_day":"2018-09-30","quantite":"3229","mois_annee":"09/2018"},{"code_pays":"DB","last_month_day":"2018-09-30","quantite":"2827","mois_annee":"09/2018"},{"code_pays":"ES","last_month_day":"2018-09-30","quantite":"2555","mois_annee":"09/2018"},{"code_pays":"CH","last_month_day":"2018-09-30","quantite":"338","mois_annee":"09/2018"},{"code_pays":"GB","last_month_day":"2018-09-30","quantite":"1732","mois_annee":"09/2018"},{"code_pays":"GB","last_month_day":"2018-10-31","quantite":"1639","mois_annee":"10/2018"},{"code_pays":"IT","last_month_day":"2018-10-31","quantite":"2705","mois_annee":"10/2018"},{"code_pays":"CH","last_month_day":"2018-10-31","quantite":"3134","mois_annee":"10/2018"},{"code_pays":"ES","last_month_day":"2018-10-31","quantite":"369","mois_annee":"10/2018"},{"code_pays":"DB","last_month_day":"2018-10-31","quantite":"1274","mois_annee":"10/2018"},{"code_pays":"CH","last_month_day":"2018-11-30","quantite":"1157","mois_annee":"11/2018"},{"code_pays":"DB","last_month_day":"2018-11-30","quantite":"-621","mois_annee":"11/2018"},{"code_pays":"GB","last_month_day":"2018-11-30","quantite":"1411","mois_annee":"11/2018"},{"code_pays":"IT","last_month_day":"2018-11-30","quantite":"1679","mois_annee":"11/2018"},{"code_pays":"ES","last_month_day":"2018-11-30","quantite":"-275","mois_annee":"11/2018"},{"code_pays":"IT","last_month_day":"2018-12-31","quantite":"3582","mois_annee":"12/2018"},{"code_pays":"GB","last_month_day":"2018-12-31","quantite":"2548","mois_annee":"12/2018"},{"code_pays":"ES","last_month_day":"2018-12-31","quantite":"1998","mois_annee":"12/2018"},{"code_pays":"DB","last_month_day":"2018-12-31","quantite":"-686","mois_annee":"12/2018"},{"code_pays":"CH","last_month_day":"2018-12-31","quantite":"2855","mois_annee":"12/2018"},{"code_pays":"ES","last_month_day":"2019-01-31","quantite":"637","mois_annee":"01/2019"},{"code_pays":"DB","last_month_day":"2019-01-31","quantite":"-5280","mois_annee":"01/2019"},{"code_pays":"GB","last_month_day":"2019-01-31","quantite":"1971","mois_annee":"01/2019"},{"code_pays":"CH","last_month_day":"2019-01-31","quantite":"1907","mois_annee":"01/2019"},{"code_pays":"IT","last_month_day":"2019-01-31","quantite":"2784","mois_annee":"01/2019"},{"code_pays":"ES","last_month_day":"2019-02-28","quantite":"3160","mois_annee":"02/2019"},{"code_pays":"DB","last_month_day":"2019-02-28","quantite":"-1749","mois_annee":"02/2019"},{"code_pays":"GB","last_month_day":"2019-02-28","quantite":"2495","mois_annee":"02/2019"},{"code_pays":"CH","last_month_day":"2019-02-28","quantite":"2946","mois_annee":"02/2019"},{"code_pays":"IT","last_month_day":"2019-02-28","quantite":"3770","mois_annee":"02/2019"},{"code_pays":"DB","last_month_day":"2019-03-31","quantite":"-559","mois_annee":"03/2019"},{"code_pays":"GB","last_month_day":"2019-03-31","quantite":"2744","mois_annee":"03/2019"},{"code_pays":"IT","last_month_day":"2019-03-31","quantite":"3686","mois_annee":"03/2019"},{"code_pays":"CH","last_month_day":"2019-03-31","quantite":"3235","mois_annee":"03/2019"},{"code_pays":"ES","last_month_day":"2019-03-31","quantite":"4067","mois_annee":"03/2019"},{"code_pays":"IT","last_month_day":"2019-04-30","quantite":"2450","mois_annee":"04/2019"},{"code_pays":"GB","last_month_day":"2019-04-30","quantite":"1370","mois_annee":"04/2019"},{"code_pays":"CH","last_month_day":"2019-04-30","quantite":"1730","mois_annee":"04/2019"},{"code_pays":"ES","last_month_day":"2019-04-30","quantite":"2696","mois_annee":"04/2019"},{"code_pays":"DB","last_month_day":"2019-04-30","quantite":"685","mois_annee":"04/2019"},{"code_pays":"IT","last_month_day":"2019-05-31","quantite":"3510","mois_annee":"05/2019"},{"code_pays":"GB","last_month_day":"2019-05-31","quantite":"2341","mois_annee":"05/2019"},{"code_pays":"CH","last_month_day":"2019-05-31","quantite":"2588","mois_annee":"05/2019"},{"code_pays":"ES","last_month_day":"2019-05-31","quantite":"2270","mois_annee":"05/2019"},{"code_pays":"DB","last_month_day":"2019-05-31","quantite":"4402","mois_annee":"05/2019"},{"code_pays":"IT","last_month_day":"2019-06-30","quantite":"3425","mois_annee":"06/2019"},{"code_pays":"CH","last_month_day":"2019-06-30","quantite":"2706","mois_annee":"06/2019"},{"code_pays":"DB","last_month_day":"2019-06-30","quantite":"4451","mois_annee":"06/2019"},{"code_pays":"ES","last_month_day":"2019-06-30","quantite":"1626","mois_annee":"06/2019"},{"code_pays":"GB","last_month_day":"2019-06-30","quantite":"1699","mois_annee":"06/2019"},{"code_pays":"DB","last_month_day":"2019-07-31","quantite":"2351","mois_annee":"07/2019"},{"code_pays":"CH","last_month_day":"2019-07-31","quantite":"1192","mois_annee":"07/2019"},{"code_pays":"ES","last_month_day":"2019-07-31","quantite":"1592","mois_annee":"07/2019"},{"code_pays":"IT","last_month_day":"2019-07-31","quantite":"3999","mois_annee":"07/2019"},{"code_pays":"GB","last_month_day":"2019-07-31","quantite":"1910","mois_annee":"07/2019"},{"code_pays":"DB","last_month_day":"2019-08-31","quantite":"3193","mois_annee":"08/2019"},{"code_pays":"CH","last_month_day":"2019-08-31","quantite":"1376","mois_annee":"08/2019"},{"code_pays":"ES","last_month_day":"2019-08-31","quantite":"1933","mois_annee":"08/2019"},{"code_pays":"IT","last_month_day":"2019-08-31","quantite":"2577","mois_annee":"08/2019"},{"code_pays":"GB","last_month_day":"2019-08-31","quantite":"1802","mois_annee":"08/2019"},{"code_pays":"CH","last_month_day":"2019-09-30","quantite":"2271","mois_annee":"09/2019"},{"code_pays":"ES","last_month_day":"2019-09-30","quantite":"1601","mois_annee":"09/2019"},{"code_pays":"GB","last_month_day":"2019-09-30","quantite":"1620","mois_annee":"09/2019"},{"code_pays":"IT","last_month_day":"2019-09-30","quantite":"3287","mois_annee":"09/2019"},{"code_pays":"DB","last_month_day":"2019-09-30","quantite":"959","mois_annee":"09/2019"},{"code_pays":"GB","last_month_day":"2019-10-31","quantite":"1194","mois_annee":"10/2019"},{"code_pays":"ES","last_month_day":"2019-10-31","quantite":"2011","mois_annee":"10/2019"},{"code_pays":"IT","last_month_day":"2019-10-31","quantite":"3236","mois_annee":"10/2019"},{"code_pays":"DB","last_month_day":"2019-10-31","quantite":"-420","mois_annee":"10/2019"},{"code_pays":"CH","last_month_day":"2019-10-31","quantite":"2224","mois_annee":"10/2019"},{"code_pays":"GB","last_month_day":"2019-11-30","quantite":"1838","mois_annee":"11/2019"},{"code_pays":"ES","last_month_day":"2019-11-30","quantite":"-974","mois_annee":"11/2019"},{"code_pays":"IT","last_month_day":"2019-11-30","quantite":"2373","mois_annee":"11/2019"},{"code_pays":"DB","last_month_day":"2019-11-30","quantite":"-2332","mois_annee":"11/2019"},{"code_pays":"CH","last_month_day":"2019-11-30","quantite":"1578","mois_annee":"11/2019"},{"code_pays":"GB","last_month_day":"2019-12-31","quantite":"1852","mois_annee":"12/2019"},{"code_pays":"DB","last_month_day":"2019-12-31","quantite":"-416","mois_annee":"12/2019"},{"code_pays":"CH","last_month_day":"2019-12-31","quantite":"2979","mois_annee":"12/2019"},{"code_pays":"IT","last_month_day":"2019-12-31","quantite":"3261","mois_annee":"12/2019"},{"code_pays":"ES","last_month_day":"2019-12-31","quantite":"-783","mois_annee":"12/2019"},{"code_pays":"CH","last_month_day":"2020-01-31","quantite":"3182","mois_annee":"01/2020"},{"code_pays":"IT","last_month_day":"2020-01-31","quantite":"3868","mois_annee":"01/2020"},{"code_pays":"ES","last_month_day":"2020-01-31","quantite":"1993","mois_annee":"01/2020"},{"code_pays":"GB","last_month_day":"2020-01-31","quantite":"1554","mois_annee":"01/2020"},{"code_pays":"DB","last_month_day":"2020-01-31","quantite":"-2064","mois_annee":"01/2020"},{"code_pays":"GB","last_month_day":"2020-02-29","quantite":"2197","mois_annee":"02/2020"},{"code_pays":"CH","last_month_day":"2020-02-29","quantite":"3795","mois_annee":"02/2020"},{"code_pays":"IT","last_month_day":"2020-02-29","quantite":"4236","mois_annee":"02/2020"},{"code_pays":"DB","last_month_day":"2020-02-29","quantite":"417","mois_annee":"02/2020"},{"code_pays":"ES","last_month_day":"2020-02-29","quantite":"2386","mois_annee":"02/2020"},{"code_pays":"ES","last_month_day":"2020-03-31","quantite":"1530","mois_annee":"03/2020"},{"code_pays":"GB","last_month_day":"2020-03-31","quantite":"2537","mois_annee":"03/2020"},{"code_pays":"IT","last_month_day":"2020-03-31","quantite":"3687","mois_annee":"03/2020"},{"code_pays":"CH","last_month_day":"2020-03-31","quantite":"3545","mois_annee":"03/2020"},{"code_pays":"DB","last_month_day":"2020-03-31","quantite":"817","mois_annee":"03/2020"},{"code_pays":"ES","last_month_day":"2020-04-30","quantite":"1594","mois_annee":"04/2020"},{"code_pays":"GB","last_month_day":"2020-04-30","quantite":"1943","mois_annee":"04/2020"},{"code_pays":"DB","last_month_day":"2020-04-30","quantite":"3729","mois_annee":"04/2020"},{"code_pays":"CH","last_month_day":"2020-04-30","quantite":"3091","mois_annee":"04/2020"},{"code_pays":"IT","last_month_day":"2020-04-30","quantite":"1140","mois_annee":"04/2020"},{"code_pays":"ES","last_month_day":"2020-05-31","quantite":"2609","mois_annee":"05/2020"},{"code_pays":"GB","last_month_day":"2020-05-31","quantite":"1724","mois_annee":"05/2020"},{"code_pays":"IT","last_month_day":"2020-05-31","quantite":"1950","mois_annee":"05/2020"},{"code_pays":"CH","last_month_day":"2020-05-31","quantite":"2831","mois_annee":"05/2020"},{"code_pays":"DB","last_month_day":"2020-05-31","quantite":"3511","mois_annee":"05/2020"},{"code_pays":"DB","last_month_day":"2020-06-30","quantite":"1759","mois_annee":"06/2020"},{"code_pays":"GB","last_month_day":"2020-06-30","quantite":"1038","mois_annee":"06/2020"},{"code_pays":"CH","last_month_day":"2020-06-30","quantite":"1386","mois_annee":"06/2020"},{"code_pays":"IT","last_month_day":"2020-06-30","quantite":"696","mois_annee":"06/2020"},{"code_pays":"ES","last_month_day":"2020-06-30","quantite":"1601","mois_annee":"06/2020"},{"code_pays":"GB","last_month_day":"2020-07-31","quantite":"-428","mois_annee":"07/2020"},{"code_pays":"CH","last_month_day":"2020-07-31","quantite":"439","mois_annee":"07/2020"},{"code_pays":"ES","last_month_day":"2020-07-31","quantite":"628","mois_annee":"07/2020"},{"code_pays":"IT","last_month_day":"2020-07-31","quantite":"2367","mois_annee":"07/2020"},{"code_pays":"DB","last_month_day":"2020-07-31","quantite":"-806","mois_annee":"07/2020"},{"code_pays":"GB","last_month_day":"2020-08-31","quantite":"1387","mois_annee":"08/2020"},{"code_pays":"ES","last_month_day":"2020-08-31","quantite":"15","mois_annee":"08/2020"},{"code_pays":"IT","last_month_day":"2020-08-31","quantite":"1481","mois_annee":"08/2020"},{"code_pays":"CH","last_month_day":"2020-08-31","quantite":"206","mois_annee":"08/2020"},{"code_pays":"DB","last_month_day":"2020-08-31","quantite":"257","mois_annee":"08/2020"},{"code_pays":"CH","last_month_day":"2020-09-30","quantite":"-167","mois_annee":"09/2020"},{"code_pays":"ES","last_month_day":"2020-09-30","quantite":"-1557","mois_annee":"09/2020"},{"code_pays":"IT","last_month_day":"2020-09-30","quantite":"1452","mois_annee":"09/2020"},{"code_pays":"DB","last_month_day":"2020-09-30","quantite":"-1536","mois_annee":"09/2020"},{"code_pays":"GB","last_month_day":"2020-09-30","quantite":"336","mois_annee":"09/2020"},{"code_pays":"CH","last_month_day":"2020-10-31","quantite":"1430","mois_annee":"10/2020"},{"code_pays":"GB","last_month_day":"2020-10-31","quantite":"1825","mois_annee":"10/2020"},{"code_pays":"ES","last_month_day":"2020-10-31","quantite":"-240","mois_annee":"10/2020"},{"code_pays":"IT","last_month_day":"2020-10-31","quantite":"3272","mois_annee":"10/2020"},{"code_pays":"DB","last_month_day":"2020-10-31","quantite":"-936","mois_annee":"10/2020"},{"code_pays":"IT","last_month_day":"2020-11-30","quantite":"3901","mois_annee":"11/2020"},{"code_pays":"GB","last_month_day":"2020-11-30","quantite":"1973","mois_annee":"11/2020"},{"code_pays":"DB","last_month_day":"2020-11-30","quantite":"-954","mois_annee":"11/2020"},{"code_pays":"ES","last_month_day":"2020-11-30","quantite":"874","mois_annee":"11/2020"},{"code_pays":"CH","last_month_day":"2020-11-30","quantite":"3368","mois_annee":"11/2020"},{"code_pays":"IT","last_month_day":"2020-12-31","quantite":"2970","mois_annee":"12/2020"},{"code_pays":"CH","last_month_day":"2020-12-31","quantite":"3654","mois_annee":"12/2020"},{"code_pays":"GB","last_month_day":"2020-12-31","quantite":"1881","mois_annee":"12/2020"},{"code_pays":"DB","last_month_day":"2020-12-31","quantite":"-2862","mois_annee":"12/2020"},{"code_pays":"ES","last_month_day":"2020-12-31","quantite":"-1313","mois_annee":"12/2020"},{"code_pays":"CH","last_month_day":"2021-01-31","quantite":"2385","mois_annee":"01/2021"},{"code_pays":"DB","last_month_day":"2021-01-31","quantite":"-4526","mois_annee":"01/2021"},{"code_pays":"ES","last_month_day":"2021-01-31","quantite":"1034","mois_annee":"01/2021"},{"code_pays":"IT","last_month_day":"2021-01-31","quantite":"1924","mois_annee":"01/2021"},{"code_pays":"GB","last_month_day":"2021-01-31","quantite":"2725","mois_annee":"01/2021"},{"code_pays":"ES","last_month_day":"2021-02-28","quantite":"-2136","mois_annee":"02/2021"},{"code_pays":"DB","last_month_day":"2021-02-28","quantite":"120","mois_annee":"02/2021"},{"code_pays":"GB","last_month_day":"2021-02-28","quantite":"2887","mois_annee":"02/2021"},{"code_pays":"CH","last_month_day":"2021-02-28","quantite":"2834","mois_annee":"02/2021"},{"code_pays":"IT","last_month_day":"2021-02-28","quantite":"3190","mois_annee":"02/2021"},{"code_pays":"GB","last_month_day":"2021-03-31","quantite":"3010","mois_annee":"03/2021"},{"code_pays":"IT","last_month_day":"2021-03-31","quantite":"2876","mois_annee":"03/2021"},{"code_pays":"DB","last_month_day":"2021-03-31","quantite":"-3141","mois_annee":"03/2021"},{"code_pays":"CH","last_month_day":"2021-03-31","quantite":"3104","mois_annee":"03/2021"},{"code_pays":"ES","last_month_day":"2021-03-31","quantite":"373","mois_annee":"03/2021"},{"code_pays":"ES","last_month_day":"2021-04-30","quantite":"814","mois_annee":"04/2021"},{"code_pays":"IT","last_month_day":"2021-04-30","quantite":"1778","mois_annee":"04/2021"},{"code_pays":"CH","last_month_day":"2021-04-30","quantite":"1728","mois_annee":"04/2021"},{"code_pays":"DB","last_month_day":"2021-04-30","quantite":"-4009","mois_annee":"04/2021"},{"code_pays":"GB","last_month_day":"2021-04-30","quantite":"2231","mois_annee":"04/2021"},{"code_pays":"CH","last_month_day":"2021-05-31","quantite":"2206","mois_annee":"05/2021"},{"code_pays":"DB","last_month_day":"2021-05-31","quantite":"672","mois_annee":"05/2021"},{"code_pays":"GB","last_month_day":"2021-05-31","quantite":"3609","mois_annee":"05/2021"},{"code_pays":"IT","last_month_day":"2021-05-31","quantite":"3532","mois_annee":"05/2021"},{"code_pays":"ES","last_month_day":"2021-05-31","quantite":"2232","mois_annee":"05/2021"},{"code_pays":"IT","last_month_day":"2021-06-30","quantite":"3221","mois_annee":"06/2021"},{"code_pays":"DB","last_month_day":"2021-06-30","quantite":"1712","mois_annee":"06/2021"},{"code_pays":"GB","last_month_day":"2021-06-30","quantite":"3503","mois_annee":"06/2021"},{"code_pays":"CH","last_month_day":"2021-06-30","quantite":"2285","mois_annee":"06/2021"},{"code_pays":"ES","last_month_day":"2021-06-30","quantite":"2708","mois_annee":"06/2021"},{"code_pays":"CH","last_month_day":"2021-07-31","quantite":"2744","mois_annee":"07/2021"},{"code_pays":"DB","last_month_day":"2021-07-31","quantite":"1155","mois_annee":"07/2021"},{"code_pays":"GB","last_month_day":"2021-07-31","quantite":"3942","mois_annee":"07/2021"},{"code_pays":"ES","last_month_day":"2021-07-31","quantite":"2735","mois_annee":"07/2021"},{"code_pays":"IT","last_month_day":"2021-07-31","quantite":"4318","mois_annee":"07/2021"},{"code_pays":"DB","last_month_day":"2021-08-31","quantite":"1630","mois_annee":"08/2021"},{"code_pays":"ES","last_month_day":"2021-08-31","quantite":"3679","mois_annee":"08/2021"},{"code_pays":"GB","last_month_day":"2021-08-31","quantite":"3753","mois_annee":"08/2021"},{"code_pays":"CH","last_month_day":"2021-08-31","quantite":"2801","mois_annee":"08/2021"},{"code_pays":"IT","last_month_day":"2021-08-31","quantite":"3349","mois_annee":"08/2021"},{"code_pays":"IT","last_month_day":"2021-09-30","quantite":"3880","mois_annee":"09/2021"},{"code_pays":"GB","last_month_day":"2021-09-30","quantite":"2330","mois_annee":"09/2021"},{"code_pays":"CH","last_month_day":"2021-09-30","quantite":"2667","mois_annee":"09/2021"},{"code_pays":"DB","last_month_day":"2021-09-30","quantite":"213","mois_annee":"09/2021"},{"code_pays":"ES","last_month_day":"2021-09-30","quantite":"2637","mois_annee":"09/2021"},{"code_pays":"GB","last_month_day":"2021-10-31","quantite":"961","mois_annee":"10/2021"},{"code_pays":"ES","last_month_day":"2021-10-31","quantite":"1702","mois_annee":"10/2021"},{"code_pays":"IT","last_month_day":"2021-10-31","quantite":"4309","mois_annee":"10/2021"},{"code_pays":"CH","last_month_day":"2021-10-31","quantite":"3743","mois_annee":"10/2021"},{"code_pays":"DB","last_month_day":"2021-10-31","quantite":"-2395","mois_annee":"10/2021"},{"code_pays":"GB","last_month_day":"2021-11-30","quantite":"-331","mois_annee":"11/2021"},{"code_pays":"CH","last_month_day":"2021-11-30","quantite":"3169","mois_annee":"11/2021"},{"code_pays":"DB","last_month_day":"2021-11-30","quantite":"-5481","mois_annee":"11/2021"},{"code_pays":"ES","last_month_day":"2021-11-30","quantite":"-1799","mois_annee":"11/2021"},{"code_pays":"IT","last_month_day":"2021-11-30","quantite":"2195","mois_annee":"11/2021"},{"code_pays":"IT","last_month_day":"2021-12-31","quantite":"1534","mois_annee":"12/2021"},{"code_pays":"ES","last_month_day":"2021-12-31","quantite":"-1916","mois_annee":"12/2021"},{"code_pays":"DB","last_month_day":"2021-12-31","quantite":"-5918","mois_annee":"12/2021"},{"code_pays":"CH","last_month_day":"2021-12-31","quantite":"2211","mois_annee":"12/2021"},{"code_pays":"GB","last_month_day":"2021-12-31","quantite":"-242","mois_annee":"12/2021"},{"code_pays":"GB","last_month_day":"2022-01-31","quantite":"169","mois_annee":"01/2022"},{"code_pays":"IT","last_month_day":"2022-01-31","quantite":"2085","mois_annee":"01/2022"},{"code_pays":"ES","last_month_day":"2022-01-31","quantite":"-754","mois_annee":"01/2022"},{"code_pays":"CH","last_month_day":"2022-01-31","quantite":"2812","mois_annee":"01/2022"},{"code_pays":"DB","last_month_day":"2022-01-31","quantite":"-6486","mois_annee":"01/2022"},{"code_pays":"IT","last_month_day":"2022-02-28","quantite":"3546","mois_annee":"02/2022"},{"code_pays":"DB","last_month_day":"2022-02-28","quantite":"-6119","mois_annee":"02/2022"},{"code_pays":"GB","last_month_day":"2022-02-28","quantite":"477","mois_annee":"02/2022"},{"code_pays":"CH","last_month_day":"2022-02-28","quantite":"3528","mois_annee":"02/2022"},{"code_pays":"ES","last_month_day":"2022-02-28","quantite":"2018","mois_annee":"02/2022"},{"code_pays":"GB","last_month_day":"2022-03-31","quantite":"14","mois_annee":"03/2022"},{"code_pays":"CH","last_month_day":"2022-03-31","quantite":"2352","mois_annee":"03/2022"},{"code_pays":"IT","last_month_day":"2022-03-31","quantite":"2202","mois_annee":"03/2022"},{"code_pays":"DB","last_month_day":"2022-03-31","quantite":"-6428","mois_annee":"03/2022"},{"code_pays":"ES","last_month_day":"2022-03-31","quantite":"-571","mois_annee":"03/2022"},{"code_pays":"GB","last_month_day":"2022-04-30","quantite":"-1254","mois_annee":"04/2022"},{"code_pays":"DB","last_month_day":"2022-04-30","quantite":"-3315","mois_annee":"04/2022"},{"code_pays":"ES","last_month_day":"2022-04-30","quantite":"-1656","mois_annee":"04/2022"},{"code_pays":"CH","last_month_day":"2022-04-30","quantite":"1091","mois_annee":"04/2022"},{"code_pays":"IT","last_month_day":"2022-04-30","quantite":"2674","mois_annee":"04/2022"},{"code_pays":"GB","last_month_day":"2022-05-31","quantite":"-2365","mois_annee":"05/2022"},{"code_pays":"ES","last_month_day":"2022-05-31","quantite":"-850","mois_annee":"05/2022"},{"code_pays":"IT","last_month_day":"2022-05-31","quantite":"4199","mois_annee":"05/2022"},{"code_pays":"DB","last_month_day":"2022-05-31","quantite":"-1352","mois_annee":"05/2022"},{"code_pays":"CH","last_month_day":"2022-05-31","quantite":"1310","mois_annee":"05/2022"},{"code_pays":"ES","last_month_day":"2022-06-30","quantite":"-586","mois_annee":"06/2022"},{"code_pays":"IT","last_month_day":"2022-06-30","quantite":"2860","mois_annee":"06/2022"},{"code_pays":"GB","last_month_day":"2022-06-30","quantite":"-3208","mois_annee":"06/2022"},{"code_pays":"DB","last_month_day":"2022-06-30","quantite":"-3225","mois_annee":"06/2022"},{"code_pays":"CH","last_month_day":"2022-06-30","quantite":"1587","mois_annee":"06/2022"},{"code_pays":"CH","last_month_day":"2022-07-31","quantite":"430","mois_annee":"07/2022"},{"code_pays":"DB","last_month_day":"2022-07-31","quantite":"-5109","mois_annee":"07/2022"},{"code_pays":"ES","last_month_day":"2022-07-31","quantite":"-2003","mois_annee":"07/2022"},{"code_pays":"IT","last_month_day":"2022-07-31","quantite":"3437","mois_annee":"07/2022"},{"code_pays":"GB","last_month_day":"2022-07-31","quantite":"-3643","mois_annee":"07/2022"},{"code_pays":"DB","last_month_day":"2022-08-31","quantite":"-3951","mois_annee":"08/2022"},{"code_pays":"ES","last_month_day":"2022-08-31","quantite":"-3096","mois_annee":"08/2022"},{"code_pays":"GB","last_month_day":"2022-08-31","quantite":"-2219","mois_annee":"08/2022"},{"code_pays":"CH","last_month_day":"2022-08-31","quantite":"910","mois_annee":"08/2022"},{"code_pays":"IT","last_month_day":"2022-08-31","quantite":"1649","mois_annee":"08/2022"},{"code_pays":"GB","last_month_day":"2022-09-30","quantite":"-2957","mois_annee":"09/2022"},{"code_pays":"IT","last_month_day":"2022-09-30","quantite":"3222","mois_annee":"09/2022"},{"code_pays":"ES","last_month_day":"2022-09-30","quantite":"-3590","mois_annee":"09/2022"},{"code_pays":"DB","last_month_day":"2022-09-30","quantite":"-4956","mois_annee":"09/2022"},{"code_pays":"CH","last_month_day":"2022-09-30","quantite":"1414","mois_annee":"09/2022"},{"code_pays":"IT","last_month_day":"2022-10-31","quantite":"4136","mois_annee":"10/2022"},{"code_pays":"ES","last_month_day":"2022-10-31","quantite":"-1908","mois_annee":"10/2022"},{"code_pays":"CH","last_month_day":"2022-10-31","quantite":"2872","mois_annee":"10/2022"},{"code_pays":"DB","last_month_day":"2022-10-31","quantite":"-3246","mois_annee":"10/2022"},{"code_pays":"GB","last_month_day":"2022-10-31","quantite":"-2680","mois_annee":"10/2022"},{"code_pays":"IT","last_month_day":"2022-11-30","quantite":"4128","mois_annee":"11/2022"},{"code_pays":"DB","last_month_day":"2022-11-30","quantite":"-5279","mois_annee":"11/2022"},{"code_pays":"CH","last_month_day":"2022-11-30","quantite":"3928","mois_annee":"11/2022"},{"code_pays":"GB","last_month_day":"2022-11-30","quantite":"-2714","mois_annee":"11/2022"},{"code_pays":"ES","last_month_day":"2022-11-30","quantite":"-2417","mois_annee":"11/2022"},{"code_pays":"ES","last_month_day":"2022-12-31","quantite":"-554","mois_annee":"12/2022"},{"code_pays":"DB","last_month_day":"2022-12-31","quantite":"-1586","mois_annee":"12/2022"},{"code_pays":"CH","last_month_day":"2022-12-31","quantite":"327","mois_annee":"12/2022"},{"code_pays":"GB","last_month_day":"2022-12-31","quantite":"-258","mois_annee":"12/2022"},{"code_pays":"IT","last_month_day":"2022-12-31","quantite":"287","mois_annee":"12/2022"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":600,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":5345,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":1,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":2,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"black","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#7c7c7b","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"small","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"last_month_day","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.textLabelNames text').text(d=>d.code_pays.replace('CH', 'Suisse').replace('IT', 'Italie').replace('DB', 'Allemagne et Belgique').replace('GB', 'Grande-Bretagne').replace('ES', 'Espagne'));\nd3.selectAll('.minMaxText').style('display', 'none');\nd3.selectAll('.axis--xmini .tick text').filter(function(d, i){return i % 2 == 0}).text('2015');\nd3.selectAll('.axis--xmini .tick text').filter(function(d, i){return i % 2 != 0}).text('2022');\n"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":1,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"last_month_day","value":"last_month_day"},{"label":"code_pays","value":"code_pays"},{"label":"quantite","value":"quantite"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[mois_annee]]<br>\n<strong>Solde d'import export d'électricité : </strong>[[quantite]] GWh"},"moveElements":{"value":true,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"value":{"_groups":[[{"__data__":{"code_pays":"GB","last_month_day":"2014-12-30T23:00:00.000Z","quantite":1461,"x_value":"2014-12-30T23:00:00.000Z","y_value":1461,"name":"GB","maxY":3942,"minY":-3643},"__on":[{"type":"click","name":"","capture":false},{"type":"mousedown","name":"drag","capture":false}]}]],"_parents":[null]},"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{"d_31592":{"elementType":"text","elementOrder":4,"operations":{"x":"122","y":"-12"}},"d_35924":{"elementType":"g","elementOrder":21,"operations":{"transform":"translate(30,172.33333333333334)"}},"d_12621":{"elementType":"text","elementOrder":14,"operations":{"x":"132","y":"-26"}},"d_62488":{"elementType":"text","elementOrder":24,"operations":{"x":"116","y":"-30"}},"d_43289":{"elementType":"text","elementOrder":21,"operations":{"x":"-25","y":"34"}},"d_27833":{"elementType":"text","elementOrder":16,"operations":{"x":"-30","y":"33"}},"d_60958":{"elementType":"text","elementOrder":10,"operations":{"x":"19","y":"28"}},"d_64680":{"elementType":"path","elementOrder":5,"operations":{"transform":"translate(0,0)"}},"d_49445":{"elementType":"circle","elementOrder":283,"operations":{"transform":null}},"d_2958":{"elementType":"text","elementOrder":13,"operations":{"x":"-21","y":"-26"}},"d_46714":{"elementType":"text","elementOrder":17,"operations":{"x":"-29","y":"-18"}},"d_55244":{"elementType":"text","elementOrder":3,"operations":{"x":"-15","y":"-55"}},"d_47055":{"elementType":"text","elementOrder":2,"operations":{"x":"-34","y":"-10"}},"d_12221":{"elementType":"text","elementOrder":19,"operations":{"x":"111","y":"-20"}}},"thoseElementsOrder":["d_31592","d_12621","d_62488","d_43289","d_27833","d_60958","d_64680","d_49445","d_2958","d_46714","d_55244","d_47055","d_12221","d_35924"]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":1,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":1,"category":"general"},"miniMarginTop":{"value":100,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":1,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":1,"category":"general"},"case_helper_text":{"value":true,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":true,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["last_month_day","code_pays"],"selected_yRows":["quantite"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{"CH":"#e61e49","IT":"#e61e49","DB":"#e61e49","GB":"#e61e49","ES":"#e61e49"},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"smallMultipleLineChartFromTidyData","chartTitle":"La France importe de l'électricité d'Allemagne, d'Espagne et de Grande-Bretagne","chartSubTitle":"Solde net des échange d'électricité avec les pays voisins en GWh par mois","chartSource":"RTE - le solde étant comptabilisé comme la différence entre importations et exportations","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeSmallMultipleLineChartFromTidyData(data_) {
+
+      var initial_data = _.cloneDeep(data_);
+      var kValue = graphParameters['selected_xRows'][0];
+      var kValue2 = graphParameters['selected_xRows'][1];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      var data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      data.forEach(function(d){
+
+        d[kValue] = (isNaN(d[kValue]) || typeof(d[kValue])  === 'object') ? d[kValue] : +d[kValue];
+        d.x_value = d[kValue]
+
+      })
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+                if (manualReusableParameters.startEndValues.manual_left_value){
+                    data = data.filter(function(d){return d.x_value >= manualReusableParameters.startEndValues.manual_left_value})
+                }
+               if (manualReusableParameters.startEndValues.manual_right_value){
+                    data = data.filter(function(d){return d.x_value <= manualReusableParameters.startEndValues.manual_right_value})
+                }
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+            if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+               
+            }
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+            data = prepareLineChartIndice100ValueForTidy(data, kValue, dValues, kValue2);
+        }
+    }
+
+    else{
+      // data = prepareLineChartData(data, kValue, dValues);
+  }
+
+
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+      //   var newScale = d3.scaleOrdinal()
+      // .domain(_.uniq(data.map(function(d){return d.kValue})))
+      // .range(_.range(1, (_.uniq(data.map(function(d){return d.kValue}))).length + 1))
+
+
+      var those_xValues = _.uniq(data.map(function(d){return d[kValue]})).filter(function(d) {return d})
+
+      // data.forEach(function(d){
+      //   d.x_value = d[kValue]
+      // })
+
+      data = _.groupBy(data, kValue2)
+      data = d3.values(data)
+
+      data.forEach(function(d){
+        d.forEach(function(e){
+        // e.x_value = those_xValues.indexOf(e.x_value)
+        e.x_value = e[kValue]
+        e.y_value = +e[dValue]
+        e.name = e[kValue2]
+
+        })
+
+        d = d.sort(function(a,b){return a.x_value - b.x_value})
+
+      })
+
+      // console.log(data)
+
+    var thisNumberOfCol = manualReusableParameters.numberOfCols.value;
+    var miniMarginLeft = manualReusableParameters.miniMarginLeft.value;
+    var miniMarginTop = manualReusableParameters.miniMarginTop.value;
+    var thisNumberOfMiniViz = data.length;
+    var thisNumberOfLines = Math.ceil(thisNumberOfMiniViz/thisNumberOfCol);
+    var eachSmallVizzWidth = (width/thisNumberOfCol - miniMarginLeft);
+    var eachSmallVizzHeight = (height/thisNumberOfLines - miniMarginTop);
+    manualReusableParameters.leftAxisStroke.manual_range_value = '#fff';
+
+  // manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  0 : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : 0;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+  console.log(thisYMin)
+  // thisYMin = 0;
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, eachSmallVizzWidth]);
+
+
+  function minMaxScaleData(data__){
+
+    return [d3.min(data__, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ]
+
+  }
+
+  function findMarginLeftTranslation(arr){
+
+    var maxYVal = d3.max(arr, function(d){return d[dValue]});
+
+    var x_val = _.find(arr, function(d){return d[dValue] == maxYVal}).x_value;
+
+    var XPositionForMaxY = xScale(x_val);
+    var thisChartWidth =  xScale(arr[arr.length-1].x_value) -  xScale(arr[0].x_value);
+    var translateXEach = (eachSmallVizzWidth/2 - XPositionForMaxY);
+
+    return translateXEach
+
+  }
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([eachSmallVizzHeight, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  // g.select("g.axis.axis--x")
+  // .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  // .call(axis_bottom)
+  // .selectAll("text")
+  // .style("text-anchor", "middle")
+  // .attr("dx", "0em")
+  // .attr("dy", "0.7em")
+  // .attr("transform", "rotate(0)");
+
+//   if (manualReusableParameters.rotateXRow.value == true){
+
+//     g.select("g.axis.axis--x")
+//     .selectAll("g.tick")
+//     .select("text")
+//     .style("text-anchor", "end")
+//     .attr("dx", "-.8em")
+//     .attr("dy", ".15em")
+//     .attr("transform", "rotate(-40)");
+
+// }
+
+
+// g.select("g.axis.axis--y")
+// .attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+// .call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+    var area = d3.area()
+    .x(function(d) { return xScale(d.x_value) })
+    .y0(yScale(yScale.domain()[0]))
+    .y1(function(d) { return yScale(d.y_value)})
+    .curve(d3.curveCatmullRom.alpha(0.5));
+
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+
+
+        var allLines = g_inner
+        .selectAll('g.miniLine')
+        .data(data);
+
+        // allLines
+        // .transition()
+        // .duration(200)
+        // .attr('d', function(d) { return line(d) })
+        // .attr('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().remove();
+
+
+        allLines
+        .attr('transform', function(d, i){ 
+            return 'translate(' + (eachSmallVizzWidth * (i % thisNumberOfCol) + (miniMarginLeft+miniMarginLeft*(i % thisNumberOfCol))) + ',' 
+            + ((eachSmallVizzHeight) * Math.floor(i / thisNumberOfCol) + (miniMarginTop*(Math.floor(i / thisNumberOfCol)))) + ')'});
+
+
+
+        var allLines_e = allLines
+        .enter()
+        .append('g')
+        .attr('class', 'miniLine')
+        .attr('transform', function(d, i){ 
+            return 'translate(' + (eachSmallVizzWidth * (i % thisNumberOfCol) + (miniMarginLeft+miniMarginLeft*(i % thisNumberOfCol))) + ',' 
+            + ((eachSmallVizzHeight) * Math.floor(i / thisNumberOfCol) + (miniMarginTop*(Math.floor(i / thisNumberOfCol)))) + ')'});
+
+
+        allLines_e.exit().remove();
+
+
+        
+
+
+
+manualReusableParameters.leftAxisTickNumber.value = 1;
+
+axis_left.ticks(2);
+axis_bottom.ticks(manualReusableParameters.bottomAxisTickNumber.value);
+axis_bottom.tickValues([xScale.domain()[0], xScale.domain()[1]])
+
+
+
+
+// var axis_bottom2 = axis_bottom = d3.axisBottom(xScale).ticks(manualReusableParameters.bottomAxisTickNumber.value).tickFormat(thisDateFormat);
+
+var x_axis_actual = allLines.select('g.axis.axis--xmini');
+
+
+   var xAxisAppened =  allLines_e
+    .append('g')
+    .attr('class', 'axis axis--xmini')
+    .merge(x_axis_actual)
+    .attr('transform', function(d, i){ 
+            return 'translate(' + 0 + ',' 
+            + ((eachSmallVizzHeight)) + ')'});
+
+
+
+d3.selectAll('g.axis.axis--xmini').selectAll('*').remove()
+
+xAxisAppened
+    .call(axis_bottom)
+    .select('path')
+    // .attr('stroke', manualReusableParameters.leftAxisStroke.manual_range_value);
+
+
+// d3.selectAll('g.axis.axis--ymini text')
+// .attr('stroke-width', 0);
+
+d3.selectAll('g.axis.axis--xmini path')
+.attr('display', 'none');
+
+d3.selectAll('g.axis.axis--xmini g.tick line')
+.attr('display', 'none');
+
+// d3.selectAll('g.axis.axis--xmini text')
+// .attr('x', 'none');
+
+d3.selectAll('g.axis.axis--xmini').selectAll('text').attr('x', '-22')
+
+d3.selectAll('g.axis.axis--xmini').select('text').attr('x', '20')
+
+// g.select("g.axis.axis--y")
+// .attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+// .call(axis_left);
+
+        var allPathAreas = allLines.select('path.area')
+
+        allLines_e
+        .append('path')
+        .attr("class", "area")
+        .merge(allPathAreas)
+        // .transition()
+        .attr('d', function(d) { return area(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('fill', function(d) { return colorUpdated(d[0].name) })
+        .attr('transform', function(d){
+
+            var thisLeftTranslation = manualReusableParameters.alignPeaks.value ? findMarginLeftTranslation(d) : 0;
+
+         return 'translate(' +thisLeftTranslation +',0)'});
+
+g_inner.selectAll('g.minMaxText').remove();
+
+var minMaxText = allLines_e
+.merge(allLines)
+.selectAll('g.minMaxText')
+.data(function(d){return [_.first(d), _.last(d)]})
+
+
+
+minMaxText
+.enter()
+.append('g')
+.attr('class', 'minMaxText')
+.merge(minMaxText)
+.attr('transform', function(d){return 'translate(' + (xScale(d.x_value)) + ',' + yScale(d.y_value) + ')'})
+.append('text')
+.attr('y', -10)
+.attr('x', function(d, i){return i == 0 ? -10 : -20 })
+.text(function(d){ return _.round(d.y_value, 1)})
+.style('font-size', "15px");
+
+
+g_inner.selectAll('g.textLabelNames').remove();
+
+
+
+var labelNames = allLines_e
+.merge(allLines)
+.selectAll('g.textLabelNames')
+.data(function(d){
+    var thisD = d[0];
+    thisD['maxY'] = d3.max(d, function(e){ return e['y_value']});
+    thisD['minY'] = d3.min(d, function(e){ return e['y_value']});
+
+    return [thisD]})
+
+
+labelNames = labelNames
+.enter()
+.append('g')
+.attr('class', 'textLabelNames')
+// .merge(labelNames)
+.attr('transform', function(d){
+    var thisYtranslate = d.maxY < yScale.domain()[1]/2 ?  (yScale(d.maxY) - 25)  : (yScale(d.minY) + 25);
+
+    return 'translate(' + 0 + ',' +  thisYtranslate + ')'});
+
+
+
+labelNames
+.append('rect')
+.attr('y', -15)
+.attr('x', -10)
+.attr('width', function(d){return (d[kValue2].length*10)})
+.attr('height', 18)
+.attr('fill', '#fff')
+.html(function(d){  return d[kValue2]})
+.style('font-size', "15px");
+
+labelNames
+.append('text')
+.attr('y', 0)
+.attr('x', eachSmallVizzWidth/2)
+.attr('text-anchor', 'middle')
+.html(function(d){
+
+    return d[kValue2]})
+.attr('dummy', function(d){
+    var thisParentNode = d3.select(this.parentNode);
+    var thisBbox = thisParentNode.select('text').node().getBBox();
+    var thisRect = thisParentNode.select('rect');
+    thisRect
+    .attr('x', thisBbox.x)
+    .attr('y', thisBbox.y)
+    .attr('width', thisBbox.width)
+    .attr('height', thisBbox.height);
+
+})
+.style('font-size', "15px");
+
+
+allLines_e
+.append('g')
+.attr('class', 'dotpointsContainer');
+
+
+        var AllDotPoints = allLines_e
+        .merge(allLines)
+        .select('.dotpointsContainer')
+        .attr('transform', function(d){ 
+             var thisLeftTranslation = manualReusableParameters.alignPeaks.value ? findMarginLeftTranslation(d) : 0;
+             return 'translate(' +thisLeftTranslation  + ',0)' })
+        .selectAll('circle.dotPoint')
+        .data(function(d){return d});
+
+
+        AllDotPoints.exit().transition().duration(0).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .merge(AllDotPoints)
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        .on('mouseover', function(d, i){ show_tooltip(d, d.name)})
+        .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+/// Axis Label
+
+// g_inner
+// .call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+  customizeAxis()
+
+  drawLegend()
+
+  if (manualReusableParameters.colorizeField.value){
+
+  colorizeOnlyOneCategory([{svg_element:'path.area', look_in_object:0,  property_types:['stroke', 'fill'], reappend_nodes:true}])
+
+
+}
+
+  addCustomCode()
+
+}
+
+initChart();
+
+makeSmallMultipleLineChartFromTidyData(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
