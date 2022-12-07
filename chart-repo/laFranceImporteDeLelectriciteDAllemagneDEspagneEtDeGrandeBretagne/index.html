@@ -76,6 +76,12 @@ stroke:#888;
     font-family: 'syntheselibeweb';
 }
     
+.area {             /* changed from line to area */
+  fill: url(#area-gradient);  /* moved the url reference to fill instead of stroke */
+  stroke-width: 0px;      /* got rid of the stroke reference and any line*/
+}
+
+
   </style>
 
 
@@ -400,7 +406,7 @@ function makeSmallMultipleLineChartFromTidyData(data_) {
 
   var thisYMin = manualReusableParameters.rangeY.value === false ?  0 : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : 0;
   var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
-  console.log(thisYMin)
+
   // thisYMin = 0;
   var xScale = xScaleType()
   .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
@@ -570,6 +576,25 @@ d3.selectAll('g.axis.axis--xmini').select('text').attr('x', '20')
 // .attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
 // .call(axis_left);
 
+
+
+  // Set the threshold
+  allLines_e.append("linearGradient")          
+    .attr("id", "area-gradient")        // change from line to area
+    .attr("gradientUnits", "userSpaceOnUse")  
+    .attr("x1", 0).attr("y1", yScale(thisYMin))       
+    .attr("x2", 0).attr("y2", yScale(thisYMax))      
+  .selectAll("stop")                
+    .data([                   
+      {offset: "0%", color: "#FF9999"},     
+      {offset: "0.1%", color: "#94AAFF"}
+    ])                      
+  .enter().append("stop")             
+    .attr("offset", function(d) { return d.offset; })   
+    .attr("stop-color", function(d) { return d.color; }); 
+
+
+
         var allPathAreas = allLines.select('path.area')
 
         allLines_e
@@ -578,8 +603,8 @@ d3.selectAll('g.axis.axis--xmini').select('text').attr('x', '20')
         .merge(allPathAreas)
         // .transition()
         .attr('d', function(d) { return area(d) })
-        .style('stroke', function(d) { return colorUpdated(d[0].name) })
-        .style('fill', function(d) { return colorUpdated(d[0].name) })
+        .attr('stroke', function(d) { return colorUpdated(d[0].name) })
+        .attr('fill', function(d) { return colorUpdated(d[0].name) })
         .attr('transform', function(d){
 
             var thisLeftTranslation = manualReusableParameters.alignPeaks.value ? findMarginLeftTranslation(d) : 0;
@@ -753,6 +778,14 @@ g_inner
 }
 
   addCustomCode()
+
+
+// d3.select('.miniline path.area')
+// .attr('d', area(d3.select('.miniline path.area').data()[0].filter(d=>d.quantite  > 0)))
+// .style('fill', 'green')
+// .style('stroke', 'green')
+
+
 
 }
 
