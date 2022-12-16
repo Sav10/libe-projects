@@ -128,13 +128,15 @@ stroke:#888;
   };
 
 
+var xScale, yScale;
+
   var initTotalWidth = 600;
   var initTotalHeight = 400;
 
   var initWidth = initTotalWidth - initMargin.left - initMargin.right;
   var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
 
-  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+  var libeCategoricalColors = ['#7c7c7c', 'red',  '#000'];
 
   var political_colors_obj = {
     'EXG': "#751719",
@@ -388,13 +390,13 @@ function makeLinechartFromTidyData(data_) {
   var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
   var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
 
-  var xScale = xScaleType()
+  xScale = xScaleType()
   .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
     d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
   .range([0, width]);
 
   var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
-  var yScale = thisScaleType
+  yScale = thisScaleType
   .domain([thisYMin,
     thisYMax
     ])
