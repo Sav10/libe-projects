@@ -555,6 +555,11 @@ g_inner
 
 d3.selectAll('svg text.label').filter(d=>d['Année'] == '2022').attr('x', 440)
 
+
+d3.selectAll('svg text.labelcoupe').filter(d=>d['Pays'] == 'France-Maroc')
+.attr('x', 400)
+.attr('y', -4)
+
 function makeVline(val){
 
 d3.select("svg g.graphContainer .innerGraph")
@@ -584,23 +589,33 @@ d3.select("svg g.graphContainer .innerGraph")
 
 
 
+makeVline(7)
+
+
+appendText(7, 'finale')
+
+
 makeVline(6)
 
 
-appendText(6, 'demi-finale')
+appendText(6, 'demi finale')
 
 
 makeVline(5)
 
 
-appendText(5, 'quart-de-finale')
+appendText(5, 'quarts de finale')
 
 
 
 makeVline(4)
 
 
-appendText(4, 'huitième-de-finale')
+appendText(4, 'huitième de finale')
+
+
+
+appendText(2, 'Poules')
 
 
 }
