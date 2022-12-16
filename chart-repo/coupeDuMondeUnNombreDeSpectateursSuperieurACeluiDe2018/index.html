@@ -553,6 +553,8 @@ g_inner
     .attr('fill', d=>(d['Année'] == '2022' ? 'red' : "#7c7c7c"))
 
 
+d3.selectAll('svg text.label').filter(d=>d['Année'] == '2022').attr('x', 440)
+
 function makeVline(val){
 
 d3.select("svg g.graphContainer .innerGraph")
@@ -560,14 +562,45 @@ d3.select("svg g.graphContainer .innerGraph")
 .attr('x1', xScale(val))
 .attr('x2', xScale(val))
 .attr('y2', height)
-.attr('stroke', 'black')
+.attr('stroke', '#ddd')
 .attr('stroke-dasharray', 4)
 
 }
 
 
+function appendText(val, this_text){
 
-makeVline(2)
+d3.select("svg g.graphContainer .innerGraph")
+.append('text')
+.attr('class', 'type_match')
+.attr('x', xScale(val))
+.attr('y', height-100)
+.attr('font-size', '10px')
+.text(this_text)
+.attr('fill', '#999')
+.attr('text-anchor', 'middle')
+
+}
+
+
+
+makeVline(6)
+
+
+appendText(6, 'demi-finale')
+
+
+makeVline(5)
+
+
+appendText(5, 'quart-de-finale')
+
+
+
+makeVline(4)
+
+
+appendText(4, 'huitième-de-finale')
 
 
 }
