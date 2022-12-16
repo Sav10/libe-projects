@@ -552,7 +552,30 @@ g_inner
     .attr('x', d=>xScale(+d.Num)+ (d['Année'] == '2022' ? -5 : +0))
     .attr('fill', d=>(d['Année'] == '2022' ? 'red' : "#7c7c7c"))
 
+
+function makeVline(val){
+
+d3.select("svg g.graphContainer .innerGraph")
+.append('line')
+.attr('x1', xScale(val))
+.attr('x2', xScale(val))
+.attr('y2', height)
+.attr('stroke', 'black')
+.attr('stroke-dasharray', 4)
+
 }
+
+
+
+makeVline(2)
+
+
+}
+
+
+
+
+
 
 initChart();
 
