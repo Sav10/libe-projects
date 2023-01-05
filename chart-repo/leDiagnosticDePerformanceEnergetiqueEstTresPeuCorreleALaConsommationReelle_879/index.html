@@ -473,11 +473,71 @@ g_inner
 d3.select("svg g.graphContainer .innerGraph")
 .append('line')
 .attr('x1', xScale(-8))
-.attr('x2', xScale(600))
+.attr('x2', xScale(700))
 .attr('y1', yScale(0))
-.attr('y2', yScale(600))
+.attr('y2', yScale(700))
 .attr('stroke', '#ddd')
 .attr('stroke-dasharray', 2)
+
+
+d3.selectAll('circle').filter(d=> d.DPE_classement == d.DPE_reel).style('fill', 'grey')
+
+
+
+var grey_dot = d3.select("svg g.graphContainer .innerGraph")
+.append('g')
+.attr('transform', 'translate(310,-10)')
+.attr('class', 'greydot')
+
+
+var red_dot = d3.select("svg g.graphContainer .innerGraph")
+.append('g')
+.attr('transform', 'translate(310,5)')
+.attr('class', 'reddot')
+
+
+grey_dot
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 10)
+    .attr('height', 10)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', 'grey');
+
+
+red_dot
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 10)
+    .attr('height', 10)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', '#e60004');
+
+grey_dot
+.append('text')
+.attr('x', 13)
+.attr('y', 9)
+.text('Le DPE correspond à la consommation réelle')
+.attr('font-size', '10px')
+
+red_dot
+.append('text')
+.attr('x', 13)
+.attr('y', 9)
+.text('Le DPE est différent de consommation réelle')
+.attr('font-size', '10px')
+
+d3.select("svg g.graphContainer .innerGraph")
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', '#e60004');
 
 
 
