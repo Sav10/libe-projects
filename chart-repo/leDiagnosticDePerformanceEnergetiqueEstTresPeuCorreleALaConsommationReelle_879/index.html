@@ -531,13 +531,6 @@ red_dot
 .text('Le DPE est différent de consommation réelle')
 .attr('font-size', '10px')
 
-d3.select("svg g.graphContainer .innerGraph")
-    .append('circle')
-    .attr('cx', 0)
-    .attr('cy', 0)
-    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
-    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
-    .style('fill', '#e60004');
 
 
 
