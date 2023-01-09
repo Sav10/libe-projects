@@ -52,38 +52,6 @@ data: {
     cache: false
 },
 
-/*  data: {
-
-        src: data_ppm.map(d=>d.mois_annee)*/
-
-/*    src: async (query) => {
-      try {
-
-
-        let encoded_query = encodeURI(query)
-
-        const source = data_ppm;
-        // Data is array of `Objects` | `Strings`
-        const data = source;
-
-
-        const data_entries  = data.features.map(function(d) { 
-
-          return {'label':d.mois_annee, 'valeur':d.de_season_avg} 
-        });
-
-
-
-        return data_entries
-      } catch (error) {
-
-        return error;
-      }
-    },
-    keys:['mois_annee'],
-    cache: false,
-    maxResults: 10*/
-/*  },*/
   resultItem: {
     highlight: true
   },
@@ -130,29 +98,8 @@ data: {
 
   var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
 
-  var political_colors_obj = {
-    'EXG': "#751719",
-    'FI': "#cd0420",
-    "COM":'#af0e1d',
-    "ECO":'#52ae56',
-    "SOC":'#e6467e',
-    "DVG":'#f46099',
-    "RDG":'#f781b6',
-    'DIV': "#cccccc",
-    'REG': "#666",
-    "REM":'#ffb400',
-    "MDM":'#e85d21',
-    "UDI":'#9f64a2',
-    "DVD":'#026db5',
-    "LR":'#0058a2',
-    "DLF":'#003366',
-    "EXD":'#03034f',
-    "FN":'#000032'
-  };
 
-  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
-
-  var color = d3.scaleOrdinal(libeCategoricalColors);
+    var color = d3.scaleOrdinal(libeCategoricalColors);
 
 
   var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
