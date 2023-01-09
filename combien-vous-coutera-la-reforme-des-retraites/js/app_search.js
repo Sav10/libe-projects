@@ -58,6 +58,8 @@ data: {
   events: {
     input: {
       selection: (event) => {
+
+        console.log(event)
         const selection = event.detail.selection.value;
         autoCompleteJS.input.value = selection.mois_annee;
         this_selection = selection
