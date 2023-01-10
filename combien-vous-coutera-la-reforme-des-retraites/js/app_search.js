@@ -6,6 +6,9 @@ let data_elu_2017
 let data_T1_2017
 let this_selection
 let data_ppm
+let data_retraites
+let work_age = 0
+let year_month_selection
 
 var xScale,
   yScale;
@@ -16,18 +19,28 @@ moment.locale('fr')
 const rattachement_financier = {}
 
 
-          d3.csv("data/ppm_since1900_monthly.csv")
-          .then(function(data) {
-            data_ppm = data
-data_ppm.forEach(function(d){
-d.de_season_avg = +d.de_season_avg;
+Promise.all([
+  d3.csv("data/ppm_since1900_monthly.csv"),
+      d3.csv('data/retraites_duree.csv')
+]).then(function(files) {
+  data_ppm = files[0]
+  data_retraites = files[1]
 
-  })
+data_retraites.forEach(function(d){
+
+d.naissance = +d.naissance
+d.ouverture_droits = +(d.ouverture_droits.replace(',', '.'))
+d.duree_cotis_ancien = +(d.duree_cotis_ancien.replace(',', '.'))
+d.duree_cotis_nouveau = +(d.duree_cotis_nouveau.replace(',', '.'))
+d.surplus_duree = +(d.surplus_duree.replace(',', '.'))
+d.Surplus_age_ouverture = +(d.Surplus_age_ouverture.replace(',', '.'))
+
+})
 
 
-          })
-          .catch(function(error) {
-          });
+}).catch(function(err) {
+  console.log('erreur' + ' ' + err)
+})
 
 
 
@@ -41,6 +54,7 @@ const autoCompleteJS = new autoComplete({
     maxResults: 10,
   },
   query: (input) => {
+    console.log(input)
     return input.replace("'", " ");
 },
 
@@ -52,6 +66,7 @@ data: {
     cache: false
 },
 
+
   resultItem: {
     highlight: true
   },
@@ -59,22 +74,77 @@ data: {
     input: {
       selection: (event) => {
 
-        console.log(event)
+console.log(event)
+
         const selection = event.detail.selection.value;
         autoCompleteJS.input.value = selection.mois_annee;
         this_selection = selection
 
         console.log(selection)
 
+        year_month_selection = selection
+
         let this_concentration = selection.de_season_avg
+
+
 
 
         write_PPM(this_concentration)
 
 
+
+}
+
+}
+}
+}
+)
+
+
+d3.select('#autoComplete2')
+.on('change', function(d){
+  console.log('changing')
+
+
+  console.log(d3.select(this).property('value'))
+
+  console.log(d)
+
+})
+.on('keyup', function() {
+     if (this.value.length > 1) {
+          // do search for this.value here
+          console.log(this.value)
+          work_age = this.value
+
+          if (year_month_selection){
+            write_PPM(year_month_selection.de_season_avg)
+          }
+
+     }
+})
+
+
+
      /*   show_circ(all_loaded_dep[this_dep])*/
 
      function write_PPM(concentration){
+
+
+      if (work_age && year_month_selection){
+
+        console.log('OK')
+
+        console.log(work_age, year_month_selection)
+
+
+
+
+
+      }
+      else{
+        return false
+      }
 
       d3.select('#result_naissance').html( "Le mois de votre naissance, la concentration dans l'atmosphère de CO2 était de <b>"+
        String(_.round(concentration,1)).replace('.', ',') + '</b> PPM')
@@ -100,8 +170,29 @@ data: {
 
   var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
 
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
 
-    var color = d3.scaleOrdinal(libeCategoricalColors);
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
 
 
   var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
@@ -1713,10 +1804,3 @@ d = manualReusableParameters.elementMoved['thoseElementsOrder'][i];
 
      }
 
-
- 
-
-      }
-    }
-  }
-});

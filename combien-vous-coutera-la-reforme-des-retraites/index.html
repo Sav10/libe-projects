@@ -51,7 +51,7 @@ margin: 0 auto;
 
 }
 
-.autoComplete_wrapper input#autoComplete{
+.autoComplete_wrapper input#autoComplete, .autoComplete_wrapper input#autoComplete2{
 color: grey;
 border: 0.05rem solid grey;
     border-radius: 0;
@@ -59,7 +59,7 @@ border: 0.05rem solid grey;
     height: 2rem;
 }
 
-.autoComplete_wrapper input#autoComplete::placeholder{
+.autoComplete_wrapper input#autoComplete::placeholder, .autoComplete_wrapper input#autoComplete2::placeholder{
 color: grey;
 }
 
@@ -74,7 +74,7 @@ color: grey;
 
    @media screen and (min-width: 530px) {
 
-.autoComplete_wrapper input#autoComplete{
+.autoComplete_wrapper input#autoComplete, .autoComplete_wrapper input#autoComplete2{
 width: 500px;
 }
 
@@ -82,7 +82,7 @@ width: 500px;
 
    @media screen and (max-width: 529px) {
 
-.autoComplete_wrapper input#autoComplete{
+.autoComplete_wrapper input#autoComplete, .autoComplete_wrapper input#autoComplete2{
 width: 99%;
 }
 
@@ -319,9 +319,11 @@ font-size: 18px;
   <div id="header">
 <div id="recherche_circo">Combien vous coûtera la réforme des retraites ?</div>
 
+
+
         <div id="autocomplete_container"> <input id="autoComplete"></div>
 
-        <div id="autocomplete_container"> <input id="autoComplete2"></div>
+        <div id="autocomplete_container"> <div class="autoComplete_wrapper" role="combobox" aria-owns="autoComplete_list_1" aria-haspopup="true" aria-expanded="false"><input id="autoComplete2" aria-controls="autoComplete_list_1" aria-autocomplete="both" placeholder="Age d'entrée sur le marché du travail. ex : 22"><ul id="autoComplete_list_1" role="listbox" hidden=""></ul></div></div>
 
         <h3 style="text-align: center;" id="adresse_circo"></h3>
     </div>
