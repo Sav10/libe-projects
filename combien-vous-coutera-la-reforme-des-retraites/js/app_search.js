@@ -292,20 +292,56 @@ d3.select('#autoComplete2')
 function makesmall_barchart(data_) {
 
 
+var kValue = graphParameters['selected_yRows'][0];
+    var dValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_xRows'];
+
+
   xScale = d3.scaleLinear()
   .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
     d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
   .range([0, width]);
 
 
-    yScale = d3.scaleLinear()
-  .domain([thisYMin,
-    thisYMax
-    ])
-  .range([height, 0]);
+    yScale = d3.scaleBand().rangeRound([0, height]).padding(manualReusableParameters.barPadding.value/10);
 
 
+ g.select('g.innerGraph')
+    .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value) +")");
 
+    g.select("g.axis.axis--x")
+    // .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + height + ")")
+    .attr("transform", "translate(" + (this_padding_left + manualReusableParameters.padding_left.value) + "," + (height + manualReusableParameters.padding_top.value ) + ")")
+    .call(axis_bottom);
+
+    g.select("g.axis.axis--y")
+    .attr('transform', 'translate(' + (manualReusableParameters.padding_left.value + this_padding_left) + ',' + manualReusableParameters.padding_top.value  + ')')
+    .call(axis_left);
+
+    var all_bars = g_inner.selectAll("rect").data(this_grouped_data);
+
+
+    all_bars
+    .transition()
+    .duration(200)
+    .attr("x", (this_padding_left))
+    .attr("y", function(d) { return y(d[kValue]); })
+    .attr("height", y.bandwidth())
+    .attr("width", function(d) { return x(d[dValue]); });
+
+    all_bars.exit().transition().duration(200).remove();
+
+    all_bars
+    .enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", (this_padding_left))
+    .attr("y", function(d) { return y(d[kValue]) })
+    .attr("height", y.bandwidth())
+    .attr("width", function(d) { return x(d[dValue]); })
+    .attr('fill', '#e60004')
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
 
 }
 
