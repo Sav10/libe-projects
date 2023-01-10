@@ -38,6 +38,15 @@ d.Surplus_age_ouverture = +(d.Surplus_age_ouverture.replace(',', '.'))
 })
 
 
+data_ppm.forEach(function(d){
+
+d.year = +d.year
+
+d.month = +d.month
+
+})
+
+
 }).catch(function(err) {
   console.log('erreur' + ' ' + err)
 })
@@ -130,12 +139,36 @@ d3.select('#autoComplete2')
 
      function write_PPM(concentration){
 
+      let this_year
+      let this_retraite_sel
+
 
       if (work_age && year_month_selection){
 
         console.log('OK')
 
         console.log(work_age, year_month_selection)
+
+
+        this_year = year_month_selection.year
+
+        if (this_year == 1961){
+          if (year_month_selection.month < 7){
+            this_year = 1960
+          }
+        }
+
+
+        this_retraite_sel = data_retraites.filter(d=>d.year == this_year)
+        if (this_retraite_sel.length >=1){
+          this_retraite_sel = this_retraite_sel[0]
+        }
+        else{
+          this_retraite_sel = null
+        }
+
+        console.log(this_retraite_sel)
+
 
 
 
