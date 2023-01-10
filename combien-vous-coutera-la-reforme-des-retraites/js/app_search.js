@@ -13,6 +13,7 @@ let year_month_selection
 var xScale,
   yScale;
 
+var g 
 
 moment.locale('fr')
 
@@ -271,7 +272,7 @@ d3.select('#autoComplete2')
       width = +svg.attr("width") - margin.left - margin.right;
       height = +svg.attr("height") - margin.top - margin.bottom;
 
-      var g = svg.append("g")
+      g = svg.append("g")
       .attr('class', 'graphContainer')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -297,13 +298,18 @@ var kValue = graphParameters['selected_yRows'][0];
     var dValues = graphParameters['selected_xRows'];
 
 
+      var this_padding_left = 40;
+
+
   xScale = d3.scaleLinear()
-  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
-    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .domain([18,70])
   .range([0, width]);
 
 
     yScale = d3.scaleBand().rangeRound([0, height]).padding(manualReusableParameters.barPadding.value/10);
+
+
+    yScale.domain([1]);
 
 
  g.select('g.innerGraph')
@@ -321,27 +327,35 @@ var kValue = graphParameters['selected_yRows'][0];
     var all_bars = g_inner.selectAll("rect").data(this_grouped_data);
 
 
-    all_bars
-    .transition()
-    .duration(200)
-    .attr("x", (this_padding_left))
-    .attr("y", function(d) { return y(d[kValue]); })
-    .attr("height", y.bandwidth())
-    .attr("width", function(d) { return x(d[dValue]); });
-
-    all_bars.exit().transition().duration(200).remove();
-
-    all_bars
-    .enter()
+    g_inner
     .append("rect")
-    .attr("class", "bar")
     .attr("x", (this_padding_left))
-    .attr("y", function(d) { return y(d[kValue]) })
-    .attr("height", y.bandwidth())
-    .attr("width", function(d) { return x(d[dValue]); })
-    .attr('fill', '#e60004')
-    .on('mouseover', function(d, i){ show_tooltip(d)})
-    .on('mouseout', function(d){ hide_tooltip()});
+    .attr("y", function(d) { return yScale(1); })
+    .attr("height", yScale.bandwidth())
+    .attr("width", function(d) { return xScale(data_.ouverture_droits); });
+
+
+    // all_bars
+    // .transition()
+    // .duration(200)
+    // .attr("x", (this_padding_left))
+    // .attr("y", function(d) { return y(d[kValue]); })
+    // .attr("height", y.bandwidth())
+    // .attr("width", function(d) { return x(d[dValue]); });
+
+    // all_bars.exit().transition().duration(200).remove();
+
+    // all_bars
+    // .enter()
+    // .append("rect")
+    // .attr("class", "bar")
+    // .attr("x", (this_padding_left))
+    // .attr("y", function(d) { return y(d[kValue]) })
+    // .attr("height", y.bandwidth())
+    // .attr("width", function(d) { return x(d[dValue]); })
+    // .attr('fill', '#e60004')
+    // .on('mouseover', function(d, i){ show_tooltip(d)})
+    // .on('mouseout', function(d){ hide_tooltip()});
 
 }
 
