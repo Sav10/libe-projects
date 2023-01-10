@@ -292,6 +292,20 @@ d3.select('#autoComplete2')
 function makesmall_barchart(data_) {
 
 
+  xScale = d3.scaleLinear()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+    yScale = d3.scaleLinear()
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+
+
 
 }
 
