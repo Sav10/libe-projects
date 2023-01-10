@@ -159,13 +159,15 @@ d3.select('#autoComplete2')
         }
 
 
-        this_retraite_sel = data_retraites.filter(d=>d.year == this_year)
+        this_retraite_sel = data_retraites.filter(d=>d.naissance == this_year)
         if (this_retraite_sel.length >=1){
           this_retraite_sel = this_retraite_sel[0]
         }
         else{
           this_retraite_sel = null
         }
+
+        console.log(this_year)
 
         console.log(this_retraite_sel)
 
