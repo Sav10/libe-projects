@@ -301,6 +301,9 @@ var kValue = graphParameters['selected_yRows'][0];
       var this_padding_left = 40;
 
 
+        var g_inner = g.select('g.innerGraph');
+
+
   xScale = d3.scaleLinear()
   .domain([18,70])
   .range([0, width]);
@@ -312,6 +315,14 @@ var kValue = graphParameters['selected_yRows'][0];
     yScale.domain([1]);
 
 
+    var axis_bottom = d3.axisBottom(xScale).ticks(manualReusableParameters.bottomAxisTickNumber.value)
+    // .tickFormat(thisDateFormat)
+    ;
+    var axis_left = d3.axisLeft(yScale).ticks(manualReusableParameters.leftAxisTickNumber.value)
+    // .tickFormat(numbers_separators)
+    ;
+
+
  g.select('g.innerGraph')
     .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value) +")");
 
@@ -320,11 +331,11 @@ var kValue = graphParameters['selected_yRows'][0];
     .attr("transform", "translate(" + (this_padding_left + manualReusableParameters.padding_left.value) + "," + (height + manualReusableParameters.padding_top.value ) + ")")
     .call(axis_bottom);
 
-    g.select("g.axis.axis--y")
-    .attr('transform', 'translate(' + (manualReusableParameters.padding_left.value + this_padding_left) + ',' + manualReusableParameters.padding_top.value  + ')')
-    .call(axis_left);
+    // g.select("g.axis.axis--y")
+    // .attr('transform', 'translate(' + (manualReusableParameters.padding_left.value + this_padding_left) + ',' + manualReusableParameters.padding_top.value  + ')')
+    // .call(axis_left);
 
-    var all_bars = g_inner.selectAll("rect").data(this_grouped_data);
+    // var all_bars = g_inner.selectAll("rect").data(this_grouped_data);
 
 
     g_inner
