@@ -201,16 +201,28 @@ if (this_year < 1961){
 }
 else {
 
+
+
+  let surplus_duree_txt = ''
+
+  if (this_retraite_sel.surplus_duree >0){
+
+    surplus_duree_txt += `et rallonge de ${String(this_retraite_sel.surplus_duree / .25)} trimestres la durée de cotisation`
+
+
+  }
+
   let surplus_age_ouverture_txt = ''
 
 
       if (Math.floor(this_retraite_sel.Surplus_age_ouverture) >0){
-      surplus_age_ouverture_txt += String(Math.floor(this_retraite_sel.Surplus_age_ouverture)) + ' annnées'
+      surplus_age_ouverture_txt += String(Math.floor(this_retraite_sel.Surplus_age_ouverture)) + ' années'
       console.log(surplus_age_ouverture_txt)
     }
 
     if(String(this_retraite_sel.Surplus_age_ouverture).split('.').length > 1){
-      let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/.25) + ' mois'
+      let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/25) + ' mois'
+      console.log(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])
       surplus_age_ouverture_txt = surplus_age_ouverture_txt ? surplus_age_ouverture_txt + ' et ' + nombre_de_mois : nombre_de_mois; 
       console.log(surplus_age_ouverture_txt)
     }
@@ -218,7 +230,7 @@ else {
     console.log(surplus_age_ouverture_txt)
 
 
-  d3.select('#result_naissance').html( `La réforme des retraites retarde votre départ à la retraite de ${surplus_age_ouverture_txt} et rallonge de XXX trimestres`)
+  d3.select('#result_naissance').html( `La réforme des retraites retarde votre date d'ouverture des droits à la retraite de ${surplus_age_ouverture_txt} ${surplus_duree_txt}`)
 }
 
 
