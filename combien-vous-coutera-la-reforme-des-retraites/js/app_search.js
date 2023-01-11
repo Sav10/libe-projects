@@ -207,16 +207,19 @@ else {
 
   if (this_retraite_sel.surplus_duree >0){
 
-    surplus_duree_txt += `et rallonge de ${String(this_retraite_sel.surplus_duree / .25)} trimestres la durée de cotisation`
+    surplus_duree_txt += `et rallonge de <b>${String(this_retraite_sel.surplus_duree / .25)} trimestres</b> la durée de cotisation necessaire pour bénéficier d'une retraite à taux plein`
 
 
   }
 
-  let surplus_age_ouverture_txt = ''
+  let surplus_age_ouverture_txt = '<b>'
+
+  let nombre_annes_supp_ouverture = Math.floor(this_retraite_sel.Surplus_age_ouverture)
 
 
-      if (Math.floor(this_retraite_sel.Surplus_age_ouverture) >0){
-      surplus_age_ouverture_txt += String(Math.floor(this_retraite_sel.Surplus_age_ouverture)) + ' années'
+      if (nombre_annes_supp_ouverture >0){
+      surplus_age_ouverture_txt += String(nombre_annes_supp_ouverture) + ' an'
+      if (nombre_annes_supp_ouverture >1){surplus_age_ouverture_txt += 's'}
       console.log(surplus_age_ouverture_txt)
     }
 
@@ -227,7 +230,12 @@ else {
       console.log(surplus_age_ouverture_txt)
     }
 
+    
+
+    surplus_age_ouverture_txt += '</b>'
+
     console.log(surplus_age_ouverture_txt)
+
 
 
   d3.select('#result_naissance').html( `La réforme des retraites retarde votre date d'ouverture des droits à la retraite de ${surplus_age_ouverture_txt} ${surplus_duree_txt}`)
