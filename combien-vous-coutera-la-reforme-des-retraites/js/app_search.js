@@ -224,7 +224,7 @@ else {
     }
 
     if(String(this_retraite_sel.Surplus_age_ouverture).split('.').length > 1){
-      let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/25).replace('0.', '') + ' mois'
+      let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/25).replace('0.', '') + ' trimestres'
       console.log(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])
       surplus_age_ouverture_txt = nombre_annes_supp_ouverture >0 ? surplus_age_ouverture_txt + ' et ' + nombre_de_mois : nombre_de_mois; 
       console.log(surplus_age_ouverture_txt)
@@ -388,7 +388,8 @@ console.log(data_)
     .attr("x",  function(d) { return margin.left + xScale(work_age) })
     .attr("y", 100)
     .attr("height", 30)
-    .attr('fill', 'grey')
+    .attr('fill', 'white')
+    .attr('stroke', 'black')
     .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture) });
 
 
@@ -399,6 +400,7 @@ console.log(data_)
     .attr("y", 100)
     .attr("height", 30)
     .attr('fill', 'red')
+    .attr('stroke', 'black')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
     }
 
@@ -410,7 +412,8 @@ console.log(data_)
     .attr("x",  function(d) { return margin.left + xScale(work_age) })
     .attr("y", 150)
     .attr("height", 10)
-    .attr('fill', 'grey')
+    .attr('fill', 'white')
+    .attr('stroke', 'black')
     .attr("width", function(d) { return xScale(this_retraite_sel.duree_cotis_ancien) });
 
 
@@ -421,6 +424,7 @@ console.log(data_)
     .attr("y", 150)
     .attr("height", 10)
     .attr('fill', 'red')
+    .attr('stroke', 'black')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
     }
 
