@@ -358,7 +358,7 @@ console.log(data_)
     yScale.domain(['1']);
 
 
-    var axis_bottom = d3.axisBottom(xScale).ticks(manualReusableParameters.bottomAxisTickNumber.value)
+    var axis_bottom = d3.axisBottom(xScale).ticks(5)
     // .tickFormat(thisDateFormat)
     ;
     var axis_left = d3.axisLeft(yScale).ticks(manualReusableParameters.leftAxisTickNumber.value)
@@ -427,6 +427,17 @@ console.log(data_)
     .attr('stroke', 'black')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
     }
+
+    d3.selectAll('.axis.axis--x .tick line')
+    .attr('opacity', .5)
+    .attr('y1', -height)
+    .attr('stroke', '#bbb')
+    .attr('y2', 0)
+
+    d3.select('.axis.axis--x path')
+    .attr('opacity', 0)
+
+
 
     // all_bars
     // .transition()
