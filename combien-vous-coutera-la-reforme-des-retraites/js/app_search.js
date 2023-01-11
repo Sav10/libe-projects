@@ -9,11 +9,27 @@ let data_ppm
 let data_retraites
 let work_age = 0
 let year_month_selection
+let this_retraite_sel
+let this_year
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  }
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 300;
 
 var xScale,
   yScale;
 
-var g 
+var g, svg
 
 moment.locale('fr')
 
@@ -64,7 +80,7 @@ const autoCompleteJS = new autoComplete({
     maxResults: 10,
   },
   query: (input) => {
-    console.log(input)
+
     return input.replace("'", " ");
 },
 
@@ -84,13 +100,13 @@ data: {
     input: {
       selection: (event) => {
 
-console.log(event)
+
 
         const selection = event.detail.selection.value;
         autoCompleteJS.input.value = selection.mois_annee;
         this_selection = selection
 
-        console.log(selection)
+
 
         year_month_selection = selection
 
@@ -113,19 +129,17 @@ console.log(event)
 
 d3.select('#autoComplete2')
 .on('change', function(d){
-  console.log('changing')
 
 
-  console.log(d3.select(this).property('value'))
 
-  console.log(d)
+
 
 })
 .on('keyup', function() {
      if (this.value.length > 1) {
           // do search for this.value here
-          console.log(this.value)
-          work_age = this.value
+
+          work_age = +this.value
 
           if (year_month_selection){
             write_PPM(year_month_selection.de_season_avg)
@@ -140,21 +154,19 @@ d3.select('#autoComplete2')
 
      function write_PPM(concentration){
 
-      let this_year
-      let this_retraite_sel
+      d3.select('svg').selectAll('*').remove()
+
+      
 
 
       if (work_age && year_month_selection){
 
-        console.log('OK')
-
-        console.log(work_age, year_month_selection)
 
 
         this_year = year_month_selection.year
 
         if (this_year == 1961){
-          if (year_month_selection.month < 7){
+          if (year_month_selection.month < 9){
             this_year = 1960
           }
         }
@@ -182,24 +194,33 @@ d3.select('#autoComplete2')
         return false
       }
 
-      d3.select('#result_naissance').html( "Le mois de votre naissance, la concentration dans l'atmosphère de CO2 était de <b>"+
-       String(_.round(concentration,1)).replace('.', ',') + '</b> PPM')
 
 
+if (this_year < 1961){
+  d3.select('#result_naissance').html( "Vous n'êtes pas concerné.e par la réforme des retraites")
+}
+else {
 
-   var margin = {},
-   width,
-   height;
-   var initMargin = {
-    top: 20,
-    right: 20,
-    bottom: 60,
-    left: 40
-  };
+  let surplus_age_ouverture_txt = ''
 
 
-  var initTotalWidth = 600;
-  var initTotalHeight = 400;
+      if (Math.floor(this_retraite_sel.Surplus_age_ouverture) >0){
+      surplus_age_ouverture_txt += String(Math.floor(this_retraite_sel.Surplus_age_ouverture)) + ' annnées'
+      console.log(surplus_age_ouverture_txt)
+    }
+
+    if(String(this_retraite_sel.Surplus_age_ouverture).split('.').length > 1){
+      let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/.25) + ' mois'
+      surplus_age_ouverture_txt = surplus_age_ouverture_txt ? surplus_age_ouverture_txt + ' et ' + nombre_de_mois : nombre_de_mois; 
+      console.log(surplus_age_ouverture_txt)
+    }
+
+    console.log(surplus_age_ouverture_txt)
+
+
+  d3.select('#result_naissance').html( `La réforme des retraites retarde votre départ à la retraite de ${surplus_age_ouverture_txt} et rallonge de XXX trimestres`)
+}
+
 
   var initWidth = initTotalWidth - initMargin.left - initMargin.right;
   var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
@@ -259,18 +280,21 @@ d3.select('#autoComplete2')
 
     function initChart() {
 
-      var svg = d3.select("svg")
-      .call(responsivefy);
+
+       svg = d3.select("svg")
+  .attr('width', initWidth)
+  .attr('height', initHeight)
+
 
       margin = {
         top: 20,
         right: 20,
-        bottom: 60,
+        bottom: 20,
         left: 50
       };
 
-      width = +svg.attr("width") - margin.left - margin.right;
-      height = +svg.attr("height") - margin.top - margin.bottom;
+      width = initWidth - margin.left - margin.right;
+      height = initHeight - margin.top - margin.bottom;
 
       g = svg.append("g")
       .attr('class', 'graphContainer')
@@ -293,9 +317,7 @@ d3.select('#autoComplete2')
 function makesmall_barchart(data_) {
 
 
-var kValue = graphParameters['selected_yRows'][0];
-    var dValue = graphParameters['selected_xRows'][0];
-    var dValues = graphParameters['selected_xRows'];
+console.log(data_)
 
 
       var this_padding_left = 40;
@@ -305,14 +327,16 @@ var kValue = graphParameters['selected_yRows'][0];
 
 
   xScale = d3.scaleLinear()
-  .domain([18,70])
+  .domain([0,70])
   .range([0, width]);
 
 
-    yScale = d3.scaleBand().rangeRound([0, height]).padding(manualReusableParameters.barPadding.value/10);
+    yScale = d3.scaleBand()
+    .rangeRound([0, height])
+    .padding(manualReusableParameters.barPadding.value/10);
 
 
-    yScale.domain([1]);
+    yScale.domain(['1']);
 
 
     var axis_bottom = d3.axisBottom(xScale).ticks(manualReusableParameters.bottomAxisTickNumber.value)
@@ -328,7 +352,7 @@ var kValue = graphParameters['selected_yRows'][0];
 
     g.select("g.axis.axis--x")
     // .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + height + ")")
-    .attr("transform", "translate(" + (this_padding_left + manualReusableParameters.padding_left.value) + "," + (height + manualReusableParameters.padding_top.value ) + ")")
+    .attr("transform", "translate(" + (margin.left) + "," + (height) + ")")
     .call(axis_bottom);
 
     // g.select("g.axis.axis--y")
@@ -337,14 +361,49 @@ var kValue = graphParameters['selected_yRows'][0];
 
     // var all_bars = g_inner.selectAll("rect").data(this_grouped_data);
 
+    /// Age ouverture des droits
+
 
     g_inner
     .append("rect")
-    .attr("x", (this_padding_left))
-    .attr("y", function(d) { return yScale(1); })
-    .attr("height", yScale.bandwidth())
-    .attr("width", function(d) { return xScale(data_.ouverture_droits); });
+    .attr("x",  function(d) { return margin.left + xScale(work_age) })
+    .attr("y", 100)
+    .attr("height", 30)
+    .attr('fill', 'grey')
+    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture) });
 
+
+    if (this_retraite_sel.Surplus_age_ouverture >0){
+      g_inner
+    .append("rect")
+    .attr("x",  function(d) { return margin.left + xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
+    .attr("y", 100)
+    .attr("height", 30)
+    .attr('fill', 'red')
+    .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
+    }
+
+
+    /// Durée de cotisation
+
+    g_inner
+    .append("rect")
+    .attr("x",  function(d) { return margin.left + xScale(work_age) })
+    .attr("y", 150)
+    .attr("height", 10)
+    .attr('fill', 'grey')
+    .attr("width", function(d) { return xScale(this_retraite_sel.duree_cotis_ancien) });
+
+
+    if (this_retraite_sel.surplus_duree >0){
+      g_inner
+    .append("rect")
+    .attr("x",  function(d) { return margin.left + xScale(work_age + this_retraite_sel.duree_cotis_ancien) })
+    .attr("y", 150)
+    .attr("height", 10)
+    .attr('fill', 'red')
+    .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
+    }
 
     // all_bars
     // .transition()
@@ -371,238 +430,7 @@ var kValue = graphParameters['selected_yRows'][0];
 }
 
 
-function makeLinechart(data_) {
 
-    var data = _.cloneDeep(data_);
-      var initial_data = _.cloneDeep(data);
-      var kValue = graphParameters['selected_xRows'][0];
-      var dValues = graphParameters['selected_yRows'];
-      var dValue = dValues[0];
-      var svg = d3.select("svg");
-      var g = svg.select('g.graphContainer');
-      var g_inner = g.select('g.innerGraph');
-
-      updateParameters();
-
-      data = recalculateAndTransformValues(initial_data, kValue, dValues)
-
-      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
-
-        var this_x_values = data.map(function(d){return d[kValue]})
-        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
-        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
-
-        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
-    }
-
-
-    if (manualReusableParameters.indice_100.value == 1){
-
-        if (checkIfpercentageInArray(data, dValues) == true){
-
-
-            data = prepareLineChartIndice100Growth(data, kValue, dValues);
-
-        }
-        else{
-
-            data = prepareLineChartIndice100Value(data, kValue, dValues);
-        }
-    }
-
-    else{
-      data = prepareLineChartData(data, kValue, dValues);
-  }
-
-  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
-  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
-
-  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
-  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
-
-  xScale = xScaleType()
-  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
-    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
-  .range([0, width]);
-
-  console.log(data)
-
-
-  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
-
-  yScale = thisScaleType
-  .domain([thisYMin,
-    thisYMax
-    ])
-  .range([height, 0]);
-
-  changeAxis(xScale, yScale);
-
-  g.select('g.innerGraph')
-  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
-
-  g.select("g.axis.axis--x")
-  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
-  .call(axis_bottom)
-  .selectAll("text")
-  .style("text-anchor", "middle")
-  .attr("dx", "0em")
-  .attr("dy", "0.7em")
-  .attr("transform", "rotate(0)");
-
-  if (manualReusableParameters.rotateXRow.value == true){
-
-    g.select("g.axis.axis--x")
-    .selectAll("g.tick")
-    .select("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", ".15em")
-    .attr("transform", "rotate(-40)");
-
-}
-
-
-g.select("g.axis.axis--y")
-.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
-.call(axis_left);
-
-var line = d3.line()
-.x(function(d) { return xScale(d.x_value) })
-.y(function(d) { return yScale(d.y_value)
-})
-
-
-        // .curve(d3.curveCatmullRom.alpha(0.5))
-
-
-        var allLines = g_inner
-        .selectAll('.line')
-        .data(data);
-
-        allLines
-        .transition()
-        .duration(200)
-        .attr('d', function(d) { return line(d) })
-        .style('stroke', function(d) { return colorUpdated(d[0].name) });
-
-        allLines.exit().transition().duration(200).remove();
-
-        allLines
-        .enter()
-        .append('path')
-        .attr('class', 'line')
-        .attr('d', function(d) { return line(d) })
-        .style('stroke', function(d) { return colorUpdated(d[0].name) })
-        .style('stroke-width', 2)
-        .style('fill', 'none');
-
-        AllDotPoints = g_inner
-        .selectAll('circle.dotPoint')
-        .data(_.flatten(data));
-
-        AllDotPoints
-        // .transition()
-        // .duration(200)
-        .attr('cx', function(d) { return xScale(d.x_value) })
-        .attr('cy', function(d) { return yScale(d.y_value) })
-        .style('fill', function(d) { return colorUpdated(d.name) })
-        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
-
-        AllDotPoints.exit().transition().duration(200).remove();
-
-        AllDotPoints
-        .enter()
-        .append('circle')
-        .attr('class', 'dotPoint')
-        .attr('cx', function(d, i) { return xScale(d.x_value) })
-        .attr('cy', function(d) { return yScale(d.y_value) })
-        .style('fill', function(d) { return colorUpdated(d.name) })
-        .attr('r', 3)
-        .style('stroke-width', 5)
-        .style('stroke', 'white')
-        .style('stroke-opacity', 0)
-        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
-        // .style('fill', 'black')
-        // .on('mouseover', function(d, i){
-        //     var thoseVars = [];
-        //     if (moment.isMoment(d.x_value)){ thoseVars.push({'name': 'date', 'value':d.x_value.locale('fr').format('DD MMMM YYYY')})};
-        //     if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':d.y_value})};
-        //     show_tooltip(_.find(initial_data, function(e){
-        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name, thoseVars)})
-        // .on('mouseout', function(d){ hide_tooltip()});
-        ;
-
-        allLabels =  g_inner
-        .selectAll('text.label')
-        .data(data.map(function(d){return d[d.length -1]}));
-
-        var allLabelsE = allLabels
-        .enter()
-        .append('text')
-        .attr('class', 'label');
-
-        allLabels.exit().remove()
-
-        allLabels
-        .merge(allLabelsE)
-        .attr('x', function(d){return xScale(d.x_value) + 6})
-        .attr('y', function(d){return yScale(d.y_value) - 6})
-        .attr('text-anchor', 'start')
-        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
-        .attr('fill', function(d){return colorUpdated(d.name)});
-
-
-    // cells.exit().remove();
-
-
-/// Axis Label
-
-g_inner
-.call(xAxisLabel, graphParameters.selected_xRows[0]);
-
-g_inner
-.call(yAxisLabel, graphParameters.selected_yRows[0]);
-
-
-
-  customizeAxis()
-
-  drawLegend()
-  addCustomCode()
-
-d3.selectAll('#vous_etes_ici_circle, #vous_etes_ici_texte, #text_bar_350').remove()
-
-d3.selectAll('g.axis--y .tick line').filter(d=>d == 350).style('stroke', 'black').style('stroke-dasharray', '2 2').style('stroke-width', '1px')
-
-d3.select('.graphContainer').append('text')
-.attr('id', 'text_bar_350').text('taux maximal acceptable de CO2 ')
-.attr('text-anchor', 'middle').attr('x', xScale(moment('1920-01-01')))
-.attr('y', yScale(357)).attr('fill', 'black').style('font-size', '13px')
-
-d3.select('.graphContainer').append('circle')
-.attr('id', 'vous_etes_ici_circle')
-.attr('cx', xScale(moment(this_selection.datetime)))
-.attr('cy', yScale(this_selection.de_season_avg))
-.attr('stroke', 'black')
-.attr('r', 9)
-.attr('fill-opacity', 0)
-.attr('stroke-width', '4px');
-
-
-
-d3.select('.graphContainer').append('text')
-.attr('id', 'vous_etes_ici_texte').text('Vous êtes né.e ici')
-.attr('text-anchor', 'end')
-.attr('x', xScale(moment(this_selection.datetime)) > 74 ? xScale(moment(this_selection.datetime)) : 74)
-.attr('dx', '-1em')
-.attr('dy', '-0.7em')
-.attr('y', yScale(this_selection.de_season_avg))
-.attr('fill', 'black').style('font-size', '13px')
-.style('font-weight', 'bold')
-
-
-}
 
 initChart();
 
@@ -618,26 +446,6 @@ d3.select("svg").call(responsivefy)
 
 // 
 
-function updateParameters(){
-
-  var svg = d3.select("svg");
-
-  svg
-  .attr('width', manualReusableParameters.chart_width.value);
-
-      // d3.select('div#chart')
-      // .style('width', manualReusableParameters.chart_width.value);
-
-      svg.attr("width", manualReusableParameters.chart_width.value);
-      svg
-      .attr('height', manualReusableParameters.chart_height.value);
-
-      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
-      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
-      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
-      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
-
-    }
 
 // Hack for Iphone
 
