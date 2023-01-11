@@ -207,7 +207,7 @@ else {
 
   if (this_retraite_sel.surplus_duree >0){
 
-    surplus_duree_txt += `et rallonge de <b>${String(this_retraite_sel.surplus_duree / .25)} trimestres</b> la durée de cotisation necessaire pour bénéficier d'une retraite à taux plein`
+    surplus_duree_txt += `et rallonge de <b>${String(this_retraite_sel.surplus_duree / .25).replace('0.', '')} trimestres</b> la durée de cotisation necessaire pour bénéficier d'une retraite à taux plein`
 
 
   }
