@@ -207,12 +207,12 @@ else {
 
   if (this_retraite_sel.surplus_duree >0){
 
-    surplus_duree_txt += `et rallonge de <b>${String(this_retraite_sel.surplus_duree / .25).replace('0.', '')} trimestres</b> la durée de cotisation necessaire pour bénéficier d'une retraite à taux plein`
+    surplus_duree_txt += `et rallonge de <b>${String(this_retraite_sel.surplus_duree / .25)} trimestres</b> la durée de cotisation necessaire pour bénéficier d'une retraite à taux plein`
 
 
   }
 
-  let surplus_age_ouverture_txt = '<b>'
+  let surplus_age_ouverture_txt = ''
 
   let nombre_annes_supp_ouverture = Math.floor(this_retraite_sel.Surplus_age_ouverture)
 
@@ -224,21 +224,20 @@ else {
     }
 
     if(String(this_retraite_sel.Surplus_age_ouverture).split('.').length > 1){
-      let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/25) + ' mois'
+      let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/25).replace('0.', '') + ' mois'
       console.log(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])
-      surplus_age_ouverture_txt = surplus_age_ouverture_txt ? surplus_age_ouverture_txt + ' et ' + nombre_de_mois : nombre_de_mois; 
+      surplus_age_ouverture_txt = nombre_annes_supp_ouverture >0 ? surplus_age_ouverture_txt + ' et ' + nombre_de_mois : nombre_de_mois; 
       console.log(surplus_age_ouverture_txt)
     }
 
     
 
-    surplus_age_ouverture_txt += '</b>'
 
     console.log(surplus_age_ouverture_txt)
 
 
 
-  d3.select('#result_naissance').html( `La réforme des retraites retarde votre date d'ouverture des droits à la retraite de ${surplus_age_ouverture_txt} ${surplus_duree_txt}`)
+  d3.select('#result_naissance').html( `La réforme des retraites retarde votre date d'ouverture des droits à la retraite de <b>${surplus_age_ouverture_txt}</b> ${surplus_duree_txt}`)
 }
 
 
