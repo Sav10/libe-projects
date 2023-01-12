@@ -361,7 +361,7 @@ console.log(data_)
 
   xScale = d3.scaleLinear()
   .domain([0,70])
-  .range([13, 335]);
+  .range([12.6, 335]);
 
 
     yScale = d3.scaleBand()
