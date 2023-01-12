@@ -397,6 +397,26 @@ console.log(data_)
     /// Age ouverture des droits
 
 
+    work_age
+
+    this_retraite_sel.duree_cotis_nouveau
+
+    if (work_age + this_retraite_sel.duree_cotis_nouveau >= this_retraite_sel.ouverture_droits){
+
+          g_inner
+    .append("rect")
+    .attr("x",  function(d) { return xScale(work_age) })
+    .attr("y", 95)
+    .attr("height", 25)
+    .attr('fill', '#FF9999')
+    .attr("width", function(d) { return xScale(this_retraite_sel.duree_cotis_nouveau)});
+
+
+    }
+    else{
+
+
+
     g_inner
     .append("rect")
     .attr("x",  function(d) { return xScale(work_age) })
@@ -405,6 +425,19 @@ console.log(data_)
     .attr('fill', '#FF9999')
     .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture)});
 
+
+
+    if (this_retraite_sel.Surplus_age_ouverture >0){
+      g_inner
+    .append("rect")
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
+    .attr("y", 95)
+    .attr("height", 25)
+    .attr('fill', 'red')
+    .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
+    }
+
+}
 
     g_inner
     .append("text")
@@ -435,15 +468,6 @@ console.log(data_)
     .attr('stroke', "#000")
 
 
-    if (this_retraite_sel.Surplus_age_ouverture >0){
-      g_inner
-    .append("rect")
-    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
-    .attr("y", 95)
-    .attr("height", 25)
-    .attr('fill', 'red')
-    .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
-    }
 
         g_inner
     .append("text")
