@@ -430,7 +430,7 @@ console.log(data_)
     if (this_retraite_sel.surplus_duree >0){
       g_inner
     .append("rect")
-    .attr("x",  function(d) { return Scale(work_age + this_retraite_sel.duree_cotis_ancien) })
+    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_ancien) })
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', 'red')
