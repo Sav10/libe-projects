@@ -356,12 +356,13 @@ console.log(data_)
       var this_padding_left = 40;
 
 
-        var g_inner = g.select('g.innerGraph');
+        var g_inner = g.select('g.innerGraph')
+        .attr('transform', 'translate(12.6, 0)');
 
 
   xScale = d3.scaleLinear()
   .domain([0,70])
-  .range([12.6, 335]);
+  .range([0, 323]);
 
 
     yScale = d3.scaleBand()
@@ -402,7 +403,7 @@ console.log(data_)
     .attr("y", 30)
     .attr("height", 25)
     .attr('fill', '#FF9999')
-    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture) });
+    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture)});
 
 
     if (this_retraite_sel.Surplus_age_ouverture >0){
