@@ -449,12 +449,12 @@ console.log(data_)
 
         g_inner
     .append("text")
-    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) +10})
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) +5})
     .attr("y", 110)
     .attr('fill', "black")
-    .attr('text-anchor', 'middle')
     .text(function(d) { return this_retraite_sel.ouverture_droits})
     .attr('font-size', '11px')
+    .attr('class', 'age_retraite_num')
 
 
     // if (this_retraite_sel.Surplus_age_ouverture >0){
@@ -524,12 +524,12 @@ console.log(data_)
 
             g_inner
     .append("text")
-    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_nouveau) +10})
+    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_nouveau) +5})
     .attr("y", 45)
     .attr('fill', "black")
-    .attr('text-anchor', 'middle')
     .text(function(d) { return String((work_age + this_retraite_sel.duree_cotis_nouveau))})
     .attr('font-size', '11px')
+    .attr('class', 'age_retraite_num')
 
     d3.selectAll('.axis.axis--x .tick line')
     .attr('opacity', .5)
