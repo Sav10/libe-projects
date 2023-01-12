@@ -445,6 +445,15 @@ console.log(data_)
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
     }
 
+        g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) +10})
+    .attr("y", 107.5)
+    .attr('fill', "red")
+    .attr('text-anchor', 'middle')
+    .text(function(d) { return this_retraite_sel.ouverture_droits})
+    .attr('font-size', '11px')
+
 
     /// Durée de cotisation
 
@@ -466,6 +475,15 @@ console.log(data_)
     .attr('fill', 'red')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
     }
+
+            g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_ancien + this_retraite_sel.Surplus_age_ouverture) +10})
+    .attr("y", 42.5)
+    .attr('fill', "red")
+    .attr('text-anchor', 'middle')
+    .text(function(d) { return String((work_age + this_retraite_sel.duree_cotis_ancien + this_retraite_sel.Surplus_age_ouverture))})
+    .attr('font-size', '11px')
 
     d3.selectAll('.axis.axis--x .tick line')
     .attr('opacity', .5)
