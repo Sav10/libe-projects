@@ -434,16 +434,16 @@ console.log(data_)
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', '#FF9999')
-    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age]) -work_age)});
+    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age].replace(',', '.')) -work_age)});
 
 
       g_inner
     .append("rect")
-    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age])) })
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age].replace(',', '.'))) })
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', 'red')
-    .attr("width", function(d) { return xScale(-+this_retraite_sel[work_age]) });
+    .attr("width", function(d) { return xScale(-+this_retraite_sel[work_age].replace(',', '.')) });
 
 
 
