@@ -478,11 +478,11 @@ console.log(data_)
 
             g_inner
     .append("text")
-    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_ancien + this_retraite_sel.Surplus_age_ouverture) +10})
+    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_nouveau) +15})
     .attr("y", 45)
     .attr('fill', "black")
     .attr('text-anchor', 'middle')
-    .text(function(d) { return String((work_age + this_retraite_sel.duree_cotis_ancien + this_retraite_sel.Surplus_age_ouverture))})
+    .text(function(d) { return String((work_age + this_retraite_sel.duree_cotis_nouveau))})
     .attr('font-size', '11px')
 
     d3.selectAll('.axis.axis--x .tick line')
