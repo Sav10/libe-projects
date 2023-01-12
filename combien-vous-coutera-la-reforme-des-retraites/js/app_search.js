@@ -519,7 +519,7 @@ console.log(data_)
     .attr("y", 30)
     .attr("height", 25)
     .attr('fill', 'red')
-    .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
+    .attr("width", function(d) { return xScale(this_retraite_sel.surplus_duree) });
     }
 
             g_inner
