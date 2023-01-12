@@ -400,7 +400,7 @@ console.log(data_)
     g_inner
     .append("rect")
     .attr("x",  function(d) { return xScale(work_age) })
-    .attr("y", 30)
+    .attr("y", 95)
     .attr("height", 25)
     .attr('fill', '#FF9999')
     .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture)});
@@ -409,20 +409,20 @@ console.log(data_)
     g_inner
     .append("text")
     .attr("x",  function(d) { return xScale(work_age) })
-    .attr("y", 154)
+    .attr("y", 160)
     .attr('fill', '#000')
     .attr('text-anchor', 'middle')
     .text('Début')
-    .attr('font-size', '11px')
+    .attr('font-size', '8px')
 
     g_inner
     .append("text")
     .attr("x",  function(d) { return xScale(work_age) })
-    .attr("y", 170)
+    .attr("y", 168)
     .attr('fill', '#000')
     .attr('text-anchor', 'middle')
     .text('de carrière')
-    .attr('font-size', '11px')
+    .attr('font-size', '8px')
 
 
     g_inner
@@ -439,7 +439,7 @@ console.log(data_)
       g_inner
     .append("rect")
     .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
-    .attr("y", 30)
+    .attr("y", 95)
     .attr("height", 25)
     .attr('fill', 'red')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
@@ -451,7 +451,7 @@ console.log(data_)
     g_inner
     .append("rect")
     .attr("x",  function(d) { return xScale(work_age) })
-    .attr("y", 95)
+    .attr("y", 30)
     .attr("height", 25)
     .attr('fill', '#FF9999')
     .attr("width", function(d) { return xScale(this_retraite_sel.duree_cotis_ancien) });
@@ -461,7 +461,7 @@ console.log(data_)
       g_inner
     .append("rect")
     .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_ancien) })
-    .attr("y", 95)
+    .attr("y", 30)
     .attr("height", 25)
     .attr('fill', 'red')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
