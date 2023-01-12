@@ -478,7 +478,7 @@ console.log(data_)
 
             g_inner
     .append("text")
-    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_nouveau) +15})
+    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_nouveau) +10})
     .attr("y", 45)
     .attr('fill', "black")
     .attr('text-anchor', 'middle')
