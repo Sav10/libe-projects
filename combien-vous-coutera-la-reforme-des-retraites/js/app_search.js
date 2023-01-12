@@ -29,7 +29,7 @@ let this_year
 var xScale,
   yScale;
 
-var g, svg
+var g, svg, svg0
 
 moment.locale('fr')
 
@@ -72,7 +72,7 @@ d.month = +d.month
 
 
 const autoCompleteJS = new autoComplete({
-  placeHolder: "Mois et année de naissance. Ex : janvier 1980",
+  placeHolder: "Ex : janvier 1980",
   diacritics: true,
   searchEngine: "loose",
   threshold: 4,
@@ -127,26 +127,38 @@ data: {
 )
 
 
-d3.select('#autoComplete2')
-.on('change', function(d){
+d3.selectAll('#button_box_age .actionButton')
+.on('click', function(d){
 
 
+work_age = +this.id.replace('age_', '')
 
+           if (year_month_selection){
+             write_PPM(year_month_selection.de_season_avg)
+           }
+
+d3.selectAll('#button_box_age .actionButton')
+.classed('selected_box', false)
+
+ d3.select(this).classed('selected_box', true)          
 
 
 })
-.on('keyup', function() {
-     if (this.value.length > 1) {
-          // do search for this.value here
 
-          work_age = +this.value
 
-          if (year_month_selection){
-            write_PPM(year_month_selection.de_season_avg)
-          }
 
-     }
-})
+// .on('keyup', function() {
+//      if (this.value.length > 1) {
+//           // do search for this.value here
+
+//           work_age = +this.value
+
+//           if (year_month_selection){
+//             write_PPM(year_month_selection.de_season_avg)
+//           }
+
+//      }
+// })
 
 
 
@@ -154,7 +166,7 @@ d3.select('#autoComplete2')
 
      function write_PPM(concentration){
 
-      d3.select('svg').selectAll('*').remove()
+      d3.select('svg g#chart_here').selectAll('*').remove()
 
       
 
@@ -300,7 +312,7 @@ else {
     function initChart() {
 
 
-       svg = d3.select("svg")
+       svg0 = d3.select("svg")
   .attr('width', initWidth)
   .attr('height', initHeight)
 
@@ -314,6 +326,8 @@ else {
 
       width = initWidth - margin.left - margin.right;
       height = initHeight - margin.top - margin.bottom;
+
+      svg = d3.select('svg g#chart_here')
 
       g = svg.append("g")
       .attr('class', 'graphContainer')
@@ -347,7 +361,7 @@ console.log(data_)
 
   xScale = d3.scaleLinear()
   .domain([0,70])
-  .range([0, width]);
+  .range([13, 335]);
 
 
     yScale = d3.scaleBand()
@@ -358,21 +372,20 @@ console.log(data_)
     yScale.domain(['1']);
 
 
-    var axis_bottom = d3.axisBottom(xScale).ticks(5)
+    // var axis_bottom = d3.axisBottom(xScale).ticks(5)
     // .tickFormat(thisDateFormat)
-    ;
-    var axis_left = d3.axisLeft(yScale).ticks(manualReusableParameters.leftAxisTickNumber.value)
+    
+    // var axis_left = d3.axisLeft(yScale).ticks(manualReusableParameters.leftAxisTickNumber.value)
     // .tickFormat(numbers_separators)
-    ;
 
 
- g.select('g.innerGraph')
-    .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value) +")");
+ // g.select('g.innerGraph')
+ //    .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value) +")");
 
-    g.select("g.axis.axis--x")
+ //    g.select("g.axis.axis--x")
     // .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + height + ")")
-    .attr("transform", "translate(" + (margin.left) + "," + (height) + ")")
-    .call(axis_bottom);
+    // .attr("transform", "translate(" + (margin.left) + "," + (height) + ")")
+    // .call(axis_bottom);
 
     // g.select("g.axis.axis--y")
     // .attr('transform', 'translate(' + (manualReusableParameters.padding_left.value + this_padding_left) + ',' + manualReusableParameters.padding_top.value  + ')')
@@ -385,22 +398,20 @@ console.log(data_)
 
     g_inner
     .append("rect")
-    .attr("x",  function(d) { return margin.left + xScale(work_age) })
-    .attr("y", 100)
-    .attr("height", 30)
-    .attr('fill', 'white')
-    .attr('stroke', 'black')
+    .attr("x",  function(d) { return xScale(work_age) })
+    .attr("y", 30)
+    .attr("height", 25)
+    .attr('fill', '#FF9999')
     .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture) });
 
 
     if (this_retraite_sel.Surplus_age_ouverture >0){
       g_inner
     .append("rect")
-    .attr("x",  function(d) { return margin.left + xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
-    .attr("y", 100)
-    .attr("height", 30)
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
+    .attr("y", 30)
+    .attr("height", 25)
     .attr('fill', 'red')
-    .attr('stroke', 'black')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
     }
 
@@ -409,22 +420,20 @@ console.log(data_)
 
     g_inner
     .append("rect")
-    .attr("x",  function(d) { return margin.left + xScale(work_age) })
-    .attr("y", 150)
-    .attr("height", 10)
-    .attr('fill', 'white')
-    .attr('stroke', 'black')
+    .attr("x",  function(d) { return xScale(work_age) })
+    .attr("y", 95)
+    .attr("height", 25)
+    .attr('fill', '#FF9999')
     .attr("width", function(d) { return xScale(this_retraite_sel.duree_cotis_ancien) });
 
 
     if (this_retraite_sel.surplus_duree >0){
       g_inner
     .append("rect")
-    .attr("x",  function(d) { return margin.left + xScale(work_age + this_retraite_sel.duree_cotis_ancien) })
-    .attr("y", 150)
-    .attr("height", 10)
+    .attr("x",  function(d) { return Scale(work_age + this_retraite_sel.duree_cotis_ancien) })
+    .attr("y", 95)
+    .attr("height", 25)
     .attr('fill', 'red')
-    .attr('stroke', 'black')
     .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
     }
 
@@ -473,7 +482,7 @@ makesmall_barchart(data);
 
 zeroParameters()
 
-d3.select("svg").call(responsivefy)
+// d3.select("svg").call(responsivefy)
 
 // output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
 //         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
@@ -581,7 +590,7 @@ function makeVarSwitch (rowsToSwitch, this_function, data){
 
     if (typeof(responsivefy) !== 'undefined'){
 
-    var svg = d3.select("svg")
+    var svg0 = d3.select("svg")
       .call(responsivefy);
   }
 
