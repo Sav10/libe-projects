@@ -423,6 +423,15 @@ console.log(data_)
     .attr('font-size', '11px')
     .attr('class', 'age_retraite_num')
 
+     g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_nouveau) -5})
+    .attr("y", 92)
+    .attr('fill', "red")
+    .text('+0')
+    .attr('font-size', '8px')
+    .attr('class', 'age_retraite_num')
+
 
     }
     else{
