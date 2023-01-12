@@ -466,6 +466,15 @@ console.log(data_)
     .attr('font-size', '11px')
     .attr('class', 'age_retraite_num')
 
+         g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) -5})
+    .attr("y", 92)
+    .attr('fill', "red")
+    .text(function(d) { return '+' + String(-+this_retraite_sel[work_age]).replace(',', '.')})
+    .attr('font-size', '8px')
+    .attr('class', 'age_retraite_num')
+
 
     // if (this_retraite_sel.Surplus_age_ouverture >0){
     //   g_inner
