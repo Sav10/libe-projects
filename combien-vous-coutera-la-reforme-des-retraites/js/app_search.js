@@ -406,6 +406,35 @@ console.log(data_)
     .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture)});
 
 
+    g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(work_age) })
+    .attr("y", 154)
+    .attr('fill', '#000')
+    .attr('text-anchor', 'middle')
+    .text('Début')
+    .attr('font-size', '11px')
+
+    g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(work_age) })
+    .attr("y", 170)
+    .attr('fill', '#000')
+    .attr('text-anchor', 'middle')
+    .text('de carrière')
+    .attr('font-size', '11px')
+
+
+    g_inner
+    .append('line')
+    .attr('x1', function(d) { return xScale(work_age) })
+    .attr('x2', function(d) { return xScale(work_age) })
+    .attr('y1', 14)
+    .attr('y2', 153)
+    .attr('stroke-dasharray', 3)
+    .attr('stroke', "#000")
+
+
     if (this_retraite_sel.Surplus_age_ouverture >0){
       g_inner
     .append("rect")
