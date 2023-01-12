@@ -344,6 +344,38 @@ opacity: 0.8;
 }
 
 
+h1 {
+    font-family: 'Libe-Sans';
+    /* letter-spacing: 0.03em; */
+    /* justify-content: left; */
+    text-align: left;
+    line-height: 1em;
+    padding-top: 0;
+    /* font-size: 1.28em; */
+    font-weight: 600;
+    font-size: 1.5em;
+    margin-bottom: 0.1em;
+    letter-spacing: 0.6;
+}
+
+
+h4#subtitle {
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /* font-weight: 100; */
+    font-size: .9em;
+    letter-spacing: 0.6;
+    font-weight: normal;
+    margin-top: 0;
+}
+
+p.mois_annee{
+margin-top: 4px;
+margin-bottom: 4px;
+font-weight: bold;
+
+}
+
         </style>
         
 
@@ -355,13 +387,13 @@ opacity: 0.8;
 </head>
     <body>
   <div id="header">
-<div id="recherche_circo">Quand partirez-vous à la retraite ?</div>
-<div id="subtitle">Visualisez ce que changerait la réforme de l'âge légal pour le nombre de trimestres à cotiser</div>
+<h1 id="recherche_circo">Quand partirez-vous à la retraite ?</h1>
+<h4 id="subtitle">Visualisez ce que changerait la réforme de l'âge légal pour le nombre de trimestres à cotiser</h4>
 
 
-<p>Mois et année de naissance</p>
+<p class="mois_annee">Mois et année de naissance</p>
         <div id="autocomplete_container"> <input id="autoComplete"></div>
-<p>Age d'entrée sur le marché du travail</p>
+<p class="mois_annee">Age d'entrée sur le marché du travail</p>
 
 
         <div id="button_box_age">
