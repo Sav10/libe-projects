@@ -397,9 +397,9 @@ console.log(data_)
     /// Age ouverture des droits
 
 
-    work_age
+    // work_age
 
-    this_retraite_sel.duree_cotis_nouveau
+    // this_retraite_sel.duree_cotis_nouveau
 
     if (work_age + this_retraite_sel.duree_cotis_nouveau >= this_retraite_sel.ouverture_droits){
 
@@ -410,6 +410,17 @@ console.log(data_)
     .attr("height", 25)
     .attr('fill', '#FF9999')
     .attr("width", function(d) { return xScale(this_retraite_sel.duree_cotis_nouveau)});
+
+
+
+        g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) +10})
+    .attr("y", 110)
+    .attr('fill', "black")
+    .attr('text-anchor', 'middle')
+    .text(function(d) { return this_retraite_sel.duree_cotis_nouveau + work_age})
+    .attr('font-size', '11px')
 
 
     }
@@ -423,19 +434,38 @@ console.log(data_)
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', '#FF9999')
-    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age - this_retraite_sel.Surplus_age_ouverture)});
+    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age]) -work_age)});
 
 
-
-    if (this_retraite_sel.Surplus_age_ouverture >0){
       g_inner
     .append("rect")
-    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age])) })
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', 'red')
-    .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
-    }
+    .attr("width", function(d) { return xScale(-+this_retraite_sel[work_age]) });
+
+
+
+        g_inner
+    .append("text")
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) +10})
+    .attr("y", 110)
+    .attr('fill', "black")
+    .attr('text-anchor', 'middle')
+    .text(function(d) { return this_retraite_sel.ouverture_droits})
+    .attr('font-size', '11px')
+
+
+    // if (this_retraite_sel.Surplus_age_ouverture >0){
+    //   g_inner
+    // .append("rect")
+    // .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits- this_retraite_sel.Surplus_age_ouverture) })
+    // .attr("y", 95)
+    // .attr("height", 25)
+    // .attr('fill', 'red')
+    // .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
+    // }
 
 }
 
@@ -469,14 +499,6 @@ console.log(data_)
 
 
 
-        g_inner
-    .append("text")
-    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) +10})
-    .attr("y", 110)
-    .attr('fill', "black")
-    .attr('text-anchor', 'middle')
-    .text(function(d) { return this_retraite_sel.ouverture_droits})
-    .attr('font-size', '11px')
 
 
     /// Durée de cotisation
