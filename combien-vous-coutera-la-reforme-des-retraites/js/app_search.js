@@ -166,6 +166,8 @@ d3.selectAll('#button_box_age .actionButton')
 
      function write_PPM(concentration){
 
+      console.log('new chart')
+
       d3.select('svg g#chart_here').selectAll('*').remove()
 
       
@@ -401,7 +403,12 @@ console.log(data_)
 
     // this_retraite_sel.duree_cotis_nouveau
 
-    if (work_age + this_retraite_sel.duree_cotis_nouveau >= this_retraite_sel.ouverture_droits){
+
+
+
+
+
+    if (this_retraite_sel.Surplus_age_ouverture <= 0){
 
           g_inner
     .append("rect")
@@ -409,23 +416,23 @@ console.log(data_)
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', '#FF9999')
-    .attr("width", function(d) { return xScale(this_retraite_sel.duree_cotis_nouveau)});
+    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits - work_age)});
 
 
 
         g_inner
     .append("text")
-    .attr("x",  function(d) { return xScale(this_retraite_sel.duree_cotis_nouveau + work_age) +5})
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) +5})
     .attr("y", 110)
     .attr('fill', "black")
     .attr('text-anchor', 'middle')
-    .text(function(d) { return String(this_retraite_sel.duree_cotis_nouveau + work_age).replace('.', ',')})
+    .text(function(d) { return String(this_retraite_sel.ouverture_droits).replace('.', ',')})
     .attr('font-size', '11px')
     .attr('class', 'age_retraite_num')
 
      g_inner
     .append("text")
-    .attr("x",  function(d) { return xScale(work_age + this_retraite_sel.duree_cotis_nouveau) -5})
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) -5})
     .attr("y", 92)
     .attr('fill', "red")
     .text('+0')
@@ -444,16 +451,16 @@ console.log(data_)
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', '#FF9999')
-    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age].replace(',', '.')) -work_age)});
+    .attr("width", function(d) { return xScale(this_retraite_sel.ouverture_droits -this_retraite_sel.Surplus_age_ouverture -work_age)});
 
 
       g_inner
     .append("rect")
-    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits + (+this_retraite_sel[work_age].replace(',', '.'))) })
+    .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits -this_retraite_sel.Surplus_age_ouverture) })
     .attr("y", 95)
     .attr("height", 25)
     .attr('fill', 'red')
-    .attr("width", function(d) { return xScale(-+this_retraite_sel[work_age].replace(',', '.')) });
+    .attr("width", function(d) { return xScale(this_retraite_sel.Surplus_age_ouverture) });
 
 
 
@@ -471,7 +478,7 @@ console.log(data_)
     .attr("x",  function(d) { return xScale(this_retraite_sel.ouverture_droits) -5})
     .attr("y", 92)
     .attr('fill', "red")
-    .text(function(d) { return this_retraite_sel[work_age].replace('-', '+')})
+    .text(function(d) { return String(this_retraite_sel.Surplus_age_ouverture).replace('-', '+')})
     .attr('font-size', '8px')
     .attr('class', 'age_retraite_num')
 
