@@ -166,7 +166,6 @@ d3.selectAll('#button_box_age .actionButton')
 
      function write_PPM(concentration){
 
-      console.log('new chart')
 
       d3.select('svg g#chart_here').selectAll('*').remove()
 
@@ -234,20 +233,17 @@ else {
       if (nombre_annes_supp_ouverture >0){
       surplus_age_ouverture_txt += String(nombre_annes_supp_ouverture) + ' an'
       if (nombre_annes_supp_ouverture >1){surplus_age_ouverture_txt += 's'}
-      console.log(surplus_age_ouverture_txt)
+
     }
 
     if(String(this_retraite_sel.Surplus_age_ouverture).split('.').length > 1){
       let nombre_de_mois = String(+(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])/25).replace('0.', '') + ' trimestres'
-      console.log(String(this_retraite_sel.Surplus_age_ouverture).split('.')[1])
+
       surplus_age_ouverture_txt = nombre_annes_supp_ouverture >0 ? surplus_age_ouverture_txt + ' et ' + nombre_de_mois : nombre_de_mois; 
-      console.log(surplus_age_ouverture_txt)
+
     }
 
     
-
-
-    console.log(surplus_age_ouverture_txt)
 
 
 
@@ -351,8 +347,6 @@ else {
 
 function makesmall_barchart(data_) {
 
-
-console.log(data_)
 
 
       var this_padding_left = 40;
@@ -826,12 +820,7 @@ if (manualReusableParameters.caseCustomTooltip.value && manualReusableParameters
         var d0 = d[k0]
         // if (k[1] ){
 
-            // console.log(k[1]);
-            // console.log(TextTransformationFonctions[k[1]]);
-            // console.log(TextTransformationFonctions[k[1]]);
-            // console.log(TextTransformationFonctions[k[1]](+d[k0]));
-            // console.log(d[k0]);
-            // console.log(Math.round(+d[k0]));
+
         // }
         if (k[1] && k[1] == 'frenchDate'){
             d0 = TextTransformationFonctions[k[1]](d0);
