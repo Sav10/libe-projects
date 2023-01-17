@@ -1,0 +1,635 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La production d'électricité au charbon augmente en Allemagne depuis 2020</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"country_or_region":"France","date":"2015-01-01","variable":"Coal","share_of_generation_pct":"2.82"},{"country_or_region":"France","date":"2015-02-01","variable":"Coal","share_of_generation_pct":"3.31"},{"country_or_region":"France","date":"2015-03-01","variable":"Coal","share_of_generation_pct":"2.25"},{"country_or_region":"France","date":"2015-04-01","variable":"Coal","share_of_generation_pct":"1.46"},{"country_or_region":"France","date":"2015-05-01","variable":"Coal","share_of_generation_pct":"0.13"},{"country_or_region":"France","date":"2015-06-01","variable":"Coal","share_of_generation_pct":"0.15"},{"country_or_region":"France","date":"2015-07-01","variable":"Coal","share_of_generation_pct":"0.56"},{"country_or_region":"France","date":"2015-08-01","variable":"Coal","share_of_generation_pct":"0.42"},{"country_or_region":"France","date":"2015-09-01","variable":"Coal","share_of_generation_pct":"1.53"},{"country_or_region":"France","date":"2015-10-01","variable":"Coal","share_of_generation_pct":"2.26"},{"country_or_region":"France","date":"2015-11-01","variable":"Coal","share_of_generation_pct":"1.67"},{"country_or_region":"France","date":"2015-12-01","variable":"Coal","share_of_generation_pct":"1.51"},{"country_or_region":"France","date":"2016-01-01","variable":"Coal","share_of_generation_pct":"1.37"},{"country_or_region":"France","date":"2016-02-01","variable":"Coal","share_of_generation_pct":"0.82"},{"country_or_region":"France","date":"2016-03-01","variable":"Coal","share_of_generation_pct":"1.52"},{"country_or_region":"France","date":"2016-04-01","variable":"Coal","share_of_generation_pct":"1.12"},{"country_or_region":"France","date":"2016-05-01","variable":"Coal","share_of_generation_pct":"0.36"},{"country_or_region":"France","date":"2016-06-01","variable":"Coal","share_of_generation_pct":"0.36"},{"country_or_region":"France","date":"2016-07-01","variable":"Coal","share_of_generation_pct":"0.45"},{"country_or_region":"France","date":"2016-08-01","variable":"Coal","share_of_generation_pct":"0.4"},{"country_or_region":"France","date":"2016-09-01","variable":"Coal","share_of_generation_pct":"2.16"},{"country_or_region":"France","date":"2016-10-01","variable":"Coal","share_of_generation_pct":"2.44"},{"country_or_region":"France","date":"2016-11-01","variable":"Coal","share_of_generation_pct":"2.64"},{"country_or_region":"France","date":"2016-12-01","variable":"Coal","share_of_generation_pct":"2.59"},{"country_or_region":"France","date":"2017-01-01","variable":"Coal","share_of_generation_pct":"3.03"},{"country_or_region":"France","date":"2017-02-01","variable":"Coal","share_of_generation_pct":"2.03"},{"country_or_region":"France","date":"2017-03-01","variable":"Coal","share_of_generation_pct":"0.79"},{"country_or_region":"France","date":"2017-04-01","variable":"Coal","share_of_generation_pct":"1.56"},{"country_or_region":"France","date":"2017-05-01","variable":"Coal","share_of_generation_pct":"1.29"},{"country_or_region":"France","date":"2017-06-01","variable":"Coal","share_of_generation_pct":"0.96"},{"country_or_region":"France","date":"2017-07-01","variable":"Coal","share_of_generation_pct":"2.29"},{"country_or_region":"France","date":"2017-08-01","variable":"Coal","share_of_generation_pct":"0.55"},{"country_or_region":"France","date":"2017-09-01","variable":"Coal","share_of_generation_pct":"1.51"},{"country_or_region":"France","date":"2017-10-01","variable":"Coal","share_of_generation_pct":"3.16"},{"country_or_region":"France","date":"2017-11-01","variable":"Coal","share_of_generation_pct":"3.3"},{"country_or_region":"France","date":"2017-12-01","variable":"Coal","share_of_generation_pct":"1.61"},{"country_or_region":"France","date":"2018-01-01","variable":"Coal","share_of_generation_pct":"0.57"},{"country_or_region":"France","date":"2018-02-01","variable":"Coal","share_of_generation_pct":"1.92"},{"country_or_region":"France","date":"2018-03-01","variable":"Coal","share_of_generation_pct":"1.64"},{"country_or_region":"France","date":"2018-04-01","variable":"Coal","share_of_generation_pct":"0.6"},{"country_or_region":"France","date":"2018-05-01","variable":"Coal","share_of_generation_pct":"0.39"},{"country_or_region":"France","date":"2018-06-01","variable":"Coal","share_of_generation_pct":"0.69"},{"country_or_region":"France","date":"2018-07-01","variable":"Coal","share_of_generation_pct":"1.44"},{"country_or_region":"France","date":"2018-08-01","variable":"Coal","share_of_generation_pct":"1.39"},{"country_or_region":"France","date":"2018-09-01","variable":"Coal","share_of_generation_pct":"0.92"},{"country_or_region":"France","date":"2018-10-01","variable":"Coal","share_of_generation_pct":"1.93"},{"country_or_region":"France","date":"2018-11-01","variable":"Coal","share_of_generation_pct":"1.16"},{"country_or_region":"France","date":"2018-12-01","variable":"Coal","share_of_generation_pct":"0.43"},{"country_or_region":"France","date":"2019-01-01","variable":"Coal","share_of_generation_pct":"0.79"},{"country_or_region":"France","date":"2019-02-01","variable":"Coal","share_of_generation_pct":"0.49"},{"country_or_region":"France","date":"2019-03-01","variable":"Coal","share_of_generation_pct":"0.02"},{"country_or_region":"France","date":"2019-04-01","variable":"Coal","share_of_generation_pct":"0.05"},{"country_or_region":"France","date":"2019-05-01","variable":"Coal","share_of_generation_pct":"0"},{"country_or_region":"France","date":"2019-06-01","variable":"Coal","share_of_generation_pct":"0.03"},{"country_or_region":"France","date":"2019-07-01","variable":"Coal","share_of_generation_pct":"0.15"},{"country_or_region":"France","date":"2019-08-01","variable":"Coal","share_of_generation_pct":"0.08"},{"country_or_region":"France","date":"2019-09-01","variable":"Coal","share_of_generation_pct":"0.08"},{"country_or_region":"France","date":"2019-10-01","variable":"Coal","share_of_generation_pct":"0.08"},{"country_or_region":"France","date":"2019-11-01","variable":"Coal","share_of_generation_pct":"1.06"},{"country_or_region":"France","date":"2019-12-01","variable":"Coal","share_of_generation_pct":"0.53"},{"country_or_region":"France","date":"2020-01-01","variable":"Coal","share_of_generation_pct":"0.3"},{"country_or_region":"France","date":"2020-02-01","variable":"Coal","share_of_generation_pct":"0.16"},{"country_or_region":"France","date":"2020-03-01","variable":"Coal","share_of_generation_pct":"0.06"},{"country_or_region":"France","date":"2020-04-01","variable":"Coal","share_of_generation_pct":"0.03"},{"country_or_region":"France","date":"2020-05-01","variable":"Coal","share_of_generation_pct":"0.14"},{"country_or_region":"France","date":"2020-06-01","variable":"Coal","share_of_generation_pct":"0.03"},{"country_or_region":"France","date":"2020-07-01","variable":"Coal","share_of_generation_pct":"0.42"},{"country_or_region":"France","date":"2020-08-01","variable":"Coal","share_of_generation_pct":"0.18"},{"country_or_region":"France","date":"2020-09-01","variable":"Coal","share_of_generation_pct":"0.87"},{"country_or_region":"France","date":"2020-10-01","variable":"Coal","share_of_generation_pct":"0.25"},{"country_or_region":"France","date":"2020-11-01","variable":"Coal","share_of_generation_pct":"0.32"},{"country_or_region":"France","date":"2020-12-01","variable":"Coal","share_of_generation_pct":"0.65"},{"country_or_region":"France","date":"2021-01-01","variable":"Coal","share_of_generation_pct":"1.55"},{"country_or_region":"France","date":"2021-02-01","variable":"Coal","share_of_generation_pct":"0.68"},{"country_or_region":"France","date":"2021-03-01","variable":"Coal","share_of_generation_pct":"0.56"},{"country_or_region":"France","date":"2021-04-01","variable":"Coal","share_of_generation_pct":"0.52"},{"country_or_region":"France","date":"2021-05-01","variable":"Coal","share_of_generation_pct":"0.07"},{"country_or_region":"France","date":"2021-06-01","variable":"Coal","share_of_generation_pct":"0.1"},{"country_or_region":"France","date":"2021-07-01","variable":"Coal","share_of_generation_pct":"0.18"},{"country_or_region":"France","date":"2021-08-01","variable":"Coal","share_of_generation_pct":"0.21"},{"country_or_region":"France","date":"2021-09-01","variable":"Coal","share_of_generation_pct":"1.33"},{"country_or_region":"France","date":"2021-10-01","variable":"Coal","share_of_generation_pct":"1.52"},{"country_or_region":"France","date":"2021-11-01","variable":"Coal","share_of_generation_pct":"1.38"},{"country_or_region":"France","date":"2021-12-01","variable":"Coal","share_of_generation_pct":"1.17"},{"country_or_region":"France","date":"2022-01-01","variable":"Coal","share_of_generation_pct":"1.61"},{"country_or_region":"France","date":"2022-02-01","variable":"Coal","share_of_generation_pct":"1.28"},{"country_or_region":"France","date":"2022-03-01","variable":"Coal","share_of_generation_pct":"1.09"},{"country_or_region":"France","date":"2022-04-01","variable":"Coal","share_of_generation_pct":"0.2"},{"country_or_region":"France","date":"2022-05-01","variable":"Coal","share_of_generation_pct":"0.09"},{"country_or_region":"France","date":"2022-06-01","variable":"Coal","share_of_generation_pct":"0.1"},{"country_or_region":"France","date":"2022-07-01","variable":"Coal","share_of_generation_pct":"0.07"},{"country_or_region":"France","date":"2022-08-01","variable":"Coal","share_of_generation_pct":"0.07"},{"country_or_region":"France","date":"2022-09-01","variable":"Coal","share_of_generation_pct":"0.07"},{"country_or_region":"France","date":"2022-10-01","variable":"Coal","share_of_generation_pct":"0.1"},{"country_or_region":"France","date":"2022-11-01","variable":"Coal","share_of_generation_pct":"0.72"},{"country_or_region":"France","date":"2022-12-01","variable":"Coal","share_of_generation_pct":"1.74"},{"country_or_region":"Allemagne","date":"2015-01-01","variable":"Coal","share_of_generation_pct":"41.24"},{"country_or_region":"Allemagne","date":"2015-02-01","variable":"Coal","share_of_generation_pct":"46.71"},{"country_or_region":"Allemagne","date":"2015-03-01","variable":"Coal","share_of_generation_pct":"43.15"},{"country_or_region":"Allemagne","date":"2015-04-01","variable":"Coal","share_of_generation_pct":"40.26"},{"country_or_region":"Allemagne","date":"2015-05-01","variable":"Coal","share_of_generation_pct":"34.82"},{"country_or_region":"Allemagne","date":"2015-06-01","variable":"Coal","share_of_generation_pct":"40.01"},{"country_or_region":"Allemagne","date":"2015-07-01","variable":"Coal","share_of_generation_pct":"41.22"},{"country_or_region":"Allemagne","date":"2015-08-01","variable":"Coal","share_of_generation_pct":"41.29"},{"country_or_region":"Allemagne","date":"2015-09-01","variable":"Coal","share_of_generation_pct":"44.2"},{"country_or_region":"Allemagne","date":"2015-10-01","variable":"Coal","share_of_generation_pct":"49.73"},{"country_or_region":"Allemagne","date":"2015-11-01","variable":"Coal","share_of_generation_pct":"39.55"},{"country_or_region":"Allemagne","date":"2015-12-01","variable":"Coal","share_of_generation_pct":"37.74"},{"country_or_region":"Allemagne","date":"2016-01-01","variable":"Coal","share_of_generation_pct":"41.05"},{"country_or_region":"Allemagne","date":"2016-02-01","variable":"Coal","share_of_generation_pct":"38.06"},{"country_or_region":"Allemagne","date":"2016-03-01","variable":"Coal","share_of_generation_pct":"41.79"},{"country_or_region":"Allemagne","date":"2016-04-01","variable":"Coal","share_of_generation_pct":"41.06"},{"country_or_region":"Allemagne","date":"2016-05-01","variable":"Coal","share_of_generation_pct":"37.4"},{"country_or_region":"Allemagne","date":"2016-06-01","variable":"Coal","share_of_generation_pct":"40.06"},{"country_or_region":"Allemagne","date":"2016-07-01","variable":"Coal","share_of_generation_pct":"37.75"},{"country_or_region":"Allemagne","date":"2016-08-01","variable":"Coal","share_of_generation_pct":"35.95"},{"country_or_region":"Allemagne","date":"2016-09-01","variable":"Coal","share_of_generation_pct":"40.3"},{"country_or_region":"Allemagne","date":"2016-10-01","variable":"Coal","share_of_generation_pct":"42.01"},{"country_or_region":"Allemagne","date":"2016-11-01","variable":"Coal","share_of_generation_pct":"41.25"},{"country_or_region":"Allemagne","date":"2016-12-01","variable":"Coal","share_of_generation_pct":"40.19"},{"country_or_region":"Allemagne","date":"2017-01-01","variable":"Coal","share_of_generation_pct":"43.57"},{"country_or_region":"Allemagne","date":"2017-02-01","variable":"Coal","share_of_generation_pct":"39.53"},{"country_or_region":"Allemagne","date":"2017-03-01","variable":"Coal","share_of_generation_pct":"37.71"},{"country_or_region":"Allemagne","date":"2017-04-01","variable":"Coal","share_of_generation_pct":"36.61"},{"country_or_region":"Allemagne","date":"2017-05-01","variable":"Coal","share_of_generation_pct":"36.77"},{"country_or_region":"Allemagne","date":"2017-06-01","variable":"Coal","share_of_generation_pct":"31.93"},{"country_or_region":"Allemagne","date":"2017-07-01","variable":"Coal","share_of_generation_pct":"34.75"},{"country_or_region":"Allemagne","date":"2017-08-01","variable":"Coal","share_of_generation_pct":"35.26"},{"country_or_region":"Allemagne","date":"2017-09-01","variable":"Coal","share_of_generation_pct":"37.67"},{"country_or_region":"Allemagne","date":"2017-10-01","variable":"Coal","share_of_generation_pct":"31.14"},{"country_or_region":"Allemagne","date":"2017-11-01","variable":"Coal","share_of_generation_pct":"37.16"},{"country_or_region":"Allemagne","date":"2017-12-01","variable":"Coal","share_of_generation_pct":"31.47"},{"country_or_region":"Allemagne","date":"2018-01-01","variable":"Coal","share_of_generation_pct":"31.75"},{"country_or_region":"Allemagne","date":"2018-02-01","variable":"Coal","share_of_generation_pct":"38.86"},{"country_or_region":"Allemagne","date":"2018-03-01","variable":"Coal","share_of_generation_pct":"36.55"},{"country_or_region":"Allemagne","date":"2018-04-01","variable":"Coal","share_of_generation_pct":"32.81"},{"country_or_region":"Allemagne","date":"2018-05-01","variable":"Coal","share_of_generation_pct":"32.46"},{"country_or_region":"Allemagne","date":"2018-06-01","variable":"Coal","share_of_generation_pct":"35.51"},{"country_or_region":"Allemagne","date":"2018-07-01","variable":"Coal","share_of_generation_pct":"37.7"},{"country_or_region":"Allemagne","date":"2018-08-01","variable":"Coal","share_of_generation_pct":"36.02"},{"country_or_region":"Allemagne","date":"2018-09-01","variable":"Coal","share_of_generation_pct":"35.79"},{"country_or_region":"Allemagne","date":"2018-10-01","variable":"Coal","share_of_generation_pct":"34.99"},{"country_or_region":"Allemagne","date":"2018-11-01","variable":"Coal","share_of_generation_pct":"36.8"},{"country_or_region":"Allemagne","date":"2018-12-01","variable":"Coal","share_of_generation_pct":"28.99"},{"country_or_region":"Allemagne","date":"2019-01-01","variable":"Coal","share_of_generation_pct":"31.94"},{"country_or_region":"Allemagne","date":"2019-02-01","variable":"Coal","share_of_generation_pct":"32.21"},{"country_or_region":"Allemagne","date":"2019-03-01","variable":"Coal","share_of_generation_pct":"23.27"},{"country_or_region":"Allemagne","date":"2019-04-01","variable":"Coal","share_of_generation_pct":"27.69"},{"country_or_region":"Allemagne","date":"2019-05-01","variable":"Coal","share_of_generation_pct":"28.47"},{"country_or_region":"Allemagne","date":"2019-06-01","variable":"Coal","share_of_generation_pct":"24.37"},{"country_or_region":"Allemagne","date":"2019-07-01","variable":"Coal","share_of_generation_pct":"26.79"},{"country_or_region":"Allemagne","date":"2019-08-01","variable":"Coal","share_of_generation_pct":"26.29"},{"country_or_region":"Allemagne","date":"2019-09-01","variable":"Coal","share_of_generation_pct":"24.24"},{"country_or_region":"Allemagne","date":"2019-10-01","variable":"Coal","share_of_generation_pct":"25.44"},{"country_or_region":"Allemagne","date":"2019-11-01","variable":"Coal","share_of_generation_pct":"33.49"},{"country_or_region":"Allemagne","date":"2019-12-01","variable":"Coal","share_of_generation_pct":"24.21"},{"country_or_region":"Allemagne","date":"2020-01-01","variable":"Coal","share_of_generation_pct":"26.39"},{"country_or_region":"Allemagne","date":"2020-02-01","variable":"Coal","share_of_generation_pct":"17.03"},{"country_or_region":"Allemagne","date":"2020-03-01","variable":"Coal","share_of_generation_pct":"20.03"},{"country_or_region":"Allemagne","date":"2020-04-01","variable":"Coal","share_of_generation_pct":"15.56"},{"country_or_region":"Allemagne","date":"2020-05-01","variable":"Coal","share_of_generation_pct":"16.13"},{"country_or_region":"Allemagne","date":"2020-06-01","variable":"Coal","share_of_generation_pct":"19.4"},{"country_or_region":"Allemagne","date":"2020-07-01","variable":"Coal","share_of_generation_pct":"19.86"},{"country_or_region":"Allemagne","date":"2020-08-01","variable":"Coal","share_of_generation_pct":"23.53"},{"country_or_region":"Allemagne","date":"2020-09-01","variable":"Coal","share_of_generation_pct":"28.48"},{"country_or_region":"Allemagne","date":"2020-10-01","variable":"Coal","share_of_generation_pct":"27.07"},{"country_or_region":"Allemagne","date":"2020-11-01","variable":"Coal","share_of_generation_pct":"30.09"},{"country_or_region":"Allemagne","date":"2020-12-01","variable":"Coal","share_of_generation_pct":"28.95"},{"country_or_region":"Allemagne","date":"2021-01-01","variable":"Coal","share_of_generation_pct":"31.94"},{"country_or_region":"Allemagne","date":"2021-02-01","variable":"Coal","share_of_generation_pct":"25.83"},{"country_or_region":"Allemagne","date":"2021-03-01","variable":"Coal","share_of_generation_pct":"24.17"},{"country_or_region":"Allemagne","date":"2021-04-01","variable":"Coal","share_of_generation_pct":"24.1"},{"country_or_region":"Allemagne","date":"2021-05-01","variable":"Coal","share_of_generation_pct":"19.54"},{"country_or_region":"Allemagne","date":"2021-06-01","variable":"Coal","share_of_generation_pct":"27.79"},{"country_or_region":"Allemagne","date":"2021-07-01","variable":"Coal","share_of_generation_pct":"27.24"},{"country_or_region":"Allemagne","date":"2021-08-01","variable":"Coal","share_of_generation_pct":"25.93"},{"country_or_region":"Allemagne","date":"2021-09-01","variable":"Coal","share_of_generation_pct":"36.46"},{"country_or_region":"Allemagne","date":"2021-10-01","variable":"Coal","share_of_generation_pct":"30.08"},{"country_or_region":"Allemagne","date":"2021-11-01","variable":"Coal","share_of_generation_pct":"35.61"},{"country_or_region":"Allemagne","date":"2021-12-01","variable":"Coal","share_of_generation_pct":"33.18"},{"country_or_region":"Allemagne","date":"2022-01-01","variable":"Coal","share_of_generation_pct":"31.72"},{"country_or_region":"Allemagne","date":"2022-02-01","variable":"Coal","share_of_generation_pct":"23.93"},{"country_or_region":"Allemagne","date":"2022-03-01","variable":"Coal","share_of_generation_pct":"35.87"},{"country_or_region":"Allemagne","date":"2022-04-01","variable":"Coal","share_of_generation_pct":"28.91"},{"country_or_region":"Allemagne","date":"2022-05-01","variable":"Coal","share_of_generation_pct":"27.74"},{"country_or_region":"Allemagne","date":"2022-06-01","variable":"Coal","share_of_generation_pct":"31.63"},{"country_or_region":"Allemagne","date":"2022-07-01","variable":"Coal","share_of_generation_pct":"30.92"},{"country_or_region":"Allemagne","date":"2022-08-01","variable":"Coal","share_of_generation_pct":"35.39"},{"country_or_region":"Allemagne","date":"2022-09-01","variable":"Coal","share_of_generation_pct":"36.1"},{"country_or_region":"Allemagne","date":"2022-10-01","variable":"Coal","share_of_generation_pct":"29.74"},{"country_or_region":"Allemagne","date":"2022-11-01","variable":"Coal","share_of_generation_pct":"33.8"},{"country_or_region":"Allemagne","date":"2022-12-01","variable":"Coal","share_of_generation_pct":"33.33"},{"country_or_region":"Royaume-Uni","date":"2015-01-01","variable":"Coal","share_of_generation_pct":"34.89"},{"country_or_region":"Royaume-Uni","date":"2015-02-01","variable":"Coal","share_of_generation_pct":"35.92"},{"country_or_region":"Royaume-Uni","date":"2015-03-01","variable":"Coal","share_of_generation_pct":"36.36"},{"country_or_region":"Royaume-Uni","date":"2015-04-01","variable":"Coal","share_of_generation_pct":"31.41"},{"country_or_region":"Royaume-Uni","date":"2015-05-01","variable":"Coal","share_of_generation_pct":"22.82"},{"country_or_region":"Royaume-Uni","date":"2015-06-01","variable":"Coal","share_of_generation_pct":"20.91"},{"country_or_region":"Royaume-Uni","date":"2015-07-01","variable":"Coal","share_of_generation_pct":"20.83"},{"country_or_region":"Royaume-Uni","date":"2015-08-01","variable":"Coal","share_of_generation_pct":"18.99"},{"country_or_region":"Royaume-Uni","date":"2015-09-01","variable":"Coal","share_of_generation_pct":"19.84"},{"country_or_region":"Royaume-Uni","date":"2015-10-01","variable":"Coal","share_of_generation_pct":"26.41"},{"country_or_region":"Royaume-Uni","date":"2015-11-01","variable":"Coal","share_of_generation_pct":"22.31"},{"country_or_region":"Royaume-Uni","date":"2015-12-01","variable":"Coal","share_of_generation_pct":"18.8"},{"country_or_region":"Royaume-Uni","date":"2016-01-01","variable":"Coal","share_of_generation_pct":"17.7"},{"country_or_region":"Royaume-Uni","date":"2016-02-01","variable":"Coal","share_of_generation_pct":"19.85"},{"country_or_region":"Royaume-Uni","date":"2016-03-01","variable":"Coal","share_of_generation_pct":"16.38"},{"country_or_region":"Royaume-Uni","date":"2016-04-01","variable":"Coal","share_of_generation_pct":"7.76"},{"country_or_region":"Royaume-Uni","date":"2016-05-01","variable":"Coal","share_of_generation_pct":"4.21"},{"country_or_region":"Royaume-Uni","date":"2016-06-01","variable":"Coal","share_of_generation_pct":"6.86"},{"country_or_region":"Royaume-Uni","date":"2016-07-01","variable":"Coal","share_of_generation_pct":"3.79"},{"country_or_region":"Royaume-Uni","date":"2016-08-01","variable":"Coal","share_of_generation_pct":"2.5"},{"country_or_region":"Royaume-Uni","date":"2016-09-01","variable":"Coal","share_of_generation_pct":"4.67"},{"country_or_region":"Royaume-Uni","date":"2016-10-01","variable":"Coal","share_of_generation_pct":"7.74"},{"country_or_region":"Royaume-Uni","date":"2016-11-01","variable":"Coal","share_of_generation_pct":"11.65"},{"country_or_region":"Royaume-Uni","date":"2016-12-01","variable":"Coal","share_of_generation_pct":"10.94"},{"country_or_region":"Royaume-Uni","date":"2017-01-01","variable":"Coal","share_of_generation_pct":"16.06"},{"country_or_region":"Royaume-Uni","date":"2017-02-01","variable":"Coal","share_of_generation_pct":"14.08"},{"country_or_region":"Royaume-Uni","date":"2017-03-01","variable":"Coal","share_of_generation_pct":"5.95"},{"country_or_region":"Royaume-Uni","date":"2017-04-01","variable":"Coal","share_of_generation_pct":"1.84"},{"country_or_region":"Royaume-Uni","date":"2017-05-01","variable":"Coal","share_of_generation_pct":"2.23"},{"country_or_region":"Royaume-Uni","date":"2017-06-01","variable":"Coal","share_of_generation_pct":"2.11"},{"country_or_region":"Royaume-Uni","date":"2017-07-01","variable":"Coal","share_of_generation_pct":"2.07"},{"country_or_region":"Royaume-Uni","date":"2017-08-01","variable":"Coal","share_of_generation_pct":"2.34"},{"country_or_region":"Royaume-Uni","date":"2017-09-01","variable":"Coal","share_of_generation_pct":"4.88"},{"country_or_region":"Royaume-Uni","date":"2017-10-01","variable":"Coal","share_of_generation_pct":"3.82"},{"country_or_region":"Royaume-Uni","date":"2017-11-01","variable":"Coal","share_of_generation_pct":"11.77"},{"country_or_region":"Royaume-Uni","date":"2017-12-01","variable":"Coal","share_of_generation_pct":"13.66"},{"country_or_region":"Royaume-Uni","date":"2018-01-01","variable":"Coal","share_of_generation_pct":"5.62"},{"country_or_region":"Royaume-Uni","date":"2018-02-01","variable":"Coal","share_of_generation_pct":"10.95"},{"country_or_region":"Royaume-Uni","date":"2018-03-01","variable":"Coal","share_of_generation_pct":"14.49"},{"country_or_region":"Royaume-Uni","date":"2018-04-01","variable":"Coal","share_of_generation_pct":"2.22"},{"country_or_region":"Royaume-Uni","date":"2018-05-01","variable":"Coal","share_of_generation_pct":"1.19"},{"country_or_region":"Royaume-Uni","date":"2018-06-01","variable":"Coal","share_of_generation_pct":"0.85"},{"country_or_region":"Royaume-Uni","date":"2018-07-01","variable":"Coal","share_of_generation_pct":"0.68"},{"country_or_region":"Royaume-Uni","date":"2018-08-01","variable":"Coal","share_of_generation_pct":"1.47"},{"country_or_region":"Royaume-Uni","date":"2018-09-01","variable":"Coal","share_of_generation_pct":"6.09"},{"country_or_region":"Royaume-Uni","date":"2018-10-01","variable":"Coal","share_of_generation_pct":"4.11"},{"country_or_region":"Royaume-Uni","date":"2018-11-01","variable":"Coal","share_of_generation_pct":"9.19"},{"country_or_region":"Royaume-Uni","date":"2018-12-01","variable":"Coal","share_of_generation_pct":"5.64"},{"country_or_region":"Royaume-Uni","date":"2019-01-01","variable":"Coal","share_of_generation_pct":"6.69"},{"country_or_region":"Royaume-Uni","date":"2019-02-01","variable":"Coal","share_of_generation_pct":"2.74"},{"country_or_region":"Royaume-Uni","date":"2019-03-01","variable":"Coal","share_of_generation_pct":"1.8"},{"country_or_region":"Royaume-Uni","date":"2019-04-01","variable":"Coal","share_of_generation_pct":"1.28"},{"country_or_region":"Royaume-Uni","date":"2019-05-01","variable":"Coal","share_of_generation_pct":"0.1"},{"country_or_region":"Royaume-Uni","date":"2019-06-01","variable":"Coal","share_of_generation_pct":"0.31"},{"country_or_region":"Royaume-Uni","date":"2019-07-01","variable":"Coal","share_of_generation_pct":"0.1"},{"country_or_region":"Royaume-Uni","date":"2019-08-01","variable":"Coal","share_of_generation_pct":"1.1"},{"country_or_region":"Royaume-Uni","date":"2019-09-01","variable":"Coal","share_of_generation_pct":"0.84"},{"country_or_region":"Royaume-Uni","date":"2019-10-01","variable":"Coal","share_of_generation_pct":"1.33"},{"country_or_region":"Royaume-Uni","date":"2019-11-01","variable":"Coal","share_of_generation_pct":"4.2"},{"country_or_region":"Royaume-Uni","date":"2019-12-01","variable":"Coal","share_of_generation_pct":"4"},{"country_or_region":"Royaume-Uni","date":"2020-01-01","variable":"Coal","share_of_generation_pct":"5.81"},{"country_or_region":"Royaume-Uni","date":"2020-02-01","variable":"Coal","share_of_generation_pct":"4.18"},{"country_or_region":"Royaume-Uni","date":"2020-03-01","variable":"Coal","share_of_generation_pct":"2.08"},{"country_or_region":"Royaume-Uni","date":"2020-04-01","variable":"Coal","share_of_generation_pct":"0.56"},{"country_or_region":"Royaume-Uni","date":"2020-05-01","variable":"Coal","share_of_generation_pct":"0"},{"country_or_region":"Royaume-Uni","date":"2020-06-01","variable":"Coal","share_of_generation_pct":"0"},{"country_or_region":"Royaume-Uni","date":"2020-07-01","variable":"Coal","share_of_generation_pct":"0"},{"country_or_region":"Royaume-Uni","date":"2020-08-01","variable":"Coal","share_of_generation_pct":"0.47"},{"country_or_region":"Royaume-Uni","date":"2020-09-01","variable":"Coal","share_of_generation_pct":"0.89"},{"country_or_region":"Royaume-Uni","date":"2020-10-01","variable":"Coal","share_of_generation_pct":"0.55"},{"country_or_region":"Royaume-Uni","date":"2020-11-01","variable":"Coal","share_of_generation_pct":"1.6"},{"country_or_region":"Royaume-Uni","date":"2020-12-01","variable":"Coal","share_of_generation_pct":"2.43"},{"country_or_region":"Royaume-Uni","date":"2021-01-01","variable":"Coal","share_of_generation_pct":"4.7"},{"country_or_region":"Royaume-Uni","date":"2021-02-01","variable":"Coal","share_of_generation_pct":"2.76"},{"country_or_region":"Royaume-Uni","date":"2021-03-01","variable":"Coal","share_of_generation_pct":"1.29"},{"country_or_region":"Royaume-Uni","date":"2021-04-01","variable":"Coal","share_of_generation_pct":"0.89"},{"country_or_region":"Royaume-Uni","date":"2021-05-01","variable":"Coal","share_of_generation_pct":"0.83"},{"country_or_region":"Royaume-Uni","date":"2021-06-01","variable":"Coal","share_of_generation_pct":"0.98"},{"country_or_region":"Royaume-Uni","date":"2021-07-01","variable":"Coal","share_of_generation_pct":"2.53"},{"country_or_region":"Royaume-Uni","date":"2021-08-01","variable":"Coal","share_of_generation_pct":"1.77"},{"country_or_region":"Royaume-Uni","date":"2021-09-01","variable":"Coal","share_of_generation_pct":"1.89"},{"country_or_region":"Royaume-Uni","date":"2021-10-01","variable":"Coal","share_of_generation_pct":"0.57"},{"country_or_region":"Royaume-Uni","date":"2021-11-01","variable":"Coal","share_of_generation_pct":"2.29"},{"country_or_region":"Royaume-Uni","date":"2021-12-01","variable":"Coal","share_of_generation_pct":"2.3"},{"country_or_region":"Royaume-Uni","date":"2022-01-01","variable":"Coal","share_of_generation_pct":"2.22"},{"country_or_region":"Royaume-Uni","date":"2022-02-01","variable":"Coal","share_of_generation_pct":"3.1"},{"country_or_region":"Royaume-Uni","date":"2022-03-01","variable":"Coal","share_of_generation_pct":"2.85"},{"country_or_region":"Royaume-Uni","date":"2022-04-01","variable":"Coal","share_of_generation_pct":"1.1"},{"country_or_region":"Royaume-Uni","date":"2022-05-01","variable":"Coal","share_of_generation_pct":"0.04"},{"country_or_region":"Royaume-Uni","date":"2022-06-01","variable":"Coal","share_of_generation_pct":"0.37"},{"country_or_region":"Royaume-Uni","date":"2022-07-01","variable":"Coal","share_of_generation_pct":"1.78"},{"country_or_region":"Royaume-Uni","date":"2022-08-01","variable":"Coal","share_of_generation_pct":"0.9"},{"country_or_region":"Royaume-Uni","date":"2022-09-01","variable":"Coal","share_of_generation_pct":"2.45"},{"country_or_region":"Royaume-Uni","date":"2022-10-01","variable":"Coal","share_of_generation_pct":"0.44"},{"country_or_region":"Royaume-Uni","date":"2022-11-01","variable":"Coal","share_of_generation_pct":"0.68"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":120,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":49.73,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":true,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":7,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":1,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"date","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":1,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('YYYY')});\nd3.selectAll('.axis--y .tick text').text(function(d){return d + '%'});"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":1,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"date","value":"date"},{"label":"country_or_region","value":"country_or_region"},{"label":"share_of_generation_pct","value":"share_of_generation_pct"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":1,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[date|frenchDate]]<br>\n[[country_or_region]]<br>\n[[share_of_generation_pct]]% <strong>de l'électricité a été produite à partir de charbon</strong>"},"moveElements":{"value":true,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"value":{"_groups":[[{"__data__":{"country_or_region":"Royaume-Uni","date":"2022-10-31T23:00:00.000Z","variable":"Coal","share_of_generation_pct":0.68,"x_value":"2022-10-31T23:00:00.000Z","y_value":0.68,"name":"Royaume-Uni"},"__on":[{"type":"mousedown","name":"drag","capture":false}]}]],"_parents":[null]},"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":true,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{"d_52148":{"elementType":"text","elementOrder":11,"operations":{"x":"423.6416464891041","y":"303.62437160667605"}},"d_11881":{"elementType":"text","elementOrder":9,"operations":{"x":"424","y":"320.8035391112005"}}},"thoseElementsOrder":["d_11881","d_52148"]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":false,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":false,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["date","country_or_region"],"selected_yRows":["share_of_generation_pct"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{"Germany":"#e61e49","United Kingdom":"#000","France":"#7c7c7c","Allemagne":"#e61e49","Royaume-Uni":"#000"},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"lineChartFromTidyData","chartTitle":"La production d'électricité au charbon augmente en Allemagne depuis 2020","chartSubTitle":"Part d'électricité fabriqué à partir de charbon (antracite ou lignite)","chartSource":"Ember-climate - données mensuelles","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeLinechartFromTidyData(data_) {
+
+      var initial_data = _.cloneDeep(data_);
+      var kValue = graphParameters['selected_xRows'][0];
+      var kValue2 = graphParameters['selected_xRows'][1];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      var data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+      data.forEach(function(d){
+
+        d[kValue] = (isNaN(d[kValue]) || typeof(d[kValue])  === 'object') ? d[kValue] : +d[kValue];
+        d.x_value = d[kValue]
+
+      })
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+                if (manualReusableParameters.startEndValues.manual_left_value){
+                    data = data.filter(function(d){return d.x_value >= manualReusableParameters.startEndValues.manual_left_value})
+                }
+               if (manualReusableParameters.startEndValues.manual_right_value){
+                    data = data.filter(function(d){return d.x_value <= manualReusableParameters.startEndValues.manual_right_value})
+                }
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+            if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+               
+            }
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+
+        }
+        else{
+            data = prepareLineChartIndice100ValueForTidy(data, kValue, dValues, kValue2);
+        }
+    }
+
+    else{
+      // data = prepareLineChartData(data, kValue, dValues);
+  }
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+      //   var newScale = d3.scaleOrdinal()
+      // .domain(_.uniq(data.map(function(d){return d.kValue})))
+      // .range(_.range(1, (_.uniq(data.map(function(d){return d.kValue}))).length + 1))
+
+
+      var those_xValues = _.uniq(data.map(function(d){return d[kValue]})).filter(function(d) {return d})
+
+      // data.forEach(function(d){
+      //   d.x_value = d[kValue]
+      // })
+
+      data = _.groupBy(data, kValue2)
+      data = d3.values(data)
+
+      data.forEach(function(d){
+        d.forEach(function(e){
+        // e.x_value = those_xValues.indexOf(e.x_value)
+        e.x_value = e[kValue]
+        e.y_value = +e[dValue]
+        e.name = e[kValue2]
+
+        })
+
+        d = d.sort(function(a,b){return a.x_value - b.x_value})
+
+      })
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+  var thisScaleType = manualReusableParameters.logScale.value ? d3.scaleLog(2) : d3.scaleLinear();
+  var yScale = thisScaleType
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale);
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+var line = d3.line()
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+        // .curve(d3.curveCatmullRom.alpha(0.5))
+
+        var allLines = g_inner
+        .selectAll('.line')
+        .data(data);
+
+        allLines
+        .transition()
+        .duration(200)
+        .attr('d', function(d) { return line(d) })
+        .attr('stroke', function(d) { return colorUpdated(d[0].name) });
+
+        allLines.exit().transition().duration(200).remove();
+
+        allLines
+        .enter()
+        .append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { return line(d) })
+        .style('stroke', function(d) { return colorUpdated(d[0].name) })
+        .attr('stroke', function(d) { return colorUpdated(d[0].name) })
+        .style('stroke-width', 2)
+        .style('fill', 'none');
+
+        AllDotPoints = g_inner
+        .selectAll('circle.dotPoint')
+        .data(_.flatten(data));
+
+        AllDotPoints
+        // .transition()
+        // .duration(200)
+        .attr('cx', function(d) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 });
+
+        AllDotPoints.exit().transition().duration(200).remove();
+
+        AllDotPoints
+        .enter()
+        .append('circle')
+        .attr('class', 'dotPoint')
+        .attr('cx', function(d, i) { return xScale(d.x_value) })
+        .attr('cy', function(d) { return yScale(d.y_value) })
+        .style('fill', function(d) { return colorUpdated(d.name) })
+        .attr('r', 3)
+        .style('stroke-width', 5)
+        .style('stroke', 'white')
+        .style('stroke-opacity', 0)
+        .style('fill-opacity', function() { return manualReusableParameters.hideCircles.value ? 0 : 1 })
+        // .style('fill', 'black')
+        .on('mouseover', function(d, i){ show_tooltip(d, d.name)})
+        .on('mouseout', function(d){ hide_tooltip()});
+        ;
+
+
+        allLabels =  g_inner
+        .selectAll('text.label')
+        .data(data.map(function(d){return d[d.length -1]}));
+
+        var allLabelsE = allLabels
+        .enter()
+        .append('text')
+        .attr('class', 'label');
+
+        allLabels.exit().remove()
+
+        allLabels
+        .merge(allLabelsE)
+        .attr('x', function(d){return xScale(d.x_value) + 6})
+        .attr('y', function(d){return yScale(d.y_value) - 6})
+        .attr('text-anchor', 'start')
+        .text(function(d){return manualReusableParameters.displayLabel.value ? _.capitalize(d.name) : ''})
+        .attr('fill', function(d){return colorUpdated(d.name)});
+
+/// Axis Label
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+  // cell.append("circle")
+  //     .attr("r", radius)
+  //     .attr("cx", function(d) {d.data.x_start =  d.data.x; return d.data.x; })
+  //     .attr("cy", function(d) { d.data.y_start =  d.data.y;  return d.data.y; })
+  //     // .attr('fill', function(d){return color(d.data.Compositeur)})
+  //     .attr('fill', '#18100b')
+  //     // .attr('stroke', function(d){return color(d.data.Compositeur)})
+  //     .attr('stroke', '#18100b')
+  //     .on('mouseover', function(d, i){ show_tooltip(d)})
+  //     .on('mouseout', function(d){ hide_tooltip()});
+
+  customizeAxis()
+
+  drawLegend()
+
+  colorizeOnlyOneCategory([{svg_element:'path', look_in_object:0,  property_types:['stroke'], reappend_nodes:true},
+    {svg_element:'circle', look_in_object:false,  property_types:['stroke', 'fill'], reappend_nodes:true}])
+
+  addCustomCode()
+
+}
+
+initChart();
+
+makeLinechartFromTidyData(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
