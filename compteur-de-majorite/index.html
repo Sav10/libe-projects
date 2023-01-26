@@ -81,7 +81,7 @@ stroke:#888;
 
   <section>
     <div id="chart" style="max-width:1000px">
-      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <img src="../chart-repo/utilities/img/Libe-Losange.png" class="libeLosange">
       <h1 id="chartTitle"></h1>
       <h4 id="chartSubTitle"></h4>
       <div id="varSwitch" class='tags'></div>
@@ -297,130 +297,32 @@ function makeBarchart(data_) {
     var kValue = graphParameters['selected_xRows'][0];
     var dValue = graphParameters['selected_yRows'][0];
     var dValues = graphParameters['selected_yRows'];
-    var kValues = graphParameters['selected_xRows'];
+    var kValues = [graphParameters['selected_xRows'][0]];
 
 // Reordering data
 
-    var data = _.cloneDeep(data_)
-
-
-    data = recalculateAndTransformValues(data, kValue, dValues, kValues)
-
-    if (kValues[1]){
-
-        var new_d_values = []
-        for (i in d3.keys(data[0])){
-            var this_d = d3.keys(data[0])[i]
-            if (this_d != dValue && this_d != kValues[0] && this_d != kValues[1]){
-                new_d_values.push(this_d)
-            }
-        }
-        dValues = new_d_values
-
-        makeVarSwitch(dValues, makeBarchart, dataFromFile.filter(function(d){return _.uniq(d3.values(d))!= ""}));
-
-        dValues = manualCustomParameters['rowsToSwitch'] ? _.cloneDeep(manualCustomParameters['rowsToSwitch']) : dValues
-
-
-        dValue = dValues[0]
-
-        var multipleKValues = 1
-
-
-        
-    }
-
-    // Format number and dates if datefield
-
-    data.forEach(function(d) {
-        d[dValue] = formatNumbers(d[dValue]);
-        for (i in dValues){
-
-            if (manualReusableParameters.dateField.value == false ||  dValues[i] != manualReusableParameters.dateField.manual_range_value){
-                d[dValues[i]] = formatNumbers(d[dValues[i]]);
-            }
-        }
-    })
 
     var svg = d3.select("svg");
     var g = svg.select('g.graphContainer');
     var g_inner = g.select('g.innerGraph');
 
-    updateParameters();
 
-    // var this_grouped_data = data.map(function(d) { return d.this_key; })
-    // .map(function(d){return {key:d, value: d3.sum(data.filter(function(e){return e.this_key == d}), function(e){return e.this_value})}});
-
-
-    this_grouped_data = groupbyKVMultiple(data, kValue, dValues, d3[manualReusableParameters.groupingFunction.manual_range_value ? manualReusableParameters.groupingFunction.manual_range_value : manualReusableParameters.groupingFunction.initial_range_value]);
-    this_grouped_data = this_grouped_data.filter(function(d) { return d[kValue] != ''});
-
-    // Check min and max
-
-    if (manualReusableParameters.differentAxisY.value ==1){
-    manualReusableParameters.rangeY.calculated_left_value =  d3.min(this_grouped_data, function(d) { return d[dValue]});
-    manualReusableParameters.rangeY.calculated_right_value =  d3.max(this_grouped_data, function(d) { return d[dValue]});
-
-    }
-    else{
-    manualReusableParameters.rangeY.calculated_left_value =  d3.min(this_grouped_data, function(d) { return d3.min(d3.entries(d).filter(function(k){ return dValues.indexOf(k.key) != -1}).map(function(v) {return v.value}))});
-    manualReusableParameters.rangeY.calculated_right_value =  d3.max(this_grouped_data, function(d) { return d3.max(d3.entries(d).filter(function(k){ return dValues.indexOf(k.key) != -1}).map(function(v) {return v.value}))});
-
-    }
-
-
-
-    var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
-    var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
-
-    // Sort values
-
-if (manualReusableParameters.sort_descending.value == 1){
-
-
-if (manualReusableParameters.invert_order.value == 1){
-
-this_grouped_data = this_grouped_data.sort(function(a, b) { return a[dValue] - b[dValue]});
-
-}
-
-else{
-
-    this_grouped_data = this_grouped_data.sort(function(a, b) { return b[dValue] - a[dValue]});
-
-}
-
-
-}
-else{
-
-if (manualReusableParameters.invert_order.value == 1){
-this_grouped_data = this_grouped_data.reverse(function(d) { return d[kValue]; });
-
-}
-
-else{
-    this_grouped_data = this_grouped_data;
-}
-
-}
 
 
 // Tooltip and scales 
 
- if (graphParameters.selected_tooltip && graphParameters.selected_tooltip.length > 0){
-        this_grouped_data = add_tooltip_values(this_grouped_data, data, kValue)
-    }
 
     xScale = d3.scaleBand().rangeRound([0, width]).padding(manualReusableParameters.barPadding.value/10);
 
     yScale = d3.scaleLinear().rangeRound([height,  0]);
 
-    xScale.domain(this_grouped_data.map(function(d) { return d[kValue];}));
-    yScale.domain([Math.min(thisYMin, 0), thisYMax]);
+    xScale.domain(['A', 'B', 'C', 'D']);
+    yScale.domain([0,500]);
+
+    var axis_bottom = d3.axisBottom(xScale).ticks(manualReusableParameters.bottomAxisTickNumber.value).tickFormat(numbers_separators);
+    var axis_left = d3.axisLeft(yScale).ticks(manualReusableParameters.leftAxisTickNumber.value).tickFormat(thisDateFormat);
 
 
-    changeAxis(xScale, yScale)
 
     // customizeAxis()
 
@@ -527,25 +429,6 @@ else{
 
     }
 
-
-// Axis customisation
-
-g_inner
-.call(xAxisLabel, graphParameters.selected_xRows[0]);
-
-g_inner
-.call(yAxisLabel, graphParameters.selected_yRows[0]);
-
-    customizeAxis()
-
-
-    drawLegend()
-
-
-    colorizeOnlyOneCategory([{svg_element:'rect', look_in_object:false,  property_types:['fill'], reappend_nodes:false}])
-
-
-    addCustomCode()
 
 }
 
