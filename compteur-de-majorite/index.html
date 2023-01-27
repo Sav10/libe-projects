@@ -305,10 +305,10 @@ let y = d3.scaleLinear()
 
 
 
-          d3.csv("comptage-maj-retraites.csv")
+          d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRxhF4SzlTtFXgY1xpJaNbV4UkpCP8ezYHWkBjlB8qqZIgnjGwmpbg50yEsmDxueHIiZ2oIugbqRgMq/pub?gid=2099874150&single=true&output=csv")
           .then(function(data) {
 
-            data_majorite = data;
+            data_majorite = data.filter(d=>d).filter(d=>d.Parti != 'MAJO' && d.Parti != 'TOTAL' && d.Parti != 'MAJO ');
 
 data_majorite.forEach(function(d){
     d.Parti = d.Parti,
@@ -514,14 +514,11 @@ function responsivefy(svg, width, height) {
 
 function showTip(d){
 
-console.log(d)
 
 let partisan_vote = data_majorite.map(e=>[e.Parti, +e[d.vote]])
 
 
 let this_html = `<p style="font-size:17px">${d.vote.toUpperCase()}<p>`
-
-console.log(partisan_vote)
 
 
 partisan_vote.forEach(function(e){
