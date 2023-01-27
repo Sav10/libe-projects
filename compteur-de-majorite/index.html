@@ -82,6 +82,8 @@ svg g.axis text{
 svg text.bartext{
     font-weight: bold;
     font-size: 20px;
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: .04em;
 
 }
  
@@ -99,8 +101,8 @@ svg text.bartext{
 
 #legendots .dot{
     float: left;
-    margin-top: 0.05em;
-    margin-right: 4px;
+    margin-top: 0.23em;
+    margin-right: 3px;
     height: 1em;
     width: 1em;
     border: 0;
@@ -109,6 +111,7 @@ svg text.bartext{
 #legendots .text_legend{
 display: inline-block;
 margin-right: 8px;
+font-family: 'syntheselibeweb';
 
 }
 
@@ -248,7 +251,7 @@ data_par_dep;
         top: 20,
         right: 20,
         bottom: 20,
-        left: 20
+        left: 25
       };
 
 
@@ -271,7 +274,7 @@ data_par_dep;
 
 const col_lenght = 10;
 const padding_bottom = 0,
-  padding_left= 35,
+  padding_left= 15,
   circle_size = 5,
   circle_padding = 12;
 
@@ -403,7 +406,7 @@ svg.selectAll('g.bar')
 .append('text')
 .attr('class', 'bartext')
 .text(d=>data_par_dep.filter(e=>e.vote == d).length)
-.attr('x', d=>x_2(d) + 2*padding_left)
+.attr('x', d=>x_2(d) + 50)
 .attr('y', d=> height - data_par_dep.filter(e=>e.vote == d).length*1.25)
 
 
