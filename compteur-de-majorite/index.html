@@ -141,7 +141,13 @@ font-family: 'syntheselibeweb';
 }
 
 
-
+footer {
+    color: #888;
+    margin-top: 0.5em;
+    padding-top: 0.5em;
+    font-size: .65em;
+    line-height: 20px;
+}
 
 
   </style>
@@ -303,9 +309,11 @@ let y = d3.scaleLinear()
     .domain([0, 200])
     .range([height - margin.bottom, margin.top])
 
+  // d3.csv("comptage-maj-retraites.csv")
 
+            // d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRxhF4SzlTtFXgY1xpJaNbV4UkpCP8ezYHWkBjlB8qqZIgnjGwmpbg50yEsmDxueHIiZ2oIugbqRgMq/pub?gid=2099874150&single=true&output=csv")
 
-          d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRxhF4SzlTtFXgY1xpJaNbV4UkpCP8ezYHWkBjlB8qqZIgnjGwmpbg50yEsmDxueHIiZ2oIugbqRgMq/pub?gid=2099874150&single=true&output=csv")
+          d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSvE0Jj9UEIpdfho4Bd2l3nc8JERqixOXnihqv2YTk-nDscIbWO9RCs5V-eaV200VO_LUM4HznkAH8Z/pub?gid=0&single=true&output=csv")
           .then(function(data) {
 
             data_majorite = data.filter(d=>d).filter(d=>d.Parti != 'MAJO' && d.Parti != 'TOTAL' && d.Parti != 'MAJO ');
