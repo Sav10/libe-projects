@@ -3,10 +3,10 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Provenance du budget de campagne des candidats à la présidentielle</title>
+  <title>Quelle majorité pour les retraites ?</title>
 
 
-         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
+         <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css"> -->
          <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
 
   <style type="text/css">
@@ -82,52 +82,40 @@ stroke:#888;
   <section>
     <div id="chart" style="max-width:1000px">
       <img src="../chart-repo/utilities/img/Libe-Losange.png" class="libeLosange">
-      <h1 id="chartTitle"></h1>
-      <h4 id="chartSubTitle"></h4>
-      <div id="varSwitch" class='tags'></div>
-      <svg></svg>
+      <h1 id="chartTitle">Quelle majorité pour les retraites ?</h1>
+      <h4 id="chartSubTitle">Répartition des députés par position vis à vis de la réforme des retraites</h4>
+      <svg width="600" height="400"></svg>
       <footer>
         <div class="credits">
-          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
         </div>
         <div class="sources">Source: <span id="chartSource">Libération</span></div>
       </footer>
 
     </div>
-    <div id="noChart" style="display:none;"></div>
   </section>
 
 
   <!-- JS -->
-  <script src="../chart-repo/utilities/js/jquery-1.10.2.js"></script>
 
-  <script src="https://d3js.org/d3.v4.js"></script>
-  <script src="../chart-repo/utilities/js/d3-annotation.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
-  <script src="../chart-repo/utilities/js/d3-area-label.js"></script>
-  <script src="../chart-repo/utilities/js/d3-scale-chromatic.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
   <script type="text/javascript" src="../chart-repo/utilities/js/moment-with-locales.min.js"></script>
   <!-- <script src="static/js/app.js"></script> -->
-<script type="text/javascript" src="chart_utilities_functions.js"></script>
+<!-- <script type="text/javascript" src="chart_utilities_functions.js"></script> -->
   <script type="text/javascript">
 
    var margin = {},
    width,
    height;
-   var initMargin = {
-    top: 20,
-    right: 20,
-    bottom: 60,
-    left: 40
-  };
 
 
-  var initTotalWidth = 600;
-  var initTotalHeight = 400;
 
-  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
-  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+let data_majorite,
+data_par_dep;
+
+
+
 
   var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
 
@@ -151,43 +139,6 @@ stroke:#888;
     "FN":'#000032'
   };
 
-  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
-
-  var color = d3.scaleOrdinal(libeCategoricalColors);
-
-
-  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
-  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
-
-  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
-
-
-  var data = [{"Nom":"Arthaud","Total":"891903","Apport personnel":"788745","versements partis":"0","Dons":"63267","Contribution parti":"6325","Part personnelle":"0,8843394405","Part partis":"0,007091578344","Part dons":"0,07093484381","Parti":"6325","Autre":"33566"},{"Nom":"Poutou","Total":"814020","Apport personnel":"800870","versements partis":"0","Dons":"0","Contribution parti":"13150","Part personnelle":"0,9838456058","Part partis":"0,01615439424","Part dons":"0","Parti":"13150","Autre":"0"},{"Nom":"Roussel","Total":"3936776","Apport personnel":"976461","versements partis":"1200000","Dons":"182545","Contribution parti":"1431008","Part personnelle":"0,2480357023","Part partis":"0,6683153931","Part dons":"0,04636916096","Parti":"2631008","Autre":"146762"},{"Nom":"Mélenchon","Total":"13924466","Apport personnel":"8059303","versements partis":"1300000","Dons":"2352347","Contribution parti":"2173284","Part personnelle":"0,5787872224","Part partis":"0,2494375009","Part dons":"0,168936245","Parti":"3473284","Autre":"39532"},{"Nom":"Jadot","Total":"5014703","Apport personnel":"656261","versements partis":"3049830","Dons":"1300738","Contribution parti":"2624","Part personnelle":"0,1308673714","Part partis":"0,6087008543","Part dons":"0,2593848529","Parti":"3052454","Autre":"5250"},{"Nom":"Hidalgo","Total":"3740581","Apport personnel":"965428","versements partis":"1498217","Dons":"155827","Contribution parti":"1117728","Part personnelle":"0,2580957343","Part partis":"0,6993418937","Part dons":"0,04165850171","Parti":"2615945","Autre":"3381"},{"Nom":"Macron","Total":"16673510","Apport personnel":"10725630","versements partis":"566609","Dons":"605853","Contribution parti":"4743465","Part personnelle":"0,6432736718","Part partis":"0,3184736747","Part dons":"0,03633626033","Parti":"5310074","Autre":"31953"},{"Nom":"Pécresse","Total":"13554449","Apport personnel":"805842","versements partis":"5155300","Dons":"4213748","Contribution parti":"3375325","Part personnelle":"0,05945221381","Part partis":"0,629359777","Part dons":"0,3108756394","Parti":"8530625","Autre":"4234"},{"Nom":"Lassale","Total":"813106","Apport personnel":"786502","versements partis":"0","Dons":"0","Contribution parti":"2009","Part personnelle":"0,9672810187","Part partis":"0,002470772568","Part dons":"0","Parti":"2009","Autre":"24595"},{"Nom":"Dupont-Aignan","Total":"857428","Apport personnel":"737018","versements partis":"0","Dons":"63133","Contribution parti":"48367","Part personnelle":"0,8595683836","Part partis":"0,05640940114","Part dons":"0,0736306722","Parti":"48367","Autre":"8910"},{"Nom":"Le Pen","Total":"","Apport personnel":"","versements partis":"","Dons":"","Contribution parti":"","Part personnelle":"","Part partis":"","Part dons":"","Parti":"","Autre":""},{"Nom":"Zemmour","Total":"11063135","Apport personnel":"10085302","versements partis":"0","Dons":"37215","Contribution parti":"501103","Part personnelle":"0,9116133899","Part partis":"0,04529484635","Part dons":"0,003363874706","Parti":"501103","Autre":"439515"}];
-  var dataFromFile = _.cloneDeep(data);
-
-  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":20,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":false,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":1,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":1,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":16673510,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":0,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":1,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":0,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":6,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"small","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":1,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":1,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis.axis--x text').attr('font-size', '9px');\nd3.selectAll('.axis.axis--x text').filter(d=>d == 'Dupont-Aignan').attr('font-size', '8.5px');\nd3.selectAll('.axis.axis--x text').filter(d=>d == 'Zemmour').attr('font-size', '8.5px');"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":1,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"Nom","value":"Nom"},{"label":"Total","value":"Total"},{"label":"Parti","value":"Parti"},{"label":"Dons","value":"Dons"},{"label":"Apport personnel","value":"Apport personnel"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[Nom]]<br>\n[[Total|number_separator]] <strong>euros de budget de campagne</strong><br>\n[[Apport personnel|number_separator]] <strong>euros d'apport personnel</strong><br>\n[[Parti|number_separator]] <strong>euros de contribution du parti</strong><br>\n[[Dons|number_separator]] <strong>euros de dons</strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":false,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":false,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
-
-  var graphParameters = {"selected_xRows":["Nom"],"selected_yRows":["Total","Parti","Dons","Apport personnel"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"makeVarSwitch(graphParameters.selected_yRows, makeBarchart, data)","selected_graph":"barChart","chartTitle":"Provenance du budget de campagne des candidats à la présidentielle","chartSource":"Commission nationale des comptes de campagne et des financements politiques","annotations":[]};
-
-  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[],"rowsToSwitch":["Total","Parti","Dons","Apport personnel"]};
-
-  color = findColorsScheme(graphParameters.selectedColorScheme);
-
-
-  graphParameters.annotations.forEach(function(d){
-
-    d.type = d3[d.functionName];
-
-
-  })
-
-  var parametersType = [{
-    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
-    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
-    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
-    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
-    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
-    ];
 
     var div = d3.select("body").append("div")
     .attr("id", "tooltip")
@@ -196,31 +147,46 @@ stroke:#888;
 
     var parseTime = d3.timeParse('%Y/%m/%d');
 
+    var svg = d3.select("svg")
+
     d3.select("#chart")
-    .attr("class", graphParameters.selected_graph);
-
-    d3.select("#chartTitle")
-    .text(graphParameters['chartTitle']);
-
-    d3.select("#chartSubTitle")
-    .text(graphParameters['chartSubTitle']);
+    .attr("class", 'barBubbleChart');
 
 
-        d3.select("#chartSource")
-    .text(graphParameters['chartSource']);
 
-    function initChart() {
 
-      var svg = d3.select("svg")
-      .call(responsivefy);
+
+      // g.append("g")
+      // .attr("class", "axis axis--x")
+      // .attr("transform", "translate(0," + height + ")");
+
+      // g.append("g")
+      // .attr("class", "axis axis--y")
+      // .attr('transform', 'translate(0,0)');
+
+
+
+
+
+// let xAxis = d3.axisBottom(xScale).ticks(manualReusableParameters.bottomAxisTickNumber.value).tickFormat(thisDateFormat);
+
+    const chart_width = 600,
+    chart_height = 400;
+
 
       margin = {
         top: 20,
         right: 20,
-        bottom: 60,
-        left: 50
+        bottom: 20,
+        left: 20
       };
 
+
+      svg = d3.select("svg")
+      .attr('width', chart_width)
+      .attr('height', chart_height)
+      // .call(responsivefy)
+      ;
       width = +svg.attr("width") - margin.left - margin.right;
       height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -228,259 +194,181 @@ stroke:#888;
       .attr('class', 'graphContainer')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      initAnnotations()
-
-      g.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height + ")");
-
-      g.append("g")
-      .attr("class", "axis axis--y")
-      .attr('transform', 'translate(0,0)');
 
       g.append("g")
       .attr('class', 'innerGraph');
 
-    }
 
-  function initAnnotations(){
+const col_lenght = 10;
+const padding_bottom = 0,
+  padding_left= 35,
+  circle_size = 5,
+  circle_padding = 12;
 
-  d3.select("#chart svg g.annotation-group").remove()
-
-  var annotationGroup = d3.select("#chart svg g.graphContainer")
-  .append("g")
-  .attr("class", "annotation-group");
+  const parti_color = {
+    "RENAISSANCE":  "#F6B923",
+"MODEM" : "#ED9627",
+"HORIZONS" : "#7D9BCB",
+"LR" : "#1C4EA6",
+"RN" : "#1D2344",
+"FI" : "#E8182C",
+"PS" : "#EE718A",
+"ECOLOS" : "#42B38E",
+"COMMUNISTES" : "#8F1F1B",
+"LIOT" : "#D0B197",
+"NI" : "#BBBABA"
   }
 
-    var makeAnnotations_ = d3.annotation()
-    .editMode(false)
-  // .type(annotationType)
-  ;
+const modalites = ['pour', 'contre', 'reserves', 'abstention'];
+
+let x_2 = d3.scaleBand()
+    .domain(modalites)
+    .rangeRound([margin.left, width - margin.right])
+
+
+let y = d3.scaleLinear()
+    .domain([0, 200])
+    .range([height - margin.bottom, margin.top])
 
 
 
-  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+          d3.csv("comptage-maj-retraites.csv")
+          .then(function(data) {
 
-  function makeAnnotation(){
+            data_majorite = data;
 
-    for (i in makeAnnotations_.annotations()){
+data_majorite.forEach(function(d){
+    d.Parti = d.Parti,
+    d.effectifs = +d.EFFECTIFS,
+    d.pour = +d.POUR,
+    d.reserves = +d.RESERVES,
+    d.abstention = +d.ABSTENTION,
+    d.contre = +d.CONTRE
 
-      var d = makeAnnotations_.annotations()[i];
-      annotations[i].x = d.x;
-      annotations[i].y = d.y;
-      annotations[i].dx = d.dx;
-      annotations[i].dy = d.dy;
+  })
 
-    }
 
-    makeAnnotations_
-    .annotations(annotations)
 
-    for (i in annotations){
-      var d = annotations[i];
-      makeAnnotations_.annotations()[i].index = d.index;
-    }
+makeBarchart(data_majorite);
 
-    d3.select("#chart svg g.graphContainer g.annotation-group")
-    .call(makeAnnotations_);
+svg.call(responsivefy)
 
-      d3.selectAll(".annotation-group .annotations .annotation text")
-      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+          })
+          .catch(function(error) {
 
-    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+            console.log(error)
+          });
 
-  }
 
 function makeBarchart(data_) {
 
 
-    var kValue = graphParameters['selected_xRows'][0];
-    var dValue = graphParameters['selected_yRows'][0];
-    var dValues = graphParameters['selected_yRows'];
-    var kValues = [graphParameters['selected_xRows'][0]];
 
-// Reordering data
+console.log(data_)
 
+data_par_dep  = []
 
-    var svg = d3.select("svg");
-    var g = svg.select('g.graphContainer');
-    var g_inner = g.select('g.innerGraph');
-
-
-
-
-// Tooltip and scales 
-
-
-    xScale = d3.scaleBand().rangeRound([0, width]).padding(manualReusableParameters.barPadding.value/10);
-
-    yScale = d3.scaleLinear().rangeRound([height,  0]);
-
-    xScale.domain(['A', 'B', 'C', 'D']);
-    yScale.domain([0,500]);
-
-    var axis_bottom = d3.axisBottom(xScale).ticks(manualReusableParameters.bottomAxisTickNumber.value).tickFormat(numbers_separators);
-    var axis_left = d3.axisLeft(yScale).ticks(manualReusableParameters.leftAxisTickNumber.value).tickFormat(thisDateFormat);
-
-
-
-    // customizeAxis()
-
-  // g.select("g.axis.axis--x")
-  // .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
-
-// Build chart
-
-// Setting axes
-
-    g.select('g.innerGraph')
-    .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value) +")");
-
-
-
-    g.select("g.axis.axis--y")
-    .attr("transform", "translate(" + (manualReusableParameters.padding_left.value) + "," + (manualReusableParameters.padding_top.value) +")")
-    // .attr('transform', 'translate(0,0)')
-    .call(axis_left);
-
-// Building bars
-
-    var all_bars = g_inner.selectAll("g.bar").data(this_grouped_data);
-
-    all_bars
-    .transition()
-    .duration(200)
-    .attr('transform', function(d){return 'translate(' +  xScale(d[kValue]) + ','+ yScale(Math.max(0, d[dValue])) + ')'})
-    .select('rect')
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", xScale.bandwidth())
-    .attr("height", function(d) { return Math.abs(yScale(0) - yScale(d[dValue])); })
-    .attr('fill', function(d){ return thisYMin >=0 ? colorBarchart('plain') :  d[dValue] >=0  ? colorBarchart('positive') : colorBarchart('negative')})
-
-    all_bars.exit().transition().duration(200).remove();
-
-    var all_barsE = all_bars
-    .enter()
-    .append('g')
-    .attr('class', 'bar')
-    .attr('transform', function(d){return 'translate(' +  xScale(d[kValue]) + ','+ yScale(Math.max(0, d[dValue])) + ')'});
-
-    all_barsE
-    .append("rect")
-    .attr("class", "bar")
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", xScale.bandwidth())
-    .attr("height", function(d) { return Math.abs(yScale(0) - yScale(d[dValue])); })
-    .attr('fill', function(d){ return thisYMin >=0 ? colorBarchart('plain') :  d[dValue] >=0  ? colorBarchart('positive') : colorBarchart('negative')})
-    .on('mouseover', function(d, i){ 
-        if (multipleKValues){
-            var this_switchedVar = d3.select('#varSwitch.tags .is-primary').text();
-
-            d[graphParameters['selected_yRows'][0]] = d[this_switchedVar];
-            d[graphParameters['selected_xRows'][1]] = this_switchedVar;
-
-        show_tooltip(d)
-    }
-        else{ show_tooltip(d)}
+  data_.forEach(function(d) {
+    modalites.forEach(function(e) {
+      if (d[e] > 0){
+for (let i = 0; i <d[e]; i++) {
+data_par_dep.push({"parti":d.Parti, "vote":e});
+}
+      }   
     })
-    .on('mouseout', function(d){ hide_tooltip()});
+        });
 
-// Labels on bars
 
-    all_barsE
-    .append("text")
-    .attr("dy", ".75em")
-    .attr("text-anchor", "middle")
-    .attr("fill", "#333")
-    .style('font-size', '12px')
-    .style('pointer-events', 'none');
+console.log(data_par_dep)
 
-    all_bars
-    .merge(all_barsE)
-    .select("text")
-    .attr("y", function(d){return Math.abs(yScale(0) - yScale(d[dValue])) > 14 ?  (d[dValue] > 0 ? 6 :  Math.abs(yScale(0) - yScale(d[dValue])) - 18) :  -12})
-    .attr("x",( xScale.bandwidth()/2))
-    .text(function(d) { return manualReusableParameters.displayLabel.value == true ? String(_.round(d[dValue], 2)).replace('.', ',') : ''});
 
-    g.select("g.axis.axis--x")
-    .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) + ")")
-    .call(axis_bottom)
-    .selectAll("text")
-    .style("text-anchor", "middle")
-    .attr("dx", "0em")
-    .attr("dy", "0.7em")
-    .attr("transform", "rotate(0)")
-    ;
+  svg.append("g")
+  .attr("class", "axis axis--x")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x_2))
+  .classed('axis', true);
 
-// Rotating labels
+  // svg.append("g")
+  // .attr("class", "axis axis--y")
+  // .attr('transform', 'translate(0,0)')
+  // .call(d3.axisLeft(y).ticks(5))
+  //   .attr('class', 'y_axis')
+  //   .classed('axis', true);
 
-    if (manualReusableParameters.rotateXRow.value == true){
+  // svg.selectAll('path.domain')
+  // .attr('stroke-width', 0)
 
-        g.select("g.axis.axis--x")
-        .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) + ")")
-        .selectAll("g.tick")
-        .select("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-40)");
+  svg.selectAll('g.axis--x line, g.axis--x path')
+  .style('display', 'none')
 
-    }
+
+  // svg.selectAll('g.x_axis g.tick line')
+  // .attr('stroke-width', 0)
+
+  //   svg.selectAll('g.x_axis g.tick text')
+  // .text(d => dateFr(d))
+  
+  // svg.selectAll('g.y_axis g.tick text')
+  // .text(d => d)
+
+  // svg.selectAll('g.y_axis g.tick line')
+  // .attr('x1', -6)
+  // .attr('x2', width)
+  // .attr('stroke', '#ddd')
+
+let g_bar = svg.append('g')
+.selectAll('g.bar')
+.data(modalites)
+.enter()
+.append('g')
+.attr('class', d=> 'bar_' + d)
+
+g_bar
+.selectAll('circle')
+.data(function (d) {
+  return data_par_dep.filter(e=>e.vote == d)
+})
+.enter()
+.append('circle')
+.attr('r', circle_size)
+.attr('fill', function (d) {
+
+  return parti_color[d.parti]
+})
+.attr('cx', function (d,i) {
+  return x_2(d.vote) + padding_left + (i % col_lenght)*circle_padding
+})
+.attr('cy', function (d,i) {
+  return height - padding_bottom - (Math.floor(i/col_lenght)*circle_padding)
+})
 
 
 }
 
-initChart();
-
-makeBarchart(data);
-
-makeVarSwitch(graphParameters.selected_yRows, makeBarchart, data)
 
 
 
-makeAnnotation();
 
-zeroParameters()
 
-d3.select("svg").call(responsivefy)
+
+// zeroParameters()
+
+// d3.select("svg").call(responsivefy)
 
 // output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
 //         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
 
 // 
 
-function updateParameters(){
-
-  var svg = d3.select("svg");
-
-  svg
-  .attr('width', manualReusableParameters.chart_width.value);
-
-      // d3.select('div#chart')
-      // .style('width', manualReusableParameters.chart_width.value);
-
-      svg.attr("width", manualReusableParameters.chart_width.value);
-      svg
-      .attr('height', manualReusableParameters.chart_height.value);
-
-      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
-      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
-      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
-      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
-
-    }
-
 // Hack for Iphone
 
-function zeroParameters(){
+// function zeroParameters(){
 
-var svg = d3.select("svg");
-svg.attr('width', null);
-svg.attr('height', null);
+// var svg = d3.select("svg");
+// svg.attr('width', null);
+// svg.attr('height', null);
 
-}
+// }
 
 /// MISCELLANEOUS FUNCTIONS
 
@@ -496,8 +384,8 @@ function responsivefy(svg, width, height) {
 
     // get container + svg aspect ratio
     var container = d3.select(svg.node().parentNode),
-    width = manualReusableParameters.chart_width.value,
-    height = manualReusableParameters.chart_height.value,
+    width = chart_width,
+    height = chart_height,
         // aspect = width / height;
         aspect = width / height;
 
