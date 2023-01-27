@@ -374,6 +374,10 @@ console.log(data_par_dep)
   .style('display', 'none')
 
 
+
+  d3.selectAll('.axis--x .tick text').text(function(d){return d.replace('reserves', 'réserves')})
+
+
 let g_bar = svg.append('g')
 .selectAll('g.bar')
 .data(modalites)
