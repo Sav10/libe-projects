@@ -262,7 +262,8 @@ drawAllPoints(school_data)
         `<strong style="font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 15px;">
         ${this_obj['Nom de la commune']} - ${this_obj['Code du département']}</strong><br>
         ${this_obj["Nom de l'établissment"]}<br>
-        IPS : ${this_obj['IPS_2022']}<br>
+        IPS en 2022 : ${this_obj['IPS_2022']}<br>
+        IPS en 2017 : ${this_obj['IPS_2017']}<br>
         Secteur : ${this_obj['Secteur']}`;
 
 
