@@ -252,9 +252,6 @@ drawAllPoints(school_data)
 
 
 
-
-
-
         html_popup = 
         `${this_name}`
 
@@ -262,9 +259,16 @@ drawAllPoints(school_data)
         `<strong style="font-weight:bold; font-family: 'libesansweb-semicondensed'; letter-spacing: 0.04em; font-size: 15px;">
         ${this_obj['Nom de la commune']} - ${this_obj['Code du département']}</strong><br>
         ${this_obj["Nom de l'établissment"]}<br>
-        IPS en 2022 : ${this_obj['IPS_2022']}<br>
-        IPS en 2017 : ${this_obj['IPS_2017']}<br>
-        Secteur : ${this_obj['Secteur']}`;
+        IPS en 2022 : <strong>${this_obj['IPS_2022']}</strong><br>
+        IPS en 2017 : <strong>${this_obj['IPS_2017']}</strong><br>`
+
+                if (type_etablissement == 'college'){
+
+                    html_info += `Ecart-type de l'IPS en 2022 : <strong>${this_obj["Ecart-type de l'IPS_2022"]}</strong><br>`
+        }
+
+
+        html_info += `Secteur : <strong>${this_obj['Secteur']}</strong>`;
 
 
 
