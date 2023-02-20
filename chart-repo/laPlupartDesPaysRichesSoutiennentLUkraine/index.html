@@ -296,6 +296,9 @@ stroke:#888;
 
   }
 
+
+let xScale, yScale;
+
 function makeCirclechart(data0) {
 
     // var kValue = 'graphParameters['selected_xRows][0];
@@ -323,12 +326,13 @@ function makeCirclechart(data0) {
 
     updateParameters();
 
-    var xScale = xScaleType()
-    .domain([d3.min(data, function(d) { return d[thisXvar] }),
-        d3.max(data, function(d) { return d[thisXvar] }) ])
+    // xScale = xScaleType()
+
+    xScale = d3.scaleLog(2)
+    .domain([1000,20000000])
     .range([0, width]);
 
-    var yScale = d3.scaleLinear()
+    yScale = d3.scaleLinear()
     .domain([d3.min(data, function(d) { return d[thisYvar] }),
         d3.max(data, function(d) { return d[thisYvar] }) ])
     .range([height, 0]);
