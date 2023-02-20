@@ -1,0 +1,553 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La plupart des pays riches soutiennent l'Ukraine</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"Country Code":"AFG","Pays":"Afghanistan","Population 2021":"40099462","PIB en million de $":"20622","PIB / habitant (PPP)":"1971","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ALB","Pays":"Albania","Population 2021":"2811666","PIB en million de $":"12458","PIB / habitant (PPP)":"13192","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"DZA","Pays":"Algeria","Population 2021":"44177969","PIB en million de $":"168144","PIB / habitant (PPP)":"10735","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"AND","Pays":"Andorra","Population 2021":"79034","PIB en million de $":"2649","PIB / habitant (PPP)":"36900","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"AGO","Pays":"Angola","Population 2021":"34503774","PIB en million de $":"104129","PIB / habitant (PPP)":"6110","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ATG","Pays":"Antigua and Barbuda","Population 2021":"93219","PIB en million de $":"1301","PIB / habitant (PPP)":"17293","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ARG","Pays":"Argentina","Population 2021":"45808747","PIB en million de $":"514772","PIB / habitant (PPP)":"19691","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ARM","Pays":"Armenia","Population 2021":"2790974","PIB en million de $":"11915","PIB / habitant (PPP)":"12620","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"AUS","Pays":"Australia","Population 2021":"25688079","PIB en million de $":"1490968","PIB / habitant (PPP)":"48679","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"AUT","Pays":"Austria","Population 2021":"8955797","PIB en million de $":"386514","PIB / habitant (PPP)":"51858","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"AZE","Pays":"Azerbaijan","Population 2021":"10137750","PIB en million de $":"51307","PIB / habitant (PPP)":"13727","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"BHS","Pays":"Bahamas, The","Population 2021":"407906","PIB en million de $":"10700","PIB / habitant (PPP)":"30847","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BHR","Pays":"Bahrain","Population 2021":"1463265","PIB en million de $":"33206","PIB / habitant (PPP)":"41481","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BGD","Pays":"Bangladesh","Population 2021":"169356251","PIB en million de $":"270696","PIB / habitant (PPP)":"4871","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BRB","Pays":"Barbados","Population 2021":"281200","PIB en million de $":"3907","PIB / habitant (PPP)":"12655","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BLR","Pays":"Belarus","Population 2021":"9340314","PIB en million de $":"58482","PIB / habitant (PPP)":"19187","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"BEL","Pays":"Belgium","Population 2021":"11592952","PIB en million de $":"466837","PIB / habitant (PPP)":"48770","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BLZ","Pays":"Belize","Population 2021":"400031","PIB en million de $":"1578","PIB / habitant (PPP)":"6122","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BEN","Pays":"Benin","Population 2021":"12996895","PIB en million de $":"14726","PIB / habitant (PPP)":"3323","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BTN","Pays":"Bhutan","Population 2021":"777486","PIB en million de $":"2222","PIB / habitant (PPP)":"10551","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BOL","Pays":"Bolivia","Population 2021":"12079472","PIB en million de $":"34821","PIB / habitant (PPP)":"7845","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BIH","Pays":"Bosnia and Herzegovina","Population 2021":"3270943","PIB en million de $":"17825","PIB / habitant (PPP)":"14509","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BWA","Pays":"Botswana","Population 2021":"2588423","PIB en million de $":"14813","PIB / habitant (PPP)":"14655","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BRA","Pays":"Brazil","Population 2021":"214326223","PIB en million de $":"1749105","PIB / habitant (PPP)":"14064","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BRN","Pays":"Brunei Darussalam","Population 2021":"445373","PIB en million de $":"13429","PIB / habitant (PPP)":"62201","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BGR","Pays":"Bulgaria","Population 2021":"6877743","PIB en million de $":"54924","PIB / habitant (PPP)":"22379","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BFA","Pays":"Burkina Faso","Population 2021":"22100683","PIB en million de $":"15291","PIB / habitant (PPP)":"2156","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"BDI","Pays":"Burundi","Population 2021":"12551213","PIB en million de $":"3219","PIB / habitant (PPP)":"731","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CPV","Pays":"Cabo Verde","Population 2021":"587925","PIB en million de $":"1632","PIB / habitant (PPP)":"6045","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KHM","Pays":"Cambodia","Population 2021":"16589023","PIB en million de $":"23012","PIB / habitant (PPP)":"4192","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CMR","Pays":"Cameroon","Population 2021":"27198628","PIB en million de $":"37687","PIB / habitant (PPP)":"3666","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CAN","Pays":"Canada","Population 2021":"38246108","PIB en million de $":"1607402","PIB / habitant (PPP)":"46064","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CAF","Pays":"Central African Republic","Population 2021":"5457154","PIB en million de $":"2001","PIB / habitant (PPP)":"936","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TCD","Pays":"Chad","Population 2021":"17179740","PIB en million de $":"10426","PIB / habitant (PPP)":"1519","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CHL","Pays":"Chile","Population 2021":"19493184","PIB en million de $":"247639","PIB / habitant (PPP)":"23325","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CHN","Pays":"China","Population 2021":"1412360000","PIB en million de $":"14631844","PIB / habitant (PPP)":"16316","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"COL","Pays":"Colombia","Population 2021":"51516562","PIB en million de $":"299826","PIB / habitant (PPP)":"13449","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"COM","Pays":"Comoros","Population 2021":"821625","PIB en million de $":"1091","PIB / habitant (PPP)":"2989","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"COD","Pays":"Congo, Dem. Rep.","Population 2021":"95894118","PIB en million de $":"45260","PIB / habitant (PPP)":"1082","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"COG","Pays":"Congo, Rep.","Population 2021":"5835806","PIB en million de $":"8877","PIB / habitant (PPP)":"3434","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CRI","Pays":"Costa Rica","Population 2021":"5153957","PIB en million de $":"61669","PIB / habitant (PPP)":"19903","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CIV","Pays":"Cote d'Ivoire","Population 2021":"27478249","PIB en million de $":"61034","PIB / habitant (PPP)":"5181","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"HRV","Pays":"Croatia","Population 2021":"3899000","PIB en million de $":"52558","PIB / habitant (PPP)":"27077","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CUB","Pays":"Cuba","Population 2021":"11256372","PIB en million de $":"81054","PIB / habitant (PPP)":"7172","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CYP","Pays":"Cyprus","Population 2021":"1244188","PIB en million de $":"23580","PIB / habitant (PPP)":"38816","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CZE","Pays":"Czechia","Population 2021":"10505772","PIB en million de $":"203095","PIB / habitant (PPP)":"38511","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"DNK","Pays":"Denmark","Population 2021":"5856733","PIB en million de $":"327738","PIB / habitant (PPP)":"55820","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"DJI","Pays":"Djibouti","Population 2021":"1105557","PIB en million de $":"3208","PIB / habitant (PPP)":"5481","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"DMA","Pays":"Dominica","Population 2021":"72412","PIB en million de $":"474","PIB / habitant (PPP)":"10289","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"DOM","Pays":"Dominican Republic","Population 2021":"11117873","PIB en million de $":"83287","PIB / habitant (PPP)":"17003","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ECU","Pays":"Ecuador","Population 2021":"17797737","PIB en million de $":"93820","PIB / habitant (PPP)":"10329","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"EGY","Pays":"Egypt, Arab Rep.","Population 2021":"109262178","PIB en million de $":"412246","PIB / habitant (PPP)":"11951","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SLV","Pays":"El Salvador","Population 2021":"6314167","PIB en million de $":"23561","PIB / habitant (PPP)":"7983","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GNQ","Pays":"Equatorial Guinea","Population 2021":"1634466","PIB en million de $":"9509","PIB / habitant (PPP)":"17008","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ERI","Pays":"Eritrea","Population 2021":"3620312","PIB en million de $":"2253","PIB / habitant (PPP)":"1628","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"EST","Pays":"Estonia","Population 2021":"1330932","PIB en million de $":"26280","PIB / habitant (PPP)":"35257","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SWZ","Pays":"Eswatini","Population 2021":"1192271","PIB en million de $":"4320","PIB / habitant (PPP)":"8405","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ETH","Pays":"Ethiopia","Population 2021":"120283026","PIB en million de $":"95069","PIB / habitant (PPP)":"2297","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"FJI","Pays":"Fiji","Population 2021":"924610","PIB en million de $":"4403","PIB / habitant (PPP)":"11451","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"FIN","Pays":"Finland","Population 2021":"5541017","PIB en million de $":"247607","PIB / habitant (PPP)":"47154","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"FRA","Pays":"France","Population 2021":"67749632","PIB en million de $":"2411255","PIB / habitant (PPP)":"42321","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GAB","Pays":"Gabon","Population 2021":"2341179","PIB en million de $":"15176","PIB / habitant (PPP)":"14321","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GMB","Pays":"Gambia, The","Population 2021":"2639916","PIB en million de $":"1673","PIB / habitant (PPP)":"2157","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GEO","Pays":"Georgia","Population 2021":"3708610","PIB en million de $":"16557","PIB / habitant (PPP)":"13966","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"DEU","Pays":"Germany","Population 2021":"83196078","PIB en million de $":"3435817","PIB / habitant (PPP)":"51423","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GHA","Pays":"Ghana","Population 2021":"32833031","PIB en million de $":"62725","PIB / habitant (PPP)":"5446","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GRC","Pays":"Greece","Population 2021":"10641221","PIB en million de $":"185375","PIB / habitant (PPP)":"27073","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GRD","Pays":"Grenada","Population 2021":"124610","PIB en million de $":"979","PIB / habitant (PPP)":"14489","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GTM","Pays":"Guatemala","Population 2021":"17109746","PIB en million de $":"69561","PIB / habitant (PPP)":"8393","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GIN","Pays":"Guinea","Population 2021":"13531906","PIB en million de $":"12923","PIB / habitant (PPP)":"2671","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GNB","Pays":"Guinea-Bissau","Population 2021":"2060721","PIB en million de $":"1219","PIB / habitant (PPP)":"1847","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"GUY","Pays":"Guyana","Population 2021":"804567","PIB en million de $":"7276","PIB / habitant (PPP)":"18680","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"HTI","Pays":"Haiti","Population 2021":"11447569","PIB en million de $":"14957","PIB / habitant (PPP)":"2934","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"HND","Pays":"Honduras","Population 2021":"10278345","PIB en million de $":"22022","PIB / habitant (PPP)":"5138","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"HUN","Pays":"Hungary","Population 2021":"9709891","PIB en million de $":"140097","PIB / habitant (PPP)":"31098","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"ISL","Pays":"Iceland","Population 2021":"372520","PIB en million de $":"19491","PIB / habitant (PPP)":"52376","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"IND","Pays":"India","Population 2021":"1407563842","PIB en million de $":"2500132","PIB / habitant (PPP)":"6166","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"IDN","Pays":"Indonesia","Population 2021":"273753191","PIB en million de $":"1027603","PIB / habitant (PPP)":"11445","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"IRN","Pays":"Iran, Islamic Rep.","Population 2021":"87923432","PIB en million de $":"410188","PIB / habitant (PPP)":"12644","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"IRQ","Pays":"Iraq","Population 2021":"43533592","PIB en million de $":"170858","PIB / habitant (PPP)":"9012","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"IRL","Pays":"Ireland","Population 2021":"5033165","PIB en million de $":"392535","PIB / habitant (PPP)":"90789","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ISR","Pays":"Israel","Population 2021":"9364000","PIB en million de $":"345460","PIB / habitant (PPP)":"39056","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ITA","Pays":"Italy","Population 2021":"59109668","PIB en million de $":"1745434","PIB / habitant (PPP)":"39073","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"JAM","Pays":"Jamaica","Population 2021":"2827695","PIB en million de $":"13441","PIB / habitant (PPP)":"8761","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"JPN","Pays":"Japan","Population 2021":"125681593","PIB en million de $":"4380757","PIB / habitant (PPP)":"40232","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"JOR","Pays":"Jordan","Population 2021":"11148278","PIB en million de $":"41108","PIB / habitant (PPP)":"9817","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KAZ","Pays":"Kazakhstan","Population 2021":"19000988","PIB en million de $":"205829","PIB / habitant (PPP)":"25363","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KEN","Pays":"Kenya","Population 2021":"53005614","PIB en million de $":"83859","PIB / habitant (PPP)":"4340","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KIR","Pays":"Kiribati","Population 2021":"128874","PIB en million de $":"192","PIB / habitant (PPP)":"2259","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PRK","Pays":"Korea, Dem. People's Rep.","Population 2021":"25971909","PIB en million de $":"28500","PIB / habitant (PPP)":"1700","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KOR","Pays":"Korea, Rep.","Population 2021":"51744876","PIB en million de $":"1623895","PIB / habitant (PPP)":"42336","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KWT","Pays":"Kuwait","Population 2021":"4250114","PIB en million de $":"104327","PIB / habitant (PPP)":"44847","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KGZ","Pays":"Kyrgyz Republic","Population 2021":"6691800","PIB en million de $":"7238","PIB / habitant (PPP)":"4715","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LAO","Pays":"Lao PDR","Population 2021":"7425057","PIB en million de $":"18585","PIB / habitant (PPP)":"7811","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LVA","Pays":"Latvia","Population 2021":"1884490","PIB en million de $":"29616","PIB / habitant (PPP)":"30100","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LBN","Pays":"Lebanon","Population 2021":"5592631","PIB en million de $":"36737","PIB / habitant (PPP)":"11488","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LSO","Pays":"Lesotho","Population 2021":"2281454","PIB en million de $":"2106","PIB / habitant (PPP)":"2317","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LBR","Pays":"Liberia","Population 2021":"5193416","PIB en million de $":"3116","PIB / habitant (PPP)":"1392","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LBY","Pays":"Libya","Population 2021":"6735277","PIB en million de $":"27806","PIB / habitant (PPP)":"10282","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LIE","Pays":"Liechtenstein","Population 2021":"39039","PIB en million de $":"6268","PIB / habitant (PPP)":"139100","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LTU","Pays":"Lithuania","Population 2021":"2800839","PIB en million de $":"48111","PIB / habitant (PPP)":"37107","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LUX","Pays":"Luxembourg","Population 2021":"640064","PIB en million de $":"66118","PIB / habitant (PPP)":"112557","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MDG","Pays":"Madagascar","Population 2021":"28915653","PIB en million de $":"12245","PIB / habitant (PPP)":"1464","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MWI","Pays":"Malawi","Population 2021":"19889742","PIB en million de $":"7537","PIB / habitant (PPP)":"1509","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MYS","Pays":"Malaysia","Population 2021":"33573874","PIB en million de $":"344099","PIB / habitant (PPP)":"26472","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MDV","Pays":"Maldives","Population 2021":"521457","PIB en million de $":"3600","PIB / habitant (PPP)":"12744","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MLI","Pays":"Mali","Population 2021":"21904983","PIB en million de $":"15831","PIB / habitant (PPP)":"2226","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"MLT","Pays":"Malta","Population 2021":"518536","PIB en million de $":"12886","PIB / habitant (PPP)":"39980","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MHL","Pays":"Marshall Islands","Population 2021":"42050","PIB en million de $":"208","PIB / habitant (PPP)":"3932","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MRT","Pays":"Mauritania","Population 2021":"4614974","PIB en million de $":"7207","PIB / habitant (PPP)":"5110","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MUS","Pays":"Mauritius","Population 2021":"1266060","PIB en million de $":"11465","PIB / habitant (PPP)":"19463","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MEX","Pays":"Mexico","Population 2021":"126705138","PIB en million de $":"1148749","PIB / habitant (PPP)":"17852","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"FSM","Pays":"Micronesia, Fed. Sts.","Population 2021":"113131","PIB en million de $":"327","PIB / habitant (PPP)":"3369","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MDA","Pays":"Moldova","Population 2021":"2615199","PIB en million de $":"8517","PIB / habitant (PPP)":"12324","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MCO","Pays":"Monaco","Population 2021":"36686","PIB en million de $":"6248","PIB / habitant (PPP)":"115700","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MNG","Pays":"Mongolia","Population 2021":"3347782","PIB en million de $":"13529","PIB / habitant (PPP)":"11724","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MNE","Pays":"Montenegro","Population 2021":"619211","PIB en million de $":"4046","PIB / habitant (PPP)":"18259","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MAR","Pays":"Morocco","Population 2021":"37076584","PIB en million de $":"105726","PIB / habitant (PPP)":"6986","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MOZ","Pays":"Mozambique","Population 2021":"32077072","PIB en million de $":"17959","PIB / habitant (PPP)":"1230","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MMR","Pays":"Myanmar","Population 2021":"53798084","PIB en million de $":"86343","PIB / habitant (PPP)":"4857","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NAM","Pays":"Namibia","Population 2021":"2530151","PIB en million de $":"10285","PIB / habitant (PPP)":"8815","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NRU","Pays":"Nauru","Population 2021":"12511","PIB en million de $":"91","PIB / habitant (PPP)":"13594","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NPL","Pays":"Nepal","Population 2021":"30034989","PIB en million de $":"29966","PIB / habitant (PPP)":"3800","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NLD","Pays":"Netherlands","Population 2021":"17533044","PIB en million de $":"808332","PIB / habitant (PPP)":"54324","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NZL","Pays":"New Zealand","Population 2021":"5122600","PIB en million de $":"204482","PIB / habitant (PPP)":"42775","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NIC","Pays":"Nicaragua","Population 2021":"6850540","PIB en million de $":"12735","PIB / habitant (PPP)":"5280","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NER","Pays":"Niger","Population 2021":"25252722","PIB en million de $":"12649","PIB / habitant (PPP)":"1221","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NGA","Pays":"Nigeria","Population 2021":"213401323","PIB en million de $":"493918","PIB / habitant (PPP)":"4917","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"MKD","Pays":"North Macedonia","Population 2021":"2065092","PIB en million de $":"10603","PIB / habitant (PPP)":"15931","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"NOR","Pays":"Norway","Population 2021":"5408320","PIB en million de $":"403553","PIB / habitant (PPP)":"63548","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"OMN","Pays":"Oman","Population 2021":"4520471","PIB en million de $":"80395","PIB / habitant (PPP)":"29502","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PAK","Pays":"Pakistan","Population 2021":"231402117","PIB en million de $":"319590","PIB / habitant (PPP)":"4563","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PLW","Pays":"Palau","Population 2021":"18024","PIB en million de $":"240","PIB / habitant (PPP)":"15473","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PAN","Pays":"Panama","Population 2021":"4351267","PIB en million de $":"52521","PIB / habitant (PPP)":"25390","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PNG","Pays":"Papua New Guinea","Population 2021":"9949437","PIB en million de $":"23855","PIB / habitant (PPP)":"4064","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PRY","Pays":"Paraguay","Population 2021":"6703799","PIB en million de $":"40447","PIB / habitant (PPP)":"12390","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PER","Pays":"Peru","Population 2021":"33715471","PIB en million de $":"190979","PIB / habitant (PPP)":"11261","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PHL","Pays":"Philippines","Population 2021":"113880328","PIB en million de $":"358294","PIB / habitant (PPP)":"7954","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"POL","Pays":"Poland","Population 2021":"37747124","PIB en million de $":"555630","PIB / habitant (PPP)":"32399","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"PRT","Pays":"Portugal","Population 2021":"10325147","PIB en million de $":"203590","PIB / habitant (PPP)":"31962","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"QAT","Pays":"Qatar","Population 2021":"2688235","PIB en million de $":"161417","PIB / habitant (PPP)":"85290","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"ROU","Pays":"Romania","Population 2021":"19119880","PIB en million de $":"208839","PIB / habitant (PPP)":"28871","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"RUS","Pays":"Russian Federation","Population 2021":"143449286","PIB en million de $":"1416124","PIB / habitant (PPP)":"26456","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"RWA","Pays":"Rwanda","Population 2021":"13461888","PIB en million de $":"10807","PIB / habitant (PPP)":"2099","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"WSM","Pays":"Samoa","Population 2021":"218764","PIB en million de $":"864","PIB / habitant (PPP)":"6417","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SMR","Pays":"San Marino","Population 2021":"33745","PIB en million de $":"1514","PIB / habitant (PPP)":"60847","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"STP","Pays":"Sao Tome and Principe","Population 2021":"223107","PIB en million de $":"371","PIB / habitant (PPP)":"4052","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SAU","Pays":"Saudi Arabia","Population 2021":"35950396","PIB en million de $":"650715","PIB / habitant (PPP)":"44328","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SEN","Pays":"Senegal","Population 2021":"16876720","PIB en million de $":"22853","PIB / habitant (PPP)":"3321","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SRB","Pays":"Serbia","Population 2021":"6834326","PIB en million de $":"45185","PIB / habitant (PPP)":"18255","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SYC","Pays":"Seychelles","Population 2021":"99258","PIB en million de $":"1386","PIB / habitant (PPP)":"24428","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SLE","Pays":"Sierra Leone","Population 2021":"8420641","PIB en million de $":"4977","PIB / habitant (PPP)":"1637","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SGP","Pays":"Singapore","Population 2021":"5453566","PIB en million de $":"330100","PIB / habitant (PPP)":"93397","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SVK","Pays":"Slovak Republic","Population 2021":"5447247","PIB en million de $":"94769","PIB / habitant (PPP)":"30510","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SVN","Pays":"Slovenia","Population 2021":"2108079","PIB en million de $":"48144","PIB / habitant (PPP)":"37051","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SLB","Pays":"Solomon Islands","Population 2021":"707851","PIB en million de $":"1467","PIB / habitant (PPP)":"2483","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SOM","Pays":"Somalia","Population 2021":"17065581","PIB en million de $":"7069","PIB / habitant (PPP)":"1181","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ZAF","Pays":"South Africa","Population 2021":"59392255","PIB en million de $":"335640","PIB / habitant (PPP)":"12666","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SSD","Pays":"South Sudan","Population 2021":"10748272","PIB en million de $":"11998","PIB / habitant (PPP)":"1180","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ESP","Pays":"Spain","Population 2021":"47415750","PIB en million de $":"1181205","PIB / habitant (PPP)":"36211","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LKA","Pays":"Sri Lanka","Population 2021":"22156000","PIB en million de $":"88832","PIB / habitant (PPP)":"12537","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"KNA","Pays":"St. Kitts and Nevis","Population 2021":"47606","PIB en million de $":"973","PIB / habitant (PPP)":"24319","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"LCA","Pays":"St. Lucia","Population 2021":"179651","PIB en million de $":"1589","PIB / habitant (PPP)":"12049","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"VCT","Pays":"St. Vincent and the Grenadines","Population 2021":"104332","PIB en million de $":"772","PIB / habitant (PPP)":"12044","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SDN","Pays":"Sudan","Population 2021":"45657202","PIB en million de $":"49450","PIB / habitant (PPP)":"3927","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SUR","Pays":"Suriname","Population 2021":"612985","PIB en million de $":"4417","PIB / habitant (PPP)":"15865","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SWE","Pays":"Sweden","Population 2021":"10415811","PIB en million de $":"533612","PIB / habitant (PPP)":"50923","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"CHE","Pays":"Switzerland","Population 2021":"8703405","PIB en million de $":"740026","PIB / habitant (PPP)":"68755","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"SYR","Pays":"Syrian Arab Republic","Population 2021":"21324367","PIB en million de $":"16266","PIB / habitant (PPP)":"3500","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TJK","Pays":"Tajikistan","Population 2021":"9750064","PIB en million de $":"11436","PIB / habitant (PPP)":"3658","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TZA","Pays":"Tanzania","Population 2021":"63588334","PIB en million de $":"61523","PIB / habitant (PPP)":"2635","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"THA","Pays":"Thailand","Population 2021":"71601103","PIB en million de $":"432649","PIB / habitant (PPP)":"17285","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"TLS","Pays":"Timor-Leste","Population 2021":"1320942","PIB en million de $":"2093","PIB / habitant (PPP)":"3926","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TGO","Pays":"Togo","Population 2021":"8644829","PIB en million de $":"5188","PIB / habitant (PPP)":"2108","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TON","Pays":"Tonga","Population 2021":"106017","PIB en million de $":"489","PIB / habitant (PPP)":"6347","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TTO","Pays":"Trinidad and Tobago","Population 2021":"1525663","PIB en million de $":"20814","PIB / habitant (PPP)":"23722","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TUN","Pays":"Tunisia","Population 2021":"12262946","PIB en million de $":"44682","PIB / habitant (PPP)":"10260","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TUR","Pays":"Turkiye","Population 2021":"84775404","PIB en million de $":"1015327","PIB / habitant (PPP)":"28393","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"TKM","Pays":"Turkmenistan","Population 2021":"6341855","PIB en million de $":"45710","PIB / habitant (PPP)":"15538","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"TUV","Pays":"Tuvalu","Population 2021":"11204","PIB en million de $":"45","PIB / habitant (PPP)":"4411","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"UGA","Pays":"Uganda","Population 2021":"45853778","PIB en million de $":"40769","PIB / habitant (PPP)":"2175","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"UKR","Pays":"Ukraine","Population 2021":"43792855","PIB en million de $":"97866","PIB / habitant (PPP)":"12376","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ARE","Pays":"United Arab Emirates","Population 2021":"9365145","PIB en million de $":"370866","PIB / habitant (PPP)":"63299","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"GBR","Pays":"United Kingdom","Population 2021":"67326569","PIB en million de $":"2891616","PIB / habitant (PPP)":"42676","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"USA","Pays":"United States","Population 2021":"331893745","PIB en million de $":"19294482","PIB / habitant (PPP)":"59920","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"URY","Pays":"Uruguay","Population 2021":"3426260","PIB en million de $":"52261","PIB / habitant (PPP)":"21608","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"UZB","Pays":"Uzbekistan","Population 2021":"34915100","PIB en million de $":"107982","PIB / habitant (PPP)":"7332","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"VUT","Pays":"Vanuatu","Population 2021":"319137","PIB en million de $":"811","PIB / habitant (PPP)":"2854","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"VEN","Pays":"Venezuela, RB","Population 2021":"28199867","PIB en million de $":"42530","PIB / habitant (PPP)":"5178","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":"oui"},{"Country Code":"VNM","Pays":"Vietnam","Population 2021":"97468029","PIB en million de $":"258509","PIB / habitant (PPP)":"8200","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"oui","Visite d'un représentant officiel à Moscou":""},{"Country Code":"YEM","Pays":"Yemen, Rep.","Population 2021":"32981641","PIB en million de $":"36790","PIB / habitant (PPP)":"3400","Vote ONU":"abstention","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ZMB","Pays":"Zambia","Population 2021":"19473125","PIB en million de $":"23419","PIB / habitant (PPP)":"3278","Vote ONU":"en faveur","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""},{"Country Code":"ZWE","Pays":"Zimbabwe","Population 2021":"15993524","PIB en million de $":"19426","PIB / habitant (PPP)":"3353","Vote ONU":"contre","Visite de Poutine ou de Lavrov":"","Visite d'un représentant officiel à Moscou":""}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":20,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"value":true,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":1412360000,"manual_left_value":null,"manual_right_value":1600000000,"activated":1,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":139100,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":5,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.5,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"Population 2021","value":"Population 2021"},{"label":"PIB / habitant (PPP)","value":"PIB / habitant (PPP)"},{"label":"PIB en million de $","value":"PIB en million de $"},{"label":"Vote ONU","value":"Vote ONU"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":false,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":false,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":false,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["Population 2021"],"selected_yRows":["PIB / habitant (PPP)"],"selected_size":["PIB en million de $"],"selected_color":["Vote ONU"],"selected_label":[],"selected_tooltip":["Pays","PIB en million de $","Visite de Poutine ou de Lavrov","PIB / habitant (PPP)"],"personalizedColorsObject":{"en faveur":"#52ae56","abstention":"#666","contre":"#cd0420"},"selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"La plupart des pays riches soutiennent l'Ukraine","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
