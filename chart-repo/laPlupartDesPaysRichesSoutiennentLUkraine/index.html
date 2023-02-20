@@ -329,7 +329,7 @@ function makeCirclechart(data0) {
     // xScale = xScaleType()
 
     xScale = d3.scaleLog(2)
-    .domain([1000,20000000])
+    .domain([800,45000000])
     .range([0, width]);
 
     yScale = d3.scaleLinear()
@@ -370,7 +370,7 @@ function makeCirclechart(data0) {
     var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
 
 
-xScale.domain([thisXMin, thisXMax])
+// xScale.domain([thisXMin, thisXMax])
 yScale.domain([thisYMin, thisYMax])
 
 
