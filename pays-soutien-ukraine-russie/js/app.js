@@ -513,15 +513,15 @@ setTimeout(() => {
 // drawLabel('France', -10)
 // drawLabel('États-Unis', -50)
 
-continent_labels
-.append('line')
-.attr('y1', 30)
-.attr('y2', 980)
-.attr('x1', (scaleX(2) + 45))
-.attr('x2', (scaleX(2) + 45))
-.attr('stroke', '#777')
-.attr('stroke-dasharray', '4 4')
-.style('stroke-width', '2.5px')
+// continent_labels
+// .append('line')
+// .attr('y1', 30)
+// .attr('y2', 980)
+// .attr('x1', (scaleX(2) + 45))
+// .attr('x2', (scaleX(2) + 45))
+// .attr('stroke', '#777')
+// .attr('stroke-dasharray', '4 4')
+// .style('stroke-width', '2.5px')
 
 // continent_labels
 // .append('text')
