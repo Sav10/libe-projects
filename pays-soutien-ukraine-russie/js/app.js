@@ -506,10 +506,10 @@ continent_labels
 
 setTimeout(() => {  
 
-drawLabel('Qatar')
-drawLabel('Chine', -90)
-drawLabel('France', -10)
-drawLabel('États-Unis', -50)
+// drawLabel('Qatar')
+// drawLabel('Chine', -90)
+// drawLabel('France', -10)
+// drawLabel('États-Unis', -50)
 
 continent_labels
 .append('line')
