@@ -471,6 +471,8 @@ let continent_labels = g.append('g').attr('id', 'continent_labels')
 
 let line_v_padding= [0, -70, -20, -120, -50, -10]
 
+let continent_vpadding_plus = {'Afrique':10, 'Amérique du Nord':0, 'Amérique du Sud':45, 'Asie':-50, 'Europe':20, 'Océanie':45}
+
 continent_names.forEach(function(d,i){
 
   let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 160 : (d3.keys(continents_position)[i] == 'OC' ? 25 : 0);
@@ -481,7 +483,7 @@ continent_labels
 .append('text')
 .text(d)
 .attr('x', (scaleX(50000)))
-.attr('y', scaleY(d3.values(continents_position)[i])-30)
+.attr('y', scaleY(d3.values(continents_position)[i])-30 + continent_vpadding_plus[d])
 .attr('text-anchor', 'middle')
 .style('font-size', '32px')
 .style('fill', '#333')
@@ -521,16 +523,16 @@ continent_labels
 .attr('stroke-dasharray', '4 4')
 .style('stroke-width', '2.5px')
 
-continent_labels
-.append('text')
-.text('2 tonnes')
-.attr('x', (scaleX(2) + 45))
-.attr('y', 20)
-.attr('text-anchor', 'middle')
-.style('font-size', '20px')
-.style('fill', '#333')
-.style('font-weight', 'bold')
-.style('text-transform', 'uppercase');
+// continent_labels
+// .append('text')
+// .text('2 tonnes')
+// .attr('x', (scaleX(2) + 45))
+// .attr('y', 20)
+// .attr('text-anchor', 'middle')
+// .style('font-size', '20px')
+// .style('fill', '#333')
+// .style('font-weight', 'bold')
+// .style('text-transform', 'uppercase');
 
 
 }, 1000);
