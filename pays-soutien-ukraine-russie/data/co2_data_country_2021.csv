@@ -1,0 +1,218 @@
+,country,CO2,code_country
+0,Afghanistan,11.8742,AFG
+1,Albania,4.6191,ALB
+2,Algeria,176.2691,DZA
+3,Andorra,0.45289,AND
+4,Angola,21.3627,AGO
+5,Anguilla,0.14474,AIA
+6,Antigua and Barbuda,0.4687,ATG
+7,Argentina,186.4483,ARG
+8,Armenia,6.806,ARM
+9,Aruba,0.85813,ABW
+10,Australia,391.1874,AUS
+11,Austria,64.6256,AUT
+12,Azerbaijan,38.4928,AZE
+13,Bahamas,2.3865,BHS
+14,Bahrain,39.0161,BHR
+15,Bangladesh,93.1759,BGD
+16,Barbados,1.1253,BRB
+17,Belarus,59.6025,BLR
+18,Belgium,95.7223,BEL
+19,Belize,0.68932,BLZ
+20,Benin,7.7558,BEN
+21,Bermuda,0.54796,BMU
+22,Bhutan,1.5221,BTN
+23,Bolivia,23.3217,BOL
+24,"Bonaire, Saint Eustatius and Saba",0.10339,
+25,Bosnia and Herzegovina,13.5663,BIH
+26,Botswana,6.4999,BWA
+27,Brazil,488.8811,BRA
+28,British Virgin Islands,0.15853,VGB
+29,Brunei Darussalam,10.4805,BRN
+30,Bulgaria,42.5602,BGR
+31,Burkina Faso,5.6983,BFA
+32,Burundi,0.69291,BDI
+33,Cambodia,19.0286,KHM
+34,Cameroon,9.2973,CMR
+35,Canada,545.6345,CAN
+36,Cape Verde,0.66769,CPV
+37,Central African Republic,0.2273,CAF
+38,Chad,1.9399,TCD
+39,Chile,85.4469,CHL
+40,China,11472.3692,CHN
+41,Colombia,91.7034,COL
+42,Comoros,0.29817,COM
+43,Congo,7.4644,COG
+44,Cook Islands,0.091403,COK
+45,Costa Rica,7.8195,CRI
+46,Côte d'Ivoire,11.7066,CIV
+47,Croatia,17.7015,HRV
+48,Cuba,22.0573,CUB
+49,Curaçao,1.8438,CUW
+50,Cyprus,7.6004,CYP
+51,Czech Republic,97.1383,CZE
+52,Democratic Republic of the Congo,2.6067,COD
+53,Denmark,29.577,DNK
+54,Djibouti,0.37918,DJI
+55,Dominica,0.15853,DMA
+56,Dominican Republic,28.9221,DOM
+57,Ecuador,41.3217,ECU
+58,Egypt,249.6242,EGY
+59,El Salvador,7.2044,SLV
+60,Equatorial Guinea,5.2248,GNQ
+61,Eritrea,0.8206,ERI
+62,Estonia,10.449,EST
+63,Ethiopia,17.7926,ETH
+64,Faeroe Islands,0.69835,
+65,Fiji,1.4704,FJI
+66,Finland,37.6023,FIN
+67,France,305.9637,FRA
+68,French Guiana,0.65138,GUF
+69,French Polynesia,0.9498,PYF
+70,Gabon,5.7125,GAB
+71,Gambia,0.6557,GMB
+72,Georgia,11.0098,GEO
+73,Germany,674.7536,DEU
+74,Ghana,21.3128,GHA
+75,Greece,56.3093,GRC
+76,Greenland,0.51066,GRL
+77,Grenada,0.31921,GRD
+78,Guadeloupe,2.2911,GLP
+79,Guatemala,20.3271,GTM
+80,Guinea,4.8418,GIN
+81,Guinea-Bissau,0.35184,GNB
+82,Guyana,3.0878,GUY
+83,Haiti,2.8759,HTI
+84,Honduras,10.8978,HND
+85,Hong Kong,31.6644,HKG
+86,Hungary,48.4546,HUN
+87,Iceland,3.375,ISL
+88,India,2709.6836,IND
+89,Indonesia,619.2775,IDN
+90,Iran,748.8788,IRN
+91,Iraq,185.5807,IRQ
+92,Ireland,37.5403,IRL
+93,Israel,54.5285,ISR
+94,Italy,328.6873,ITA
+95,Jamaica,7.6897,JAM
+96,Japan,1067.3984,JPN
+97,Jordan,25.5937,JOR
+98,Kazakhstan,276.6835,KAZ
+99,Kenya,19.8754,KEN
+100,Kiribati,0.071533,KIR
+101,Kosovo,5.6444,
+102,Kuwait,106.1343,KWT
+103,Kyrgyzstan,9.3081,KGZ
+104,Laos,20.7775,LAO
+105,Latvia,7.2662,LVA
+106,Lebanon,24.9589,LBN
+107,Lesotho,2.2822,LSO
+108,Liberia,1.1953,LBR
+109,Libya,74.5251,LBY
+110,Liechtenstein,0.15095,LIE
+111,Lithuania,13.8808,LTU
+112,Luxembourg,8.3546,LUX
+113,Macao,1.2868,MAC
+114,Madagascar,4.2444,MDG
+115,Malawi,1.5522,MWI
+116,Malaysia,256.0489,MYS
+117,Maldives,2.1182,MDV
+118,Mali,4.1698,MLI
+119,Malta,1.7242,MLT
+120,Marshall Islands,0.15896,MHL
+121,Martinique,2.1001,MTQ
+122,Mauritania,4.1181,MRT
+123,Mauritius,4.4717,MUS
+124,Mexico,407.205,MEX
+125,Micronesia (Federated States of),0.15896,FSM
+126,Moldova,5.6015,MDA
+127,Mongolia,50.3159,MNG
+128,Montenegro,1.7514,MNE
+129,Montserrat,0.020678,MSR
+130,Morocco,70.5777,MAR
+131,Mozambique,7.1562,MOZ
+132,Myanmar,36.3068,MMR
+133,Namibia,4.0148,NAM
+134,Nauru,0.059611,NRU
+135,Nepal,14.1731,NPL
+136,Netherlands,141.0454,NLD
+137,New Caledonia,5.4963,NCL
+138,New Zealand,33.7898,NZL
+139,Nicaragua,5.0598,NIC
+140,Niger,2.6989,NER
+141,Nigeria,136.9868,NGA
+142,Niue,0.011922,NIU
+143,North Korea,56.3801,PRK
+144,North Macedonia,6.8516,MKD
+145,Norway,40.9186,NOR
+146,Occupied Palestinian Territory,3.0922,
+147,Oman,80.9912,OMN
+148,Pakistan,229.5124,PAK
+149,Palau,0.23844,PLW
+150,Panama,13.0316,PAN
+151,Papua New Guinea,8.5096,PNG
+152,Paraguay,8.5766,PRY
+153,Peru,56.282,PER
+154,Philippines,144.2639,PHL
+155,Poland,328.5798,POL
+156,Portugal,40.7972,PRT
+157,Qatar,95.6672,QAT
+158,Republic of South Sudan,1.5821,
+159,Réunion,4.103,REU
+160,Romania,79.3269,ROU
+161,Russian Federation,1755.5474,RUS
+162,Rwanda,1.7545,RWA
+163,Saint Helena,0.013785,SHN
+164,Saint Kitts and Nevis,0.23779,KNA
+165,Saint Lucia,0.48593,LCA
+166,Saint Pierre and Miquelon,0.062033,SPM
+167,Saint Vincent and the Grenadines,0.21367,VCT
+168,Samoa,0.29408,WSM
+169,Sao Tome and Principe,0.13198,STP
+170,Saudi Arabia,672.3799,SAU
+171,Senegal,13.5979,SEN
+172,Serbia,30.869,SRB
+173,Seychelles,0.56828,SYC
+174,Sierra Leone,1.2994,SLE
+175,Singapore,32.5069,SGP
+176,Slovakia,35.3082,SVK
+177,Slovenia,12.5493,SVN
+178,Solomon Islands,0.31792,SLB
+179,Somalia,0.61037,SOM
+180,South Africa,435.9289,ZAF
+181,South Korea,616.075,KOR
+182,Spain,233.6495,ESP
+183,Sri Lanka,20.7809,LKA
+184,Sudan,21.0382,SDN
+185,Suriname,2.7932,SUR
+186,Swaziland,1.0872,SWZ
+187,Sweden,35.8489,SWE
+188,Switzerland,34.9317,CHE
+189,Syria,27.0008,SYR
+190,Taiwan,282.8561,TWN
+191,Tajikistan,10.3364,TJK
+192,Tanzania,13.0589,TZA
+193,Thailand,278.4957,THA
+194,Timor-Leste,0.73633,TLS
+195,Togo,2.342,TGO
+196,Tonga,0.17486,TON
+197,Trinidad and Tobago,36.124,TTO
+198,Tunisia,31.5827,TUN
+199,Turkey,446.2042,TUR
+200,Turkmenistan,83.0068,TKM
+201,Turks and Caicos Islands,0.34118,TCA
+202,Tuvalu,0.0079481,TUV
+203,Uganda,5.7805,UGA
+204,Ukraine,201.8577,UKR
+205,United Arab Emirates,204.0867,ARE
+206,United Kingdom,346.7732,GBR
+207,United States of America,5007.3359,USA
+208,Uruguay,6.7379,URY
+209,Uzbekistan,121.6315,UZB
+210,Vanuatu,0.17486,VUT
+211,Venezuela,79.7466,VEN
+212,Vietnam,326.0137,VNM
+213,Wallis and Futuna Islands,0.027818,WLF
+214,Yemen,12.4766,YEM
+215,Zambia,7.6762,ZMB
+216,Zimbabwe,11.2961,ZWE
