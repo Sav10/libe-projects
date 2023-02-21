@@ -480,8 +480,8 @@ continent_names.forEach(function(d,i){
 continent_labels
 .append('text')
 .text(d)
-.attr('x', (scaleX(35/2) +padding_continents))
-.attr('y', scaleY(d3.values(continents_position)[i])+40)
+.attr('x', (scaleX(50000)))
+.attr('y', scaleY(d3.values(continents_position)[i])-30)
 .attr('text-anchor', 'middle')
 .style('font-size', '32px')
 .style('fill', '#333')
