@@ -23,7 +23,7 @@ data_ukraine;
 
 const code_pays = 'code2d';
 
-const radius_name = 'radius_pop';
+let radius_name = 'radius_pop';
 // const radius_name = 'radius_co2';
 
 // const code_pays = 'geoId';
@@ -48,7 +48,11 @@ var circleScaleDeaths =
 d3.scaleSqrt()
 .range([1, 100]);
 
+var circleScaleGDP = 
+d3.scaleSqrt()
+.range([1, 100]);
 
+let axisT;
 
 const continents_position = {
 'AF': 9.2,
@@ -365,10 +369,50 @@ d3.selectAll('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
+radius_name = 'radius_pop'
+
 transform_all_paths_to_circle(radius_name)
 
 
 })
+
+
+d3.select('#display_proportional_circles_gdp')
+.on('click', function(){
+
+d3.selectAll('#representation_carto .actionButton')
+.style('color', 'red')
+.style('background-color', '#fff')
+
+d3.select('#display_proportional_circles_gdp')
+.style('color', '#fff')
+.style('background-color', 'red')
+
+
+allPaths.attr('visibility', 'visible')
+  // transform_all_paths_to_circle('radius_pop')
+
+
+d3.selectAll('#title_x, #title_y')
+.style('visibility', 'hidden');
+
+d3.select('g#axisLeft')
+.remove()
+d3.select('g#axisBottom')
+.remove()
+
+d3.selectAll('g#continent_labels')
+.remove()
+d3.selectAll('.labels_pays').remove()
+
+
+radius_name = 'radius_GDP'
+
+transform_all_paths_to_circle(radius_name)
+
+
+})
+
 
 d3.select('#order_by_vax')
 .on('click', function(){
@@ -382,18 +426,44 @@ d3.select('#order_by_vax')
 .style('color', '#fff')
 .style('background-color', 'red')
 
-changeYAxisScale([400,120000], 'log')
+if(radius_name == 'radius_GDP'){
+
+d3.select('#display_proportional_circles_gdp')
+.style('color', '#fff')
+.style('background-color', 'red')
+}
+
+else{
+d3.select('#display_proportional_circles_pop')
+.style('color', '#fff')
+.style('background-color', 'red')
+}
+
+// changeYAxisScale([400,120000], 'log')
 
 d3.selectAll('#title_x, #title_y')
 .style('visibility', 'visible');
+
+
+d3.selectAll('#title_x')
+.html(`Population en millions <em style="font-size:.8em">(échelle log)</em>`);
 
 d3.selectAll('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
+changeXAxisScale([100000,2500000000], 'log')
 
-makeScatterPlot('CO2_capita', 'gdp_capita')
+// changeYAxisScale([0,120000])
 
+changeYAxisScale([400,120000], 'log')
+
+
+
+makeScatterPlot('population', 'gdp_capita')
+
+
+d3.selectAll('#axisBottom text').text(d=>_.round(d/1000000, 1) + " Million")
 
 setTimeout(() => {  
 
@@ -441,10 +511,26 @@ d3.select('#order_by_continent')
 .style('color', '#fff')
 .style('background-color', 'red')
 
+
+if(radius_name == 'radius_GDP'){
+
+d3.select('#display_proportional_circles_gdp')
+.style('color', '#fff')
+.style('background-color', 'red')
+}
+
+else{
+d3.select('#display_proportional_circles_pop')
+.style('color', '#fff')
+.style('background-color', 'red')
+}
+
+
 d3.select('g#axisLeft')
 .remove()
 
 d3.select('#title_x')
+.text('PIB par habitant')
 .style('visibility', 'visible');
 
 d3.select('#title_y')
@@ -477,7 +563,7 @@ continent_names.forEach(function(d,i){
 
   let padding_continents = d3.keys(continents_position)[i] == 'NA' ? 160 : (d3.keys(continents_position)[i] == 'OC' ? 25 : 0);
 
-
+d3.selectAll('#axisBottom text').text(d=>d >= 1 ? String(d/1000) + ' 000' : d)
 
 continent_labels
 .append('text')
@@ -635,6 +721,14 @@ Promise.all([
     //   d.Densite = +d.Densite;
     //   d.population = +d.population;
     // })
+    let obj_countries_gdp = {};
+
+        data_soutien.forEach(d => {
+      // d.deaths = +d.deaths;
+      d.PIB_total = +d.PIB_total;
+      obj_countries_gdp[d.country_code] = +d.PIB_total;
+    })
+
 
     data.forEach(d => {
       // d.deaths = +d.deaths;
@@ -642,13 +736,15 @@ Promise.all([
       d.CO2 = +d.CO2;
       d.gdp_capita = +d.gdp_capita;
       d.CO2_capita = +d.Co2_capita;
+      d.PIB_total = d3.keys(obj_countries_gdp).includes(d.code_country) ?  obj_countries_gdp[d.code_country] : 0;
     })
 
     data = data.filter(d=>d.code2d)
 
     // console.log(data0)
-    console.log(data)
     console.log(data_soutien)
+    console.log(data)
+
 
     data_ukraine = data_soutien
 
@@ -657,6 +753,8 @@ Promise.all([
     circleScalePop.domain(d3.extent(data, d=>d.population));
 
     circleScaleCO2.domain(d3.extent(data, d=>d.CO2));
+
+    circleScaleGDP.domain([45, d3.max(data, d=>d.PIB_total)])
 
     let list_code_2d = data.map(d=>d.code2d)
 
@@ -695,10 +793,12 @@ Promise.all([
       let continent = this_d.continents_txt;
       let continent_num = continents_position[this_d.continent];
       let gdp_capita = this_d ? this_d.gdp_capita : 1;
+      let PIB_total = this_d ? this_d.PIB_total : 0;
       let this_radius_random = Math.round(Math.random()*50);
       let this_radius_fixed = 10;
       let this_radius_pop = Math.round(circleScalePop(this_pop));
       let this_radius_co2 = Math.round(circleScaleCO2(CO2));
+      let this_radius_GDP = Math.round(circleScaleGDP(PIB_total));
       // let this_radius_deaths= Math.round(circleScaleDeaths(this_deaths));
       let this_path_d = d3.select(allSvgNodes[i]).attr('d');
       let this_centroid = getBoundingBoxCenter(d3.select(allSvgNodes[i]));
@@ -725,10 +825,12 @@ Promise.all([
         'CO2':CO2,
         'CO2_capita':CO2_capita,
         'gdp_capita':gdp_capita,
+        'PIB_total':PIB_total,
         'continent':continent,
         'continent_num':continent_num,
         'radius_pop': this_radius_pop,
         'radius_co2': this_radius_co2,
+        'radius_GDP': this_radius_GDP,
         'country_code': this_country_code,
         // 'radius_deaths': this_radius_deaths,
         'radius_fixed': this_radius_fixed,
@@ -881,7 +983,7 @@ scaleY = d3.scaleLinear()
 function changeXAxisScale(newScale, log){
 
 if (log){
-scaleY = d3.scaleLog(2)
+scaleX = d3.scaleLog(2)
 .range(rangeX)
 .domain(newScale)
 }
@@ -933,7 +1035,10 @@ d3.select('#axisLeft path.domain')
 
 function drawAxisBottom(){
 
-var axisT = d3.axisTop(scaleX);
+axisT = d3.axisTop(scaleX);
+
+
+axisT.ticks(4)
 
 d3.select('g#axisBottom')
 .remove()
