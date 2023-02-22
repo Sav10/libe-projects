@@ -1179,18 +1179,38 @@ function show_tooltip(d) {
 let this_code = d.id;
 
     let this_d = _.find(app_data, d => d[code_pays] == this_code);
+
+    let this_d_ukraine =  data_ukraine.filter(e=>e.country_code == d.country_code)[0]
+
     if(this_d){
+
+      // console.log(this_d)
     /*let this_deaths = this_d.deaths;*/
     let CO2_capita = this_d.CO2_capita;
     let CO2 = this_d.CO2;
 
     d3.select("#tooltip").style('display', 'block');
 
-    var this_inner_html =  `<span class='details'>${this_d.Pays}<br>
-    <span style="font-weight:bold">${String(_.round(CO2_capita, 1)).replace('.', ',')}</span> tonnes de CO2 sont rejetées par an et par personne en moyenne soit 
-    <span style="font-weight:bold">${String(_.round(CO2, 2)).replace('.', ',')}</span> millions de tonnes au total
-    <br>Le PIB par habitant est de <span style="font-weight:bold">${this_d.gdp_capita}$</span></span></span>`
+    var this_inner_html =  `<span class='details'><span class='tooltip_title'>${this_d.Pays}</span><br>
+    Vote à l'Onu vis à vis de l'Ukraine : <span style="font-weight:bold">${this_d_ukraine.vote_ONU}</span><br>`
 
+if(this_d_ukraine.Visite_representant_Moscou){
+  this_inner_html += 'Un représentant du pays a rendu une visite officielle à Moscou<br>'
+}
+
+if(this_d_ukraine.Visite_Poutine_ou_Lavrov){
+  this_inner_html += 'Poutine ou Lavrov se sont rendu officiellement dans le pays<br>'
+}
+
+if (this_d_ukraine.Visite_Poutine_ou_Lavrov || this_d_ukraine.Visite_representant_Moscou){
+}
+else{
+this_inner_html += 'Pas de visite diplomatique avec la Russie<br>'
+}
+
+
+this_inner_html += `Population : <span style="font-weight:bold">${_.round(d.population / 1000000, 1)} millions</span> d'habitants<br>
+PIB par tête : <span style="font-weight:bold">${this_d.gdp_capita} $</span><br>`
 
 
   var dx = d3.event.pageX;
