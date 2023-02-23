@@ -1,0 +1,603 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La part des usagers vulnérables tués par des poids lourds a bondi l'année de l'obligation d’apposition de l'autocollant angle mort</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"annee_mois":"2012-01-01","part":"0.24","total":"75.0","tues_pl":"18.0","part_glissante":"25.8","date_txt":"Janvier 2012"},{"annee_mois":"2012-02-01","part":"0.1388888888888889","total":"36.0","tues_pl":"5.0","part_glissante":"25.4","date_txt":"Février 2012"},{"annee_mois":"2012-03-01","part":"0.3333333333333333","total":"54.0","tues_pl":"18.0","part_glissante":"25.9","date_txt":"Mars 2012"},{"annee_mois":"2012-04-01","part":"0.2708333333333333","total":"48.0","tues_pl":"13.0","part_glissante":"26.4","date_txt":"Avril 2012"},{"annee_mois":"2012-05-01","part":"0.1891891891891892","total":"37.0","tues_pl":"7.0","part_glissante":"26.2","date_txt":"Mai 2012"},{"annee_mois":"2012-06-01","part":"0.29545454545454547","total":"44.0","tues_pl":"13.0","part_glissante":"25.7","date_txt":"Juin 2012"},{"annee_mois":"2012-07-01","part":"0.23880597014925373","total":"67.0","tues_pl":"16.0","part_glissante":"25.8","date_txt":"Juillet 2012"},{"annee_mois":"2012-08-01","part":"0.26666666666666666","total":"60.0","tues_pl":"16.0","part_glissante":"26.4","date_txt":"Août 2012"},{"annee_mois":"2012-09-01","part":"0.22535211267605634","total":"71.0","tues_pl":"16.0","part_glissante":"25.1","date_txt":"Septembre 2012"},{"annee_mois":"2012-10-01","part":"0.17391304347826086","total":"69.0","tues_pl":"12.0","part_glissante":"23.4","date_txt":"Octobre 2012"},{"annee_mois":"2012-11-01","part":"0.30158730158730157","total":"63.0","tues_pl":"19.0","part_glissante":"24.2","date_txt":"Novembre 2012"},{"annee_mois":"2012-12-01","part":"0.14130434782608695","total":"92.0","tues_pl":"13.0","part_glissante":"23.2","date_txt":"Décembre 2012"},{"annee_mois":"2013-01-01","part":"0.2631578947368421","total":"57.0","tues_pl":"15.0","part_glissante":"23.4","date_txt":"Janvier 2013"},{"annee_mois":"2013-02-01","part":"0.16666666666666666","total":"48.0","tues_pl":"8.0","part_glissante":"23.4","date_txt":"Février 2013"},{"annee_mois":"2013-03-01","part":"0.3","total":"40.0","tues_pl":"12.0","part_glissante":"23.0","date_txt":"Mars 2013"},{"annee_mois":"2013-04-01","part":"0.3333333333333333","total":"51.0","tues_pl":"17.0","part_glissante":"23.5","date_txt":"Avril 2013"},{"annee_mois":"2013-05-01","part":"0.4222222222222222","total":"45.0","tues_pl":"19.0","part_glissante":"24.9","date_txt":"Mai 2013"},{"annee_mois":"2013-06-01","part":"0.20408163265306123","total":"49.0","tues_pl":"10.0","part_glissante":"24.3","date_txt":"Juin 2013"},{"annee_mois":"2013-07-01","part":"0.2909090909090909","total":"55.0","tues_pl":"16.0","part_glissante":"24.7","date_txt":"Juillet 2013"},{"annee_mois":"2013-08-01","part":"0.13559322033898305","total":"59.0","tues_pl":"8.0","part_glissante":"23.6","date_txt":"Août 2013"},{"annee_mois":"2013-09-01","part":"0.2727272727272727","total":"66.0","tues_pl":"18.0","part_glissante":"24.1","date_txt":"Septembre 2013"},{"annee_mois":"2013-10-01","part":"0.3220338983050847","total":"59.0","tues_pl":"19.0","part_glissante":"25.4","date_txt":"Octobre 2013"},{"annee_mois":"2013-11-01","part":"0.20408163265306123","total":"49.0","tues_pl":"10.0","part_glissante":"24.6","date_txt":"Novembre 2013"},{"annee_mois":"2013-12-01","part":"0.24705882352941178","total":"85.0","tues_pl":"21.0","part_glissante":"26.1","date_txt":"Décembre 2013"},{"annee_mois":"2014-01-01","part":"0.3","total":"60.0","tues_pl":"18.0","part_glissante":"26.4","date_txt":"Janvier 2014"},{"annee_mois":"2014-02-01","part":"0.19298245614035087","total":"57.0","tues_pl":"11.0","part_glissante":"26.5","date_txt":"Février 2014"},{"annee_mois":"2014-03-01","part":"0.25","total":"56.0","tues_pl":"14.0","part_glissante":"26.2","date_txt":"Mars 2014"},{"annee_mois":"2014-04-01","part":"0.22448979591836735","total":"49.0","tues_pl":"11.0","part_glissante":"25.4","date_txt":"Avril 2014"},{"annee_mois":"2014-05-01","part":"0.21052631578947367","total":"38.0","tues_pl":"8.0","part_glissante":"24.0","date_txt":"Mai 2014"},{"annee_mois":"2014-06-01","part":"0.26785714285714285","total":"56.0","tues_pl":"15.0","part_glissante":"24.5","date_txt":"Juin 2014"},{"annee_mois":"2014-07-01","part":"0.2545454545454545","total":"55.0","tues_pl":"14.0","part_glissante":"24.2","date_txt":"Juillet 2014"},{"annee_mois":"2014-08-01","part":"0.19607843137254902","total":"51.0","tues_pl":"10.0","part_glissante":"24.8","date_txt":"Août 2014"},{"annee_mois":"2014-09-01","part":"0.2571428571428571","total":"70.0","tues_pl":"18.0","part_glissante":"24.7","date_txt":"Septembre 2014"},{"annee_mois":"2014-10-01","part":"0.25333333333333335","total":"75.0","tues_pl":"19.0","part_glissante":"24.1","date_txt":"Octobre 2014"},{"annee_mois":"2014-11-01","part":"0.24050632911392406","total":"79.0","tues_pl":"19.0","part_glissante":"24.4","date_txt":"Novembre 2014"},{"annee_mois":"2014-12-01","part":"0.2641509433962264","total":"53.0","tues_pl":"14.0","part_glissante":"24.5","date_txt":"Décembre 2014"},{"annee_mois":"2015-01-01","part":"0.24615384615384617","total":"65.0","tues_pl":"16.0","part_glissante":"24.0","date_txt":"Janvier 2015"},{"annee_mois":"2015-02-01","part":"0.32142857142857145","total":"56.0","tues_pl":"18.0","part_glissante":"25.0","date_txt":"Février 2015"},{"annee_mois":"2015-03-01","part":"0.24390243902439024","total":"41.0","tues_pl":"10.0","part_glissante":"25.0","date_txt":"Mars 2015"},{"annee_mois":"2015-04-01","part":"0.22448979591836735","total":"49.0","tues_pl":"11.0","part_glissante":"25.0","date_txt":"Avril 2015"},{"annee_mois":"2015-05-01","part":"0.3488372093023256","total":"43.0","tues_pl":"15.0","part_glissante":"25.8","date_txt":"Mai 2015"},{"annee_mois":"2015-06-01","part":"0.21052631578947367","total":"38.0","tues_pl":"8.0","part_glissante":"25.5","date_txt":"Juin 2015"},{"annee_mois":"2015-07-01","part":"0.2112676056338028","total":"71.0","tues_pl":"15.0","part_glissante":"25.0","date_txt":"Juillet 2015"},{"annee_mois":"2015-08-01","part":"0.3170731707317073","total":"41.0","tues_pl":"13.0","part_glissante":"25.8","date_txt":"Août 2015"},{"annee_mois":"2015-09-01","part":"0.20833333333333334","total":"48.0","tues_pl":"10.0","part_glissante":"25.5","date_txt":"Septembre 2015"},{"annee_mois":"2015-10-01","part":"0.208955223880597","total":"67.0","tues_pl":"14.0","part_glissante":"25.0","date_txt":"Octobre 2015"},{"annee_mois":"2015-11-01","part":"0.225","total":"80.0","tues_pl":"18.0","part_glissante":"24.8","date_txt":"Novembre 2015"},{"annee_mois":"2015-12-01","part":"0.22950819672131148","total":"61.0","tues_pl":"14.0","part_glissante":"24.5","date_txt":"Décembre 2015"},{"annee_mois":"2016-01-01","part":"0.2711864406779661","total":"59.0","tues_pl":"16.0","part_glissante":"24.8","date_txt":"Janvier 2016"},{"annee_mois":"2016-02-01","part":"0.265625","total":"64.0","tues_pl":"17.0","part_glissante":"24.3","date_txt":"Février 2016"},{"annee_mois":"2016-03-01","part":"0.36585365853658536","total":"41.0","tues_pl":"15.0","part_glissante":"25.1","date_txt":"Mars 2016"},{"annee_mois":"2016-04-01","part":"0.2765957446808511","total":"47.0","tues_pl":"13.0","part_glissante":"25.5","date_txt":"Avril 2016"},{"annee_mois":"2016-05-01","part":"0.32142857142857145","total":"56.0","tues_pl":"18.0","part_glissante":"25.4","date_txt":"Mai 2016"},{"annee_mois":"2016-06-01","part":"0.16071428571428573","total":"56.0","tues_pl":"9.0","part_glissante":"24.9","date_txt":"Juin 2016"},{"annee_mois":"2016-07-01","part":"0.15492957746478872","total":"71.0","tues_pl":"11.0","part_glissante":"24.3","date_txt":"Juillet 2016"},{"annee_mois":"2016-08-01","part":"0.2807017543859649","total":"57.0","tues_pl":"16.0","part_glissante":"24.2","date_txt":"Août 2016"},{"annee_mois":"2016-09-01","part":"0.2714285714285714","total":"70.0","tues_pl":"19.0","part_glissante":"24.7","date_txt":"Septembre 2016"},{"annee_mois":"2016-10-01","part":"0.2839506172839506","total":"81.0","tues_pl":"23.0","part_glissante":"25.4","date_txt":"Octobre 2016"},{"annee_mois":"2016-11-01","part":"0.2804878048780488","total":"82.0","tues_pl":"23.0","part_glissante":"26.0","date_txt":"Novembre 2016"},{"annee_mois":"2016-12-01","part":"0.2","total":"85.0","tues_pl":"17.0","part_glissante":"25.6","date_txt":"Décembre 2016"},{"annee_mois":"2017-01-01","part":"0.12698412698412698","total":"63.0","tues_pl":"8.0","part_glissante":"24.5","date_txt":"Janvier 2017"},{"annee_mois":"2017-02-01","part":"0.36363636363636365","total":"33.0","tues_pl":"12.0","part_glissante":"24.8","date_txt":"Février 2017"},{"annee_mois":"2017-03-01","part":"0.2549019607843137","total":"51.0","tues_pl":"13.0","part_glissante":"24.2","date_txt":"Mars 2017"},{"annee_mois":"2017-04-01","part":"0.25925925925925924","total":"54.0","tues_pl":"14.0","part_glissante":"24.1","date_txt":"Avril 2017"},{"annee_mois":"2017-05-01","part":"0.27586206896551724","total":"58.0","tues_pl":"16.0","part_glissante":"23.8","date_txt":"Mai 2017"},{"annee_mois":"2017-06-01","part":"0.19047619047619047","total":"63.0","tues_pl":"12.0","part_glissante":"24.0","date_txt":"Juin 2017"},{"annee_mois":"2017-07-01","part":"0.16417910447761194","total":"67.0","tues_pl":"11.0","part_glissante":"24.1","date_txt":"Juillet 2017"},{"annee_mois":"2017-08-01","part":"0.1875","total":"48.0","tues_pl":"9.0","part_glissante":"23.4","date_txt":"Août 2017"},{"annee_mois":"2017-09-01","part":"0.2542372881355932","total":"59.0","tues_pl":"15.0","part_glissante":"23.3","date_txt":"Septembre 2017"},{"annee_mois":"2017-10-01","part":"0.2222222222222222","total":"54.0","tues_pl":"12.0","part_glissante":"22.6","date_txt":"Octobre 2017"},{"annee_mois":"2017-11-01","part":"0.1746031746031746","total":"63.0","tues_pl":"11.0","part_glissante":"21.5","date_txt":"Novembre 2017"},{"annee_mois":"2017-12-01","part":"0.17073170731707318","total":"82.0","tues_pl":"14.0","part_glissante":"21.2","date_txt":"Décembre 2017"},{"annee_mois":"2018-01-01","part":"0.2222222222222222","total":"54.0","tues_pl":"12.0","part_glissante":"22.0","date_txt":"Janvier 2018"},{"annee_mois":"2018-02-01","part":"0.23404255319148937","total":"47.0","tues_pl":"11.0","part_glissante":"21.4","date_txt":"Février 2018"},{"annee_mois":"2018-03-01","part":"0.2558139534883721","total":"43.0","tues_pl":"11.0","part_glissante":"21.4","date_txt":"Mars 2018"},{"annee_mois":"2018-04-01","part":"0.21153846153846154","total":"52.0","tues_pl":"11.0","part_glissante":"21.0","date_txt":"Avril 2018"},{"annee_mois":"2018-05-01","part":"0.2857142857142857","total":"49.0","tues_pl":"14.0","part_glissante":"21.0","date_txt":"Mai 2018"},{"annee_mois":"2018-06-01","part":"0.2","total":"55.0","tues_pl":"11.0","part_glissante":"21.1","date_txt":"Juin 2018"},{"annee_mois":"2018-07-01","part":"0.13432835820895522","total":"67.0","tues_pl":"9.0","part_glissante":"20.8","date_txt":"Juillet 2018"},{"annee_mois":"2018-08-01","part":"0.2222222222222222","total":"54.0","tues_pl":"12.0","part_glissante":"21.1","date_txt":"Août 2018"},{"annee_mois":"2018-09-01","part":"0.14035087719298245","total":"57.0","tues_pl":"8.0","part_glissante":"20.1","date_txt":"Septembre 2018"},{"annee_mois":"2018-10-01","part":"0.24358974358974358","total":"78.0","tues_pl":"19.0","part_glissante":"20.4","date_txt":"Octobre 2018"},{"annee_mois":"2018-11-01","part":"0.21311475409836064","total":"61.0","tues_pl":"13.0","part_glissante":"20.7","date_txt":"Novembre 2018"},{"annee_mois":"2018-12-01","part":"0.22972972972972974","total":"74.0","tues_pl":"17.0","part_glissante":"21.4","date_txt":"Décembre 2018"},{"annee_mois":"2019-01-01","part":"0.28125","total":"64.0","tues_pl":"18.0","part_glissante":"22.0","date_txt":"Janvier 2019"},{"annee_mois":"2019-02-01","part":"0.22058823529411764","total":"68.0","tues_pl":"15.0","part_glissante":"21.9","date_txt":"Février 2019"},{"annee_mois":"2019-03-01","part":"0.26785714285714285","total":"56.0","tues_pl":"15.0","part_glissante":"22.0","date_txt":"Mars 2019"},{"annee_mois":"2019-04-01","part":"0.296875","total":"64.0","tues_pl":"19.0","part_glissante":"22.8","date_txt":"Avril 2019"},{"annee_mois":"2019-05-01","part":"0.2978723404255319","total":"47.0","tues_pl":"14.0","part_glissante":"22.8","date_txt":"Mai 2019"},{"annee_mois":"2019-06-01","part":"0.2962962962962963","total":"54.0","tues_pl":"16.0","part_glissante":"23.5","date_txt":"Juin 2019"},{"annee_mois":"2019-07-01","part":"0.2638888888888889","total":"72.0","tues_pl":"19.0","part_glissante":"24.7","date_txt":"Juillet 2019"},{"annee_mois":"2019-08-01","part":"0.11764705882352941","total":"51.0","tues_pl":"6.0","part_glissante":"24.0","date_txt":"Août 2019"},{"annee_mois":"2019-09-01","part":"0.2903225806451613","total":"62.0","tues_pl":"18.0","part_glissante":"25.2","date_txt":"Septembre 2019"},{"annee_mois":"2019-10-01","part":"0.21153846153846154","total":"52.0","tues_pl":"11.0","part_glissante":"25.0","date_txt":"Octobre 2019"},{"annee_mois":"2019-11-01","part":"0.22857142857142856","total":"70.0","tues_pl":"16.0","part_glissante":"25.1","date_txt":"Novembre 2019"},{"annee_mois":"2019-12-01","part":"0.21052631578947367","total":"76.0","tues_pl":"16.0","part_glissante":"24.9","date_txt":"Décembre 2019"},{"annee_mois":"2020-01-01","part":"0.171875","total":"64.0","tues_pl":"11.0","part_glissante":"23.9","date_txt":"Janvier 2020"},{"annee_mois":"2020-02-01","part":"0.09615384615384616","total":"52.0","tues_pl":"5.0","part_glissante":"23.1","date_txt":"Février 2020"},{"annee_mois":"2020-03-01","part":"0.3103448275862069","total":"29.0","tues_pl":"9.0","part_glissante":"23.1","date_txt":"Mars 2020"},{"annee_mois":"2020-04-01","part":"0.11764705882352941","total":"17.0","tues_pl":"2.0","part_glissante":"22.1","date_txt":"Avril 2020"},{"annee_mois":"2020-05-01","part":"0.2619047619047619","total":"42.0","tues_pl":"11.0","part_glissante":"21.8","date_txt":"Mai 2020"},{"annee_mois":"2020-06-01","part":"0.2765957446808511","total":"47.0","tues_pl":"13.0","part_glissante":"21.6","date_txt":"Juin 2020"},{"annee_mois":"2020-07-01","part":"0.1774193548387097","total":"62.0","tues_pl":"11.0","part_glissante":"20.7","date_txt":"Juillet 2020"},{"annee_mois":"2020-08-01","part":"0.2545454545454545","total":"55.0","tues_pl":"14.0","part_glissante":"21.8","date_txt":"Août 2020"},{"annee_mois":"2020-09-01","part":"0.2112676056338028","total":"71.0","tues_pl":"15.0","part_glissante":"21.0","date_txt":"Septembre 2020"},{"annee_mois":"2020-10-01","part":"0.2916666666666667","total":"48.0","tues_pl":"14.0","part_glissante":"21.6","date_txt":"Octobre 2020"},{"annee_mois":"2020-11-01","part":"0.25","total":"48.0","tues_pl":"12.0","part_glissante":"21.8","date_txt":"Novembre 2020"},{"annee_mois":"2020-12-01","part":"0.2857142857142857","total":"77.0","tues_pl":"22.0","part_glissante":"22.7","date_txt":"Décembre 2020"},{"annee_mois":"2021-01-01","part":"0.46511627906976744","total":"43.0","tues_pl":"20.0","part_glissante":"25.0","date_txt":"Janvier 2021"},{"annee_mois":"2021-02-01","part":"0.35135135135135137","total":"37.0","tues_pl":"13.0","part_glissante":"27.1","date_txt":"Février 2021"},{"annee_mois":"2021-03-01","part":"0.358974358974359","total":"39.0","tues_pl":"14.0","part_glissante":"27.5","date_txt":"Mars 2021"},{"annee_mois":"2021-04-01","part":"0.20454545454545456","total":"44.0","tues_pl":"9.0","part_glissante":"27.4","date_txt":"Avril 2021"},{"annee_mois":"2021-05-01","part":"0.19148936170212766","total":"47.0","tues_pl":"9.0","part_glissante":"26.9","date_txt":"Mai 2021"},{"annee_mois":"2021-06-01","part":"0.35714285714285715","total":"70.0","tues_pl":"25.0","part_glissante":"27.8","date_txt":"Juin 2021"},{"annee_mois":"2021-07-01","part":"0.24615384615384617","total":"65.0","tues_pl":"16.0","part_glissante":"28.4","date_txt":"Juillet 2021"},{"annee_mois":"2021-08-01","part":"0.18181818181818182","total":"66.0","tues_pl":"12.0","part_glissante":"27.6","date_txt":"Août 2021"},{"annee_mois":"2021-09-01","part":"0.29411764705882354","total":"68.0","tues_pl":"20.0","part_glissante":"28.5","date_txt":"Septembre 2021"},{"annee_mois":"2021-10-01","part":"0.20238095238095238","total":"84.0","tues_pl":"17.0","part_glissante":"27.5","date_txt":"Octobre 2021"},{"annee_mois":"2021-11-01","part":"0.2028985507246377","total":"69.0","tues_pl":"14.0","part_glissante":"26.9","date_txt":"Novembre 2021"},{"annee_mois":"2021-12-01","part":"0.3088235294117647","total":"68.0","tues_pl":"21.0","part_glissante":"27.1","date_txt":"Décembre 2021"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":402,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":20.1,"calculated_right_value":28.5,"manual_left_value":0,"manual_right_value":50,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":8,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":10,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"annee_mois","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('YYYY')});\nd3.selectAll('.axis--y .tick text').text(function(d){return d+'%'})"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"annee_mois","value":"annee_mois"},{"label":"part_glissante","value":"part_glissante"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[date_txt]]<br>\n[[part_glissante|number_separator]]%<strong> de piétons tués par des poids lourds sur 12 mois glissants<strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":true,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":true,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["annee_mois"],"selected_yRows":["part_glissante"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{"part_glissante":"#e61e49"},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"areaChart","chartTitle":"La part des usagers vulnérables tués par des poids lourds a bondi l'année de l'obligation d’apposition de l'autocollant angle mort","chartSubTitle":"Part d'usagers vulnérables (piétons et cyclistes) tués dans un accident impliquent un poids lourd - moyenne annuelle glissante par mois","chartSource":"ONISR","annotations":[{"note":{"label":"Obligation pour les poids lourds d'apposer un autocollant angle mort","title":"","wrap":"200","orientation":0,"textPadding":0},"x":300,"y":163,"dy":-52,"dx":-50,"subject":{"radius":20,"radiusPadding":2},"functionName":"annotationCallout","connector":{"end":"arrow"},"color":"#3c3c3b","index":1,"disable":[]}]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeAreachart(data_) {
+
+    var kValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_yRows'];
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+    // width = +svg.attr("width") - margin.left - margin.right;
+
+    updateParameters();
+
+    var data = _.cloneDeep(data_);
+    var initial_data = _.cloneDeep(data);
+
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var yScale = d3.scaleLinear()
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale)
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var area = d3.area()
+    .x(function(d) { return xScale(d.x_value) })
+    .y0(yScale(yScale.domain()[0]))
+    .y1(function(d) { return yScale(d.y_value)})
+    .curve(d3.curveLinear);
+
+    // .curve(d3.curveCatmullRom.alpha(0.5));
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+    var allArea = g_inner
+    .selectAll('.area')
+    .data(data);
+
+    allArea
+    .transition()
+    .duration(200)
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+    allArea.exit().transition().duration(200).remove();
+
+    allArea
+    .enter()
+    .append('path')
+    .attr('class', 'area')
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) })
+    .style('fill', function(d) { return colorUpdated(d[0].name) })
+    .style('stroke-width', 2)
+    .style('fill-opacity', 0.9);
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+        // AllDotPoints = g_inner
+        // .selectAll('circle.dotPoint')
+        // .data(_.flatten(data));
+
+        // AllDotPoints
+        // // .transition()
+        // // .duration(200)
+        // .attr('cx', function(d) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .style('fill-opacity', 0 );
+
+        // AllDotPoints.exit().transition().duration(200).remove();
+
+        // AllDotPoints
+        // .enter()
+        // .append('circle')
+        // .attr('class', 'dotPoint')
+        // .attr('cx', function(d, i) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .attr('r', 3)
+        // .style('stroke-width', 5)
+        // .style('stroke', 'white')
+        // .style('stroke-opacity', 0)
+        // .style('fill-opacity', 0 )
+        // // .style('fill', 'black')
+        // .on('mouseover', function(d, i){ show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        // ;
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+
+customizeAxis()
+
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeAreachart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
