@@ -1212,7 +1212,7 @@ if(this_d_ukraine.Visite_Poutine_ou_Lavrov){
 
 this_inner_html += `Population : <span style="font-weight:bold">${_.round(d.population / 1000000, 1)} millions</span> d'habitants<br>
 PIB par tête : <span style="font-weight:bold">${this_d.gdp_capita} $</span><br>
-PIB par total : <span style="font-weight:bold">${_.round(this_d.PIB_total / 1000)} millions de $ </span><br>`
+PIB par total : <span style="font-weight:bold">${_.round(this_d.PIB_total / 1000)} millions de $ en 2020</span><br>`
 
 
   var dx = d3.event.pageX;
