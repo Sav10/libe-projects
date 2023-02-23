@@ -353,6 +353,8 @@ d3.select('#display_proportional_circles_pop')
 .style('background-color', 'black')
 
 
+d3.select("#Calque_1").style('display', 'block')
+
 allPaths.attr('visibility', 'visible')
   // transform_all_paths_to_circle('radius_pop')
 
@@ -425,6 +427,8 @@ d3.selectAll('#representation_carto .actionButton')
 d3.select('#order_by_vax')
 .style('color', '#fff')
 .style('background-color', 'black')
+
+d3.select("#Calque_1").style('display', 'none')
 
 // if(radius_name == 'radius_GDP'){
 
@@ -642,6 +646,8 @@ d3.select('#display_geo_paths')
 .style('color', '#fff')
 .style('background-color', 'black')
 
+
+d3.select("#Calque_1").style('display', 'none')
 
 allPaths.attr('visibility', 'visible')
 
