@@ -462,7 +462,7 @@ d3.selectAll('g#continent_labels')
 .remove()
 d3.selectAll('.labels_pays').remove()
 
-changeXAxisScale([100000,2500000000], 'log')
+changeXAxisScale([100000,3000000000], 'log')
 
 // changeYAxisScale([0,120000])
 
