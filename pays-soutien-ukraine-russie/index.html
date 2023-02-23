@@ -513,6 +513,41 @@ font-weight: bold;
 }
 
 
+#legendots {
+/*    max-width: 750px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;*/
+    display: flex;
+    padding: 0 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    flex-wrap: wrap;
+}
+
+
+.legende_dot {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#legendots .text_legend {
+    display: inline-block;
+}
+
+
+#legendots .dot {
+    float: left;
+    margin-top: 0.2em;
+    margin-right: 4px;
+    height: 1em;
+    width: 1em;
+    border: 0;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
   </style>
 </head>
 <body>
@@ -533,6 +568,13 @@ font-weight: bold;
                     <a class="actionButton" id="display_proportional_circles_gdp" href="#">PIB</a>
                     <a class="actionButton" id="order_by_vax" href="#">Classement</a>
                   </p>
+
+<p style='font-weight: bold;'>Soutien à la Russie lors du dernier vote à l'Onu</p>
+<div id="legendots">
+  <span class="legende_dot"><span class="text_legend">En faveur</span><span class="dot" style="background-color: #6E8AEF;"></span></span>
+  <span class="legende_dot"><span class="text_legend">Contre</span><span class="dot" style="background-color: #FF0000;"></span></span>
+  <span class="legende_dot"><span class="text_legend">Abstention</span><span class="dot" style="background-color: #E2E2E2;"></span></span>
+</div>
 <!--                   <p style='margin-top: -1.1em;'>
                     <br><span class="repr_cat">Classement</span>
                   <a class="actionButton" id="order_by_vax" href="#">PIB</a>
