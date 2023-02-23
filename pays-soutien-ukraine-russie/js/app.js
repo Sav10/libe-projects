@@ -436,6 +436,11 @@ d3.select('#order_by_vax')
 d3.select("#Calque_1").style('display', 'none')
 d3.select("#Calque_2").style('display', 'none')
 
+
+radius_name = 'radius_pop'
+
+transform_all_paths_to_circle(radius_name)
+
 // if(radius_name == 'radius_GDP'){
 
 // d3.select('#display_proportional_circles_gdp')
