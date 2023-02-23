@@ -164,14 +164,15 @@ a#play_button img {
 
 .actionButton {
     background-color: #fff;
-    color: red;
+    color: black;
     display: inline-block;
     font-size: 1.3em;
     line-height: 1.2em;
     padding: 3px 5px 4px;
     text-transform: uppercase;
     font-family: "syntheselibeweb", sans-serif;
-    margin-right: 20px;
+    margin-right: .5em;
+    border: .3px solid black;
 }
 
 .actionButton:focus {
@@ -180,7 +181,7 @@ a#play_button img {
 }
 
 .actionButton:focus {
-  border: 0;
+  /*border: 0;*/
   opacity: 0.8;
   outline: 0;
 
@@ -196,7 +197,7 @@ margin-bottom: -18px;
 }
 
 .actionButton:hover{
-color: #red;
+color: black;
 opacity: 0.8;
 cursor: pointer;
 
@@ -253,7 +254,7 @@ h1#graph_title{
 
 .actionButton {
     background-color: #fff;
-    color: red;
+    color: black;
     display: inline-block;
     font-size: .9em;
     line-height: 1.2em;
@@ -265,7 +266,7 @@ h1#graph_title{
 }
 
 .actionButton:hover{
-color:  red;
+color:  black;
 opacity: 0.8;
 
 }
@@ -487,8 +488,10 @@ font-size: .7rem;
 
 
 .repr_cat{
-width: 100px;
-display: inline-block;
+/*width: 100px;*/
+display: block;
+margin-bottom: 0.2em;
+font-weight: bold;
 }
 
 
@@ -524,16 +527,17 @@ display: inline-block;
           <h1 id="graph_title"><span style="color:red; display: inline;"></span> Le soutien à l'Ukraine dans le monde</h1>
                     <p>
                     <div id="representation_carto">
-                    <p><span class="repr_cat">Représentation</span>
-                      <a class="actionButton"  id="display_geo_paths" href="#" style="color:#fff;background-color:red">Territoire</a>
+                    <p><span class="repr_cat">Voir les résultats par</span>
+                      <a class="actionButton"  id="display_geo_paths" href="#" style="color:#fff;background-color:black">Territoire</a>
                     <a class="actionButton" id="display_proportional_circles_pop" href="#">Population</a>
                     <a class="actionButton" id="display_proportional_circles_gdp" href="#">PIB</a>
+                    <a class="actionButton" id="order_by_vax" href="#">Classement</a>
                   </p>
-                  <p style='margin-top: -1.1em;'>
+<!--                   <p style='margin-top: -1.1em;'>
                     <br><span class="repr_cat">Classement</span>
                   <a class="actionButton" id="order_by_vax" href="#">PIB</a>
                   <a class="actionButton" id="order_by_continent" href="#">Continent</a>
-                </p>
+                </p> -->
 
           </div>
 
@@ -551,6 +555,95 @@ display: inline-block;
 
           <div class="carte" id='morphocarte'>
    <svg class="sightline-svg" style="max-height: 562.5px;" version="1.1" viewbox="0 0 2000 1000" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-2 {
+        letter-spacing: 0.05em;
+      }
+
+      .cls-3 {
+        stroke-dasharray: 0 0 1.9 .95;
+      }
+
+      .cls-3, .cls-4 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: .5px;
+      }
+
+      .cls-5 {
+        font-family: Synthese-Regular, Synthese;
+      }
+
+      .cls-5, .cls-6 {
+        font-size: 8px;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        letter-spacing: 0em;
+      }
+
+      .cls-9 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6 {
+        font-family: Synthese-Bold, Synthese;
+        font-weight: 700;
+      }
+
+      .cls-10 {
+        letter-spacing: -.02em;
+      }
+    </style>
+  </defs>
+
+
+  <g id="Calque_1" data-name="Calque 1" transform="scale(3.3)">>
+    <g>
+      <text class="cls-6" transform="translate(.6 6.56)"><tspan class="cls-2" x="0" y="0">Population en millions</tspan></text>
+      <text class="cls-5" transform="translate(48.09 16.27)"><tspan x="0" y="0">1400</tspan></text>
+      <text class="cls-5" transform="translate(48.47 33.4)"><tspan x="0" y="0">500</tspan></text>
+      <text class="cls-5" transform="translate(48.47 45.95)"><tspan x="0" y="0">100</tspan></text>
+      <text class="cls-5" transform="translate(48.66 54.21)"><tspan x="0" y="0">20</tspan></text>
+      <circle class="cls-4" cx="21.51" cy="34.98" r="21.26" transform="translate(-18.43 25.45) rotate(-45)"/>
+      <circle class="cls-4" cx="21.51" cy="43.53" r="12.7"/>
+      <path class="cls-4" d="m21.51,44.87c-3.14,0-5.68,2.54-5.68,5.68s2.54,5.68,5.68,5.68,5.68-2.54,5.68-5.68-2.54-5.68-5.68-5.68Z"/>
+      <path class="cls-4" d="m21.51,50.23c-1.66,0-3,1.34-3,3s1.34,3,3,3,3-1.34,3-3-1.34-3-3-3Z"/>
+      <g>
+        <line class="cls-4" x1="21.51" y1="13.72" x2="22.51" y2="13.72"/>
+        <line class="cls-3" x1="23.46" y1="13.72" x2="45.75" y2="13.72"/>
+        <line class="cls-4" x1="46.23" y1="13.72" x2="47.23" y2="13.72"/>
+      </g>
+      <g>
+        <line class="cls-4" x1="21.51" y1="30.83" x2="22.51" y2="30.83"/>
+        <line class="cls-3" x1="23.46" y1="30.83" x2="45.75" y2="30.83"/>
+        <line class="cls-4" x1="46.23" y1="30.83" x2="47.23" y2="30.83"/>
+      </g>
+      <g>
+        <line class="cls-4" x1="21.51" y1="44.87" x2="22.51" y2="44.87"/>
+        <line class="cls-3" x1="23.46" y1="44.87" x2="45.75" y2="44.87"/>
+        <line class="cls-4" x1="46.23" y1="44.87" x2="47.23" y2="44.87"/>
+      </g>
+      <g>
+        <line class="cls-4" x1="21.51" y1="50.23" x2="22.51" y2="50.23"/>
+        <line class="cls-3" x1="23.46" y1="50.23" x2="45.75" y2="50.23"/>
+        <line class="cls-4" x1="46.23" y1="50.23" x2="47.23" y2="50.23"/>
+      </g>
+    </g>
+  </g>    
+
+
+
    <g id='graph'>
 <path d="m 1369.9,333.8 -5.4,0 -3.8,-0.5 -2.5,2.9 -2.1,0.7 -1.5,1.3 -2.6,-2.1 -1,-5.4 -1.6,-0.3 0,-2 -3.2,-1.5 -1.7,2.3 0.2,2.6 -0.6,0.9 -3.2,-0.1 -0.9,3 -2.1,-1.3 -3.3,2.1 -1.8,-0.8 -4.3,-1.4 -2.9,0 -1.6,-0.2 -2.9,-1.7 -0.3,2.3 -4.1,1.2 0.1,5.2 -2.5,2 -4,0.9 -0.4,3 -3.9,0.8 -5.9,-2.4 -0.5,8 -0.5,4.7 2.5,0.9 -1.6,3.5 2.7,5.1 1.1,4 4.3,1.1 1.1,4 -3.9,5.8 9.6,3.2 5.3,-0.9 3.3,0.8 0.9,-1.4 3.8,0.5 6.6,-2.6 -0.8,-5.4 2.3,-3.6 4,0 0.2,-1.7 4,-0.9 2.1,0.6 1.7,-1.8 -1.1,-3.8 1.5,-3.8 3,-1.6 -3,-4.2 5.1,0.2 0.9,-2.3 -0.8,-2.5 2,-2.7 -1.4,-3.2 -1.9,-2.8 2.4,-2.8 5.3,-1.3 5.8,-0.8 2.4,-1.2 2.8,-0.7 -1.4,-1.9 z" data-id="AF" data-name="Afghanistan" data-nom="Afghanistan" id="AF" style="fill:#f2f2f2;fill-rule:evenodd"></path>
 <path d="M1068.3,609.6L1051.7,609.5L1049.8,610.2L1048.1,610.1L1045.8,611L1045.3,612.2L1048.1,616.2L1049.2,620.5L1050.8,626.6L1049.1,629.2L1048.8,630.5L1050.1,634.3L1051.6,638.2L1053.2,640.4L1053.5,644L1052.8,648.8L1051,651.6L1047.7,655.8L1046.4,658.4L1044.5,664.1L1044.2,666.8L1042.2,672.7L1041.3,678.2L1041.8,682.2L1044.5,681L1047.8,680L1051.4,680.1L1054.6,683L1055.5,682.6L1078,682.3L1081.7,685.3L1095.1,686.2L1105.4,683.7L1101.9,679.7L1098.3,674.5L1099.1,654.2L1110.7,654.3L1110.2,652.1L1111.1,649.7L1110.2,646.7L1110.9,643.7L1110.4,641.7L1107.8,641.3L1104.3,642.3L1101.9,642.1L1100.5,642.7L1101,635.1L1099.1,632.8L1098.8,628.8L1099.7,625L1098.5,622.6L1098.5,618.6L1091.7,618.6L1092.2,616.3L1089.3,616.3L1089,617.4L1085.6,617.7L1084.1,621.4L1083.2,623L1080.2,622.1L1078.3,623L1074.6,623.5L1072.5,620.2L1071.2,618.1L1069.6,614.3L1068.3,609.6Z M1046.5,608.3L1046.7,605.6L1047.6,603.9L1049.6,602.6L1047.6,600.4L1045.8,601.5L1043.6,604.2L1045,609L1046.5,608.3Z" data-id="AO" data-name="Angola" data-nom="Angola" id="AO" style="fill:#f2f2f2;fill-rule:evenodd"></path>

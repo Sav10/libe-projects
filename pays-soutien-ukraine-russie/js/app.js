@@ -144,7 +144,7 @@ const height = 500 - margin.top - margin.bottom
 
 
   var color_ukraine = d3.scaleOrdinal()
-  .range(["green", "grey" , "red"])
+  .range(["#6E8AEF", "#E2E2E2" , "#FF0000"])
   .domain(['en faveur', 'abstention', 'contre']);
 
   // .range(["white", "#D4000C"]);
@@ -345,12 +345,12 @@ d3.select('#display_proportional_circles_pop')
 .on('click', function(){
 
 d3.selectAll('#representation_carto .actionButton')
-.style('color', 'red')
+.style('color', 'black')
 .style('background-color', '#fff')
 
 d3.select('#display_proportional_circles_pop')
 .style('color', '#fff')
-.style('background-color', 'red')
+.style('background-color', 'black')
 
 
 allPaths.attr('visibility', 'visible')
@@ -381,12 +381,12 @@ d3.select('#display_proportional_circles_gdp')
 .on('click', function(){
 
 d3.selectAll('#representation_carto .actionButton')
-.style('color', 'red')
+.style('color', 'black')
 .style('background-color', '#fff')
 
 d3.select('#display_proportional_circles_gdp')
 .style('color', '#fff')
-.style('background-color', 'red')
+.style('background-color', 'black')
 
 
 allPaths.attr('visibility', 'visible')
@@ -419,25 +419,25 @@ d3.select('#order_by_vax')
 
 
 d3.selectAll('#representation_carto .actionButton')
-.style('color', 'red')
+.style('color', 'black')
 .style('background-color', '#fff')
 
 d3.select('#order_by_vax')
 .style('color', '#fff')
-.style('background-color', 'red')
+.style('background-color', 'black')
 
-if(radius_name == 'radius_GDP'){
+// if(radius_name == 'radius_GDP'){
 
-d3.select('#display_proportional_circles_gdp')
-.style('color', '#fff')
-.style('background-color', 'red')
-}
+// d3.select('#display_proportional_circles_gdp')
+// .style('color', '#fff')
+// .style('background-color', 'black')
+// }
 
-else{
-d3.select('#display_proportional_circles_pop')
-.style('color', '#fff')
-.style('background-color', 'red')
-}
+// else{
+// d3.select('#display_proportional_circles_pop')
+// .style('color', '#fff')
+// .style('background-color', 'black')
+// }
 
 // changeYAxisScale([400,120000], 'log')
 
@@ -635,12 +635,12 @@ d3.selectAll('g#continent_labels')
 d3.selectAll('.labels_pays').remove()
 
 d3.selectAll('#representation_carto .actionButton')
-.style('color', 'red')
+.style('color', 'black')
 .style('background-color', '#fff')
 
 d3.select('#display_geo_paths')
 .style('color', '#fff')
-.style('background-color', 'red')
+.style('background-color', 'black')
 
 
 allPaths.attr('visibility', 'visible')
@@ -875,7 +875,7 @@ app_data = data;
   .on('mouseover', function(d) {
     show_tooltip(d)
     d3.select(this)
-    .raise()
+    // .raise()
     .style('fill-opacity', 1)
     // .style('stroke-opacity', 1)
     // .style('stroke-width', 3)
@@ -904,19 +904,21 @@ allPaths
 .filter(d=>{
 let this_e =  data_ukraine.filter(e=>e.country_code == d.country_code)[0]
 return this_e.Visite_Poutine_ou_Lavrov
-}).style('stroke', 'blue').style('stroke-width', 4)
-
-allPaths
-.filter(d=>{
-let this_e =  data_ukraine.filter(e=>e.country_code == d.country_code)[0]
-return this_e.Visite_representant_Moscou
-}).style('stroke', 'orange').style('stroke-width', 4)
-
-allPaths
-.filter(d=>{
-let this_e =  data_ukraine.filter(e=>e.country_code == d.country_code)[0]
-return this_e.Visite_Poutine_ou_Lavrov && this_e.Visite_representant_Moscou
 }).style('stroke', 'black').style('stroke-width', 4)
+.raise()
+
+
+// allPaths
+// .filter(d=>{
+// let this_e =  data_ukraine.filter(e=>e.country_code == d.country_code)[0]
+// return this_e.Visite_representant_Moscou
+// }).style('stroke', 'orange').style('stroke-width', 4)
+
+// allPaths
+// .filter(d=>{
+// let this_e =  data_ukraine.filter(e=>e.country_code == d.country_code)[0]
+// return this_e.Visite_Poutine_ou_Lavrov && this_e.Visite_representant_Moscou
+// }).style('stroke', 'black').style('stroke-width', 4)
 
 
 /// Adding labels
@@ -1194,23 +1196,17 @@ let this_code = d.id;
     var this_inner_html =  `<span class='details'><span class='tooltip_title'>${this_d.Pays}</span><br>
     Vote à l'Onu vis à vis de l'Ukraine : <span style="font-weight:bold">${this_d_ukraine.vote_ONU}</span><br>`
 
-if(this_d_ukraine.Visite_representant_Moscou){
-  this_inner_html += 'Un représentant du pays a rendu une visite officielle à Moscou<br>'
-}
-
 if(this_d_ukraine.Visite_Poutine_ou_Lavrov){
   this_inner_html += 'Poutine ou Lavrov se sont rendu officiellement dans le pays<br>'
 }
-
-if (this_d_ukraine.Visite_Poutine_ou_Lavrov || this_d_ukraine.Visite_representant_Moscou){
-}
-else{
-this_inner_html += 'Pas de visite diplomatique avec la Russie<br>'
-}
+// else{
+// this_inner_html += 'Pas de visite diplomatique de la Russie<br>'
+// }
 
 
 this_inner_html += `Population : <span style="font-weight:bold">${_.round(d.population / 1000000, 1)} millions</span> d'habitants<br>
-PIB par tête : <span style="font-weight:bold">${this_d.gdp_capita} $</span><br>`
+PIB par tête : <span style="font-weight:bold">${this_d.gdp_capita} $</span><br>
+PIB par total : <span style="font-weight:bold">${_.round(this_d.PIB_total / 1000)} millions de $ </span><br>`
 
 
   var dx = d3.event.pageX;
