@@ -394,6 +394,7 @@ d3.select('#display_proportional_circles_gdp')
 
 d3.select("#Calque_1").style('display', 'none')
 d3.select("#Calque_2").style('display', 'block')
+.attr('transform', 'scale(4.5)')
 
 
 allPaths.attr('visibility', 'visible')
@@ -437,7 +438,9 @@ d3.select('#order_by_vax')
 .style('background-color', 'black')
 
 d3.select("#Calque_1").style('display', 'none')
-d3.select("#Calque_2").style('display', 'none')
+
+d3.select("#Calque_2").style('display', 'block')
+.attr('transform', 'scale(4.5) translate(40,160)')
 
 
 
