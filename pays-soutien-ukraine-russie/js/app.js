@@ -377,6 +377,17 @@ radius_name = 'radius_pop'
 transform_all_paths_to_circle(radius_name)
 
 
+setTimeout(() => {  
+
+drawLabel('États-Unis', -45, -40)
+drawLabel('Chine', -120, -40)
+
+drawLabel('Russie', -60, -40)
+
+}, 500);
+
+
+
 })
 
 
@@ -417,6 +428,18 @@ d3.selectAll('.labels_pays').remove()
 radius_name = 'radius_GDP'
 
 transform_all_paths_to_circle(radius_name)
+
+setTimeout(() => {  
+
+drawLabel('États-Unis', -90, 50)
+drawLabel('Chine', -110, -40)
+
+drawLabel('Russie', -50, -40)
+
+}, 500);
+
+
+
 
 
 })
@@ -509,6 +532,17 @@ continent_labels
 .style('fill', '#333')
 .style('font-weight', 'bold')
 .style('text-transform', 'uppercase');
+
+
+
+setTimeout(() => {  
+
+drawLabel('États-Unis', -90, 0)
+drawLabel('Chine', -70, 0)
+
+drawLabel('France', -25, 0)
+
+}, 500);
 
 
 }, 1000);
@@ -1284,7 +1318,7 @@ function hide_tooltip() {
 }
 
 
-function drawLabel(country, v_padding, label_bottom){
+function drawLabel(country, v_padding, h_padding ,label_bottom){
 
 let this_d = d3.selectAll('path').filter(d=>d && d.nom == country).data()[0]
 
@@ -1292,11 +1326,13 @@ v_padding = v_padding ? v_padding : 0;
 
 label_bottom = label_bottom ? -55 : 0;
 
+h_padding = h_padding ? h_padding : 0;
+
 g.append('text')
 .attr('class', 'labels_pays')
 .attr('text-anchor', 'middle')
 .text(country)
-.attr('x', this_d.x + 35)
+.attr('x', this_d.x + 35 + h_padding)
 .attr('y', this_d.y - 20 + v_padding)
 .style('font-size', '24px')
 .style('fill', '#333')
@@ -1304,8 +1340,8 @@ g.append('text')
 
 g.append('line')
 .attr('class', 'labels_pays')
-.attr('x1', this_d.x + 40)
-.attr('x2', this_d.x + 40)
+.attr('x1', this_d.x + 40 + h_padding)
+.attr('x2', this_d.x + 40 + h_padding)
 .attr('y1', this_d.y - 10 + v_padding + label_bottom)
 .attr('y2', this_d.y + 15 + v_padding + label_bottom)
 .attr('stroke', '#333')
