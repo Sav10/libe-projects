@@ -424,7 +424,7 @@ transform_all_paths_to_circle(radius_name)
 d3.select('#order_by_vax')
 .on('click', function(){
 
-radius_name = 'radius_pop'
+radius_name = 'radius_GDP'
 
 /*transform_all_paths_to_circle(radius_name)*/
 
