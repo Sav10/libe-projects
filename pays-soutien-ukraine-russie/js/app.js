@@ -1214,7 +1214,7 @@ let this_code = d.id;
     d3.select("#tooltip").style('display', 'block');
 
     var this_inner_html =  `<span class='details'><span class='tooltip_title'>${this_d.Pays}</span><br>
-    Vote à l'Onu vis à vis de l'Ukraine : <span style="font-weight:bold">${this_d_ukraine.vote_ONU}</span><br>`
+    Vote à l'Onu vis à vis de l'Ukraine : <span style="font-weight:bold;color:${color_ukraine(this_d_ukraine.vote_ONU)};">${this_d_ukraine.vote_ONU}</span><br>`
 
 if(this_d_ukraine.Visite_Poutine_ou_Lavrov){
   this_inner_html += 'Poutine ou Lavrov se sont rendu officiellement dans le pays<br>'
