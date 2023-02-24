@@ -426,7 +426,7 @@ d3.select('#order_by_vax')
 
 radius_name = 'radius_pop'
 
-transform_all_paths_to_circle(radius_name)
+/*transform_all_paths_to_circle(radius_name)*/
 
 d3.selectAll('#representation_carto .actionButton')
 .style('color', 'black')
@@ -477,7 +477,7 @@ changeYAxisScale([400,120000], 'log')
 
 
 
-makeScatterPlot('population', 'gdp_capita')
+makeScatterPlot('population', 'gdp_capita', radius_name)
 
 
 d3.selectAll('#axisBottom text').text(d=>_.round(d/1000000, 1) + " Million")
@@ -688,7 +688,7 @@ redraw_paths(radius_name, 500)
 
 // Ex : makeScatterPlot('deaths_for_100k', 'deaths_for_100k')
 
-function makeScatterPlot(column_x, column_y){
+function makeScatterPlot(column_x, column_y, force_size){
 
 
 /*console.log('making scatter mapstate : ' + mapstate)*/
@@ -698,7 +698,13 @@ drawAxisBottom()
 
 drawAxisLeft()
 
-if (mapstate == 0){
+if (force_size){
+
+transform_all_paths_to_circle(radius_name, column_x, column_y)
+
+}
+
+else if (mapstate == 0){
 
 transform_all_paths_to_circle(radius_name, column_x, column_y)
 
