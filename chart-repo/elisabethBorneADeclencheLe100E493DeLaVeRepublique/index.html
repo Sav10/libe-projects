@@ -1,0 +1,553 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elisabeth Borne a déclenché le 100e 49.3 de la Ve République</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"Gouvernement":"Debré","Législature":"Ière législature","Projet de loi":"Loi de finances pour 1960","Date d'engagement\n de la responsabilité":"25/11/1959","Date de dépôt de la\n motion de censure":"25/11/1959","Date du vote de la\n motion de censure":"27/11/1959","Suffrages requis":"277","Suffrages obtenus":"109","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Debré","Législature":"Ière législature","Projet de loi":"Programmation militaire 1ère lecture","Date d'engagement\n de la responsabilité":"19/10/1960","Date de dépôt de la\n motion de censure":"20/10/1960","Date du vote de la\n motion de censure":"24/10/1960","Suffrages requis":"277","Suffrages obtenus":"207","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Debré","Législature":"Ière législature","Projet de loi":"Programmation militaire 2ème lecture","Date d'engagement\n de la responsabilité":"17/11/1960","Date de dépôt de la\n motion de censure":"18/11/1960","Date du vote de la\n motion de censure":"22/11/1960","Suffrages requis":"277","Suffrages obtenus":"214","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Debré","Législature":"Ière législature","Projet de loi":"Programmation militaire 3ème lecture","Date d'engagement\n de la responsabilité":"01/12/1960","Date de dépôt de la\n motion de censure":"02/12/1960","Date du vote de la\n motion de censure":"06/12/1960","Suffrages requis":"277","Suffrages obtenus":"215","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Pompidou","Législature":"Ière législature","Projet de loi":"Loi de finances rectificative pour 1962 (Pierrelatte)\n1ère lecture","Date d'engagement\n de la responsabilité":"12/07/1962","Date de dépôt de la\n motion de censure":"12/07/1962","Date du vote de la\n motion de censure":"16/07/1962","Suffrages requis":"241","Suffrages obtenus":"206","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Pompidou","Législature":"Ière législature","Projet de loi":"Loi de finances rectificative pour 1962\n2ème lecture","Date d'engagement\n de la responsabilité":"23/07/1962","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Pompidou","Législature":"Ière législature","Projet de loi":"Loi de finances rectificative pour 1962\n3ème lecture","Date d'engagement\n de la responsabilité":"24/07/1962","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Pompidou","Législature":"IIIème législature","Projet de loi":"Loi d'habilitation en matière économique et sociale\n1ère lecture","Date d'engagement\n de la responsabilité":"18/05/1967","Date de dépôt de la\n motion de censure":"18/05/1967","Date du vote de la\n motion de censure":"20/05/1967","Suffrages requis":"244","Suffrages obtenus":"236","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Pompidou","Législature":"IIIème législature","Projet de loi":"Loi d'habilitation en matière économique et sociale\n2ème lecture","Date d'engagement\n de la responsabilité":"07/06/1967","Date de dépôt de la\n motion de censure":"07/06/1967","Date du vote de la\n motion de censure":"09/06/1967","Suffrages requis":"244","Suffrages obtenus":"236","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Pompidou","Législature":"IIIème législature","Projet de loi":"Loi d'habilitation en matière économique et sociale\n3ème lecture","Date d'engagement\n de la responsabilité":"14/06/1967","Date de dépôt de la\n motion de censure":"14/06/1967","Date du vote de la\n motion de censure":"16/06/1967","Suffrages requis":"244","Suffrages obtenus":"239","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Barre","Législature":"Vème législature","Projet de loi":"Loi de finances rectificative pour 1976","Date d'engagement\n de la responsabilité":"15/10/1976","Date de dépôt de la\n motion de censure":"15/10/1976","Date du vote de la\n motion de censure":"19/10/1976","Suffrages requis":"241","Suffrages obtenus":"181","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Barre","Législature":"Vème législature","Projet de loi":"Mode d'élection des membres du Parlement européen","Date d'engagement\n de la responsabilité":"16/06/1977","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Barre","Législature":"VIème législature","Projet de loi":"Loi de finances pour 1980","Date d'engagement\n de la responsabilité":"17/11/1979","Date de dépôt de la\n motion de censure":"18/11/1979","Date du vote de la\n motion de censure":"20/11/1979","Suffrages requis":"246\n246","Suffrages obtenus":"201\n199","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Barre","Législature":"VIème législature","Projet de loi":"Financement de la sécurité sociale 1ère lecture","Date d'engagement\n de la responsabilité":"04/12/1979","Date de dépôt de la\n motion de censure":"05/12/1979","Date du vote de la\n motion de censure":"07/12/1979","Suffrages requis":"246\n246","Suffrages obtenus":"200\n198","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Barre","Législature":"VIème législature","Projet de loi":"Loi de finances pour 1980 \nTexte de la CMP","Date d'engagement\n de la responsabilité":"13/12/1979","Date de dépôt de la\n motion de censure":"14/12/1979","Date du vote de la\n motion de censure":"17/12/1979","Suffrages requis":"246\n246","Suffrages obtenus":"197\n196","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Barre","Législature":"VIème législature","Projet de loi":"Financement de la sécurité sociale\nTexte de la CMP","Date d'engagement\n de la responsabilité":"20/12/1979","Date de dépôt de la\n motion de censure":"20/12/1979","Date du vote de la\n motion de censure":"22/12/1979","Suffrages requis":"246\n246","Suffrages obtenus":"191\n190","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Barre","Législature":"VIème législature","Projet de loi":"Loi de finances pour 1980 (2ème projet)\n1ère partie","Date d'engagement\n de la responsabilité":"07/01/1980","Date de dépôt de la\n motion de censure":"07/01/1980","Date du vote de la\n motion de censure":"09/01/1980","Suffrages requis":"246\n246","Suffrages obtenus":"202\n202","Number":"1","nombre_de_493":"6"},{"Gouvernement":"Barre","Législature":"VIème législature","Projet de loi":"Loi de finances pour 1980 (2ème projet)\n2ème partie et ensemble","Date d'engagement\n de la responsabilité":"09/01/1980","Date de dépôt de la\n motion de censure":"09/01/1980","Date du vote de la\n motion de censure":"11/01/1980","Suffrages requis":"246\n246","Suffrages obtenus":"192\n190","Number":"1","nombre_de_493":"7"},{"Gouvernement":"Mauroy","Législature":"VIIème législature","Projet de loi":"Nationalisation (2ème projet)","Date d'engagement\n de la responsabilité":"26/01/1982","Date de dépôt de la\n motion de censure":"26/01/1982","Date du vote de la\n motion de censure":"28/01/1982","Suffrages requis":"246","Suffrages obtenus":"154","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Mauroy","Législature":"VIIème législature","Projet de loi":"Les prix et les revenus 1ère lecture","Date d'engagement\n de la responsabilité":"24/06/1982","Date de dépôt de la\n motion de censure":"24/06/1982","Date du vote de la\n motion de censure":"28/06/1982","Suffrages requis":"246","Suffrages obtenus":"138","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Mauroy","Législature":"VIIème législature","Projet de loi":"Les prix et les revenus 2ème lecture","Date d'engagement\n de la responsabilité":"09/07/1982","Date de dépôt de la\n motion de censure":"09/07/1982","Date du vote de la\n motion de censure":"12/07/1982","Suffrages requis":"245","Suffrages obtenus":"146","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Mauroy","Législature":"VIIème législature","Projet de loi":"Les prix et les revenus 3ème lecture","Date d'engagement\n de la responsabilité":"13/07/1982","Date de dépôt de la\n motion de censure":"13/07/1982","Date du vote de la\n motion de censure":"20/07/1982","Suffrages requis":"245","Suffrages obtenus":"155","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Mauroy","Législature":"VIIème législature","Projet de loi":"Événements d'Afrique du Nord 2ème lecture","Date d'engagement\n de la responsabilité":"23/11/1982","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Mauroy","Législature":"VIIème législature","Projet de loi":"Enseignement privé","Date d'engagement\n de la responsabilité":"23/05/1984","Date de dépôt de la\n motion de censure":"23/05/1984","Date du vote de la\n motion de censure":"24/05/1984","Suffrages requis":"246","Suffrages obtenus":"159","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Mauroy","Législature":"VIIème législature","Projet de loi":"Liberté de la presse 2ème lecture","Date d'engagement\n de la responsabilité":"05/07/1984","Date de dépôt de la\n motion de censure":"06/07/1984","Date du vote de la\n motion de censure":"10/07/1984","Suffrages requis":"246","Suffrages obtenus":"159","Number":"1","nombre_de_493":"6"},{"Gouvernement":"Fabius","Législature":"VIIème législature","Projet de loi":"Liberté de la presse 3ème lecture","Date d'engagement\n de la responsabilité":"07/09/1984","Date de dépôt de la\n motion de censure":"07/09/1984","Date du vote de la\n motion de censure":"10/09/1984","Suffrages requis":"246","Suffrages obtenus":"105","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Fabius","Législature":"VIIème législature","Projet de loi":"Aménagement du temps de travail 1ère lecture","Date d'engagement\n de la responsabilité":"11/12/1985","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Fabius","Législature":"VIIème législature","Projet de loi":"Aménagement du temps de travail 2ème lecture","Date d'engagement\n de la responsabilité":"12/02/1986","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Fabius","Législature":"VIIème législature","Projet de loi":"Aménagement du temps de travail 3ème lecture","Date d'engagement\n de la responsabilité":"27/02/1986","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Loi d'habilitation en matière économique et sociale","Date d'engagement\n de la responsabilité":"13/05/1986","Date de dépôt de la\n motion de censure":"14/05/1986","Date du vote de la\n motion de censure":"16/05/1986","Suffrages requis":"289","Suffrages obtenus":"251","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Rétablissement du scrutin majoritaire pour l'élection des députés","Date d'engagement\n de la responsabilité":"20/05/1986","Date de dépôt de la\n motion de censure":"20/05/1986","Date du vote de la\n motion de censure":"22/05/1986","Suffrages requis":"289","Suffrages obtenus":"284","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Loi de finances rectificative pour 1986","Date d'engagement\n de la responsabilité":"29/05/1986","Date de dépôt de la\n motion de censure":"29/05/1986","Date du vote de la\n motion de censure":"02/06/1986","Suffrages requis":"289","Suffrages obtenus":"251","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Privatisation","Date d'engagement\n de la responsabilité":"24/07/1986","Date de dépôt de la\n motion de censure":"24/07/1986","Date du vote de la\n motion de censure":"28/07/1986","Suffrages requis":"284","Suffrages obtenus":"245","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Liberté de la communication","Date d'engagement\n de la responsabilité":"06/08/1986","Date de dépôt de la\n motion de censure":"06/08/1986","Date du vote de la\n motion de censure":"08/08/1986","Suffrages requis":"284","Suffrages obtenus":"234","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Circonscriptions électorales","Date d'engagement\n de la responsabilité":"10/10/1986","Date de dépôt de la\n motion de censure":"10/10/1986","Date du vote de la\n motion de censure":"13/10/1986","Suffrages requis":"288","Suffrages obtenus":"281","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Circonscriptions électorales\nTexte de la CMP","Date d'engagement\n de la responsabilité":"22/10/1986","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"6"},{"Gouvernement":"Chirac","Législature":"VIIIème législature","Projet de loi":"Aménagement du temps de travail","Date d'engagement\n de la responsabilité":"20/05/1987","Date de dépôt de la\n motion de censure":"20/05/1987","Date du vote de la\n motion de censure":"26/05/1987","Suffrages requis":"289","Suffrages obtenus":"250","Number":"1","nombre_de_493":"7"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Liberté de la communication 2ème lecture","Date d'engagement\n de la responsabilité":"15/12/1988","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Liberté de la communication 3ème lecture","Date d'engagement\n de la responsabilité":"21/12/1988","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Xème Plan (1989-1992)","Date d'engagement\n de la responsabilité":"28/04/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Audiovisuel (présidence commune A2-FR3) 1ère lecture","Date d'engagement\n de la responsabilité":"19/06/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Audiovisuel (présidence commune A2-FR3) 2ème lecture","Date d'engagement\n de la responsabilité":"01/07/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Programmation militaire (1990-1993)","Date d'engagement\n de la responsabilité":"04/10/1989","Date de dépôt de la\n motion de censure":"05/10/1989","Date du vote de la\n motion de censure":"09/10/1989","Suffrages requis":"288","Suffrages obtenus":"159","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1990\n1ère partie","Date d'engagement\n de la responsabilité":"21/10/1989","Date de dépôt de la\n motion de censure":"21/10/1989","Date du vote de la\n motion de censure":"23/10/1989","Suffrages requis":"288","Suffrages obtenus":"240","Number":"1","nombre_de_493":"6"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1990\n2ème partie et ensemble","Date d'engagement\n de la responsabilité":"17/11/1989","Date de dépôt de la\n motion de censure":"17/11/1989","Date du vote de la\n motion de censure":"20/11/1989","Suffrages requis":"288","Suffrages obtenus":"254","Number":"1","nombre_de_493":"7"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Programmation militaire (1990-1993) 2ème lecture","Date d'engagement\n de la responsabilité":"27/11/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"8"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Diverses dispositions sanitaires et sociales 1ère lecture","Date d'engagement\n de la responsabilité":"01/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"9"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances rectificative pour 1989","Date d'engagement\n de la responsabilité":"06/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"10"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1990 2ème lecture\n1ère partie","Date d'engagement\n de la responsabilité":"15/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"11"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Programmation militaire (1990-1993) 3ème lecture","Date d'engagement\n de la responsabilité":"15/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"12"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Diverses dispositions sanitaires et sociales 2ème lecture","Date d'engagement\n de la responsabilité":"15/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"13"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1990 2ème lecture\n2ème partie et ensemble","Date d'engagement\n de la responsabilité":"16/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"14"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1990 3ème lecture\nEnsemble","Date d'engagement\n de la responsabilité":"19/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"15"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Diverses dispositions sanitaires et sociales 3ème lecture","Date d'engagement\n de la responsabilité":"19/12/1989","Date de dépôt de la\n motion de censure":"19/12/1989","Date du vote de la\n motion de censure":"21/12/1989","Suffrages requis":"289","Suffrages obtenus":"265","Number":"1","nombre_de_493":"16"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances rectificatives pour 1989 2ème lecture","Date d'engagement\n de la responsabilité":"21/12/1989","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"17"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Statut de la Régie Renault","Date d'engagement\n de la responsabilité":"28/04/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"18"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1991 1ère lecture\nArticles 92 à 99 : CSG","Date d'engagement\n de la responsabilité":"16/11/1990","Date de dépôt de la\n motion de censure":"16/11/1990","Date du vote de la\n motion de censure":"19/11/1990","Suffrages requis":"289","Suffrages obtenus":"284","Number":"1","nombre_de_493":"19"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1991 1ère lecture\nEnsemble","Date d'engagement\n de la responsabilité":"20/11/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"20"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances rectificative pour 1990","Date d'engagement\n de la responsabilité":"04/12/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"21"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Diverses dispositions sanitaires et sociales 1ère lecture","Date d'engagement\n de la responsabilité":"07/12/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"22"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1991 2ème lecture","Date d'engagement\n de la responsabilité":"14/12/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"23"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1991 3ème lecture","Date d'engagement\n de la responsabilité":"19/12/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"24"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Diverses dispositions sanitaires et sociales 2ème lecture","Date d'engagement\n de la responsabilité":"19/12/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"25"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Diverses dispositions sanitaires et sociales 3ème lecture","Date d'engagement\n de la responsabilité":"20/12/1990","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"26"},{"Gouvernement":"Rocard","Législature":"IXème législature","Projet de loi":"Réforme hospitalière","Date d'engagement\n de la responsabilité":"29/04/1991","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"27"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Diverses dispositions d'ordre économique et financier 1ère lecture","Date d'engagement\n de la responsabilité":"13/06/1991","Date de dépôt de la\n motion de censure":"13/06/1991","Date du vote de la\n motion de censure":"17/06/1991","Suffrages requis":"289","Suffrages obtenus":"265","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Diverses dispositions d'ordre économique et financier 2ème lecture","Date d'engagement\n de la responsabilité":"28/06/1991","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Diverses dispositions d'ordre économique et financier 3ème lecture","Date d'engagement\n de la responsabilité":"03/07/1991","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Agence du Médicament","Date d'engagement\n de la responsabilité":"05/10/1991","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1992 1ère lecture\n1ère partie","Date d'engagement\n de la responsabilité":"19/10/1991","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1992 1ère lecture\n2ème partie et ensemble","Date d'engagement\n de la responsabilité":"16/11/1991","Date de dépôt de la\n motion de censure":"16/11/1991","Date du vote de la\n motion de censure":"18/11/1991","Suffrages requis":"289","Suffrages obtenus":"264","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Loi de finances rectificative pour 1991","Date d'engagement\n de la responsabilité":"05/12/1991","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"6"},{"Gouvernement":"Cresson","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1992 2ème lecture\n2ème partie et ensemble","Date d'engagement\n de la responsabilité":"14/12/1991","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"7"},{"Gouvernement":"Bérégovoy","Législature":"IXème législature","Projet de loi":"Médecins et assurance maladie","Date d'engagement\n de la responsabilité":"05/06/1992","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Bérégovoy","Législature":"IXème législature","Projet de loi":"Loi de finances pour 1993 1ère lecture\n2ème partie et ensemble","Date d'engagement\n de la responsabilité":"18/11/1992","Date de dépôt de la\n motion de censure":"19/11/1992","Date du vote de la\n motion de censure":"23/11/1992","Suffrages requis":"286","Suffrages obtenus":"257","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Bérégovoy","Législature":"IXème législature","Projet de loi":"Fonds de solidarité vieillesse","Date d'engagement\n de la responsabilité":"11/12/1992","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Balladur","Législature":"Xème législature","Projet de loi":"Privatisation","Date d'engagement\n de la responsabilité":"30/06/1993","Date de dépôt de la\n motion de censure":"01/07/1993","Date du vote de la\n motion de censure":"05/07/1993","Suffrages requis":"289","Suffrages obtenus":"87","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Juppé","Législature":"Xème législature","Projet de loi":"Loi d'habilitation pour la réforme de la sécurité sociale","Date d'engagement\n de la responsabilité":"10/12/1995","Date de dépôt de la\n motion de censure":"10/12/1995","Date du vote de la\n motion de censure":"12/12/1995","Suffrages requis":"287","Suffrages obtenus":"94","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Juppé","Législature":"Xème législature","Projet de loi":"Statut de France Télécom","Date d'engagement\n de la responsabilité":"26/06/1996","Date de dépôt de la\n motion de censure":"27/06/1996","Date du vote de la\n motion de censure":"29/06/1996","Suffrages requis":"289","Suffrages obtenus":"96","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Raffarin","Législature":"XIIème législature","Projet de loi":"Élection des conseillers régionaux, des représentants au Parlement européen, aide publique aux partis politiques","Date d'engagement\n de la responsabilité":"12/02/2003","Date de dépôt de la\n motion de censure":"13/02/2003","Date du vote de la\n motion de censure":"15/02/2003","Suffrages requis":"288","Suffrages obtenus":"177","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Raffarin","Législature":"XIIème législature","Projet de loi":"Libertés et responsabilités locales 2ème lecture","Date d'engagement\n de la responsabilité":"23/07/2004","Date de dépôt de la\n motion de censure":"23/07/2004","Date du vote de la\n motion de censure":"27/07/2004","Suffrages requis":"289","Suffrages obtenus":"175","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Villepin","Législature":"XIIème législature","Projet de loi":"Égalité des chances","Date d'engagement\n de la responsabilité":"10/02/2005","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Valls","Législature":"XIVème législature","Projet de loi":"Croissance et activité\n1ère lecture","Date d'engagement\n de la responsabilité":"17/02/2015","Date de dépôt de la\n motion de censure":"17/02/2015","Date du vote de la\n motion de censure":"19/02/2015","Suffrages requis":"289","Suffrages obtenus":"234","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Valls","Législature":"XIVème législature","Projet de loi":"Croissance, activité et égalité des chances économiques\nNouvelle lecture","Date d'engagement\n de la responsabilité":"16/06/2015","Date de dépôt de la\n motion de censure":"16/06/2015","Date du vote de la\n motion de censure":"18/06/2015","Suffrages requis":"289","Suffrages obtenus":"198","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Valls","Législature":"XIVème législature","Projet de loi":"Croissance, activité et égalité des chances économiques\nLecture définitive","Date d'engagement\n de la responsabilité":"09/07/2015","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Valls","Législature":"XIVème législature","Projet de loi":"Nouvelles libertés et nouvelles protections pour les entreprises et les actifs\n1ère lecture","Date d'engagement\n de la responsabilité":"10/05/2016","Date de dépôt de la\n motion de censure":"10/05/2016","Date du vote de la\n motion de censure":"12/05/2016","Suffrages requis":"288","Suffrages obtenus":"246","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Valls","Législature":"XIVème législature","Projet de loi":"Travail, modernisation du dialogue social et sécurisation des parcours professionnels\nNouvelle lecture","Date d'engagement\n de la responsabilité":"05/07/2016","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Valls","Législature":"XIVème législature","Projet de loi":"Travail, modernisation du dialogue social et sécurisation des parcours professionnels\nLecture définitive","Date d'engagement\n de la responsabilité":"20/07/2016","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Philippe","Législature":"XVème législature","Projet de loi":"Système universel de retraite\n1ère lecture","Date d'engagement\n de la responsabilité":"29/02/2020","Date de dépôt de la\n motion de censure":"29/02/2020","Date du vote de la\n motion de censure":"03/03/2020","Suffrages requis":"289\n289","Suffrages obtenus":"148\n91","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de Finances pour 2023 (1ère partie) 1ère lecture","Date d'engagement\n de la responsabilité":"19/10/2022","Date de dépôt de la\n motion de censure":"19/10/2022","Date du vote de la\n motion de censure":"24/10/2022","Suffrages requis":"289\n289","Suffrages obtenus":"239\n90","Number":"1","nombre_de_493":"0"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de financement de la Sécurité sociale pour 2023 (3e partie)\n1ère lecture","Date d'engagement\n de la responsabilité":"20/10/2022","Date de dépôt de la\n motion de censure":"20/10/2022","Date du vote de la\n motion de censure":"24/10/2022","Suffrages requis":"289","Suffrages obtenus":"150","Number":"1","nombre_de_493":"1"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de financement de la Sécurité sociale pour 2023 (4e partie et ensemble du projet) 1ère lecture","Date d'engagement\n de la responsabilité":"27/10/2022","Date de dépôt de la\n motion de censure":"27/10/2022","Date du vote de la\n motion de censure":"31/10/2022","Suffrages requis":"289\n259","Suffrages obtenus":"90\n218","Number":"1","nombre_de_493":"2"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de finances pour 2023 (Seconde partie et ensemble du projet) 1ère lecture","Date d'engagement\n de la responsabilité":"02/11/2022","Date de dépôt de la\n motion de censure":"02/11/2022","Date du vote de la\n motion de censure":"04/11/2022","Suffrages requis":"289","Suffrages obtenus":"188","Number":"1","nombre_de_493":"3"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de financement de la Sécurité sociale pour 2023 (3e partie)\nNouvelle lecture","Date d'engagement\n de la responsabilité":"21/11/2022","Date de dépôt de la\n motion de censure":"22/11/2022","Date du vote de la\n motion de censure":"25/11/2022","Suffrages requis":"289","Suffrages obtenus":"85","Number":"1","nombre_de_493":"4"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de financement de la Sécurité sociale pour 2023 (4e partie et ensemble du projet) Nouvelle lecture","Date d'engagement\n de la responsabilité":"25/11/2022","Date de dépôt de la\n motion de censure":"25/11/2022","Date du vote de la\n motion de censure":"28/11/2022","Suffrages requis":"289","Suffrages obtenus":"93","Number":"1","nombre_de_493":"5"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de financement de la Sécurité sociale pour 2023 (L'ensemble du projet) Lecture définitive","Date d'engagement\n de la responsabilité":"30/11/2022","Date de dépôt de la\n motion de censure":"30/11/2022","Date du vote de la\n motion de censure":"02/12/2022","Suffrages requis":"289","Suffrages obtenus":"87","Number":"1","nombre_de_493":"6"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de finances pour 2023 (1ère partie du projet) Nouvelle lecture","Date d'engagement\n de la responsabilité":"09/12/2022","Date de dépôt de la\n motion de censure":"09/12/2022","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"7"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de finances pour 2023 (Seconde partie et ensemble du projet) Nouvelle lecture","Date d'engagement\n de la responsabilité":"11/12/2022","Date de dépôt de la\n motion de censure":"11/12/2022","Date du vote de la\n motion de censure":"13/12/2022","Suffrages requis":"289","Suffrages obtenus":"102","Number":"1","nombre_de_493":"8"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Projet de loi de finances pour 2023 (L'ensemble du projet) Lecture définitive","Date d'engagement\n de la responsabilité":"15/12/2022","Date de dépôt de la\n motion de censure":"15/12/2022","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"9"},{"Gouvernement":"Borne","Législature":"XVIème législature","Projet de loi":"Réforme des retraites","Date d'engagement\n de la responsabilité":"16/03/2023","Date de dépôt de la\n motion de censure":"","Date du vote de la\n motion de censure":"","Suffrages requis":"","Suffrages obtenus":"","Number":"1","nombre_de_493":"10"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":"1958-08-19T23:00:00.000Z","calculated_right_value":"2023-03-15T23:00:00.000Z","manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":27,"manual_left_value":-1,"manual_right_value":30,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":0,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":16,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"black","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"small","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"small","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"Date d'engagement\n de la responsabilité","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":5,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":13,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":10,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":5,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.7,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('YYYY')})"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"Date d'engagement\n de la responsabilité","value":"Date d'engagement\n de la responsabilité"},{"label":"Gouvernement","value":"Gouvernement"},{"label":"Législature","value":"Législature"},{"label":"Projet de loi","value":"Projet de loi"},{"label":"nombre_de_493","value":"nombre_de_493"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":false,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":true,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":true,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["Date d'engagement\n de la responsabilité","Gouvernement","Législature","Projet de loi"],"selected_yRows":["nombre_de_493"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":["Date d'engagement\n de la responsabilité","Gouvernement","Législature","Projet de loi"],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"Elisabeth Borne a déclenché le 100e 49.3 de la Ve République","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
