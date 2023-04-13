@@ -1,0 +1,507 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les financements de projets fossiles par les banques en 2022-</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"2022":" 39 239 598 597 ","Bank":"JPMorgan Chase","montant":"39240","France":"0"},{"2022":" 33 942 812 256 ","Bank":"Citi","montant":"33943","France":"0"},{"2022":" 38 898 759 154 ","Bank":"Wells Fargo","montant":"38899","France":"0"},{"2022":" 36 966 666 717 ","Bank":"Bank of America","montant":"36967","France":"0"},{"2022":" 42 126 126 986 ","Bank":"RBC","montant":"42126","France":"0"},{"2022":" 29 514 747 911 ","Bank":"MUFG","montant":"29515","France":"0"},{"2022":" 16 578 495 812 ","Bank":"Barclays","montant":"16578","France":"0"},{"2022":" 28 830 038 700 ","Bank":"Mizuho","montant":"28830","France":"0"},{"2022":" 29 468 825 666 ","Bank":"Scotiabank","montant":"29469","France":"0"},{"2022":" 29 001 616 095 ","Bank":"TD","montant":"29002","France":"0"},{"2022":" 20 083 158 568 ","Bank":"BNP Paribas","montant":"20083","France":"1"},{"2022":" 11 096 063 556 ","Bank":"Morgan Stanley","montant":"11096","France":"0"},{"2022":" 11 074 181 980 ","Bank":"HSBC","montant":"11074","France":"0"},{"2022":" 9 959 777 108 ","Bank":"Goldman Sachs","montant":"9960","France":"0"},{"2022":" 19 309 503 813 ","Bank":"Bank of Montreal","montant":"19310","France":"0"},{"2022":" 22 599 078 378 ","Bank":"SMBC Group","montant":"22599","France":"0"},{"2022":" 15 578 191 063 ","Bank":"Bank of China","montant":"15578","France":"0"},{"2022":" 21 658 793 905 ","Bank":"ICBC","montant":"21659","France":"0"},{"2022":" 17 872 395 538 ","Bank":"CIBC","montant":"17872","France":"0"},{"2022":" 6 657 600 400 ","Bank":"Credit Suisse","montant":"6658","France":"0"},{"2022":" 11 146 173 067 ","Bank":"Société Générale","montant":"11146","France":"1"},{"2022":" 7 471 718 139 ","Bank":"Deutsche Bank","montant":"7472","France":"0"},{"2022":" 11 658 614 348 ","Bank":"Crédit Agricole","montant":"11659","France":"1"},{"2022":" 10 590 817 217 ","Bank":"Agricultural Bank of China","montant":"10591","France":"0"},{"2022":" 9 200 152 233 ","Bank":"Industrial Bank","montant":"9200","France":"0"},{"2022":" 9 184 481 620 ","Bank":"China Construction Bank","montant":"9184","France":"0"},{"2022":" 16 909 390 328 ","Bank":"China CITIC Bank","montant":"16909","France":"0"},{"2022":" 5 155 789 180 ","Bank":"ING","montant":"5156","France":"0"},{"2022":" 7 579 457 323 ","Bank":"Shanghai Pudong Development Bank","montant":"7579","France":"0"},{"2022":" 9 124 186 327 ","Bank":"China Merchants Bank","montant":"9124","France":"0"},{"2022":" 4 731 283 088 ","Bank":"BPCE/Natixis","montant":"4731","France":"1"},{"2022":" 6 640 003 665 ","Bank":"Santander","montant":"6640","France":"0"},{"2022":" 7 232 637 280 ","Bank":"China Everbright Bank","montant":"7233","France":"0"},{"2022":" 8 792 694 440 ","Bank":"US Bancorp","montant":"8793","France":"0"},{"2022":" 12 606 105 412 ","Bank":"PNC","montant":"12606","France":"0"},{"2022":" 5 110 652 385 ","Bank":"Standard Chartered","montant":"5111","France":"0"},{"2022":" 2 843 172 219 ","Bank":"UBS","montant":"2843","France":"0"},{"2022":" 9 190 057 944 ","Bank":"Bank of Communications","montant":"9190","France":"0"},{"2022":" 5 728 749 973 ","Bank":"UniCredit","montant":"5729","France":"0"},{"2022":" 3 779 199 167 ","Bank":"Ping An Insurance Group","montant":"3779","France":"0"},{"2022":" 1 887 749 794 ","Bank":"China Minsheng Bank","montant":"1888","France":"0"},{"2022":" 1 080 446 043 ","Bank":"State Bank of India","montant":"1080","France":"0"},{"2022":" 2 496 544 728 ","Bank":"BBVA","montant":"2497","France":"0"},{"2022":" 3 749 323 899 ","Bank":"ANZ","montant":"3749","France":"0"},{"2022":" 3 250 751 203 ","Bank":"Intesa Sanpaolo","montant":"3251","France":"0"},{"2022":" 1 167 345 903 ","Bank":"NatWest","montant":"1167","France":"0"},{"2022":" 995 930 209 ","Bank":"KB Financial","montant":"996","France":"0"},{"2022":" 1 806 312 472 ","Bank":"Lloyds","montant":"1806","France":"0"},{"2022":" 1 168 060 029 ","Bank":"Commerzbank","montant":"1168","France":"0"},{"2022":" 2 527 546 051 ","Bank":"Postal Savings Bank of China","montant":"2528","France":"0"},{"2022":" 1 733 706 741 ","Bank":"Rabobank","montant":"1734","France":"0"},{"2022":" 927 075 087 ","Bank":"Nordea Bank","montant":"927","France":"0"},{"2022":" 807 766 911 ","Bank":"Westpac","montant":"808","France":"0"},{"2022":" 494 468 207 ","Bank":"Commonwealth Bank","montant":"494","France":"0"},{"2022":" 2 215 845 967 ","Bank":"CaixaBank","montant":"2216","France":"0"},{"2022":" 585 634 971 ","Bank":"Danske Bank","montant":"586","France":"0"},{"2022":" 837 495 971 ","Bank":"NAB","montant":"837","France":"0"},{"2022":" 122 079 455 ","Bank":"DZ Bank","montant":"122","France":"0"},{"2022":" 122 213 801 ","Bank":"Crédit Mutuel","montant":"122","France":"1"},{"2022":" -   ","Bank":"La Banque Postale","montant":"0","France":"1"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":900,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":100,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":42126,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":42126126986,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":10,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":6,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#f4f4f4","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullHeight","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":false,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":false,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":false,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('rect.bar').style('fill', function(d){let this_d = dataFromFile.filter(e=>e.Bank == d.Bank)[0];\n                                                  return this_d.France == 1 ? 'red' : 'grey'})"},"colorizeField":{"value":true,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":1,"category":"color"},"colorizeFieldText":{"value":"1","type":"simpleInputs","label":"Critères pour colorier le champ","activated":true,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"montant","value":"montant"},{"label":"Bank","value":"Bank"}],"initial_range_value":"black","manual_range_value":"France","activated":true,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"<strong>La banque</strong> [[Bank]] <strong>a financé</strong> [[montant|number_separator]] <strong>millions de dollars de projets fossiles en 2022</strong>"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":3,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":true,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":true,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["montant"],"selected_yRows":["Bank"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"barChartHorizontal","chartTitle":"Les financements de projets fossiles par les banques en 2022-","chartSource":"bankingonclimatechaos","annotations":[],"chartSubTitle":"En millions de dollars"};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeHorizontalBarchart(data_) {
+
+    var kValue = graphParameters['selected_yRows'][0];
+    var dValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_xRows'];
+
+    var data = _.cloneDeep(data_)
+
+    data = recalculateAndTransformValues(data, kValue, dValue)
+
+    var this_padding_left = 40;
+
+    data.forEach(function(d) {
+        d[dValue] = formatNumbers(d[dValue]);
+        for (v in dValues){
+            d[dValues[v]] = formatNumbers(d[dValues[v]]);
+        }
+    });
+
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    // var this_grouped_data = data.map(function(d) { return d.this_key; })
+    // .map(function(d){return {key:d, value: d3.sum(data.filter(function(e){return e.this_key == d}), function(e){return e.this_value})}});
+
+    this_grouped_data = groupbyKVMultiple(data, kValue, dValues, d3.sum);
+    this_grouped_data = this_grouped_data.filter(function(d) { return d[kValue] != ''});
+
+
+
+    manualReusableParameters.rangeX.calculated_left_value =  0;
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(this_grouped_data, function(d) { return d3.max(d3.entries(d).filter(function(k){ return dValues.indexOf(k.key) != -1}).map(function(v) {return v.value}))});
+
+    var thisXMin = manualReusableParameters.rangeX.value === false ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = manualReusableParameters.rangeX.value === false ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+
+    // reGenerateParameters();
+
+    if (manualReusableParameters.sort_descending.value == 1){
+        this_grouped_data = this_grouped_data.sort(function(a, b) { return b[dValue] - a[dValue]});
+    }
+
+    y = d3.scaleBand().rangeRound([0, height]).padding(manualReusableParameters.barPadding.value/10);
+    // x = d3.scaleLinear().rangeRound([(manualReusableParameters.padding_left.value + this_padding_left), width]);
+    x = d3.scaleLinear().rangeRound([0, (width - manualReusableParameters.padding_left.value)]);
+
+
+    
+ if (graphParameters.selected_tooltip && graphParameters.selected_tooltip.length > 0){
+        this_grouped_data = add_tooltip_values(this_grouped_data, data, kValue)
+    }
+
+    y.domain(this_grouped_data.map(function(d) { return d[kValue];}));
+    x.domain([thisXMin, thisXMax]);
+
+
+
+
+    changeAxis(x, y)
+
+    g.select('g.innerGraph')
+    .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (manualReusableParameters.padding_top.value) +")");
+
+    g.select("g.axis.axis--x")
+    // .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + height + ")")
+    .attr("transform", "translate(" + (this_padding_left + manualReusableParameters.padding_left.value) + "," + (height + manualReusableParameters.padding_top.value ) + ")")
+    .call(axis_bottom);
+
+    g.select("g.axis.axis--y")
+    .attr('transform', 'translate(' + (manualReusableParameters.padding_left.value + this_padding_left) + ',' + manualReusableParameters.padding_top.value  + ')')
+    .call(axis_left);
+
+    var all_bars = g_inner.selectAll("rect").data(this_grouped_data);
+
+    all_bars
+    .transition()
+    .duration(200)
+    .attr("x", (this_padding_left))
+    .attr("y", function(d) { return y(d[kValue]); })
+    .attr("height", y.bandwidth())
+    .attr("width", function(d) { return x(d[dValue]); });
+
+    all_bars.exit().transition().duration(200).remove();
+
+    all_bars
+    .enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", (this_padding_left))
+    .attr("y", function(d) { return y(d[kValue]) })
+    .attr("height", y.bandwidth())
+    .attr("width", function(d) { return x(d[dValue]); })
+    .attr('fill', '#e60004')
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    drawLegend()
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+
+    colorizeOnlyOneCategory([{svg_element:'rect', look_in_object:false,  property_types:['fill'], reappend_nodes:false}])
+
+    addCustomCode()
+}
+
+initChart();
+
+makeHorizontalBarchart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
