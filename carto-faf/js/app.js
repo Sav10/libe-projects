@@ -101,6 +101,21 @@ d3.selectAll("#CONTOUR circle").nodes().forEach((n) => {
 
 });
 
+d3.selectAll("#CONTOUR circle")
+.on('click', function(event, d) {
+
+  let this_class = d3.select(this).attr('class');
+  console.log(this_class)
+
+  showTip(this_class)
+    // selected_dep = [this, d];
+    // showTip(data, d, location_variable)
+    // all_those_paths
+    // .style('fill-opacity', .5)
+    // d3.select(this)
+    // .style('fill-opacity', 1)
+  })
+
 
 Promise.all([
     d3.csv("data/data.csv"),
@@ -202,9 +217,9 @@ d3.selectAll('#'+all_filtered_classes.filter(d=>d != null).join(',#'))
 
 
 
-all_villes.unshift('Choisir');
-all_groups.unshift('Choisir');
-all_ideologies.unshift('Choisir');
+all_villes.unshift('Toutes');
+all_groups.unshift('Tous');
+all_ideologies.unshift('Toutes');
 
 console.log(all_villes)
 
@@ -231,7 +246,7 @@ d3.select('#cities-select')
 .on('change', function(d){
     let this_prop = d3.select(this).property('value');
     console.log(this_prop)
-    if (this_prop == 'Choisir'){
+    if (this_prop == 'Toutes'){
       those_filters[0] = 0;
         }
     else{
@@ -267,7 +282,7 @@ d3.select('#ideology-select')
 .on('change', function(d){
     let this_prop = d3.select(this).property('value');
     console.log(this_prop)
-        if (this_prop == 'Choisir'){
+        if (this_prop == 'Toutes'){
       those_filters[1] = 0;
         }
     else{
@@ -306,7 +321,7 @@ d3.select('#group-select')
 .on('change', function(d){
     let this_prop = d3.select(this).property('value');
     console.log(this_prop)
-        if (this_prop == 'Choisir'){
+        if (this_prop == 'Tous'){
       those_filters[2] = 0;
         }
     else{
@@ -320,3 +335,87 @@ d3.select('#group-select')
 }
 
 }
+
+
+function showTip(that_class){
+
+
+let this_d = all_data.filter(d=>d.this_class == that_class)[0]
+
+console.log(this_d)
+
+// <image width="100" height="100" id="QUIN" xlink:href=""
+
+
+
+
+let this_html
+
+
+
+this_html = `<div class="box_element_line">
+<div class="box_element_col"><img width="100" height="100" src="img/logos/${that_class}.jpg"></div>
+<div class="box_element_col" style="margin-left:1em"><span>${this_d.ville}</span><h3>${this_d.nom_groupe}</h3>  <span>${this_d.famille_ideologique}</span></div>
+</div>
+<div class="box_element_line">
+Lorem ipsum dolor sit amet. Eos iure nihil et molestiae saepe est voluptatem natus. 
+Et porro laborum eos ratione quod sit itaque nihil. 
+Et debitis assumenda et unde vitae ab dolorem libero. 
+Vel placeat veniam aut beatae maiores et deleniti sunt ad sint quod
+</div>`
+
+
+
+d3.select('#tooltip')
+.style('display', 'flex')
+
+d3.select('#map_info2')
+.style('visibility', 'visible')
+
+d3.select('#tooltip')
+.html(this_html)
+.style('opacity', '1')
+.style('display', 'flex')
+
+}
+
+
+
+/// Click function for shape
+
+d3.select('body').on("click",function(event, d){
+
+
+    var outside = d3.selectAll("#CONTOUR circle").filter(equalToEventTarget).empty();
+    // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
+    if (outside) {
+
+      
+    // reset_tooltip()
+
+
+
+/*    all_those_paths
+    .style('fill-opacity', 1)
+
+    d3.selectAll('path')
+    .style('fill-opacity', 1)*/
+d3.select('#map_info2')
+.style('visibility', 'hidden')
+
+d3.select('#tooltip')
+.style('display', 'none')
+
+
+    }
+else{
+}
+
+
+
+});
+
+
+function equalToEventTarget() {
+ return this == event.target;
+    }
