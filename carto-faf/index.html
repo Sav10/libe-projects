@@ -488,14 +488,7 @@ left: 2px;
     min-width: 200px;
 }
 
-#tooltip{
 
-    min-width: 200px;
-    padding: 0;
-    padding: 10px;
-    border: 1px solid rgb(221, 221, 221);
-    filter: opacity(0.85);
-}
 
 #tooltip hr{
 
@@ -841,6 +834,78 @@ min-width: 380px;
 
 }
 
+#map_info2{
+/*    min-height: 5rem;
+    position: absolute;
+    top: 50px;
+    left: 0;*/
+/*    opacity: 1; 
+    display: flex;*/
+
+}
+
+
+#map_info2{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    opacity: 1;
+}
+
+@media screen and (max-width: 700px){
+
+#map_info2{
+left: 2px;
+}
+#map_info2{
+
+    min-width: 200px;
+}
+}
+
+#LOGO-OK image{
+    pointer-events: none;
+}
+
+
+.map_container{
+    position: relative;
+}
+
+#tooltip{
+
+    min-width: 200px;
+    padding: 0;
+    padding: 10px;
+    border: 1px solid rgb(221, 221, 221);
+    opacity: 1;
+    max-width: 400px;
+
+}
+
+
+#tooltip{
+    flex-direction: column;
+}
+
+.box_element_line{
+display: flex;
+align-items: center;
+}
+
+
+
+.box_element_col{
+
+}
+
+#tooltip h3{
+    margin-top: .3em;
+    margin-bottom: .3em;
+}
+
+
   </style>
 
 </head>
@@ -855,26 +920,29 @@ min-width: 380px;
 <div class="select_menu">
         <label for="cities-select">Ville</label>
 <select name="cities" id="cities-select">
-    <option value="">Choisir</option>
+    <option value="">Toutes</option>
 </select>
 </div>
 <div class="select_menu" id="select_ideology">
 
         <label for="ideology-select">Idéologie</label>
 <select name="ideology" id="ideology-select">
-    <option value="">Choisir</option>
+    <option value="">Toutes</option>
 </select>
 </div>
 <div class="select_menu">
         <label for="group-select">Groupe</label>
 <select name="group" id="group-select">
-    <option value="">Choisir</option>
+    <option value="">Tous</option>
 </select>
 </div>
 
 </div>
 
-
+            <div id="map_info2" >
+              <div id="tooltip"></div>
+              <!-- <div id="sparkline"></div> -->
+            </div>
 <div id="svg-container-map" class='svg_map'></div>
 
 
