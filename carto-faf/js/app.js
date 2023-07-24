@@ -96,12 +96,35 @@ d3.selectAll("#CONTOUR circle").nodes().forEach((n) => {
   let this_color = d.attr('fill')
 
   let this_class = d.attr('class')
-  d3.select('#Fils .' + this_class).style('stroke', this_color)
+  d3.select('#Fils .' + this_class)
+  .style('stroke', this_color)
+  .style('stroke-opacity', 1)
 
 
 });
 
+
+
+
+
 d3.selectAll("#CONTOUR circle")
+.on('click', function(event, d) {
+
+  let this_class = d3.select(this).attr('class');
+  console.log(this_class)
+
+  showTip(this_class)
+    // selected_dep = [this, d];
+    // showTip(data, d, location_variable)
+    // all_those_paths
+    // .style('fill-opacity', .5)
+    // d3.select(this)
+    // .style('fill-opacity', 1)
+  })
+
+
+
+d3.selectAll('#Groupes text')
 .on('click', function(event, d) {
 
   let this_class = d3.select(this).attr('class');
@@ -203,16 +226,20 @@ d3.selectAll('#Groupes text,#LOGO-OK image,#Fils path')
 .style('visibility', 'hidden');
 
 d3.selectAll('#CONTOUR circle')
-.style('fill', 'grey')
+.style('fill', '#DFDFDF')
+.style('opacity', .7)
 
 d3.selectAll('.'+all_filtered_classes.filter(d=>d != null).join(',.'))
 .style('visibility', 'visible')
+.style('opacity', 1)
 
 d3.selectAll('circle.'+all_filtered_classes.filter(d=>d != null).join(',circle.'))
 .style('fill', null)
+.style('opacity', 1)
 
 d3.selectAll('#'+all_filtered_classes.filter(d=>d != null).join(',#'))
 .style('visibility', 'visible')
+.style('opacity', 1)
 
 
 
@@ -369,7 +396,7 @@ Vel placeat veniam aut beatae maiores et deleniti sunt ad sint quod
 d3.select('#tooltip')
 .style('display', 'flex')
 
-d3.select('#map_info2')
+d3.select('#map_info')
 .style('visibility', 'visible')
 
 d3.select('#tooltip')
@@ -386,7 +413,7 @@ d3.select('#tooltip')
 d3.select('body').on("click",function(event, d){
 
 
-    var outside = d3.selectAll("#CONTOUR circle").filter(equalToEventTarget).empty();
+    var outside = d3.selectAll("#CONTOUR circle, #Groupes text").filter(equalToEventTarget).empty();
     // var outside = d3.select(event.path[0]).attr('class') != 'cls-1'
     if (outside) {
 
@@ -400,7 +427,7 @@ d3.select('body').on("click",function(event, d){
 
     d3.selectAll('path')
     .style('fill-opacity', 1)*/
-d3.select('#map_info2')
+d3.select('#map_info')
 .style('visibility', 'hidden')
 
 d3.select('#tooltip')
