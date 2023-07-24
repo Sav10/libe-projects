@@ -45,23 +45,23 @@ body{
 }
 
     #map_info {
-    position: absolute;
+/*    position: absolute;
     display: none;
     width: 97%;
     max-width: 700px;
-    padding: 10px;
+    padding: 10px;*/
     /*margin-top: 10px;*/
-    margin-bottom: 10px;
+/*    margin-bottom: 10px;
     font-family: "syntheselibeweb";
     font-size: .8em;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4;*/
     /*pointer-events: none;*/
-    z-index: 10;
+/*    z-index: 10;
       display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   border: 0;
-  margin-left: .5%;
+  margin-left: .5%;*/
 }
     .intro-section {
     background-color: #E3234A;
@@ -447,7 +447,7 @@ font-family: 'syntheselibeweb';
     margin: 0 auto;
 }
 
-#map_info2{
+#map_info{
     min-height: 5rem;
     position: absolute;
     top: 50px;
@@ -455,13 +455,6 @@ font-family: 'syntheselibeweb';
     opacity: 1; 
     display: flex;
 
-}
-
-@media screen and (max-width: 700px){
-
-#map_info2{
-left: 2px;
-}
 }
 
 
@@ -483,7 +476,7 @@ left: 2px;
     margin-top: 6px;
 }
 
-#map_info2{
+#map_info{
 
     min-width: 200px;
 }
@@ -708,7 +701,7 @@ transform: translate(-21px,0px);
 }
 
 
-#map_info2 {
+#map_info {
     top: 20px;
 }
 
@@ -834,18 +827,9 @@ min-width: 380px;
 
 }
 
-#map_info2{
-/*    min-height: 5rem;
-    position: absolute;
-    top: 50px;
-    left: 0;*/
-/*    opacity: 1; 
-    display: flex;*/
-
-}
 
 
-#map_info2{
+#map_info{
     position: absolute;
     top: 5%;
     left: 50%;
@@ -853,16 +837,6 @@ min-width: 380px;
     opacity: 1;
 }
 
-@media screen and (max-width: 700px){
-
-#map_info2{
-left: 2px;
-}
-#map_info2{
-
-    min-width: 200px;
-}
-}
 
 #LOGO-OK image{
     pointer-events: none;
@@ -906,6 +880,48 @@ align-items: center;
 }
 
 
+
+#CONTOUR circle, #Groupes text{
+cursor: pointer;
+}
+
+
+#CONTOUR circle{
+mix-blend-mode: multiply;
+
+}
+
+
+@media screen and (max-width: 700px){
+
+.select_menu{
+font-size: .5rem;
+min-width: 100px;
+}
+
+
+#select_ideology{
+min-width: 150px;
+
+}
+
+
+@media screen and (max-width: 375){
+
+.select_menu{
+min-width: 90px;
+}
+
+
+#select_ideology{
+min-width: 130px;
+
+}
+
+
+}
+
+
   </style>
 
 </head>
@@ -939,7 +955,7 @@ align-items: center;
 
 </div>
 
-            <div id="map_info2" >
+            <div id="map_info" >
               <div id="tooltip"></div>
               <!-- <div id="sparkline"></div> -->
             </div>
