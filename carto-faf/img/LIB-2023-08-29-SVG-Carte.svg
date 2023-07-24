@@ -369,39 +369,39 @@
 	
 		<text transform="matrix(-0.0331 0.9995 -0.9995 -0.0331 378.741 602.1712)" font-family="'Synthese-Regular'" font-size="11.3763px" class="LYO">Lyon Populaire</text>
 	
-		<text transform="matrix(0.0935 -0.9956 0.9956 0.0935 345.9264 716.1677)" font-family="'Synthese-Regular'" font-size="11.3764px" x="18px" class="UNI">Unité Sud Perpignan</text>
+		<text transform="matrix(0.0935 -0.9956 0.9956 0.0935 345.9264 716.1677)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="UNI">Unité Sud Perpignan</text>
 	
-		<text transform="matrix(0.2152 -0.9766 0.9766 0.2152 308.8284 686.4983)" font-family="'Synthese-Regular'" font-size="11.3764px" x="10px" class="LIG-M">La Ligue du Midi</text>
+		<text transform="matrix(0.2152 -0.9766 0.9766 0.2152 308.8284 686.4983)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="LIG-M">La Ligue du Midi</text>
 	
-		<text transform="matrix(0.3336 -0.9427 0.9427 0.3336 269.7222 678.1932)" font-family="'Synthese-Regular'" font-size="11.3763px" x="10px" class="NAT">Les Nationalistes</text>
+		<text transform="matrix(0.3336 -0.9427 0.9427 0.3336 269.7222 678.1932)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="NAT">Les Nationalistes</text>
 	
 
-		<text transform="matrix(0.4469 -0.8946 0.8946 0.4469 241.3598 645.3895)" font-family="'Synthese-Regular'" font-size="11.3764px" x="10px" class="PAT">Patria Albiges</text>
+		<text transform="matrix(0.4469 -0.8946 0.8946 0.4469 241.3598 645.3895)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="PAT">Patria Albiges</text>
 	
-		<text transform="matrix(0.5534 -0.8329 0.8329 0.5534 205.3958 631.1641)" font-family="'Synthese-Regular'" font-size="11.3764px" x="10px" class="FUR">Furie française</text>
+		<text transform="matrix(0.5534 -0.8329 0.8329 0.5534 205.3958 631.1641)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="FUR">Furie française</text>
 	
-		<text transform="matrix(0.6516 -0.7586 0.7586 0.6516 141.6708 646.0918)" font-family="'Synthese-Regular'" font-size="11.3763px" x="18px" class="CLER">Clermont non conforme</text>
+		<text transform="matrix(0.6516 -0.7586 0.7586 0.6516 141.6708 646.0918)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="CLER">Clermont non conforme</text>
 	
-		<text transform="matrix(0.7399 -0.6727 0.6727 0.7399 131.9195 594.3447)" font-family="'Synthese-Regular'" font-size="11.3763px" x="12px" class="BAS">Bastide bordelaise</text>
-		<text transform="matrix(0.8169 -0.5767 0.5767 0.8169 160.6261 523.5899)" font-family="'Synthese-Regular'" font-size="11.3763px" x="8px" class="CIV">Civitas</text>
-	<text transform="matrix(0.8816 -0.472 0.472 0.8816 115.9476 510.0505)" font-family="'Synthese-Regular'" font-size="11.3763px" x="10px" class="SOP">Sophia Polis</text>
-	<text transform="matrix(0.9329 -0.3601 0.3601 0.9329 94.0293 479.0137)" font-family="'Synthese-Regular'" font-size="11.3763px" x="12px" class="ANI">Animus Fortis</text>
-	<text transform="matrix(0.9701 -0.2427 0.2427 0.9701 45.6418 452.2142)" font-family="'Synthese-Regular'" font-size="11.3764px" x="18px" class="TOUR">Des Tours et des Lys</text>
-	<text transform="matrix(0.9926 -0.1216 0.1216 0.9926 45.0814 409.4294)" font-family="'Synthese-Regular'" font-size="11.3764px" x="15px" class="JAN">Jeunesse Angevine</text>
-	<text transform="matrix(1 0 0 1 84.706 368.438)" font-family="'Synthese-Regular'" font-size="11.3763px"  x="10px" class="RED">RED Angers</text>
-	<text transform="matrix(0.9923 0.1242 -0.1242 0.9923 90.7019 331.5251)" font-family="'Synthese-Regular'" font-size="11.3763px" x="10px" class="CAR">La Caraque</text>
-	<text transform="matrix(0.9695 0.2451 -0.2451 0.9695 56.9358 285.712)" font-family="'Synthese-Regular'" font-size="11.3764px" x="18px" class="LIG-L">La Ligue ligérienne</text>
-	<text transform="matrix(0.932 0.3624 -0.3624 0.932 84.09 251.8267)" font-family="'Synthese-Regular'" font-size="11.3763px" x="15px" class="AF-N">Action française</text>
-	<text transform="matrix(0.8804 0.4742 -0.4742 0.8804 123.4587 228.069)" font-family="'Synthese-Regular'" font-size="11.3763px" x="15px" class="ANT">An Tour-Tan</text>
+		<text transform="matrix(0.7399 -0.6727 0.6727 0.7399 131.9195 594.3447)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="BAS">Bastide bordelaise</text>
+		<text transform="matrix(0.8169 -0.5767 0.5767 0.8169 160.6261 523.5899)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="CIV">Civitas</text>
+	<text transform="matrix(0.8816 -0.472 0.472 0.8816 115.9476 510.0505)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="SOP">Sophia Polis</text>
+	<text transform="matrix(0.9329 -0.3601 0.3601 0.9329 94.0293 479.0137)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="ANI">Animus Fortis</text>
+	<text transform="matrix(0.9701 -0.2427 0.2427 0.9701 45.6418 452.2142)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="TOUR">Des Tours et des Lys</text>
+	<text transform="matrix(0.9926 -0.1216 0.1216 0.9926 45.0814 409.4294)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="JAN">Jeunesse Angevine</text>
+	<text transform="matrix(1 0 0 1 84.706 368.438)" font-family="'Synthese-Regular'" font-size="11.3763px"  x="0" class="RED">RED Angers</text>
+	<text transform="matrix(0.9923 0.1242 -0.1242 0.9923 90.7019 331.5251)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="CAR">La Caraque</text>
+	<text transform="matrix(0.9695 0.2451 -0.2451 0.9695 56.9358 285.712)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="LIG-L">La Ligue ligérienne</text>
+	<text transform="matrix(0.932 0.3624 -0.3624 0.932 84.09 251.8267)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="AF-N">Action française</text>
+	<text transform="matrix(0.8804 0.4742 -0.4742 0.8804 123.4587 228.069)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="ANT">An Tour-Tan</text>
 	
-		<text transform="matrix(0.8155 0.5788 -0.5788 0.8155 140.8229 195.7524)" font-family="'Synthese-Regular'" font-size="11.3763px" x="10px" class="ORI">L'Oriflamme</text>
-	<text transform="matrix(0.7382 0.6746 -0.6746 0.7382 144.6262 149.479)" font-family="'Synthese-Regular'" font-size="11.3764px" x="15px" class="MED">Meduana Noctua</text>
-		<text transform="matrix(0.6497 0.7602 -0.7602 0.6497 159.9342 105.6861)" font-family="'Synthese-Regular'" font-size="11.3763px" x="10px" class="ACA">Academia Christiana</text>
-	<text transform="matrix(0.5513 0.8343 -0.8343 0.5513 196.6243 83.8549)" font-family="'Synthese-Regular'" font-size="11.3763px" x="18px" class="COR">Aurelianorum Corda</text>
-	<text transform="matrix(0.4446 0.8957 -0.8957 0.4446 252.429 101.3458)" font-family="'Synthese-Regular'" font-size="11.3763px" x="12px" class="NOR">les Normaux</text>
-	<text transform="matrix(0.3311 0.9436 -0.9436 0.3311 277.3332 60.8921)" font-family="'Synthese-Regular'" font-size="11.3764px" x="15px" class="PDF-B">Parti de la France</text>
-	<text transform="matrix(0.2127 0.9771 -0.9771 0.2127 323.1793 81.4419)" font-family="'Synthese-Regular'" font-size="11.3763px" x="10px" class="CIT">La Citadelle</text>
-	<text transform="matrix(0.091 0.9959 -0.9959 0.091 356.82 48.7596)" font-family="'Synthese-Regular'" font-size="11.3763px" x="15px" class="AF-L">Action française</text>
+		<text transform="matrix(0.8155 0.5788 -0.5788 0.8155 140.8229 195.7524)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="ORI">L'Oriflamme</text>
+	<text transform="matrix(0.7382 0.6746 -0.6746 0.7382 144.6262 149.479)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="MED">Meduana Noctua</text>
+		<text transform="matrix(0.6497 0.7602 -0.7602 0.6497 159.9342 105.6861)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="ACA">Academia Christiana</text>
+	<text transform="matrix(0.5513 0.8343 -0.8343 0.5513 196.6243 83.8549)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="COR">Aurelianorum Corda</text>
+	<text transform="matrix(0.4446 0.8957 -0.8957 0.4446 252.429 101.3458)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="NOR">les Normaux</text>
+	<text transform="matrix(0.3311 0.9436 -0.9436 0.3311 277.3332 60.8921)" font-family="'Synthese-Regular'" font-size="11.3764px" x="0" class="PDF-B">Parti de la France</text>
+	<text transform="matrix(0.2127 0.9771 -0.9771 0.2127 323.1793 81.4419)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="CIT">La Citadelle</text>
+	<text transform="matrix(0.091 0.9959 -0.9959 0.091 356.82 48.7596)" font-family="'Synthese-Regular'" font-size="11.3763px" x="0" class="AF-L">Action française</text>
 </g>
 <g id="LOGO-OK">
 	
