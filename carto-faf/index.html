@@ -349,7 +349,6 @@ font-size: 20px;
 
 .legende_dot{
   display: inline-block;
-  margin-left: 10px;
 }
 
 .track-inset {
@@ -603,14 +602,6 @@ font-size: 13px;
     font-size: 12px;
 }
 
-   @media screen and (max-width: 380px) {
-.legende_dot{
-font-size: 12px;
-
-}
-
-
-}
 
 #taille_proportionnelle {
     font-size: 13px;
@@ -887,8 +878,16 @@ font-family: syntheselibeweb;
 }
 
 
+
+
 #CONTOUR circle{
 mix-blend-mode: multiply;
+
+}
+
+#Villes_00000085937572202784161360000007901630108656599683_ circle{
+/*mix-blend-mode: multiply;*/
+cursor: pointer;
 
 }
 
@@ -919,7 +918,8 @@ mix-blend-mode: multiply;
 #tooltip{
 
     min-width: 300px;
-    font-size: .7rem;
+    font-size: .6rem;
+
 }
 
 .select_menu{
@@ -965,6 +965,27 @@ font-family: syntheselibeweb;
 #tooltip h3{
     font-family: 'libesansweb-semicondensed';
     letter-spacing: 0.04em;
+}
+
+
+.legende_dot .dot{
+  margin-right: 4px;
+  float: left;
+  margin-top: 0.2em;
+  height: 15px;
+  width: 15px;
+}
+
+@media screen and (max-width: 700px){
+
+.legende_dot .dot{
+  margin-right: 2px;
+  height: 10px;
+  width: 10px;
+}
+
+
+
 }
 
 
