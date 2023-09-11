@@ -25,7 +25,6 @@ obj_group_class =  {
     "Syndicat des fleuristes": "FLE",
     "15.43": "QUIN",
     "Aquila Popularis": "AQU",
-    "Zoulous Nice": "ZOU",
     "Defend Marseille": "DEF",
     "Tenesoun": "TEN",
     "Action française Lille": "AF-L",
@@ -55,7 +54,8 @@ obj_group_class =  {
     "Academia Christiana": "ACA",
     "Aurelianorum Corda": "COR",
     "les Normaux": "NOR",
-    "La Citadelle": "CIT"
+    "La Citadelle": "CIT",
+    "Palatinu" : "PAL"
 }
 
 let objVillesClasses = 
@@ -80,6 +80,7 @@ let objVillesClasses =
     "Nancy": "Nancy",
     "Nantes": "Nantes",
     "Nice": "Nice",
+    "Bastia": "Bastia",
     "Orleans": "Orléans",
     "Paris": "Paris/Versailles",
     "Perpignan": "Perpignan",
@@ -96,7 +97,7 @@ let objVillesClasses =
 }
 
 
-d3.xml("img/LIB-2023-08-29-SVG-Carte.svg")
+d3.xml("img/LIB-2023-08-29-SVG-Carte-2.svg")
 .then(data => {
   d3.select("#svg-container-map").node().append(data.documentElement)
 
@@ -106,6 +107,7 @@ d3.selectAll('path').style('fill', 'none')
 d3.select('g#Carte path').style('fill', '#182856').style('stroke', '#182856')
 
 d3.selectAll("#CONTOUR circle").nodes().forEach((n) => {
+  console.log(n)
   let d = d3.select(n)
 
   let this_color = d.attr('fill')
@@ -133,6 +135,8 @@ d3.selectAll('#Groupes text')
 .on('click', function(event, d) {
 
   let this_class = d3.select(this).attr('class');
+
+  console.log(this_class)
 
   showTip(this_class)
   })
