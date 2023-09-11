@@ -408,7 +408,7 @@
 	<text transform="matrix(0.4446 0.8957 -0.8957 0.4446 252.429 101.3458)" font-family="'Synthese-Regular'" font-size="11.3763px" class="NOR">Les Normaux</text>
 	<text transform="matrix(0.3311 0.9436 -0.9436 0.3311 277.3332 60.8921)" font-family="'Synthese-Regular'" font-size="11.3764px" class="PDF-B">Parti de la France</text>
 	<text transform="matrix(0.2127 0.9771 -0.9771 0.2127 323.1793 81.4419)" font-family="'Synthese-Regular'" font-size="11.3763px" class="CIT">La Citadelle</text>
-	<text transform="matrix(0.091 0.9959 -0.9959 0.091 356.82 48.7596)" font-family="'Synthese-Regular'" font-size="11.3763px"> class="AF-L">Action française</text>
+	<text transform="matrix(0.091 0.9959 -0.9959 0.091 356.82 48.7596)" font-family="'Synthese-Regular'" font-size="11.3763px" class="AF-L">Action française</text>
 </g>
 <g id="LOGO-OK">
 	
