@@ -1,0 +1,553 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La SNCF s'est débarassée de plus de 200 TGV en 12 ans</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"Type":"Sud-Est","date_mise_en_service":"1978-08-08","date_rebut":"2021-05-26","age_rebut_num":"42.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1978-03-15","date_rebut":"2018-05-27","age_rebut_num":"40.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-04-19","date_rebut":"2019-08-07","age_rebut_num":"39.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-02-06","date_rebut":"2019-03-14","age_rebut_num":"39.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-03-14","date_rebut":"2018-05-26","age_rebut_num":"38.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-03-14","date_rebut":"2018-07-02","age_rebut_num":"38.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-04-19","date_rebut":"2019-09-12","age_rebut_num":"39.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-05-26","date_rebut":"2019-12-31","age_rebut_num":"39.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-05-26","date_rebut":"2019-10-19","age_rebut_num":"39.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-07-01","date_rebut":"2013-11-24","age_rebut_num":"33.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-08-07","date_rebut":"2019-02-06","age_rebut_num":"38.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-08-07","date_rebut":"2020-05-25","age_rebut_num":"39.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-09-12","date_rebut":"2021-08-06","age_rebut_num":"40.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-10-19","date_rebut":"2021-10-19","age_rebut_num":"41.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-10-19","date_rebut":"2021-08-07","age_rebut_num":"40.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-11-24","date_rebut":"2019-09-12","age_rebut_num":"38.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-11-24","date_rebut":"2020-10-18","age_rebut_num":"39.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-11-24","date_rebut":"2019-11-24","age_rebut_num":"39.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-11-24","date_rebut":"2021-07-01","age_rebut_num":"40.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1980-12-31","date_rebut":"2019-12-31","age_rebut_num":"39.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-02-06","date_rebut":"2018-03-14","age_rebut_num":"37.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-01-01","date_rebut":"2013-03-15","age_rebut_num":"32.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-04-20","date_rebut":"2019-08-08","age_rebut_num":"38.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-04-20","date_rebut":"2018-07-02","age_rebut_num":"37.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-04-20","date_rebut":"2018-11-25","age_rebut_num":"37.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-04-20","date_rebut":"2013-11-25","age_rebut_num":"32.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-04-20","date_rebut":"2018-08-07","age_rebut_num":"37.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-04-20","date_rebut":"2013-08-07","age_rebut_num":"32.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-09-13","date_rebut":"2015-05-26","age_rebut_num":"33.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-10-20","date_rebut":"2014-07-02","age_rebut_num":"32.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-10-20","date_rebut":"2020-09-13","age_rebut_num":"38.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-11-25","date_rebut":"2014-09-13","age_rebut_num":"32.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-05-27","date_rebut":"2012-08-07","age_rebut_num":"31.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-07-02","date_rebut":"2014-11-25","age_rebut_num":"33.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-09-13","date_rebut":"2015-04-20","age_rebut_num":"33.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-07-02","date_rebut":"2016-12-31","age_rebut_num":"35.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-09-13","date_rebut":"2014-12-31","age_rebut_num":"33.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-09-13","date_rebut":"1994-02-06","age_rebut_num":"12.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-11-25","date_rebut":"2021-09-12","age_rebut_num":"39.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-01-01","date_rebut":"2020-12-31","age_rebut_num":"39.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-01-01","date_rebut":"2020-04-20","age_rebut_num":"38.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-01-01","date_rebut":"2020-12-31","age_rebut_num":"39.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-01-01","date_rebut":"2012-11-25","age_rebut_num":"30.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-02-06","date_rebut":"2018-03-14","age_rebut_num":"36.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-02-06","date_rebut":"2018-04-20","age_rebut_num":"36.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-03-15","date_rebut":"2009-04-20","age_rebut_num":"27.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-03-15","date_rebut":"2013-04-20","age_rebut_num":"31.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-03-15","date_rebut":"2013-10-19","age_rebut_num":"31.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-03-15","date_rebut":"2014-04-20","age_rebut_num":"32.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-08-08","date_rebut":"2015-03-15","age_rebut_num":"32.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-04-20","date_rebut":"2014-07-02","age_rebut_num":"32.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-04-20","date_rebut":"2014-04-20","age_rebut_num":"32.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-04-20","date_rebut":"2013-05-26","age_rebut_num":"31.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-05-27","date_rebut":"2014-05-27","age_rebut_num":"32.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-05-27","date_rebut":"2014-07-02","age_rebut_num":"32.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-07-02","date_rebut":"2014-12-31","age_rebut_num":"32.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-07-02","date_rebut":"2016-04-19","age_rebut_num":"33.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-08-08","date_rebut":"2014-07-02","age_rebut_num":"31.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-09-13","date_rebut":"2014-10-19","age_rebut_num":"32.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-09-13","date_rebut":"2021-08-07","age_rebut_num":"38.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-09-13","date_rebut":"2013-03-14","age_rebut_num":"30.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-10-20","date_rebut":"2015-08-08","age_rebut_num":"32.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-10-20","date_rebut":"2015-04-20","age_rebut_num":"32.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-11-25","date_rebut":"2019-11-25","age_rebut_num":"37.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1982-11-25","date_rebut":"2016-11-24","age_rebut_num":"34.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-01-01","date_rebut":"2015-01-01","age_rebut_num":"32.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-01-01","date_rebut":"2015-10-20","age_rebut_num":"32.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-02-06","date_rebut":"2015-02-06","age_rebut_num":"32.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-02-06","date_rebut":"2013-10-19","age_rebut_num":"30.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-03-15","date_rebut":"1988-08-07","age_rebut_num":"5.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-03-15","date_rebut":"2015-05-27","age_rebut_num":"32.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-03-15","date_rebut":"2013-09-13","age_rebut_num":"30.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-04-20","date_rebut":"2014-05-26","age_rebut_num":"31.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-04-20","date_rebut":"2018-09-12","age_rebut_num":"35.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-05-27","date_rebut":"2015-09-13","age_rebut_num":"32.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-05-27","date_rebut":"2014-10-19","age_rebut_num":"31.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-05-27","date_rebut":"2015-07-02","age_rebut_num":"32.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-07-02","date_rebut":"2014-12-31","age_rebut_num":"31.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-07-02","date_rebut":"2014-03-14","age_rebut_num":"30.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-05-27","date_rebut":"2016-10-19","age_rebut_num":"33.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-09-13","date_rebut":"2015-05-26","age_rebut_num":"31.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-02-06","date_rebut":"2015-02-05","age_rebut_num":"31.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-02-06","date_rebut":"2015-03-14","age_rebut_num":"31.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-02-06","date_rebut":"2016-11-24","age_rebut_num":"32.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-03-14","date_rebut":"2016-03-14","age_rebut_num":"32.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-03-14","date_rebut":"2013-12-31","age_rebut_num":"29.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-03-14","date_rebut":"2014-05-26","age_rebut_num":"30.2","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-10-19","date_rebut":"2014-08-07","age_rebut_num":"29.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-09-12","date_rebut":"2017-05-25","age_rebut_num":"32.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1986-08-08","date_rebut":"2015-02-06","age_rebut_num":"28.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1985-02-06","date_rebut":"2015-10-20","age_rebut_num":"30.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1985-10-20","date_rebut":"2017-05-26","age_rebut_num":"31.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1985-11-25","date_rebut":"2017-05-26","age_rebut_num":"31.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1985-09-13","date_rebut":"2014-04-20","age_rebut_num":"28.6","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1986-09-13","date_rebut":"2016-05-25","age_rebut_num":"29.7","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1986-07-02","date_rebut":"2015-12-31","age_rebut_num":"29.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1986-05-27","date_rebut":"2015-10-20","age_rebut_num":"29.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1986-07-02","date_rebut":"2017-11-24","age_rebut_num":"31.4","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-04-19","date_rebut":"2014-08-07","age_rebut_num":"30.3","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-05-26","date_rebut":"2017-07-01","age_rebut_num":"33.1","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-07-01","date_rebut":"2014-12-31","age_rebut_num":"30.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1981-08-08","date_rebut":"2013-02-06","age_rebut_num":"31.5","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-10-20","date_rebut":"2013-08-07","age_rebut_num":"29.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-10-20","date_rebut":"2013-09-12","age_rebut_num":"29.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-11-25","date_rebut":"2013-09-12","age_rebut_num":"29.8","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1983-11-25","date_rebut":"2013-11-24","age_rebut_num":"30.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1984-01-01","date_rebut":"2013-11-24","age_rebut_num":"29.9","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1986-01-01","date_rebut":"2015-01-01","age_rebut_num":"29.0","categorie":"Sud-Est"},{"Type":"Sud-Est","date_mise_en_service":"1985-11-25","date_rebut":"2014-10-19","age_rebut_num":"28.9","categorie":"Sud-Est"},{"Type":"Duplex","date_mise_en_service":"1997-09-13","date_rebut":"2013-04-19","age_rebut_num":"15.6","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"1997-10-20","date_rebut":"2013-05-26","age_rebut_num":"15.6","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"1997-11-25","date_rebut":"2013-07-01","age_rebut_num":"15.6","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"1997-11-25","date_rebut":"2013-10-19","age_rebut_num":"15.9","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"1998-05-27","date_rebut":"2017-04-20","age_rebut_num":"18.9","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"1998-07-02","date_rebut":"2016-08-07","age_rebut_num":"18.1","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"1998-07-02","date_rebut":"2016-05-25","age_rebut_num":"17.9","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"1998-09-13","date_rebut":"2016-09-12","age_rebut_num":"18.0","categorie":"Duplex"},{"Type":"Duplex","date_mise_en_service":"2003-09-13","date_rebut":"2013-04-19","age_rebut_num":"9.6","categorie":"Duplex"},{"Type":"Atlantique","date_mise_en_service":"1988-03-14","date_rebut":"2016-03-14","age_rebut_num":"28.0","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-01-01","date_rebut":"2018-11-25","age_rebut_num":"27.9","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-08-08","date_rebut":"2016-12-31","age_rebut_num":"26.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-05-27","date_rebut":"2017-10-20","age_rebut_num":"28.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-05-27","date_rebut":"2016-10-19","age_rebut_num":"27.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-07-02","date_rebut":"2016-11-24","age_rebut_num":"27.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-05-27","date_rebut":"2017-03-14","age_rebut_num":"27.8","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-02-06","date_rebut":"2015-02-06","age_rebut_num":"25.0","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-05-27","date_rebut":"2014-08-08","age_rebut_num":"25.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-08-08","date_rebut":"2017-03-14","age_rebut_num":"27.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-08-08","date_rebut":"2021-03-14","age_rebut_num":"30.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-08-08","date_rebut":"2018-02-06","age_rebut_num":"28.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-08-08","date_rebut":"2016-03-14","age_rebut_num":"26.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-07-02","date_rebut":"2018-12-31","age_rebut_num":"29.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-08-08","date_rebut":"2019-02-06","age_rebut_num":"29.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-07-02","date_rebut":"2017-11-25","age_rebut_num":"28.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-07-02","date_rebut":"2017-05-26","age_rebut_num":"27.9","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-08-08","date_rebut":"2015-03-15","age_rebut_num":"25.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-09-13","date_rebut":"2019-05-26","age_rebut_num":"29.7","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-09-13","date_rebut":"2016-07-01","age_rebut_num":"26.8","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-08-08","date_rebut":"2017-09-13","age_rebut_num":"28.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-10-20","date_rebut":"2016-04-20","age_rebut_num":"26.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-09-13","date_rebut":"2020-12-31","age_rebut_num":"31.3","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-09-13","date_rebut":"2019-10-20","age_rebut_num":"30.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-05-27","date_rebut":"2018-10-20","age_rebut_num":"29.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-09-13","date_rebut":"2019-05-26","age_rebut_num":"29.7","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-09-13","date_rebut":"2018-10-19","age_rebut_num":"29.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-10-20","date_rebut":"2017-07-02","age_rebut_num":"27.7","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-10-20","date_rebut":"2019-07-02","age_rebut_num":"29.7","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-10-20","date_rebut":"2021-10-20","age_rebut_num":"32.0","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-11-25","date_rebut":"2018-07-02","age_rebut_num":"28.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-11-25","date_rebut":"2015-07-02","age_rebut_num":"25.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-11-25","date_rebut":"2021-10-19","age_rebut_num":"31.9","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-11-25","date_rebut":"2018-05-26","age_rebut_num":"28.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-11-25","date_rebut":"2019-02-06","age_rebut_num":"29.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-01-01","date_rebut":"2018-07-02","age_rebut_num":"28.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-01-01","date_rebut":"2017-11-25","age_rebut_num":"27.9","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-02-06","date_rebut":"2014-03-14","age_rebut_num":"24.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-01-01","date_rebut":"2017-05-26","age_rebut_num":"27.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-02-06","date_rebut":"2016-11-24","age_rebut_num":"26.8","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-03-15","date_rebut":"2020-03-14","age_rebut_num":"30.0","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-02-06","date_rebut":"2017-04-19","age_rebut_num":"27.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-03-15","date_rebut":"2018-05-27","age_rebut_num":"28.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-03-15","date_rebut":"2020-09-13","age_rebut_num":"30.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-03-15","date_rebut":"2017-05-26","age_rebut_num":"27.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-03-15","date_rebut":"2017-07-02","age_rebut_num":"27.3","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-04-20","date_rebut":"2020-08-07","age_rebut_num":"30.3","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-04-20","date_rebut":"2018-04-20","age_rebut_num":"28.0","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-04-20","date_rebut":"2020-03-13","age_rebut_num":"29.9","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-04-20","date_rebut":"2018-05-26","age_rebut_num":"28.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-05-27","date_rebut":"2017-12-31","age_rebut_num":"27.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-05-27","date_rebut":"2021-08-07","age_rebut_num":"31.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-05-27","date_rebut":"2021-02-06","age_rebut_num":"30.7","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-07-02","date_rebut":"2018-03-14","age_rebut_num":"27.7","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-09-13","date_rebut":"2017-11-24","age_rebut_num":"27.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-09-13","date_rebut":"2017-10-19","age_rebut_num":"27.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1990-02-06","date_rebut":"2019-12-31","age_rebut_num":"29.9","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-01-01","date_rebut":"2017-12-31","age_rebut_num":"27.0","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1989-09-13","date_rebut":"2016-02-06","age_rebut_num":"26.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-01-01","date_rebut":"2016-12-31","age_rebut_num":"26.0","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-02-06","date_rebut":"2016-03-13","age_rebut_num":"25.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-02-06","date_rebut":"2018-04-19","age_rebut_num":"27.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-02-06","date_rebut":"2019-11-25","age_rebut_num":"28.8","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-03-15","date_rebut":"2018-05-26","age_rebut_num":"27.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-03-15","date_rebut":"2016-05-26","age_rebut_num":"25.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-04-20","date_rebut":"2018-09-12","age_rebut_num":"27.4","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-04-20","date_rebut":"2020-05-25","age_rebut_num":"29.1","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-04-20","date_rebut":"2020-08-06","age_rebut_num":"29.3","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-04-20","date_rebut":"2018-08-07","age_rebut_num":"27.3","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-05-27","date_rebut":"2021-02-05","age_rebut_num":"29.7","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-05-27","date_rebut":"2020-11-24","age_rebut_num":"29.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-08-08","date_rebut":"2021-05-26","age_rebut_num":"29.8","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-07-02","date_rebut":"2017-09-12","age_rebut_num":"26.2","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-08-08","date_rebut":"2019-02-06","age_rebut_num":"27.5","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-09-13","date_rebut":"2022-04-19","age_rebut_num":"30.6","categorie":"Atlantique"},{"Type":"Atlantique","date_mise_en_service":"1991-10-20","date_rebut":"2019-05-26","age_rebut_num":"27.6","categorie":"Atlantique"},{"Type":"Réseau","date_mise_en_service":"1992-09-12","date_rebut":"1998-12-31","age_rebut_num":"6.3","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1992-11-24","date_rebut":"2017-08-06","age_rebut_num":"24.7","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-03-15","date_rebut":"2022-11-25","age_rebut_num":"29.7","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-03-15","date_rebut":"2006-01-01","age_rebut_num":"12.8","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-03-15","date_rebut":"2006-03-15","age_rebut_num":"13.0","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2006-05-26","age_rebut_num":"13.1","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2006-04-20","age_rebut_num":"13.0","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2006-05-26","age_rebut_num":"13.1","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2006-10-19","age_rebut_num":"13.5","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2007-02-06","age_rebut_num":"13.8","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2006-11-25","age_rebut_num":"13.6","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2007-07-02","age_rebut_num":"14.2","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-03-15","age_rebut_num":"13.8","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-04-20","date_rebut":"2007-02-06","age_rebut_num":"13.8","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-01-01","age_rebut_num":"13.6","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-03-15","age_rebut_num":"13.8","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-03-15","age_rebut_num":"13.8","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-07-03","age_rebut_num":"14.1","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-08-08","age_rebut_num":"14.2","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-03-15","age_rebut_num":"13.8","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-02-06","age_rebut_num":"13.7","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1993-05-27","date_rebut":"2007-10-20","age_rebut_num":"14.4","categorie":"Réseau"},{"Type":"Réseau Duplex","date_mise_en_service":"2006-08-08","date_rebut":"2009-07-02","age_rebut_num":"2.9","categorie":"Duplex"},{"Type":"Réseau Duplex","date_mise_en_service":"2007-08-08","date_rebut":"2023-08-08","age_rebut_num":"16.0","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2013-07-02","date_rebut":"2021-04-19","age_rebut_num":"7.8","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2013-07-02","date_rebut":"2021-04-19","age_rebut_num":"7.8","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2013-08-08","date_rebut":"2021-07-02","age_rebut_num":"7.9","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2013-09-13","date_rebut":"2021-09-13","age_rebut_num":"8.0","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2014-04-20","date_rebut":"2021-11-24","age_rebut_num":"7.6","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2014-05-27","date_rebut":"2022-02-06","age_rebut_num":"7.7","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2014-07-02","date_rebut":"2022-04-19","age_rebut_num":"7.8","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2014-08-08","date_rebut":"2022-07-02","age_rebut_num":"7.9","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2014-09-13","date_rebut":"2022-10-19","age_rebut_num":"8.1","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2014-11-25","date_rebut":"2023-02-06","age_rebut_num":"8.2","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2015-01-01","date_rebut":"2023-04-20","age_rebut_num":"8.3","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2015-02-06","date_rebut":"2021-07-01","age_rebut_num":"6.4","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2015-03-15","date_rebut":"2021-09-13","age_rebut_num":"6.5","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2015-03-15","date_rebut":"2021-10-19","age_rebut_num":"6.6","categorie":"Duplex"},{"Type":"2N2","date_mise_en_service":"2023-04-20","date_rebut":"2023-08-07","age_rebut_num":"0.3","categorie":"Duplex"},{"Type":"TMST 3C","date_mise_en_service":"1999-09-13","date_rebut":"2015-04-19","age_rebut_num":"15.6","categorie":"Autre"},{"Type":"TMST 3C","date_mise_en_service":"1999-09-13","date_rebut":"2015-04-19","age_rebut_num":"15.6","categorie":"Autre"},{"Type":"TMST 3C","date_mise_en_service":"1999-09-13","date_rebut":"2015-04-19","age_rebut_num":"15.6","categorie":"Autre"},{"Type":"TMST NOL","date_mise_en_service":"2007-09-13","date_rebut":"2015-04-19","age_rebut_num":"7.6","categorie":"Autre"},{"Type":"TMST NOL","date_mise_en_service":"2007-09-13","date_rebut":"2015-04-19","age_rebut_num":"7.6","categorie":"Autre"},{"Type":"TMST NOL","date_mise_en_service":"2007-09-13","date_rebut":"2015-04-19","age_rebut_num":"7.6","categorie":"Autre"},{"Type":"TMST NOL","date_mise_en_service":"2007-09-13","date_rebut":"2015-04-19","age_rebut_num":"7.6","categorie":"Autre"},{"Type":"TMST NOL","date_mise_en_service":"2007-09-13","date_rebut":"2015-04-19","age_rebut_num":"7.6","categorie":"Autre"},{"Type":"TMST NOL","date_mise_en_service":"2007-09-13","date_rebut":"2015-04-19","age_rebut_num":"7.6","categorie":"Autre"},{"Type":"POS","date_mise_en_service":"2006-10-20","date_rebut":"2009-12-31","age_rebut_num":"3.2","categorie":"Autre"},{"Type":"POS","date_mise_en_service":"2007-03-15","date_rebut":"2008-09-12","age_rebut_num":"1.5","categorie":"Autre"},{"Type":"Réseau","date_mise_en_service":"1994-09-13","date_rebut":"2007-11-25","age_rebut_num":"13.2","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1994-09-13","date_rebut":"2007-12-31","age_rebut_num":"13.3","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1994-09-13","date_rebut":"2007-12-31","age_rebut_num":"13.3","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1995-11-25","date_rebut":"2003-10-19","age_rebut_num":"7.9","categorie":"Réseau"},{"Type":"Réseau","date_mise_en_service":"1995-10-20","date_rebut":"2009-03-14","age_rebut_num":"13.4","categorie":"Réseau"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":20,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":24,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":"1987-11-24T23:00:00.000Z","calculated_right_value":"2023-08-07T22:00:00.000Z","manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":0,"calculated_right_value":42.8,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"LibePoliticalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":true,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":10,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":9,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"small","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"date_rebut","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"YYYY-MM-DD","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":8,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":1,"category":"general"},"circleOpacity":{"value":0.3,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":1,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d).format('YYYY')})"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"date_rebut","value":"date_rebut"},{"label":"age_rebut_num","value":"age_rebut_num"},{"label":"categorie","value":"categorie"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":true,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":true,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":"[[Type]]<br>\n<strong>Mis en service le : </strong>[[date_mise_en_service|frenchDate]]<br>\n<strong>Mis au rebut le :</strong> [[date_rebut|frenchDate]]<br>\n<strong>A l'age de :</strong> [[age_rebut_num]]"},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":1,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":true,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":true,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["date_rebut"],"selected_yRows":["age_rebut_num"],"selected_size":[],"selected_color":["categorie"],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{"Sud-Est":"#e85d21","Atlantique":"#026db5","Autre":"#cccccc","Duplex":"#52ae56","Réseau":"#cd0420"},"selectedColorScheme":"LibePoliticalColors","additionnalParam":"","selected_graph":"circleChart","chartTitle":"La SNCF s'est débarassée de plus de 200 TGV en 12 ans","chartSource":"Trans-Missions","chartSubTitle":"TGV mis au rebut, revendus ou transformés par la SNCF","annotations":[{"note":{"label":"Toutes les rames de TGV Sud-Est et la plupart des TGV Réseau ont été mis à la casse en moins de 10 ans","title":"","align":"right","wrap":"250","orientation":0,"textPadding":"30"},"x":449,"y":88,"dy":-9.999992370605469,"dx":-132,"subject":{"radius":96.36757552651996},"functionName":"annotationCalloutCircle","color":"#3c3c3b","index":1,"disable":[]},{"note":{"label":"19 rames de TGV réseau sont retirées pour être transformées en TGV Duplex et POS","title":"","align":"right","wrap":"200","orientation":0,"textPadding":0},"x":296,"y":218.99999237060547,"dy":-30.99999237060547,"dx":-57.999996185302734,"subject":{"radius":38.384776310850235},"functionName":"annotationCalloutCircle","color":"#3c3c3b","index":2,"disable":[]},{"note":{"label":"14 rames de TGV Duplex sont envoyées en Espagne","title":"","align":"right","wrap":150,"orientation":0,"textPadding":0},"x":518,"y":264.00000762939453,"dy":2.9999847412109375,"dx":-38.999996185302734,"subject":{"radius":31.313708498984763},"functionName":"annotationCalloutCircle","color":"#3c3c3b","index":3,"disable":[]}]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeCirclechart(data0) {
+
+    // var kValue = 'graphParameters['selected_xRows][0];
+    // var dValues = graphParameters[selected_yRows];
+
+    var data = _.cloneDeep(data0);
+
+    data = recalculateAndTransformDate(data);
+
+    var thisXvar = graphParameters['selected_xRows'][0];
+    var thisYvar = graphParameters['selected_yRows'][0];
+    var thisSizeVar = graphParameters['selected_size'][0];
+    var thisColorVar = graphParameters['selected_color'][0];
+    var thisLabelVar = graphParameters['selected_label'][0];
+
+    data.forEach(function(d) {
+        d[thisXvar] = formatNumbers(d[thisXvar]);
+        d[thisYvar] = formatNumbers(d[thisYvar]);
+        d[thisSizeVar] = d[thisSizeVar] ? formatNumbers(d[thisSizeVar]) : 1;
+    })
+
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+
+    updateParameters();
+
+    var xScale = xScaleType()
+    .domain([d3.min(data, function(d) { return d[thisXvar] }),
+        d3.max(data, function(d) { return d[thisXvar] }) ])
+    .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d[thisYvar] }),
+        d3.max(data, function(d) { return d[thisYvar] }) ])
+    .range([height, 0]);
+
+    var rScale = d3.scaleSqrt()
+    .domain([0, d3.max(data, function(d){ return d[thisSizeVar]})])
+    .range([0, (manualReusableParameters.circleRadius.value*13)]);
+
+
+   manualReusableParameters.rangeX.calculated_left_value =  0;
+
+
+   if (manualReusableParameters.dateField.value == true && manualReusableParameters.dateFieldFormat.value){
+
+    var this_Min = _.cloneDeep(d3.min(data, function(d) { return d[thisXvar] }))
+
+    var this_Max = _.cloneDeep(d3.max(data, function(d) { return d[thisXvar] }))
+
+    var this_Diff = _.round(this_Max.diff(this_Min, 'days')/50)
+
+
+    var thisNewMin = this_Min.subtract(this_Diff, 'days')
+
+    manualReusableParameters.rangeX.calculated_left_value = thisNewMin;
+   }
+
+    manualReusableParameters.rangeX.calculated_right_value =  d3.max(data, function(d) { return d[thisXvar]});
+
+   manualReusableParameters.rangeY.calculated_left_value =  0;
+    manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d[thisYvar]});
+
+    var thisXMin = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_left_value : manualReusableParameters.rangeX.manual_left_value !== null ? manualReusableParameters.rangeX.manual_left_value : manualReusableParameters.rangeX.calculated_left_value;
+    var thisXMax = ! manualReusableParameters.rangeX.value ?  manualReusableParameters.rangeX.calculated_right_value : manualReusableParameters.rangeX.manual_right_value !== null ? manualReusableParameters.rangeX.manual_right_value : manualReusableParameters.rangeX.calculated_right_value;
+    var thisYMin = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+    var thisYMax = ! manualReusableParameters.rangeY.value ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+xScale.domain([thisXMin, thisXMax])
+yScale.domain([thisYMin, thisYMax])
+
+
+    changeAxis(xScale, yScale)
+
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var circles = g_inner
+    .selectAll('.ball')
+    .data(data);
+
+    circles.exit().transition().duration(200).remove();
+
+    circles
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .select('circle')
+    .transition()
+    .duration(200)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value);
+
+    circles
+    .select('text')
+    .transition()
+    .duration(200)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+    var new_circles = circles
+    .enter()
+    .append('g')
+    .attr('class', 'ball')
+    .attr('transform', function(d) {return 'translate(' + xScale(d[thisXvar]) + ',' +  yScale(d[thisYvar]) + ')'})
+    .on('mouseover', function(d, i){ show_tooltip(d)})
+    .on('mouseout', function(d){ hide_tooltip()});
+
+    new_circles
+    .append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', function(d){return graphParameters['selected_size'][0] ? rScale(d[thisSizeVar]) : manualReusableParameters.circleRadius.value})
+    .style('fill-opacity', manualReusableParameters.circleOpacity.value)
+    .style('fill', function(d){return thisColorVar ? colorUpdated(d[thisColorVar]) : '#e60004'});
+
+    new_circles
+    .append('text')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('y', 4)
+    .text(function(d){return thisLabelVar ? d[thisLabelVar] : ""});
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+    customizeAxis()
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeCirclechart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
