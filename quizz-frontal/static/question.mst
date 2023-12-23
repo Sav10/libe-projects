@@ -1,0 +1,66 @@
+<!--  Questions  -->
+{{#items}}
+<div class="question">
+    <div class="question__top">
+        <div class="question__top__title" style="background-image:url({{&image}});background-position: center; background-size: cover;">
+            {{#image}}
+            <div class="question__top__title__overlay"></div>
+            {{/image}}
+            <span class="centerHeight">{{&question}}</span>
+        </div>
+    </div>
+    <div class="question__bottom">
+        <div class="question__bottom__answers">
+            {{#answers}}
+                <div class="question__bottom__answers__answer" rel="{{id}}">
+                    <span class="center">{{&text}}</span>
+                </div>
+            {{/answers}}
+        </div>
+        <div class="question__bottom__result">
+            <div class="question__bottom__result__ok" rel="{{ok}}">
+                <div class="question__bottom__result__ok__title"><span class="fa-stack"><i class="fa fa-2x fa-smile-o" aria-hidden="true"></i></span>{{&titleIsOk}}</div>
+                <div class="question__bottom__result__ok__texte">{{&textIsOk}}</div>
+                {{#link}}
+                <a href="{{&link}}" target="_blank" class="question__bottom_result__more">En savoir plus</a>
+                {{/link}}
+            </div>
+            <div class="question__bottom__result__ko">
+                <div class="question__bottom__result__ko__title"><span class="fa-stack"><i class="fa fa-2x fa-frown-o" aria-hidden="true"></i></span>{{&titleIsNop}}</div>
+                <div class="question__bottom__result__ko__texte">{{&textIsNop}}</div>
+                {{#link}}
+                <a href="{{&link}}" target="_blank" class="question__bottom_result__more">En savoir plus</a>
+                {{/link}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/items}}
+<!--  Résultats  -->
+<div class="question result">
+    <div flex class="result-top">
+        <div class="result-top__wrapper">
+            <div class="result__title">
+                Score final
+            </div>
+            <div class="result__score">
+                <span class="result__score__inner">
+                    <span class="result__score__inner__current"></span>/<span class="result__score__inner__max"></span>
+                </span>
+            </div>
+            <div class="result__text">
+                <div class="result__text__ok">{{&txtQuizOk}}</div>
+                <div class="result__text__ko">{{&txtQuizNop}}</div>
+            </div>
+            <div class="result__share">
+                <a href="" class="result__tweet__link" rel="XX"><i class="fa fa-fw fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+    {{#linkQuiz}}
+    <div class="result__more">
+        <a href="{{&linkQuiz}}" target="_blank">À lire aussi</a>
+    </div>
+    {{/linkQuiz}}
+    <div class="reload">Recommencer le quiz</div>
+</div>

@@ -1,0 +1,417 @@
+{
+	"id": "quizz-festival-aix",
+	"type": "quiz",
+	"date": "23/6/2023",
+	"created_date": "2023-06-23T10:18:03.950Z",
+	"modification_date": "2023-06-23T10:18:03.950Z",
+	"statut": "published",
+	"name": "Connaissez-vous le Festival d'Aix-en-Provence ? (c'est du lyrique)",
+	"author": "Service web",
+	"author_slug": "service-web",
+	"mainColor": "#000",
+	"sideColor": "#fff",
+	"txtQuizOk": "Du 4 au 24 juillet, le Festival présente sa 75e édition. A vous de la découvrir à travers ce quiz ludique et informé",
+	"txtQuizNop": "",
+	"linkQuiz": "",
+	"social": "",
+	"items": [{
+		"question": "Cette année, le Festival d’Aix fête sa...",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "12e édition",
+			"isOk": false
+		}, {
+			"text": "51e édition",
+			"isOk": false
+		}, {
+			"text": "75e édition (on l'a dit le carton d'avant...)",
+			"isOk": true
+		}],
+		"titleIsOk": "Bravo !",
+		"textIsOk": "Le Festival d’Aix-en-Provence a été créé en 1948 par Gabriel Dussurget.",
+		"titleIsNop": "Hélas...",
+		"textIsNop": "Le Festival d’Aix-en-Provence a été créé en 1948 par Gabriel Dussurget.",
+		"link": ""
+	},
+{
+		"question": "Lequel de ces ténors entendrez-vous cette année au Festival d’Aix ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Roberto Alagna",
+			"isOk": false
+		}, {
+			"text": "Luciano Pavarotti †",
+			"isOk": false
+		}, {
+			"text": "Jonas Kaufmann",
+			"isOk": true
+		}],
+		"titleIsOk": "Oui !",
+		"textIsOk": "Il interprète «Otello» en version de concert.",
+		"titleIsNop": "Eh non...",
+		"textIsNop": "Il s'agit de Jonas Kaufmann, qui interprète «Otello» en version de concert.",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Si Mozart n’avait pas été compositeur, il aurait été…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Peintre, comme tous les compositeurs aveugles",
+			"isOk": false
+		}, {
+			"text": "Poète, il a écrit 14 recueils retrouvés sous son lit après sa mort",
+			"isOk": false
+		}, {
+			"text": "Franchement, nul ne le sait",
+			"isOk": true
+		}],
+		"titleIsOk": "Bravo !",
+		"textIsOk": "Et si quelqu’un a une piste, qu’il n’hésite pas à la garder pour lui.",
+		"titleIsNop": "Pas du tout",
+		"textIsNop": "Et si quelqu’un a une piste, qu’il n’hésite pas à la garder pour lui.",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "Laquelle de ces sopranos entendrez-vous cette année ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Marianne Crebassa",
+			"isOk": false
+		}, {
+			"text": "Elizabeth DeShong",
+			"isOk": false
+		}, {
+			"text": "Agneta Eichenholz",
+			"isOk": true
+		}],
+		"titleIsOk": "Merveilleux !",
+		"textIsOk": "Marianne Crebassa et Elizabeth DeShong sont mezzo, mdr",
+		"titleIsNop": "Presque",
+		"textIsNop": "Marianne Crebassa et Elizabeth DeShong sont mezzo, mdr",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "La pièce de Büchner “Woyzeck” puis l’opéra de Berg “Wozzeck” sont inspirés…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "De la vie d’un condamné à mort du XIXe siècle",
+			"isOk": true
+		}, {
+			"text": "De la vie d’un homme qui existe encore",
+			"isOk": false
+		}, {
+			"text": "De la vie d’un inconnu qui n’avait rien demandé et a ensuite été condamné pour des faits, écrits dans la pièce, qu’il n’avait pas commis",
+			"isOk": false
+		}],
+		"titleIsOk": "Félicitations !",
+		"textIsOk": "La dernière réponse est séduisante mais un peu trop rocambolesque, reconnaissons-le…",
+		"titleIsNop": "Vous le faites exprès ?",
+		"textIsNop": "C'est la première réponse. La dernière réponse est séduisante mais un peu trop rocambolesque, reconnaissons-le…",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Dans la fosse, cette année, vous pourrez entendre…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "L’Orchestre Balthasar Neumann",
+			"isOk": true
+		}, {
+			"text": "L’Harmonie de Villefranche-sur-Meuse",
+			"isOk": false
+		}, {
+			"text": "Le Philharmonique de New York",
+			"isOk": false
+		}],
+		"titleIsOk": "Vous êtes fortiche !",
+		"textIsOk": "Le Balthasar Neumann, qui tient son nom d’un architecte allemand du XVIIIe siècle, est un orchestre historiquement informé.",
+		"titleIsNop": "Pas du tout...",
+		"textIsNop": "C'était le Balthasar Neumann, qui tient son nom d’un architecte allemand du XVIIIe siècle. Par ailleurs, c'est un orchestre historiquement informé.",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Qu’est-ce qu’un orchestre historiquement informé ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Les musiciens ont tous un master d’histoire",
+			"isOk": false
+		}, {
+			"text": "Les musiciens sont tous abonnés à un organe de presse",
+			"isOk": false
+		}, {
+			"text": "Les musiciens jouent tous sur instruments d’époque",
+			"isOk": true
+		}],
+		"titleIsOk": "C'était facile, mais bravo !",
+		"textIsOk": "Les instruments datent donc peu ou prou du moment de la création de l’oeuvre interprétée, afin de restituer le son de l’époque.",
+		"titleIsNop": "Concentrez-vous un peu, quoi...",
+		"textIsNop": "Dans un tel orchestre, les instruments datent peu ou prou du moment de la création de l’oeuvre interprétée, afin de restituer le son de l’époque.",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "George Britten a composé...",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "«Violence in Venice»",
+			"isOk": false
+		}, {
+			"text": "«Peter on Skin»",
+			"isOk": false
+		}, {
+			"text": "Il n'est pas compositeur",
+			"isOk": true
+		}],
+		"titleIsOk": "Génie que vous êtes !",
+		"textIsOk": "Les deux compositeurs contemporains dont on a mélangé les titres sont Benjamin Britten et George Benjamin. Il existe bien des George Britten dans le monde, et on les salue chaleureusement !",
+		"titleIsNop": "Caramba, encore raté...",
+		"textIsNop": "Les deux compositeurs contemporains dont on a mélangé les titres sont Benjamin Britten et George Benjamin. Il existe bien des George Britten dans le monde, et on les salue chaleureusement !",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "La tradition du Festival d’Aix veut que tous les orchestres s’accordent sur la musique de…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "«Enfants de la Ddass» de MC Jean Gab’1",
+			"isOk": false
+		}, {
+			"text": "«Quand je joue» de Julien Clerc",
+			"isOk": false
+		}, {
+			"text": "Il n’y a pas de tradition d’accordage spécifique",
+			"isOk": true
+		}],
+		"titleIsOk": "Easy...",
+		"textIsOk": "Les musiciens s’accordent donc sur un la et à ne pas trop parler durant les représentations.",
+		"titleIsNop": "Nimp de nimp",
+		"textIsNop": "Les musiciens s’accordent sur un la et à ne pas trop parler durant les représentations.",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Quel nouveau lieu du Festival a ouvert l’an dernier ? ",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "La piscine du Tholonet",
+			"isOk": false
+		}, {
+			"text": "Le stadium de Vitrolles",
+			"isOk": true
+		}, {
+			"text": "Le camping de Gardanne",
+			"isOk": false
+		}],
+		"titleIsOk": "Chapeau !",
+		"textIsOk": "Tout comme le Pavillon noir, construit pour accueillir le Ballet Preljocaj, mais aussi certaines productions du Festival depuis 2022.",
+		"titleIsNop": "Nul",
+		"textIsNop": "C'était le stadium de Vitrolles. Comme le Pavillon noir, construit pour accueillir le Ballet Preljocaj, il accueille certaines productions du Festival depuis 2022.",
+		"link": "eventuel_lien"
+	},
+{
+		"question": " Mais qu’est-ce qu’il est beau, cet arbre, près de la scène…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "De l’Archevêché",
+			"isOk": true
+		}, {
+			"text": "Du Jeu de Paume",
+			"isOk": false
+		}, {
+			"text": "Et Marne",
+			"isOk": false
+		}],
+		"titleIsOk": "Vous êtes connaisseur !",
+		"textIsOk": "Enfin beau… il est là quoi.",
+		"titleIsNop": "Hélas, Ignace...",
+		"textIsNop": "C'était à l'Archevêché. Mais il est pas non plus magnifique. Il est là quoi.",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "Soudain, vous vous apercevez que votre voisin ou voisine dort pendant le spectacle. Que faites-vous ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Vous demandez à ce que l’opéra soit arrêté pour favoriser son sommeil",
+			"isOk": false
+		}, {
+			"text": "Vous le dénoncez aux trois agents formés par le festival pour réveiller les spectateurs",
+			"isOk": false
+		}, {
+			"text": "En réalité c’est un rêve. Votre voisin ne dort pas",
+			"isOk": true
+		}],
+		"titleIsOk": "Bel esprit logique !",
+		"textIsOk": "Les deux autres propositions sont aberrante ou fausse.",
+		"titleIsNop": "Eh non, Edmond...",
+		"textIsNop": "Les deux premières propositions sont aberrante ou fausse.",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Le Festival réfléchit à doter l’Archevêché...",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "D'un toit",
+			"isOk": true
+		}, {
+			"text": "De toilettes",
+			"isOk": false
+		}, {
+			"text": "D'un toit de toilettes",
+			"isOk": false
+		}],
+		"titleIsOk": "Féérique !",
+		"textIsOk": "Les toilettes existent déjà et, pour la troisième proposition, on espère jamais.",
+		"titleIsNop": "Aberrant",
+		"textIsNop": "Les toilettes existent déjà et, pour la troisième proposition, on espère jamais",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "“The Faggots and Their Friends Between Revolutions” est un spectacle…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Sur une entrevue entre Danton et Robespierre",
+			"isOk": false
+		}, {
+			"text": "Queer",
+			"isOk": true
+		}, {
+			"text": "Satin",
+			"isOk": false
+		}],
+		"titleIsOk": "Merveilleux !",
+		"textIsOk": "Le spectacle est adapté d’un ouvrage militant publié dans les années 70 par l’Américain Larry Mitchell.",
+		"titleIsNop": "Peut mieux faire, clairement",
+		"textIsNop": "Ce spectacle queer est adapté d’un ouvrage militant publié dans les années 70 par l’Américain Larry Mitchell.",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "En ancien franc, le budget du Festival se monte à…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "2 567 871 000",
+			"isOk": false
+		}, {
+			"text": "19 022 753 000",
+			"isOk": true
+		}, {
+			"text": "87 898 238 000",
+			"isOk": false
+		}],
+		"titleIsOk": "Ovation pour vous !",
+		"textIsOk": "Ce qui nous donne à peu près 29 millions d’euros.",
+		"titleIsNop": "C'était compliqué faut dire...",
+		"textIsNop": "En euros, ça donne à peu près 29 millions.",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "On pense souvent que Brecht est allemand, alors qu’il… ",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Est dramaturge",
+			"isOk": false
+		}, {
+			"text": "Est suisse",
+			"isOk": false
+		}, {
+			"text": "Est bien allemand",
+			"isOk": true
+		}],
+		"titleIsOk": "Vous... mais alors vous...",
+		"textIsOk": "Il est même né en Bavière… (la première proposition est aussi exacte).",
+		"titleIsNop": "Votre persévérance est appréciée",
+		"textIsNop": "Il est allemand et même né en Bavière… (la première proposition est aussi exacte).",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "L’oeuvre de quel compositeur est au coeur des «Ballets russes» ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Berlioz",
+			"isOk": false
+		}, {
+			"text": "Rimski-Korsakov",
+			"isOk": false
+		}, {
+			"text": "Stravinski",
+			"isOk": true
+		}],
+		"titleIsOk": "Quelle vista !",
+		"textIsOk": "Et les ballets sont «l’Oiseau de feu» (1910), «Petrouchka» (1911) et «le Sacre du printemps» (1913).",
+		"titleIsNop": "Mais... et alors ?",
+		"textIsNop": "C'était Stravinski, et les ballets sont «l’Oiseau de feu» (1910), «Petrouchka» (1911) et «le Sacre du printemps» (1913).",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Lequel de ces opéras n’est pas proposé en version de concert cette année ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "«Le Prophète»",
+			"isOk": false
+		}, {
+			"text": "«Otello»",
+			"isOk": false
+		}, {
+			"text": "«Lucie de la mer Morte»",
+			"isOk": true
+		}],
+		"titleIsOk": "Brillant !",
+		"textIsOk": "C’est «Lucie de Lammermoor». Merci.",
+		"titleIsNop": "C'est un échec",
+		"textIsNop": "C’est «Lucie de Lammermoor». Merci.",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Début juillet, parallèlement au Festival, un autre événement organisé à Aix accapare beaucoup de chambres d’hôtel. Il s’agit…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Des Rencontres économiques d’Aix-en-Provence",
+			"isOk": true
+		}, {
+			"text": "De l’université d’été du Parti radical",
+			"isOk": false
+		}, {
+			"text": "De la Journée portes ouvertes de la crèche Bambinos",
+			"isOk": false
+		}],
+		"titleIsOk": "Bien vu !",
+		"textIsOk": "Conseil : réservez dès maintenant votre séjour.",
+		"titleIsNop": "Raté",
+		"textIsNop": "Cela dit, l'essentiel est de réserver dès maintenant votre séjour.",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "En 2024, le Festival d’Aix accueillera…",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Les Jeux olympiques de Paris",
+			"isOk": false
+		}, {
+			"text": "Le Festival d’Angoulême",
+			"isOk": false
+		}, {
+			"text": "Un opéra de Mozart",
+			"isOk": true
+		}],
+		"titleIsOk": "Exceptionnel !",
+		"textIsOk": "Un Mozart, oui, comme à chaque édition depuis sa création. A l’année prochaine et bons spectacles !",
+		"titleIsNop": "Le dernier pas a coûté...",
+		"textIsNop": "C'était bien sûr un opéra de Mozart, comme à chaque édition depuis la création du Festival. A l’année prochaine et bons spectacles !",
+		"link": "eventuel_lien"
+	}]
+}

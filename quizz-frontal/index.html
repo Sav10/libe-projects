@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+        <title>Libération.fr – quiz</title>
+        <meta name="description" content="Tout savoir sur les dernières actualités politiques, monde, société, sports, écologie avec le journal en ligne Libération.">
+        <meta name="keywords" content="actualités, news">
+
+        <!-- Vendor -->
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+
+        <!-- Styles -->
+        <link type="text/css" rel="stylesheet" href="static/styles/font-awesome.css">
+        <link type="text/css" rel="stylesheet" href="static/styles/styles.css">
+
+<style type="text/css">
+    
+.question__top__title span {
+    font-size: 1.5em;
+}
+
+
+
+@media (max-width: 590px){
+.question__top__title span {
+    font-size: 1.2em;
+}
+
+}
+
+
+@media (max-width: 450px){
+.question__top__title span {
+    font-size: 1.1em;
+}
+}
+
+
+@media (max-width: 400px){
+.question__top__title span {
+    font-size: 1em;
+}
+}
+
+</style>
+
+    </head>
+    <body>
+        <div class="indicator">
+            <div class="indicator__inner">
+                <span class="indicator__inner__current"></span>/<span class="indicator__inner__max"></span>
+            </div>
+        </div>
+        <div class="next-button next-button--hidden">continuer</div>
+        <div class="expand-button"><i class="fa fa-expand"></i></div>
+        <div class="overlay-message">
+            <div class="overlay-message-title">Mais encore ?</div>
+        </div>
+        <div id="wrapper"></div>
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="static/scripts/app.js"></script>
+
+    </body>
+</html>
