@@ -1,0 +1,603 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le nombre de défaillances d'entreprises au plus haut depuis 2017</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css"> -->
+  <link rel="stylesheet" href="../utilities/css/bulma-custom.css">
+  <link rel="stylesheet" href="../utilities/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.css"/>
+  <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+  <style type="text/css">
+    
+    
+h1{
+font-family: 'Libe-Sans';
+/*letter-spacing: 0.03em;*/
+/*justify-content: left;*/
+text-align: left;
+line-height: 1.1em;
+padding-top: 0;
+/*font-size: 1.28em;*/
+font-weight: 600;
+font-size: 1.5em;
+margin-bottom: 0.1em;
+letter-spacing: 0.6;
+;
+}
+
+h1 span{
+color: red;
+display: inline;
+}
+
+h4#chartSubTitle{
+    text-align: left;
+    font-family: 'Libe-Sans-light';
+    /*font-weight: 100;*/
+      font-size: .9em;
+      letter-spacing: 0.6;
+}
+
+
+svg g.tick text{
+font-family: 'syntheselibeweb';
+font-size: .9em;
+}
+
+
+svg text.label{
+font-family: 'syntheselibeweb';
+/*font-size: .7em !important;*/
+}
+
+text.xAxisLabel, text.yAxisLabel {
+    font-size: .8rem;
+    font-family: 'syntheselibeweb';
+}
+
+img.libeLosange {
+    height: auto;
+    max-width: 100%;
+    width: 52px;
+    display: block;
+    margin-top: 0.5em;
+}
+
+g.ball circle:hover{
+stroke:#888;
+}
+
+#tooltip {
+    font-family: 'syntheselibeweb';
+}
+    
+  </style>
+
+
+</head>
+<body>
+
+  <section>
+    <div id="chart" style="max-width:1000px">
+      <img src="../utilities/img/Libe-Losange.png" class="libeLosange">
+      <h1 id="chartTitle"></h1>
+      <h4 id="chartSubTitle"></h4>
+      <div id="varSwitch" class='tags'></div>
+      <svg></svg>
+      <footer>
+        <div class="credits">
+          <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a>
+        </div>
+        <div class="sources">Source: <span id="chartSource">Libération</span></div>
+      </footer>
+
+    </div>
+    <div id="noChart" style="display:none;"></div>
+  </section>
+
+
+  <!-- JS -->
+  <script src="../utilities/js/jquery-1.10.2.js"></script>
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../utilities/js/d3-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+  <script src="../utilities/js/d3-area-label.js"></script>
+  <script src="../utilities/js/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="../utilities/js/moment-with-locales.min.js"></script>
+  <!-- <script src="static/js/app.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fh-3.1.3/kt-2.3.2/r-2.2.1/sc-1.4.4/datatables.min.js"></script>
+<script type="text/javascript" src="../utilities/js/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="chart_utilities_functions.js"></script>
+  <script type="text/javascript">
+
+   var margin = {},
+   width,
+   height;
+   var initMargin = {
+    top: 20,
+    right: 20,
+    bottom: 60,
+    left: 40
+  };
+
+
+  var initTotalWidth = 600;
+  var initTotalHeight = 400;
+
+  var initWidth = initTotalWidth - initMargin.left - initMargin.right;
+  var initHeight = initTotalHeight - initMargin.top - initMargin.bottom;
+
+  var libeCategoricalColors = ['#e60004', '#7c7c7c', '#000'];
+
+  var political_colors_obj = {
+    'EXG': "#751719",
+    'FI': "#cd0420",
+    "COM":'#af0e1d',
+    "ECO":'#52ae56',
+    "SOC":'#e6467e',
+    "DVG":'#f46099',
+    "RDG":'#f781b6',
+    'DIV': "#cccccc",
+    'REG': "#666",
+    "REM":'#ffb400',
+    "MDM":'#e85d21',
+    "UDI":'#9f64a2',
+    "DVD":'#026db5',
+    "LR":'#0058a2',
+    "DLF":'#003366',
+    "EXD":'#03034f',
+    "FN":'#000032'
+  };
+
+  var LibePoliticalColors =["#751719", "#cd0420", "#af0e1d", "#52ae56", "#e6467e", "#f46099", "#f781b6", "#cccccc", "#666", "#ffb400", "#e85d21", "#9f64a2", "#026db5", "#0058a2", "#003366", "#03034f", "#000032"];
+
+  var color = d3.scaleOrdinal(libeCategoricalColors);
+
+
+  var categorical_color_sheme = ['libeCategoricalColors', 'LibePoliticalColors', 'schemeDark2', 'schemeAccent', 'schemePastel2', 'schemeSet2', 'schemeSet1', 'schemePastel1', 
+  'schemeCategory10', 'schemeSet3', 'schemePaired', 'schemeCategory20', 'schemeCategory20b', 'schemeCategory20c'];
+
+  var basicColors = {plain:{initial:"#e60004", personalized:null}, positive:{initial:'#85b4b2', personalized:null}, negative:{initial:"#e60004", personalized:null}};
+
+
+  var data = [{"date":"31/12/1991","Nombre de défaillances":"52863"},{"date":"30/01/1992","Nombre de défaillances":"53457"},{"date":"28/02/1992","Nombre de défaillances":"54064"},{"date":"31/03/1992","Nombre de défaillances":"54534"},{"date":"30/04/1992","Nombre de défaillances":"54873"},{"date":"31/05/1992","Nombre de défaillances":"55282"},{"date":"30/06/1992","Nombre de défaillances":"55755"},{"date":"31/07/1992","Nombre de défaillances":"56225"},{"date":"31/08/1992","Nombre de défaillances":"56390"},{"date":"30/09/1992","Nombre de défaillances":"57282"},{"date":"31/10/1992","Nombre de défaillances":"57736"},{"date":"30/11/1992","Nombre de défaillances":"58733"},{"date":"31/12/1992","Nombre de défaillances":"59589"},{"date":"30/01/1993","Nombre de défaillances":"59968"},{"date":"28/02/1993","Nombre de défaillances":"60358"},{"date":"31/03/1993","Nombre de défaillances":"61379"},{"date":"30/04/1993","Nombre de défaillances":"61516"},{"date":"31/05/1993","Nombre de défaillances":"62017"},{"date":"30/06/1993","Nombre de défaillances":"62775"},{"date":"31/07/1993","Nombre de défaillances":"62943"},{"date":"31/08/1993","Nombre de défaillances":"63287"},{"date":"30/09/1993","Nombre de défaillances":"63790"},{"date":"31/10/1993","Nombre de défaillances":"63999"},{"date":"30/11/1993","Nombre de défaillances":"63974"},{"date":"31/12/1993","Nombre de défaillances":"63709"},{"date":"30/01/1994","Nombre de défaillances":"63927"},{"date":"28/02/1994","Nombre de défaillances":"63928"},{"date":"31/03/1994","Nombre de défaillances":"63542"},{"date":"30/04/1994","Nombre de défaillances":"63314"},{"date":"31/05/1994","Nombre de défaillances":"63515"},{"date":"30/06/1994","Nombre de défaillances":"63321"},{"date":"31/07/1994","Nombre de défaillances":"62870"},{"date":"31/08/1994","Nombre de défaillances":"62366"},{"date":"30/09/1994","Nombre de défaillances":"62043"},{"date":"31/10/1994","Nombre de défaillances":"61386"},{"date":"30/11/1994","Nombre de défaillances":"61190"},{"date":"31/12/1994","Nombre de défaillances":"60954"},{"date":"30/01/1995","Nombre de défaillances":"60664"},{"date":"28/02/1995","Nombre de défaillances":"60427"},{"date":"31/03/1995","Nombre de défaillances":"60126"},{"date":"30/04/1995","Nombre de défaillances":"59801"},{"date":"31/05/1995","Nombre de défaillances":"59211"},{"date":"30/06/1995","Nombre de défaillances":"58685"},{"date":"31/07/1995","Nombre de défaillances":"58475"},{"date":"31/08/1995","Nombre de défaillances":"58604"},{"date":"30/09/1995","Nombre de défaillances":"58498"},{"date":"31/10/1995","Nombre de défaillances":"58802"},{"date":"30/11/1995","Nombre de défaillances":"59069"},{"date":"31/12/1995","Nombre de défaillances":"58945"},{"date":"30/01/1996","Nombre de défaillances":"58520"},{"date":"28/02/1996","Nombre de défaillances":"58659"},{"date":"31/03/1996","Nombre de défaillances":"58226"},{"date":"30/04/1996","Nombre de défaillances":"58723"},{"date":"31/05/1996","Nombre de défaillances":"58820"},{"date":"30/06/1996","Nombre de défaillances":"58778"},{"date":"31/07/1996","Nombre de défaillances":"59392"},{"date":"31/08/1996","Nombre de défaillances":"59392"},{"date":"30/09/1996","Nombre de défaillances":"59406"},{"date":"31/10/1996","Nombre de défaillances":"59853"},{"date":"30/11/1996","Nombre de défaillances":"59361"},{"date":"31/12/1996","Nombre de défaillances":"59760"},{"date":"30/01/1997","Nombre de défaillances":"60111"},{"date":"28/02/1997","Nombre de défaillances":"60041"},{"date":"31/03/1997","Nombre de défaillances":"60041"},{"date":"30/04/1997","Nombre de défaillances":"60183"},{"date":"31/05/1997","Nombre de défaillances":"60269"},{"date":"30/06/1997","Nombre de défaillances":"60508"},{"date":"31/07/1997","Nombre de défaillances":"60346"},{"date":"31/08/1997","Nombre de défaillances":"60168"},{"date":"30/09/1997","Nombre de défaillances":"60105"},{"date":"31/10/1997","Nombre de défaillances":"59638"},{"date":"30/11/1997","Nombre de défaillances":"59204"},{"date":"31/12/1997","Nombre de défaillances":"58986"},{"date":"30/01/1998","Nombre de défaillances":"58571"},{"date":"28/02/1998","Nombre de défaillances":"58121"},{"date":"31/03/1998","Nombre de défaillances":"57816"},{"date":"30/04/1998","Nombre de défaillances":"57156"},{"date":"31/05/1998","Nombre de défaillances":"56349"},{"date":"30/06/1998","Nombre de défaillances":"55487"},{"date":"31/07/1998","Nombre de défaillances":"54577"},{"date":"31/08/1998","Nombre de défaillances":"54255"},{"date":"30/09/1998","Nombre de défaillances":"53862"},{"date":"31/10/1998","Nombre de défaillances":"52982"},{"date":"30/11/1998","Nombre de défaillances":"52630"},{"date":"31/12/1998","Nombre de défaillances":"51968"},{"date":"30/01/1999","Nombre de défaillances":"51257"},{"date":"28/02/1999","Nombre de défaillances":"50667"},{"date":"31/03/1999","Nombre de défaillances":"50816"},{"date":"30/04/1999","Nombre de défaillances":"50251"},{"date":"31/05/1999","Nombre de défaillances":"50193"},{"date":"30/06/1999","Nombre de défaillances":"50052"},{"date":"31/07/1999","Nombre de défaillances":"49687"},{"date":"31/08/1999","Nombre de défaillances":"49699"},{"date":"30/09/1999","Nombre de défaillances":"49394"},{"date":"31/10/1999","Nombre de défaillances":"48960"},{"date":"30/11/1999","Nombre de défaillances":"48748"},{"date":"31/12/1999","Nombre de défaillances":"48342"},{"date":"30/01/2000","Nombre de défaillances":"47946"},{"date":"28/02/2000","Nombre de défaillances":"47542"},{"date":"31/03/2000","Nombre de défaillances":"46787"},{"date":"30/04/2000","Nombre de défaillances":"45984"},{"date":"31/05/2000","Nombre de défaillances":"45894"},{"date":"30/06/2000","Nombre de défaillances":"45225"},{"date":"31/07/2000","Nombre de défaillances":"44834"},{"date":"31/08/2000","Nombre de défaillances":"44769"},{"date":"30/09/2000","Nombre de défaillances":"44414"},{"date":"31/10/2000","Nombre de défaillances":"44437"},{"date":"30/11/2000","Nombre de défaillances":"44321"},{"date":"31/12/2000","Nombre de défaillances":"43968"},{"date":"30/01/2001","Nombre de défaillances":"43852"},{"date":"28/02/2001","Nombre de défaillances":"43066"},{"date":"31/03/2001","Nombre de défaillances":"40680"},{"date":"30/04/2001","Nombre de défaillances":"41835"},{"date":"31/05/2001","Nombre de défaillances":"42014"},{"date":"30/06/2001","Nombre de défaillances":"42362"},{"date":"31/07/2001","Nombre de défaillances":"42621"},{"date":"31/08/2001","Nombre de défaillances":"42721"},{"date":"30/09/2001","Nombre de défaillances":"42653"},{"date":"31/10/2001","Nombre de défaillances":"42911"},{"date":"30/11/2001","Nombre de défaillances":"43036"},{"date":"31/12/2001","Nombre de défaillances":"43282"},{"date":"30/01/2002","Nombre de défaillances":"43543"},{"date":"28/02/2002","Nombre de défaillances":"42727"},{"date":"31/03/2002","Nombre de défaillances":"45430"},{"date":"30/04/2002","Nombre de défaillances":"44954"},{"date":"31/05/2002","Nombre de défaillances":"44844"},{"date":"30/06/2002","Nombre de défaillances":"44770"},{"date":"31/07/2002","Nombre de défaillances":"44915"},{"date":"31/08/2002","Nombre de défaillances":"44716"},{"date":"30/09/2002","Nombre de défaillances":"45042"},{"date":"31/10/2002","Nombre de défaillances":"44959"},{"date":"30/11/2002","Nombre de défaillances":"44894"},{"date":"31/12/2002","Nombre de défaillances":"44966"},{"date":"30/01/2003","Nombre de défaillances":"45009"},{"date":"28/02/2003","Nombre de défaillances":"46939"},{"date":"31/03/2003","Nombre de défaillances":"46571"},{"date":"30/04/2003","Nombre de défaillances":"46656"},{"date":"31/05/2003","Nombre de défaillances":"46403"},{"date":"30/06/2003","Nombre de défaillances":"46379"},{"date":"31/07/2003","Nombre de défaillances":"46558"},{"date":"31/08/2003","Nombre de défaillances":"46455"},{"date":"30/09/2003","Nombre de défaillances":"46797"},{"date":"31/10/2003","Nombre de défaillances":"47015"},{"date":"30/11/2003","Nombre de défaillances":"46962"},{"date":"31/12/2003","Nombre de défaillances":"47216"},{"date":"30/01/2004","Nombre de défaillances":"47378"},{"date":"28/02/2004","Nombre de défaillances":"47114"},{"date":"31/03/2004","Nombre de défaillances":"47563"},{"date":"30/04/2004","Nombre de défaillances":"47456"},{"date":"31/05/2004","Nombre de défaillances":"47699"},{"date":"30/06/2004","Nombre de défaillances":"48146"},{"date":"31/07/2004","Nombre de défaillances":"47890"},{"date":"31/08/2004","Nombre de défaillances":"48111"},{"date":"30/09/2004","Nombre de défaillances":"48154"},{"date":"31/10/2004","Nombre de défaillances":"48034"},{"date":"30/11/2004","Nombre de défaillances":"48468"},{"date":"31/12/2004","Nombre de défaillances":"48357"},{"date":"30/01/2005","Nombre de défaillances":"48466"},{"date":"28/02/2005","Nombre de défaillances":"48751"},{"date":"31/03/2005","Nombre de défaillances":"48756"},{"date":"30/04/2005","Nombre de défaillances":"49110"},{"date":"31/05/2005","Nombre de défaillances":"49512"},{"date":"30/06/2005","Nombre de défaillances":"49693"},{"date":"31/07/2005","Nombre de défaillances":"49583"},{"date":"31/08/2005","Nombre de défaillances":"49519"},{"date":"30/09/2005","Nombre de défaillances":"49670"},{"date":"31/10/2005","Nombre de défaillances":"49501"},{"date":"30/11/2005","Nombre de défaillances":"49487"},{"date":"31/12/2005","Nombre de défaillances":"49351"},{"date":"30/01/2006","Nombre de défaillances":"48925"},{"date":"28/02/2006","Nombre de défaillances":"48397"},{"date":"31/03/2006","Nombre de défaillances":"48169"},{"date":"30/04/2006","Nombre de défaillances":"47572"},{"date":"31/05/2006","Nombre de défaillances":"47222"},{"date":"30/06/2006","Nombre de défaillances":"46996"},{"date":"31/07/2006","Nombre de défaillances":"47019"},{"date":"31/08/2006","Nombre de défaillances":"47117"},{"date":"30/09/2006","Nombre de défaillances":"47082"},{"date":"31/10/2006","Nombre de défaillances":"47306"},{"date":"30/11/2006","Nombre de défaillances":"47594"},{"date":"31/12/2006","Nombre de défaillances":"47919"},{"date":"30/01/2007","Nombre de défaillances":"48348"},{"date":"28/02/2007","Nombre de défaillances":"49006"},{"date":"31/03/2007","Nombre de défaillances":"49416"},{"date":"30/04/2007","Nombre de défaillances":"49788"},{"date":"31/05/2007","Nombre de défaillances":"50045"},{"date":"30/06/2007","Nombre de défaillances":"50447"},{"date":"31/07/2007","Nombre de défaillances":"50997"},{"date":"31/08/2007","Nombre de défaillances":"50955"},{"date":"30/09/2007","Nombre de défaillances":"51003"},{"date":"31/10/2007","Nombre de défaillances":"51439"},{"date":"30/11/2007","Nombre de défaillances":"51349"},{"date":"31/12/2007","Nombre de défaillances":"51350"},{"date":"30/01/2008","Nombre de défaillances":"51370"},{"date":"28/02/2008","Nombre de défaillances":"51620"},{"date":"31/03/2008","Nombre de défaillances":"51408"},{"date":"30/04/2008","Nombre de défaillances":"52133"},{"date":"31/05/2008","Nombre de défaillances":"52015"},{"date":"30/06/2008","Nombre de défaillances":"52017"},{"date":"31/07/2008","Nombre de défaillances":"52288"},{"date":"31/08/2008","Nombre de défaillances":"52432"},{"date":"30/09/2008","Nombre de défaillances":"53206"},{"date":"31/10/2008","Nombre de défaillances":"53874"},{"date":"30/11/2008","Nombre de défaillances":"54511"},{"date":"31/12/2008","Nombre de défaillances":"55642"},{"date":"30/01/2009","Nombre de défaillances":"56447"},{"date":"28/02/2009","Nombre de défaillances":"57250"},{"date":"31/03/2009","Nombre de défaillances":"58984"},{"date":"30/04/2009","Nombre de défaillances":"59766"},{"date":"31/05/2009","Nombre de défaillances":"60649"},{"date":"30/06/2009","Nombre de défaillances":"61510"},{"date":"31/07/2009","Nombre de défaillances":"62202"},{"date":"31/08/2009","Nombre de défaillances":"62663"},{"date":"30/09/2009","Nombre de défaillances":"63444"},{"date":"31/10/2009","Nombre de défaillances":"63263"},{"date":"30/11/2009","Nombre de défaillances":"63480"},{"date":"31/12/2009","Nombre de défaillances":"63283"},{"date":"30/01/2010","Nombre de défaillances":"63332"},{"date":"28/02/2010","Nombre de défaillances":"63291"},{"date":"31/03/2010","Nombre de défaillances":"63319"},{"date":"30/04/2010","Nombre de défaillances":"62677"},{"date":"31/05/2010","Nombre de défaillances":"62627"},{"date":"30/06/2010","Nombre de défaillances":"62647"},{"date":"31/07/2010","Nombre de défaillances":"62202"},{"date":"31/08/2010","Nombre de défaillances":"62252"},{"date":"30/09/2010","Nombre de défaillances":"61625"},{"date":"31/10/2010","Nombre de défaillances":"61186"},{"date":"30/11/2010","Nombre de défaillances":"60921"},{"date":"31/12/2010","Nombre de défaillances":"60393"},{"date":"30/01/2011","Nombre de défaillances":"60424"},{"date":"28/02/2011","Nombre de défaillances":"60406"},{"date":"31/03/2011","Nombre de défaillances":"60012"},{"date":"30/04/2011","Nombre de défaillances":"59777"},{"date":"31/05/2011","Nombre de défaillances":"60581"},{"date":"30/06/2011","Nombre de défaillances":"59959"},{"date":"31/07/2011","Nombre de défaillances":"59596"},{"date":"31/08/2011","Nombre de défaillances":"59640"},{"date":"30/09/2011","Nombre de défaillances":"59422"},{"date":"31/10/2011","Nombre de défaillances":"59501"},{"date":"30/11/2011","Nombre de défaillances":"59694"},{"date":"31/12/2011","Nombre de défaillances":"59595"},{"date":"30/01/2012","Nombre de défaillances":"60078"},{"date":"28/02/2012","Nombre de défaillances":"60101"},{"date":"31/03/2012","Nombre de défaillances":"59656"},{"date":"30/04/2012","Nombre de défaillances":"59814"},{"date":"31/05/2012","Nombre de défaillances":"58986"},{"date":"30/06/2012","Nombre de défaillances":"59036"},{"date":"31/07/2012","Nombre de défaillances":"59857"},{"date":"31/08/2012","Nombre de défaillances":"59754"},{"date":"30/09/2012","Nombre de défaillances":"59473"},{"date":"31/10/2012","Nombre de défaillances":"60453"},{"date":"30/11/2012","Nombre de défaillances":"60530"},{"date":"31/12/2012","Nombre de défaillances":"61211"},{"date":"30/01/2013","Nombre de défaillances":"61068"},{"date":"28/02/2013","Nombre de défaillances":"60953"},{"date":"31/03/2013","Nombre de défaillances":"60836"},{"date":"30/04/2013","Nombre de défaillances":"61513"},{"date":"31/05/2013","Nombre de défaillances":"61668"},{"date":"30/06/2013","Nombre de défaillances":"61883"},{"date":"31/07/2013","Nombre de défaillances":"62334"},{"date":"31/08/2013","Nombre de défaillances":"62273"},{"date":"30/09/2013","Nombre de défaillances":"62765"},{"date":"31/10/2013","Nombre de défaillances":"62725"},{"date":"30/11/2013","Nombre de défaillances":"62628"},{"date":"31/12/2013","Nombre de défaillances":"62665"},{"date":"30/01/2014","Nombre de défaillances":"62764"},{"date":"28/02/2014","Nombre de défaillances":"63352"},{"date":"31/03/2014","Nombre de défaillances":"63347"},{"date":"30/04/2014","Nombre de défaillances":"63464"},{"date":"31/05/2014","Nombre de défaillances":"63216"},{"date":"30/06/2014","Nombre de défaillances":"63321"},{"date":"31/07/2014","Nombre de défaillances":"63326"},{"date":"31/08/2014","Nombre de défaillances":"63333"},{"date":"30/09/2014","Nombre de défaillances":"63509"},{"date":"31/10/2014","Nombre de défaillances":"63390"},{"date":"30/11/2014","Nombre de défaillances":"63430"},{"date":"31/12/2014","Nombre de défaillances":"62564"},{"date":"30/01/2015","Nombre de défaillances":"62865"},{"date":"28/02/2015","Nombre de défaillances":"62756"},{"date":"31/03/2015","Nombre de défaillances":"63879"},{"date":"30/04/2015","Nombre de défaillances":"63923"},{"date":"31/05/2015","Nombre de défaillances":"62584"},{"date":"30/06/2015","Nombre de défaillances":"63462"},{"date":"31/07/2015","Nombre de défaillances":"63186"},{"date":"31/08/2015","Nombre de défaillances":"62934"},{"date":"30/09/2015","Nombre de défaillances":"63028"},{"date":"31/10/2015","Nombre de défaillances":"62173"},{"date":"30/11/2015","Nombre de défaillances":"62334"},{"date":"31/12/2015","Nombre de défaillances":"63111"},{"date":"30/01/2016","Nombre de défaillances":"62355"},{"date":"28/02/2016","Nombre de défaillances":"61973"},{"date":"31/03/2016","Nombre de défaillances":"61173"},{"date":"30/04/2016","Nombre de défaillances":"60539"},{"date":"31/05/2016","Nombre de défaillances":"62023"},{"date":"30/06/2016","Nombre de défaillances":"61169"},{"date":"31/07/2016","Nombre de défaillances":"60290"},{"date":"31/08/2016","Nombre de défaillances":"60204"},{"date":"30/09/2016","Nombre de défaillances":"59570"},{"date":"31/10/2016","Nombre de défaillances":"59389"},{"date":"30/11/2016","Nombre de défaillances":"59119"},{"date":"31/12/2016","Nombre de défaillances":"58155"},{"date":"30/01/2017","Nombre de défaillances":"57999"},{"date":"28/02/2017","Nombre de défaillances":"57443"},{"date":"31/03/2017","Nombre de défaillances":"57320"},{"date":"30/04/2017","Nombre de défaillances":"56556"},{"date":"31/05/2017","Nombre de défaillances":"56538"},{"date":"30/06/2017","Nombre de défaillances":"55867"},{"date":"31/07/2017","Nombre de défaillances":"55635"},{"date":"31/08/2017","Nombre de défaillances":"55674"},{"date":"30/09/2017","Nombre de défaillances":"55019"},{"date":"31/10/2017","Nombre de défaillances":"54821"},{"date":"30/11/2017","Nombre de défaillances":"54446"},{"date":"31/12/2017","Nombre de défaillances":"54571"},{"date":"30/01/2018","Nombre de défaillances":"54092"},{"date":"28/02/2018","Nombre de défaillances":"53785"},{"date":"31/03/2018","Nombre de défaillances":"53145"},{"date":"30/04/2018","Nombre de défaillances":"53276"},{"date":"31/05/2018","Nombre de défaillances":"52749"},{"date":"30/06/2018","Nombre de défaillances":"52789"},{"date":"31/07/2018","Nombre de défaillances":"53026"},{"date":"31/08/2018","Nombre de défaillances":"53309"},{"date":"30/09/2018","Nombre de défaillances":"53486"},{"date":"31/10/2018","Nombre de défaillances":"54013"},{"date":"30/11/2018","Nombre de défaillances":"53963"},{"date":"31/12/2018","Nombre de défaillances":"54041"},{"date":"30/01/2019","Nombre de défaillances":"54449"},{"date":"28/02/2019","Nombre de défaillances":"54406"},{"date":"31/03/2019","Nombre de défaillances":"54193"},{"date":"30/04/2019","Nombre de défaillances":"54316"},{"date":"31/05/2019","Nombre de défaillances":"54167"},{"date":"30/06/2019","Nombre de défaillances":"53659"},{"date":"31/07/2019","Nombre de défaillances":"53634"},{"date":"31/08/2019","Nombre de défaillances":"52976"},{"date":"30/09/2019","Nombre de défaillances":"52569"},{"date":"31/10/2019","Nombre de défaillances":"51932"},{"date":"30/11/2019","Nombre de défaillances":"51462"},{"date":"31/12/2019","Nombre de défaillances":"51145"},{"date":"30/01/2020","Nombre de défaillances":"49925"},{"date":"28/02/2020","Nombre de défaillances":"49171"},{"date":"31/03/2020","Nombre de défaillances":"47176"},{"date":"30/04/2020","Nombre de défaillances":"44083"},{"date":"31/05/2020","Nombre de défaillances":"41481"},{"date":"30/06/2020","Nombre de défaillances":"40135"},{"date":"31/07/2020","Nombre de défaillances":"38522"},{"date":"31/08/2020","Nombre de défaillances":"38027"},{"date":"30/09/2020","Nombre de défaillances":"36535"},{"date":"31/10/2020","Nombre de défaillances":"34522"},{"date":"30/11/2020","Nombre de défaillances":"32897"},{"date":"31/12/2020","Nombre de défaillances":"31217"},{"date":"30/01/2021","Nombre de défaillances":"29845"},{"date":"28/02/2021","Nombre de défaillances":"28168"},{"date":"31/03/2021","Nombre de défaillances":"28034"},{"date":"30/04/2021","Nombre de défaillances":"28740"},{"date":"31/05/2021","Nombre de défaillances":"29333"},{"date":"30/06/2021","Nombre de défaillances":"28877"},{"date":"31/07/2021","Nombre de défaillances":"28089"},{"date":"31/08/2021","Nombre de défaillances":"27999"},{"date":"30/09/2021","Nombre de défaillances":"27481"},{"date":"31/10/2021","Nombre de défaillances":"27222"},{"date":"30/11/2021","Nombre de défaillances":"27257"},{"date":"31/12/2021","Nombre de défaillances":"27582"},{"date":"30/01/2022","Nombre de défaillances":"28091"},{"date":"28/02/2022","Nombre de défaillances":"29058"},{"date":"31/03/2022","Nombre de défaillances":"30220"},{"date":"30/04/2022","Nombre de défaillances":"31366"},{"date":"31/05/2022","Nombre de défaillances":"32387"},{"date":"30/06/2022","Nombre de défaillances":"33548"},{"date":"31/07/2022","Nombre de défaillances":"34971"},{"date":"31/08/2022","Nombre de défaillances":"35631"},{"date":"30/09/2022","Nombre de défaillances":"37362"},{"date":"31/10/2022","Nombre de défaillances":"38820"},{"date":"30/11/2022","Nombre de défaillances":"40290"},{"date":"31/12/2022","Nombre de défaillances":"41297"},{"date":"30/01/2023","Nombre de défaillances":"43016"},{"date":"28/02/2023","Nombre de défaillances":"44259"},{"date":"31/03/2023","Nombre de défaillances":"45856"},{"date":"30/04/2023","Nombre de défaillances":"46857"},{"date":"31/05/2023","Nombre de défaillances":"48190"},{"date":"30/06/2023","Nombre de défaillances":"49374"},{"date":"31/07/2023","Nombre de défaillances":"50348"},{"date":"31/08/2023","Nombre de défaillances":"50761"},{"date":"30/09/2023","Nombre de défaillances":"51685"},{"date":"31/10/2023","Nombre de défaillances":"53248"},{"date":"30/11/2023","Nombre de défaillances":"54650"},{"date":"31/12/23","Nombre de défaillances":"55492"}];
+  var dataFromFile = _.cloneDeep(data);
+
+  var manualReusableParameters = {"rotateXRow":{"value":false,"type":"checkbox","label":"pivoter l'étiquette des X","initial_value":false,"activated":1,"category":"general"},"chart_width":{"value":600,"type":"slider","label":"Largeur du graphique","initial_value":600,"min":300,"max":800,"activated":1,"category":"general"},"chart_height":{"value":400,"type":"slider","label":"Hauteur du graphique","initial_value":400,"min":200,"max":800,"activated":1,"category":"general"},"padding_bottom":{"value":0,"type":"slider","label":"marge basse","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_left":{"value":0,"type":"slider","label":"marge gauche","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_right":{"value":0,"type":"slider","label":"marge droite","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"padding_top":{"value":0,"type":"slider","label":"marge haute","initial_value":0,"min":-100,"max":100,"activated":1,"category":"general"},"sort_descending":{"value":true,"type":"checkbox","label":"tri décroissant","initial_value":true,"activated":1,"category":"general"},"invert_order":{"value":false,"type":"checkbox","label":"inverser l'ordre","initial_value":false,"activated":0,"category":"general"},"differentAxisY":{"value":false,"type":"checkbox","label":"Adapter l'axe des Y aux données","initial_value":false,"activated":0,"category":"general"},"rangeX":{"value":false,"type":"checkInputs","label":"Range X personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"general"},"rangeY":{"value":true,"type":"checkInputs","label":"Range Y personalisée","initial_left_value":null,"initial_right_value":null,"calculated_left_value":27222,"calculated_right_value":63999,"manual_left_value":0,"manual_right_value":null,"activated":1,"category":"general"},"color_field_select":{"value":"libeCategoricalColors","type":"colorFieldSelect","label":"Jeu de couleurs","initial_value":"libeCategoricalColors","activated":0,"fields":["libeCategoricalColors","LibePoliticalColors","schemeDark2","schemeAccent","schemePastel2","schemeSet2","schemeSet1","schemePastel1","schemeCategory10","schemeSet3","schemePaired","schemeCategory20","schemeCategory20b","schemeCategory20c"],"category":"color"},"persColorsCheck":{"value":false,"type":"persColorsCheck","label":"Couleurs personalisées","initial_value":false,"activated":1,"category":"color"},"indice_100":{"value":false,"type":"checkbox","label":"Démarrer à l'indice 100","initial_value":false,"activated":1,"category":"calculs"},"displayLabel":{"value":false,"type":"checkbox","label":"afficher la valeur","initial_value":false,"activated":0,"category":"labels"},"startEndValues":{"type":"checkInputs","label":"Valeurs de début et de fin","initial_left_value":null,"initial_right_value":null,"calculated_left_value":null,"calculated_right_value":null,"manual_left_value":null,"manual_right_value":null,"activated":1,"category":"filter"},"caseLegend":{"type":"checkSelects","label":"Afficher la légende","range":[{"value":"topRight","label":"En haut à droite"},{"value":"topLeft","label":"En haut à gauche"},{"value":"bottomLeft","label":"En bas à gauche"},{"value":"bottomRight","label":"En bas à droite"}],"initial_range_value":"topRight","manual_range_value":null,"activated":1,"category":"legend"},"padding_left_legend":{"value":0,"type":"slider","label":"marge gauche légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"padding_top_legend":{"value":0,"type":"slider","label":"marge haute légende","initial_value":0,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"legendOrientation":{"type":"simpleSelect","label":"Orientation de la légende","range":[{"value":"vertical","label":"Verticale"},{"value":"horizontal","label":"Horizontale"}],"initial_range_value":"vertical","manual_range_value":null,"category":"legend","dependOn":"caseLegend"},"inner_padding_legend":{"value":2,"type":"slider","label":"Marge intérieure de la légende","initial_value":2,"min":-100,"max":100,"category":"legend","dependOn":"caseLegend"},"textLegendOtherCat":{"type":"simpleInputs","label":"Texte de la légende si autre","category":"legend","dependOn":"caseLegend"},"leftAxisTickNumber":{"value":6,"type":"slider","label":"Nombre de graduations à gauche","initial_value":10,"min":0,"max":20,"activated":1,"category":"grid"},"bottomAxisTickNumber":{"value":18,"type":"slider","label":"Nombre de graduations en bas","initial_value":5,"min":0,"max":20,"activated":1,"category":"grid"},"leftAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe gauche","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"bottomAxisStroke":{"type":"simpleSelect","label":"Couleur de l'axe bas","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#fff","activated":1,"category":"grid"},"ticksStroke":{"type":"simpleSelect","label":"Couleur des graduations","range":[{"value":"black","label":"noir"},{"value":"#3c3c3b","label":"gris foncé"},{"value":"#7c7c7b","label":"gris moyen"},{"value":"#c6c6c6","label":"gris clair"},{"value":"#e4e4e4","label":"gris très clair"},{"value":"#f4f4f4","label":"gris très très clair"},{"value":"#fff","label":"invisible"}],"initial_range_value":"black","manual_range_value":"#e4e4e4","activated":1,"category":"grid"},"leftTickSize":{"type":"simpleSelect","label":"Taille des graduations horizontales","range":[{"value":"small","label":"petites"},{"value":"fullWidth","label":"largeur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"fullWidth","activated":1,"category":"grid"},"bottomTickSize":{"type":"simpleSelect","label":"Taille des graduations verticales","range":[{"value":"small","label":"petites"},{"value":"fullHeight","label":"hauteur complète"},{"value":"invisible","label":"invisibles"}],"initial_range_value":"small","manual_range_value":"invisible","activated":1,"category":"grid"},"yAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe gauche","initial_value":false,"activated":1,"category":"labels"},"xAxisLabel":{"value":false,"type":"checkbox","label":"Etiquette de l'axe bas","initial_value":false,"activated":1,"category":"labels"},"yAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe gauche","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelPadding":{"value":0,"type":"slider","label":"Marge de l'étiquette de l'axe bas","initial_value":0,"min":-100,"max":100,"category":"labels","activated":false,"dependOn":"xAxisLabel"},"yAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe gauche","category":"labels","activated":false,"dependOn":"yAxisLabel"},"xAxisLabelText":{"type":"simpleInputs","label":"Texte de l'étiquette de l'axe bas","category":"labels","activated":false,"dependOn":"xAxisLabel"},"trimKValue":{"value":true,"type":"checkbox","label":"Supprimer les espaces inutiles","initial_value":true,"activated":0,"category":"textRemplacement"},"hideCircles":{"value":true,"type":"checkbox","label":"Supprimer les cercles","initial_value":true,"activated":0,"category":"general"},"dateField":{"value":true,"type":"checkSelects","label":"Y a-t-il un champ date ?","range":"selectedFields","initial_range_value":"topRight","manual_range_value":"date","initial_value":false,"activated":1,"category":"textRemplacement"},"dateFieldFormat":{"value":"DD/MM/YYYY","initial_value":"DD/MM/YYYY","type":"simpleInputs","label":"Format de date","category":"textRemplacement","activated":true,"dependOn":"dateField"},"previousDate":{"type":"simpleInputs","label":"date n-1","category":"textRemplacement","activated":true,"dependOn":"dateField"},"groupingFunction":{"type":"simpleSelect","label":"Fonction de réduction des données","range":[{"value":"sum","label":"Somme"},{"value":"mean","label":"moyenne"},{"value":"median","label":"médianne"}],"initial_range_value":null,"manual_range_value":"sum","activated":0,"category":"calculs"},"logScale":{"value":false,"type":"checkbox","label":"Echelle logarithmique","initial_value":false,"activated":0,"category":"calculs"},"beeswarnRadius":{"value":2,"type":"slider","label":"Taille des points","initial_value":2,"min":1,"max":20,"activated":0,"category":"general"},"beeswarnCollide":{"value":3,"type":"slider","label":"Eloignement des points","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"verticalStrength":{"value":8,"type":"slider","label":"Force verticale","initial_value":8,"min":1,"max":10,"activated":0,"category":"general"},"circleRadius":{"value":3,"type":"slider","label":"Taille des cercles","initial_value":3,"min":1,"max":20,"activated":0,"category":"general"},"circleOpacity":{"value":0.9,"type":"slider","label":"Opacité des cercles","initial_value":0.9,"min":0,"max":1,"step":0.1,"activated":0,"category":"general"},"customCode":{"type":"simpleTextArea","label":"Ajouter du code js","activated":1,"category":"textRemplacement","numberOfRows":5,"value":"d3.selectAll('.axis--x .tick text').text(function(d){return moment(d).format('YYYY')})"},"colorizeField":{"value":false,"type":"checkbox","label":"Colorier un champ en fonction de critères","initial_value":false,"activated":0,"category":"color"},"colorizeFieldText":{"type":"simpleInputs","label":"Critères pour colorier le champ","activated":false,"category":"color","dependOn":"colorizeField"},"colorizeFieldSelectField":{"type":"simpleSelect","label":"Nom du champ","range":[{"label":"Dans quel champ ?","value":""},{"label":"date","value":"date"},{"label":"Nombre de défaillances","value":"Nombre de défaillances"}],"initial_range_value":"black","manual_range_value":false,"activated":false,"category":"color","dependOn":"colorizeField"},"stackedBarWhiteSeparator":{"value":false,"type":"checkbox","label":"Séparer les rectangles","initial_value":false,"activated":0,"category":"general"},"stackedBarInsideOrder":{"type":"simpleSelect","label":"Ordre des valeurs à l'intérieur des barres","range":[{"value":"stackOrderNone","label":"Aucun ordre"},{"value":"stackOrderAscending","label":"Ordre croissant"},{"value":"stackOrderDescending","label":"Ordre décroissant"},{"value":"stackOrderInsideOut","label":"Ordre intérieur extérieur"},{"value":"stackOrderReverse","label":"Ordre inversé"}],"initial_range_value":"stackOrderNone","manual_range_value":"stackOrderNone","activated":0,"category":"general"},"CheckIfNochart":{"value":false,"type":"checkbox","label":"Pas un graph","initial_value":false,"activated":0,"category":"none"},"automaticDate":{"value":false,"type":"checkbox","label":"Reconnaissance automatique des dates","initial_value":false,"activated":0,"category":"general"},"ColorLegendPie":{"type":"simpleColorInputs","label":"Couleur de la légende","activated":0,"category":"general"},"caseCustomTooltip":{"value":false,"type":"checkSelects","label":"Tooltip personalisé","range":"selectedColNames","manual_range_value":null,"initial_value":false,"activated":1,"category":"textRemplacement"},"customTooltips":{"type":"simpleTextArea","label":"Texte du Tooltip, noms des champs entre doubles crochets.\n Ex : [[nom]], [[montant]]","activated":false,"category":"textRemplacement","dependOn":"caseCustomTooltip","numberOfRows":5,"value":""},"moveElements":{"value":false,"type":"checkbox","label":"Déplacer les éléments","initial_value":false,"activated":1,"category":"textRemplacement"},"selectedElementType":{"value":false,"type":"simpleInputs","label":"Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"selectedElement":{"type":"none","activated":0,"category":"none"},"selectedParentElementType":{"value":false,"type":"simpleInputs","label":"parent de l Element sélectionné","initial_value":false,"activated":false,"category":"textRemplacement","dependOn":"moveElements"},"elementMoved":{"type":"none","activated":0,"category":"none","thoseElements":{},"thoseElementsOrder":[]},"emptyMovedElements":{"value":false,"type":"checkbox","label":"initialiser les éléments déplacés","initial_value":false,"activated":1,"category":"textRemplacement"},"barPadding":{"value":1,"type":"slider","label":"Espace entre les barres","initial_value":1,"min":1,"max":10,"activated":0,"category":"general"},"numberOfCols":{"value":2,"type":"slider","label":"Nombre de colonnes","initial_value":2,"min":1,"max":10,"activated":0,"category":"general"},"miniMarginLeft":{"value":30,"type":"slider","label":"Marge gauche entre les graphs","initial_value":30,"min":0,"max":100,"activated":0,"category":"general"},"miniMarginTop":{"value":20,"type":"slider","label":"Marge supérieure entre les graphs","initial_value":20,"min":0,"max":100,"activated":0,"category":"general"},"alignPeaks":{"value":false,"type":"checkbox","label":"Aligner les pics","initial_value":false,"activated":0,"category":"general"},"case_helper_text":{"value":true,"type":"checkbox","label":"afficher des exemples de code","initial_value":false,"activated":1,"category":"textRemplacement"},"helper_text_hooks":{"category":"textRemplacement","type":"helper_text","activated":true,"text_value":"\nDate on axis<br>\n<code>d3.selectAll('.axis--x .tick text').text(function(d){return moment(d,i ).format('MMMM YYYY')})</code><br>\nFrench dates in tooltip<br>\n[[datetime|frenchDate]]<br>\nRound in tooltip<br>\n[[variable|round]]<br>\n[[variable|round|1]]  #(1 decimal)<br>\nNumber separator<br>\n[[variable|number_separator]]\n","dependOn":"case_helper_text"}};
+
+  var graphParameters = {"selected_xRows":["date"],"selected_yRows":["Nombre de défaillances"],"selected_size":[],"selected_color":[],"selected_label":[],"selected_tooltip":[],"personalizedColorsObject":{},"selectedColorScheme":"libeCategoricalColors","additionnalParam":"","selected_graph":"areaChart","chartTitle":"Le nombre de défaillances d'entreprises au plus haut depuis 2017","chartSubTitle":"Nombre de défaillances d'entreprises sur un an","chartSource":"Banque de France - Cumul sur les douze derniers mois depuis 1991","annotations":[]};
+
+  var manualCustomParameters = {"fieldsToReplace":[],"filteredFields":[]};
+
+  color = findColorsScheme(graphParameters.selectedColorScheme);
+
+
+  graphParameters.annotations.forEach(function(d){
+
+    d.type = d3[d.functionName];
+
+
+  })
+
+  var parametersType = [{
+    selector:'dropdiv_x', tagsArray:graphParameters['selected_xRows'], dropzoneName:'dropzoneX'},
+    {selector:'dropdiv_y', tagsArray:graphParameters['selected_yRows'], dropzoneName:'dropzoneY'},
+    {selector:'size_tags', tagsArray:graphParameters['selected_size'], dropzoneName:'dropzoneSize'},
+    {selector:'color_tags', tagsArray:graphParameters['selected_color'], dropzoneName:'dropzoneColor'},
+    {selector:'label_tags', tagsArray:graphParameters['selected_label'], dropzoneName:'dropzoneLabel'}
+    ];
+
+    var div = d3.select("body").append("div")
+    .attr("id", "tooltip")
+    .attr('class', 'box');
+
+
+    var parseTime = d3.timeParse('%Y/%m/%d');
+
+    d3.select("#chart")
+    .attr("class", graphParameters.selected_graph);
+
+    d3.select("#chartTitle")
+    .text(graphParameters['chartTitle']);
+
+    d3.select("#chartSubTitle")
+    .text(graphParameters['chartSubTitle']);
+
+
+        d3.select("#chartSource")
+    .text(graphParameters['chartSource']);
+
+    function initChart() {
+
+      var svg = d3.select("svg")
+      .call(responsivefy);
+
+      margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 50
+      };
+
+      width = +svg.attr("width") - margin.left - margin.right;
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var g = svg.append("g")
+      .attr('class', 'graphContainer')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      initAnnotations()
+
+      g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")");
+
+      g.append("g")
+      .attr("class", "axis axis--y")
+      .attr('transform', 'translate(0,0)');
+
+      g.append("g")
+      .attr('class', 'innerGraph');
+
+    }
+
+  function initAnnotations(){
+
+  d3.select("#chart svg g.annotation-group").remove()
+
+  var annotationGroup = d3.select("#chart svg g.graphContainer")
+  .append("g")
+  .attr("class", "annotation-group");
+  }
+
+    var makeAnnotations_ = d3.annotation()
+    .editMode(false)
+  // .type(annotationType)
+  ;
+
+
+
+  var annotations = graphParameters.annotations ? graphParameters.annotations : [];
+
+  function makeAnnotation(){
+
+    for (i in makeAnnotations_.annotations()){
+
+      var d = makeAnnotations_.annotations()[i];
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+
+    }
+
+    makeAnnotations_
+    .annotations(annotations)
+
+    for (i in annotations){
+      var d = annotations[i];
+      makeAnnotations_.annotations()[i].index = d.index;
+    }
+
+    d3.select("#chart svg g.graphContainer g.annotation-group")
+    .call(makeAnnotations_);
+
+      d3.selectAll(".annotation-group .annotations .annotation text")
+      .attr('transform', function(d){return 'rotate(' + (+d.note.orientation) + ') translate(' + (+d.note.textPadding) + ',0)'});
+
+    d3.select(".annotation-group").node().parentNode.appendChild(d3.select(".annotation-group").node())
+
+  }
+
+function makeAreachart(data_) {
+
+    var kValue = graphParameters['selected_xRows'][0];
+    var dValues = graphParameters['selected_yRows'];
+    var svg = d3.select("svg");
+    var g = svg.select('g.graphContainer');
+    var g_inner = g.select('g.innerGraph');
+    // width = +svg.attr("width") - margin.left - margin.right;
+
+    updateParameters();
+
+    var data = _.cloneDeep(data_);
+    var initial_data = _.cloneDeep(data);
+
+      var kValue = graphParameters['selected_xRows'][0];
+      var dValues = graphParameters['selected_yRows'];
+      var dValue = dValues[0];
+
+      var svg = d3.select("svg");
+      var g = svg.select('g.graphContainer');
+      var g_inner = g.select('g.innerGraph');
+
+      updateParameters();
+
+      data = recalculateAndTransformValues(initial_data, kValue, dValues)
+
+
+      if (manualReusableParameters.startEndValues.value != 0 && manualReusableParameters.startEndValues.value !== undefined){
+
+        var this_x_values = data.map(function(d){return d[kValue]})
+        var minXval =  manualReusableParameters.startEndValues.manual_left_value ?  manualReusableParameters.startEndValues.manual_left_value : +this_x_values[0];
+        var maxXval =  manualReusableParameters.startEndValues.manual_right_value ?  manualReusableParameters.startEndValues.manual_right_value : +this_x_values[this_x_values.length -1];
+
+        data = data.filter(function(d){return d[kValue] >= minXval && d[kValue] <= maxXval});
+    }
+
+    if (manualReusableParameters.indice_100.value == 1){
+
+        if (checkIfpercentageInArray(data, dValues) == true){
+
+
+            data = prepareLineChartIndice100Growth(data, kValue, dValues);
+        }
+        else{
+
+            data = prepareLineChartIndice100Value(data, kValue, dValues);
+        }
+    }
+
+    else{
+      data = prepareLineChartData(data, kValue, dValues);
+  }
+
+  manualReusableParameters.rangeY.calculated_left_value =  d3.min(data, function(d) { return d3.min(d, function(e) { return e['y_value'] }) });
+  manualReusableParameters.rangeY.calculated_right_value =  d3.max(data, function(d) { return d3.max(d, function(e) { return e['y_value'] }) });
+
+  var thisYMin = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_left_value : manualReusableParameters.rangeY.manual_left_value !== null ? manualReusableParameters.rangeY.manual_left_value : manualReusableParameters.rangeY.calculated_left_value;
+  var thisYMax = manualReusableParameters.rangeY.value === false ?  manualReusableParameters.rangeY.calculated_right_value : manualReusableParameters.rangeY.manual_right_value !== null ? manualReusableParameters.rangeY.manual_right_value : manualReusableParameters.rangeY.calculated_right_value;
+
+
+
+  var xScale = xScaleType()
+  .domain([d3.min(data, function(d) { return d3.min(d, function(e) { return e['x_value'] }) }),
+    d3.max(data, function(d) { return d3.max(d, function(e) { return e['x_value'] }) }) ])
+  .range([0, width]);
+
+
+  var yScale = d3.scaleLinear()
+  .domain([thisYMin,
+    thisYMax
+    ])
+  .range([height, 0]);
+
+  changeAxis(xScale, yScale)
+
+  g.select('g.innerGraph')
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + manualReusableParameters.padding_top.value + ")");
+
+  g.select("g.axis.axis--x")
+  .attr("transform", "translate(" + manualReusableParameters.padding_left.value + "," + (height + manualReusableParameters.padding_top.value) +")")
+  .call(axis_bottom)
+  .selectAll("text")
+  .style("text-anchor", "middle")
+  .attr("dx", "0em")
+  .attr("dy", "0.7em")
+  .attr("transform", "rotate(0)");
+
+  if (manualReusableParameters.rotateXRow.value == true){
+
+    g.select("g.axis.axis--x")
+    .selectAll("g.tick")
+    .select("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-40)");
+
+}
+
+g.select("g.axis.axis--y")
+.attr('transform', 'translate(' + manualReusableParameters.padding_left.value + ',' + manualReusableParameters.padding_top.value + ')')
+.call(axis_left);
+
+    var area = d3.area()
+    .x(function(d) { return xScale(d.x_value) })
+    .y0(yScale(yScale.domain()[0]))
+    .y1(function(d) { return yScale(d.y_value)})
+    .curve(d3.curveLinear);
+
+    // .curve(d3.curveCatmullRom.alpha(0.5));
+
+var voronoi = d3.voronoi()
+.extent([[0, 0], [width + margin.right, height + margin.top]])
+.x(function(d) { return xScale(d.x_value) })
+.y(function(d) { return yScale(d.y_value)
+})
+
+    var allArea = g_inner
+    .selectAll('.area')
+    .data(data);
+
+    allArea
+    .transition()
+    .duration(200)
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) });
+
+    allArea.exit().transition().duration(200).remove();
+
+    allArea
+    .enter()
+    .append('path')
+    .attr('class', 'area')
+    .attr('d', function(d) { return area(d) })
+    .style('stroke', function(d) { return colorUpdated(d[0].name) })
+    .style('fill', function(d) { return colorUpdated(d[0].name) })
+    .style('stroke-width', 2)
+    .style('fill-opacity', 0.9);
+
+
+     g_inner.select('g.voronoiGroup').remove()
+
+     var voronoiGroup =  g_inner.append("g")
+      .attr("class", "voronoiGroup")
+
+
+     voronoiGroup.selectAll("path")
+    .data(voronoi
+    .polygons(d3.merge(data)))
+    .enter()
+    .append('path')
+    .attr("d", function(d) {
+            return d ? "M" + d.join("L") + "Z" : null;
+        })
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', function(d){
+        var thisD = d.data;
+        var thoseVars = [];
+        if (moment.isMoment(thisD.x_value)){ thoseVars.push({'name': 'date', 'value':thisD.x_value.locale('fr').format('DD MMMM YYYY')})};
+        if (manualReusableParameters.indice_100.value){ thoseVars.push({'name': 'valeur', 'value':thisD.y_value})};
+        show_tooltip(_.find(initial_data, function(e){
+        return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == thisD.x_value}), thisD.name, thoseVars)})
+    .on('mouseout', function(){ hide_tooltip()});
+
+        // AllDotPoints = g_inner
+        // .selectAll('circle.dotPoint')
+        // .data(_.flatten(data));
+
+        // AllDotPoints
+        // // .transition()
+        // // .duration(200)
+        // .attr('cx', function(d) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .style('fill-opacity', 0 );
+
+        // AllDotPoints.exit().transition().duration(200).remove();
+
+        // AllDotPoints
+        // .enter()
+        // .append('circle')
+        // .attr('class', 'dotPoint')
+        // .attr('cx', function(d, i) { return xScale(d.x_value) })
+        // .attr('cy', function(d) { return yScale(d.y_value) })
+        // .style('fill', function(d) { return colorUpdated(d.name) })
+        // .attr('r', 3)
+        // .style('stroke-width', 5)
+        // .style('stroke', 'white')
+        // .style('stroke-opacity', 0)
+        // .style('fill-opacity', 0 )
+        // // .style('fill', 'black')
+        // .on('mouseover', function(d, i){ show_tooltip(_.find(initial_data, function(e){
+        //     return formatNumbersDate(e[graphParameters.selected_xRows[0]], graphParameters.selected_xRows[0]) == d.x_value}), d.name)})
+        // .on('mouseout', function(d){ hide_tooltip()});
+        // ;
+
+g_inner
+.call(xAxisLabel, graphParameters.selected_xRows[0]);
+
+g_inner
+.call(yAxisLabel, graphParameters.selected_yRows[0]);
+
+
+customizeAxis()
+
+    drawLegend()
+    addCustomCode()
+
+}
+
+initChart();
+
+makeAreachart(data);
+
+
+
+
+
+makeAnnotation();
+
+zeroParameters()
+
+d3.select("svg").call(responsivefy)
+
+// output_from_parsed_html_template = html_template.render(this_title=this_title, chart_html=chart_html, 
+//         chart_data=data, chart_parameters=chart_parameters, chart_function=chart_function)
+
+// 
+
+function updateParameters(){
+
+  var svg = d3.select("svg");
+
+  svg
+  .attr('width', manualReusableParameters.chart_width.value);
+
+      // d3.select('div#chart')
+      // .style('width', manualReusableParameters.chart_width.value);
+
+      svg.attr("width", manualReusableParameters.chart_width.value);
+      svg
+      .attr('height', manualReusableParameters.chart_height.value);
+
+      width = manualReusableParameters.chart_width.value - initMargin.left - initMargin.right;
+      height = manualReusableParameters.chart_height.value - initMargin.top - initMargin.bottom;
+      width = width  - manualReusableParameters.padding_left.value - manualReusableParameters.padding_right.value;
+      height = height - manualReusableParameters.padding_bottom.value- manualReusableParameters.padding_top.value;
+
+    }
+
+// Hack for Iphone
+
+function zeroParameters(){
+
+var svg = d3.select("svg");
+svg.attr('width', null);
+svg.attr('height', null);
+
+}
+
+/// MISCELLANEOUS FUNCTIONS
+
+function emptyChart(){
+
+  d3.select('#varSwitch').selectAll("*").remove();
+  d3.select("#chart .graphContainer .innerGraph").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--x").selectAll("*").remove();
+  d3.select("#chart .graphContainer .axis--y").selectAll("*").remove();
+}
+
+function responsivefy(svg, width, height) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+    width = manualReusableParameters.chart_width.value,
+    height = manualReusableParameters.chart_height.value,
+        // aspect = width / height;
+        aspect = width / height;
+
+    // add viewBox and preserve aspectratio properties
+    // call resize so that svg resizes on initial page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMinYMid")
+    .call(resize);
+
+    // to register multiple listeners for the same event type
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    function resize() {
+
+      var targetWidth = parseInt(container.style("width"));
+      var targetHeight = Math.round(targetWidth / aspect);
+
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+
+    }
+  }
+
+
+      </script>
+
+    </body>
+    </html>
