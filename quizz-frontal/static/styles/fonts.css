@@ -1,0 +1,94 @@
+gmail
+/* @group FONT-FACES */
+
+	/*
+	 * fonts:
+	 *  - synthese 400,600
+	 *  - libesans condensed 400,200
+	 *  - libesans semicondensed 400,800
+	 *  - libetypewriter 400
+	 *  - libetypewriter underline 400
+	*/
+
+	@font-face {
+		font-family: 'syntheselibeweb';
+		src: url('../assets/fonts/syntheselibeweb-regular.woff') format('woff'),
+			 url('../assets/fonts/syntheselibeweb-regular.ttf') format('truetype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'syntheselibeweb-bold';
+		src: url('../assets/fonts/syntheselibeweb-bold.woff') format('woff'),
+			 url('../assets/fonts/syntheselibeweb-bold.ttf') format('truetype');
+				 
+		font-style: normal;
+		font-weight: 600;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-condensed';
+		src: url('../assets/fonts/libesansweb-condensed-regular.woff') format('woff'),
+			 url('../assets/fonts/libesansweb-condensed-regular.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-condensed';
+		src: url('../assets/fonts/libesansweb-condensed-light.woff') format('woff'),
+			 url('../assets/fonts/libesansweb-condensed-light.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 200;
+	}
+	
+	@font-face {
+		font-family: 'libesansweb-semicondensed';
+		src: url('../assets/fonts/libesansweb-semicondensed-regular.woff') format('woff'),
+			 url('../assets/fonts/libesansweb-semicondensed-regular.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-semicondensed';
+		src: url('../assets/fonts/libesansweb-semicondensed-black.woff') format('woff'),
+			 url('../assets/fonts/libesansweb-semicondensed-black.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 800;
+	}
+	
+	@font-face {
+		font-family: 'libetypewriter-regular';
+		src: url('../assets/fonts/libetypewriter-regular.woff') format('woff'),
+			 url('../assets/fonts/libetypewriter-regular.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libetypewriter-regular-underline';
+		src: url('../assets/fonts/libetypewriterweb-regularunderline.woff') format('woff'),
+			 url('../assets/fonts/libetypewriterweb-regularunderline.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'libesansweb-black';
+		src: url('../assets/fonts/libesansweb-black.woff') format('woff'),
+			 url('../assets/fonts/libesansweb-black.otf') format('opentype');
+				 
+		font-style: normal;
+		font-weight: 400;
+	}
+
+/* @end FONT-FACES */

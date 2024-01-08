@@ -1,0 +1,57 @@
+{
+	"id": "avez-vous-bien-suivi-lactu-de-lete-",
+	"type": "quiz",
+	"date": "25/8/2020",
+	"created_date": "2020-08-25T10:18:03.950Z",
+	"modification_date": "2020-08-27T15:39:13.815Z",
+	"statut": "published",
+	"name": "Connaissez-vous le Festival d'Aix-en-Provence ? (c'est du lyrique)",
+	"author": "Service web",
+	"author_slug": "service-web",
+	"mainColor": "#000",
+	"sideColor": "#fff",
+	"txtQuizOk": "Bravo",
+	"txtQuizNop": "Dommage",
+	"linkQuiz": "",
+	"social": "",
+	"items": [{
+		"question": "Cette année, le Festival d’Aix fête sa...",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "12e édition",
+			"isOk": false
+		}, {
+			"text": "51e édition",
+			"isOk": false
+		}, {
+			"text": "75e édition (on l'a dit le carton d'avant...)",
+			"isOk": true
+		}],
+		"titleIsOk": "Bravo !",
+		"textIsOk": "Le Festival d’Aix-en-Provence a été créé en 1948 par Gabriel Dussurget.",
+		"titleIsNop": "Hélas...",
+		"textIsNop": "Le Festival d’Aix-en-Provence a été créé en 1948 par Gabriel Dussurget.",
+		"link": ""
+	},
+{
+		"question": "Lequel de ces ténors entendrez-vous cette année au Festival d’Aix ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Roberto Alagna",
+			"isOk": false
+		}, {
+			"text": "Luciano Pavarotti †",
+			"isOk": false
+		}, {
+			"text": "Jonas Kaufmann",
+			"isOk": true
+		}],
+		"titleIsOk": "Oui !",
+		"textIsOk": "Il interprète \"Otello\" en version de concert.",
+		"titleIsNop": "Eh non...",
+		"textIsNop": "Il s'agit de Jonas Kaufmann, qui interprète «Otello» en version de concert.",
+		"link": "eventuel_lien"
+	}]
+}

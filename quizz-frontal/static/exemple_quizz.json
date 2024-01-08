@@ -1,0 +1,421 @@
+{
+	"id": "avez-vous-bien-suivi-lactu-de-lete-",
+	"type": "quiz",
+	"date": "25/8/2020",
+	"created_date": "2020-08-25T10:18:03.950Z",
+	"modification_date": "2020-08-27T15:39:13.815Z",
+	"statut": "published",
+	"name": "Avez-vous bien suivi l'actu de l'été ?",
+	"author": "Service web",
+	"author_slug": "service-web",
+	"mainColor": "#000",
+	"sideColor": "#fff",
+	"txtQuizOk": "Vous avez tout suivi ! Partagez vite la bonne nouvelle avec vos amis.",
+	"txtQuizNop": "Vous êtes restés loin de l'actu, et qui vous en blâmera ? Voyez si vos amis font mieux que vous.",
+	"tweetPartage": "Et vous ?",
+	"linkQuiz": "",
+	"social": "",
+	"items": [{
+		"question": "Qui est le réalisateur de la comédie de l’été «Tout simplement noir» ?",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "Lucien Jean-Baptiste",
+			"isOk": false
+		}, {
+			"text": "Claude Zidi",
+			"isOk": false
+		}, {
+			"text": "Pascal Légitimus",
+			"isOk": false
+		}, {
+			"text": "Jean-Pascal Zadi",
+			"isOk": true
+		}],
+		"titleIsOk": "Oui !",
+		"textIsOk": "C'est bien Jean-Pascal Zadi qui a réalisé ce film, dans lequel il tient par ailleurs le rôle principal.",
+		"titleIsNop": "Eh non.",
+		"textIsNop": "C'est Jean-Pascal Zadi qui a réalisé ce film, dans lequel il tient par ailleurs le rôle principal.",
+		"link": "https://next.liberation.fr/cinema/2020/07/05/jean-pascal-zadi-la-grande-debrouille_1793428"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	},
+	{
+		"question": "Question_posée",
+		"image": "",
+		"photo": "",
+		"answers": [{
+			"text": "réponse_1",
+			"isOk": false
+		}, {
+			"text": "réponse_2",
+			"isOk": false
+		}, {
+			"text": "réponse_3",
+			"isOk": true
+		}],
+		"titleIsOk": "titre_si_OK",
+		"textIsOk": "texte_si_ok",
+		"titleIsNop": "titre_si_pas_OK",
+		"textIsNop": "texte_si_pas_OK",
+		"link": "eventuel_lien"
+	}]
+}

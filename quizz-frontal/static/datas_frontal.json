@@ -1,0 +1,133 @@
+{
+	"id": "quizz-frontal-noel",
+	"type": "quiz",
+	"date": "21/12/2023",
+	"created_date": "2023-12-21T10:18:03.950Z",
+	"modification_date": "2023-12-21T10:18:03.950Z",
+	"statut": "published",
+	"name": "le quiz Frontal pour reconnaître les fachos au repas de Noël",
+	"author": "Service web",
+	"author_slug": "service-web",
+	"mainColor": "#000",
+	"sideColor": "#fff",
+	"txtQuizOk": "",
+	"txtQuizNop": "",
+	"linkQuiz": "",
+	"social": "",
+	"items": [{
+"question": "Quel parti a fait élire un député ayant été condamné pour «violences en réunion» avec une arme à feu utilisée lors d’une agression raciste?", "image": "", "photo": "", "answers": 
+	[{
+		"text": "Le RN", "isOk": true}, {
+		"text": "Reconquête!", "isOk": false}, {
+		"text": "la Ligue du Sud", "isOk": false}
+		], 
+	"titleIsOk": "Bravo !", 
+	"textIsOk": "Il s’agit de Frédéric Boccaletti, député RN de la 7e circonscription du Var. Il a été condamné en pour «violences en réunion avec arme» en 2000. En marge d’un collage d’affiches de son parti il a donné une arme à feu à un homme qui l’accompagnait qui a tiré sur des jeunes hommes racisés. L’homme a également tenu un temps une boutique vendant des livres négationnistes.",
+	"titleIsNop": "Non",
+	"textIsNop": "Il s’agit de Frédéric Boccaletti, député RN de la 7e circonscription du Var. Il a été condamné en pour «violences en réunion avec arme» en 2000. En marge d’un collage d’affiches de son parti il a donné une arme à feu à un homme qui l’accompagnait qui a tiré sur des jeunes hommes racisés. L’homme a également tenu un temps une boutique vendant des livres négationnistes.",
+	"link": "https://www.liberation.fr/checknews/legislatives-le-rn-a-t-il-investi-dans-le-var-un-candidat-condamne-pour-violence-avec-arme-20220604_DI2DHVE5XJBGFPI6DX343QWMOI/"
+	}, {
+		"question": "Votre petit cousin en fac de droit à Assas arbore un badge avec un rat noir. Il sympathise probablement avec la mouvance…", "image": "", "photo": "", "answers": 
+	[{
+		"text": "Identitaire", "isOk": false}, {
+		"text": "Royaliste", "isOk": false}, {
+		"text": "Nationaliste-révolutionnaire", "isOk": true}
+		], "titleIsOk": "Bravo !",
+		 "textIsOk": "Le rat noir est un symbole des nationalistes-révolutionnaires (des néofascistes) du GUD. Ces militants violents en ont même fait leur symbole, censé représenter leur vision du militantisme par des hommes violents et durs au mal. Des réprouvés.",
+		 "titleIsNop": "Non",
+		  "textIsNop": "Le rat noir est un symbole des nationalistes-révolutionnaires (des néofascistes) du GUD. Ces militants violents en ont même fait leur symbole, censé représenter leur vision du militantisme par des hommes violents et durs au mal. Des réprouvés.",
+		  "link": "https://www.liberation.fr/politique/breve-histoire-du-gud-ce-groupuscule-fascisant-dont-a-fait-partie-loik-le-priol-20220325_H4ASZBQSGRBHVBIOVMGOEN3NEE/"
+	}, {
+		"question": "Un beau-frère se présente à la messe de Noël avec un pin’s à croix celtique au revers de sa veste. Ce symbole exprime...", "image": "", "photo": "", "answers": 
+	[{
+		"text": "sa religiosité chrétienne", "isOk": false}, {
+		"text": "son adhésion au néofascisme", "isOk": true}, {
+		"text": "sa fascination pour la culture bretonne", "isOk": false}
+		], "titleIsOk": "Bravo !",
+		 "textIsOk": "La croix celtique est le symbole des néofascistes français. Il a été adopté sous l’impulsion de Pierre Sidos, fils de collabo et dirigeant de l’Oeuvre française jusqu’à sa mort en 2020, un groupuscule pétainiste d’après-guerre.",
+		 "titleIsNop": "Non",
+		 "textIsNop": "La croix celtique est le symbole des néofascistes français. Il a été adopté sous l’impulsion de Pierre Sidos, fils de collabo et dirigeant de l’Oeuvre française jusqu’à sa mort en 2020, un groupuscule pétainiste d’après-guerre.",
+		 "link": "https://www.liberation.fr/politiques/2020/09/06/mort-de-pierre-sidos-doyen-de-l-extreme-droite-petainiste_1798695/"
+	}, {
+		"question": "On compte en France des dizaines de groupuscules d’extrême droite violents. Parmi les suivants, un seul n’existe pas, lequel ?", "image": "", "photo": "", "answers": 
+	[{
+		"text": "Bourg en Bresse nationaliste", "isOk": false}, {
+		"text": "Guignol squad", "isOk": false}, {
+		"text": "Les Normaux", "isOk": false}, {
+		"text": "Gargouilles d’Amiens", "isOk": true}
+		], "titleIsOk": "Bravo !",
+		"textIsOk": "Les Gargouilles d’Amiens ne sont pas un groupuscule d’extrême droite. Il est absent de la cartographie de ces groupes dévoilée par «Libé» en octobre.",
+		"titleIsNop": "Non",
+		"textIsNop": "Les Gargouilles d’Amiens ne sont pas un groupuscule d’extrême droite. Il est absent de la cartographie de ces groupes dévoilée par «Libé» en octobre.",
+		"link": " https://www.liberation.fr/politique/carte-interactive-des-groupuscules-dextreme-droite-ils-sont-vraiment-partout-20231003_5HWZLQE2IBAJBLZZSEW5NRYZTY/"
+	}, {
+		"question": "«Moi j’ai bien aimé», lance votre mère au sujet du film «Sound of Freedom». Sorti mi-novembre en France, ce dispensable long métrage reprend certaines obsessions des complotistes américains. Le héros y lutte contre…", "image": "", "photo": "", "answers": 
+	[{
+		"text": "Le lobby LGBT", "isOk": false}, {
+		"text": "Un réseau pédophile international", "isOk": true}, {
+		"text": "Une conspiration anarchiste", "isOk": false}
+		], "titleIsOk": "Bravo !",
+	"textIsOk": "Le film «Sound of Freedom» dénonce l’existence d’un prétendu complot pédocriminel mondial. Nanardesque à souhait, le long métrage surfe sur des théories du complot promues par le mouvement américain Qanon comme l’a raconté «Libé».",
+	"titleIsNop": "Non",
+	"textIsNop": "Le film «Sound of Freedom» dénonce l’existence d’un prétendu complot pédocriminel mondial. Nanardesque à souhait, le long métrage surfe sur des théories du complot promues par le mouvement américain Qanon comme l’a raconté «Libé».",
+	"link": "https://www.liberation.fr/politique/le-film-complotiste-sound-of-freedom-debarque-en-france-pousse-par-une-proche-de-bollore-20231107_HXU6D6LHTZF4PCBQJLVILNQGQA/"
+	}, {
+		"question": "Le nouveau copain de votre sœur, qui se dit «royaliste», affirme que l’Action française est le plus vieux mouvement politique en activité. Est-ce exact ?", "image": "", "photo": "", "answers": 
+	[{
+		"text": "Vrai", "isOk": true}, {
+		"text": "Faux", "isOk": false}
+		],
+	"titleIsOk": "Bravo !", 
+	"textIsOk": "C’est en effet vrai. Le mouvement royaliste a été fondé en 1899, six ans avant la SFIO, ancêtre de l’actuel Parti socialiste. Le parti de Charles Maurras a certes échappé à toutes les dissolutions mais, accusé d’avoir collaboré, il a interrompu ses activités à la Libération avant de se relancer quelques années plus tard.",
+	"titleIsNop": "Non",
+	"textIsNop": "C’est en effet vrai. Le mouvement royaliste a été fondé en 1899, six ans avant la SFIO, ancêtre de l’actuel Parti socialiste. Le parti de Charles Maurras a certes échappé à toutes les dissolutions mais, accusé d’avoir collaboré, il a interrompu ses activités à la Libération avant de se relancer quelques années plus tard.",
+	"link": ""
+	}, {
+		"question": "Il y a autour de la table des amateurs de CNews, la chaîne ultra-conservatrice de Vincent Bolloré, où officie notamment le polémiste identitaire Mathieu Bock-Côté. Pouvez-vous compléter cette citation du Québécois ? «Ce n’est pas l’“extrême droite” qui nous menace, mais…»", "image": "", "photo": "", "answers": 
+	[{
+		"text": "«l’hydre islamiste qui nous accable»", "isOk": false}, {
+		"text": "«la dictature écolo qui nous oppresse»", "isOk": false}, {
+		"text": "«la lutte contre ”l’extrême droite” qui nous conduit au totalitarisme»", "isOk": true}
+		], "titleIsOk": "Bravo !",
+	"textIsOk": "Il a beau être hanté par la «submersion migratoire», Mathieu Bock-Côté n’en a pas moins quitté son Québec et traversé l’Atlantique pour dire tout le mal qu’il pense des exilés. Mais aussi s’en prendre aux wokes et aux «seul culte des droits de l’homme» sur CNews, «Europe 1» ou dans le «JDD». Selon ce chroniqueur bolloréen, c’est donc bien «la lutte contre “l’extrême droite” qui nous conduit au totalitarisme».",
+	"titleIsNop": "Non",
+	"textIsNop": "Il a beau être hanté par la «submersion migratoire», Mathieu Bock-Côté n’en a pas moins quitté son Québec et traversé l’Atlantique pour dire tout le mal qu’il pense des exilés. Mais aussi s’en prendre aux wokes et aux «seul culte des droits de l’homme» sur CNews, «Europe 1» ou dans le «JDD». Selon ce chroniqueur bolloréen, c’est donc bien «la lutte contre “l’extrême droite” qui nous conduit au totalitarisme».",
+	"link": "https://www.liberation.fr/idees-et-debats/mathieu-bock-cote-le-dartagnan-planque-de-lextreme-droite-20231116_3JY3RXOZ75GLZGMIT24APJEVDU/"
+	}, {
+		"question": "Au réveillon, un tonton un peu raciste se lance sur le «grand remplacement», une théorie fumeuse qu’il dit inventée par un certain Renaud Camus. Est-ce exact?", "image": "", "photo": "", "answers": 
+	[{
+		"text": "Vrai", "isOk": false}, {
+		"text": "Faux", "isOk": true}
+		], "titleIsOk": "Bravo !",
+	"textIsOk": "C’est faux. L’écrivain Renaud Camus aime à se présenter comme le père de cette théorie raciste mais il n’en est qu’un récupérateur, qui l’a toutefois bien fait évoluer dans sa forme profondément islamophobe actuelle. Cette thèse voulant que les populations «de souche» seraient en passe d’être «remplacées» remonte en réalité aux penseurs nationalistes français de la fin du XIXe siècle, et était alors fortement teintée d’antisémitisme. Une prédiction centenaire qui ne s’est donc toujours pas réalisée.", 
+	"titleIsNop": "Non", 
+	"textIsNop": "C’est faux. L’écrivain Renaud Camus aime à se présenter comme le père de cette théorie raciste mais il n’en est qu’un récupérateur, qui l’a toutefois bien fait évoluer dans sa forme profondément islamophobe actuelle. Cette thèse voulant que les populations «de souche» seraient en passe d’être «remplacées» remonte en réalité aux penseurs nationalistes français de la fin du XIXe siècle, et était alors fortement teintée d’antisémitisme. Une prédiction centenaire qui ne s’est donc toujours pas réalisée.", 
+	"link": "https://www.liberation.fr/politique/grand-remplacement-un-documentaire-retrace-lhistoire-violente-dune-idee-mortifere-20220329_YYEWAHQA5JDCJD2MHV2ZRF4ERI/"
+	}, {
+		"question": "La discussion glisse sur la descente raciste de Romans-sur-Isère après le drame de Crépol. Autour de la table les avis sont partagés, certains estimant que l’action n’était pas si violente.... En cela, ils rejoignent la position de quels leaders politiques ?",
+		 "image": "", 
+		 "photo": "", 
+		 "answers": 
+	[{
+		"text": "Eric Zemmour et Eric Ciotti", "isOk": true}, {
+		"text": "Marine Le Pen et Jordan Bardella", "isOk": false}
+		], "titleIsOk": "Bravo !",
+		"textIsOk": "Zemmour et Ciotti. «Ce que je condamne, c'est la mort de Thomas, c'est l'ultra racaille», a clamé le premier, tandis que le second s’est dit «très choqué par (la) réaction médiatique» ayant fait suite à cette descente raciste et violente, avant de finir par condamner du bout des lèvres. Une certaine idée de l’Etat de droit.",
+		"titleIsNop": "Non",
+		"textIsNop": "Zemmour et Ciotti. «Ce que je condamne, c'est la mort de Thomas, c'est l'ultra racaille», a clamé le premier, tandis que le second s’est dit «très choqué par (la) réaction médiatique» ayant fait suite à cette descente raciste et violente, avant de finir par condamner du bout des lèvres. Une certaine idée de l’Etat de droit.",
+		"link": ""
+	}, {
+		"question": "Pas de chance, on vous a offert le dernier livre d’Eric Naulleau intitulé «la Faute à Rousseau» (la députée écolo). Chez quel groupuscule d’extrême droite l’ancien acolyte d’Eric Zemmour, qui persiste à se présenter comme un homme de gauche, est-il allé faire la promotion de son brûlot ?",
+		 "image": "",
+		  "photo": "",
+		   "answers": 
+	[{
+		"text": "Academia Christiana", "isOk": false}, {
+		"text": "L’Action française", "isOk": true}, {
+		"text": "Egalité & Réconciliation", "isOk": false}
+		], "titleIsOk": "Bravo !", "textIsOk": "Même s’il a coécrit un livre avec l’antisémite Alain Soral (fondateur d'Egalité & Réconciliation), c’est bien chez les royalistes de l’Action française que celui que se prétend toujours de gauche s’est rendu pour faire sa réclame.",
+	"titleIsNop": "Non",
+	"textIsNop": "Même s’il a coécrit un livre avec l’antisémite Alain Soral (fondateur d'Egalité & Réconciliation), c’est bien chez les royalistes de l’Action française que celui que se prétend toujours de gauche s’est rendu pour faire sa réclame.",
+	"link": ""
+	}]
+}
