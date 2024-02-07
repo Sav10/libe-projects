@@ -1,0 +1,339 @@
+Massif,sous-massif,Region,Département,Station,Indice climatique,Indice socio-économique,Indice Finances publiques,Socre de vulnérabilité,geoloc_auto,fiabilite_geoloc,ville_geoloc,latLong_auto,latLong,vulnérable
+Alpes,"Alpes du
+Nord",ARA,73,Orelle,1,"3,67",5,"0,73","[6.536645, 45.20987]",0.3931271900826446,Orelle,"45.20987,6.536645","45.2076,6.5462",non
+Alpes,"Alpes du
+Nord",ARA,73,Tignes,1,"8,33",10,"0,83","[6.927293, 45.49388]",0.4014999173553718,Tignes,"45.49388,6.927293","45.4701,6.9076",non
+Alpes,"Alpes du
+Nord",ARA,73,Val thorens,1,9,10,"0,9","[6.557857, 45.303308]",0.36564636363636366,Route de Val Thorens,"45.303308,6.557857","45.2957227,6.5524791",non
+Alpes,"Alpes du
+Nord",ARA,74,Chamonix,1,10,10,1,"[6.869242, 45.924044]",0.4799212587412587,Chamonix,"45.924044,6.869242","45.9258,6.8713",non
+Alpes,"Alpes du
+Nord",ARA,73,Val d'isere,1,"7,33",7,"1,05","[6.988649, 45.448292]",0.5398827272727272,Val-d'Isère,"45.448292,6.988649","45.445649,6.977695",non
+Alpes,"Alpes du
+Sud",PACA,4,Saint paul,"5,67",1,5,"1,13","[7.518759, 43.79605]",0.5360272727272728,Saint Paul,"43.79605,7.518759","44.5167954,6.7575956",non
+Alpes,"Alpes du
+Nord",ARA,38,Deux alpes (les),1,"8,33",7,"1,19","[6.12511, 45.010313]",0.5397408211143695,Place des 2 Alpes,"45.010313,6.12511","45.0063,6.1231",non
+Alpes,"Alpes du
+Nord",ARA,38,Col de porte,"7,33","1,67",10,"1,22","[6.026538, 45.437743]",0.471195652173913,Rue du Col de Porte,"45.437743,6.026538","45.2895,5.7672",non
+Alpes,"Alpes du
+Nord",ARA,73,Menuires (les),"1,67",9,10,"1,5","[5.026103, 45.039124]",0.3657566457680251,Lotissement les Menuires,"45.039124,5.026103","45.3233799,6.5346576",non
+Alpes,"Alpes du
+Nord",ARA,73,Valmeinier,"1,67",5,5,"1,67","[6.481963, 45.185472]",0.5147754545454545,Valmeinier,"45.185472,6.481963","45.1843,6.4811",non
+Alpes,"Alpes du
+Sud",ARA,26,Font d'urle - chaud clapier,"7,33","2,33",10,"1,71","[5.332169, 44.889925]",0.3112964171122995,Font d'Urle-ouest,"44.889925,5.332169",,
+Alpes,"Alpes du
+Nord",ARA,38,Alpe d'huez (l'),"1,67","7,33",7,"1,75","[6.038075, 45.063681]",0.45515909090909085,Route de l'Alpe d'Huez,"45.063681,6.038075",,
+Alpes,"Alpes du
+Sud",PACA,5,Montgenevre,"2,33","5,67",7,"1,89","[6.713215, 44.929113]",0.5341890909090908,Montgenèvre,"44.929113,6.713215",,
+Alpes,"Alpes du
+Sud",PACA,4,Sainte anne la condamine,"5,67","1,67",5,"1,89","[6.721335, 44.466908]",0.450142243713733,Route de Sainte-Anne,"44.466908,6.721335",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,31,Bourg d'oueil,10,1,5,2,"[0.498305, 42.859012]",0.47300519480519476,Bourg-d'Oueil,"42.859012,0.498305",,
+Alpes,"Alpes du
+Nord",ARA,74,Semnoz (le),"5,67","3,67",10,"2,08","[5.91773, 45.675503]",0.3008629752066116,Chemin du semnoz,"45.675503,5.91773",,
+Alpes,"Alpes du
+Nord",ARA,73,Courchevel,"2,33",9,10,"2,1","[6.622002, 45.430622]",0.5212190909090909,Courchevel,"45.430622,6.622002",,
+Alpes,"Alpes du
+Sud",PACA,4,Larche,"6,33","1,67",5,"2,11","[3.600583, 45.157311]",0.21039909090909087,Chemin du Suc de Larche,"45.157311,3.600583",,
+Alpes,"Alpes du
+Nord",ARA,73,Bessans,5,3,7,"2,14","[6.996174, 45.32174]",0.4308772727272727,Bessans,"45.32174,6.996174",,
+Alpes,"Alpes du
+Sud",PACA,4,Pra-loup,"4,33",5,10,"2,17","[6.603762, 44.369741]",0.4675203496503496,Pra Loup,"44.369741,6.603762",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,9,Ascou pailhères,"6,67","2,33",7,"2,22","[1.985694, 42.734566]",0.32798066115702473,Port de Pailleres,"42.734566,1.985694",,
+Alpes,"Alpes du
+Nord",ARA,73,Arcs (les) - peisey-vallandry,"2,33",10,10,"2,33",,,,,"45.5949,6.7923",
+Alpes,"Alpes du
+Sud",PACA,5,Grave (la)- la meije,"2,33",5,5,"2,33","[2.560198, 48.605299]",0.38753424242424234,Allee de la Meije,"48.605299,2.560198",,
+Pyrénées,"ouest
+pyrénéen",,64,Gourette,"6,67","3,67",10,"2,44","[-0.38651, 43.3666]",0.3388006611570248,Rue de Gourette,"43.3666,-0.38651",,
+Pyrénées,"Est
+Pyrénéen",OCCITANIE,9,Mijanès donezan,"7,33","2,33",7,"2,44","[1.734401, 43.20038]",0.29271090909090913,Les Mijanes,"43.20038,1.734401",,
+Alpes,"Alpes du
+Sud",ARA,26,Col du rousset,7,"3,67",10,"2,57","[5.027751, 45.022522]",0.44678090909090906,Rue du Col du Rousset,"45.022522,5.027751",,
+Alpes,"Alpes du
+Nord",ARA,73,Karellis (les),3,"4,33",5,"2,6","[4.868223, 45.456719]",0.33028611570247934,Place Arélis,"45.456719,4.868223",,
+Alpes,"Alpes du
+Sud",PACA,5,La joue du loup,"5,67","2,33",5,"2,64","[-1.75631, 46.834529]",0.4833709917355371,la noue du loup,"46.834529,-1.75631",,
+Alpes,"Alpes du
+Nord",ARA,38,Sept laux (les),"4,33","6,33",10,"2,74","[4.75475, 45.798794]",0.4485481818181818,Allée des Sept Laux,"45.798794,4.75475",,
+Alpes,"Alpes du
+Nord",ARA,73,Meribel les allues + mottaret,"2,33","8,33",7,"2,78","[6.568772, 45.389174]",0.4316318181818181,Route de mottaret,"45.389174,6.568772",,
+Alpes,"Alpes du
+Nord",ARA,73,Bonneval sur arc,"2,33","3,67",3,"2,85","[7.058284, 45.375131]",0.604801038961039,Bonneval-sur-Arc,"45.375131,7.058284",,
+Alpes,"Alpes du
+Nord",ARA,38,Oz - vaujany,"3,67","5,67",7,"2,97","[6.073673, 45.15796]",0.3488927272727273,Vaujany,"45.15796,6.073673",,
+Alpes,"Alpes du
+Nord",ARA,73,Aussois,3,5,5,3,"[6.742733, 45.229408]",0.43384909090909085,Aussois,"45.229408,6.742733",,
+Alpes,"Alpes du
+Sud",PACA,5,Orres (les),3,5,5,3,"[6.554934, 44.500338]",0.40536363636363637,Les Orres,"44.500338,6.554934",,
+Alpes,"Alpes du
+Nord",ARA,73,Sainte-foy-tarentaise,3,5,5,3,"[6.885178, 45.572507]",0.6542188111888113,Sainte-Foy-Tarentaise,"45.572507,6.885178",,
+Alpes,"Alpes du
+Sud",PACA,5,Serre chevalier,3,10,10,3,"[5.04912, 45.048136]",0.42464082644628093,Rue Chevalier,"45.048136,5.04912",,
+Alpes,"Alpes du
+Nord",ARA,73,Norma (la),"4,33",5,7,"3,1","[6.696841, 45.201407]",0.2994909090909091,La Norma Village,"45.201407,6.696841",,
+Alpes,"Alpes du
+Sud",PACA,5,Puy st vincent,"3,67","4,33",5,"3,18","[6.486196, 44.819865]",0.44770292490118574,Puy-Saint-Vincent,"44.819865,6.486196",,
+Alpes,"Alpes du
+Nord",ARA,73,Valmorel,"2,33",7,5,"3,27","[6.442483, 45.461698]",0.4689330769230769,Valmorel,"45.461698,6.442483",,
+Alpes,"Alpes du
+Nord",ARA,73,Plagne (la),"1,67",10,5,"3,33","[6.62575, 45.538585]",0.4422672727272727,Aime-la-Plagne,"45.538585,6.62575",,
+Alpes,"Alpes du
+Nord",ARA,38,Saint nizier du moucherotte,10,1,3,"3,33","[5.632283, 45.170612]",0.6916354545454546,Saint-Nizier-du-Moucherotte,"45.170612,5.632283",,
+Alpes,"Alpes du
+Sud",PACA,5,Serre eyraud,"5,67",3,5,"3,4","[6.260872, 44.677448]",0.3848965734265734,Route de Serre-Eyraud,"44.677448,6.260872",,
+Alpes,"Alpes du
+Nord",ARA,73,Valloire,3,"5,67",5,"3,4","[6.419227, 45.136353]",0.46728944055944055,Valloire,"45.136353,6.419227",,
+Pyrénées,"Est
+Pyrénéen",OCCITANIE,9,Plateau de beille,"6,67","3,67",7,"3,49","[5.611098, 45.952846]",0.34263719535783366,Rue du Pre la Belle,"45.952846,5.611098",,
+Alpes,"Alpes du
+Nord",ARA,73,Val frejus,"4,33","5,67",7,"3,51","[6.74616, 43.466565]",0.3555870247933884,Avenue du VAL DES ARCHES,"43.466565,6.74616",,
+Alpes,"Alpes du
+Nord",ARA,38,Chamrousse,"3,67",5,5,"3,67","[5.430819, 45.395609]",0.5161123923444977,Allee Chamrousse,"45.395609,5.430819",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Luz ardiden,5,"3,67",5,"3,67","[-0.012492, 42.867243]",0.24704596194503167,Route de l'Ardiden,"42.867243,-0.012492",,
+Alpes,"Alpes du
+Nord",ARA,74,"Portes du mont blanc (les)
+- sallanches-cordon","7,33",5,1,"3,67","[6.132428, 45.556202]",0.40302514157973174,Allée du mont blanc,"45.556202,6.132428",,
+Alpes,"Alpes du
+Nord",ARA,73,Pralognan,"3,67",5,5,"3,67","[6.715221, 45.372015]",0.33169818181818184,Pralognan-la-Vanoise,"45.372015,6.715221",,
+Alpes,"Alpes du
+Sud",PACA,5,Risoul,"3,67",5,5,"3,67","[6.629695, 44.643728]",0.3964244628099173,Risoul,"44.643728,6.629695",,
+Alpes,"Alpes du
+Nord",ARA,73,Saint francois longchamp,"3,67",5,5,"3,67","[6.32164, 45.393445]",0.6725737304075236,Saint François Longchamp,"45.393445,6.32164",,
+Alpes,"Alpes du
+Nord",ARA,73,Saint sorlin d'arves,"3,67",5,5,"3,67","[6.2336, 45.220242]",0.6434772727272727,Saint-Sorlin-d'Arves,"45.220242,6.2336",,
+Alpes,"Alpes du
+Nord",ARA,73,Saint-colomban-des-villards,5,"3,67",5,"3,67","[6.226032, 45.292813]",0.6820081818181819,Saint-Colomban-des-Villards,"45.292813,6.226032",,
+Alpes,"Alpes du
+Nord",ARA,73,Albiez montrond,"4,33","4,33",5,"3,76","[6.336181, 45.204845]",0.5945763636363636,Albiez-Montrond,"45.204845,6.336181",,
+Pyrénées,"Pyrénées
+centrales",OCCITANIE,65,Piau-engaly,"4,33","4,33",5,"3,76","[0.214683, 42.786629]",0.3740760606060605,Route de Piau Engaly,"42.786629,0.214683",,
+Pyrénées,"ouest
+pyrénéen",,64,La pierre st martin,"6,67","5,67",10,"3,78","[-0.744099, 42.976949]",0.48272580645161284,La Pierre Saint Martin,"42.976949,-0.744099",,
+Alpes,"Alpes du
+Nord",ARA,38,Col du barioz alpin,"6,33",3,5,"3,8","[6.013402, 45.317429]",0.3447979338842975,route du col du barioz,"45.317429,6.013402",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Gavarnie gèdre,"6,33",3,5,"3,8","[0.019304, 42.788471]",0.5050128925619836,Gavarnie-Gèdre,"42.788471,0.019304",,
+Alpes,"Alpes du
+Nord",ARA,74,Avoriaz - morzine,3,9,7,"3,86","[6.71914, 46.18613]",0.5572101398601399,Route d'avoriaz,"46.18613,6.71914",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Val d'azun,9,3,7,"3,86","[-0.329343, 43.312034]",0.38885606060606054,rue du val d'Azun,"43.312034,-0.329343",,
+Alpes,"Alpes du
+Nord",ARA,74,Grand bornand (le),"4,33","6,33",7,"3,92","[6.457781, 45.95992]",0.5504066115702478,Le Grand-Bornand,"45.95992,6.457781",,
+Alpes,"Alpes du
+Nord",ARA,74,Carroz d'araches (les),5,"5,67",7,"4,05","[6.639886, 46.033196]",0.35446168278529977,Route des grandes alpes,"46.033196,6.639886",,
+Alpes,"Alpes du
+Sud",PACA,5,Orcières merlette,"3,67","5,67",5,"4,16","[2.369264, 48.985236]",0.44514030303030294,Allee des Merlettes,"48.985236,2.369264",,
+Alpes,"Alpes du
+Sud",PACA,5,Vars,"3,67","5,67",5,"4,16","[6.133602, 43.665633]",0.3191672727272727,Avenue des Alpes,"43.665633,6.133602",,
+Alpes,"Alpes du
+Nord",ARA,74,Clusaz (la),"3,67",8,7,"4,19","[6.44087, 45.896385]",0.4106590909090909,La Clusaz,"45.896385,6.44087",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,11,Camurac,9,"2,33",5,"4,2","[1.910414, 47.643779]",0.3953299999999999,Les Pyrenees,"47.643779,1.910414",,
+Alpes,"Alpes du
+Nord",ARA,73,"Corbier (le)-saint jean
+d'arves","4,33",5,5,"4,33","[0.110918, 49.497364]",0.23609513368983953,Rue Edouard Corbière,"49.497364,0.110918",,
+Alpes,"Alpes du
+Sud",ARA,26,Lus la jarjatte,10,"4,33",10,"4,33","[5.719577, 44.660977]",0.4031936363636363,Route de la Jarjatte,"44.660977,5.719577",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,9,Goulier-neige,"8,33","3,67",7,"4,37","[3.888181, 44.389377]",0.3571109090909091,Sentier Perce-Neige,"44.389377,3.888181",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,66,Espace nordique capcir,"7,33",3,5,"4,4",,,,,"42.5355874,2.1424424",
+Alpes,"Alpes du
+Nord",ARA,74,Contamines (les)-hauteluce,"3,67","6,33",5,"4,64","[6.115345, 45.94725]",0.3943356684491978,Allée des Contamines,"45.94725,6.115345",,
+Alpes,"Alpes du
+Nord",ARA,74,Seythenex - la sambuy,"5,67",6,7,"4,86","[6.298649, 45.750472]",0.4514223076923077,Rue de la sambuy,"45.750472,6.298649",,
+Alpes,"Alpes du
+Nord",ARA,73,Bramans,"5,67","4,33",5,"4,91","[6.774664, 45.223889]",0.25857078369905956,Chemin des Jardins (bramans),"45.223889,6.774664",,
+Alpes,"Alpes du
+Nord",ARA,38,Collet d'allevard (le),"4,33","5,67",5,"4,91","[6.085338, 45.397692]",0.45563818181818183,Route du Collet,"45.397692,6.085338",,
+Alpes,"Alpes du
+Sud",PACA,4,Le sauze,"5,67","4,33",5,"4,91","[1.403098, 46.141805]",0.467133986013986,Le Sauze,"46.141805,1.403098",,
+Alpes,"Alpes du
+Nord",ARA,74,Reposoir (le),"6,33","2,33",3,"4,93","[-2.3792, 48.565782]",0.46817598930481286,Le Reposoir,"48.565782,-2.3792",,
+Alpes,"Alpes du
+Nord",ARA,73,Areches beaufort,5,5,5,5,"[6.571014, 45.711376]",0.5136833766233765,Route d’Arêches,"45.711376,6.571014",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Hautacam,"8,33",3,5,5,"[-0.047664, 43.083874]",0.30520758620689653,Rue du Hautacam,"43.083874,-0.047664",,
+Alpes,"Alpes du
+Sud",PACA,6,Isola 2000,3,5,3,5,"[8.847032, 41.734281]",0.3432790909090909,Isola,"41.734281,8.847032",,
+Alpes,"Alpes du
+Nord",ARA,74,Megeve,5,10,10,5,"[6.617934, 45.856704]",0.4064535537190082,Megève,"45.856704,6.617934",,
+Alpes,"Alpes du
+Sud",PACA,5,Pelvoux-vallouise,5,5,5,5,"[6.485877, 44.866104]",0.5605659288537549,Vallouise-Pelvoux,"44.866104,6.485877",,
+Alpes,"Alpes du
+Nord",ARA,74,Les houches - saint-gervais,"4,33","8,33",7,"5,16","[2.84999, 46.024283]",0.5256154545454546,Les Ouches,"46.024283,2.84999",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Val louron,"7,33","3,67",5,"5,38","[0.390333, 42.790769]",0.32179961038961036,Station de Val Louron,"42.790769,0.390333",,
+Alpes,"Alpes du
+Nord",ARA,74,Passy plaine-joux,"6,33",6,7,"5,43","[6.729929, 45.950514]",0.4720446627565982,Route de plaine joux,"45.950514,6.729929",,
+Alpes,"Alpes du
+Nord",ARA,74,Mont saxonnex,"6,33","4,33",5,"5,49","[6.488259, 46.053592]",0.5741881818181818,Mont-Saxonnex,"46.053592,6.488259",,
+Alpes,"Alpes du
+Nord",ARA,73,Saisies (les),"4,33","6,33",5,"5,49","[0.964299, 46.998518]",0.24506282296650714,La Saisie,"46.998518,0.964299",,
+Alpes,"Alpes du
+Nord",ARA,73,Val cenis,"4,33","6,33",5,"5,49","[6.818505, 45.276832]",0.556676611570248,Rue des Alpes,"45.276832,6.818505",,
+Alpes,"Alpes du
+Nord",ARA,74,Abondance,"5,67",5,5,"5,67","[6.73173, 46.267387]",0.4956361038961038,Abondance,"46.267387,6.73173",,
+Alpes,"Alpes du
+Sud",PACA,5,Ancelle,"5,67",5,5,"5,67","[6.193121, 44.617079]",0.43511181818181816,Ancelle,"44.617079,6.193121",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,9,Ax 3 domaines,"5,67",5,5,"5,67","[1.815459, 42.702307]",0.4690180519480519,Residence Ax 3 Domaines,"42.702307,1.815459",,
+Alpes,"Alpes du
+Nord",ARA,74,Bellevaux hirmentaz,"5,67",5,5,"5,67","[6.507816, 46.248203]",0.5051499999999999,Route d'Hirmentaz,"46.248203,6.507816",,
+Alpes,"Alpes du
+Nord",ARA,74,Bernex,"5,67",5,5,"5,67","[6.672711, 46.3614]",0.39986809917355365,Bernex,"46.3614,6.672711",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Cauerets,5,"5,67",5,"5,67","[1.506016, 43.546951]",0.3128890909090909,La Pyreneenne,"43.546951,1.506016",,
+Alpes,"Alpes du
+Sud",PACA,5,Chazelet-villar d'arene,"5,67",5,5,"5,67","[6.40493, 45.034782]",0.4447083116883116,Le Lautaret,"45.034782,6.40493",,
+Alpes,"Alpes du
+Nord",ARA,74,Gets (les),5,"5,67",5,"5,67","[6.660803, 46.154463]",0.39185032258064517,Route des grandes alpes,"46.154463,6.660803",,
+Alpes,"Alpes du
+Nord",ARA,74,Manigod croix fry,"5,67",5,5,"5,67","[6.387895, 45.871743]",0.36971955654101996,Route du Col de la Croix Fry,"45.871743,6.387895",,
+Alpes,"Alpes du
+Sud",PACA,5,Massif du devoluy,5,"5,67",5,"5,67",,,,,"44.6767135,5.927624",
+Alpes,"Alpes du
+Nord",ARA,74,Morillon- samoens,"5,67",7,7,"5,67","[6.679908, 46.082197]",0.4536772727272727,Route de Samoens,"46.082197,6.679908",,
+Alpes,"Alpes du
+Sud",PACA,5,Nevache,"5,67",3,3,"5,67","[6.633764, 45.017867]",0.43085181818181817,Névache,"45.017867,6.633764",,
+Alpes,"Alpes du
+Nord",ARA,38,Villard de lans-correncon,"5,67",7,7,"5,67","[5.545196, 45.055194]",0.5498965034965034,Route de Corrençon,"45.055194,5.545196",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,31,Boutx - le mourtis,"6,67","4,33",5,"5,78","[0.717666, 42.917758]",0.35889909090909095,Route du Mourtis,"42.917758,0.717666",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,66,Cambre d'aze,"6,67","4,33",5,"5,78","[2.070145, 42.506375]",0.4206737662337662,Avenue du Cambre d'Aze,"42.506375,2.070145",,
+Alpes,"Alpes du
+Nord",ARA,38,"Col de marcieu (st bernard
+du touvet)",10,3,5,6,"[5.903581, 45.339416]",0.3583790909090909,Route du Col de Marcieu,"45.339416,5.903581",,
+Alpes,"Alpes du
+Nord",ARA,74,"Grand massif (flaine - vallee
+du giffre)",3,10,5,6,"[6.353463, 46.1616]",0.3680103896103896,Route de la vallée du giffre,"46.1616,6.353463",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,66,Les angles,6,5,5,6,"[4.767023, 43.963902]",0.5383418181818181,Impasse des Pyrenees,"43.963902,4.767023",,
+Pyrénées,"Est
+Pyrénéen",OCCITANIE,66,Porté puymorens,6,3,3,6,"[1.833482, 42.548561]",0.5143546245059288,Porté-Puymorens,"42.548561,1.833482",,
+Alpes,"Alpes du
+Nord",ARA,38,Alpe du grand serre (l'),5,"3,67",3,"6,11","[5.10512, 45.269893]",0.3768190909090909,Rue de l'Abattoir,"45.269893,5.10512",,
+Alpes,"Alpes du
+Nord",ARA,74,Cret (saint jean-de-sixt),"8,33","3,67",5,"6,11","[6.401417, 45.924424]",0.5290819410319411,Route du Crêt,"45.924424,6.401417",,
+Alpes,"Alpes du
+Nord",ARA,74,Montmin,"8,33","3,67",5,"6,11","[6.231385, 45.816905]",0.35666000000000003,Talloires-Montmin,"45.816905,6.231385",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Saint-lary soulan,5,"6,33",5,"6,33","[0.290483, 42.818987]",0.5492545454545454,Saint-Lary-Soulan,"42.818987,0.290483",,
+Alpes,"Alpes du
+Nord",ARA,74,Chatel,"4,33","7,33",5,"6,36","[5.801068, 45.86733]",0.4082780991735537,Châtel,"45.86733,5.801068",,
+Alpes,"Alpes du
+Nord",ARA,73,Granier sur aime - le granier,"7,33","4,33",5,"6,36","[6.654812, 45.567292]",0.46587272727272727,Granier (Granier),"45.567292,6.654812",,
+Alpes,"Alpes du
+Nord",ARA,74,Saint nicolas de veroce,"4,33","7,33",5,"6,36","[-0.564974, 47.474578]",0.44134142857142855,Rue Saint-Nicolas,"47.474578,-0.564974",,
+Alpes,"Alpes du
+Nord",ARA,74,Chapelle d'abondance (la),"5,67","5,67",5,"6,42","[6.791724, 46.299493]",0.6184628526645767,La Chapelle-d'Abondance,"46.299493,6.791724",,
+Alpes,"Alpes du
+Sud",PACA,5,"Super dévoluy - la joue du
+loup","5,67","5,67",5,"6,42","[5.940714, 44.692915]",0.30683272727272726,Impasse du Saut du Loup,"44.692915,5.940714",,
+Alpes,"Alpes du
+Nord",ARA,74,Morzine pleney nyon,"5,67",8,7,"6,48","[6.701977, 46.180532]",0.33426090909090905,Taille de mas du pleney,"46.180532,6.701977",,
+Pyrénées,"ouest
+pyrénéen",,64,Artouste,"6,67",5,5,"6,67","[-0.376179, 43.319225]",0.3722046753246753,rue d'Artouste,"43.319225,-0.376179",,
+Alpes,"Alpes du
+Nord",ARA,74,Praz-de-lys - sommand,5,"6,67",5,"6,67","[6.613927, 46.143509]",0.3110390909090909,Route du praz de lys,"46.143509,6.613927",,
+Alpes,"Alpes du
+Sud",PACA,6,Valberg-beuil,"6,67",5,5,"6,67","[6.928112, 44.097546]",0.3544145454545455,Valberg,"44.097546,6.928112",,
+Alpes,"Alpes du
+Nord",ARA,38,"Saint pierre de chartreuse - le
+planolet",7,5,5,7,"[5.667746, 45.244304]",0.4195117482517482,rue de la chartreuse,"45.244304,5.667746",,
+Alpes,"Alpes du
+Nord",ARA,38,Autrans-meaudre,"6,33","5,67",5,"7,18","[5.552751, 45.155316]",0.4405963636363636,Autrans-Méaudre en Vercors,"45.155316,5.552751",,
+Alpes,"Alpes du
+Nord",ARA,74,"Espace roc d'enfer (st jean
+d'aulps - grande terche)","6,33","5,67",5,"7,18","[6.643122, 46.225031]",0.41204810040705564,Impasse de la grande terche,"46.225031,6.643122",,
+Alpes,"Alpes du
+Nord",ARA,38,Lans en vercors,"6,33","5,67",5,"7,18","[5.582892, 45.126968]",0.6036063636363636,Lans-en-Vercors,"45.126968,5.582892",,
+Alpes,"Alpes du
+Sud",PACA,5,Reallon,5,"4,33",3,"7,22","[6.358226, 44.596519]",0.42921272727272725,Réallon,"44.596519,6.358226",,
+Alpes,"Alpes du
+Nord",ARA,74,"Habere poche, hirmentaz","7,33",5,5,"7,33","[6.472198, 46.254474]",0.3615178787878787,Habère-Poche,"46.254474,6.472198",,
+Alpes,"Alpes du
+Nord",ARA,74,"Saint gervais mont blanc
+(saint gervais bettex)",5,"7,33",5,"7,33","[6.711674, 45.892873]",0.45974727272727267,Rue du mont blanc,"45.892873,6.711674",,
+Alpes,"Alpes du
+Nord",ARA,38,Sappey en chartreuse (le),10,"3,67",5,"7,33","[5.775644, 45.257104]",0.6194610344827586,Le Sappey-en-Chartreuse,"45.257104,5.775644",,
+Alpes,"Alpes du
+Nord",ARA,73,Rafforts (les) - ugine,"7,33","5,33",5,"7,82","[6.479651, 45.789742]",0.4798472727272727,Route des Rafforts,"45.789742,6.479651",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,65,Grand tourmalet,5,8,5,8,"[-0.212208, 43.188959]",0.32842584415584414,Rue du Tourmalet,"43.188959,-0.212208",,
+Alpes,"Alpes du
+Nord",ARA,74,Vallorcine la poya,"6,67","3,67",3,"8,15","[6.914625, 46.019489]",0.49641818181818176,Chemin de la poya,"46.019489,6.914625",,
+Alpes,"Alpes du
+Sud",PACA,6,Auron saint etienne de tinée,"4,33","5,67",3,"8,19","[6.930358, 44.225181]",0.7005587603305785,Auron,"44.225181,6.930358",,
+Alpes,"Alpes du
+Nord",ARA,73,Crest-voland,5,5,3,"8,33","[6.511023, 45.794346]",0.5508463101604278,Crest-Voland,"45.794346,6.511023",,
+Alpes,"Alpes du
+Nord",ARA,74,Lullin col de feu,"8,33",3,3,"8,33","[6.513342, 46.291801]",0.42126272727272723,Route du Col du Feu,"46.291801,6.513342",,
+Alpes,"Alpes du
+Nord",ARA,74,PorteTs du mont blanc (les) - combloux - le jaillet - la giettaz,5,"8,33",5,"8,33","[6.644618, 45.891145]",0.3113385345997286,Chemin du Mont-blanc,"45.891145,6.644618",,
+Alpes,"Alpes du
+Nord",ARA,74,Romme nancy sur cluses,"8,33",3,3,"8,33","[6.578193, 46.033817]",0.4349171670190275,Route du col de romme,"46.033817,6.578193",,
+Pyrénées,"Pyrénées
+centrales",Occitanie,31,Luchon superbagnères,"6,67","6,33",5,"8,44","[0.590782, 42.789188]",0.4562281818181818,Rue de Superbagnères,"42.789188,0.590782",,
+Alpes,"Alpes du
+Nord",ARA,38,Saint hilaire du touvet,10,"4,33",5,"8,67","[5.94467, 45.354879]",0.46698132867132863,Route de Saint Hilaire,"45.354879,5.94467",,
+Alpes,"Alpes du
+Nord",ARA,74,Brasses (les),"6,67","6,67",5,"8,89","[-0.992147, 47.98689]",0.2757500395256917,Le Petit Brasse,"47.98689,-0.992147",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,9,Guzet,"6,33","4,33",3,"9,15","[1.910414, 47.643779]",0.44078454545454543,Les Pyrenees,"47.643779,1.910414",,
+Alpes,"Alpes du
+Sud",PACA,4,Val d'allos,"4,33","6,33",3,"9,15","[2.022967, 47.836229]",0.3143578512396694,Rue des Allots,"47.836229,2.022967",,
+Alpes,"Alpes du
+Nord",ARA,73,Aillon le jeune-margeriaz,"5,67",5,3,"9,44","[6.062014, 45.642911]",0.6063949385749386,Route de Margériaz,"45.642911,6.062014",,
+Alpes,"Alpes du
+Sud",PACA,6,Colmiane valdeblore,"5,67",5,3,"9,44","[7.17003, 44.069079]",0.4916994805194804,route de La Colmiane,"44.069079,7.17003",,
+Alpes,"Alpes du
+Nord",ARA,74,Thollon les memises,"5,67",5,3,"9,44","[6.714131, 46.391165]",0.6391836363636363,Thollon-les-Mémises,"46.391165,6.714131",,
+Alpes,"Alpes du
+Nord",ARA,38,Gresse en vercors,7,"4,33",3,"10,11","[5.566931, 44.897269]",0.6169395041322313,Gresse-en-Vercors,"44.897269,5.566931",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,66,Formiguères,"6,67",5,3,"11,11","[2.107804, 42.61399]",0.45390382775119614,Formiguères,"42.61399,2.107804",,
+Alpes,"Alpes du
+Nord",ARA,73,Savoie grand revard,"6,67",5,3,"11,11","[5.939817, 45.718581]",0.2969290909090909,Route du Revard,"45.718581,5.939817",,
+Alpes,"Alpes du
+Nord",ARA,73,Rosiere (la),"2,33",5,1,"11,67","[6.65493, 45.417084]",0.4762383732057416,R de la Rosière,"45.417084,6.65493",,
+Alpes,"Alpes du
+Nord",ARA,73,Val d'arly,5,7,3,"11,67","[1.523494, 43.640992]",0.4016903162055336,Allée du Val d'Arly,"43.640992,1.523494",,
+Alpes,"Alpes du
+Nord",ARA,73,"Col du granier - desert
+d'entremont",10,"3,67",3,"12,22","[5.956152, 45.500831]",0.40345636363636356,Route du Col du Granier,"45.500831,5.956152",,
+Alpes,"Alpes du
+Nord",ARA,73,Notre dame du pré,"6,33","2,33",1,"14,78","[6.592443, 45.510501]",0.6151995041322313,Notre-Dame-du-Pré,"45.510501,6.592443",,
+Alpes,"Alpes du
+Nord",ARA,38,Col d'ornon,"6,67","2,33",1,"15,56","[5.972249, 45.017072]",0.34858272727272727,Au Plan du Col,"45.017072,5.972249",,
+Pyrénées,"Est
+Pyrénéen",Occitanie,66,"Font-romeu - bolquère
+- pyrénées 2000","6,67","7,33",3,"16,3","[2.071189, 42.504357]",0.34730636363636364,Chemin de Font-romeu,"42.504357,2.071189",,
+Alpes,"Alpes du
+Sud",PACA,5,Laye,"5,67",3,1,17,"[4.223194, 45.954059]",0.3261923376623377,l'Allée,"45.954059,4.223194",,
+Alpes,"Alpes du
+Sud",PACA,5,"Molines saint-véran
+(beauregard)","3,67",5,1,"18,33","[6.865843, 44.699584]",0.46746802660753883,Rue de Beauregard,"44.699584,6.865843","44.69883731059124, 6.869973109817884",oui
+Alpes,"Alpes du
+Nord",ARA,73,"Toussuire (la) - saint-
+pancrace (les bottieres)","3,67","5,67",1,"20,78","[6.300383, 45.267172]",0.4887251336898396,Route des Bottières,"45.267172,6.300383","44.7208851,6.8476923",oui
+Alpes,"Alpes du
+Sud",PACA,5,Abriès-ristolas,5,"4,33",1,"21,67","[6.953637, 44.7747]",0.5948054545454545,Abriès-Ristolas,"44.7747,6.953637","45.2498205,6.2403708",oui
+Alpes,"Alpes du
+Sud",PACA,5,Arvieux,5,"4,33",1,"21,67","[6.738585, 44.768483]",0.4308145454545454,Arvieux,"44.768483,6.738585","44.7923822,6.9266796",oui
+Alpes,"Alpes du
+Sud",PACA,5,Ceillac,5,"4,33",1,"21,67","[6.788561, 44.655142]",0.42978999999999995,Ceillac,"44.655142,6.788561","44.7639898,6.7223914",oui
+Alpes,"Alpes du
+Sud",PACA,5,Chaillol (pinateau),5,"4,33",1,"21,67","[6.166001, 44.68807]",0.32136081632653063,Corniche du Pinateau,"44.68807,6.166001","44.6894,6.1648",oui
+Alpes,"Alpes du
+Sud",PACA,5,St léger les mélèzes,5,"4,33",1,"21,67","[6.201986, 44.6479]",0.5297106269592476,Saint-Léger-les-Mélèzes,"44.6479,6.201986","44.6425,6.2001",oui
+Alpes,"Alpes du
+Sud",PACA,5,Aiguilles,6,"3,67",1,22,"[5.863628, 43.480749]",0.6425581818181817,Les Aiguilles,"43.480749,5.863628","44.7824,6.8697",oui
+Pyrénées,"Pyrénées
+centrales",OCCITANIE,65,Peyragudes,"5,67","4,33",1,"24,56","[2.400091, 48.861472]",0.4866536363636363,Rue des Pyrénées,"48.861472,2.400091","42.7879,0.4775",oui
+Alpes,"Alpes du
+Sud",PACA,6,Roubion les buisses,"8,33","3,67",1,"30,56","[4.89349, 44.581382]",0.27853636363636364,Impasse des Buis,"44.581382,4.89349","44.0833,7.0423",oui
