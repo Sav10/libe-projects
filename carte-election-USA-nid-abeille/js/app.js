@@ -9,13 +9,6 @@ let selected_reg = null;
 let selected_year = 2024;
 let all_states_2024;
 
-const objIdeologyColor = {
-
-"Identitaires" : "#B61D18",
-"Royalistes" : "#0C8EFF",
-"Nationalistes-révolutionnaires" : "#8729FF",
-"Ultranationalistes" : "#009771"
-}
 
 let scale_jauge = d3.scaleLinear()
 .domain([0,538])
@@ -45,8 +38,6 @@ d3.selectAll('g#GE-2024 > g, g#GE-2020 > g')
   let this_class = d3.select(this).attr('class');
   let this_id = d3.select(this).attr('id');
 
-  console.log(this_id)
-
 
 
   showTip(this_id)
@@ -55,8 +46,6 @@ d3.selectAll('g#GE-2024 > g, g#GE-2020 > g')
 d3.selectAll("#representation_carto .actionButton").on('click', function(event, d) {
 
   let this_id = d3.select(this).attr('id');
-
-  console.log(this_id)
 
 
 d3.selectAll("#representation_carto .actionButton")
@@ -81,46 +70,6 @@ selected_year = +this_id.replace('display_', '')
 })
 
 
-d3.selectAll('path#land, path#land-2, path#land-3')
-.style('stroke-opacity', 1)
-
-
-
-
-d3.selectAll('#Contour-USA path')
-.style('stroke-opacity', 1)
-
-
-d3.selectAll('g#Regions path#Cote-Pacifique')
-.style('stroke-opacity', 0)
-
-d3.selectAll('#Liens g path')
-.style('stroke-opacity', 0)
-
-
-d3.selectAll('g#Regions path')
-.style('stroke-opacity', 1)
-
-
-d3.selectAll('g#Regions > path')
-.style('stroke', "white")
-
-
-d3.selectAll('g#Regions path#Cote-Pacifique')
-.style('stroke-opacity', 0)
-
-
-d3.selectAll('#Bloc-Perso > g')
-.on('click', function(event, d) {
-
-  // console.log("clicked")
-
-  let this_class = d3.select(this).attr('id');
-
-  // console.log(this_class)
-
-  showTip(this_class.replace('-2', ''))
-  })
 
 
 
@@ -175,22 +124,6 @@ d3.select('#Regions #' + selected_reg)
 
 }
   )
-
-
-
-
-d3.selectAll('#Regions path')
-.on('click', function(event, d) {
-
-  // console.log("clicked")
-
-  let this_id = d3.select(this).attr('id');
-
-  // console.log(this_class)
-
-  showTip(this_id.replace('-2', ''))
-  })
-
 
 
 
@@ -284,11 +217,6 @@ sel2.datum(d)
 })
 
 
-console.log(all_data[2020])
-
-
-
-console.log(all_data[2024])
 
 // all_filtered_groups = _.uniq(all_data.map(d=>d.nom_pour_carte))
 
@@ -423,8 +351,6 @@ all_states_2024.filter(d=>d.Systeme_electoral != "Winner takes all")
 .selectAll('polygon')
 .style('fill', function(d, i){
 
-console.log(i)
-console.log(d)
 
 let c
   if (d.dem_GE  >= i+1){
@@ -446,26 +372,6 @@ let c
 
 }
 
-// Nom
-// prenom
-// nom
-// Photo
-// Naissance
-// age
-// Situation_politique
-// Fonction_actuelle
-// Fonction_principale
-// Mandat_2009_2014
-// Mandat_2014_2019
-// mi_temps_plein_temps
-// Fonction_organigramme_FN_2015
-// Statut_juridique
-// Des_chefs_de
-// Texte
-// Fait_remarquable
-// Note
-// Documents
-
 
 
 function showTip(that_class){
@@ -482,7 +388,6 @@ let this_obj = all_data[selected_year].filter(d=>d.Code == that_class)[0]
 
 selected_reg = that_class
 
-console.log(this_obj)
 
 d3.selectAll('#Regions path')
 .style('fill', '#1A1A1A')
@@ -492,7 +397,6 @@ d3.select('#Regions path#' + that_class)
 .style('fill', '#D13A34')
 
 
-// console.log(this_obj_texte)
 
 
 let this_color = '#1A1A1A'
@@ -538,7 +442,13 @@ d3.select('#tooltip')
 .style('opacity', '1')
 .style('display', 'flex')
 
+all_states_2024
+.selectAll('polygon')
+.style('fill-opacity', .3)
 
+d3.select('#GE-2024 g#' +selected_reg )
+.selectAll('polygon')
+.style('fill-opacity', 1)
 
 
 
@@ -561,7 +471,9 @@ d3.select('#tooltip')
 .style('display', 'none')
 
 
-
+all_states_2024
+.selectAll('polygon')
+.style('fill-opacity', 1)
 
 
     }
