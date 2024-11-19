@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--================================================================================
+  Item Name: Materialize - Material Design Admin Template
+  Version: 3.1
+  Author: GeeksLabs
+  Author URL: http://www.themeforest.net/user/geekslabs
+  ================================================================================ -->
+
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=20">
+    <meta name="description" content="Tout savoir sur les dernières actualités politiques, monde, société, sports, écologie avec le journal en ligne Libération.">
+    <meta name="keywords" content="actualités, news">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Explorer les votes aux européennes de 2024</title>
+
+    <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
+   
+<!--     <link rel="canonical" href="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes"> -->
+
+    <meta property="og:site_name" content="Libération.fr"/>
+<!--     <meta property="og:url" content="https://www.liberation.fr/2019/05/explorer-elections-europeennes/" /> -->
+    <meta property="og:title" content="Explorer les votes aux présidentielles" />
+    <meta property="og:description" content="Visualisez les résultats des élections en fonction de critères socio démographiques (CSP, démographie, sexe...). Exemple : comment ont voté les villes de moins de 10 000 habitants, les villes avec plus de 15% d'ouvriers" />
+<!--         <meta property="og:image" content="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes/social.jpg" /> -->
+        
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@libe" />
+    <meta name="twitter:creator" content="@libe" />
+<!--     <meta name="twitter:url" content="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes/" /> -->
+    <meta name="twitter:title" content="Explorer les votes aux présidentielles" />
+    <meta name="twitter:description" content="Visualisez les résultats des élections en fonction de critères socio démographiques (CSP, démographie, sexe...). Exemple : comment ont voté les villes de moins de 10 000 habitants, les villes avec plus de 15% d'ouvriers" />
+    <!-- <meta name="twitter:image" content="https://www.liberation.fr/apps/2019/05/explorer-elections-europeennes/social.jpg"> -->
+
+
+    <!-- CORE CSS-->
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="https://sav10.github.io/libe-projects/fonts/fonts.css">
+
+
+
+        <style>
+        html,body {
+            margin: 0;
+            padding: 0;
+            height:100%;
+            width:100%;
+        }
+
+body{
+
+      font-family: "syntheselibeweb";
+}
+
+    .gslider .handle_cursor {
+    stroke: red;
+    stroke-width: 7px;
+    fill: white;
+    pointer-events: none;
+}
+
+.gslider .left_range tspan {
+    font-weight: bold;
+    fill: red;
+}
+
+.gslider .right_range tspan {
+    font-weight: bold;
+    fill: red;
+}
+
+
+g.gbar text.barnumbers{
+font-weight: bold;
+
+}
+
+.selectYears .tab a span{
+color: #000;
+font-weight: bold;
+
+}
+
+.selectYears .tab a{
+color: #000;
+font-weight: bold;
+font-size: 1.4em;
+background-color: #f9f9f9;
+/*font-family: 'libesansweb-semicondensed';
+letter-spacing: .12em;*/
+}
+
+.selectYears .tab a.active{
+color: #000;
+background-color: #fff;
+
+}
+
+ul.side-nav.leftside-navigation li {
+     line-height: 2em;
+}
+
+#left-sidebar-nav {
+    margin-top: 95px;
+}
+
+
+#left-sidebar-nav .side-nav{
+margin-top: 43px;
+}
+
+#burger-menu i{
+  color: white;
+  background-color: black;
+}
+
+#explain_filters{
+margin-bottom: 0;
+margin-top: 0;
+font-size: .8em;
+}
+
+#title_dashboard{
+margin-top: 0;
+/*font-family: TiemposText, Georgia, serif;*/
+font-size: 1.1em;
+}
+
+@media (min-width: 993px){ 
+
+#left-sidebar-nav .side-nav {
+    margin-top: 0;
+}
+
+}
+
+@media (max-width: 992px){ 
+
+/*#slide-out {
+    left: -252px;
+}*/
+
+}
+
+.gbar.k_100, .gbar.k_101, .gbar.k_102, .gbar.k_103, .gbar.k_104, .gbar.k_105,
+ .gbar.k_106, .gbar.k_107, .gbar.k_108, .gbar.k_109{
+
+display: none;
+
+}
+
+
+.gbar.k_1, .gbar.k_2, .gbar.k_3, .gbar.k_4, .gbar.k_5, .gbar.k_6,
+ .gbar.k_7, .gbar.k_8, .gbar.k_9, .gbar.k_10, .gbar.k_11, .gbar.k_12{
+
+display: block;
+
+}
+
+svg g.gbar .bartext{
+font-size: .6em
+
+}
+
+#map canvas{
+/*  position: absolute;*/
+  z-index: 30;
+}
+
+.chart{
+    position: relative;
+}
+
+.selectYears .tab a{
+font-size: 1em;
+}
+
+
+.tabs .tab {
+    min-width: 65px;
+}
+
+
+@media (max-width: 510px){ 
+
+.selectYears .tab a{
+font-size: .7em;
+}
+}
+
+@media (max-width: 500px){
+
+#data_sliders {
+    width: 280px;
+    padding-left: 20px;
+}
+}
+
+.selectYears .tab a {
+    font-size: .9em;
+}
+
+.tabs .tab {
+    width: 12%;
+    letter-spacing: 0;
+}
+
+.tabs .tab {
+    min-width: 45px;
+}
+
+#map{
+  margin-top: 120px
+}
+
+
+#map_info{
+    position: absolute;
+/*    top: 30%;
+    left: 50%;
+    transform: translate(-50%);*/
+    opacity: 1;
+}
+
+#map_info{
+
+    font-size: 1.2em;
+}
+
+#map_info{
+    min-width: 200px;
+    z-index: 100;
+    background-color: white
+}
+
+#map_info #tooltip{
+color:#1F0657;
+}
+
+
+#tooltip .auteur{
+
+font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.04em;
+    font-weight: bold;
+    font-size: 1.3em;
+    line-height: 1.3em;
+
+}
+
+#tooltip #decouvrir_auteur{
+
+ font-family: "syntheselibeweb", sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #D13A34;
+    padding: 12px;
+    border:1px solid black;
+    font-size: 1.2em;
+
+}
+
+#map_info #tooltip{
+color:#1F0657;
+}
+
+
+
+.container{
+  position: relative;
+}
+
+
+        </style>
+
+  </head>
+
+  <body>
+
+    <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+
+  <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- START MAIN -->
+  <div id="main">
+
+
+
+
+          <!--start container-->
+          <div class="container">
+
+            <div id="map_info" >
+              <div id="tooltip"></div>
+              <!-- <div id="sparkline"></div> -->
+            </div>            
+              <div class="chart">
+              <!-- <div id="map" class=" col s8 l6"></div> -->
+              <!-- <div id="map" class=" col s8 l6"><svg class="map"></svg></div> -->
+
+              </div>
+
+<!--                                                     <p class="social ">
+          <i class="shareTwitter fa fa-twitter fa-2x"></i>
+          <i class="shareFacebook fa fa-facebook-square fa-2x"></i>
+        </p> -->
+            </div>
+
+
+
+  </div>
+  <!-- END WRAPPER -->
+
+</div>
+<!-- END MAIN -->
+
+
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+<!-- START FOOTER -->
+<!-- <footer class="page-footer" style="background-color: #bcbcbc;">
+  <div class="footer-copyright" style="background-color: #bcbcbc;"> -->
+<!--     <div class="container">
+      <span><a style="color:white" href="https://www.liberation.fr/dossier/data-matin/" target="_blank">Liberation data</a></span> - 
+      <span> Réalisation : Savinien de Rivet</span>
+    </div> -->
+<!--   </div>
+</footer> -->
+<!-- END FOOTER -->
+
+
+
+    <!-- ================================================
+    Scripts
+    ================================================ -->
+    
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>    
+
+    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+    <script src="//d3js.org/d3.v7.min.js"></script>
+
+    <script type="text/javascript" src="js/map_only.js"></script>
+
+    
+  </body>
+
+  </html>
