@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+        <title>Libération.fr Les Tesla endommagées et brûlées</title>
+        <meta name="description" content="Les Tesla endommagées et brûlées">
+        <meta name="keywords" content="actualités, news">
+
+        <!-- <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico"> -->
+       
+
+        <!-- <link rel="canonical" href="https://www.liberation.fr/apps/2020/09/la-carte-des-chevaux-mutiles/"> -->
+
+        <meta property="og:site_name" content="Libération.fr"/>
+        <meta property="og:type" content="article" />
+        <!-- <meta property="og:url" content="https://www.liberation.fr/apps/2020/09/la-carte-des-chevaux-mutiles/" /> -->
+        <meta property="og:title" content="Les Tesla endommagées et brûlées - Libération" />
+        <meta property="og:description" content="Les Tesla endommagées et brûlées" />
+        <!-- <meta property="og:image" content="https://www.liberation.fr/apps/2020/09/la-carte-des-chevaux-mutiles/social.jpg" /> -->
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@libe" />
+        <meta name="twitter:creator" content="@libe" />
+        <!-- <meta name="twitter:url" content="https://www.liberation.fr/apps/2020/09/la-carte-des-chevaux-mutiles/" /> -->
+        <meta name="twitter:title" content="Les Tesla endommagées et brûlées" />
+        <meta name="twitter:description" content="Les Tesla endommagées et brûlées" />
+        <!-- <meta name="twitter:image" content="https://www.liberation.fr/apps/2020/09/la-carte-des-chevaux-mutiles/social.jpg"> -->
+
+        <style>
+        html,body {
+            margin: 0;
+            padding: 0;
+            height:100%;
+            width:100%;
+        }
+        #libe-menu {
+            height: auto !important;
+        }
+
+#mainContent {
+    background-color: #f8f8f8;
+}
+
+@media screen and (min-width: 769px), print {
+    .column.is-three-quarters, .column.is-three-quarters-tablet {
+        flex: none;
+        width: 100%;
+    }
+}
+
+        </style>
+        
+        <!-- Vendor -->
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/lodash.min.js"></script>
+        <script type="text/javascript" src="js/moment-with-locales.js"></script>
+        <!-- <script type="text/javascript" src="scripts/html2canvas.js"></script> -->
+
+        <!-- Styles -->
+        <!-- <link type="text/css" rel="stylesheet" href="https://unpkg.com/ionicons@4.5.0/dist/css/ionicons.min.css"> -->
+        <link rel="stylesheet" href="js/leaflet.css" />
+    <!-- CORE CSS-->
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="css/six-plus.css">
+    <link type="text/css" rel="stylesheet" href="css/styles.css">
+
+
+
+        <style type="text/css">
+            
+        .intro-section {
+    background-color: rgb(227, 35, 74);
+            }
+
+            #intro_text a {
+    color: #47258A;
+}
+
+
+#conclusion {
+    background-color: rgb(227, 35, 74);
+}
+
+.link .libePink {
+    color: rgb(227, 35, 74);
+}
+
+div.info.city.box .cityName {
+    font-size: 1em;
+}
+
+div.info.city.box .cityName {
+    color: #47258A;
+}
+
+
+#volet{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 80px;
+    background: #fff;
+    overflow-y: auto;
+    display: none;
+    z-index: 80;
+    text-align: center;
+}
+
+#volet svg#close_button{
+    position: absolute;
+    right: 50px;
+    fill: rgb(227, 35, 74);
+    cursor: pointer;
+  top: 90px;
+}
+
+
+#volet_column{
+margin: 36px 14%;
+text-align: left;
+max-width: 800px;
+}
+
+#volet_column p{
+margin-top: 24px;
+}
+
+#savoir_plus{
+
+border: 1px solid rgb(227, 35, 74);
+width: 13em;
+padding: 5px;
+color: rgb(227, 35, 74);
+margin-top: 6px;
+cursor: pointer;
+}
+
+.headline-big.title {
+color: white;
+
+}   
+
+@media (max-width: 768px)
+{
+
+#volet_column {
+    margin: 45px 8px;
+}
+
+#volet {
+    margin-top: 50px;
+    padding-top: 0;
+}
+
+#volet svg#close_button {
+    right: 0px;
+    top: 10px;
+}
+
+
+}
+
+#legend_img_container img{
+max-width: 800px;
+text-align: center;
+margin: 0 auto;
+display: block;
+width: 100%;
+}
+
+
+div.info.city.box {
+max-width:300px;
+
+}
+
+div.info.city.box #text_content{
+font-family: "syntheselibeweb";
+letter-spacing: 0;
+
+}
+
+
+.cityName button{
+    display: inline-block;
+    float: right;
+
+}
+
+
+h3.city {
+    background-color: #222;
+    color: #fff;
+    font-family: 'libesansweb-semicondensed';
+    letter-spacing: 0.08em;
+    font-size: 1.2em;
+    overflow: hidden;
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 4px;
+}
+
+
+p.dateEvent {
+    font-family: syntheselibeweb;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+
+#tabletExplanations {
+    font-size: .8rem;
+    line-height: 1.2rem;
+    display: inline-block;
+}
+
+
+#departement_title{
+
+font-size: .9rem;
+
+}
+
+
+@media (max-width: 380px){
+div.info.city.box {
+    max-width: 250px;
+}
+
+
+#text_content{
+
+font-size: .7rem;
+
+}
+
+h3.city {
+    font-size: 1em;
+}
+
+}
+
+
+
+p.description{
+margin-top:8px;
+margin-bottom:8px;
+
+
+}
+
+
+        </style>
+    </head>
+    <body>
+
+
+
+<div id='volet' >
+<svg id='close_button' width='80' height='50' viewBox='0 0 512 512'><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke:rgb(227, 35, 74);stroke-linecap:round;stroke-linejoin:round;stroke-width:50px'/><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke:rgb(227, 35, 74);stroke-linecap:round;stroke-linejoin:round;stroke-width:50px'/></svg>
+<div id="volet_column">
+<p></p>
+</div>
+
+
+</div>
+
+
+<section class='section mainContent' id="mainContent">
+
+<section id="tabs" class='columns is-centered is-hidden-mobile'>
+<div class="container tabs sectionParametres" id="parametersTabs">
+                </div>
+            </section>
+
+<div class="container">
+<!-- <p class="social socialTop is-hidden-mobile">
+
+        <span><img class="shareFacebook" src="static/generated/img/logos/facebook-badge.png" style="width: 30px"></span>
+    <span><img class="shareTwitter" src="static/generated/img/logos/twitter-badge.png" style="width: 30px"></span>
+</p> -->
+<!-- <p class="social socialTop is-hidden-desktop">
+
+        <span><img class="shareFacebook" src="static/generated/img/logos/facebook-badge.png" style="width: 20px"></span>
+    <span><img class="shareTwitter" src="static/generated/img/logos/twitter-badge.png" style="width: 20px"></span>
+</p> -->
+<div class='columns is-centered mainMap'>
+<div class="column is-three-quarters" style="z-index: 60;">
+<div id='intro_text'>
+        
+<br />
+<!-- <p id='savoir_plus'>
+POUR EN SAVOIR PLUS</p>
+</div> -->
+<!-- <div id="cityTitle" class='box' style="display: none; max-width: 200px"></div> -->
+<span id='tabletExplanations' class='is-hidden-tablet'>Utilisez deux doigts pour naviguer.</span>
+<div id="legend_img_container"><img src="img/legende_tesla.png" id="legend_img"></div>
+<div id="map" style="height: 600px; width: 600px"></div>
+<div id="slider_container">
+<a id="play_button"><img src="img/play.svg"></a>
+  <svg id = "map_slider" height="70" width="600"></svg>
+
+  </div>
+<div id='appenedCityTagContainer'></div>
+<div id="articles"></div>
+
+  </div>
+</div>
+</div>
+</section>
+
+
+
+
+
+
+        <!-- Scripts -->
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="js/leaflet.js"></script>
+<!--     <script src="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.js"></script>
+    <script src="https://cdn.klokantech.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script> -->
+    <script src="js/app.js"></script>
+
+
+    </body>
+</html>

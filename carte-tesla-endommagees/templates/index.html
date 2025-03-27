@@ -1,0 +1,1227 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+        <title>Libération.fr titre</title>
+        <meta name="description" content="Tout savoir sur les dernières actualités politiques, monde, société, sports, écologie avec le journal en ligne Libération.">
+        <meta name="keywords" content="actualités, news">
+
+        <link rel="shortcut icon" href="https://www.liberation.fr/favicon.ico">
+       
+
+        <link rel="canonical" href="https://www.liberation.fr/apps/2019/01/url/">
+
+        <meta property="og:site_name" content="Libération.fr"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://www.liberation.fr/apps/2019/01/url/" />
+        <meta property="og:title" content="titre - Libération" />
+        <meta property="og:description" content="description #BlessésGJ
+    " />
+        <meta property="og:image" content="https://www.liberation.fr/apps/2019/01/url/social.jpg" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@libe" />
+        <meta name="twitter:creator" content="@libe" />
+        <meta name="twitter:url" content="https://www.liberation.fr/apps/2019/01/url/" />
+        <meta name="twitter:title" content="titre" />
+        <meta name="twitter:description" content="description. #BlessésGJ" />
+        <meta name="twitter:image" content="https://www.liberation.fr/apps/2019/01/url/social.jpg">
+
+        <style>
+        html,body {
+            margin: 0;
+            padding: 0;
+            height:100%;
+            width:100%;
+        }
+        #libe-menu {
+            height: auto !important;
+        }
+        </style>
+        
+        <!-- Vendor -->
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+        <!-- <script type="text/javascript" src="scripts/html2canvas.js"></script> -->
+
+        <!-- Styles -->
+        <link type="text/css" rel="stylesheet" href="https://unpkg.com/ionicons@4.5.0/dist/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+        <link type="text/css" rel="stylesheet" href="styles/six-plus.css">
+        <link type="text/css" rel="stylesheet" href="styles/styles.css">
+        <!--
+        <link type="text/css" rel="stylesheet" media="screen and (max-width: 768px)" href="styles/mobile.css">
+        <link type="text/css" rel="stylesheet" media="screen and (min-width: 768px)" href="styles/styles.css"> -->
+    </head>
+    <body>
+
+<div class="intro-section">
+
+  <div class="headline-section has-text-centered">
+    <p class="headline-big is-centered has-text-centered overtitle">
+        
+
+    </p>
+    <p class="headline-big is-centered has-text-centered title">
+       titre
+    </p>
+    <div id='pictoContainer'></div>
+     <div id='appenedPictoContainer'></div>
+
+
+<!--     <p class="headline-small">
+        De nombreuses universités sont désormais mobilisées ou bloquées contre la réforme de l'université. A cette revendication initiale s'ajoute désormais la colère des étudiant(e)s contre la répression, dans un contexte marqué par les violences survenues à la faculté de droit de Montpellier. Suivi au jour le jour et ville par ville de la situation.
+    </p> -->
+
+<section class='is-centered'>
+
+
+</section>
+   
+
+  </div>
+
+
+</div>
+
+
+
+
+
+<section class='section mainContent' id="mainContent">
+
+<section id="tabs" class='columns is-centered is-hidden-mobile'>
+<div class="container tabs sectionParametres" id="parametersTabs">
+                </div>
+            </section>
+
+<div class="container">
+<p class="social socialTop is-hidden-mobile">
+
+        <span><img class="shareFacebook" src="img/logos/facebook-badge.png" style="width: 30px"></span>
+    <span><img class="shareTwitter" src="img/logos/twitter-badge.png" style="width: 30px"></span>
+</p>
+<p class="social socialTop is-hidden-desktop">
+
+        <span><img class="shareFacebook" src="img/logos/facebook-badge.png" style="width: 20px"></span>
+    <span><img class="shareTwitter" src="img/logos/twitter-badge.png" style="width: 20px"></span>
+</p>
+<div class='columns is-centered mainMap'>
+<div class="column is-three-quarters" style="z-index: 90;">
+<div id='intro_text'>
+Face à la multiplication des victimes de blessures graves depuis le début des manifestations des gilets jaunes, Libération recense leurs cas dans une liste non exhaustive, représentée sur cette carte. Ce recensement est le résultat d’un travail d’identification et de vérification, par <a href='https://www.liberation.fr/checknews/2019/01/14/gilets-jaunes-le-decompte-des-blesses-graves_1702863' target="_blank">CheckNews</a>, de centaines d’images sanglantes et de témoignages diffusés sur les réseaux sociaux. <span id="NombreTotalBlessesGraves">94</span> blessés graves ont été comptabilisés à ce jour.<img id='iconMoreContent' src="img/iconPlus.png" style="width: 30px" />
+<div class="morecontent" style="display: none;">
+Il est délicat de définir ce qu’est un blessé grave, nous avons retenu comme blessure : les membres arrachés, les organes ayant perdu leur fonction principale, les os fracturés, les pieds et jambes incrustés de bouts de grenades, les brûlures graves, mais aussi toutes plaies ouvertes au niveau de la tête. Certaines blessures comme les hématomes, parfois vastes, n’ont pas été comptabilisés. Enfin, nous n’avons gardé que les cas où nous pouvions identifier la victime, soit par son prénom ou parce que nous avions suffisamment d’images d’elle.
+</div>
+</div>
+<!-- <div id="cityTitle" class='box' style="display: none; max-width: 200px"></div> -->
+<span id='tabletExplanations' class='is-hidden-tablet'>Utilisez deux doigts pour naviguer, un seul pour scroller.</span>
+<div id="map" style="height: 600px; width: 600px"></div>
+<div id="slider_container">
+<a id="play_button"><img src="img/play2.png"></a>
+  <svg id = "map_slider" height="70" width="600"></svg>
+
+  </div>
+<div id='appenedCityTagContainer'></div>
+<div id="articles"></div>
+
+  </div>
+</div>
+</div>
+</section>
+
+<div id="conclusion">
+       <p class="conclusion-prose">
+       <span> <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538"><img src="img/logos/LibeLaboLogo.svg" style="width: 50px;position: relative;top: 10px;"></a></span>
+    <span><img class="shareFacebook" src="img/logos/social-facebook.png" style="width: 30px"></span>
+    <span><img class="shareTwitter" src="img/logos/social-twitter.png" style="width: 30px"></span>
+    </p>
+
+    <p class="credits_top"><strong> Production</strong> : <a href="https://www.liberation.fr/libe-labo-data-nouveaux-formats,100538" target="_blank">Libé Labo</a></p>
+  </div>
+
+
+
+
+
+        <!-- Scripts -->
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+        <script type="text/javascript">
+            
+
+var parseTime = d3.timeParse("%d/%m/%Y");
+
+var formatTime = d3.timeFormat("%d/%m/%Y")
+
+var mainWidth = parseInt(d3.select('.mainContent .mainMap').style("width"));
+
+var sliderTime = 3000;
+
+
+moment.locale('fr')
+
+
+d3.select('#map')
+.style('width', (mainWidth > 800 ? '800px' : String(mainWidth-11) + 'px'))
+.style('height', (mainWidth > 800 ? '800px' : String(mainWidth-11) + 'px'));
+
+d3.select('svg#map_slider')
+.style('width', (mainWidth > 800 ? '800px' : String(mainWidth) + 'px'));
+
+
+d3.select('#slider_container')
+.style('width', (mainWidth > 800 ? '800px' : String(mainWidth) + 'px'));
+
+var margin = {top: 80, right: 30, bottom: 60, left: 40},
+    width = 800 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom,
+    padding = 0.3,
+    max_width = 800,
+    width_slider = (width < (mainWidth -70) ? width : (mainWidth -70)),
+    width = width < mainWidth ? width : mainWidth,
+    map,
+    data,
+    t0 = parseTime('17/11/2018'),
+    tMax,
+    ticks_slider,
+    svgmap,
+    gmap,
+    info_city,
+    this_zoom_level = 4.6,
+    thismaxZoom = 12,
+    rectWidth = 10,
+    minMaxRectWidth = [12,30],
+    scaleWidth,
+    thisMinZoom = 2;
+
+
+
+    if($(window).width() >= 1000){
+
+this_zoom_level = 6;
+
+    }
+
+    var mainColor = '#000';
+
+    var colors_cat = {
+      'Blocus':{'fill':'#f18fa3', 'stroke':'#e3234a'}, 
+    'AG':{'fill':'#e3234a', 'stroke':'#f18fa3'}, 
+  'Manifestation':{'fill':'#f18fa3', 'stroke':'#f18fa3'},
+  'Violences':{'fill':'#fff', 'stroke':'#e3234a'},
+  'Autre':{'fill': mainColor, 'stroke': mainColor}
+}
+
+    var images_cat = {
+      'Blocus':'blocus.png', 
+    'AG':'ag.png', 
+  'Manifestation':'manif.png',
+  'Violences':'violence.png',
+   'Autre':'greve.png'
+}
+
+var image_names = d3.keys(colors_cat).map(function(d){return {name:d, image:images_cat[d]}});
+
+
+var svg = d3.select("svg#map_slider");
+
+svg.style('width', (width_slider + 30));
+
+var articles = d3.select('div#articles')
+
+var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
+  // var x = d3.scaleLinear()
+  // .domain([2017, 2018])
+  // .range([0, width])
+  // .clamp(true)
+  // ;
+
+// parse the date / time
+
+
+// set the ranges
+var x = d3.scaleTime()
+.range([0, width_slider])
+.clamp(true);
+
+
+var y = d3.scaleLinear()
+    .range([height, 0]);
+
+
+  var div = d3.select("body").append("div")
+  .attr("id", "tooltip")
+  .attr('class', 'box');
+
+
+
+    d3.queue()
+    .defer(d3.csv, 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6YOcYH2GBljCvg2rXaPjWC2ibMV0upfMWd93kpQ6R8tO8mYtZt3y0SQNcRFI2K7aXyXNsgK5LGHnx/pub?gid=1360208169&single=true&output=csv')
+    .await(load_Data);
+
+d3.select('#iconMoreContent')
+.on('click', function(){
+
+d3.select('.morecontent').style('display')  ==  'none' ? d3.select('.morecontent').style('display', 'block') : d3.select('.morecontent').style('display', 'none');
+
+
+
+ })
+
+
+function load_Data(error, incommingData){
+
+// console.log(incommingData)
+
+data = incommingData.filter(function(d,i){return d.GPS });
+
+d3.select('#NombreTotalBlessesGraves')
+.text(data.length);
+
+data.forEach(function(d){
+
+d.datetime = parseTime(d.Date);
+
+d.gpsArray = d.GPS.split(',').map(function(e){return _.trim(e)});
+
+    d.LatLng = new L.LatLng(+ d.gpsArray[0],
+      + d.gpsArray[1]);
+
+    // d.type_Array = d['Type'].split(',').map(function(d){return _.trim(d)});
+
+     d.type_Array = 'Blocus';
+
+     // d.data_value = d.Lieu + '|' + normalizeString( d['Nom de la victime'] + ' ' + d['Cause revendiquée']);
+     d.Number_of_events_in_city = data.filter(function(e){return e.Lieu == d.Lieu}).length;
+
+})
+
+
+tMax = d3.max(data, function(d) { return d.datetime; })
+
+x.domain([t0 , tMax]);
+
+ticks_slider =  [x.ticks()[0], x.ticks()[x.ticks().length -1]];
+
+// dragging: !L.Browser.mobile
+// tap:false
+var min_max_city_events =  d3.extent(data, function(d){ return d.Number_of_events_in_city});
+
+scaleWidth = d3.scalePow(0.5)
+.domain(min_max_city_events)
+.range(minMaxRectWidth);
+
+
+
+map = L.map('map', {
+  dragging: !L.Browser.mobile, center: [50, 2], zoomControl:!L.Browser.mobile, maxZoom: thismaxZoom, minZoom: thisMinZoom, tap:!L.Browser.mobile}).setView([46.2, 2], this_zoom_level)
+
+
+
+L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: 'abcd',
+  minZoom: 0,
+  maxZoom: 20,
+  ext: 'png'
+}).addTo(map);
+
+L.svg().addTo(map);
+
+
+svgmap = d3.select("#map").select("svg"),
+gmap = svgmap.append("g");
+
+info_city = L.control({position: 'topleft'});
+
+info_city.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info city box'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info_city.update = function (d) {
+  // console.log(d);
+    this._div.innerHTML = '' +  
+    (d ? '<span class="cityName">' + d   + '<button class="delete"></button></span>' : 'Cliquer sur une ville');
+
+deleteCityTag()
+
+
+};
+
+info_city.addTo(map);
+
+
+fillMapOnce(data)
+
+makeSlider()
+
+}
+
+////////////////////////////// Slider  //////
+//////////////////////////////////////////////////////////
+
+function makeSlider (){
+
+  var slider = svg.append("g")
+  .attr("class", "slider")
+  .attr("transform", "translate(10,20)");
+
+  slider.append("line")
+  .attr("class", "track")
+  .attr("x1", x.range()[0])
+  .attr("x2", x.range()[1])
+  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+  .attr("class", "track-inset")
+  // .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+  // .attr("class", "track-overlay")
+  .call(d3.drag()
+    .on("start.interrupt", function() { slider.interrupt(); })
+    .on("start drag", function() { moving_slider(x.invert(d3.event.x)); }));
+
+
+
+
+slider.selectAll('rect.rectEvent')
+.data(data)
+.enter()
+.append('rect')
+.attr('class', 'rectEvent')
+.attr('x', function(d){return x(d.datetime)})
+.attr('y', -8)
+.attr('width', '10px')
+.attr('height', '15px')
+.attr('fill', mainColor)
+.style('pointer-events', 'none');
+
+
+  var handle = slider.insert("g", ".track-overlay")
+  .attr("class", "handle")
+;
+
+handle.append("rect")
+.attr("width", 12)
+.attr("height", 17)
+.attr("y", -9)
+.attr("x", -1)
+// .attr("rx", 20)
+// .attr("ry", 20)
+;
+
+
+
+
+
+slider
+.append('g')
+.attr('transform', 'translate(0, 30)')
+.append('text')
+.attr('class', 'dateSlider')
+.attr('text-anchor', 'start')
+.text(moment(t0, 'DD-MM-YYYY').format('LL'))
+;
+
+
+slider
+.append('g')
+.attr('transform', 'translate(' + width_slider + ', 30)')
+.append('text')
+.attr('class', 'dateSlider')
+.attr('text-anchor', 'end')
+.text(moment(tMax, 'DD-MM-YYYY').format('LL'))
+;
+// Transitions
+
+slider.transition() // Gratuitous intro!
+.duration(sliderTime)
+.tween("moving_slider", function() {
+  var i = d3.interpolate(t0, tMax);
+  d3.select("#articles").style('display', 'none')
+  return function(t) { moving_slider(i(t)); };
+})
+.on('end', function(){
+d3.select("#articles").style('display', 'block');
+// updatemap()
+populate_map(tMax, 0)
+
+
+
+})
+.on('interrupt', function(d){d3.select("#articles").style('display', 'block')});
+
+
+// Auto animation with transitions
+
+d3.select('#reload_svg')
+.on('click', function(){
+
+  slider.transition('chrono_animation')
+  .duration(0);
+
+  d3.select('#play_button')
+  .text('PLAY')
+  .attr('class','play');
+
+slider.transition() // Intro
+.duration(0)
+.tween("moving_slider", function() {
+  var i = d3.interpolate(t0, t0);
+  d3.select("#articles").style('display', 'none')
+  return function(t) { moving_slider(i(t)); };
+
+})
+.on('end', function(){d3.select("#articles").style('display', 'block')})
+.on('interrupt', function(d){d3.select("#articles").style('display', 'block')});
+
+
+})
+
+
+d3.select('#play_button')
+.on('click', function(){
+check_transition();
+});
+
+
+slider
+.on('click', function(){
+  slider.transition('chrono_animation')
+  .duration(sliderTime);
+  d3.select('#play_button')
+  .html('<img src="img/play2.png"">')
+  .attr('class','play');
+
+})
+
+function check_transition(){
+
+
+
+  var transition_state = d3.select('#play_button').attr('class');
+
+    // console.log(transition_state)
+
+
+  if (transition_state == 'pause')
+  {
+
+    slider.transition('chrono_animation')
+    .duration(0);
+
+d3.select('#play_button')
+.html('<img src="img/play2.png">')
+.attr('class','play');
+
+}
+
+else{
+  restart_transition();
+}
+}
+
+// Starting auto animation
+
+function restart_transition(){
+
+  d3.select('#play_button')
+  .html('<img src="img/pause2.png">')
+  .attr('class','pause');
+
+  slider.transition('chrono_animation')
+  .duration(sliderTime)
+  .ease(d3.easeLinear)
+  .tween("moving_slider", function() {
+    var i = d3.interpolate(t0, tMax);
+    d3.select("#articles").style('display', 'none')
+    return function(t) { moving_slider(i(t)); };
+  })
+  .on('end', function(){d3.select("#articles").style('display', 'block');
+    updateAllArticle()
+
+d3.select('#play_button')
+.html('<img src="img/play2.png">')
+.attr('class','play');
+
+})
+  .on('interrupt', function(d){d3.select("#articles").style('display', 'block');
+updateAllArticle()})
+}
+
+
+
+function moving_slider(h) {
+  handle.attr("transform", "translate("+ x(h) +",0)");
+
+  populate_map(h, 0)
+
+
+
+}
+
+
+d3.select('.handle').node().parentNode.appendChild(d3.select('.handle').node())
+
+}
+
+
+function fillMapOnce(dataAll){
+
+
+  var dataAll =  _.uniqBy(dataAll, function(d){return d.Lieu});
+
+  // console.log(dataAll)
+
+    feature_map = gmap.selectAll("g.eventPict")
+  .data(dataAll);
+
+
+  var allMapEvents =  feature_map     
+  .enter()
+  .append('g')
+  .attr('class', 'eventPict')
+  // .attr('data-value', function(d){ return d.data_value})
+  .attr('transform', 'translate(-1000,0)')
+
+allMapEvents
+  .append("rect")
+  .attr('x', function(d){return (-scaleWidth(d.Number_of_events_in_city)/2 - 2)})
+  .attr('y', function(d){return (-scaleWidth(d.Number_of_events_in_city)/2 - 2)})
+  .style("stroke-width", 0.5)
+  .style("pointer-events", 'all')
+  .style('cursor', 'pointer')
+  .style("opacity", 1) 
+  .style("fill", function(d){ return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].fill : colors_cat['Autre'].fill})
+  .style('stroke', function(d){return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].stroke : colors_cat['Autre'].stroke})
+  .style('stroke-width', '3px')
+      // Other colors
+      // .style("fill", "#22A7F0")
+      // .style("fill", "#F89406")
+      // .style("fill", "#BF55EC")
+      // .attr("r", function(d){return radius_scale(d.value)})
+      // .attr("r", 5)
+      .attr('width', function(d){return scaleWidth(d.Number_of_events_in_city)})
+      .attr('height', function(d){return scaleWidth(d.Number_of_events_in_city)})
+      .attr('class', 'city_point')
+      // .on("mouseover", function(d){console.log(d); populate_panel(0, d.ville)})
+      ;
+
+allMapEvents
+.append('rect')
+.attr('class', 'hoverPict')
+  .style("stroke", "#555")
+  .style("stroke-width", 3)
+  .style('stroke-opacity', 0)
+  .style('fill-opacity', 0)
+  .attr('width', function(d){return (scaleWidth(d.Number_of_events_in_city) + 4)})
+  .attr('height', function(d){return (scaleWidth(d.Number_of_events_in_city) + 4)})
+  .attr('x', function(d){return (-scaleWidth(d.Number_of_events_in_city)/2 - 3)})
+  .attr('y', function(d){return (-scaleWidth(d.Number_of_events_in_city)/2 - 3)})
+
+
+      feature_map
+      .exit()
+      .remove();
+
+      map.on("zoom", update);
+      update();
+
+
+      feature_map
+      .on("click", function(d){
+        d3.selectAll('rect.hoverPict')
+        .style('stroke-opacity', 0)
+
+        d3.select(this).select('rect.hoverPict')
+        .style('stroke-opacity', 1)
+
+        populate_map(0, d.Lieu);
+        // appendCityTagContainer(d.ville)
+      });
+
+
+      function update() {
+
+
+        feature_map = gmap.selectAll("g.eventPict");
+
+        feature_map
+        // .attr('data-value', function(d){return d.data_value})
+        .attr("transform", 
+          function(d) { 
+            return "translate("+ 
+            map.latLngToLayerPoint(d.LatLng).x +","+ 
+            map.latLngToLayerPoint(d.LatLng).y +") rotate(45)";
+          })
+
+        feature_map
+        .select('rect')
+        .style("fill", function(d){ return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].fill : colors_cat['Autre'].fill})
+        .style('stroke', function(d){return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].stroke : colors_cat['Autre'].stroke})
+          }
+
+
+    }
+
+
+function populate_map(date_value, city, category){
+
+  // select only cities of selected year or before
+
+  // console.log(date_value)
+
+  // console.log(data)
+
+  if (date_value){
+
+// d3.select('text.dateSlider')
+// .text(moment(date_value).format('LL'))
+
+
+  var filtered_data = _.cloneDeep(data).filter(function(d){ return d.datetime <= date_value});
+
+  filtered_data = filtered_data.sort(function(a,b){return d3.descending(a.datetime , b.datetime)});
+
+  // console.log(filtered_data.length)
+  // console.log(_.uniq(filtered_data.filter(function(d){return d.Lieu == "Quimper"}).map(function(d){return d.Lieu})))
+
+
+// console.log(filtered_data)
+
+fillMap(filtered_data)
+
+// updatemap()
+
+// updateAllArticle(filtered_data)
+
+
+
+  }
+  
+else if (category){
+
+// console.log(data)
+
+// console.log(category)
+
+
+    var filtered_data = _.cloneDeep(data).filter(function(d){ return d.type_Array[0] == category});
+
+    // console.log(filtered_data)
+
+    filtered_data = filtered_data.sort(function(a,b){return d3.descending(a.datetime , b.datetime)});
+
+
+    // fillMap(filtered_data)
+
+    // console.log(filtered_data)
+
+}
+
+  else{
+
+    d3.select("#cityTitle")
+      .text(city);
+
+      info_city.update(city)
+
+      d3.select('.info.city.box')
+      .style('display', 'none')
+
+
+    var filtered_data = _.cloneDeep(data).filter(function(d){ return d.Lieu == city});
+
+    // console.log(filtered_data)
+
+    filtered_data = filtered_data.sort(function(a,b){return d3.descending(a.datetime , b.datetime)});
+
+  }
+
+  
+
+
+function fillMap(filtered_data){
+
+  // console.log(filtered_data)
+
+var thoseLocations =  _.uniqBy(filtered_data, function(d){return d.Lieu}).map(function(d){return d.Lieu});
+
+var thoseLenghts = _.countBy(filtered_data, 'Lieu');
+
+feature_map = gmap.selectAll("g.eventPict");
+
+feature_map.filter(function(d){return thoseLocations.indexOf(d.Lieu) == -1})
+.attr('opacity', 0);
+
+
+
+var selectedLoc = feature_map.filter(function(d){return thoseLocations.indexOf(d.Lieu) != -1});
+
+selectedLoc
+.attr('opacity', 1)
+.select("rect.city_point")
+  .attr('x', function(d){return (-scaleWidth(thoseLenghts[d.Lieu])/2 - 2)})
+  .attr('y', function(d){return (-scaleWidth(thoseLenghts[d.Lieu])/2 - 2)})
+  .attr('width', function(d){return scaleWidth(thoseLenghts[d.Lieu])})
+  .attr('height', function(d){return scaleWidth(thoseLenghts[d.Lieu])});
+
+
+selectedLoc
+.select("rect.hoverPict")
+  .attr('width', function(d){return (scaleWidth(thoseLenghts[d.Lieu]) + 4)})
+  .attr('height', function(d){return (scaleWidth(thoseLenghts[d.Lieu]) + 4)})
+  .attr('x', function(d){return (-scaleWidth(thoseLenghts[d.Lieu])/2 - 3)})
+  .attr('y', function(d){return (-scaleWidth(thoseLenghts[d.Lieu])/2 - 3)});
+
+
+    }
+
+
+      map.on("zoom", update);
+      update();
+
+
+
+      function update() {
+        feature_map
+        // .attr('data-value', function(d){return d.data_value})
+        .attr("transform", 
+          function(d) { 
+            return "translate("+ 
+            map.latLngToLayerPoint(d.LatLng).x +","+ 
+            map.latLngToLayerPoint(d.LatLng).y +") rotate(45)";
+          })
+
+        feature_map
+        .select('rect')
+        .style("fill", function(d){ return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].fill : colors_cat['Autre'].fill})
+        .style('stroke', function(d){return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].stroke : colors_cat['Autre'].stroke})
+          }
+
+
+
+var allArticles = articles.selectAll('.article')
+.data(filtered_data);
+
+allArticles
+.exit()
+.remove();
+
+// console.log(filtered_data)
+
+var articleUpdate =  allArticles
+
+articleUpdate
+.select('p.dateEvent')
+.text(function(d){return moment(d['Date'], 'DD-MM-YYYY').format('LL')})
+
+articleUpdate
+.select('h3.city')
+.text(function(d){return d['Lieu']})
+
+
+articleUpdate
+.select('p.event')
+.html(function(d){var thisHtml = '';
+
+thisHtml += 'Nom de la victime : <strong>' + d['Nom de la victime'] + '</strong><br />';
+
+thisHtml += 'Age : <strong>' + d['Age'] + '</strong><br />';
+
+thisHtml += 'Membre atteint : <strong>' + d['Membre atteint'] + '</strong><br />';
+
+thisHtml += 'Blessure : <strong>' + d['Blessure'] + '</strong><br />';
+
+thisHtml += 'Cause revendiquée : <strong>' + d['Cause revendiquée'] + '</strong><br />';
+
+  thisHtml += "<br /> <br />Détails :<p class='description_detail'>" + d['Description'] + '';
+  
+  return thisHtml})
+
+articleUpdate
+.select('p.link')
+.html(function(d){return d['Lien'] ? '<a href="' + d['Lien'] + '" class="libePink" target="_blank">Plus d\'infos</a>' : ''})
+
+
+var articleEnter = allArticles     
+  .enter()
+  .append("div")
+  .attr('class', 'article')
+
+
+articleEnter
+.append('h3')
+.attr('class', 'city')
+.text(function(d){return d['ville']})
+
+articleEnter
+.append('p')
+.attr('class', 'dateEvent')
+.text(function(d){return moment(d['date'], 'DD-MM-YYYY').format('LL')})
+
+
+articleEnter
+.append('p')
+.attr('class', 'event')
+.html(function(d){return (d['Type']?  '<span class="typeEvent">' + d['Type'] + '</span> - ' : '')  + d['événement']})
+
+
+articleEnter
+.append('p')
+.attr('class', 'link')
+.html(function(d){return d['Lien'] ? '<a href="' + d['Lien'] + '" class="libePink" target="_blank">Plus d\'infos</a>' : ''})
+
+
+if (city){
+
+updateAllArticle()
+
+}
+      }
+
+
+      function updatemap() {
+        gmap.selectAll("g.eventPict")
+        // .attr('data-value', function(d){return d.data_value})
+        .attr("transform", 
+          function(d) { 
+            return "translate("+ 
+            map.latLngToLayerPoint(d.LatLng).x +","+ 
+            map.latLngToLayerPoint(d.LatLng).y +") rotate(45)";
+          })
+
+        gmap.selectAll("g.eventPict")
+        .select('rect')
+        .style("fill", function(d){ return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].fill : colors_cat['Autre'].fill})
+        .style('stroke', function(d){return colors_cat[d['type_Array'][0]] ? colors_cat[d['type_Array'][0]].stroke : colors_cat['Autre'].stroke})
+          }
+
+
+function updateAllArticle(){
+
+var allArticles = articles.selectAll('.article')
+
+// .data(filtered_data);
+
+allArticles
+.exit()
+.remove();
+
+
+var articleUpdate =  allArticles
+
+articleUpdate
+.select('p.dateEvent')
+.text(function(d){return moment(d['Date'], 'DD-MM-YYYY').format('LL')})
+
+articleUpdate
+.select('h3.city')
+.text(function(d){return d['Lieu']})
+
+articleUpdate
+.select('div.pictos')
+.html(function(d){return appendImages(d.type_Array)});
+
+articleUpdate
+.select('h3.university')
+.text(function(d){return d['université']})
+
+articleUpdate
+.select('p.event')
+.html(function(d){var thisHtml = '';
+
+thisHtml += 'Nom de la victime : <strong>' + d['Nom de la victime'] + '</strong><br />';
+
+thisHtml += 'Age : <strong>' + d['Age'] + '</strong><br />';
+
+thisHtml += 'Membre atteint : <strong>' + d['Membre atteint'] + '</strong><br />';
+
+thisHtml += 'Blessure : <strong>' + d['Blessure'] + '</strong><br />';
+
+thisHtml += 'Cause revendiquée : <strong>' + d['Cause revendiquée'] + '</strong><br />';
+
+  thisHtml += "<br />  <br />" + d['Description'] + '';
+  
+  return thisHtml})
+
+articleUpdate
+.select('p.link')
+.html(function(d){return d['Lien'] ? '<a href="' + d['Lien']+ '" class="libePink" target="_blank">Plus d\'infos</a>' : ''})
+
+
+var articleEnter = allArticles     
+  .enter()
+  .append("div")
+  .attr('class', 'article')
+
+
+articleEnter
+.append('h3')
+.attr('class', 'city')
+.text(function(d){return d['ville']})
+
+articleEnter
+.append('p')
+.attr('class', 'dateEvent')
+.text(function(d){return moment(d['date'], 'DD-MM-YYYY').format('LL')})
+
+articleEnter
+.append('div')
+.attr('class', 'pictos')
+.html(function(d){return appendImages(d.type_Array)});
+
+articleEnter
+.append('h3')
+.attr('class', 'university')
+.text(function(d){return d['université']})
+
+articleEnter
+.append('p')
+.attr('class', 'event')
+.html(function(d){return (d['Type']?  '<span class="typeEvent">' + d['Type'] + '</span> - ' : '')  + d['événement']})
+
+
+articleEnter
+.append('p')
+.attr('class', 'link')
+.html(function(d){ return d['Lien']  ? '<a href="' + d['Lien']  + '" class="libePink" target="_blank">Plus d\'infos</a>' : ''})
+
+}
+
+function type(d) {
+  d.value = +d.value;
+  return d;
+}
+
+function dollarFormatter(n) {
+  n = Math.round(n);
+  var result = n;
+  if (Math.abs(n) > 1000) {
+    result = String(_.round(n/1000, 2)).replace('.', ',') + 'K';
+  }
+  return result + '€';
+}
+
+
+
+
+
+function deleteCityTag(){
+
+d3.select('div.info.city.box .cityName')
+.on('click', function(){
+
+d3.select('#map div.info.city.box')
+.html('Cliquer sur une ville')
+
+d3.select('#appenedPictoContainer').selectAll('*')
+.remove()
+
+ d3.selectAll('rect.hoverPict')
+ .style('stroke-opacity', 0)
+
+    populate_map(tMax, 0, 0)
+    populate_map(tMax, 0, 0)
+
+
+})
+
+
+
+}
+
+
+    function responsivefy(svg) {
+
+        // get container + svg aspect ratio
+        var container = d3.select(svg.node().parentNode),
+        width = parseInt(svg.style('width')),
+        height = parseInt(svg.style("height")),
+        aspect = width / height;
+
+
+        // add viewBox and preserve aspectratio properties
+        // call resize so that svg resizes on initial page load
+        svg.attr("viewBox", "0 0 " + width + " " + height)
+        .attr("preserveAspectRatio", "xMinYMid")
+        .call(resize);
+
+        // to register multiple listeners for the same event type
+        d3.select(window).on("resize." + container.attr("id"), resize);
+
+        function resize() {
+
+            var actualContainerWidth = parseInt(container.style("width"));
+
+            var targetWidth = actualContainerWidth <= max_width  ? actualContainerWidth : 800;
+            var targetHeight = Math.round(targetWidth / aspect);
+
+            svg.attr("width", targetWidth);
+            svg.attr("height", targetHeight);
+
+        }
+    }
+
+
+
+function appendImages(array_types){
+var this_html = ''
+
+for (i in array_types){
+var thisD = array_types[i]
+
+
+
+if (! images_cat[thisD]){
+
+
+}
+else{
+
+var thisImg = '<img src="img/' + images_cat[thisD]+'" class="pictosArticles"/>'
+
+
+  this_html = this_html + thisImg
+
+
+}
+
+
+}
+
+return this_html
+
+}
+
+
+var removespecials = function (str){
+  return str.replace(/[èéêëœ]/g,"e").replace(/[àáâãäåæ]/g,"a").replace(/[ç]/g,"c").replace(/[ìíîï]/g,"i").replace(/[ðñòóôõö]/g,"o").replace(/[ùúûü]/g,"u").replace(/[ýÿ]/g,"y")
+};
+
+var prettyfy_string = function(string){return string.replace(" ","_").replace("'","_").replace("(","_").replace(")","_")};
+
+
+
+function addSpacesFr(nStr)
+{
+  nStr += '';
+  x = nStr.split('.');
+  x1 = x[0];
+  x2 = x.length > 1 ? '.' + x[1] : '';
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+  }
+  return x1;
+}
+
+
+
+
+function normalizeString(s){
+ return _.snakeCase(_.deburr(s))
+}
+
+
+serialize_for_url = function(obj) {
+  var str = [];
+  for(var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+}
+
+
+d3.selectAll(".shareTwitter")
+.on('click', function(d){ shareTwitter()});
+
+d3.selectAll(".shareFacebook")
+.on('click', function(d){ shareFacebook()});
+
+
+
+function shareFacebook () {
+          var url = encodeURIComponent(window.location.origin + window.location.pathname),
+              link = 'http://www.facebook.com/sharer/sharer.php?u=' + url ;
+          window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
+        };
+
+function shareTwitter () {
+          var url = encodeURIComponent(window.location.origin + window.location.pathname),
+              text = "titre https://www.liberation.fr/apps/2019/01/url/ via @libe",
+              link = 'https://twitter.com/intent/tweet?original_referer=&text=' + text;
+          window.open(link, '', 'width=575,height=400,menubar=no,toolbar=no');
+
+      }
+
+
+        </script>
+
+        <!-- Header -->
+        <script type="text/javascript" src="https://www.liberation.fr/menu/script.js"></script>
+
+        <!-- Chartbeat -->
+        <script type='text/javascript'>
+            var _sf_async_config={};
+            _sf_async_config.uid = 43601;
+            _sf_async_config.domain = 'liberation.fr';
+            _sf_async_config.useCanonical = true;
+            _sf_async_config.sections = "Static";
+            _sf_async_config.authors = "Static";
+            (function(){
+                function loadChartbeat() {
+                    window._sf_endpt=(new Date()).getTime();
+                    var e = document.createElement('script');
+                    e.setAttribute('language', 'javascript');
+                    e.setAttribute('type', 'text/javascript');
+                    e.setAttribute('src', 'https://static.chartbeat.com/' + 'js/chartbeat.js');
+                    document.body.appendChild(e);
+                }
+                var oldonload = window.onload;
+                window.onload = (typeof window.onload != 'function') ?
+                loadChartbeat : function() { oldonload(); loadChartbeat(); };
+            })();
+        </script>
+        <!-- // Chartbeat -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+         ga('create', 'UA-116918263-1', 'auto');
+         ga('send', 'pageview');
+        </script>
+        <!-- // Google Analytics -->
+
+        <!-- Xiti -->
+        <script type="text/javascript">
+            xtnv = document;
+            xtsd = "http://logliberation";
+            xtsite = "381060";
+            xtn2 = "48";
+            xtpage = "Static::Data::url";
+            xtdi = "";
+            xt_pagetype = "";
+            xt_multc = "&x1=0&x2=43&x3=&x4=&x5=&x6=7&x7=";
+            xt_an = "";
+            xt_ac = "";
+            if (window.xtparam==null) { window.xtparam = ''; }
+            window.xtparam += "&ptype="+xt_pagetype+"&ac="+xt_ac+"&an="+xt_an+xt_multc;
+        </script>
+        <noscript>
+            <img width="1" height="1" src="http://logliberation.xiti.com/hit.xiti?s=381060&amp;s2=56&amp;p=Static::Data::&amp;di=&amp;" >
+        </noscript>
+        <script type="text/javascript" src="https://statics.liberation.fr/bloom/theme/js/xtcore.js"></script>
+        <!-- // Xiti -->
+    </body>
+</html>
